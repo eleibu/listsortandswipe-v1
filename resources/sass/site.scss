@@ -1,0 +1,159 @@
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto';
+  background-color: #FAFAFA;
+}
+
+a {
+	color: #3366CC;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+
+div.button-icon-cont {
+	display: inline-block;
+	position: relative;
+
+	svg {
+		visibility: hidden;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+
+	i {
+		position: relative;
+	}
+}
+
+div.button-icon-cont:hover {
+	cursor: pointer;
+
+	svg {
+		visibility: visible;
+	}
+}
+
+#div-list-cont {
+	position: relative;
+
+	div.listitem-cont {
+		background-color: #FFFFFF;
+		border-bottom: 1px solid #F4F4F4;
+
+		div.listitem-outer {
+			position: relative;
+
+			div.button-icon-cont {
+				i {
+					color: #DDDDDD;
+				}
+			}
+		}
+	}
+
+	div.listitem-cont:hover {
+		div.listitem-outer {
+			div.button-icon-cont {
+				i {
+					color: #000000;
+				}
+			}
+		}
+	}
+}
+
+#div-list-cont.xl, #div-list-cont.lg, #div-list-cont.md, #div-list-cont.sm {
+	max-width: 600px;
+	margin: 0 auto;
+
+	div.listitem-cont {
+		padding: 1.8em 0.8em;
+
+		div.listitem-outer {
+			i {
+				display: inline-block;
+				padding: 0.5em;
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				border-radius: 999px;
+				color: #DDDDDD;
+			}
+
+			i:hover {
+				cursor: pointer;
+				background: rgba(0, 0, 0, 0.07);
+			}
+
+			i.sort {
+				left : 0;
+			}
+
+			i.archive {
+				left : 1.8em;
+			}
+
+			i.delete {
+				right : 0;
+			}
+
+			// div.button-icon-cont {
+			// 	position: absolute;
+			// 	top: 50%;
+			// 	transform: translateY(-50%);
+			// }
+
+			// div.button-icon-cont.sort {
+			// 	left: 0;
+			// }
+
+			// div.button-icon-cont.archive {
+			// 	left: 1.8em;
+			// }
+
+			div.text {
+				margin: 0 2em 0 4em;
+			}
+
+			// div.button-icon-cont.delete {
+			// 	right: 0;
+			// }
+		}
+	}
+
+	div.listitem-cont:hover {
+		div.listitem-outer {
+			i {
+				color: #000000;
+			}
+		}
+	}
+}
+
+#div-list-cont.xs {
+	div.listitem-cont {
+		padding: 1em;
+
+		div.listitem-outer {
+			// div.button-icon-cont {
+			// 	display: none;
+			// }
+		}
+	}
+}
