@@ -23,32 +23,6 @@ a:hover {
   visibility: hidden;
 }
 
-div.button-icon-cont {
-  display: inline-block;
-  position: relative;
-}
-
-div.button-icon-cont svg {
-  visibility: hidden;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-}
-
-div.button-icon-cont i {
-  position: relative;
-}
-
-div.button-icon-cont:hover {
-  cursor: pointer;
-}
-
-div.button-icon-cont:hover svg {
-  visibility: visible;
-}
-
 #div-list-cont {
   position: relative;
 }
@@ -60,14 +34,6 @@ div.button-icon-cont:hover svg {
 
 #div-list-cont div.listitem-cont div.listitem-outer {
   position: relative;
-}
-
-#div-list-cont div.listitem-cont div.listitem-outer div.button-icon-cont i {
-  color: #DDDDDD;
-}
-
-#div-list-cont div.listitem-cont:hover div.listitem-outer div.button-icon-cont i {
-  color: #000000;
 }
 
 #div-list-cont.xl, #div-list-cont.lg, #div-list-cont.md, #div-list-cont.sm {
@@ -92,7 +58,7 @@ div.button-icon-cont:hover svg {
 
 #div-list-cont.xl div.listitem-cont div.listitem-outer i:hover, #div-list-cont.lg div.listitem-cont div.listitem-outer i:hover, #div-list-cont.md div.listitem-cont div.listitem-outer i:hover, #div-list-cont.sm div.listitem-cont div.listitem-outer i:hover {
   cursor: pointer;
-  background: rgba(0, 0, 0, 0.07);
+  background: rgba(0, 0, 0, 0.06);
 }
 
 #div-list-cont.xl div.listitem-cont div.listitem-outer i.sort, #div-list-cont.lg div.listitem-cont div.listitem-outer i.sort, #div-list-cont.md div.listitem-cont div.listitem-outer i.sort, #div-list-cont.sm div.listitem-cont div.listitem-outer i.sort {
@@ -100,7 +66,7 @@ div.button-icon-cont:hover svg {
 }
 
 #div-list-cont.xl div.listitem-cont div.listitem-outer i.archive, #div-list-cont.lg div.listitem-cont div.listitem-outer i.archive, #div-list-cont.md div.listitem-cont div.listitem-outer i.archive, #div-list-cont.sm div.listitem-cont div.listitem-outer i.archive {
-  left: 1.8em;
+  left: 1.6em;
 }
 
 #div-list-cont.xl div.listitem-cont div.listitem-outer i.delete, #div-list-cont.lg div.listitem-cont div.listitem-outer i.delete, #div-list-cont.md div.listitem-cont div.listitem-outer i.delete, #div-list-cont.sm div.listitem-cont div.listitem-outer i.delete {
@@ -117,4 +83,8 @@ div.button-icon-cont:hover svg {
 
 #div-list-cont.xs div.listitem-cont {
   padding: 1em;
+}
+
+#div-list-cont.xs div.listitem-cont div.listitem-outer i {
+  display: none;
 }

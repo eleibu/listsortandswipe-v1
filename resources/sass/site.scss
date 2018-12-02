@@ -23,32 +23,6 @@ a:hover {
   visibility: hidden;
 }
 
-
-div.button-icon-cont {
-	display: inline-block;
-	position: relative;
-
-	svg {
-		visibility: hidden;
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-	}
-
-	i {
-		position: relative;
-	}
-}
-
-div.button-icon-cont:hover {
-	cursor: pointer;
-
-	svg {
-		visibility: visible;
-	}
-}
-
 #div-list-cont {
 	position: relative;
 
@@ -58,22 +32,6 @@ div.button-icon-cont:hover {
 
 		div.listitem-outer {
 			position: relative;
-
-			div.button-icon-cont {
-				i {
-					color: #DDDDDD;
-				}
-			}
-		}
-	}
-
-	div.listitem-cont:hover {
-		div.listitem-outer {
-			div.button-icon-cont {
-				i {
-					color: #000000;
-				}
-			}
 		}
 	}
 }
@@ -98,7 +56,7 @@ div.button-icon-cont:hover {
 
 			i:hover {
 				cursor: pointer;
-				background: rgba(0, 0, 0, 0.07);
+				background: rgba(0, 0, 0, 0.06);
 			}
 
 			i.sort {
@@ -106,34 +64,16 @@ div.button-icon-cont:hover {
 			}
 
 			i.archive {
-				left : 1.8em;
+				left : 1.6em;
 			}
 
 			i.delete {
 				right : 0;
 			}
 
-			// div.button-icon-cont {
-			// 	position: absolute;
-			// 	top: 50%;
-			// 	transform: translateY(-50%);
-			// }
-
-			// div.button-icon-cont.sort {
-			// 	left: 0;
-			// }
-
-			// div.button-icon-cont.archive {
-			// 	left: 1.8em;
-			// }
-
 			div.text {
 				margin: 0 2em 0 4em;
 			}
-
-			// div.button-icon-cont.delete {
-			// 	right: 0;
-			// }
 		}
 	}
 
@@ -151,9 +91,9 @@ div.button-icon-cont:hover {
 		padding: 1em;
 
 		div.listitem-outer {
-			// div.button-icon-cont {
-			// 	display: none;
-			// }
+			i {
+				display: none;
+			}
 		}
 	}
 }

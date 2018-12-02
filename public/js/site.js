@@ -183,12 +183,14 @@ var lithiumlistPro = function () {
 
 		var items = listCont.getElementsByClassName(listItemClass);
 		for (var i = 0, len = items.length; i < len; i++) {
-			items[i].addEventListener('mousedown', function (e) {
-				mouseDown(e, i, instance);
-			});
-			items[i].addEventListener('touchstart', function (e) {
-				touchStart(e, i, instance);
-			});
+			(function (i) {
+				items[i].addEventListener('mousedown', function (e) {
+					mouseDown(e, i, instance);
+				});
+				items[i].addEventListener('touchstart', function (e) {
+					touchStart(e, i, instance);
+				});
+			})(i);
 		}
 	};
 
