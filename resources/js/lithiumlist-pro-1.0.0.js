@@ -2,6 +2,8 @@
 
 // Notes:
 // listCont should have 'position: relative'
+// need to set css 'box-shadow' for 'clone-sort' class if want sort clone to have a drop shadow
+// need to set css for 'sort-item-active' to hide active item while sorting
 
 
 export var lithiumlistPro = (function () {
@@ -22,6 +24,7 @@ export var lithiumlistPro = (function () {
         sortEnabled: true,
         sortByDrag: true,
         sortCloneClass: 'clone-sort',
+        sortItemActiveClass: 'sort-item-active',
         sortDragHandleClass: 'sort-drag-handle',
         // sortCloneBoxShadow: '0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12)',
         sortMoveStartDelay: 200,
@@ -102,13 +105,7 @@ export var lithiumlistPro = (function () {
 			}
 		}
 
-		var instance = {
-			'listCont' : listCont,
-			'scrollCont' : scrollCont,
-			'eventsTarget' : eventsTarget,
-			'listItemClass' : listItemClass,
-			'deltaItemsScroll' : getDeltaWithParent(listCont, scrollCont, 0),
-			'props' : props,
+		var temp = {
 			'items' : [],
 			'moveType' : null,
 			'itemClone' : null,
@@ -121,45 +118,53 @@ export var lithiumlistPro = (function () {
 			'lastPageY' : null,
 			'sortDelayTimer' : null
 		};
+
+		var instance = {
+			'listCont' : listCont,
+			'scrollCont' : scrollCont,
+			'eventsTarget' : eventsTarget,
+			'listItemClass' : listItemClass,
+			'deltaItemsScroll' : getDeltaWithParent(listCont, scrollCont, 0),
+			'props' : props,
+			'temp' : temp
+		};
 		instances.push(instance);
 
-		var items = listCont.getElementsByClassName(listItemClass);
-		for (var i = 0, len = items.length; i < len; i++) {
-			(function(i) {
-				items[i].addEventListener('mousedown', function(e) {mouseDown(e, i, instance)});
-				items[i].addEventListener('touchstart', function(e) {touchStart(e, i, instance)});
-			}(i));
-		}
+		instance.listCont.addEventListener('mousedown', function(e) {mouseDown(e, instance)});
+		// instance.listCont.addEventListener('touchstart', function(e) {touchStart(e, instance)});
+
+		// var items = listCont.getElementsByClassName(listItemClass);
+		// for (var i = 0, len = items.length; i < len; i++) {
+		// 	(function(i) {
+		// 		items[i].addEventListener('mousedown', function(e) {mouseDown(e, i, instance)});
+		// 		items[i].addEventListener('touchstart', function(e) {touchStart(e, i, instance)});
+		// 	}(i));
+		// }
 	};
 
-	var mouseDown = function(e, index, instance) {
-		// var instance = null;
-		// for (var i = 0, len = instances.length; i < len; i++) {
-		// 	if (instances[i].listCont === listCont) {
-		// 		instance = instances[i];
-		// 		break;
-		// 	}
-		// }
-
+	var mouseDown = function(e, instance) {
 		if ((instance != null) && ((instance.props.sortEnabled) || (instance.props.leftEnabled) || (instance.props.rightEnabled))) {
- 			if ((instance.props.sortDragHandleClass) && (hasClass(e.target, instance.props.sortDragHandleClass))) {
- 				// sort drag handle click
- 				// alert('sort handle');
+			setItems(instance);
 
- 			} else if ((instance.props.leftDragHandleClass) && (hasClass(e.target, instance.props.leftDragHandleClass))) {
- 				// left drag handle click
- 				// alert('left handle');
+			var index = null;
+			for (var i = 0, len = instance.temp.items.length; i < len; i++) {
+				if ((instance.temp.items[i] === e.target) || (instance.temp.items[i].contains(e.target))) {
+					index = i;
+					break;
+				}
+			}
 
- 			} else if ((instance.props.rightDragHandleClass) && (hasClass(e.target, instance.props.rightDragHandleClass))) {
- 				// right drag handle click
- 				// alert('right handle');
-
- 			} else {
- 				backgroundClick(e, index, instance);
- 				// background click
- 				// alert('background');
-
- 			}
+			if (index != null) {
+				if (checkClassClicked(e, instance.temp.items[index], instance.props.sortDragHandleClass)) {
+					// sort drag handle click
+				} else if (checkClassClicked(e, instance.temp.items[index], instance.props.leftDragHandleClass)) {
+					// left drag handle click
+				} else if (checkClassClicked(e, instance.temp.items[index], instance.props.rightDragHandleClass)) {
+					// right drag handle click
+				} else {
+					backgroundClick(e, index, instance);
+				}
+			}
 		}
 	};
 
@@ -169,12 +174,12 @@ export var lithiumlistPro = (function () {
 			var pageY = getPageY(e);
 
 			// activeListCont = listCont;
-			instance.activeIndex = index;
-			instance.origIndex = index;
-			instance.startPageX = pageX;
-			instance.startPageY = pageY;
-			instance.lastPageX = pageX;
-			instance.lastPageY = pageY;
+			instance.temp.activeIndex = index;
+			instance.temp.origIndex = index;
+			instance.temp.startPageX = pageX;
+			instance.temp.startPageY = pageY;
+			instance.temp.lastPageX = pageX;
+			instance.temp.lastPageY = pageY;
 
 			instance.eventsTarget.addEventListener('mousemove', function(e) {mouseMove(e, instance);});
 			instance.eventsTarget.addEventListener('mouseup', function(e) {mouseUp(e, instance);});
@@ -190,67 +195,212 @@ export var lithiumlistPro = (function () {
 	};
 
 	var setSortDelay = function(delay, instance) {
-		instance.sortDelayTimer = setTimeout(function() {activateSort(instance);}, delay);
+		instance.temp.sortDelayTimer = setTimeout(function() {activateSort(instance);}, delay);
 	};
 
 	var activateSort = function(instance) {
         if (instance.props.onSortStart) {
-			instance.props.onSortStart(instance.activeIndex);
+			instance.props.onSortStart(instance.temp.activeIndex);
         }
 
-        instance.sortDelayTimer = null;
-        instance.moveType = 'SORT';
+        instance.temp.sortDelayTimer = null;
+        instance.temp.moveType = 'SORT';
 
         setItems(instance);
-        if (!instance.itemClone) {
-        	 var top = instance.items[instance.activeIndex].offsetTop + 'px';
+        if (!instance.temp.itemClone) {
+        	 var top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
         	 createClone(instance, 0, top);
         }
 
-        // REPLACE THIS WITH CLASSNAME??
-        instance.items[instance.activeIndex].style.visibility = 'hidden';
-        instance.items[instance.activeIndex].style.opacity = '0';
+		if (instance.props.sortItemActiveClass) {
+			addClass(instance.temp.items[instance.temp.activeIndex], instance.props.sortItemActiveClass);
+		}
+	};
+
+	var mouseMove = function(e, instance) {
+        var pageX = getPageX(e);
+        var pageY = getPageY(e);
+        // const cursorX = this.startPageX - pageX;
+
+        if (!instance.temp.moveType) {
+        	if (instance.temp.sortDelayTimer) {	 // ignore up / down movement during this time
+
+        	}
+        } else {
+        	if ((instance.temp.moveType == 'LEFT') || (instance.temp.moveType == 'RIGHT')) {
+
+        	} else if (instance.temp.moveType == 'SORT') {
+
+        	}
+        }
+
+        if (!this.moveType) {
+            if (this.sortDelayTimer) { // ignore up / down movement during this setTimeout
+                if (((this.props.deleteEnabled && this.props.deleteBySwipe)) && (cursorX > this.props.deleteSwipeStartThreshold)) {
+                    clearTimeout(this.sortDelayTimer);
+                    this.sortDelayTimer = null;
+                    this.setTaskDivs();
+                    this.moveType = 'DELETE';
+                    if (this.props.itemsContHideOverflowOnSlide) {
+                        this.origItemsContOverflow = this.getItemsCont().style.overflow;
+                        this.getItemsCont().style.overflow = 'hidden';
+                    }
+                    if (!this.redDiv) {
+                        this.createRed();
+                    }
+                    if (!this.clone) {
+                        const left = -1 * cursorX + 'px';
+                        const top = this.taskDivs[this.activeTaskIndex].offsetTop + 'px';
+                        this.createClone(left, top);
+                    }
+                }
+            }
+        } else {
+            if (this.moveType == 'DELETE') {
+                if (this.props.itemsContHideOverflowOnSlide) {
+                    this.origItemsContOverflow = this.getItemsCont().style.overflow;
+                    this.getItemsCont().style.overflow = 'hidden';
+                }
+                if (!this.redDiv) {
+                    this.createRed();
+                }
+                if (!this.clone) {
+                    const left = -1 * cursorX + 'px';
+                    const top = this.taskDivs[this.activeTaskIndex].offsetTop + 'px';
+                    this.createClone(left, top);
+                }
+		    	if (cursorX > this.props.deleteSwipeStartThreshold) {
+		    		if (this.props.deleteConfirm) {
+				    	let deleteConfirmThreshold = 0.25;
+				    	if (this.props.deleteConfirmThreshold) {
+							deleteConfirmThreshold = this.props.deleteConfirmThreshold;
+				    	}
+				    	const thresholdPx = this.taskDivs[this.activeTaskIndex].offsetWidth * deleteConfirmThreshold;
+				    	if (cursorX <= thresholdPx) {
+				    		this.cloneIsAtDeleteConfirmThreshold = false;
+		                    const left = -1 * cursorX + 'px';
+		                    this.clone.style.left = left;
+				    	} else {
+				    		this.cloneIsAtDeleteConfirmThreshold = true;
+				    	}
+		    		} else {
+	                    const left = -1 * cursorX + 'px';
+	                    this.clone.style.left = left;
+		    		}
+		    	}
+            } else if (this.moveType == 'SORT') {
+                e.preventDefault(); // Prevent scrolling on mobile
+
+                if (this.scrollInterval) {
+                    clearInterval(this.scrollInterval);
+                    this.scrollInterval = null;
+                }
+
+                let shouldScroll = this.moveClone(pageY - this.lastPageY);
+                this.animateTasks();
+
+                if (shouldScroll) {
+                    let cloneTop = this.getOrigTop(this.clone) + this.getTranslateYNum(this.clone);
+                    let scrollDir = 0;
+                    let outFraction = 0;
+                    if (cloneTop < (this.getScrollCont().scrollTop - this.deltaItemsScroll)) {
+                        scrollDir = -1;    // scroll up
+                        outFraction = ((this.getScrollCont().scrollTop - this.deltaItemsScroll) - cloneTop) / this.clone.offsetHeight;
+                    } else if ((cloneTop + this.clone.offsetHeight) > (this.getScrollCont().scrollTop + this.getScrollCont().offsetHeight - this.deltaItemsScroll)) {
+                        scrollDir = 1;    // scroll down
+                        outFraction = ((cloneTop + this.clone.offsetHeight) - (this.getScrollCont().scrollTop + this.getScrollCont().offsetHeight - this.deltaItemsScroll)) / this.clone.offsetHeight;
+                    }
+
+                    if ((scrollDir != 0) & (outFraction != 0)) {
+                        let multiplier = 15;
+                        if (this.props.sortScrollSpeed) {
+                            multiplier = this.props.sortScrollSpeed;
+                        }
+                        const scrollChange = Math.round(scrollDir * outFraction * multiplier);
+
+                        this.scrollInterval = setInterval(() => {
+                            this.doScroll(scrollChange);
+                        }, 5);
+                    }
+                }
+            }
+        }
+        this.lastPageX = pageX;
+        this.lastPageY = pageY;
+
+
 
 	};
 
-	var mouseMove = function(e, index, listCont, instance) {
+	var moveItemClone = function(deltaTrans) {
+	        let shouldScroll = true;
+	        let cloneOrigTop = this.getOrigTop(this.clone);
+	        let cloneTrans = this.getTranslateYNum(this.clone) + deltaTrans;
+
+	        if (cloneOrigTop + cloneTrans < 0) {
+	            cloneTrans = -1 * cloneOrigTop;
+	            shouldScroll = false;
+	        } else if (cloneOrigTop + cloneTrans + this.clone.offsetHeight > this.getItemsCont().offsetHeight) {
+	            cloneTrans = this.getItemsCont().offsetHeight - cloneOrigTop - this.clone.offsetHeight;
+	            shouldScroll = false;
+	        }
+
+	        this.clone.style[`${vendorPrefix}Transform`] = 'translateY('+ cloneTrans + 'px)';
+	        return shouldScroll;
+	};
+
+	var animateItems = function() {
 
 	};
 
-	var mouseUp = function(e, index, listCont, instance) {
+	var getItemCloneTop = function(instance) {
+
+		// CAN WE REPLACE THIS WITH OFFSETTOP?
+
+		var origTop = 0;
+		if ((instance.temp.itemClone) && (instance.temp.itemClone.style) && (instance.temp.itemClone.style.top)) {
+			var index = instance.temp.itemClone.style.top.indexOf('px');
+			if (index > -1) {
+				origTop = parseInt(instance.temp.itemClone.style.top.substring(0, index));
+			}
+		}
+		return origTop;
+	};
+
+	var mouseUp = function(e, instance) {
 
 	};
 
-	var touchMove = function(e, index, listCont, instance) {
+	var touchMove = function(e, instance) {
 
 	};
 
-	var touchEnd = function(e, index, listCont, instance) {
+	var touchEnd = function(e, instance) {
 
 	};
 
 	var setItems = function(instance) {
-	    instance.items = Array.prototype.slice.call(instance.listCont.getElementsByClassName(instance.listItemClass));
+	    instance.temp.items = Array.prototype.slice.call(instance.listCont.getElementsByClassName(instance.listItemClass));
 	}
 
 	var createClone = function(instance, left, top) {
-		var cloneNode = instance.items[instance.activeIndex].cloneNode(true);
-		instance.itemClone = instance.listCont.appendChild(cloneNode);
-		instance.itemClone.style.position = 'absolute';
-		instance.itemClone.style.left = left;
-		instance.itemClone.style.top = top;
+		var cloneNode = instance.temp.items[instance.temp.activeIndex].cloneNode(true);
+		instance.temp.itemClone = instance.listCont.appendChild(cloneNode);
+		instance.temp.itemClone.style.position = 'absolute';
+		instance.temp.itemClone.style.left = left;
+		instance.temp.itemClone.style.top = top;
 
-		if (instance.moveType == 'SORT') {
+		if (instance.temp.moveType == 'SORT') {
 			if (instance.props.sortCloneClass) {
-				addClass(instance.itemClone, instance.props.sortCloneClass);
+				addClass(instance.temp.itemClone, instance.props.sortCloneClass);
 			}
-		} else if (instance.moveType == 'LEFT') {
+		} else if (instance.temp.moveType == 'LEFT') {
 			if (instance.props.leftCloneClass) {
-				addClass(instance.itemClone, instance.props.leftCloneClass);
+				addClass(instance.temp.itemClone, instance.props.leftCloneClass);
 			}
-		} else if (instance.moveType == 'RIGHT') {
+		} else if (instance.temp.moveType == 'RIGHT') {
 			if (instance.props.rightCloneClass) {
-				addClass(instance.itemClone, instance.props.rightCloneClass);
+				addClass(instance.temp.itemClone, instance.props.rightCloneClass);
 			}
 		}	
 	}
@@ -275,6 +425,26 @@ export var lithiumlistPro = (function () {
 
 
 	// utility functions
+
+	var checkClassClicked = function(e, container, className) {
+		var classClicked = false;
+		if (className) {
+			if (hasClass(e.target, className)) {	// check if element with className was itself clicked
+				classClicked = true;
+			} else {
+				if (container) {					// check if element with className contains the clicked element
+					var conts = container.getElementsByClassName(className);
+					for (var i = 0, len = conts.length; i < len; i++) {
+						if (conts[i].contains(e.target)) {
+							classClicked = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+		return classClicked;
+	}
 
 	var getPageX = function(e) {
 	    if (e.touches && e.touches.length) {

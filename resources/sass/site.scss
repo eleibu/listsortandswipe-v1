@@ -34,6 +34,11 @@ a:hover {
 			position: relative;
 		}
 	}
+	//sort-item-active
+	div.listitem-cont.sort-item-active {
+		visibility: hidden;
+		opacity: 0;
+	}
 
 	div.listitem-cont.clone-sort {
 		box-shadow: 0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12);
@@ -50,7 +55,7 @@ a:hover {
 
 		div.listitem-outer {
 			margin: 0 0.8em;
-			
+
 			i {
 				display: inline-block;
 				padding: 0.5em;
