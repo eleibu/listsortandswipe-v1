@@ -183,7 +183,11 @@ var lithiumlistPro = function () {
 			'startPageY': null,
 			'lastPageX': null,
 			'lastPageY': null,
-			'sortDelayTimer': null
+			'sortDelayTimer': null,
+			'funcMouseMove': null,
+			'funcMouseUp': null,
+			'funcTouchMove': null,
+			'funcTouchEnd': null
 		};
 
 		var instance = {
@@ -249,19 +253,23 @@ var lithiumlistPro = function () {
 			instance.temp.startPageY = pageY;
 			instance.temp.lastPageX = pageX;
 			instance.temp.lastPageY = pageY;
-
-			instance.eventsTarget.addEventListener('mousemove', function (e) {
+			instance.temp.funcMouseMove = function (e) {
 				mouseMove(e, instance);
-			});
-			instance.eventsTarget.addEventListener('mouseup', function (e) {
+			};
+			instance.temp.funcMouseUp = function (e) {
 				mouseUp(e, instance);
-			});
-			instance.eventsTarget.addEventListener('touchmove', function (e) {
+			};
+			instance.temp.funcTouchMove = function (e) {
 				touchMove(e, instance);
-			});
-			instance.eventsTarget.addEventListener('touchend', function (e) {
+			};
+			instance.temp.funcTouchEnd = function (e) {
 				touchEnd(e, instance);
-			});
+			};
+
+			instance.eventsTarget.addEventListener('mousemove', instance.temp.funcMouseMove);
+			instance.eventsTarget.addEventListener('mouseup', instance.temp.funcMouseUp);
+			instance.eventsTarget.addEventListener('touchmove', instance.temp.funcTouchMove);
+			instance.eventsTarget.addEventListener('touchend', instance.temp.funcTouchEnd);
 
 			setSortDelay(instance.props.sortMoveStartDelay, instance);
 		}
@@ -297,8 +305,6 @@ var lithiumlistPro = function () {
 	};
 
 	var mouseMove = function mouseMove(e, instance) {
-		var _this = this;
-
 		var pageX = getPageX(e);
 		var pageY = getPageY(e);
 		// const cursorX = this.startPageX - pageX;
@@ -308,119 +314,63 @@ var lithiumlistPro = function () {
 
 			}
 		} else {
-			if (instance.temp.moveType == 'LEFT' || instance.temp.moveType == 'RIGHT') {} else if (instance.temp.moveType == 'SORT') {}
-		}
-
-		if (!this.moveType) {
-			if (this.sortDelayTimer) {
-				// ignore up / down movement during this setTimeout
-				if (this.props.deleteEnabled && this.props.deleteBySwipe && cursorX > this.props.deleteSwipeStartThreshold) {
-					clearTimeout(this.sortDelayTimer);
-					this.sortDelayTimer = null;
-					this.setTaskDivs();
-					this.moveType = 'DELETE';
-					if (this.props.itemsContHideOverflowOnSlide) {
-						this.origItemsContOverflow = this.getItemsCont().style.overflow;
-						this.getItemsCont().style.overflow = 'hidden';
-					}
-					if (!this.redDiv) {
-						this.createRed();
-					}
-					if (!this.clone) {
-						var left = -1 * cursorX + 'px';
-						var top = this.taskDivs[this.activeTaskIndex].offsetTop + 'px';
-						this.createClone(left, top);
-					}
-				}
-			}
-		} else {
-			if (this.moveType == 'DELETE') {
-				if (this.props.itemsContHideOverflowOnSlide) {
-					this.origItemsContOverflow = this.getItemsCont().style.overflow;
-					this.getItemsCont().style.overflow = 'hidden';
-				}
-				if (!this.redDiv) {
-					this.createRed();
-				}
-				if (!this.clone) {
-					var _left = -1 * cursorX + 'px';
-					var _top = this.taskDivs[this.activeTaskIndex].offsetTop + 'px';
-					this.createClone(_left, _top);
-				}
-				if (cursorX > this.props.deleteSwipeStartThreshold) {
-					if (this.props.deleteConfirm) {
-						var deleteConfirmThreshold = 0.25;
-						if (this.props.deleteConfirmThreshold) {
-							deleteConfirmThreshold = this.props.deleteConfirmThreshold;
-						}
-						var thresholdPx = this.taskDivs[this.activeTaskIndex].offsetWidth * deleteConfirmThreshold;
-						if (cursorX <= thresholdPx) {
-							this.cloneIsAtDeleteConfirmThreshold = false;
-							var _left2 = -1 * cursorX + 'px';
-							this.clone.style.left = _left2;
-						} else {
-							this.cloneIsAtDeleteConfirmThreshold = true;
-						}
-					} else {
-						var _left3 = -1 * cursorX + 'px';
-						this.clone.style.left = _left3;
-					}
-				}
-			} else if (this.moveType == 'SORT') {
+			if (instance.temp.moveType == 'LEFT' || instance.temp.moveType == 'RIGHT') {} else if (instance.temp.moveType == 'SORT') {
 				e.preventDefault(); // Prevent scrolling on mobile
 
-				if (this.scrollInterval) {
-					clearInterval(this.scrollInterval);
-					this.scrollInterval = null;
-				}
+				// if (this.scrollInterval) {
+				//     clearInterval(this.scrollInterval);
+				//     this.scrollInterval = null;
+				// }
 
-				var shouldScroll = this.moveClone(pageY - this.lastPageY);
-				this.animateTasks();
+				var shouldScroll = moveItemClone(instance, pageY - instance.temp.lastPageY);
+				// this.animateTasks();
 
-				if (shouldScroll) {
-					var cloneTop = this.getOrigTop(this.clone) + this.getTranslateYNum(this.clone);
-					var scrollDir = 0;
-					var outFraction = 0;
-					if (cloneTop < this.getScrollCont().scrollTop - this.deltaItemsScroll) {
-						scrollDir = -1; // scroll up
-						outFraction = (this.getScrollCont().scrollTop - this.deltaItemsScroll - cloneTop) / this.clone.offsetHeight;
-					} else if (cloneTop + this.clone.offsetHeight > this.getScrollCont().scrollTop + this.getScrollCont().offsetHeight - this.deltaItemsScroll) {
-						scrollDir = 1; // scroll down
-						outFraction = (cloneTop + this.clone.offsetHeight - (this.getScrollCont().scrollTop + this.getScrollCont().offsetHeight - this.deltaItemsScroll)) / this.clone.offsetHeight;
-					}
+				// if (shouldScroll) {
+				//     let cloneTop = this.getOrigTop(this.clone) + this.getTranslateYNum(this.clone);
+				//     let scrollDir = 0;
+				//     let outFraction = 0;
+				//     if (cloneTop < (this.getScrollCont().scrollTop - this.deltaItemsScroll)) {
+				//         scrollDir = -1;    // scroll up
+				//         outFraction = ((this.getScrollCont().scrollTop - this.deltaItemsScroll) - cloneTop) / this.clone.offsetHeight;
+				//     } else if ((cloneTop + this.clone.offsetHeight) > (this.getScrollCont().scrollTop + this.getScrollCont().offsetHeight - this.deltaItemsScroll)) {
+				//         scrollDir = 1;    // scroll down
+				//         outFraction = ((cloneTop + this.clone.offsetHeight) - (this.getScrollCont().scrollTop + this.getScrollCont().offsetHeight - this.deltaItemsScroll)) / this.clone.offsetHeight;
+				//     }
 
-					if (scrollDir != 0 & outFraction != 0) {
-						var multiplier = 15;
-						if (this.props.sortScrollSpeed) {
-							multiplier = this.props.sortScrollSpeed;
-						}
-						var scrollChange = Math.round(scrollDir * outFraction * multiplier);
+				//     if ((scrollDir != 0) & (outFraction != 0)) {
+				//         let multiplier = 15;
+				//         if (this.props.sortScrollSpeed) {
+				//             multiplier = this.props.sortScrollSpeed;
+				//         }
+				//         const scrollChange = Math.round(scrollDir * outFraction * multiplier);
 
-						this.scrollInterval = setInterval(function () {
-							_this.doScroll(scrollChange);
-						}, 5);
-					}
-				}
+				//         this.scrollInterval = setInterval(() => {
+				//             this.doScroll(scrollChange);
+				//         }, 5);
+				//     }
+				// }
 			}
 		}
-		this.lastPageX = pageX;
-		this.lastPageY = pageY;
+
+		instance.temp.lastPageX = pageX;
+		instance.temp.lastPageY = pageY;
 	};
 
-	var moveItemClone = function moveItemClone(deltaTrans) {
+	var moveItemClone = function moveItemClone(instance, deltaTrans) {
+		//@@
 		var shouldScroll = true;
-		var cloneOrigTop = this.getOrigTop(this.clone);
-		var cloneTrans = this.getTranslateYNum(this.clone) + deltaTrans;
+		var cloneOrigTop = getItemCloneTop(instance);
+		var cloneTrans = getTransYNum(instance.temp.itemClone) + deltaTrans;
 
 		if (cloneOrigTop + cloneTrans < 0) {
 			cloneTrans = -1 * cloneOrigTop;
 			shouldScroll = false;
-		} else if (cloneOrigTop + cloneTrans + this.clone.offsetHeight > this.getItemsCont().offsetHeight) {
-			cloneTrans = this.getItemsCont().offsetHeight - cloneOrigTop - this.clone.offsetHeight;
+		} else if (cloneOrigTop + cloneTrans + instance.temp.itemClone.offsetHeight > instance.listCont.offsetHeight) {
+			cloneTrans = instance.listCont.offsetHeight - cloneOrigTop - instance.temp.itemClone.offsetHeight;
 			shouldScroll = false;
 		}
 
-		this.clone.style[vendorPrefix + 'Transform'] = 'translateY(' + cloneTrans + 'px)';
+		instance.temp.itemClone.style[vendorPrefix + 'Transform'] = 'translateY(' + cloneTrans + 'px)';
 		return shouldScroll;
 	};
 
@@ -440,7 +390,111 @@ var lithiumlistPro = function () {
 		return origTop;
 	};
 
-	var mouseUp = function mouseUp(e, instance) {};
+	var getTransYNum = function getTransYNum(el) {
+
+		// CAN WE REPLACE THIS WITH: https://stackoverflow.com/questions/42267189/how-to-get-value-translatex-by-javascript
+
+		var currentTransAmount = 0;
+		if (el.style && el.style[vendorPrefix + 'Transform']) {
+			var index = el.style[vendorPrefix + 'Transform'].indexOf('px');
+			if (index > -1) {
+				currentTransAmount = parseInt(el.style[vendorPrefix + 'Transform'].substring(11, index));
+			}
+		}
+		return currentTransAmount;
+	};
+
+	var vendorPrefix = function () {
+		var styles = window.getComputedStyle(document.documentElement, '') || ['-moz-hidden-iframe'];
+		var prefix = (Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/) || styles.OLink === ('' && ['', 'o']))[1];
+
+		switch (prefix) {
+			case 'ms':
+				return 'ms';
+			default:
+				return prefix && prefix.length ? prefix[0].toUpperCase() + prefix.substr(1) : '';
+		}
+	}();
+
+	var mouseUp = function mouseUp(e, instance) {
+		if (instance.temp.sortDelayTimer) {
+			clearTimeout(instance.temp.sortDelayTimer);
+			instance.temp.sortDelayTimer = null;
+		}
+		if (instance.temp.funcMouseMove) {
+			instance.eventsTarget.removeEventListener('mousemove', instance.temp.funcMouseMove);
+		}
+		if (instance.temp.funcMouseUp) {
+			instance.eventsTarget.removeEventListener('mouseup', instance.temp.funcMouseUp);
+		}
+		if (instance.temp.funcTouchMove) {
+			instance.eventsTarget.removeEventListener('touchmove', instance.temp.funcTouchMove);
+		}
+		if (instance.temp.funcTouchEnd) {
+			instance.eventsTarget.removeEventListener('touchend', instance.temp.funcTouchEnd);
+		}
+
+		// instance.eventsTarget.addEventListener('mousemove', function(e) {mouseMove(e, instance);});
+		// instance.eventsTarget.addEventListener('mouseup', function(e) {mouseUp(e, instance);});
+		// instance.eventsTarget.addEventListener('touchmove', function(e) {touchMove(e, instance);});
+		// instance.eventsTarget.addEventListener('touchend', function(e) {touchEnd(e, instance);});
+
+		//       this.props.eventsTarget().removeEventListener('mousemove', this.handleMouseMove);
+		//       this.props.eventsTarget().removeEventListener('mouseup', this.handleMouseUp);
+		//       this.props.eventsTarget().removeEventListener('touchmove', this.handleTouchMove);
+		//       this.props.eventsTarget().removeEventListener('touchend', this.handleTouchEnd);
+
+		//       if (this.moveType) {
+		//           if (this.moveType == 'DELETE') {
+		//               if (this.clone) {
+		//               	const cloneX = -1 * this.clone.offsetLeft;
+
+		//               	if (this.props.deleteConfirm) {
+		// 		    	if (this.cloneIsAtDeleteConfirmThreshold) {
+		// 		    		this.cloneIsAtDeleteConfirmThreshold = false;
+		// 			    	if (this.props.onDeleteConfirmStart) {
+		// 			    		this.props.onDeleteConfirmStart();
+		// 			    	}
+		// 					document.addEventListener('mousedown', this.handleDocClick);
+		// 		    	} else {
+		// 		    		this.autoSlideRight();
+		// 		    	}
+		//               	} else {
+		//                    let deleteSwipeEndPercent = 0.5;
+		//                    if (this.props.deleteSwipeEndPercent) {
+		//                        deleteSwipeEndPercent = this.props.deleteSwipeEndPercent;
+		//                    }
+		//                    const deleteSwipeEndThreshold = this.taskDivs[this.activeTaskIndex].offsetWidth * deleteSwipeEndPercent;
+
+		//                    if (cloneX > deleteSwipeEndThreshold) {
+		//                        this.autoSlideLeft();
+		//                    } else {
+		//                        this.autoSlideRight();
+		//                    }
+		//               	}
+		//               }
+		//           } else if (this.moveType == 'SORT') {
+		//               if (this.scrollInterval) {
+		//                   clearInterval(this.scrollInterval);
+		//                   this.scrollInterval = null;
+		//               }
+
+		//               let activeTaskTop = getDeltaWithParent(this.taskDivs[this.activeTaskIndex], this.getItemsCont(), 0) + this.getTranslateYNum(this.taskDivs[this.activeTaskIndex]);
+
+		//               let cloneTop = this.getOrigTop(this.clone) + this.getTranslateYNum(this.clone);
+		//               let sortEndDockDuration = 200;
+		//               if (this.props.sortEndDockDuration) {
+		//                   sortEndDockDuration = this.props.sortEndDockDuration;
+		//               }
+		//               this.clone.style[`${vendorPrefix}TransitionDuration`] = sortEndDockDuration + 'ms';
+		//               this.moveClone(activeTaskTop - cloneTop);
+
+		//               this.sortEndTimer = setTimeout(() => {
+		//                   this.sortEnd();
+		//               }, sortEndDockDuration);
+		//           }
+		//       }
+	};
 
 	var touchMove = function touchMove(e, instance) {};
 
