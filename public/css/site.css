@@ -36,13 +36,23 @@ a:hover {
   position: relative;
 }
 
+#div-list-cont div.listitem-cont.clone-sort {
+  -webkit-box-shadow: 0 5px 14px rgba(0, 0, 0, 0.15), 0 6px 6px rgba(0, 0, 0, 0.12);
+          box-shadow: 0 5px 14px rgba(0, 0, 0, 0.15), 0 6px 6px rgba(0, 0, 0, 0.12);
+  width: 100%;
+}
+
 #div-list-cont.xl, #div-list-cont.lg, #div-list-cont.md, #div-list-cont.sm {
   max-width: 600px;
   margin: 0 auto;
 }
 
 #div-list-cont.xl div.listitem-cont, #div-list-cont.lg div.listitem-cont, #div-list-cont.md div.listitem-cont, #div-list-cont.sm div.listitem-cont {
-  padding: 1.8em 0.8em;
+  padding: 1.8em 0;
+}
+
+#div-list-cont.xl div.listitem-cont div.listitem-outer, #div-list-cont.lg div.listitem-cont div.listitem-outer, #div-list-cont.md div.listitem-cont div.listitem-outer, #div-list-cont.sm div.listitem-cont div.listitem-outer {
+  margin: 0 0.8em;
 }
 
 #div-list-cont.xl div.listitem-cont div.listitem-outer i, #div-list-cont.lg div.listitem-cont div.listitem-outer i, #div-list-cont.md div.listitem-cont div.listitem-outer i, #div-list-cont.sm div.listitem-cont div.listitem-outer i {
