@@ -105,6 +105,22 @@ export var lithiumlistPro = (function () {
 			}
 		}
 
+		var instance = {
+			'listCont' : listCont,
+			'scrollCont' : scrollCont,
+			'eventsTarget' : eventsTarget,
+			'listItemClass' : listItemClass,
+			'deltaItemsScroll' : getDeltaWithParent(listCont, scrollCont, 0),
+			'props' : props,
+			'temp' : getEmptyTemp()
+		};
+		instances.push(instance);
+
+		instance.listCont.addEventListener('mousedown', function(e) {mouseDown(e, instance)});
+		// instance.listCont.addEventListener('touchstart', function(e) {touchStart(e, instance)});
+	};
+
+	var getEmptyTemp = function() {
 		var temp = {
 			'items' : [],
 			'moveType' : null,
@@ -117,33 +133,13 @@ export var lithiumlistPro = (function () {
 			'lastPageX' : null,
 			'lastPageY' : null,
 			'sortDelayTimer' : null,
+			'sortEndTimer' : null,
 			'funcMouseMove' : null,
 			'funcMouseUp' : null,
 			'funcTouchMove' : null,
 			'funcTouchEnd' : null
 		};
-
-		var instance = {
-			'listCont' : listCont,
-			'scrollCont' : scrollCont,
-			'eventsTarget' : eventsTarget,
-			'listItemClass' : listItemClass,
-			'deltaItemsScroll' : getDeltaWithParent(listCont, scrollCont, 0),
-			'props' : props,
-			'temp' : temp
-		};
-		instances.push(instance);
-
-		instance.listCont.addEventListener('mousedown', function(e) {mouseDown(e, instance)});
-		// instance.listCont.addEventListener('touchstart', function(e) {touchStart(e, instance)});
-
-		// var items = listCont.getElementsByClassName(listItemClass);
-		// for (var i = 0, len = items.length; i < len; i++) {
-		// 	(function(i) {
-		// 		items[i].addEventListener('mousedown', function(e) {mouseDown(e, i, instance)});
-		// 		items[i].addEventListener('touchstart', function(e) {touchStart(e, i, instance)});
-		// 	}(i));
-		// }
+		return temp;
 	};
 
 	var mouseDown = function(e, instance) {
@@ -246,7 +242,7 @@ export var lithiumlistPro = (function () {
                 // }
 
                 let shouldScroll = moveItemClone(instance, pageY - instance.temp.lastPageY);
-                // this.animateTasks();
+                animateItems(instance);
 
                 // if (shouldScroll) {
                 //     let cloneTop = this.getOrigTop(this.clone) + this.getTranslateYNum(this.clone);
@@ -280,7 +276,6 @@ export var lithiumlistPro = (function () {
 	};
 
 	var moveItemClone = function(instance, deltaTrans) {
-		//@@
         let shouldScroll = true;
         let cloneOrigTop = getItemCloneTop(instance);
         let cloneTrans = getTransYNum(instance.temp.itemClone) + deltaTrans;
@@ -297,8 +292,54 @@ export var lithiumlistPro = (function () {
         return shouldScroll;
 	};
 
-	var animateItems = function() {
+	var animateItems = function(instance) {
+        var prevIndex = null;
+        var moveUpBoundary = 0;
+        if (instance.temp.activeIndex > 0) {
+            prevIndex = instance.temp.activeIndex - 1;
+            moveUpBoundary = instance.temp.items[prevIndex].offsetTop + getTransYNum(instance.temp.items[prevIndex]) + (instance.temp.items[prevIndex].offsetHeight / 2);
+        }
 
+        var nextIndex = null;
+        var moveDownBoundary = instance.listCont.offsetHeight;
+        if (instance.temp.activeIndex < instance.temp.items.length - 1) {
+        	nextIndex = instance.temp.activeIndex + 1;
+        	moveDownBoundary = instance.temp.items[nextIndex].offsetTop + getTransYNum(instance.temp.items[nextIndex]) + (instance.temp.items[nextIndex].offsetHeight / 2);
+        }
+
+        var cloneTop = getItemCloneTop(instance) + getTransYNum(instance.temp.itemClone);
+
+        if ((cloneTop < moveUpBoundary) || ((cloneTop + instance.temp.itemClone.offsetHeight) > moveDownBoundary)) {
+            if ((prevIndex !== null) && (cloneTop < moveUpBoundary)) {
+                // move up
+                const activeUp = -1 * instance.temp.items[prevIndex].offsetHeight;
+				instance.temp.items[instance.temp.activeIndex].style[`${vendorPrefix}TransitionDuration`] = instance.props.sortReorderDuration + 'ms';
+				setTransY(instance.temp.items[instance.temp.activeIndex], activeUp);
+
+                const prevDown = instance.temp.items[instance.temp.activeIndex].offsetHeight;
+				instance.temp.items[prevIndex].style[`${vendorPrefix}TransitionDuration`] = instance.props.sortReorderDuration + 'ms';
+				setTransY(instance.temp.items[prevIndex], prevDown);
+
+                const copyActiveTaskDivRef = instance.temp.items[instance.temp.activeIndex];
+                instance.temp.items[instance.temp.activeIndex] = instance.temp.items[prevIndex];
+				instance.temp.items[prevIndex] = copyActiveTaskDivRef;
+				instance.temp.activeIndex = prevIndex;
+            } else if ((nextIndex !== null) && ((cloneTop + instance.temp.itemClone.offsetHeight) > moveDownBoundary)) {
+                // move down
+                const activeDown = instance.temp.items[nextIndex].offsetHeight;
+                instance.temp.items[instance.temp.activeIndex].style[`${vendorPrefix}TransitionDuration`] = instance.props.sortReorderDuration + 'ms';
+				setTransY(instance.temp.items[instance.temp.activeIndex], activeDown);
+
+                const nextUp = -1 * instance.temp.items[instance.temp.activeIndex].offsetHeight;
+                instance.temp.items[nextIndex].style[`${vendorPrefix}TransitionDuration`] = instance.props.sortReorderDuration + 'ms';
+                setTransY(instance.temp.items[nextIndex], nextUp);
+
+                const copyActiveTaskDivRef = instance.temp.items[instance.temp.activeIndex];
+                instance.temp.items[instance.temp.activeIndex] = instance.temp.items[nextIndex];
+                instance.temp.items[nextIndex] = copyActiveTaskDivRef;
+                instance.temp.activeIndex = nextIndex;
+            }
+        }
 	};
 
 	var getItemCloneTop = function(instance) {
@@ -329,6 +370,21 @@ export var lithiumlistPro = (function () {
         return currentTransAmount;
 	};
 
+	var setTransY = function(el, transAmount) {
+		let currentTransAmount = getTransYNum(el);
+        let newTransAmount = 0;
+        if (currentTransAmount != 0) {
+            newTransAmount = currentTransAmount + transAmount;
+        } else {
+            newTransAmount = transAmount;
+        }
+        if (newTransAmount != 0) {
+            el.style[`${vendorPrefix}Transform`] = 'translateY('+ newTransAmount + 'px)';
+        } else {
+            el.style[`${vendorPrefix}Transform`] = '';
+        }
+	}
+
 	var vendorPrefix = (function() {
         const styles = window.getComputedStyle(document.documentElement, '') || ['-moz-hidden-iframe'];
         const prefix = (Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/) || (styles.OLink === ('' && ['', 'o'])))[1];
@@ -357,68 +413,28 @@ export var lithiumlistPro = (function () {
         }
         if (instance.temp.funcTouchEnd) {
 			instance.eventsTarget.removeEventListener('touchend', instance.temp.funcTouchEnd);
-        }		
+        }
 
-		// instance.eventsTarget.addEventListener('mousemove', function(e) {mouseMove(e, instance);});
-		// instance.eventsTarget.addEventListener('mouseup', function(e) {mouseUp(e, instance);});
-		// instance.eventsTarget.addEventListener('touchmove', function(e) {touchMove(e, instance);});
-		// instance.eventsTarget.addEventListener('touchend', function(e) {touchEnd(e, instance);});
+        if (instance.temp.moveType) {
+        	if ((instance.temp.moveType == 'LEFT') || (instance.temp.moveType == 'RIGHT')) {
 
-  //       this.props.eventsTarget().removeEventListener('mousemove', this.handleMouseMove);
-  //       this.props.eventsTarget().removeEventListener('mouseup', this.handleMouseUp);
-  //       this.props.eventsTarget().removeEventListener('touchmove', this.handleTouchMove);
-  //       this.props.eventsTarget().removeEventListener('touchend', this.handleTouchEnd);
 
-  //       if (this.moveType) {
-  //           if (this.moveType == 'DELETE') {
-  //               if (this.clone) {
-  //               	const cloneX = -1 * this.clone.offsetLeft;
+        	} else if (instance.temp.moveType == 'SORT') {
+                // if (this.scrollInterval) {
+                //     clearInterval(this.scrollInterval);
+                //     this.scrollInterval = null;
+                // }
+                // getDeltaWithParent = function(node, parent, delta)
 
-  //               	if (this.props.deleteConfirm) {
-		// 		    	if (this.cloneIsAtDeleteConfirmThreshold) {
-		// 		    		this.cloneIsAtDeleteConfirmThreshold = false;
-		// 			    	if (this.props.onDeleteConfirmStart) {
-		// 			    		this.props.onDeleteConfirmStart();
-		// 			    	}
-		// 					document.addEventListener('mousedown', this.handleDocClick);
-		// 		    	} else {
-		// 		    		this.autoSlideRight();
-		// 		    	}
-  //               	} else {
-	 //                    let deleteSwipeEndPercent = 0.5;
-	 //                    if (this.props.deleteSwipeEndPercent) {
-	 //                        deleteSwipeEndPercent = this.props.deleteSwipeEndPercent;
-	 //                    }
-	 //                    const deleteSwipeEndThreshold = this.taskDivs[this.activeTaskIndex].offsetWidth * deleteSwipeEndPercent;
-	                    
-	 //                    if (cloneX > deleteSwipeEndThreshold) {
-	 //                        this.autoSlideLeft();
-	 //                    } else {
-	 //                        this.autoSlideRight();
-	 //                    }
-  //               	}
-  //               }
-  //           } else if (this.moveType == 'SORT') {
-  //               if (this.scrollInterval) {
-  //                   clearInterval(this.scrollInterval);
-  //                   this.scrollInterval = null;
-  //               }
+                var activeTaskTop = getDeltaWithParent(instance.temp.items[instance.temp.activeIndex], instance.listCont, 0) + getTransYNum(instance.temp.items[instance.temp.activeIndex]);
 
-  //               let activeTaskTop = getDeltaWithParent(this.taskDivs[this.activeTaskIndex], this.getItemsCont(), 0) + this.getTranslateYNum(this.taskDivs[this.activeTaskIndex]);
+                var cloneTop = getItemCloneTop(instance) + getTransYNum(instance.temp.itemClone);
+                instance.temp.itemClone.style[`${vendorPrefix}TransitionDuration`] = instance.props.sortEndDockDuration + 'ms';
+                moveItemClone(instance, activeTaskTop - cloneTop);
 
-  //               let cloneTop = this.getOrigTop(this.clone) + this.getTranslateYNum(this.clone);
-  //               let sortEndDockDuration = 200;
-  //               if (this.props.sortEndDockDuration) {
-  //                   sortEndDockDuration = this.props.sortEndDockDuration;
-  //               }
-  //               this.clone.style[`${vendorPrefix}TransitionDuration`] = sortEndDockDuration + 'ms';
-  //               this.moveClone(activeTaskTop - cloneTop);
-
-  //               this.sortEndTimer = setTimeout(() => {
-  //                   this.sortEnd();
-  //               }, sortEndDockDuration);
-  //           }
-  //       }
+                instance.temp.sortEndTimer = setTimeout(function() {sortEnd(instance)}, instance.props.sortEndDockDuration);
+        	}
+        }
 	};
 
 	var touchMove = function(e, instance) {
@@ -429,9 +445,36 @@ export var lithiumlistPro = (function () {
 
 	};
 
+	var sortEnd = function(instance) {
+		if (instance.props.sortItemActiveClass) {
+			removeClass(instance.temp.items[instance.temp.activeIndex], instance.props.sortItemActiveClass);
+		}
+
+        destroyTempDivs(instance);
+
+		for (var i = 0, len = instance.temp.items.length; i < len; i++) {
+			instance.temp.items[i].style[`${vendorPrefix}TransitionDuration`] = '';
+			instance.temp.items[i].style[`${vendorPrefix}Transform`] = '';
+		}
+		if (instance.props.onSortEnd) {
+			instance.props.onSortEnd(instance.temp.origIndex, instance.temp.activeIndex);
+		}
+		instance.temp = getEmptyTemp();
+	};
+
+	var destroyTempDivs = function(instance) {
+
+
+
+		if (instance.temp.itemClone) {
+			instance.listCont.removeChild(instance.temp.itemClone);
+			instance.temp.itemClone = null;
+		}
+	};
+
 	var setItems = function(instance) {
 	    instance.temp.items = Array.prototype.slice.call(instance.listCont.getElementsByClassName(instance.listItemClass));
-	}
+	};
 
 	var createClone = function(instance, left, top) {
 		var cloneNode = instance.temp.items[instance.temp.activeIndex].cloneNode(true);
@@ -453,7 +496,7 @@ export var lithiumlistPro = (function () {
 				addClass(instance.temp.itemClone, instance.props.rightCloneClass);
 			}
 		}	
-	}
+	};
 
 	var detachFromList = function(listCont) {
 		if (listCont) {
@@ -517,13 +560,6 @@ export var lithiumlistPro = (function () {
 	};
 
 	var hasClass = function(el, className) {
-		// if ((elem) && (elem.className) && (elem.className.length > 0) && (className) && (className.length > 0)) {
-		// 	className = " " + className + " ";
-		// 	if ((" " + elem.className + " ").replace(/[\n\t]/g, " ").indexOf(className) > -1) {
-		// 		return true;
-		// 	}
-		// }
-	 //    return false;
 	 	if (el.classList) {
 			return el.classList.contains(className);
 	 	}
