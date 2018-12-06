@@ -23,30 +23,39 @@ a:hover {
   visibility: hidden;
 }
 
-#div-list-cont {
+#div-scroll-cont {
 	position: relative;
+	height: 800px;
+	border: 1px solid #AAAAAA;
+	overflow: auto;
 
-	div.listitem-cont {
-		background-color: #FFFFFF;
-		border-bottom: 1px solid #F4F4F4;
+	#div-list-cont {
+		position: relative;
 
-		div.listitem-outer {
-			position: relative;
+		div.listitem-cont {
+			background-color: #FFFFFF;
+			border-bottom: 1px solid #F4F4F4;
+
+			div.listitem-outer {
+				position: relative;
+			}
 		}
-	}
-	//sort-item-active
-	div.listitem-cont.sort-item-active {
-		visibility: hidden;
-		opacity: 0;
-	}
+		//sort-item-active
+		div.listitem-cont.sort-item-active {
+			visibility: hidden;
+			opacity: 0;
+		}
 
-	div.listitem-cont.clone-sort {
-		box-shadow: 0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12);
-		width: 100%;
+		div.listitem-cont.clone-sort {
+			box-shadow: 0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12);
+			width: 100%;
+		}
 	}
 }
 
-#div-list-cont.xl, #div-list-cont.lg, #div-list-cont.md, #div-list-cont.sm {
+
+
+#div-scroll-cont.xl, #div-scroll-cont.lg, #div-scroll-cont.md, #div-scroll-cont.sm {
 	max-width: 600px;
 	margin: 0 auto;
 

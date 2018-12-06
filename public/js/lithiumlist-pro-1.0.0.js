@@ -73,25 +73,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "lithiumlistPro", function() { return lithiumlistPro; });
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+// BROWSER COMPATIBIILITY
+// IE 9
+// Edge 12
+// Firefox 12
+// Chrome 4
+// Safari 4
+// Opera 11.5
+// iOS Safari 4
+// Android Browser 2.3
+// Chrome for Android all
+// Firefox for Android all
+// (based on getBoundingClientRect - see caniuse)
+
+
 // Notes:
 // listCont should have 'position: relative'
 // need to set css 'box-shadow' for 'clone-sort' class if want sort clone to have a drop shadow
 // need to set css for 'sort-item-active' to hide active item while sorting
 
 
+// TODO: Handle releasing mouse outside window (see: https://stackoverflow.com/questions/5418740/jquery-mouseup-outside-window-possible)
+// TODO: Don't respond to mouse up/down when cursor is not over a list-item
+
+
 var lithiumlistPro = function () {
 	var _defaultProperties;
 
 	var instances = [];
-	// var activeListCont = null;
-	// var moveType = null;
-	// var activeIndex = null;
-	// var origIndex = null;
-	// var startPageX = null;
-	// var startPageY = null;
-	// var lastPageX = null;
-	// var lastPageY = null;
-	// var sortDelayTimer = null;
 
 	var defaultProperties = (_defaultProperties = {
 		onSortStart: null,
@@ -134,21 +143,21 @@ var lithiumlistPro = function () {
 		// to do
 	};
 
-	var attachToList = function attachToList(listCont, scrollCont, eventsTarget, listItemClass, listProperties) {
+	var attachToList = function attachToList(scrollCont, listCont, eventsTarget, listItemClass, listProperties) {
+		if (scrollCont == null) {
+			scrollCont = window;
+		} else {
+			if (scrollCont !== window && scrollCont !== listCont && !scrollCont.contains(listCont)) {
+				throw 'listCont must be parent of scrollCont.';
+			}
+		}
+
 		if (listCont == null) {
 			throw 'listCont cannot be null.';
 		}
 		for (var i = 0, len = instances.length; i < len; i++) {
 			if (instances[i].listCont === listCont) {
 				throw 'listCont already has lithiumlist attached.';
-			}
-		}
-
-		if (scrollCont == null) {
-			scrollCont = window;
-		} else {
-			if (scrollCont !== window && scrollCont !== listCont && !scrollCont.contains(listCont)) {
-				throw 'listCont must be parent of scrollCont.';
 			}
 		}
 
@@ -173,8 +182,8 @@ var lithiumlistPro = function () {
 		}
 
 		var instance = {
-			'listCont': listCont,
 			'scrollCont': scrollCont,
+			'listCont': listCont,
 			'eventsTarget': eventsTarget,
 			'listItemClass': listItemClass,
 			'deltaItemsScroll': getDeltaWithParent(listCont, scrollCont, 0),
@@ -190,7 +199,7 @@ var lithiumlistPro = function () {
 	};
 
 	var getEmptyTemp = function getEmptyTemp() {
-		var temp = {
+		return {
 			'items': [],
 			'moveType': null,
 			'itemClone': null,
@@ -203,12 +212,12 @@ var lithiumlistPro = function () {
 			'lastPageY': null,
 			'sortDelayTimer': null,
 			'sortEndTimer': null,
+			'scrollInterval': null,
 			'funcMouseMove': null,
 			'funcMouseUp': null,
 			'funcTouchMove': null,
 			'funcTouchEnd': null
 		};
-		return temp;
 	};
 
 	var mouseDown = function mouseDown(e, instance) {
@@ -237,8 +246,12 @@ var lithiumlistPro = function () {
 		}
 	};
 
+	var sortHandleClick = function sortHandleClick(e, index, instance) {
+		if (instance.props.sortEnabled) {}
+	};
+
 	var backgroundClick = function backgroundClick(e, index, instance) {
-		if (instance.props.sortEnabled) {
+		if (instance.props.sortEnabled && instance.props.sortByDrag || instance.props.leftEnabled && instance.props.leftByDrag || instance.props.rightEnabled && instance.props.rightByDrag) {
 			var pageX = getPageX(e);
 			var pageY = getPageY(e);
 
@@ -267,18 +280,21 @@ var lithiumlistPro = function () {
 			instance.eventsTarget.addEventListener('touchmove', instance.temp.funcTouchMove);
 			instance.eventsTarget.addEventListener('touchend', instance.temp.funcTouchEnd);
 
-			setSortDelay(instance.props.sortMoveStartDelay, instance);
+			setItems(instance);
+			if (instance.props.sortEnabled && instance.props.sortByDrag && instance.temp.items.length > 1) {
+				instance.temp.sortDelayTimer = setTimeout(function () {
+					activateSort(instance);
+				}, instance.props.sortMoveStartDelay);
+			} else {
+
+				// wait for either left or right drag
+
+			}
 		}
 	};
 
 	var touchStart = function touchStart(e, index, instance) {
 		alert(e.pageX + ' ' + index);
-	};
-
-	var setSortDelay = function setSortDelay(delay, instance) {
-		instance.temp.sortDelayTimer = setTimeout(function () {
-			activateSort(instance);
-		}, delay);
 	};
 
 	var activateSort = function activateSort(instance) {
@@ -289,7 +305,7 @@ var lithiumlistPro = function () {
 		instance.temp.sortDelayTimer = null;
 		instance.temp.moveType = 'SORT';
 
-		setItems(instance);
+		// setItems(instance);
 		if (!instance.temp.itemClone) {
 			var top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
 			createClone(instance, 0, top);
@@ -303,53 +319,69 @@ var lithiumlistPro = function () {
 	var mouseMove = function mouseMove(e, instance) {
 		var pageX = getPageX(e);
 		var pageY = getPageY(e);
-		// const cursorX = this.startPageX - pageX;
+		// var cursorX = this.startPageX - pageX;
 
 		if (!instance.temp.moveType) {
 			if (instance.temp.sortDelayTimer) {// ignore up / down movement during this time
 
-			}
+
+			} else {
+					// waiting for mouse to be released, or left or right drag
+
+				}
 		} else {
 			if (instance.temp.moveType == 'LEFT' || instance.temp.moveType == 'RIGHT') {} else if (instance.temp.moveType == 'SORT') {
-				e.preventDefault(); // Prevent scrolling on mobile
+				e.preventDefault(); // prevent scrolling on mobile
 
-				// if (this.scrollInterval) {
-				//     clearInterval(this.scrollInterval);
-				//     this.scrollInterval = null;
-				// }
+				if (instance.temp.scrollInterval) {
+					clearInterval(instance.temp.scrollInterval);
+					instance.temp.scrollInterval = null;
+				}
 
 				var shouldScroll = moveItemClone(instance, pageY - instance.temp.lastPageY);
 				animateItems(instance);
 
-				// if (shouldScroll) {
-				//     let cloneTop = this.getOrigTop(this.clone) + this.getTranslateYNum(this.clone);
-				//     let scrollDir = 0;
-				//     let outFraction = 0;
-				//     if (cloneTop < (this.getScrollCont().scrollTop - this.deltaItemsScroll)) {
-				//         scrollDir = -1;    // scroll up
-				//         outFraction = ((this.getScrollCont().scrollTop - this.deltaItemsScroll) - cloneTop) / this.clone.offsetHeight;
-				//     } else if ((cloneTop + this.clone.offsetHeight) > (this.getScrollCont().scrollTop + this.getScrollCont().offsetHeight - this.deltaItemsScroll)) {
-				//         scrollDir = 1;    // scroll down
-				//         outFraction = ((cloneTop + this.clone.offsetHeight) - (this.getScrollCont().scrollTop + this.getScrollCont().offsetHeight - this.deltaItemsScroll)) / this.clone.offsetHeight;
-				//     }
+				// var divTemp = document.getElementById('div-temp');
+				// divTemp.innerHTML = divTemp.innerHTML + '</br>' + shouldScroll;
 
-				//     if ((scrollDir != 0) & (outFraction != 0)) {
-				//         let multiplier = 15;
-				//         if (this.props.sortScrollSpeed) {
-				//             multiplier = this.props.sortScrollSpeed;
-				//         }
-				//         const scrollChange = Math.round(scrollDir * outFraction * multiplier);
+				if (shouldScroll) {
+					var cloneTop = getItemCloneTop(instance) + getTransYNum(instance.temp.itemClone);
+					var scrollDir = 0;
+					var outFraction = 0;
 
-				//         this.scrollInterval = setInterval(() => {
-				//             this.doScroll(scrollChange);
-				//         }, 5);
-				//     }
-				// }
+					if (cloneTop < instance.scrollCont.scrollTop - instance.deltaItemsScroll) {
+						scrollDir = -1; // scroll up
+						outFraction = (instance.scrollCont.scrollTop - instance.deltaItemsScroll - cloneTop) / instance.temp.itemClone.offsetHeight;
+					} else if (cloneTop + instance.temp.itemClone.offsetHeight > instance.scrollCont.scrollTop + instance.scrollCont.clientHeight - instance.deltaItemsScroll) {
+						scrollDir = 1; // scroll down
+						outFraction = (cloneTop + instance.temp.itemClone.offsetHeight - (instance.scrollCont.scrollTop + instance.scrollCont.clientHeight - instance.deltaItemsScroll)) / instance.temp.itemClone.offsetHeight;
+					}
+
+					if (scrollDir != 0 && outFraction != 0) {
+						var scrollChange = Math.round(scrollDir * outFraction * instance.props.sortScrollSpeed);
+						instance.temp.scrollInterval = setInterval(function () {
+							doScroll(instance, scrollChange);
+						}, 5);
+					}
+				}
 			}
 		}
 
 		instance.temp.lastPageX = pageX;
 		instance.temp.lastPageY = pageY;
+	};
+
+	var doScroll = function doScroll(instance, scrollChange) {
+		var shouldScroll = moveItemClone(instance, scrollChange);
+		if (shouldScroll) {
+			instance.scrollCont.scrollTop = instance.scrollCont.scrollTop + scrollChange;
+			animateItems(instance);
+		} else {
+			if (instance.temp.scrollInterval) {
+				clearInterval(instance.temp.scrollInterval);
+				instance.temp.scrollInterval = null;
+			}
+		}
 	};
 
 	var moveItemClone = function moveItemClone(instance, deltaTrans) {
@@ -360,8 +392,8 @@ var lithiumlistPro = function () {
 		if (cloneOrigTop + cloneTrans < 0) {
 			cloneTrans = -1 * cloneOrigTop;
 			shouldScroll = false;
-		} else if (cloneOrigTop + cloneTrans + instance.temp.itemClone.offsetHeight > instance.listCont.offsetHeight) {
-			cloneTrans = instance.listCont.offsetHeight - cloneOrigTop - instance.temp.itemClone.offsetHeight;
+		} else if (cloneOrigTop + cloneTrans + instance.temp.itemClone.offsetHeight > instance.listCont.clientHeight) {
+			cloneTrans = instance.listCont.clientHeight - cloneOrigTop - instance.temp.itemClone.offsetHeight;
 			shouldScroll = false;
 		}
 
@@ -378,7 +410,7 @@ var lithiumlistPro = function () {
 		}
 
 		var nextIndex = null;
-		var moveDownBoundary = instance.listCont.offsetHeight;
+		var moveDownBoundary = instance.listCont.clientHeight;
 		if (instance.temp.activeIndex < instance.temp.items.length - 1) {
 			nextIndex = instance.temp.activeIndex + 1;
 			moveDownBoundary = instance.temp.items[nextIndex].offsetTop + getTransYNum(instance.temp.items[nextIndex]) + instance.temp.items[nextIndex].offsetHeight / 2;
@@ -411,9 +443,9 @@ var lithiumlistPro = function () {
 				instance.temp.items[nextIndex].style[vendorPrefix + 'TransitionDuration'] = instance.props.sortReorderDuration + 'ms';
 				setTransY(instance.temp.items[nextIndex], nextUp);
 
-				var _copyActiveTaskDivRef = instance.temp.items[instance.temp.activeIndex];
+				var copyActiveTaskDivRef = instance.temp.items[instance.temp.activeIndex];
 				instance.temp.items[instance.temp.activeIndex] = instance.temp.items[nextIndex];
-				instance.temp.items[nextIndex] = _copyActiveTaskDivRef;
+				instance.temp.items[nextIndex] = copyActiveTaskDivRef;
 				instance.temp.activeIndex = nextIndex;
 			}
 		}
@@ -494,11 +526,10 @@ var lithiumlistPro = function () {
 
 		if (instance.temp.moveType) {
 			if (instance.temp.moveType == 'LEFT' || instance.temp.moveType == 'RIGHT') {} else if (instance.temp.moveType == 'SORT') {
-				// if (this.scrollInterval) {
-				//     clearInterval(this.scrollInterval);
-				//     this.scrollInterval = null;
-				// }
-				// getDeltaWithParent = function(node, parent, delta)
+				if (instance.temp.scrollInterval) {
+					clearInterval(instance.temp.scrollInterval);
+					instance.temp.scrollInterval = null;
+				}
 
 				var activeTaskTop = getDeltaWithParent(instance.temp.items[instance.temp.activeIndex], instance.listCont, 0) + getTransYNum(instance.temp.items[instance.temp.activeIndex]);
 
@@ -577,10 +608,6 @@ var lithiumlistPro = function () {
 			throw 'listCont cannot be null.';
 		}
 	};
-
-	var addItem = function addItem(listCont, item) {};
-
-	var removeItem = function removeItem(listCont, item) {};
 
 	// utility functions
 
@@ -677,9 +704,7 @@ var lithiumlistPro = function () {
 		setDefaultProperties: setDefaultProperties,
 		setListProperties: setListProperties,
 		attachToList: attachToList,
-		detachFromList: detachFromList,
-		addItem: addItem,
-		removeItem: removeItem
+		detachFromList: detachFromList
 	};
 }();
 
