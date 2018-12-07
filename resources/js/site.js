@@ -4,7 +4,8 @@ import { lithiumlistPro } from './lithiumlist-pro-1.0.0.js';
 
 var listCont = document.getElementById('div-list-cont');
 var scrollCont = document.getElementById('div-scroll-cont');
-var eventsTarget = document.getElementById('div-body');
+// var eventsTarget = document.getElementById('div-body');
+var eventsTarget = window;
 var listItemClass = 'listitem-cont';
 
 // function(listCont, scrollCont, eventsTarget, listItemClass, listProperties)
@@ -17,15 +18,17 @@ var listProperties = {
 };
 
 function sortEnd(origIndex, newIndex) {
-	var items = listCont.getElementsByClassName(listItemClass);
-	var origItem = items[origIndex];
-	var newItem = items[newIndex];
+	if (origIndex != newIndex) {
+		var items = listCont.getElementsByClassName(listItemClass);
+		var origItem = items[origIndex];
+		var newItem = items[newIndex];
 
-	listCont.removeChild(origItem);	
-	if (newIndex > origIndex) {
-		listCont.insertBefore(origItem, newItem.nextSibling);
-	} else {
-		listCont.insertBefore(origItem, newItem);
+		listCont.removeChild(origItem);	
+		if (newIndex > origIndex) {
+			listCont.insertBefore(origItem, newItem.nextSibling);
+		} else {
+			listCont.insertBefore(origItem, newItem);
+		}		
 	}
 }
 

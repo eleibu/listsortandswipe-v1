@@ -7,7 +7,6 @@
 @endsection
 
 @section('content')
-    <div id="div-temp" style="height: 50px; width: 800px; border: 1px solid #333333; overflow: scroll;"></div>
     <br/><br/>
     <div id="div-scroll-cont" class="lg">
         <div id="div-list-cont">

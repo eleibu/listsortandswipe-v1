@@ -93,8 +93,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 // need to set css for 'sort-item-active' to hide active item while sorting
 
 
-// TODO: Handle releasing mouse outside window (see: https://stackoverflow.com/questions/5418740/jquery-mouseup-outside-window-possible)
-// TODO: Don't respond to mouse up/down when cursor is not over a list-item
+// Known issues:
+// * Position of itemCont behaves strangely when item-cont has a top or bottom margin. Temporary resolution is to remove the margin, insert a child div and add a margin to that.
 
 
 var lithiumlistPro = function () {
@@ -319,6 +319,8 @@ var lithiumlistPro = function () {
 	var mouseMove = function mouseMove(e, instance) {
 		var pageX = getPageX(e);
 		var pageY = getPageY(e);
+
+		// console.log('pageY: ' + pageY + ' instance.temp.lastPageY: ' + instance.temp.lastPageY + ' pageY - instance.temp.lastPageY: ' + (pageY - instance.temp.lastPageY));
 		// var cursorX = this.startPageX - pageX;
 
 		if (!instance.temp.moveType) {
@@ -338,30 +340,42 @@ var lithiumlistPro = function () {
 					instance.temp.scrollInterval = null;
 				}
 
-				var shouldScroll = moveItemClone(instance, pageY - instance.temp.lastPageY);
-				animateItems(instance);
+				var rect = instance.temp.itemClone.getBoundingClientRect();
+				var shouldMove = false;
+				if (pageY - instance.temp.lastPageY < 0 && rect.bottom > pageY) {
+					// moving up - move if cursor is above bottom of itemClone
+					shouldMove = true;
+				} else if (pageY - instance.temp.lastPageY > 0 && rect.top < pageY) {
+					// moving down - move if cursor is below top of itemClone
+					shouldMove = true;
+				}
 
-				// var divTemp = document.getElementById('div-temp');
-				// divTemp.innerHTML = divTemp.innerHTML + '</br>' + shouldScroll;
+				if (shouldMove) {
+					console.log('pageY: ' + pageY + ' instance.temp.lastPageY: ' + instance.temp.lastPageY + ' pageY - instance.temp.lastPageY: ' + (pageY - instance.temp.lastPageY));
+					var shouldScroll = moveItemClone(instance, pageY - instance.temp.lastPageY);
+					animateItems(instance);
 
-				if (shouldScroll) {
-					var cloneTop = getItemCloneTop(instance) + getTransYNum(instance.temp.itemClone);
-					var scrollDir = 0;
-					var outFraction = 0;
+					if (shouldScroll) {
+						var cloneTop = getItemCloneTop(instance) + getTransYNum(instance.temp.itemClone);
+						var scrollDir = 0;
+						var outFraction = 0;
 
-					if (cloneTop < instance.scrollCont.scrollTop - instance.deltaItemsScroll) {
-						scrollDir = -1; // scroll up
-						outFraction = (instance.scrollCont.scrollTop - instance.deltaItemsScroll - cloneTop) / instance.temp.itemClone.offsetHeight;
-					} else if (cloneTop + instance.temp.itemClone.offsetHeight > instance.scrollCont.scrollTop + instance.scrollCont.clientHeight - instance.deltaItemsScroll) {
-						scrollDir = 1; // scroll down
-						outFraction = (cloneTop + instance.temp.itemClone.offsetHeight - (instance.scrollCont.scrollTop + instance.scrollCont.clientHeight - instance.deltaItemsScroll)) / instance.temp.itemClone.offsetHeight;
-					}
+						if (cloneTop < instance.scrollCont.scrollTop - instance.deltaItemsScroll) {
+							console.log('SCROLL UP cloneTop: ' + cloneTop + ' instance.scrollCont.scrollTop: ' + instance.scrollCont.scrollTop + ' instance.deltaItemsScroll: ' + instance.deltaItemsScroll + ' (instance.scrollCont.scrollTop - instance.deltaItemsScroll): ' + (instance.scrollCont.scrollTop - instance.deltaItemsScroll));
+							scrollDir = -1; // scroll up
+							outFraction = (instance.scrollCont.scrollTop - instance.deltaItemsScroll - cloneTop) / instance.temp.itemClone.offsetHeight;
+						} else if (cloneTop + instance.temp.itemClone.offsetHeight > instance.scrollCont.scrollTop + instance.scrollCont.clientHeight - instance.deltaItemsScroll) {
+							console.log('scroll down');
+							scrollDir = 1; // scroll down
+							outFraction = (cloneTop + instance.temp.itemClone.offsetHeight - (instance.scrollCont.scrollTop + instance.scrollCont.clientHeight - instance.deltaItemsScroll)) / instance.temp.itemClone.offsetHeight;
+						}
 
-					if (scrollDir != 0 && outFraction != 0) {
-						var scrollChange = Math.round(scrollDir * outFraction * instance.props.sortScrollSpeed);
-						instance.temp.scrollInterval = setInterval(function () {
-							doScroll(instance, scrollChange);
-						}, 5);
+						if (scrollDir != 0 && outFraction != 0) {
+							var scrollChange = Math.round(scrollDir * outFraction * instance.props.sortScrollSpeed);
+							instance.temp.scrollInterval = setInterval(function () {
+								doScroll(instance, scrollChange);
+							}, 5);
+						}
 					}
 				}
 			}
@@ -389,10 +403,13 @@ var lithiumlistPro = function () {
 		var cloneOrigTop = getItemCloneTop(instance);
 		var cloneTrans = getTransYNum(instance.temp.itemClone) + deltaTrans;
 
-		if (cloneOrigTop + cloneTrans < 0) {
+		console.log('deltaTrans: ' + deltaTrans + ' cloneOrigTop: ' + cloneOrigTop + ' origCloneTrans: ' + getTransYNum(instance.temp.itemClone) + ' newCloneTrans: ' + cloneTrans + ' cloneOrigTop + newCloneTrans: ' + (cloneOrigTop + cloneTrans));
+		// console.log('cloneOrigTop + cloneTrans + instance.temp.itemClone.offsetHeight: ' + (cloneOrigTop + cloneTrans + instance.temp.itemClone.offsetHeight) + ' instance.listCont.clientHeight: ' + instance.listCont.clientHeight);
+
+		if (cloneOrigTop + cloneTrans <= 0) {
 			cloneTrans = -1 * cloneOrigTop;
 			shouldScroll = false;
-		} else if (cloneOrigTop + cloneTrans + instance.temp.itemClone.offsetHeight > instance.listCont.clientHeight) {
+		} else if (cloneOrigTop + cloneTrans + instance.temp.itemClone.offsetHeight >= instance.listCont.clientHeight) {
 			cloneTrans = instance.listCont.clientHeight - cloneOrigTop - instance.temp.itemClone.offsetHeight;
 			shouldScroll = false;
 		}
