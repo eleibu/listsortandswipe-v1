@@ -24,6 +24,9 @@
 // * Position of itemCont behaves strangely when item-cont has a top or bottom margin. Temporary resolution is to remove the margin, insert a child div and add a margin to that.
 
 
+// TODO: Why does scrolling pause unless cursor is in exactly the right position?
+
+
 export var lithiumlistPro = (function () {
 	var instances = [];
 
@@ -274,30 +277,13 @@ export var lithiumlistPro = (function () {
 	        	}
 
 	        	if (shouldMove) {
-	        		console.log('pageY: ' + pageY + ' instance.temp.lastPageY: ' + instance.temp.lastPageY + ' pageY - instance.temp.lastPageY: ' + (pageY - instance.temp.lastPageY));
-	                var shouldScroll = moveItemClone(instance, pageY - instance.temp.lastPageY);
-	                animateItems(instance);
+	        		var scrollProps = moveItemClone(instance, pageY - instance.temp.lastPageY);
+	        		animateItems(instance);
 
-	                if (shouldScroll) {
-	                	var cloneTop = getItemCloneTop(instance) + getTransYNum(instance.temp.itemClone);
-	                    var scrollDir = 0;
-	                    var outFraction = 0;
-
-	                    if (cloneTop < (instance.scrollCont.scrollTop - instance.deltaItemsScroll)) {
-	                    	console.log('SCROLL UP cloneTop: ' + cloneTop + ' instance.scrollCont.scrollTop: ' + instance.scrollCont.scrollTop + ' instance.deltaItemsScroll: ' + instance.deltaItemsScroll + ' (instance.scrollCont.scrollTop - instance.deltaItemsScroll): ' + (instance.scrollCont.scrollTop - instance.deltaItemsScroll));
-	                    	scrollDir = -1;		// scroll up
-	                    	outFraction = ((instance.scrollCont.scrollTop - instance.deltaItemsScroll) - cloneTop) / instance.temp.itemClone.offsetHeight;
-	                    } else if ((cloneTop + instance.temp.itemClone.offsetHeight) > (instance.scrollCont.scrollTop + instance.scrollCont.clientHeight - instance.deltaItemsScroll)) {
-	                    	console.log('scroll down');
-							scrollDir = 1;		// scroll down
-							outFraction = ((cloneTop + instance.temp.itemClone.offsetHeight) - (instance.scrollCont.scrollTop + instance.scrollCont.clientHeight - instance.deltaItemsScroll)) / instance.temp.itemClone.offsetHeight;
-	                    }
-
-	                    if ((scrollDir != 0) && (outFraction != 0)) {
-	                    	var scrollChange = Math.round(scrollDir * outFraction * instance.props.sortScrollSpeed);
-	                    	instance.temp.scrollInterval = setInterval(function() {doScroll(instance, scrollChange);}, 5);
-	                    }
-	                }
+                    if ((scrollProps.scrollDir != 0) && (scrollProps.outFraction != 0)) {
+                    	var scrollChange = Math.round(scrollProps.scrollDir * scrollProps.outFraction * instance.props.sortScrollSpeed);
+                    	instance.temp.scrollInterval = setInterval(function() {doScroll(instance, scrollChange);}, 5);
+                    }
 	        	}
         	}
         }
@@ -307,36 +293,45 @@ export var lithiumlistPro = (function () {
 	};
 
 	var doScroll = function(instance, scrollChange) {
-		var shouldScroll = moveItemClone(instance, scrollChange);
-        if (shouldScroll) {
+		var scrollProps = moveItemClone(instance, scrollChange);
+		if ((scrollProps.scrollDir != 0) && (scrollProps.outFraction != 0)) {
         	instance.scrollCont.scrollTop = instance.scrollCont.scrollTop + scrollChange;
         	animateItems(instance);
-        } else {
+		} else {
         	if (instance.temp.scrollInterval) {
         		clearInterval(instance.temp.scrollInterval);
         		instance.temp.scrollInterval = null;
         	}
-        }
+		}
 	};
 
 	var moveItemClone = function(instance, deltaTrans) {
-        var shouldScroll = true;
         var cloneOrigTop = getItemCloneTop(instance);
         var cloneTrans = getTransYNum(instance.temp.itemClone) + deltaTrans;
 
-		console.log('deltaTrans: ' + deltaTrans +  ' cloneOrigTop: ' + cloneOrigTop + ' origCloneTrans: ' + getTransYNum(instance.temp.itemClone) + ' newCloneTrans: ' + cloneTrans + ' cloneOrigTop + newCloneTrans: ' + (cloneOrigTop + cloneTrans));
-		// console.log('cloneOrigTop + cloneTrans + instance.temp.itemClone.offsetHeight: ' + (cloneOrigTop + cloneTrans + instance.temp.itemClone.offsetHeight) + ' instance.listCont.clientHeight: ' + instance.listCont.clientHeight);
-
-        if (cloneOrigTop + cloneTrans <= 0) {
+        // ensure itemClone is not above top or below bottom of listCont
+        if (cloneOrigTop + cloneTrans < 0) {
             cloneTrans = -1 * cloneOrigTop;
-            shouldScroll = false;
-        } else if (cloneOrigTop + cloneTrans + instance.temp.itemClone.offsetHeight >= instance.listCont.clientHeight) {
+        } else if (cloneOrigTop + cloneTrans + instance.temp.itemClone.offsetHeight > instance.listCont.clientHeight) {
             cloneTrans = instance.listCont.clientHeight - cloneOrigTop - instance.temp.itemClone.offsetHeight;
-            shouldScroll = false;
+        }
+        instance.temp.itemClone.style[`${vendorPrefix}Transform`] = 'translateY('+ cloneTrans + 'px)';
+
+    	var cloneTop = cloneOrigTop + cloneTrans;
+        var scrollDir = 0;
+        var outFraction = 0;
+        if (cloneTop < (instance.scrollCont.scrollTop - instance.deltaItemsScroll)) {
+        	scrollDir = -1;		// scroll up
+        	outFraction = ((instance.scrollCont.scrollTop - instance.deltaItemsScroll) - cloneTop) / instance.temp.itemClone.offsetHeight;
+        } else if ((cloneTop + instance.temp.itemClone.offsetHeight) > (instance.scrollCont.scrollTop + instance.scrollCont.clientHeight - instance.deltaItemsScroll)) {
+			scrollDir = 1;		// scroll down
+			outFraction = ((cloneTop + instance.temp.itemClone.offsetHeight) - (instance.scrollCont.scrollTop + instance.scrollCont.clientHeight - instance.deltaItemsScroll)) / instance.temp.itemClone.offsetHeight;
         }
 
-        instance.temp.itemClone.style[`${vendorPrefix}Transform`] = 'translateY('+ cloneTrans + 'px)';
-        return shouldScroll;
+        return {
+        	'scrollDir' : scrollDir,
+        	'outFraction' : outFraction
+        };
 	};
 
 	var animateItems = function(instance) {
