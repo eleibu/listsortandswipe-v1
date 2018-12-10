@@ -22,6 +22,7 @@
 
 // Known issues:
 // * Position of itemCont behaves strangely when item-cont has a top or bottom margin. Temporary resolution is to remove the margin, insert a child div and add a margin to that.
+// * Cursor is sometimes far above itemCont but still moving it (seems to happen only when moving up, but not sure).
 
 
 export var lithiumlistPro = (function () {
@@ -165,7 +166,7 @@ export var lithiumlistPro = (function () {
 
 			if (index != null) {
 				if (checkClassClicked(e, instance.temp.items[index], instance.props.sortDragHandleClass)) {
-					// sort drag handle click
+					setTimeout(function() {sortHandleClick(e, index, instance);}, 1);	// delay allows itemCont to show to :hover classes
 				} else if (checkClassClicked(e, instance.temp.items[index], instance.props.leftDragHandleClass)) {
 					// left drag handle click
 				} else if (checkClassClicked(e, instance.temp.items[index], instance.props.rightDragHandleClass)) {
@@ -177,34 +178,37 @@ export var lithiumlistPro = (function () {
 		}
 	};
 
+	var initialiseItemMove = function(e, index, instance) {
+		var pageX = getPageX(e);
+		var pageY = getPageY(e);
+
+		instance.temp.activeIndex = index;
+		instance.temp.origIndex = index;
+		instance.temp.startPageX = pageX;
+		instance.temp.startPageY = pageY;
+		instance.temp.lastPageX = pageX;
+		instance.temp.lastPageY = pageY;
+		instance.temp.funcMouseMove = function(e) {mouseMove(e, instance);};
+		instance.temp.funcMouseUp = function(e) {mouseUp(e, instance);};
+		instance.temp.funcTouchMove = function(e) {touchMove(e, instance);};
+		instance.temp.funcTouchEnd = function(e) {touchEnd(e, instance);};
+
+		instance.eventsTarget.addEventListener('mousemove', instance.temp.funcMouseMove);
+		instance.eventsTarget.addEventListener('mouseup', instance.temp.funcMouseUp);
+		instance.eventsTarget.addEventListener('touchmove', instance.temp.funcTouchMove);
+		instance.eventsTarget.addEventListener('touchend', instance.temp.funcTouchEnd);
+	};
+
 	var sortHandleClick = function(e, index, instance) {
 		if (instance.props.sortEnabled) {
-
+			initialiseItemMove(e, index, instance);
+			setItems(instance);
+			activateSort(instance);
 		}
 	};
 
 	var backgroundClick = function(e, index, instance) {
 		if ((instance.props.sortEnabled && instance.props.sortByDrag) || (instance.props.leftEnabled && instance.props.leftByDrag) || (instance.props.rightEnabled && instance.props.rightByDrag)) {
-			var pageX = getPageX(e);
-			var pageY = getPageY(e);
-
-			// activeListCont = listCont;
-			instance.temp.activeIndex = index;
-			instance.temp.origIndex = index;
-			instance.temp.startPageX = pageX;
-			instance.temp.startPageY = pageY;
-			instance.temp.lastPageX = pageX;
-			instance.temp.lastPageY = pageY;
-			instance.temp.funcMouseMove = function(e) {mouseMove(e, instance);};
-			instance.temp.funcMouseUp = function(e) {mouseUp(e, instance);};
-			instance.temp.funcTouchMove = function(e) {touchMove(e, instance);};
-			instance.temp.funcTouchEnd = function(e) {touchEnd(e, instance);};
-
-			instance.eventsTarget.addEventListener('mousemove', instance.temp.funcMouseMove);
-			instance.eventsTarget.addEventListener('mouseup', instance.temp.funcMouseUp);
-			instance.eventsTarget.addEventListener('touchmove', instance.temp.funcTouchMove);
-			instance.eventsTarget.addEventListener('touchend', instance.temp.funcTouchEnd);
-
 			setItems(instance);
 			if (instance.props.sortEnabled && instance.props.sortByDrag && (instance.temp.items.length > 1)) {
 				instance.temp.sortDelayTimer = setTimeout(function() {activateSort(instance);}, instance.props.sortMoveStartDelay);
