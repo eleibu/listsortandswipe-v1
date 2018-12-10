@@ -23,9 +23,21 @@ a:hover {
   visibility: hidden;
 }
 
+.unselectable {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+}
+
 #div-scroll-cont {
   position: relative;
-  height: 800px;
   border: 1px solid #AAAAAA;
   overflow: auto;
 }
@@ -55,6 +67,7 @@ a:hover {
 }
 
 #div-scroll-cont.xl, #div-scroll-cont.lg, #div-scroll-cont.md, #div-scroll-cont.sm {
+  height: 800px;
   max-width: 600px;
   margin: 0 auto;
 }
@@ -103,10 +116,14 @@ a:hover {
   color: #000000;
 }
 
-#div-list-cont.xs div.listitem-cont {
-  padding: 1em;
+#div-scroll-cont.xs {
+  height: 400px;
 }
 
-#div-list-cont.xs div.listitem-cont div.listitem-outer i {
+#div-scroll-cont.xs div.listitem-cont {
+  padding: 1.4em 1em;
+}
+
+#div-scroll-cont.xs div.listitem-cont div.listitem-outer i {
   display: none;
 }

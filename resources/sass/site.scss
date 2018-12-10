@@ -23,9 +23,17 @@ a:hover {
   visibility: hidden;
 }
 
+.unselectable {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
+}
+
 #div-scroll-cont {
 	position: relative;
-	height: 800px;
 	border: 1px solid #AAAAAA;
 	overflow: auto;
 
@@ -56,6 +64,7 @@ a:hover {
 
 
 #div-scroll-cont.xl, #div-scroll-cont.lg, #div-scroll-cont.md, #div-scroll-cont.sm {
+	height: 800px;
 	max-width: 600px;
 	margin: 0 auto;
 
@@ -107,9 +116,11 @@ a:hover {
 	}
 }
 
-#div-list-cont.xs {
+#div-scroll-cont.xs {
+	height: 400px;
+
 	div.listitem-cont {
-		padding: 1em;
+		padding: 1.4em 1em;
 
 		div.listitem-outer {
 			i {

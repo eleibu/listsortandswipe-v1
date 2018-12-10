@@ -90,11 +90,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 // listCont should have 'position: relative'
 // need to set css 'box-shadow' for 'clone-sort' class if want sort clone to have a drop shadow
 // need to set css for 'sort-item-active' to hide active item while sorting
+// add 'unselectedable' classes (with vendor prefixes) to prevent text selection
 
 
 // Known issues:
 // * Position of itemCont behaves strangely when item-cont has a top or bottom margin. Temporary resolution is to remove the margin, insert a child div and add a margin to that.
 // * Cursor is sometimes far above itemCont but still moving it (seems to happen only when moving up, but not sure).
+
+
+// TODO: Start of scrolling should cancel sort timer
 
 
 var lithiumlistPro = function () {
@@ -111,7 +115,7 @@ var lithiumlistPro = function () {
 		sortItemActiveClass: 'sort-item-active',
 		sortDragHandleClass: 'sort-drag-handle',
 		// sortCloneBoxShadow: '0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12)',
-		sortMoveStartDelay: 200,
+		sortMoveStartDelay: 400,
 		sortReorderDuration: 200,
 		sortEndDockDuration: 200,
 		sortScrollSpeed: 15,
@@ -192,10 +196,14 @@ var lithiumlistPro = function () {
 		};
 		instances.push(instance);
 
-		instance.listCont.addEventListener('mousedown', function (e) {
+		instance.temp.funcMouseDown = function (e) {
 			mouseDown(e, instance);
-		});
-		// instance.listCont.addEventListener('touchstart', function(e) {touchStart(e, instance)});
+		};
+		instance.temp.funcTouchStart = function (e) {
+			touchStart(e, instance);
+		};
+		instance.listCont.addEventListener('mousedown', instance.temp.funcMouseDown);
+		instance.listCont.addEventListener('touchstart', instance.temp.funcTouchStart);
 	};
 
 	var getEmptyTemp = function getEmptyTemp() {
@@ -213,6 +221,8 @@ var lithiumlistPro = function () {
 			'sortDelayTimer': null,
 			'sortEndTimer': null,
 			'scrollInterval': null,
+			'funcMouseDown': null,
+			'funcTouchStart': null,
 			'funcMouseMove': null,
 			'funcMouseUp': null,
 			'funcTouchMove': null,
@@ -236,7 +246,7 @@ var lithiumlistPro = function () {
 				if (checkClassClicked(e, instance.temp.items[index], instance.props.sortDragHandleClass)) {
 					setTimeout(function () {
 						sortHandleClick(e, index, instance);
-					}, 1); // delay allows itemCont to show to :hover classes
+					}, 1); // delay allows itemCont to show :hover classes
 				} else if (checkClassClicked(e, instance.temp.items[index], instance.props.leftDragHandleClass)) {
 					// left drag handle click
 				} else if (checkClassClicked(e, instance.temp.items[index], instance.props.rightDragHandleClass)) {
@@ -287,6 +297,7 @@ var lithiumlistPro = function () {
 
 	var backgroundClick = function backgroundClick(e, index, instance) {
 		if (instance.props.sortEnabled && instance.props.sortByDrag || instance.props.leftEnabled && instance.props.leftByDrag || instance.props.rightEnabled && instance.props.rightByDrag) {
+			initialiseItemMove(e, index, instance);
 			setItems(instance);
 			if (instance.props.sortEnabled && instance.props.sortByDrag && instance.temp.items.length > 1) {
 				instance.temp.sortDelayTimer = setTimeout(function () {
@@ -300,8 +311,8 @@ var lithiumlistPro = function () {
 		}
 	};
 
-	var touchStart = function touchStart(e, index, instance) {
-		alert(e.pageX + ' ' + index);
+	var touchStart = function touchStart(e, instance) {
+		mouseDown(e, instance);
 	};
 
 	var activateSort = function activateSort(instance) {
@@ -312,7 +323,6 @@ var lithiumlistPro = function () {
 		instance.temp.sortDelayTimer = null;
 		instance.temp.moveType = 'SORT';
 
-		// setItems(instance);
 		if (!instance.temp.itemClone) {
 			var top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
 			createClone(instance, 0, top);
@@ -324,6 +334,10 @@ var lithiumlistPro = function () {
 	};
 
 	var mouseMove = function mouseMove(e, instance) {
+		if (instance.temp && instance.temp.moveType == 'SORT') {
+			e.preventDefault();
+		}
+
 		var pageX = getPageX(e);
 		var pageY = getPageY(e);
 
@@ -337,8 +351,6 @@ var lithiumlistPro = function () {
 				}
 		} else {
 			if (instance.temp.moveType == 'LEFT' || instance.temp.moveType == 'RIGHT') {} else if (instance.temp.moveType == 'SORT') {
-				e.preventDefault(); // prevent scrolling on mobile
-
 				var deltaY = pageY - instance.temp.lastPageY;
 				if (deltaY != 0 && instance.temp.scrollInterval) {
 					clearInterval(instance.temp.scrollInterval);
@@ -373,6 +385,10 @@ var lithiumlistPro = function () {
 		instance.temp.lastPageY = pageY;
 	};
 
+	var touchMove = function touchMove(e, instance) {
+		mouseMove(e, instance);
+	};
+
 	var doScroll = function doScroll(instance, scrollChange) {
 		var shouldScroll = moveItemClone(instance, scrollChange, false);
 		if (shouldScroll) {
@@ -387,7 +403,6 @@ var lithiumlistPro = function () {
 	};
 
 	var moveItemClone = function moveItemClone(instance, deltaTrans, withScrollProps) {
-		// function returns either scrollProps or shouldScroll
 		var cloneOrigTop = getItemCloneTop(instance);
 		var cloneTrans = getTransYNum(instance.temp.itemClone) + deltaTrans;
 
@@ -401,6 +416,7 @@ var lithiumlistPro = function () {
 
 		var cloneTop = cloneOrigTop + cloneTrans;
 		if (withScrollProps) {
+			// return scrollProps
 			var scrollDir = 0;
 			var outFraction = 0;
 			if (cloneTop < instance.scrollCont.scrollTop - instance.deltaItemsScroll) {
@@ -415,6 +431,7 @@ var lithiumlistPro = function () {
 				'outFraction': outFraction
 			};
 		} else {
+			// return shouldScroll
 			var shouldScroll = false;
 			if (cloneTop < instance.scrollCont.scrollTop - instance.deltaItemsScroll || cloneTop + instance.temp.itemClone.offsetHeight > instance.scrollCont.scrollTop + instance.scrollCont.clientHeight - instance.deltaItemsScroll) {
 				shouldScroll = true;
@@ -566,9 +583,9 @@ var lithiumlistPro = function () {
 		}
 	};
 
-	var touchMove = function touchMove(e, instance) {};
-
-	var touchEnd = function touchEnd(e, instance) {};
+	var touchEnd = function touchEnd(e, instance) {
+		mouseUp(e, instance);
+	};
 
 	var sortEnd = function sortEnd(instance) {
 		if (instance.props.sortItemActiveClass) {
@@ -623,9 +640,23 @@ var lithiumlistPro = function () {
 
 	var detachFromList = function detachFromList(listCont) {
 		if (listCont) {
+			var index = null;
+			for (var i = 0, len = instances.length; i < len; i++) {
+				if (instances[i].listCont === listCont) {
+					index = i;
+					break;
+				}
+			}
 
-			// do stuff
-
+			if (index != null) {
+				if (instances[index].temp.funcMouseDown) {
+					listCont.removeEventListener('mousedown', instances[index].temp.funcMouseDown);
+				}
+				if (instances[index].temp.funcTouchStart) {
+					listCont.removeEventListener('touchstart', instances[index].temp.funcTouchStart);
+				}
+				instances.splice(index, 1);
+			}
 		} else {
 			throw 'listCont cannot be null.';
 		}
@@ -751,35 +782,69 @@ __webpack_require__(3);
 
 var listCont = document.getElementById('div-list-cont');
 var scrollCont = document.getElementById('div-scroll-cont');
-// var eventsTarget = document.getElementById('div-body');
-var eventsTarget = window;
 var listItemClass = 'listitem-cont';
 
 // function(listCont, scrollCont, eventsTarget, listItemClass, listProperties)
 
 var listProperties = {
-	sortDragHandleClass: 'budicon-grab-ui',
-	leftDragHandleClass: 'budicon-reload-ui',
-	rightDragHandleClass: 'budicon-trash',
-	onSortEnd: sortEnd
+				sortDragHandleClass: 'budicon-grab-ui',
+				leftDragHandleClass: 'budicon-reload-ui',
+				rightDragHandleClass: 'budicon-trash',
+				onSortEnd: sortEnd
 };
 
-function sortEnd(origIndex, newIndex) {
-	if (origIndex != newIndex) {
-		var items = listCont.getElementsByClassName(listItemClass);
-		var origItem = items[origIndex];
-		var newItem = items[newIndex];
-
-		listCont.removeChild(origItem);
-		if (newIndex > origIndex) {
-			listCont.insertBefore(origItem, newItem.nextSibling);
-		} else {
-			listCont.insertBefore(origItem, newItem);
-		}
-	}
+function monitorWinWidth() {
+				var width = window.innerWidth;
+				if (width > 1330) {
+								setWidthClass('xl');
+				} else if (width > 1130) {
+								setWidthClass('lg');
+				} else if (width > 760) {
+								setWidthClass('md');
+				} else if (width > 540) {
+								setWidthClass('sm');
+				} else {
+								setWidthClass('xs');
+				}
 }
 
-__WEBPACK_IMPORTED_MODULE_0__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].attachToList(scrollCont, listCont, eventsTarget, listItemClass, listProperties);
+var event_changeWidthClass = new Event('changeWidthClass');
+function setWidthClass(classtxt) {
+				var divtarget = document.getElementById("div-scroll-cont");
+				if (divtarget.className != classtxt) {
+								divtarget.className = classtxt;
+								window.dispatchEvent(event_changeWidthClass);
+				}
+
+				__WEBPACK_IMPORTED_MODULE_0__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].detachFromList(listCont);
+
+				var eventsTarget = window;
+				if (classtxt == 'xs') {
+								eventsTarget = document.getElementById('div-body');
+				}
+
+				__WEBPACK_IMPORTED_MODULE_0__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].attachToList(scrollCont, listCont, eventsTarget, listItemClass, listProperties);
+}
+
+monitorWinWidth();
+window.addEventListener("resize", function () {
+				monitorWinWidth();
+});
+
+function sortEnd(origIndex, newIndex) {
+				if (origIndex != newIndex) {
+								var items = listCont.getElementsByClassName(listItemClass);
+								var origItem = items[origIndex];
+								var newItem = items[newIndex];
+
+								listCont.removeChild(origItem);
+								if (newIndex > origIndex) {
+												listCont.insertBefore(origItem, newItem.nextSibling);
+								} else {
+												listCont.insertBefore(origItem, newItem);
+								}
+				}
+}
 
 // lithiumlistPro.setDefaults({delay: 200});
 
