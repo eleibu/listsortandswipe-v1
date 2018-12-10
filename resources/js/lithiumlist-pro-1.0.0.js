@@ -24,9 +24,6 @@
 // * Position of itemCont behaves strangely when item-cont has a top or bottom margin. Temporary resolution is to remove the margin, insert a child div and add a margin to that.
 
 
-// TODO: Why does scrolling pause unless cursor is in exactly the right position?
-
-
 export var lithiumlistPro = (function () {
 	var instances = [];
 
@@ -246,9 +243,6 @@ export var lithiumlistPro = (function () {
         var pageX = getPageX(e);
         var pageY = getPageY(e);
 
-        // console.log('pageY: ' + pageY + ' instance.temp.lastPageY: ' + instance.temp.lastPageY + ' pageY - instance.temp.lastPageY: ' + (pageY - instance.temp.lastPageY));
-        // var cursorX = this.startPageX - pageX;
-
         if (!instance.temp.moveType) {
         	if (instance.temp.sortDelayTimer) {	 // ignore up / down movement during this time
 
@@ -263,21 +257,22 @@ export var lithiumlistPro = (function () {
         	} else if (instance.temp.moveType == 'SORT') {
                 e.preventDefault(); // prevent scrolling on mobile
 
-	        	if (instance.temp.scrollInterval) {
+                var deltaY = pageY - instance.temp.lastPageY;
+	        	if ((deltaY != 0) && (instance.temp.scrollInterval)) {
 	        		clearInterval(instance.temp.scrollInterval);
 	        		instance.temp.scrollInterval = null;
 	        	}
 
         		var rect = instance.temp.itemClone.getBoundingClientRect();
 	        	var shouldMove = false;
-	        	if ((pageY - instance.temp.lastPageY < 0) && (rect.bottom > pageY)) {		// moving up - move if cursor is above bottom of itemClone
+	        	if ((deltaY < 0) && (rect.bottom > pageY)) {		// moving up - move if cursor is above bottom of itemClone
 					shouldMove = true;
-	        	} else if ((pageY - instance.temp.lastPageY > 0) && (rect.top < pageY)) {	// moving down - move if cursor is below top of itemClone
+	        	} else if ((deltaY > 0) && (rect.top < pageY)) {	// moving down - move if cursor is below top of itemClone
 					shouldMove = true;
 	        	}
 
 	        	if (shouldMove) {
-	        		var scrollProps = moveItemClone(instance, pageY - instance.temp.lastPageY);
+	        		var scrollProps = moveItemClone(instance, deltaY, true);
 	        		animateItems(instance);
 
                     if ((scrollProps.scrollDir != 0) && (scrollProps.outFraction != 0)) {
@@ -293,8 +288,8 @@ export var lithiumlistPro = (function () {
 	};
 
 	var doScroll = function(instance, scrollChange) {
-		var scrollProps = moveItemClone(instance, scrollChange);
-		if ((scrollProps.scrollDir != 0) && (scrollProps.outFraction != 0)) {
+		var shouldScroll = moveItemClone(instance, scrollChange, false);
+		if (shouldScroll) {
         	instance.scrollCont.scrollTop = instance.scrollCont.scrollTop + scrollChange;
         	animateItems(instance);
 		} else {
@@ -305,33 +300,39 @@ export var lithiumlistPro = (function () {
 		}
 	};
 
-	var moveItemClone = function(instance, deltaTrans) {
+	var moveItemClone = function(instance, deltaTrans, withScrollProps) {	// function returns either scrollProps or shouldScroll
         var cloneOrigTop = getItemCloneTop(instance);
         var cloneTrans = getTransYNum(instance.temp.itemClone) + deltaTrans;
 
-        // ensure itemClone is not above top or below bottom of listCont
-        if (cloneOrigTop + cloneTrans < 0) {
+        if (cloneOrigTop + cloneTrans < 0) {	// ensure itemClone is not above top or below bottom of listCont
             cloneTrans = -1 * cloneOrigTop;
         } else if (cloneOrigTop + cloneTrans + instance.temp.itemClone.offsetHeight > instance.listCont.clientHeight) {
             cloneTrans = instance.listCont.clientHeight - cloneOrigTop - instance.temp.itemClone.offsetHeight;
         }
         instance.temp.itemClone.style[`${vendorPrefix}Transform`] = 'translateY('+ cloneTrans + 'px)';
 
-    	var cloneTop = cloneOrigTop + cloneTrans;
-        var scrollDir = 0;
-        var outFraction = 0;
-        if (cloneTop < (instance.scrollCont.scrollTop - instance.deltaItemsScroll)) {
-        	scrollDir = -1;		// scroll up
-        	outFraction = ((instance.scrollCont.scrollTop - instance.deltaItemsScroll) - cloneTop) / instance.temp.itemClone.offsetHeight;
-        } else if ((cloneTop + instance.temp.itemClone.offsetHeight) > (instance.scrollCont.scrollTop + instance.scrollCont.clientHeight - instance.deltaItemsScroll)) {
-			scrollDir = 1;		// scroll down
-			outFraction = ((cloneTop + instance.temp.itemClone.offsetHeight) - (instance.scrollCont.scrollTop + instance.scrollCont.clientHeight - instance.deltaItemsScroll)) / instance.temp.itemClone.offsetHeight;
+		var cloneTop = cloneOrigTop + cloneTrans;
+        if (withScrollProps) {	
+	        var scrollDir = 0;
+	        var outFraction = 0;
+	        if (cloneTop < (instance.scrollCont.scrollTop - instance.deltaItemsScroll)) {
+	        	scrollDir = -1;		// scroll up
+	        	outFraction = ((instance.scrollCont.scrollTop - instance.deltaItemsScroll) - cloneTop) / instance.temp.itemClone.offsetHeight;
+	        } else if ((cloneTop + instance.temp.itemClone.offsetHeight) > (instance.scrollCont.scrollTop + instance.scrollCont.clientHeight - instance.deltaItemsScroll)) {
+				scrollDir = 1;		// scroll down
+				outFraction = ((cloneTop + instance.temp.itemClone.offsetHeight) - (instance.scrollCont.scrollTop + instance.scrollCont.clientHeight - instance.deltaItemsScroll)) / instance.temp.itemClone.offsetHeight;
+	        }
+	        return {
+	        	'scrollDir' : scrollDir,
+	        	'outFraction' : outFraction
+	        };
+        } else {
+        	var shouldScroll = false;
+        	if ((cloneTop < (instance.scrollCont.scrollTop - instance.deltaItemsScroll)) || ((cloneTop + instance.temp.itemClone.offsetHeight) > (instance.scrollCont.scrollTop + instance.scrollCont.clientHeight - instance.deltaItemsScroll))) {
+        		shouldScroll = true;
+        	}
+        	return shouldScroll;
         }
-
-        return {
-        	'scrollDir' : scrollDir,
-        	'outFraction' : outFraction
-        };
 	};
 
 	var animateItems = function(instance) {
@@ -471,7 +472,7 @@ export var lithiumlistPro = (function () {
 
                 var cloneTop = getItemCloneTop(instance) + getTransYNum(instance.temp.itemClone);
                 instance.temp.itemClone.style[`${vendorPrefix}TransitionDuration`] = instance.props.sortEndDockDuration + 'ms';
-                moveItemClone(instance, activeTaskTop - cloneTop);
+                moveItemClone(instance, activeTaskTop - cloneTop, false);
 
                 instance.temp.sortEndTimer = setTimeout(function() {sortEnd(instance)}, instance.props.sortEndDockDuration);
         	}
