@@ -58,6 +58,26 @@ a:hover {
 			box-shadow: 0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12);
 			width: 100%;
 		}
+
+		div.listitem-cont.clone-left {
+			width: 100%;
+		}
+
+		div.listitem-cont.clone-right {
+			width: 100%;
+		}
+
+		div.listitem-cont.mask-left {
+			width: 100%;
+			background-color: red;
+		}
+
+		div.listitem-cont.mask-right {
+			width: 100%;
+			background-color: green;
+		}
+
+
 	}
 }
 

@@ -19,6 +19,7 @@
 // need to set css 'box-shadow' for 'clone-sort' class if want sort clone to have a drop shadow
 // need to set css for 'sort-item-active' to hide active item while sorting
 // add 'unselectedable' classes (with vendor prefixes) to prevent text selection
+// eventsTarget should be 'window' on desktop and NOT 'window' or 'body' on mobile
 
 
 // Known issues:
@@ -26,9 +27,9 @@
 // * Cursor is sometimes far above itemCont but still moving it (seems to happen only when moving up, but not sure).
 
 
-// TODO: Start of scrolling should cancel sort timer
+// TODO: Start of scrolling should cancel sort timer (DONE?)
 // TODO: Sorting should not start if cursor/touch is not over same item that was clicked/touched
-// TODO: Remove touchStart(), touchMove(), etc
+// TODO: Remove .version() from webpack.mix.js?
 
 
 export var lithiumlistPro = (function () {
@@ -47,21 +48,27 @@ export var lithiumlistPro = (function () {
         sortReorderDuration: 200,
         sortEndDockDuration: 200,
         sortScrollSpeed: 15,
+		onLeftStart: null,
+		onLeftEnd: null,
         leftEnabled: true,
         leftByDrag: true,
         leftCloneClass: 'clone-left',
+        leftMaskClass: 'mask-left',
         leftDragHandleClass: 'left-drag-handle',
-        leftDragStartThreshold: 10,
+        leftDragStartThreshold: '10px',
         leftDragEndPercent: 0.5,
         leftSlideOutDuration: 200,
         leftSlideInDuration: 200,
         leftBgdHeightTransition: 'height 100ms ease-in 100ms',
         leftBgdColor: '#FF3300',
+		onRightStart: null,
+		onRightEnd: null,
         rightEnabled: true,
         rightByDrag: true,
-        leftCloneClass: 'clone-right',
+        rightCloneClass: 'clone-right',
+        rightMaskClass: 'mask-right',
         rightDragHandleClass: 'right-drag-handle',
-        rightDragStartThreshold: 10,
+        rightDragStartThreshold: '10px',
         rightDragEndPercent: 0.5,
         rightSlideOutDuration: 200,
         rightSlideInDuration: 200,
@@ -198,6 +205,10 @@ export var lithiumlistPro = (function () {
 		}
 	};
 
+	var touchStart = function(e, instance) {
+		mouseDown(e, instance);
+	};
+
 	var initialiseItemMove = function(e, index, instance) {
 		var pageX = getPageX(e);
 		var pageY = getPageY(e);
@@ -241,25 +252,40 @@ export var lithiumlistPro = (function () {
 		}
 	};
 
-	var touchStart = function(e, instance) {
-		mouseDown(e, instance);
-	};
 
 	var activateSort = function(instance) {
-        if (instance.props.onSortStart) {
-			instance.props.onSortStart(instance.temp.activeIndex);
-        }
+		if ((instance.temp) && (instance.temp.lastPageX != null) && (instance.temp.lastPageY != null)) {
+			var rect = instance.temp.items[instance.temp.activeIndex].getBoundingClientRect();
+			if ((instance.temp.lastPageX >= rect.left) && (instance.temp.lastPageX <= rect.right) && (instance.temp.lastPageY >= rect.top) && (instance.temp.lastPageY <= rect.bottom)) {
+		        if (instance.props.onSortStart) {
+					instance.props.onSortStart(instance.temp.activeIndex);
+		        }
+		        instance.temp.sortDelayTimer = null;
+		        instance.temp.moveType = 'SORT';
 
-        instance.temp.sortDelayTimer = null;
-        instance.temp.moveType = 'SORT';
+		        if (!instance.temp.itemClone) {
+		        	 var top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
+		        	 createClone(instance, 0, top);
+		        }
 
-        if (!instance.temp.itemClone) {
-        	 var top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
-        	 createClone(instance, 0, top);
-        }
+				if (instance.props.sortItemActiveClass) {
+					addClass(instance.temp.items[instance.temp.activeIndex], instance.props.sortItemActiveClass);
+				}
+			}
+		}
+	};
 
-		if (instance.props.sortItemActiveClass) {
-			addClass(instance.temp.items[instance.temp.activeIndex], instance.props.sortItemActiveClass);
+	var getPXorPercent = function(val) {
+		if (val != 0) {
+			var index = val.indexOf('px');
+			if (index == -1) {
+				index = val.indexOf('%');
+			}
+			if (index > -1) {
+				return parseInt(val.substring(0, index));
+			} else {
+				return 0;
+			}
 		}
 	};
 
@@ -272,8 +298,47 @@ export var lithiumlistPro = (function () {
         var pageY = getPageY(e);
 
         if (!instance.temp.moveType) {
-        	if (instance.temp.sortDelayTimer) {	 // ignore up / down movement during this time
+        	if ((instance.temp.sortDelayTimer) && ((instance.props.leftEnabled && instance.props.leftByDrag) || (instance.props.rightEnabled && instance.props.rightByDrag))) {
+        		var cursorX = pageX - instance.temp.lastPageX;
+        		if ((cursorX < 0) && instance.props.leftEnabled && instance.props.leftByDrag) {
+        			var leftDT = 0;
+        			if (instance.props.leftDragStartThreshold != 0) {
+        				var index = instance.props.leftDragStartThreshold.indexOf('px');
+        				if (index > -1) {
+        					leftDT = parseInt(instance.props.leftDragStartThreshold.substring(0, index));
+        				} else {
+        					index = instance.props.leftDragStartThreshold.indexOf('%');
+        					if (index > -1) {
+        						var perc = parseFloat(instance.props.leftDragStartThreshold.substring(0, index)) * 0.01;    
+        						var itemW = instance.temp.items[instance.temp.activeIndex].offsetWidth;
+								leftDT = Math.round(perc * itemW);
+        					}
+        				}
+        			}
+        			if (Math.abs(cursorX) > leftDT) {
+        				console.log('left');
+        				clearTimeout(instance.temp.sortDelayTimer);
+        				instance.temp.sortDelayTimer = null;
+				        instance.temp.moveType = 'LEFT';
 
+
+						var top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
+				        if (!instance.temp.itemClone) {
+				        	var left = cursorX + 'px';
+				        	createClone(instance, left, top);
+				        }
+
+				        if (!instance.temp.itemMask) {
+				        	createMask(instance, top);
+				        }
+
+				        // call 'onLeftStart'
+        			}
+
+
+        		} else if (cursorX > 0) {
+
+        		}
 
         	} else {
         		// waiting for mouse to be released, or left or right drag
@@ -564,6 +629,24 @@ export var lithiumlistPro = (function () {
 		} else if (instance.temp.moveType == 'RIGHT') {
 			if (instance.props.rightCloneClass) {
 				addClass(instance.temp.itemClone, instance.props.rightCloneClass);
+			}
+		}	
+	};
+
+	var createMask = function(instance, top) {
+		var newDiv = document.createElement('div');
+		instance.temp.itemMask = instance.listCont.appendChild(newDiv);
+		instance.temp.itemClone.style.position = 'absolute';
+		instance.temp.itemClone.style.left = '0';
+		instance.temp.itemClone.style.top = top;
+
+		if (instance.temp.moveType == 'LEFT') {
+			if (instance.props.leftMaskClass) {
+				addClass(instance.temp.itemMask, instance.props.leftMaskClass);
+			}
+		} else if (instance.temp.moveType == 'RIGHT') {
+			if (instance.props.rightMaskClass) {
+				addClass(instance.temp.itemMask, instance.props.rightMaskClass);
 			}
 		}	
 	};

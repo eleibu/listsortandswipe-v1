@@ -66,6 +66,24 @@ a:hover {
   width: 100%;
 }
 
+#div-scroll-cont #div-list-cont div.listitem-cont.clone-left {
+  width: 100%;
+}
+
+#div-scroll-cont #div-list-cont div.listitem-cont.clone-right {
+  width: 100%;
+}
+
+#div-scroll-cont #div-list-cont div.listitem-cont.mask-left {
+  width: 100%;
+  background-color: red;
+}
+
+#div-scroll-cont #div-list-cont div.listitem-cont.mask-right {
+  width: 100%;
+  background-color: green;
+}
+
 #div-scroll-cont.xl, #div-scroll-cont.lg, #div-scroll-cont.md, #div-scroll-cont.sm {
   height: 800px;
   max-width: 600px;
