@@ -99,6 +99,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 // TODO: Start of scrolling should cancel sort timer
+// TODO: Sorting should not start if cursor/touch is not over same item that was clicked/touched
+// TODO: Remove touchStart(), touchMove(), etc
 
 
 var lithiumlistPro = function () {
@@ -196,12 +198,16 @@ var lithiumlistPro = function () {
 		};
 		instances.push(instance);
 
+		instance.temp.funcOnScroll = function (e) {
+			onScroll(e, instance);
+		};
 		instance.temp.funcMouseDown = function (e) {
 			mouseDown(e, instance);
 		};
 		instance.temp.funcTouchStart = function (e) {
 			touchStart(e, instance);
 		};
+		instance.scrollCont.addEventListener('scroll', instance.temp.funcOnScroll);
 		instance.listCont.addEventListener('mousedown', instance.temp.funcMouseDown);
 		instance.listCont.addEventListener('touchstart', instance.temp.funcTouchStart);
 	};
@@ -221,6 +227,7 @@ var lithiumlistPro = function () {
 			'sortDelayTimer': null,
 			'sortEndTimer': null,
 			'scrollInterval': null,
+			'funcOnScroll': null,
 			'funcMouseDown': null,
 			'funcTouchStart': null,
 			'funcMouseMove': null,
@@ -228,6 +235,13 @@ var lithiumlistPro = function () {
 			'funcTouchMove': null,
 			'funcTouchEnd': null
 		};
+	};
+
+	var onScroll = function onScroll(e, instance) {
+		if (instance.temp.sortDelayTimer) {
+			clearTimeout(instance.temp.sortDelayTimer);
+			instance.temp.sortDelayTimer = null;
+		}
 	};
 
 	var mouseDown = function mouseDown(e, instance) {
@@ -647,8 +661,10 @@ var lithiumlistPro = function () {
 					break;
 				}
 			}
-
 			if (index != null) {
+				if (instances[index].temp.funcOnScroll) {
+					instances[index].scrollCont.removeEventListener('scroll', instances[index].temp.funcOnScroll);
+				}
 				if (instances[index].temp.funcMouseDown) {
 					listCont.removeEventListener('mousedown', instances[index].temp.funcMouseDown);
 				}
