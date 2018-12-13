@@ -60,26 +60,26 @@ a:hover {
   opacity: 0;
 }
 
-#div-scroll-cont #div-list-cont div.listitem-cont.clone-sort {
+#div-scroll-cont #div-list-cont div.listitem-cont.sort-clone {
   -webkit-box-shadow: 0 5px 14px rgba(0, 0, 0, 0.15), 0 6px 6px rgba(0, 0, 0, 0.12);
           box-shadow: 0 5px 14px rgba(0, 0, 0, 0.15), 0 6px 6px rgba(0, 0, 0, 0.12);
   width: 100%;
 }
 
-#div-scroll-cont #div-list-cont div.listitem-cont.clone-left {
+#div-scroll-cont #div-list-cont div.listitem-cont.left-clone {
   width: 100%;
 }
 
-#div-scroll-cont #div-list-cont div.listitem-cont.clone-right {
+#div-scroll-cont #div-list-cont div.listitem-cont.right-clone {
   width: 100%;
 }
 
-#div-scroll-cont #div-list-cont div.listitem-cont.mask-left {
+#div-scroll-cont #div-list-cont div.listitem-cont.left-mask {
   width: 100%;
   background-color: red;
 }
 
-#div-scroll-cont #div-list-cont div.listitem-cont.mask-right {
+#div-scroll-cont #div-list-cont div.listitem-cont.right-mask {
   width: 100%;
   background-color: green;
 }

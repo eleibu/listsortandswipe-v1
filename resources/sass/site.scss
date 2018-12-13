@@ -54,25 +54,27 @@ a:hover {
 			opacity: 0;
 		}
 
-		div.listitem-cont.clone-sort {
+		div.listitem-cont.sort-clone {
 			box-shadow: 0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12);
 			width: 100%;
 		}
 
-		div.listitem-cont.clone-left {
+		div.listitem-cont.left-clone {
+			width: 100%;
+			// z-index: 2;
+		}
+
+		div.listitem-cont.right-clone {
 			width: 100%;
 		}
 
-		div.listitem-cont.clone-right {
-			width: 100%;
-		}
-
-		div.listitem-cont.mask-left {
+		div.listitem-cont.left-mask {
 			width: 100%;
 			background-color: red;
+			// z-index: 1;
 		}
 
-		div.listitem-cont.mask-right {
+		div.listitem-cont.right-mask {
 			width: 100%;
 			background-color: green;
 		}

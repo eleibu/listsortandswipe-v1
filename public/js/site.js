@@ -17008,7 +17008,8 @@ var lithiumlistPro = function () {
 		onSortEnd: null,
 		sortEnabled: true,
 		sortByDrag: true,
-		sortCloneClass: 'clone-sort',
+		sortScrollClass: 'sort-scroll',
+		sortCloneClass: 'sort-clone',
 		sortItemActiveClass: 'sort-item-active',
 		sortDragHandleClass: 'sort-drag-handle',
 		// sortCloneBoxShadow: '0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12)',
@@ -17020,8 +17021,9 @@ var lithiumlistPro = function () {
 		onLeftEnd: null,
 		leftEnabled: true,
 		leftByDrag: true,
-		leftCloneClass: 'clone-left',
-		leftMaskClass: 'mask-left',
+		leftScrollClass: 'left-scroll',
+		leftCloneClass: 'left-clone',
+		leftMaskClass: 'left-mask',
 		leftDragHandleClass: 'left-drag-handle',
 		leftDragStartThreshold: '10px',
 		leftDragEndPercent: 0.5,
@@ -17033,8 +17035,9 @@ var lithiumlistPro = function () {
 		onRightEnd: null,
 		rightEnabled: true,
 		rightByDrag: true,
-		rightCloneClass: 'clone-right',
-		rightMaskClass: 'mask-right',
+		rightScrollClass: 'right-scroll',
+		rightCloneClass: 'right-clone',
+		rightMaskClass: 'right-mask',
 		rightDragHandleClass: 'right-drag-handle',
 		rightDragStartThreshold: '10px',
 		rightDragEndPercent: 0.5,
@@ -17242,11 +17245,15 @@ var lithiumlistPro = function () {
 		if (instance.temp && instance.temp.lastPageX != null && instance.temp.lastPageY != null) {
 			var rect = instance.temp.items[instance.temp.activeIndex].getBoundingClientRect();
 			if (instance.temp.lastPageX >= rect.left && instance.temp.lastPageX <= rect.right && instance.temp.lastPageY >= rect.top && instance.temp.lastPageY <= rect.bottom) {
+				instance.temp.sortDelayTimer = null;
+
 				if (instance.props.onSortStart) {
 					instance.props.onSortStart(instance.temp.activeIndex);
 				}
-				instance.temp.sortDelayTimer = null;
-				instance.temp.moveType = 'SORT';
+
+				if (instance.props.sortScrollClass) {
+					addClass(instance.scrollCont, instance.props.sortScrollClass);
+				}
 
 				if (!instance.temp.itemClone) {
 					var top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
@@ -17256,6 +17263,8 @@ var lithiumlistPro = function () {
 				if (instance.props.sortItemActiveClass) {
 					addClass(instance.temp.items[instance.temp.activeIndex], instance.props.sortItemActiveClass);
 				}
+
+				instance.temp.moveType = 'SORT';
 			}
 		}
 	};
@@ -17281,10 +17290,11 @@ var lithiumlistPro = function () {
 
 		var pageX = getPageX(e);
 		var pageY = getPageY(e);
+		var cursorX = pageX - instance.temp.lastPageX;
 
 		if (!instance.temp.moveType) {
 			if (instance.temp.sortDelayTimer && (instance.props.leftEnabled && instance.props.leftByDrag || instance.props.rightEnabled && instance.props.rightByDrag)) {
-				var cursorX = pageX - instance.temp.lastPageX;
+
 				if (cursorX < 0 && instance.props.leftEnabled && instance.props.leftByDrag) {
 					var leftDT = 0;
 					if (instance.props.leftDragStartThreshold != 0) {
@@ -17301,10 +17311,22 @@ var lithiumlistPro = function () {
 						}
 					}
 					if (Math.abs(cursorX) > leftDT) {
-						console.log('left');
+						//@@
+						// console.log(leftDT);
 						clearTimeout(instance.temp.sortDelayTimer);
 						instance.temp.sortDelayTimer = null;
-						instance.temp.moveType = 'LEFT';
+
+						if (instance.props.onLeftStart) {
+							instance.props.onLeftStart(instance.temp.activeIndex);
+						}
+
+						if (instance.props.leftScrollClass) {
+							addClass(instance.scrollCont, instance.props.leftScrollClass);
+						}
+
+						if (!instance.temp.itemMask) {
+							createMask(instance, top);
+						}
 
 						var top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
 						if (!instance.temp.itemClone) {
@@ -17312,11 +17334,7 @@ var lithiumlistPro = function () {
 							createClone(instance, left, top);
 						}
 
-						if (!instance.temp.itemMask) {
-							createMask(instance, top);
-						}
-
-						// call 'onLeftStart'
+						instance.temp.moveType = 'LEFT';
 					}
 				} else if (cursorX > 0) {}
 			} else {
@@ -17324,7 +17342,12 @@ var lithiumlistPro = function () {
 
 			}
 		} else {
-			if (instance.temp.moveType == 'LEFT' || instance.temp.moveType == 'RIGHT') {} else if (instance.temp.moveType == 'SORT') {
+			if (instance.temp.moveType == 'LEFT' || instance.temp.moveType == 'RIGHT') {
+				if (instance.temp.moveType == 'LEFT') {
+					var left = cursorX + 'px';
+					instance.temp.itemClone.style.left = left;
+				} else {}
+			} else if (instance.temp.moveType == 'SORT') {
 				var deltaY = pageY - instance.temp.lastPageY;
 				if (deltaY != 0 && instance.temp.scrollInterval) {
 					clearInterval(instance.temp.scrollInterval);
@@ -17538,7 +17561,11 @@ var lithiumlistPro = function () {
 		}
 
 		if (instance.temp.moveType) {
-			if (instance.temp.moveType == 'LEFT' || instance.temp.moveType == 'RIGHT') {} else if (instance.temp.moveType == 'SORT') {
+			if (instance.temp.moveType == 'LEFT' || instance.temp.moveType == 'RIGHT') {
+				// remove class from scrollCont
+				// remove class from item
+
+			} else if (instance.temp.moveType == 'SORT') {
 				if (instance.temp.scrollInterval) {
 					clearInterval(instance.temp.scrollInterval);
 					instance.temp.scrollInterval = null;
@@ -17572,17 +17599,26 @@ var lithiumlistPro = function () {
 			instance.temp.items[i].style[vendorPrefix + 'TransitionDuration'] = '';
 			instance.temp.items[i].style[vendorPrefix + 'Transform'] = '';
 		}
+
+		if (instance.props.sortScrollClass) {
+			removeClass(instance.scrollCont, instance.props.sortScrollClass);
+		}
+
 		if (instance.props.onSortEnd) {
 			instance.props.onSortEnd(instance.temp.origIndex, instance.temp.activeIndex);
 		}
+
 		instance.temp = getEmptyTemp();
 	};
 
 	var destroyTempDivs = function destroyTempDivs(instance) {
-
 		if (instance.temp.itemClone) {
 			instance.listCont.removeChild(instance.temp.itemClone);
 			instance.temp.itemClone = null;
+		}
+		if (instance.temp.itemMask) {
+			instance.listCont.removeChild(instance.temp.itemMask);
+			instance.temp.itemMask = null;
 		}
 	};
 
@@ -17615,9 +17651,9 @@ var lithiumlistPro = function () {
 	var createMask = function createMask(instance, top) {
 		var newDiv = document.createElement('div');
 		instance.temp.itemMask = instance.listCont.appendChild(newDiv);
-		instance.temp.itemClone.style.position = 'absolute';
-		instance.temp.itemClone.style.left = '0';
-		instance.temp.itemClone.style.top = top;
+		instance.temp.itemMask.style.position = 'absolute';
+		instance.temp.itemMask.style.left = '0';
+		instance.temp.itemMask.style.top = top;
 
 		if (instance.temp.moveType == 'LEFT') {
 			if (instance.props.leftMaskClass) {
