@@ -48,34 +48,31 @@ a:hover {
 				position: relative;
 			}
 		}
-		//sort-item-active
+
 		div.listitem-cont.sort-item-active {
 			visibility: hidden;
 			opacity: 0;
 		}
 
-		div.listitem-cont.sort-clone {
+		div.sort-clone {
 			box-shadow: 0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12);
 			width: 100%;
 		}
 
-		div.listitem-cont.left-clone {
+		div.left-clone {
 			width: 100%;
 			// z-index: 2;
 		}
 
-		div.listitem-cont.right-clone {
+		div.right-clone {
 			width: 100%;
 		}
 
-		div.listitem-cont.left-mask {
-			width: 100%;
+		div.left-mask {
 			background-color: red;
-			// z-index: 1;
 		}
 
-		div.listitem-cont.right-mask {
-			width: 100%;
+		div.right-mask {
 			background-color: green;
 		}
 

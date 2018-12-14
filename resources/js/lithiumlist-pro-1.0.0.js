@@ -20,6 +20,7 @@
 // need to set css for 'sort-item-active' to hide active item while sorting
 // add 'unselectedable' classes (with vendor prefixes) to prevent text selection
 // eventsTarget should be 'window' on desktop and NOT 'window' or 'body' on mobile
+// if 'left/righMaskClass' is not set, mask is not created
 
 
 // Known issues:
@@ -55,6 +56,7 @@ export var lithiumlistPro = (function () {
         leftByDrag: true,
         leftScrollClass: 'left-scroll',
         leftCloneClass: 'left-clone',
+        leftItemActiveClass: 'left-item-active',
         leftMaskClass: 'left-mask',
         leftDragHandleClass: 'left-drag-handle',
         leftDragStartThreshold: '10px',
@@ -69,6 +71,7 @@ export var lithiumlistPro = (function () {
         rightByDrag: true,
         rightScrollClass: 'right-scroll',
         rightCloneClass: 'right-clone',
+        rightItemActiveClass: 'right-item-active',
         rightMaskClass: 'right-mask',
         rightDragHandleClass: 'right-drag-handle',
         rightDragStartThreshold: '10px',
@@ -261,6 +264,7 @@ export var lithiumlistPro = (function () {
 			var rect = instance.temp.items[instance.temp.activeIndex].getBoundingClientRect();
 			if ((instance.temp.lastPageX >= rect.left) && (instance.temp.lastPageX <= rect.right) && (instance.temp.lastPageY >= rect.top) && (instance.temp.lastPageY <= rect.bottom)) {
 		        instance.temp.sortDelayTimer = null;
+		        instance.temp.moveType = 'SORT';
 
 		        if (instance.props.onSortStart) {
 					instance.props.onSortStart(instance.temp.activeIndex);
@@ -278,8 +282,6 @@ export var lithiumlistPro = (function () {
 				if (instance.props.sortItemActiveClass) {
 					addClass(instance.temp.items[instance.temp.activeIndex], instance.props.sortItemActiveClass);
 				}
-
-				instance.temp.moveType = 'SORT';
 			}
 		}
 	};
@@ -305,7 +307,7 @@ export var lithiumlistPro = (function () {
 
         var pageX = getPageX(e);
         var pageY = getPageY(e);
-        var cursorX = pageX - instance.temp.lastPageX;
+        var cursorX = pageX - instance.temp.startPageX;
 
         if (!instance.temp.moveType) {
         	if ((instance.temp.sortDelayTimer) && ((instance.props.leftEnabled && instance.props.leftByDrag) || (instance.props.rightEnabled && instance.props.rightByDrag))) {
@@ -330,6 +332,7 @@ export var lithiumlistPro = (function () {
         				// console.log(leftDT);
         				clearTimeout(instance.temp.sortDelayTimer);
         				instance.temp.sortDelayTimer = null;
+        				instance.temp.moveType = 'LEFT';
 
 				        if (instance.props.onLeftStart) {
 							instance.props.onLeftStart(instance.temp.activeIndex);
@@ -339,24 +342,47 @@ export var lithiumlistPro = (function () {
 				        	addClass(instance.scrollCont, instance.props.leftScrollClass);
 				        }
 
-				        if (!instance.temp.itemMask) {
-				        	createMask(instance, top);
+				        if ((instance.props.leftMaskClass) && (!instance.temp.itemMask)) {
+							createMask(instance);
 				        }
+
+						if (instance.props.leftItemActiveClass) {
+							addClass(instance.temp.items[instance.temp.activeIndex], instance.props.leftItemActiveClass);
+						}
 
 						var top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
 				        if (!instance.temp.itemClone) {
 				        	var left = cursorX + 'px';
 				        	createClone(instance, left, top);
 				        }
-
-				        instance.temp.moveType = 'LEFT';
         			}
-
-
         		} else if (cursorX > 0) {
+    				clearTimeout(instance.temp.sortDelayTimer);
+    				instance.temp.sortDelayTimer = null;
+    				instance.temp.moveType = 'RIGHT';
 
+			        if (instance.props.onRightStart) {
+						instance.props.onRightStart(instance.temp.activeIndex);
+			        }
+
+			        if (instance.props.rightScrollClass) {
+			        	addClass(instance.scrollCont, instance.props.rightScrollClass);
+			        }
+
+			        if ((instance.props.rightMaskClass) && (!instance.temp.itemMask)) {
+						createMask(instance);
+			        }
+
+					if (instance.props.rightItemActiveClass) {
+						addClass(instance.temp.items[instance.temp.activeIndex], instance.props.rightItemActiveClass);
+					}
+
+					var top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
+			        if (!instance.temp.itemClone) {
+			        	var left = cursorX + 'px';
+			        	createClone(instance, left, top);
+			        }
         		}
-
         	} else {
         		// waiting for mouse to be released, or left or right drag
 
@@ -364,13 +390,15 @@ export var lithiumlistPro = (function () {
         } else {
         	if ((instance.temp.moveType == 'LEFT') || (instance.temp.moveType == 'RIGHT')) {
         		if (instance.temp.moveType == 'LEFT') {
-        			var left = cursorX + 'px';
-        			instance.temp.itemClone.style.left = left;
-
-
+        			if (cursorX < 0) {
+	        			var left = cursorX + 'px';
+	        			instance.temp.itemClone.style.left = left;
+        			}
         		} else {
-
-
+        			if (cursorX > 0) {
+	        			var left = cursorX + 'px';
+	        			instance.temp.itemClone.style.left = left;
+        			}
         		}
         	} else if (instance.temp.moveType == 'SORT') {
                 var deltaY = pageY - instance.temp.lastPageY;
@@ -584,6 +612,7 @@ export var lithiumlistPro = (function () {
         	if ((instance.temp.moveType == 'LEFT') || (instance.temp.moveType == 'RIGHT')) {
         		// remove class from scrollCont
         		// remove class from item
+        		// remove leftItemActiveClass
 
         	} else if (instance.temp.moveType == 'SORT') {
 	        	if (instance.temp.scrollInterval) {
@@ -666,12 +695,14 @@ export var lithiumlistPro = (function () {
 		}	
 	};
 
-	var createMask = function(instance, top) {
+	var createMask = function(instance) {
 		var newDiv = document.createElement('div');
 		instance.temp.itemMask = instance.listCont.appendChild(newDiv);
 		instance.temp.itemMask.style.position = 'absolute';
 		instance.temp.itemMask.style.left = '0';
-		instance.temp.itemMask.style.top = top;
+		instance.temp.itemMask.style.top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
+		instance.temp.itemMask.style.height = instance.temp.items[instance.temp.activeIndex].offsetHeight + 'px';
+		instance.temp.itemMask.style.width = '100%';
 
 		if (instance.temp.moveType == 'LEFT') {
 			if (instance.props.leftMaskClass) {
