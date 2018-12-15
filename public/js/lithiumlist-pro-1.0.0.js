@@ -125,38 +125,44 @@ var lithiumlistPro = function () {
 		sortScrollSpeed: 15,
 		onLeftStart: null,
 		onLeftSlideOutStart: null,
+		onLeftSlideBackStart: null,
 		onLeftEnd: null,
 		leftEnabled: true,
 		leftByDrag: true,
 		leftScrollClass: 'left-scroll',
 		leftCloneClass: 'left-clone',
-		leftCloneSlideOutClass: 'left-clone-slideout',
+		leftCloneSlideOutClass: 'left-clone-slide-out',
+		leftCloneSlideBackClass: 'left-clone-slide-back',
 		leftItemActiveClass: 'left-item-active',
 		leftMaskClass: 'left-mask',
-		leftMaskSlideOutClass: 'left-mask-slideout',
+		leftMaskSlideOutClass: 'left-mask-slide-out',
+		leftMaskSlideBackClass: 'left-mask-slide-back',
 		leftDragHandleClass: 'left-drag-handle',
 		leftDragStartThreshold: '10%',
 		leftDragEndThreshold: '30%',
 		leftSlideOutDuration: 200,
-		leftSlideInDuration: 200,
+		leftSlideBackDuration: 200,
 		// leftBgdHeightTransition: 'height 100ms ease-in 100ms',
 		// leftBgdColor: '#FF3300',
 		onRightStart: null,
 		onRightSlideOutStart: null,
+		onRightSlideBackStart: null,
 		onRightEnd: null,
 		rightEnabled: true,
 		rightByDrag: true,
 		rightScrollClass: 'right-scroll',
 		rightCloneClass: 'right-clone',
-		rightCloneSlideOutClass: 'right-clone-slideout',
+		rightCloneSlideOutClass: 'right-clone-slide-out',
+		rightCloneSlideBackClass: 'right-clone-slide-back',
 		rightItemActiveClass: 'right-item-active',
 		rightMaskClass: 'right-mask',
-		rightMaskSlideOutClass: 'right-mask-slideout',
+		rightMaskSlideOutClass: 'right-mask-slide-out',
+		rightMaskSlideBackClass: 'right-mask-slide-back',
 		rightDragHandleClass: 'right-drag-handle',
 		rightDragStartThreshold: '10px',
 		rightDragEndThreshold: '30%',
 		rightSlideOutDuration: 200,
-		rightSlideInDuration: 200
+		rightSlideBackDuration: 200
 		// rightBgdHeightTransition: 'height 100ms ease-in 100ms',
 		// rightBgdColor: '#339900'
 	};
@@ -686,39 +692,22 @@ var lithiumlistPro = function () {
 				// remove leftItemActiveClass
 				// remove rightItemActiveClass
 
+				var cloneX = Math.abs(instance.temp.itemClone.offsetLeft);
 				if (instance.temp.moveType == 'LEFT') {
-					var cloneX = Math.abs(instance.temp.itemClone.offsetLeft);
 					var leftDET = getPXorPercent(instance.props.leftDragEndThreshold, instance.temp.items[instance.temp.activeIndex].offsetWidth);
 					if (cloneX > leftDET) {
 						initLeftSlideOut(instance);
-					} else {}
-
-					//          	const cloneX = -1 * this.clone.offsetLeft;
-
-					//          	if (this.props.deleteConfirm) {
-					//  	if (this.cloneIsAtDeleteConfirmThreshold) {
-					//  		this.cloneIsAtDeleteConfirmThreshold = false;
-					//   	if (this.props.onDeleteConfirmStart) {
-					//   		this.props.onDeleteConfirmStart();
-					//   	}
-					// document.addEventListener('mousedown', this.handleDocClick);
-					//  	} else {
-					//  		this.autoSlideRight();
-					//  	}
-					//          	} else {
-					//               let deleteSwipeEndPercent = 0.5;
-					//               if (this.props.deleteSwipeEndPercent) {
-					//                   deleteSwipeEndPercent = this.props.deleteSwipeEndPercent;
-					//               }
-					//               const deleteSwipeEndThreshold = this.taskDivs[this.activeTaskIndex].offsetWidth * deleteSwipeEndPercent;
-
-					//               if (cloneX > deleteSwipeEndThreshold) {
-					//                   this.autoSlideLeft();
-					//               } else {
-					//                   this.autoSlideRight();
-					//               }
-					//          	}
-				} else {}
+					} else {
+						initLeftSlideBack(instance);
+					}
+				} else {
+					var rightDET = getPXorPercent(instance.props.rightDragEndThreshold, instance.temp.items[instance.temp.activeIndex].offsetWidth);
+					if (cloneX > rightDET) {
+						initRightSlideOut(instance);
+					} else {
+						initRightSlideBack(instance);
+					}
+				}
 			} else if (instance.temp.moveType == 'SORT') {
 				if (instance.temp.scrollInterval) {
 					clearInterval(instance.temp.scrollInterval);
@@ -763,25 +752,114 @@ var lithiumlistPro = function () {
 		}
 
 		instance.temp.itemClone.style.left = '-100%';
-
 		setTimeout(function () {
-			completeSlideOut(instance);
+			completeSlide(instance, true);
 		}, instance.props.leftSlideOutDuration);
 	};
 
-	var completeSlideOut = function completeSlideOut(instance) {
-		if (instance.temp.moveType == 'LEFT' && instance.props.onLeftEnd) {
-			instance.props.onLeftEnd(instance.temp.activeIndex);
-		} else if (instance.temp.moveType == 'RIGHT' && instance.props.onRightEnd) {
-			instance.props.onRightEnd(instance.temp.activeIndex);
+	var initLeftSlideBack = function initLeftSlideBack(instance) {
+		instance.temp.itemClone.style.transition = 'left ' + instance.props.leftSlideBackDuration + 'ms ease-in';
+		setTimeout(function () {
+			doLeftSlideBack(instance);
+		}, 1);
+	};
+
+	var doLeftSlideBack = function doLeftSlideBack(instance) {
+		if (instance.props.onLeftSlideBackStart) {
+			instance.props.onLeftSlideBackStart(instance.temp.activeIndex);
 		}
 
-		if (instance.props.leftScrollClass) {
-			removeClass(instance.scrollCont, instance.props.leftScrollClass);
+		if (instance.props.leftCloneSlideBackClass) {
+			addClass(instance.temp.itemClone, instance.props.leftCloneSlideBackClass);
 		}
 
-		if (instance.temp.items[instance.temp.activeIndex] && instance.props.leftItemActiveClass) {
-			removeClass(instance.temp.items[instance.temp.activeIndex], instance.props.leftItemActiveClass);
+		if (instance.props.leftMaskSlideBackClass && instance.temp.itemMask) {
+			addClass(instance.temp.itemMask, instance.props.leftMaskSlideBackClass);
+		}
+
+		instance.temp.itemClone.style.left = '0';
+		setTimeout(function () {
+			completeSlide(instance, false);
+		}, instance.props.leftSlideBackDuration);
+	};
+
+	var initRightSlideOut = function initRightSlideOut(instance) {
+		instance.temp.itemClone.style.transition = 'left ' + instance.props.rightSlideOutDuration + 'ms ease-in';
+		setTimeout(function () {
+			doRightSlideOut(instance);
+		}, 1);
+	};
+
+	var doRightSlideOut = function doRightSlideOut(instance) {
+		if (instance.props.onRightSlideOutStart) {
+			instance.props.onRightSlideOutStart(instance.temp.activeIndex);
+		}
+
+		if (instance.props.rightCloneSlideOutClass) {
+			addClass(instance.temp.itemClone, instance.props.rightCloneSlideOutClass);
+		}
+
+		if (instance.props.rightMaskSlideOutClass && instance.temp.itemMask) {
+			addClass(instance.temp.itemMask, instance.props.rightMaskSlideOutClass);
+		}
+
+		instance.temp.itemClone.style.left = '100%';
+		setTimeout(function () {
+			completeSlide(instance, true);
+		}, instance.props.rightSlideOutDuration);
+	};
+
+	var initRightSlideBack = function initRightSlideBack(instance) {
+		instance.temp.itemClone.style.transition = 'left ' + instance.props.rightSlideBackDuration + 'ms ease-in';
+		setTimeout(function () {
+			doRightSlideBack(instance);
+		}, 1);
+	};
+
+	var doRightSlideBack = function doRightSlideBack(instance) {
+		if (instance.props.onRightSlideBackStart) {
+			instance.props.onRightSlideBackStart(instance.temp.activeIndex);
+		}
+
+		if (instance.props.rightCloneSlideBackClass) {
+			addClass(instance.temp.itemClone, instance.props.rightCloneSlideBackClass);
+		}
+
+		if (instance.props.rightMaskSlideBackClass && instance.temp.itemMask) {
+			addClass(instance.temp.itemMask, instance.props.rightMaskSlideBackClass);
+		}
+
+		instance.temp.itemClone.style.left = '0';
+		setTimeout(function () {
+			completeSlide(instance, false);
+		}, instance.props.rightSlideBackDuration);
+	};
+
+	var completeSlide = function completeSlide(instance, didSlideOut) {
+		if (instance.temp.moveType == 'LEFT') {
+			if (instance.props.onLeftEnd) {
+				instance.props.onLeftEnd(instance.temp.activeIndex, didSlideOut);
+			}
+
+			if (instance.props.leftScrollClass) {
+				removeClass(instance.scrollCont, instance.props.leftScrollClass);
+			}
+
+			if (instance.temp.items[instance.temp.activeIndex] && instance.props.leftItemActiveClass) {
+				removeClass(instance.temp.items[instance.temp.activeIndex], instance.props.leftItemActiveClass);
+			}
+		} else if (instance.temp.moveType == 'RIGHT') {
+			if (instance.props.onRightEnd) {
+				instance.props.onRightEnd(instance.temp.activeIndex, didSlideOut);
+			}
+
+			if (instance.props.rightScrollClass) {
+				removeClass(instance.scrollCont, instance.props.rightScrollClass);
+			}
+
+			if (instance.temp.items[instance.temp.activeIndex] && instance.props.rightItemActiveClass) {
+				removeClass(instance.temp.items[instance.temp.activeIndex], instance.props.rightItemActiveClass);
+			}
 		}
 
 		instance.temp.moveType = null;
