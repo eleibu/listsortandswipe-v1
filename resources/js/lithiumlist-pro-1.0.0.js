@@ -28,6 +28,9 @@
 // * Cursor is sometimes far above itemCont but still moving it (seems to happen only when moving up, but not sure).
 
 
+// TODO: only detect left/right drag if enabled
+// TODO: include tags to ignore when clicked
+// TODO: left / right buttons
 // TODO: left / right confirm
 // TODO: cancel 'mousemove', 'mouseup', 'touchmove', 'touchend' while scrolling?
 // TODO: Start of scrolling should cancel sort timer (DONE?)
