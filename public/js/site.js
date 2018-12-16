@@ -16991,11 +16991,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // if 'left/righMaskClass' is not set, mask is not created
 
 
+// Pipeline:
+// confirm left / right
+// left / right buttons
+// elastic drag left / right
+// slow auto scroll when approach top / bottom
+
+
 // Known issues:
 // * Position of itemCont behaves strangely when item-cont has a top or bottom margin. Temporary resolution is to remove the margin, insert a child div and add a margin to that.
 // * Cursor is sometimes far above itemCont but still moving it (seems to happen only when moving up, but not sure).
 
-
+// TODO: convert sortScrollSpeed to 'veryslow', 'slow', 'normal', 'fast', 'veryfast' (or perhaps 1, 2, 3, 4, 5)
 // TODO: only detect left/right drag if enabled
 // TODO: include tags to ignore when clicked
 // TODO: left / right buttons
@@ -17038,10 +17045,8 @@ var lithiumlistPro = function () {
 		leftDragHandleClass: 'left-drag-handle',
 		leftDragStartThreshold: '10%',
 		leftDragEndThreshold: '30%',
-		leftSlideOutDuration: 200,
+		leftSlideOutDuration: 400,
 		leftSlideBackDuration: 200,
-		// leftBgdHeightTransition: 'height 100ms ease-in 100ms',
-		// leftBgdColor: '#FF3300',
 		onRightStart: null,
 		onRightSlideOutStart: null,
 		onRightSlideBackStart: null,
@@ -17059,10 +17064,8 @@ var lithiumlistPro = function () {
 		rightDragHandleClass: 'right-drag-handle',
 		rightDragStartThreshold: '10px',
 		rightDragEndThreshold: '30%',
-		rightSlideOutDuration: 200,
+		rightSlideOutDuration: 400,
 		rightSlideBackDuration: 200
-		// rightBgdHeightTransition: 'height 100ms ease-in 100ms',
-		// rightBgdColor: '#339900'
 	};
 
 	var setDefaultProperties = function setDefaultProperties(userDefaultProperties) {
@@ -17187,14 +17190,20 @@ var lithiumlistPro = function () {
 			}
 
 			if (index != null) {
-				if (checkClassClicked(e, instance.temp.items[index], instance.props.sortDragHandleClass)) {
+				if (instance.props.sortEnabled && checkClassClicked(e, instance.temp.items[index], instance.props.sortDragHandleClass)) {
 					setTimeout(function () {
-						sortHandleClick(e, index, instance);
+						initItemMove(e, index, instance);
+						setItems(instance);
+						activateSort(instance);
 					}, 1); // delay allows itemCont to show :hover classes
-				} else if (checkClassClicked(e, instance.temp.items[index], instance.props.leftDragHandleClass)) {
-					// left drag handle click
-				} else if (checkClassClicked(e, instance.temp.items[index], instance.props.rightDragHandleClass)) {
-					// right drag handle click
+				} else if (instance.props.leftEnabled && checkClassClicked(e, instance.temp.items[index], instance.props.leftDragHandleClass)) {
+					instance.temp.activeIndex = index;
+					initMoveLeft(instance, 0);
+					initLeftSlideOut(instance);
+				} else if (instance.props.rightEnabled && checkClassClicked(e, instance.temp.items[index], instance.props.rightDragHandleClass)) {
+					instance.temp.activeIndex = index;
+					initMoveRight(instance, 0);
+					initRightSlideOut(instance);
 				} else {
 					backgroundClick(e, index, instance);
 				}
@@ -17206,7 +17215,7 @@ var lithiumlistPro = function () {
 		mouseDown(e, instance);
 	};
 
-	var initialiseItemMove = function initialiseItemMove(e, index, instance) {
+	var initItemMove = function initItemMove(e, index, instance) {
 		var pageX = getPageX(e);
 		var pageY = getPageY(e);
 
@@ -17235,17 +17244,61 @@ var lithiumlistPro = function () {
 		instance.eventsTarget.addEventListener('touchend', instance.temp.funcTouchEnd);
 	};
 
-	var sortHandleClick = function sortHandleClick(e, index, instance) {
-		if (instance.props.sortEnabled) {
-			initialiseItemMove(e, index, instance);
-			setItems(instance);
-			activateSort(instance);
+	var initMoveLeft = function initMoveLeft(instance, cloneLeftPX) {
+		instance.temp.moveType = 'LEFT';
+
+		if (instance.props.onLeftStart) {
+			instance.props.onLeftStart(instance.temp.activeIndex);
+		}
+
+		if (instance.props.leftScrollClass) {
+			addClass(instance.scrollCont, instance.props.leftScrollClass);
+		}
+
+		if (instance.props.leftMaskClass && !instance.temp.itemMask) {
+			createMask(instance);
+		}
+
+		if (instance.props.leftItemActiveClass) {
+			addClass(instance.temp.items[instance.temp.activeIndex], instance.props.leftItemActiveClass);
+		}
+
+		var top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
+		if (!instance.temp.itemClone) {
+			var left = cloneLeftPX + 'px';
+			createClone(instance, left, top);
+		}
+	};
+
+	var initMoveRight = function initMoveRight(instance, cloneLeftPX) {
+		instance.temp.moveType = 'RIGHT';
+
+		if (instance.props.onRightStart) {
+			instance.props.onRightStart(instance.temp.activeIndex);
+		}
+
+		if (instance.props.rightScrollClass) {
+			addClass(instance.scrollCont, instance.props.rightScrollClass);
+		}
+
+		if (instance.props.rightMaskClass && !instance.temp.itemMask) {
+			createMask(instance);
+		}
+
+		if (instance.props.rightItemActiveClass) {
+			addClass(instance.temp.items[instance.temp.activeIndex], instance.props.rightItemActiveClass);
+		}
+
+		var top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
+		if (!instance.temp.itemClone) {
+			var left = cloneLeftPX + 'px';
+			createClone(instance, left, top);
 		}
 	};
 
 	var backgroundClick = function backgroundClick(e, index, instance) {
 		if (instance.props.sortEnabled && instance.props.sortByDrag || instance.props.leftEnabled && instance.props.leftByDrag || instance.props.rightEnabled && instance.props.rightByDrag) {
-			initialiseItemMove(e, index, instance);
+			initItemMove(e, index, instance);
 			setItems(instance);
 			if (instance.props.sortEnabled && instance.props.sortByDrag && instance.temp.items.length > 1) {
 				instance.temp.sortDelayTimer = setTimeout(function () {
@@ -17262,7 +17315,7 @@ var lithiumlistPro = function () {
 	var activateSort = function activateSort(instance) {
 		if (instance.temp && instance.temp.lastPageX != null && instance.temp.lastPageY != null) {
 			var rect = instance.temp.items[instance.temp.activeIndex].getBoundingClientRect();
-			if (instance.temp.lastPageX >= rect.left && instance.temp.lastPageX <= rect.right && instance.temp.lastPageY >= rect.top && instance.temp.lastPageY <= rect.bottom) {
+			if (cursorIsOverRect(instance.temp.lastPageX, instance.temp.lastPageY, rect)) {
 				instance.temp.sortDelayTimer = null;
 				instance.temp.moveType = 'SORT';
 
@@ -17287,7 +17340,7 @@ var lithiumlistPro = function () {
 	};
 
 	var mouseMove = function mouseMove(e, instance) {
-		if (instance.temp && instance.temp.moveType == 'SORT') {
+		if (instance.temp && instance.temp.moveType != null) {
 			e.preventDefault();
 		}
 
@@ -17297,62 +17350,21 @@ var lithiumlistPro = function () {
 
 		if (!instance.temp.moveType) {
 			if (instance.temp.sortDelayTimer && (instance.props.leftEnabled && instance.props.leftByDrag || instance.props.rightEnabled && instance.props.rightByDrag)) {
-				if (cursorX < 0 && instance.props.leftEnabled && instance.props.leftByDrag) {
-					var leftDST = getPXorPercent(instance.props.leftDragStartThreshold, instance.temp.items[instance.temp.activeIndex].offsetWidth);
-					if (Math.abs(cursorX) > leftDST) {
-						clearTimeout(instance.temp.sortDelayTimer);
-						instance.temp.sortDelayTimer = null;
-						instance.temp.moveType = 'LEFT';
-
-						if (instance.props.onLeftStart) {
-							instance.props.onLeftStart(instance.temp.activeIndex);
+				var rect = instance.temp.items[instance.temp.activeIndex].getBoundingClientRect();
+				if (cursorIsOverRect(pageX, pageY, rect)) {
+					if (cursorX < 0 && instance.props.leftEnabled && instance.props.leftByDrag) {
+						var leftDST = getPXorPercent(instance.props.leftDragStartThreshold, instance.temp.items[instance.temp.activeIndex].offsetWidth);
+						if (Math.abs(cursorX) > leftDST) {
+							clearTimeout(instance.temp.sortDelayTimer);
+							instance.temp.sortDelayTimer = null;
+							initMoveLeft(instance, cursorX);
 						}
-
-						if (instance.props.leftScrollClass) {
-							addClass(instance.scrollCont, instance.props.leftScrollClass);
-						}
-
-						if (instance.props.leftMaskClass && !instance.temp.itemMask) {
-							createMask(instance);
-						}
-
-						if (instance.props.leftItemActiveClass) {
-							addClass(instance.temp.items[instance.temp.activeIndex], instance.props.leftItemActiveClass);
-						}
-
-						var top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
-						if (!instance.temp.itemClone) {
-							var left = cursorX + 'px';
-							createClone(instance, left, top);
-						}
-					}
-				} else if (cursorX > 0) {
-					var rightDST = getPXorPercent(instance.props.rightDragStartThreshold, instance.temp.items[instance.temp.activeIndex].offsetWidth);
-					if (cursorX > rightDST) {
-						clearTimeout(instance.temp.sortDelayTimer);
-						instance.temp.sortDelayTimer = null;
-						instance.temp.moveType = 'RIGHT';
-
-						if (instance.props.onRightStart) {
-							instance.props.onRightStart(instance.temp.activeIndex);
-						}
-
-						if (instance.props.rightScrollClass) {
-							addClass(instance.scrollCont, instance.props.rightScrollClass);
-						}
-
-						if (instance.props.rightMaskClass && !instance.temp.itemMask) {
-							createMask(instance);
-						}
-
-						if (instance.props.rightItemActiveClass) {
-							addClass(instance.temp.items[instance.temp.activeIndex], instance.props.rightItemActiveClass);
-						}
-
-						var top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
-						if (!instance.temp.itemClone) {
-							var left = cursorX + 'px';
-							createClone(instance, left, top);
+					} else if (cursorX > 0 && instance.props.rightEnabled && instance.props.rightByDrag) {
+						var rightDST = getPXorPercent(instance.props.rightDragStartThreshold, instance.temp.items[instance.temp.activeIndex].offsetWidth);
+						if (cursorX > rightDST) {
+							clearTimeout(instance.temp.sortDelayTimer);
+							instance.temp.sortDelayTimer = null;
+							initMoveRight(instance, cursorX);
 						}
 					}
 				}
@@ -17585,11 +17597,6 @@ var lithiumlistPro = function () {
 
 		if (instance.temp.moveType) {
 			if (instance.temp.moveType == 'LEFT' || instance.temp.moveType == 'RIGHT') {
-				// remove class from scrollCont
-				// remove class from item
-				// remove leftItemActiveClass
-				// remove rightItemActiveClass
-
 				var cloneX = Math.abs(instance.temp.itemClone.offsetLeft);
 				if (instance.temp.moveType == 'LEFT') {
 					var leftDET = getPXorPercent(instance.props.leftDragEndThreshold, instance.temp.items[instance.temp.activeIndex].offsetWidth);
@@ -17735,51 +17742,53 @@ var lithiumlistPro = function () {
 
 	var completeSlide = function completeSlide(instance, didSlideOut) {
 		if (instance.temp.moveType == 'LEFT') {
-			if (instance.props.onLeftEnd) {
-				instance.props.onLeftEnd(instance.temp.activeIndex, didSlideOut);
+			if (instance.temp.items[instance.temp.activeIndex] && instance.props.leftItemActiveClass) {
+				removeClass(instance.temp.items[instance.temp.activeIndex], instance.props.leftItemActiveClass);
 			}
 
 			if (instance.props.leftScrollClass) {
 				removeClass(instance.scrollCont, instance.props.leftScrollClass);
 			}
 
-			if (instance.temp.items[instance.temp.activeIndex] && instance.props.leftItemActiveClass) {
-				removeClass(instance.temp.items[instance.temp.activeIndex], instance.props.leftItemActiveClass);
+			destroyTempDivs(instance);
+
+			if (instance.props.onLeftEnd) {
+				instance.props.onLeftEnd(instance.temp.activeIndex, didSlideOut);
 			}
 		} else if (instance.temp.moveType == 'RIGHT') {
-			if (instance.props.onRightEnd) {
-				instance.props.onRightEnd(instance.temp.activeIndex, didSlideOut);
+			if (instance.temp.items[instance.temp.activeIndex] && instance.props.rightItemActiveClass) {
+				removeClass(instance.temp.items[instance.temp.activeIndex], instance.props.rightItemActiveClass);
 			}
 
 			if (instance.props.rightScrollClass) {
 				removeClass(instance.scrollCont, instance.props.rightScrollClass);
 			}
 
-			if (instance.temp.items[instance.temp.activeIndex] && instance.props.rightItemActiveClass) {
-				removeClass(instance.temp.items[instance.temp.activeIndex], instance.props.rightItemActiveClass);
+			destroyTempDivs(instance);
+
+			if (instance.props.onRightEnd) {
+				instance.props.onRightEnd(instance.temp.activeIndex, didSlideOut);
 			}
 		}
 
-		instance.temp.moveType = null;
-		instance.temp.activeIndex = null;
-		destroyTempDivs(instance);
+		instance.temp = getEmptyTemp();
 	};
 
 	var sortEnd = function sortEnd(instance) {
-		if (instance.props.sortItemActiveClass) {
-			removeClass(instance.temp.items[instance.temp.activeIndex], instance.props.sortItemActiveClass);
-		}
-
-		destroyTempDivs(instance);
-
 		for (var i = 0, len = instance.temp.items.length; i < len; i++) {
 			instance.temp.items[i].style[vendorPrefix + 'TransitionDuration'] = '';
 			instance.temp.items[i].style[vendorPrefix + 'Transform'] = '';
 		}
 
+		if (instance.props.sortItemActiveClass) {
+			removeClass(instance.temp.items[instance.temp.activeIndex], instance.props.sortItemActiveClass);
+		}
+
 		if (instance.props.sortScrollClass) {
 			removeClass(instance.scrollCont, instance.props.sortScrollClass);
 		}
+
+		destroyTempDivs(instance);
 
 		if (instance.props.onSortEnd) {
 			instance.props.onSortEnd(instance.temp.origIndex, instance.temp.activeIndex);
@@ -17872,6 +17881,14 @@ var lithiumlistPro = function () {
 	};
 
 	// utility functions
+
+	var cursorIsOverRect = function cursorIsOverRect(pageX, pageY, rect) {
+		if (pageX >= rect.left && pageX <= rect.right && pageY >= rect.top && pageY <= rect.bottom) {
+			return true;
+		} else {
+			return false;
+		}
+	};
 
 	var getPXorPercent = function getPXorPercent(val, percOf) {
 		var returnVal = 0;
@@ -18007,8 +18024,8 @@ var listItemClass = 'listitem-cont';
 
 var listProperties = {
 				sortDragHandleClass: 'budicon-grab-ui',
-				leftDragHandleClass: 'budicon-reload-ui',
-				rightDragHandleClass: 'budicon-trash',
+				leftDragHandleClass: 'budicon-trash',
+				rightDragHandleClass: 'budicon-reload-ui',
 				onSortEnd: sortEnd
 };
 

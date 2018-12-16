@@ -10,8 +10,8 @@ var listItemClass = 'listitem-cont';
 
 var listProperties = {
 	sortDragHandleClass: 'budicon-grab-ui',
-	leftDragHandleClass: 'budicon-reload-ui',
-	rightDragHandleClass: 'budicon-trash',
+	leftDragHandleClass: 'budicon-trash',
+	rightDragHandleClass: 'budicon-reload-ui',
 	onSortEnd: sortEnd
 };
 
