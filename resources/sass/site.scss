@@ -69,13 +69,37 @@ a:hover {
 
 		div.left-mask {
 			background-color: red;
+
+			div.label-cont {
+				position: relative;
+				height: 100%;
+
+				span {
+					position: absolute;
+					right: 0.4em;
+					top: 50%;
+					transform: translateY(-50%);
+					color: #F8F8F8;
+				}
+			}
 		}
 
 		div.right-mask {
 			background-color: green;
+
+			div.label-cont {
+				position: relative;
+				height: 100%;
+
+				span {
+					position: absolute;
+					left: 0.4em;
+					top: 50%;
+					transform: translateY(-50%);
+					color: #F8F8F8;
+				}
+			}
 		}
-
-
 	}
 }
 

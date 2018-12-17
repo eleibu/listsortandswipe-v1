@@ -17003,8 +17003,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // * Position of itemCont behaves strangely when item-cont has a top or bottom margin. Temporary resolution is to remove the margin, insert a child div and add a margin to that.
 // * Cursor is sometimes far above itemCont but still moving it (seems to happen only when moving up, but not sure).
 
+// TODO: allow itemMask to have multiple
 // TODO: methods - eg. triggerLeft(index) / triggerRight(index)
-// TODO: left / right buttons
 // TODO: left / right confirm
 // TODO: Remove .version() from webpack.mix.js?
 
@@ -17036,13 +17036,10 @@ var lithiumlistPro = function () {
 		leftCloneSlideOutClass: 'left-clone-slide-out',
 		leftCloneSlideBackClass: 'left-clone-slide-back',
 		leftItemActiveClass: 'left-item-active',
-		// leftMaskClass: 'left-mask',
-		// leftMaskSlideOutClass: 'left-mask-slide-out',
-		// leftMaskSlideBackClass: 'left-mask-slide-back',
-		leftBackgrounds: [{
+		leftMasks: [{
 			classNameDefault: 'left-mask',
 			classNameSlideOut: 'left-mask-slide-out',
-			classNameSlideIn: 'left-mask-slide-back',
+			classNameSlideBack: 'left-mask-slide-back',
 			childNode: null
 		}],
 		leftDragHandleClass: 'left-drag-handle',
@@ -17061,15 +17058,12 @@ var lithiumlistPro = function () {
 		rightCloneSlideOutClass: 'right-clone-slide-out',
 		rightCloneSlideBackClass: 'right-clone-slide-back',
 		rightItemActiveClass: 'right-item-active',
-		rightBackgrounds: [{
+		rightMasks: [{
 			classNameDefault: 'right-mask',
 			classNameSlideOut: 'right-mask-slide-out',
-			classNameSlideIn: 'right-mask-slide-back',
+			classNameSlideBack: 'right-mask-slide-back',
 			childNode: null
 		}],
-		// rightMaskClass: 'right-mask',
-		// rightMaskSlideOutClass: 'right-mask-slide-out',
-		// rightMaskSlideBackClass: 'right-mask-slide-back',
 		rightDragHandleClass: 'right-drag-handle',
 		rightDragStartThreshold: '10px',
 		rightDragEndThreshold: '30%',
@@ -17265,7 +17259,7 @@ var lithiumlistPro = function () {
 			addClass(instance.scrollCont, instance.props.leftScrollClass);
 		}
 
-		if (instance.props.leftBackgrounds[0] && instance.props.leftBackgrounds[0].classNameDefault && !instance.temp.itemMask) {
+		if (instance.props.leftMasks[0] && instance.props.leftMasks[0].classNameDefault && !instance.temp.itemMask) {
 			createMask(instance);
 		}
 
@@ -17291,7 +17285,7 @@ var lithiumlistPro = function () {
 			addClass(instance.scrollCont, instance.props.rightScrollClass);
 		}
 
-		if (instance.props.rightMaskClass && !instance.temp.itemMask) {
+		if (instance.props.rightMasks[0] && instance.props.rightMasks[0].classNameDefault && !instance.temp.itemMask) {
 			createMask(instance);
 		}
 
@@ -17658,8 +17652,8 @@ var lithiumlistPro = function () {
 			addClass(instance.temp.itemClone, instance.props.leftCloneSlideOutClass);
 		}
 
-		if (instance.props.leftMaskSlideOutClass && instance.temp.itemMask) {
-			addClass(instance.temp.itemMask, instance.props.leftMaskSlideOutClass);
+		if (instance.props.leftMasks[0] && instance.props.leftMasks[0].classNameSlideOut && !instance.temp.itemMask) {
+			addClass(instance.temp.itemMask, instance.props.leftMasks[0].classNameSlideOut);
 		}
 
 		instance.temp.itemClone.style.left = '-100%';
@@ -17684,8 +17678,8 @@ var lithiumlistPro = function () {
 			addClass(instance.temp.itemClone, instance.props.leftCloneSlideBackClass);
 		}
 
-		if (instance.props.leftMaskSlideBackClass && instance.temp.itemMask) {
-			addClass(instance.temp.itemMask, instance.props.leftMaskSlideBackClass);
+		if (instance.props.leftMasks[0] && instance.props.leftMasks[0].classNameSlideBack && !instance.temp.itemMask) {
+			addClass(instance.temp.itemMask, instance.props.leftMasks[0].classNameSlideBack);
 		}
 
 		instance.temp.itemClone.style.left = '0';
@@ -17710,8 +17704,8 @@ var lithiumlistPro = function () {
 			addClass(instance.temp.itemClone, instance.props.rightCloneSlideOutClass);
 		}
 
-		if (instance.props.rightMaskSlideOutClass && instance.temp.itemMask) {
-			addClass(instance.temp.itemMask, instance.props.rightMaskSlideOutClass);
+		if (instance.props.rightMasks[0] && instance.props.rightMasks[0].classNameSlideOut && !instance.temp.itemMask) {
+			addClass(instance.temp.itemMask, instance.props.rightMasks[0].classNameSlideOut);
 		}
 
 		instance.temp.itemClone.style.left = '100%';
@@ -17736,8 +17730,8 @@ var lithiumlistPro = function () {
 			addClass(instance.temp.itemClone, instance.props.rightCloneSlideBackClass);
 		}
 
-		if (instance.props.rightMaskSlideBackClass && instance.temp.itemMask) {
-			addClass(instance.temp.itemMask, instance.props.rightMaskSlideBackClass);
+		if (instance.props.rightMasks[0] && instance.props.rightMasks[0].classNameSlideBack && !instance.temp.itemMask) {
+			addClass(instance.temp.itemMask, instance.props.rightMasks[0].classNameSlideBack);
 		}
 
 		instance.temp.itemClone.style.left = '0';
@@ -17849,25 +17843,19 @@ var lithiumlistPro = function () {
 		instance.temp.itemMask.style.height = instance.temp.items[instance.temp.activeIndex].offsetHeight + 'px';
 		instance.temp.itemMask.style.width = '100%';
 
-		if (instance.temp.moveType == 'LEFT') {
-			//      leftBackgrounds: [{
-			// classNameDefault: 'left-mask',
-			// classNameSlideOut: 'left-mask-slide-out',
-			// classNameSlideIn: 'left-mask-slide-back',
-			// childNode: null
-			//      }],
-
-			// ALSO REPLACE leftMaskSlideOutClass / leftMaskSlideInClass !!!!
-
-			if (instance.props.leftBackgrounds[0] && instance.props.leftBackgrounds[0].classNameDefault) {
-				addClass(instance.temp.itemMask, instance.props.leftBackgrounds[0].classNameDefault);
+		if (instance.temp.moveType == 'LEFT' && instance.props.leftMasks[0]) {
+			if (instance.props.leftMasks[0].classNameDefault) {
+				addClass(instance.temp.itemMask, instance.props.leftMasks[0].classNameDefault);
 			}
-			// if (instance.props.leftMaskClass) {
-			// 	addClass(instance.temp.itemMask, instance.props.leftMaskClass);
-			// }
-		} else if (instance.temp.moveType == 'RIGHT') {
-			if (instance.props.rightMaskClass) {
-				addClass(instance.temp.itemMask, instance.props.rightMaskClass);
+			if (instance.props.leftMasks[0].childNode) {
+				instance.temp.itemMask.appendChild(instance.props.leftMasks[0].childNode);
+			}
+		} else if (instance.temp.moveType == 'RIGHT' && instance.props.rightMasks[0]) {
+			if (instance.props.rightMasks[0].classNameDefault) {
+				addClass(instance.temp.itemMask, instance.props.rightMasks[0].classNameDefault);
+			}
+			if (instance.props.rightMasks[0].childNode) {
+				instance.temp.itemMask.appendChild(instance.props.rightMasks[0].childNode);
 			}
 		}
 	};
@@ -18057,6 +18045,32 @@ var listCont = document.getElementById('div-list-cont');
 var scrollCont = document.getElementById('div-scroll-cont');
 var listItemClass = 'listitem-cont';
 
+// const textNodeDelete0 = document.createTextNode("Click here to");
+// const brDelete = document.createElement("br");
+// const textNodeDelete1 = document.createTextNode("confirm delete");
+// const divOuterDelete = document.createElement("div");
+// divOuterDelete.className = 'listsort-msg-outer';
+// divOuterDelete.appendChild(textNodeDelete0);
+// divOuterDelete.appendChild(brDelete);
+// divOuterDelete.appendChild(textNodeDelete1);
+// const divContDelete = document.createElement("div");
+// divContDelete.className = 'listsort-msg-cont';
+// divContDelete.appendChild(divOuterDelete);
+
+var textLeft = document.createTextNode("Delete");
+var spanLeft = document.createElement("span");
+spanLeft.appendChild(textLeft);
+var divLeft = document.createElement("div");
+divLeft.appendChild(spanLeft);
+divLeft.className = 'label-cont';
+
+var textRight = document.createTextNode("Archive");
+var spanRight = document.createElement("span");
+spanRight.appendChild(textRight);
+var divRight = document.createElement("div");
+divRight.appendChild(spanRight);
+divRight.className = 'label-cont';
+
 var listProperties = {
 				sortDragHandleClass: 'budicon-grab-ui',
 				leftDragHandleClass: 'budicon-trash',
@@ -18065,8 +18079,20 @@ var listProperties = {
 				sortScrollSpeed: 5,
 				leftEnabled: true,
 				leftByDrag: true,
+				leftMasks: [{
+								classNameDefault: 'left-mask',
+								classNameSlideOut: 'left-mask-slide-out',
+								classNameSlideBack: 'left-mask-slide-back',
+								childNode: divLeft
+				}],
 				rightEnabled: true,
-				rightByDrag: true
+				rightByDrag: true,
+				rightMasks: [{
+								classNameDefault: 'right-mask',
+								classNameSlideOut: 'right-mask-slide-out',
+								classNameSlideBack: 'right-mask-slide-back',
+								childNode: divRight
+				}]
 };
 
 function monitorWinWidth() {

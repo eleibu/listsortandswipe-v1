@@ -78,8 +78,36 @@ a:hover {
   background-color: red;
 }
 
+#div-scroll-cont #div-list-cont div.left-mask div.label-cont {
+  position: relative;
+  height: 100%;
+}
+
+#div-scroll-cont #div-list-cont div.left-mask div.label-cont span {
+  position: absolute;
+  right: 0.4em;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  color: #F8F8F8;
+}
+
 #div-scroll-cont #div-list-cont div.right-mask {
   background-color: green;
+}
+
+#div-scroll-cont #div-list-cont div.right-mask div.label-cont {
+  position: relative;
+  height: 100%;
+}
+
+#div-scroll-cont #div-list-cont div.right-mask div.label-cont span {
+  position: absolute;
+  left: 0.4em;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  color: #F8F8F8;
 }
 
 #div-scroll-cont.xl, #div-scroll-cont.lg, #div-scroll-cont.md, #div-scroll-cont.sm {

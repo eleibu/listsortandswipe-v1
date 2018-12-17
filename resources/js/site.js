@@ -6,6 +6,33 @@ var listCont = document.getElementById('div-list-cont');
 var scrollCont = document.getElementById('div-scroll-cont');
 var listItemClass = 'listitem-cont';
 
+
+// const textNodeDelete0 = document.createTextNode("Click here to");
+// const brDelete = document.createElement("br");
+// const textNodeDelete1 = document.createTextNode("confirm delete");
+// const divOuterDelete = document.createElement("div");
+// divOuterDelete.className = 'listsort-msg-outer';
+// divOuterDelete.appendChild(textNodeDelete0);
+// divOuterDelete.appendChild(brDelete);
+// divOuterDelete.appendChild(textNodeDelete1);
+// const divContDelete = document.createElement("div");
+// divContDelete.className = 'listsort-msg-cont';
+// divContDelete.appendChild(divOuterDelete);
+
+var textLeft = document.createTextNode("Delete");
+var spanLeft = document.createElement("span");
+spanLeft.appendChild(textLeft);
+var divLeft = document.createElement("div");
+divLeft.appendChild(spanLeft);
+divLeft.className = 'label-cont';
+
+var textRight = document.createTextNode("Archive");
+var spanRight = document.createElement("span");
+spanRight.appendChild(textRight);
+var divRight = document.createElement("div");
+divRight.appendChild(spanRight);
+divRight.className = 'label-cont';
+
 var listProperties = {
 	sortDragHandleClass: 'budicon-grab-ui',
 	leftDragHandleClass: 'budicon-trash',
@@ -14,8 +41,20 @@ var listProperties = {
 	sortScrollSpeed: 5,
 	leftEnabled: true,
 	leftByDrag: true,
+    leftMasks: [{
+		classNameDefault: 'left-mask',
+		classNameSlideOut: 'left-mask-slide-out',
+		classNameSlideBack: 'left-mask-slide-back',
+		childNode: divLeft
+    }],
 	rightEnabled: true,
-	rightByDrag: true
+	rightByDrag: true,
+    rightMasks: [{
+		classNameDefault: 'right-mask',
+		classNameSlideOut: 'right-mask-slide-out',
+		classNameSlideBack: 'right-mask-slide-back',
+		childNode: divRight
+    }],
 };
 
 function monitorWinWidth() {
