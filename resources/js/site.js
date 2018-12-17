@@ -6,15 +6,17 @@ var listCont = document.getElementById('div-list-cont');
 var scrollCont = document.getElementById('div-scroll-cont');
 var listItemClass = 'listitem-cont';
 
-// function(listCont, scrollCont, eventsTarget, listItemClass, listProperties)
-
 var listProperties = {
 	sortDragHandleClass: 'budicon-grab-ui',
 	leftDragHandleClass: 'budicon-trash',
 	rightDragHandleClass: 'budicon-reload-ui',
-	onSortEnd: sortEnd
+	onSortEnd: sortEnd,
+	sortScrollSpeed: 5,
+	leftEnabled: true,
+	leftByDrag: true,
+	rightEnabled: true,
+	rightByDrag: true
 };
-
 
 function monitorWinWidth() {
     var width = window.innerWidth;

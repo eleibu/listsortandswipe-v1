@@ -94,6 +94,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // add 'unselectedable' classes (with vendor prefixes) to prevent text selection
 // eventsTarget should be 'window' on desktop and NOT 'window' or 'body' on mobile
 // if 'left/righMaskClass' is not set, mask is not created
+// sortScrollSpeed: 1, 2, 3, 4, 5 (default = 3)
 
 
 // Pipeline:
@@ -107,13 +108,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // * Position of itemCont behaves strangely when item-cont has a top or bottom margin. Temporary resolution is to remove the margin, insert a child div and add a margin to that.
 // * Cursor is sometimes far above itemCont but still moving it (seems to happen only when moving up, but not sure).
 
-// TODO: convert sortScrollSpeed to 'veryslow', 'slow', 'normal', 'fast', 'veryfast' (or perhaps 1, 2, 3, 4, 5)
-// TODO: only detect left/right drag if enabled
-// TODO: include tags to ignore when clicked
 // TODO: left / right buttons
 // TODO: left / right confirm
-// TODO: cancel 'mousemove', 'mouseup', 'touchmove', 'touchend' while scrolling?
-// TODO: Start of scrolling should cancel sort timer (DONE?)
 // TODO: Remove .version() from webpack.mix.js?
 
 
@@ -132,7 +128,7 @@ var lithiumlistPro = function () {
 		sortMoveStartDelay: 400,
 		sortReorderDuration: 200,
 		sortEndDockDuration: 200,
-		sortScrollSpeed: 15,
+		sortScrollSpeed: 3,
 		onLeftStart: null,
 		onLeftSlideOutStart: null,
 		onLeftSlideBackStart: null,
@@ -150,7 +146,7 @@ var lithiumlistPro = function () {
 		leftDragHandleClass: 'left-drag-handle',
 		leftDragStartThreshold: '10%',
 		leftDragEndThreshold: '30%',
-		leftSlideOutDuration: 400,
+		leftSlideOutDuration: 300,
 		leftSlideBackDuration: 200,
 		onRightStart: null,
 		onRightSlideOutStart: null,
@@ -169,8 +165,9 @@ var lithiumlistPro = function () {
 		rightDragHandleClass: 'right-drag-handle',
 		rightDragStartThreshold: '10px',
 		rightDragEndThreshold: '30%',
-		rightSlideOutDuration: 400,
-		rightSlideBackDuration: 200
+		rightSlideOutDuration: 300,
+		rightSlideBackDuration: 200,
+		ignoreOnClick: ['input', 'textarea', 'select', 'option', 'button']
 	};
 
 	var setDefaultProperties = function setDefaultProperties(userDefaultProperties) {
@@ -309,7 +306,7 @@ var lithiumlistPro = function () {
 					instance.temp.activeIndex = index;
 					initMoveRight(instance, 0);
 					initRightSlideOut(instance);
-				} else {
+				} else if (instance.props.ignoreOnClick.indexOf(e.target.tagName.toLowerCase()) == -1) {
 					backgroundClick(e, index, instance);
 				}
 			}
@@ -409,10 +406,6 @@ var lithiumlistPro = function () {
 				instance.temp.sortDelayTimer = setTimeout(function () {
 					activateSort(instance);
 				}, instance.props.sortMoveStartDelay);
-			} else {
-
-				// wait for either left or right drag
-
 			}
 		}
 	};
@@ -509,7 +502,7 @@ var lithiumlistPro = function () {
 					animateItems(instance);
 
 					if (scrollProps.scrollDir != 0 && scrollProps.outFraction != 0) {
-						var scrollChange = Math.round(scrollProps.scrollDir * scrollProps.outFraction * instance.props.sortScrollSpeed);
+						var scrollChange = Math.round(scrollProps.scrollDir * scrollProps.outFraction * getScrollMultiplier(instance.props.sortScrollSpeed));
 						instance.temp.scrollInterval = setInterval(function () {
 							doScroll(instance, scrollChange);
 						}, 5);
@@ -986,6 +979,25 @@ var lithiumlistPro = function () {
 	};
 
 	// utility functions
+
+	var getScrollMultiplier = function getScrollMultiplier(speed) {
+		switch (speed) {
+			case 1:
+				return 2;
+				break;
+			case 2:
+				return 5;
+				break;
+			case 4:
+				return 11;
+				break;
+			case 5:
+				return 14;
+				break;
+			default:
+				return 8;
+		}
+	};
 
 	var cursorIsOverRect = function cursorIsOverRect(pageX, pageY, rect) {
 		if (pageX >= rect.left && pageX <= rect.right && pageY >= rect.top && pageY <= rect.bottom) {
