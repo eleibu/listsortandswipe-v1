@@ -35,6 +35,7 @@
 // * Position of itemCont behaves strangely when item-cont has a top or bottom margin. Temporary resolution is to remove the margin, insert a child div and add a margin to that.
 // * Cursor is sometimes far above itemCont but still moving it (seems to happen only when moving up, but not sure).
 
+// TODO: methods - eg. triggerLeft(index) / triggerRight(index)
 // TODO: left / right buttons
 // TODO: left / right confirm
 // TODO: Remove .version() from webpack.mix.js?
@@ -67,9 +68,15 @@ export var lithiumlistPro = (function () {
         leftCloneSlideOutClass: 'left-clone-slide-out',
         leftCloneSlideBackClass: 'left-clone-slide-back',
         leftItemActiveClass: 'left-item-active',
-        leftMaskClass: 'left-mask',
-        leftMaskSlideOutClass: 'left-mask-slide-out',
-        leftMaskSlideBackClass: 'left-mask-slide-back',
+        // leftMaskClass: 'left-mask',
+        // leftMaskSlideOutClass: 'left-mask-slide-out',
+        // leftMaskSlideBackClass: 'left-mask-slide-back',
+        leftBackgrounds: [{
+			classNameDefault: 'left-mask',
+			classNameSlideOut: 'left-mask-slide-out',
+			classNameSlideIn: 'left-mask-slide-back',
+			childNode: null
+        }],
         leftDragHandleClass: 'left-drag-handle',
         leftDragStartThreshold: '10%',
         leftDragEndThreshold: '30%',
@@ -86,9 +93,15 @@ export var lithiumlistPro = (function () {
         rightCloneSlideOutClass: 'right-clone-slide-out',
         rightCloneSlideBackClass: 'right-clone-slide-back',
         rightItemActiveClass: 'right-item-active',
-        rightMaskClass: 'right-mask',
-        rightMaskSlideOutClass: 'right-mask-slide-out',
-        rightMaskSlideBackClass: 'right-mask-slide-back',
+        rightBackgrounds: [{
+			classNameDefault: 'right-mask',
+			classNameSlideOut: 'right-mask-slide-out',
+			classNameSlideIn: 'right-mask-slide-back',
+			childNode: null
+        }],
+        // rightMaskClass: 'right-mask',
+        // rightMaskSlideOutClass: 'right-mask-slide-out',
+        // rightMaskSlideBackClass: 'right-mask-slide-back',
         rightDragHandleClass: 'right-drag-handle',
         rightDragStartThreshold: '10px',
         rightDragEndThreshold: '30%',
@@ -270,9 +283,9 @@ export var lithiumlistPro = (function () {
         	addClass(instance.scrollCont, instance.props.leftScrollClass);
         }
 
-        if ((instance.props.leftMaskClass) && (!instance.temp.itemMask)) {
+   		if ((instance.props.leftBackgrounds[0]) && (instance.props.leftBackgrounds[0].classNameDefault) && (!instance.temp.itemMask)) {
 			createMask(instance);
-        }
+   		}
 
 		if (instance.props.leftItemActiveClass) {
 			addClass(instance.temp.items[instance.temp.activeIndex], instance.props.leftItemActiveClass);
@@ -830,9 +843,21 @@ export var lithiumlistPro = (function () {
 		instance.temp.itemMask.style.width = '100%';
 
 		if (instance.temp.moveType == 'LEFT') {
-			if (instance.props.leftMaskClass) {
-				addClass(instance.temp.itemMask, instance.props.leftMaskClass);
-			}
+   //      leftBackgrounds: [{
+			// classNameDefault: 'left-mask',
+			// classNameSlideOut: 'left-mask-slide-out',
+			// classNameSlideIn: 'left-mask-slide-back',
+			// childNode: null
+   //      }],
+
+   // ALSO REPLACE leftMaskSlideOutClass / leftMaskSlideInClass !!!!
+
+	   		if ((instance.props.leftBackgrounds[0]) && (instance.props.leftBackgrounds[0].classNameDefault)) {
+				addClass(instance.temp.itemMask, instance.props.leftBackgrounds[0].classNameDefault);
+	   		}
+			// if (instance.props.leftMaskClass) {
+			// 	addClass(instance.temp.itemMask, instance.props.leftMaskClass);
+			// }
 		} else if (instance.temp.moveType == 'RIGHT') {
 			if (instance.props.rightMaskClass) {
 				addClass(instance.temp.itemMask, instance.props.rightMaskClass);
