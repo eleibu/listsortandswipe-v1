@@ -95,6 +95,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // eventsTarget should be 'window' on desktop and NOT 'window' or 'body' on mobile
 // if 'left/righMaskClass' is not set, mask is not created
 // sortScrollSpeed: 1, 2, 3, 4, 5 (default = 3)
+// leftMasks / rightMasks must be arrays (not null)
 
 
 // Pipeline:
@@ -108,9 +109,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // * Position of itemCont behaves strangely when item-cont has a top or bottom margin. Temporary resolution is to remove the margin, insert a child div and add a margin to that.
 // * Cursor is sometimes far above itemCont but still moving it (seems to happen only when moving up, but not sure).
 
-// TODO: allow itemMask to have multiple
-// TODO: methods - eg. triggerLeft(index) / triggerRight(index)
-// TODO: left / right confirm
+
 // TODO: Remove .version() from webpack.mix.js?
 
 
@@ -259,7 +258,7 @@ var lithiumlistPro = function () {
 			'items': [],
 			'moveType': null,
 			'itemClone': null,
-			'itemMask': null,
+			'itemMasks': [],
 			'activeIndex': null,
 			'origIndex': null,
 			'startPageX': null,
@@ -364,8 +363,8 @@ var lithiumlistPro = function () {
 			addClass(instance.scrollCont, instance.props.leftScrollClass);
 		}
 
-		if (instance.props.leftMasks[0] && instance.props.leftMasks[0].classNameDefault && !instance.temp.itemMask) {
-			createMask(instance);
+		if (instance.props.leftMasks.length > 0 && instance.temp.itemMasks.length == 0) {
+			createMasks(instance);
 		}
 
 		if (instance.props.leftItemActiveClass) {
@@ -390,8 +389,8 @@ var lithiumlistPro = function () {
 			addClass(instance.scrollCont, instance.props.rightScrollClass);
 		}
 
-		if (instance.props.rightMasks[0] && instance.props.rightMasks[0].classNameDefault && !instance.temp.itemMask) {
-			createMask(instance);
+		if (instance.props.rightMasks.length > 0 && instance.temp.itemMasks.length == 0) {
+			createMasks(instance);
 		}
 
 		if (instance.props.rightItemActiveClass) {
@@ -757,8 +756,10 @@ var lithiumlistPro = function () {
 			addClass(instance.temp.itemClone, instance.props.leftCloneSlideOutClass);
 		}
 
-		if (instance.props.leftMasks[0] && instance.props.leftMasks[0].classNameSlideOut && !instance.temp.itemMask) {
-			addClass(instance.temp.itemMask, instance.props.leftMasks[0].classNameSlideOut);
+		for (var i = 0, len = instance.props.leftMasks.length; i < len; i++) {
+			if (instance.props.leftMasks[i].classNameSlideOut && instance.temp.itemMasks[i]) {
+				addClass(instance.temp.itemMasks[i], instance.props.leftMasks[i].classNameSlideOut);
+			}
 		}
 
 		instance.temp.itemClone.style.left = '-100%';
@@ -783,8 +784,10 @@ var lithiumlistPro = function () {
 			addClass(instance.temp.itemClone, instance.props.leftCloneSlideBackClass);
 		}
 
-		if (instance.props.leftMasks[0] && instance.props.leftMasks[0].classNameSlideBack && !instance.temp.itemMask) {
-			addClass(instance.temp.itemMask, instance.props.leftMasks[0].classNameSlideBack);
+		for (var i = 0, len = instance.props.leftMasks.length; i < len; i++) {
+			if (instance.props.leftMasks[i].classNameSlideBack && instance.temp.itemMasks[i]) {
+				addClass(instance.temp.itemMasks[i], instance.props.leftMasks[i].classNameSlideBack);
+			}
 		}
 
 		instance.temp.itemClone.style.left = '0';
@@ -809,8 +812,10 @@ var lithiumlistPro = function () {
 			addClass(instance.temp.itemClone, instance.props.rightCloneSlideOutClass);
 		}
 
-		if (instance.props.rightMasks[0] && instance.props.rightMasks[0].classNameSlideOut && !instance.temp.itemMask) {
-			addClass(instance.temp.itemMask, instance.props.rightMasks[0].classNameSlideOut);
+		for (var i = 0, len = instance.props.rightMasks.length; i < len; i++) {
+			if (instance.props.rightMasks[i].classNameSlideOut && instance.temp.itemMasks[i]) {
+				addClass(instance.temp.itemMasks[i], instance.props.rightMasks[i].classNameSlideOut);
+			}
 		}
 
 		instance.temp.itemClone.style.left = '100%';
@@ -835,8 +840,10 @@ var lithiumlistPro = function () {
 			addClass(instance.temp.itemClone, instance.props.rightCloneSlideBackClass);
 		}
 
-		if (instance.props.rightMasks[0] && instance.props.rightMasks[0].classNameSlideBack && !instance.temp.itemMask) {
-			addClass(instance.temp.itemMask, instance.props.rightMasks[0].classNameSlideBack);
+		for (var i = 0, len = instance.props.rightMasks.length; i < len; i++) {
+			if (instance.props.rightMasks[i].classNameSlideBack && instance.temp.itemMasks[i]) {
+				addClass(instance.temp.itemMasks[i], instance.props.rightMasks[i].classNameSlideBack);
+			}
 		}
 
 		instance.temp.itemClone.style.left = '0';
@@ -907,9 +914,11 @@ var lithiumlistPro = function () {
 			instance.listCont.removeChild(instance.temp.itemClone);
 			instance.temp.itemClone = null;
 		}
-		if (instance.temp.itemMask) {
-			instance.listCont.removeChild(instance.temp.itemMask);
-			instance.temp.itemMask = null;
+		if (instance.temp.itemMasks.length > 0) {
+			for (var i = 0, len = instance.temp.itemMasks.length; i < len; i++) {
+				instance.listCont.removeChild(instance.temp.itemMasks[i]);
+				instance.temp.itemMasks[i] = null;
+			}
 		}
 	};
 
@@ -939,28 +948,29 @@ var lithiumlistPro = function () {
 		}
 	};
 
-	var createMask = function createMask(instance) {
-		var newDiv = document.createElement('div');
-		instance.temp.itemMask = instance.listCont.appendChild(newDiv);
-		instance.temp.itemMask.style.position = 'absolute';
-		instance.temp.itemMask.style.left = '0';
-		instance.temp.itemMask.style.top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
-		instance.temp.itemMask.style.height = instance.temp.items[instance.temp.activeIndex].offsetHeight + 'px';
-		instance.temp.itemMask.style.width = '100%';
+	var createMasks = function createMasks(instance) {
+		var masks = null;
+		if (instance.temp.moveType == 'LEFT' && instance.props.leftMasks.length > 0) {
+			masks = instance.props.leftMasks;
+		} else if (instance.temp.moveType == 'RIGHT' && instance.props.rightMasks.length > 0) {
+			masks = instance.props.rightMasks;
+		}
+		if (masks) {
+			for (var i = 0, len = masks.length; i < len; i++) {
+				var newDiv = document.createElement('div');
+				instance.temp.itemMasks[i] = instance.listCont.appendChild(newDiv);
+				instance.temp.itemMasks[i].style.position = 'absolute';
+				instance.temp.itemMasks[i].style.left = '0';
+				instance.temp.itemMasks[i].style.top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
+				instance.temp.itemMasks[i].style.height = instance.temp.items[instance.temp.activeIndex].offsetHeight + 'px';
+				instance.temp.itemMasks[i].style.width = '100%';
 
-		if (instance.temp.moveType == 'LEFT' && instance.props.leftMasks[0]) {
-			if (instance.props.leftMasks[0].classNameDefault) {
-				addClass(instance.temp.itemMask, instance.props.leftMasks[0].classNameDefault);
-			}
-			if (instance.props.leftMasks[0].childNode) {
-				instance.temp.itemMask.appendChild(instance.props.leftMasks[0].childNode);
-			}
-		} else if (instance.temp.moveType == 'RIGHT' && instance.props.rightMasks[0]) {
-			if (instance.props.rightMasks[0].classNameDefault) {
-				addClass(instance.temp.itemMask, instance.props.rightMasks[0].classNameDefault);
-			}
-			if (instance.props.rightMasks[0].childNode) {
-				instance.temp.itemMask.appendChild(instance.props.rightMasks[0].childNode);
+				if (masks[i].classNameDefault) {
+					addClass(instance.temp.itemMasks[i], masks[i].classNameDefault);
+				}
+				if (masks[i].childNode) {
+					instance.temp.itemMasks[i].appendChild(masks[i].childNode);
+				}
 			}
 		}
 	};
@@ -985,6 +995,66 @@ var lithiumlistPro = function () {
 					listCont.removeEventListener('touchstart', instances[index].temp.funcTouchStart);
 				}
 				instances.splice(index, 1);
+			}
+		} else {
+			throw 'listCont cannot be null.';
+		}
+	};
+
+	var triggerLeft = function triggerLeft(listCont, itemIndex) {
+		if (listCont) {
+			var index = null;
+			for (var i = 0, len = instances.length; i < len; i++) {
+				if (instances[i].listCont === listCont) {
+					index = i;
+					break;
+				}
+			}
+			if (index != null) {
+				if (instances[index].props.leftEnabled) {
+					setItems(instances[index]);
+					if (instances[index].temp.items.length > itemIndex) {
+						instances[index].temp.activeIndex = itemIndex;
+						initMoveLeft(instances[index], 0);
+						initLeftSlideOut(instances[index]);
+					} else {
+						console.warn('List item not found.');
+					}
+				} else {
+					console.warn('listCont has \'leftEnabled = false\'.');
+				}
+			} else {
+				console.warn('listCont does not have lithiumlist attached.');
+			}
+		} else {
+			throw 'listCont cannot be null.';
+		}
+	};
+
+	var triggerRight = function triggerRight(listCont, itemIndex) {
+		if (listCont) {
+			var index = null;
+			for (var i = 0, len = instances.length; i < len; i++) {
+				if (instances[i].listCont === listCont) {
+					index = i;
+					break;
+				}
+			}
+			if (index != null) {
+				if (instances[index].props.rightEnabled) {
+					setItems(instances[index]);
+					if (instances[index].temp.items.length > itemIndex) {
+						instances[index].temp.activeIndex = itemIndex;
+						initMoveRight(instances[index], 0);
+						initRightSlideOut(instances[index]);
+					} else {
+						console.warn('List item not found.');
+					}
+				} else {
+					console.warn('listCont has \'rightEnabled = false\'.');
+				}
+			} else {
+				console.warn('listCont does not have lithiumlist attached.');
 			}
 		} else {
 			throw 'listCont cannot be null.';
@@ -1130,7 +1200,9 @@ var lithiumlistPro = function () {
 		setDefaultProperties: setDefaultProperties,
 		setListProperties: setListProperties,
 		attachToList: attachToList,
-		detachFromList: detachFromList
+		detachFromList: detachFromList,
+		triggerLeft: triggerLeft,
+		triggerRight: triggerRight
 	};
 }();
 

@@ -7,18 +7,6 @@ var scrollCont = document.getElementById('div-scroll-cont');
 var listItemClass = 'listitem-cont';
 
 
-// const textNodeDelete0 = document.createTextNode("Click here to");
-// const brDelete = document.createElement("br");
-// const textNodeDelete1 = document.createTextNode("confirm delete");
-// const divOuterDelete = document.createElement("div");
-// divOuterDelete.className = 'listsort-msg-outer';
-// divOuterDelete.appendChild(textNodeDelete0);
-// divOuterDelete.appendChild(brDelete);
-// divOuterDelete.appendChild(textNodeDelete1);
-// const divContDelete = document.createElement("div");
-// divContDelete.className = 'listsort-msg-cont';
-// divContDelete.appendChild(divOuterDelete);
-
 var textLeft = document.createTextNode("Delete");
 var spanLeft = document.createElement("span");
 spanLeft.appendChild(textLeft);
@@ -114,6 +102,10 @@ function sortEnd(origIndex, newIndex) {
 	}
 }
 
+var temp = document.getElementById('temp');
+temp.addEventListener('click', function() {
+	lithiumlistPro.triggerRight(listCont, 23);
+});
 
 
 // lithiumlistPro.setDefaults({delay: 200});
