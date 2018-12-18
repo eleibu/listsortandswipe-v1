@@ -21,28 +21,32 @@ var divRight = document.createElement("div");
 divRight.appendChild(spanRight);
 divRight.className = 'label-cont';
 
+// var listProperties = {
+// 	sortDragHandleClass: 'budicon-grab-ui',
+// 	leftDragHandleClass: 'budicon-trash',
+// 	rightDragHandleClass: 'budicon-reload-ui',
+// 	onSortEnd: sortEnd,
+// 	sortScrollSpeed: 5,
+// 	leftEnabled: true,
+// 	leftByDrag: true,
+//     leftMasks: [{
+// 		classNameDefault: 'left-mask',
+// 		classNameSlideOut: 'left-mask-slide-out',
+// 		classNameSlideBack: 'left-mask-slide-back',
+// 		childNode: divLeft
+//     }],
+// 	rightEnabled: true,
+// 	rightByDrag: true,
+//     rightMasks: [{
+// 		classNameDefault: 'right-mask',
+// 		classNameSlideOut: 'right-mask-slide-out',
+// 		classNameSlideBack: 'right-mask-slide-back',
+// 		childNode: divRight
+//     }],
+// };
+
 var listProperties = {
-	sortDragHandleClass: 'budicon-grab-ui',
-	leftDragHandleClass: 'budicon-trash',
-	rightDragHandleClass: 'budicon-reload-ui',
-	onSortEnd: sortEnd,
-	sortScrollSpeed: 5,
-	leftEnabled: true,
-	leftByDrag: true,
-    leftMasks: [{
-		classNameDefault: 'left-mask',
-		classNameSlideOut: 'left-mask-slide-out',
-		classNameSlideBack: 'left-mask-slide-back',
-		childNode: divLeft
-    }],
-	rightEnabled: true,
-	rightByDrag: true,
-    rightMasks: [{
-		classNameDefault: 'right-mask',
-		classNameSlideOut: 'right-mask-slide-out',
-		classNameSlideBack: 'right-mask-slide-back',
-		childNode: divRight
-    }],
+	sortEnabled: true
 };
 
 function monitorWinWidth() {

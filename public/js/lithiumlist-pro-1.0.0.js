@@ -176,6 +176,72 @@ var lithiumlistPro = function () {
 		ignoreOnClick: ['input', 'textarea', 'select', 'option', 'button']
 	};
 
+	var validateProps = function validateProps(props) {
+		if (!isUndefinedOrNull(props['onSortStart']) && !isFunction(props['onSortStart'])) {
+			throw 'onSortStart must be a function';
+		}
+
+		if (!isUndefinedOrNull(props['onSortEnd']) && !isFunction(props['onSortEnd'])) {
+			throw 'onSortEnd must be a function';
+		}
+
+		if (!isUndefinedOrNull(props['sortEnabled']) && !isBoolean(props['sortEnabled'])) {
+			throw 'sortEnabled must be a boolean';
+		}
+
+		if (!isUndefinedOrNull(props['sortByDrag']) && !isBoolean(props['sortByDrag'])) {
+			throw 'sortByDrag must be a boolean';
+		}
+	};
+
+	var isUndefinedOrNull = function isUndefinedOrNull(value) {
+		if (typeof value === 'undefined' || value == null) {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+	var isFunction = function isFunction(value) {
+		if (value && typeof value === 'function') {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+	var isBoolean = function isBoolean(value) {
+		if (typeof value === 'boolean') {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+	var isIntegar = function isIntegar(value) {
+		if (!(typeof value === 'string') && !(value instanceof String) && value === parseInt(value, 10)) {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+	var isString = function isString(value, permitZeroLength) {
+		if (typeof value === 'string' || value instanceof String) {
+			if (permitZeroLength) {
+				return true;
+			} else {
+				if (value.length > 0) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		} else {
+			return false;
+		}
+	};
+
 	var setDefaultProperties = function setDefaultProperties(userDefaultProperties) {
 		if (userDefaultProperties) {
 			for (var attrname in defaultProperties) {
@@ -191,6 +257,12 @@ var lithiumlistPro = function () {
 	};
 
 	var attachToList = function attachToList(scrollCont, listCont, eventsTarget, listItemClass, listProperties) {
+
+		// var test = [0, -42, '42', 4e2, '4e2', '  1  ', '', 42.1, '1a', '4e2a', null, undefined, NaN];		
+		// for (var i = 0, len = test.length; i < len; i++) {
+		// 	console.log(test[i] + ': ' + isIntegar(test[i]));
+		// }
+
 		if (scrollCont == null) {
 			scrollCont = window;
 		} else {
@@ -217,10 +289,18 @@ var lithiumlistPro = function () {
 		}
 
 		var props = defaultProperties;
+		// if (listProperties) {
+
+		// 	// SHOULD WE VALIDATE THESE FIRST?
+
+		// 	for (var attrname in props) {
+		// 		if (typeof listProperties[attrname] !== 'undefined') {
+		// 			props[attrname] = listProperties[attrname];
+		// 		}
+		// 	}
+		// }
 		if (listProperties) {
-
-			// SHOULD WE VALIDATE THESE FIRST?
-
+			validateProps(listProperties);
 			for (var attrname in props) {
 				if (typeof listProperties[attrname] !== 'undefined') {
 					props[attrname] = listProperties[attrname];
@@ -627,9 +707,6 @@ var lithiumlistPro = function () {
 	};
 
 	var getItemCloneTop = function getItemCloneTop(instance) {
-
-		// CAN WE REPLACE THIS WITH OFFSETTOP?
-
 		var origTop = 0;
 		if (instance.temp.itemClone && instance.temp.itemClone.style && instance.temp.itemClone.style.top) {
 			var index = instance.temp.itemClone.style.top.indexOf('px');
@@ -641,9 +718,6 @@ var lithiumlistPro = function () {
 	};
 
 	var getTransYNum = function getTransYNum(el) {
-
-		// CAN WE REPLACE THIS WITH: https://stackoverflow.com/questions/42267189/how-to-get-value-translatex-by-javascript
-
 		var currentTransAmount = 0;
 		if (el.style && el.style[vendorPrefix + 'Transform']) {
 			var index = el.style[vendorPrefix + 'Transform'].indexOf('px');
