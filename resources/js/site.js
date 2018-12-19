@@ -3,7 +3,8 @@ require('bootstrap');
 import { lithiumlistPro } from './lithiumlist-pro-1.0.0.js';
 
 var listCont = document.getElementById('div-list-cont');
-var scrollCont = document.getElementById('div-scroll-cont');
+// var scrollCont = document.getElementById('div-scroll-cont');
+var scrollCont = window;
 var listItemClass = 'listitem-cont';
 
 
@@ -21,34 +22,28 @@ var divRight = document.createElement("div");
 divRight.appendChild(spanRight);
 divRight.className = 'label-cont';
 
-// var listProperties = {
-// 	sortDragHandleClass: 'budicon-grab-ui',
-// 	leftDragHandleClass: 'budicon-trash',
-// 	rightDragHandleClass: 'budicon-reload-ui',
-// 	onSortEnd: sortEnd,
-// 	sortScrollSpeed: 5,
-// 	leftEnabled: true,
-// 	leftByDrag: true,
-//     leftMasks: [{
-// 		classNameDefault: 'left-mask',
-// 		classNameSlideOut: 'left-mask-slide-out',
-// 		classNameSlideBack: 'left-mask-slide-back',
-// 		childNode: divLeft
-//     }],
-// 	rightEnabled: true,
-// 	rightByDrag: true,
-//     rightMasks: [{
-// 		classNameDefault: 'right-mask',
-// 		classNameSlideOut: 'right-mask-slide-out',
-// 		classNameSlideBack: 'right-mask-slide-back',
-// 		childNode: divRight
-//     }],
-// };
-
 var listProperties = {
+	sortDragHandleClass: 'budicon-grab-ui',
+	leftDragHandleClass: 'budicon-trash',
+	rightDragHandleClass: 'budicon-reload-ui',
+	onSortEnd: sortEnd,
 	sortScrollSpeed: 3,
-	leftDragStartThreshold: '40%',
-	onSortEnd: sortEnd
+	leftEnabled: true,
+	leftByDrag: true,
+    leftMasks: [{
+		classNameDefault: 'left-mask',
+		classNameSlideOut: 'left-mask-slide-out',
+		classNameSlideBack: 'left-mask-slide-back',
+		childNode: divLeft
+    }],
+	rightEnabled: true,
+	rightByDrag: true,
+    rightMasks: [{
+		classNameDefault: 'right-mask',
+		classNameSlideOut: 'right-mask-slide-out',
+		classNameSlideBack: 'right-mask-slide-back',
+		childNode: divRight
+    }],
 };
 
 function monitorWinWidth() {
@@ -110,7 +105,12 @@ function sortEnd(origIndex, newIndex) {
 
 var temp = document.getElementById('temp');
 temp.addEventListener('click', function() {
-	lithiumlistPro.triggerRight(listCont, 23);
+	console.log('window: ' + window.pageYOffset);
+	console.log(window.innerHeight);
+	// console.log('window: ' + window.scrollTop);
+	// console.log('document: ' + document.scrollTop);
+	// console.log('body: ' + document.body.scrollTop);
+	// lithiumlistPro.triggerRight(listCont, 23);
 });
 
 

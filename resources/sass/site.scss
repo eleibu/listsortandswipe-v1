@@ -35,7 +35,7 @@ a:hover {
 #div-scroll-cont {
 	position: relative;
 	border: 1px solid #AAAAAA;
-	overflow: auto;
+	// overflow: auto;
 
 	#div-list-cont {
 		position: relative;
@@ -104,7 +104,7 @@ a:hover {
 }
 
 #div-scroll-cont.xl, #div-scroll-cont.lg, #div-scroll-cont.md, #div-scroll-cont.sm {
-	height: 800px;
+	// height: 800px;
 	max-width: 600px;
 	margin: 0 auto;
 
@@ -157,7 +157,7 @@ a:hover {
 }
 
 #div-scroll-cont.xs {
-	height: 400px;
+	// height: 400px;
 
 	div.listitem-cont {
 		padding: 1.4em 1em;

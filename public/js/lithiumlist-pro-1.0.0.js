@@ -88,6 +88,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 // Notes:
+// scrollCont should be a DOM element or window (not 'document' or 'document.body')
 // listCont should have 'position: relative'
 // need to set css 'box-shadow' for 'clone-sort' class if want sort clone to have a drop shadow
 // need to set css for 'sort-item-active' to hide active item while sorting
@@ -97,11 +98,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // sortScrollSpeed: 1, 2, 3, 4, 5 (default = 3)
 // leftMasks / rightMasks must be arrays (not null) and leftMasks.classNameDefault must not be undefined or null
 // setDefaultProperties only applies to instances created after it is called (use setListProperties to change properties for a paticular instance)
+// leftScrollClass / rightScrollClass is not added to scrollCont if it is 'window'
 
 
 // Pipeline:
 // confirm left / right
-// left / right buttons
+// left / right buttons and multiple (remember to delete tempFunctionRemoveMasks())
 // elastic drag left / right
 // slow auto scroll when approach top / bottom
 
@@ -111,9 +113,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // * Cursor is sometimes far above itemCont but still moving it (seems to happen only when moving up, but not sure).
 
 
-// TODO: If leftMasks / rightMasks have length > 1, shorten them!!!
 // TODO: Test using window as scrollCont
-// TODO: Do not add classes to scrollCont if it is 'window'
 // TODO: Remove .version() from webpack.mix.js?
 
 
@@ -180,53 +180,7 @@ var lithiumlistPro = function () {
 		ignoreOnClick: ['input', 'textarea', 'select', 'option', 'button']
 	};
 
-	var setDefaultProperties = function setDefaultProperties(newDefaultProperties) {
-		if (isUndefinedOrNull(newDefaultProperties)) {
-			throw 'newDefaultProperties must not be undefined or null';
-		} else {
-			for (var attrname in defaultProperties) {
-				if (typeof newDefaultProperties[attrname] !== 'undefined') {
-					if (isArray(newDefaultProperties[attrname])) {
-						defaultProperties[attrname] = newDefaultProperties[attrname].slice(0);
-					} else {
-						defaultProperties[attrname] = newDefaultProperties[attrname];
-					}
-				}
-			}
-		}
-	};
-
-	var setListProperties = function setListProperties(listCont, listProperties) {
-		if (!isUndefinedOrNull(listCont) && isDOMElement(listCont)) {
-			if (!isUndefinedOrNull(listProperties)) {
-				var index = null;
-				for (var i = 0, len = instances.length; i < len; i++) {
-					if (instances[i].listCont === listCont) {
-						index = i;
-						break;
-					}
-				}
-				if (index != null) {
-					validateProps(listProperties);
-					for (var attrname in instances[index]['props']) {
-						if (typeof listProperties[attrname] !== 'undefined') {
-							if (isArray(listProperties[attrname])) {
-								instances[index]['props'][attrname] = listProperties[attrname].slice(0);
-							} else {
-								instances[index]['props'][attrname] = listProperties[attrname];
-							}
-						}
-					}
-				} else {
-					throw 'listCont does not have lithiumlist attached ';
-				}
-			} else {
-				throw 'listProperties must not be undefined or null';
-			}
-		} else {
-			throw 'listCont must be a DOM element';
-		}
-	};
+	// public methods
 
 	var attachToList = function attachToList(listCont, scrollCont, eventsTarget, listItemClass, listProperties) {
 		if (isUndefinedOrNull(listCont)) {
@@ -246,16 +200,18 @@ var lithiumlistPro = function () {
 		if (isUndefinedOrNull(scrollCont)) {
 			scrollCont = window;
 		} else {
-			if (isDOMElement(scrollCont)) {
-				if (scrollCont === listCont) {
-					console.warn('Auto scrolling may not work where scrollCont === listCont');
-				} else {
-					if (scrollCont !== window && !scrollCont.contains(listCont)) {
-						throw 'scrollCont must contain listCont';
+			if (!isWindow(scrollCont)) {
+				if (isDOMElement(scrollCont)) {
+					if (scrollCont === listCont) {
+						console.warn('Auto scrolling may not work where scrollCont === listCont');
+					} else {
+						if (!scrollCont.contains(listCont)) {
+							throw 'scrollCont must contain listCont';
+						}
 					}
+				} else {
+					throw 'scrollCont must be a DOM element';
 				}
-			} else {
-				throw 'scrollCont must be a DOM element';
 			}
 		}
 
@@ -286,6 +242,7 @@ var lithiumlistPro = function () {
 				}
 			}
 		}
+		tempFunctionRemoveMasks(props);
 
 		var instance = {
 			'scrollCont': scrollCont,
@@ -312,29 +269,151 @@ var lithiumlistPro = function () {
 		instance.listCont.addEventListener('touchstart', instance.temp.funcTouchStart);
 	};
 
-	var getEmptyTemp = function getEmptyTemp() {
-		return {
-			'items': [],
-			'moveType': null,
-			'itemClone': null,
-			'itemMasks': [],
-			'activeIndex': null,
-			'origIndex': null,
-			'startPageX': null,
-			'startPageY': null,
-			'lastPageX': null,
-			'lastPageY': null,
-			'sortDelayTimer': null,
-			'sortEndTimer': null,
-			'scrollInterval': null,
-			'funcOnScroll': null,
-			'funcMouseDown': null,
-			'funcTouchStart': null,
-			'funcMouseMove': null,
-			'funcMouseUp': null,
-			'funcTouchMove': null,
-			'funcTouchEnd': null
-		};
+	var detachFromList = function detachFromList(listCont) {
+		if (listCont) {
+			var index = null;
+			for (var i = 0, len = instances.length; i < len; i++) {
+				if (instances[i].listCont === listCont) {
+					index = i;
+					break;
+				}
+			}
+			if (index != null) {
+				if (instances[index].temp.funcOnScroll) {
+					instances[index].scrollCont.removeEventListener('scroll', instances[index].temp.funcOnScroll);
+				}
+				if (instances[index].temp.funcMouseDown) {
+					listCont.removeEventListener('mousedown', instances[index].temp.funcMouseDown);
+				}
+				if (instances[index].temp.funcTouchStart) {
+					listCont.removeEventListener('touchstart', instances[index].temp.funcTouchStart);
+				}
+				instances.splice(index, 1);
+			}
+		} else {
+			throw 'listCont cannot be null.';
+		}
+	};
+
+	var triggerLeft = function triggerLeft(listCont, itemIndex) {
+		if (listCont) {
+			var index = null;
+			for (var i = 0, len = instances.length; i < len; i++) {
+				if (instances[i].listCont === listCont) {
+					index = i;
+					break;
+				}
+			}
+			if (index != null) {
+				if (instances[index].props.leftEnabled) {
+					setItems(instances[index]);
+					if (instances[index].temp.items.length > itemIndex) {
+						instances[index].temp.activeIndex = itemIndex;
+						initMoveLeft(instances[index], 0);
+						initLeftSlideOut(instances[index]);
+					} else {
+						console.warn('List item not found.');
+					}
+				} else {
+					console.warn('listCont has \'leftEnabled = false\'.');
+				}
+			} else {
+				console.warn('listCont does not have lithiumlist attached.');
+			}
+		} else {
+			throw 'listCont cannot be null.';
+		}
+	};
+
+	var triggerRight = function triggerRight(listCont, itemIndex) {
+		if (listCont) {
+			var index = null;
+			for (var i = 0, len = instances.length; i < len; i++) {
+				if (instances[i].listCont === listCont) {
+					index = i;
+					break;
+				}
+			}
+			if (index != null) {
+				if (instances[index].props.rightEnabled) {
+					setItems(instances[index]);
+					if (instances[index].temp.items.length > itemIndex) {
+						instances[index].temp.activeIndex = itemIndex;
+						initMoveRight(instances[index], 0);
+						initRightSlideOut(instances[index]);
+					} else {
+						console.warn('List item not found.');
+					}
+				} else {
+					console.warn('listCont has \'rightEnabled = false\'.');
+				}
+			} else {
+				console.warn('listCont does not have lithiumlist attached.');
+			}
+		} else {
+			throw 'listCont cannot be null.';
+		}
+	};
+
+	var setDefaultProperties = function setDefaultProperties(newDefaultProperties) {
+		if (isUndefinedOrNull(newDefaultProperties)) {
+			throw 'newDefaultProperties must not be undefined or null';
+		} else {
+			for (var attrname in defaultProperties) {
+				if (typeof newDefaultProperties[attrname] !== 'undefined') {
+					if (isArray(newDefaultProperties[attrname])) {
+						defaultProperties[attrname] = newDefaultProperties[attrname].slice(0);
+					} else {
+						defaultProperties[attrname] = newDefaultProperties[attrname];
+					}
+				}
+			}
+			tempFunctionRemoveMasks(defaultProperties);
+		}
+	};
+
+	var setListProperties = function setListProperties(listCont, listProperties) {
+		if (!isUndefinedOrNull(listCont) && isDOMElement(listCont)) {
+			if (!isUndefinedOrNull(listProperties)) {
+				var index = null;
+				for (var i = 0, len = instances.length; i < len; i++) {
+					if (instances[i].listCont === listCont) {
+						index = i;
+						break;
+					}
+				}
+				if (index != null) {
+					validateProps(listProperties);
+					for (var attrname in instances[index]['props']) {
+						if (typeof listProperties[attrname] !== 'undefined') {
+							if (isArray(listProperties[attrname])) {
+								instances[index]['props'][attrname] = listProperties[attrname].slice(0);
+							} else {
+								instances[index]['props'][attrname] = listProperties[attrname];
+							}
+						}
+					}
+					tempFunctionRemoveMasks(instances[index]['props']);
+				} else {
+					throw 'listCont does not have lithiumlist attached ';
+				}
+			} else {
+				throw 'listProperties must not be undefined or null';
+			}
+		} else {
+			throw 'listCont must be a DOM element';
+		}
+	};
+
+	// private functions
+
+	var tempFunctionRemoveMasks = function tempFunctionRemoveMasks(props) {
+		if (props.leftMasks.length > 1) {
+			props.leftMasks.length = 1;
+		}
+		if (props.rightMasks.length > 1) {
+			props.rightMasks.length = 1;
+		}
 	};
 
 	var onScroll = function onScroll(e, instance) {
@@ -368,6 +447,7 @@ var lithiumlistPro = function () {
 					initMoveLeft(instance, 0);
 					initLeftSlideOut(instance);
 				} else if (instance.props.rightEnabled && checkClassClicked(e, instance.temp.items[index], instance.props.rightDragHandleClass)) {
+
 					instance.temp.activeIndex = index;
 					initMoveRight(instance, 0);
 					initRightSlideOut(instance);
@@ -418,7 +498,8 @@ var lithiumlistPro = function () {
 			instance.props.onLeftStart(instance.temp.activeIndex);
 		}
 
-		if (instance.props.leftScrollClass) {
+		if (instance.props.leftScrollClass && isDOMElement(instance.scrollCont)) {
+			// check that scrollCont is not 'window' or 'document'
 			addClass(instance.scrollCont, instance.props.leftScrollClass);
 		}
 
@@ -444,7 +525,8 @@ var lithiumlistPro = function () {
 			instance.props.onRightStart(instance.temp.activeIndex);
 		}
 
-		if (instance.props.rightScrollClass) {
+		if (instance.props.rightScrollClass && isDOMElement(instance.scrollCont)) {
+			// check that scrollCont is not 'window' or 'document'
 			addClass(instance.scrollCont, instance.props.rightScrollClass);
 		}
 
@@ -486,7 +568,8 @@ var lithiumlistPro = function () {
 					instance.props.onSortStart(instance.temp.activeIndex);
 				}
 
-				if (instance.props.sortScrollClass) {
+				if (instance.props.sortScrollClass && isDOMElement(instance.scrollCont)) {
+					// check that scrollCont is not 'window' or 'document'
 					addClass(instance.scrollCont, instance.props.sortScrollClass);
 				}
 
@@ -587,7 +670,8 @@ var lithiumlistPro = function () {
 	var doScroll = function doScroll(instance, scrollChange) {
 		var shouldScroll = moveItemClone(instance, scrollChange, false);
 		if (shouldScroll) {
-			instance.scrollCont.scrollTop = instance.scrollCont.scrollTop + scrollChange;
+			setScrollTop(instance.scrollCont, getScrollTop(instance.scrollCont) + scrollChange);
+			// instance.scrollCont.scrollTop = instance.scrollCont.scrollTop + scrollChange;
 			animateItems(instance);
 		} else {
 			if (instance.temp.scrollInterval) {
@@ -614,13 +698,25 @@ var lithiumlistPro = function () {
 			// return scrollProps
 			var scrollDir = 0;
 			var outFraction = 0;
-			if (cloneTop < instance.scrollCont.scrollTop - instance.deltaItemsScroll) {
+
+			// console.log('cloneTop + instance.temp.itemClone.offsetHeight: ' + cloneTop + instance.temp.itemClone.offsetHeight);
+			// console.log('getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.deltaItemsScroll: ' + getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.deltaItemsScroll);
+			// console.log(instance.deltaItemsScroll);
+
+			if (cloneTop < getScrollTop(instance.scrollCont) - instance.deltaItemsScroll) {
 				scrollDir = -1; // scroll up
-				outFraction = (instance.scrollCont.scrollTop - instance.deltaItemsScroll - cloneTop) / instance.temp.itemClone.offsetHeight;
-			} else if (cloneTop + instance.temp.itemClone.offsetHeight > instance.scrollCont.scrollTop + instance.scrollCont.clientHeight - instance.deltaItemsScroll) {
+				outFraction = (getScrollTop(instance.scrollCont) - instance.deltaItemsScroll - cloneTop) / instance.temp.itemClone.offsetHeight;
+			} else if (cloneTop + instance.temp.itemClone.offsetHeight > getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.deltaItemsScroll) {
 				scrollDir = 1; // scroll down
-				outFraction = (cloneTop + instance.temp.itemClone.offsetHeight - (instance.scrollCont.scrollTop + instance.scrollCont.clientHeight - instance.deltaItemsScroll)) / instance.temp.itemClone.offsetHeight;
+				outFraction = (cloneTop + instance.temp.itemClone.offsetHeight - (getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.deltaItemsScroll)) / instance.temp.itemClone.offsetHeight;
 			}
+			//      if (cloneTop < (instance.scrollCont.scrollTop - instance.deltaItemsScroll)) {
+			//      	scrollDir = -1;		// scroll up
+			//      	outFraction = ((instance.scrollCont.scrollTop - instance.deltaItemsScroll) - cloneTop) / instance.temp.itemClone.offsetHeight;
+			//      } else if ((cloneTop + instance.temp.itemClone.offsetHeight) > (instance.scrollCont.scrollTop + instance.scrollCont.clientHeight - instance.deltaItemsScroll)) {
+			// scrollDir = 1;		// scroll down
+			// outFraction = ((cloneTop + instance.temp.itemClone.offsetHeight) - (instance.scrollCont.scrollTop + instance.scrollCont.clientHeight - instance.deltaItemsScroll)) / instance.temp.itemClone.offsetHeight;
+			//      }
 			return {
 				'scrollDir': scrollDir,
 				'outFraction': outFraction
@@ -628,9 +724,12 @@ var lithiumlistPro = function () {
 		} else {
 			// return shouldScroll
 			var shouldScroll = false;
-			if (cloneTop < instance.scrollCont.scrollTop - instance.deltaItemsScroll || cloneTop + instance.temp.itemClone.offsetHeight > instance.scrollCont.scrollTop + instance.scrollCont.clientHeight - instance.deltaItemsScroll) {
+			if (cloneTop < getScrollTop(instance.scrollCont) - instance.deltaItemsScroll || cloneTop + instance.temp.itemClone.offsetHeight > getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.deltaItemsScroll) {
 				shouldScroll = true;
 			}
+			// if ((cloneTop < (instance.scrollCont.scrollTop - instance.deltaItemsScroll)) || ((cloneTop + instance.temp.itemClone.offsetHeight) > (instance.scrollCont.scrollTop + instance.scrollCont.clientHeight - instance.deltaItemsScroll))) {
+			// 	shouldScroll = true;
+			// }
 			return shouldScroll;
 		}
 	};
@@ -911,7 +1010,7 @@ var lithiumlistPro = function () {
 				removeClass(instance.temp.items[instance.temp.activeIndex], instance.props.leftItemActiveClass);
 			}
 
-			if (instance.props.leftScrollClass) {
+			if (instance.props.leftScrollClass && isDOMElement(instance.scrollCont)) {
 				removeClass(instance.scrollCont, instance.props.leftScrollClass);
 			}
 
@@ -925,7 +1024,7 @@ var lithiumlistPro = function () {
 				removeClass(instance.temp.items[instance.temp.activeIndex], instance.props.rightItemActiveClass);
 			}
 
-			if (instance.props.rightScrollClass) {
+			if (instance.props.rightScrollClass && isDOMElement(instance.scrollCont)) {
 				removeClass(instance.scrollCont, instance.props.rightScrollClass);
 			}
 
@@ -949,7 +1048,7 @@ var lithiumlistPro = function () {
 			removeClass(instance.temp.items[instance.temp.activeIndex], instance.props.sortItemActiveClass);
 		}
 
-		if (instance.props.sortScrollClass) {
+		if (instance.props.sortScrollClass && isDOMElement(instance.scrollCont)) {
 			removeClass(instance.scrollCont, instance.props.sortScrollClass);
 		}
 
@@ -1028,93 +1127,56 @@ var lithiumlistPro = function () {
 		}
 	};
 
-	var detachFromList = function detachFromList(listCont) {
-		if (listCont) {
-			var index = null;
-			for (var i = 0, len = instances.length; i < len; i++) {
-				if (instances[i].listCont === listCont) {
-					index = i;
-					break;
-				}
-			}
-			if (index != null) {
-				if (instances[index].temp.funcOnScroll) {
-					instances[index].scrollCont.removeEventListener('scroll', instances[index].temp.funcOnScroll);
-				}
-				if (instances[index].temp.funcMouseDown) {
-					listCont.removeEventListener('mousedown', instances[index].temp.funcMouseDown);
-				}
-				if (instances[index].temp.funcTouchStart) {
-					listCont.removeEventListener('touchstart', instances[index].temp.funcTouchStart);
-				}
-				instances.splice(index, 1);
-			}
-		} else {
-			throw 'listCont cannot be null.';
-		}
-	};
-
-	var triggerLeft = function triggerLeft(listCont, itemIndex) {
-		if (listCont) {
-			var index = null;
-			for (var i = 0, len = instances.length; i < len; i++) {
-				if (instances[i].listCont === listCont) {
-					index = i;
-					break;
-				}
-			}
-			if (index != null) {
-				if (instances[index].props.leftEnabled) {
-					setItems(instances[index]);
-					if (instances[index].temp.items.length > itemIndex) {
-						instances[index].temp.activeIndex = itemIndex;
-						initMoveLeft(instances[index], 0);
-						initLeftSlideOut(instances[index]);
-					} else {
-						console.warn('List item not found.');
-					}
-				} else {
-					console.warn('listCont has \'leftEnabled = false\'.');
-				}
-			} else {
-				console.warn('listCont does not have lithiumlist attached.');
-			}
-		} else {
-			throw 'listCont cannot be null.';
-		}
-	};
-
-	var triggerRight = function triggerRight(listCont, itemIndex) {
-		if (listCont) {
-			var index = null;
-			for (var i = 0, len = instances.length; i < len; i++) {
-				if (instances[i].listCont === listCont) {
-					index = i;
-					break;
-				}
-			}
-			if (index != null) {
-				if (instances[index].props.rightEnabled) {
-					setItems(instances[index]);
-					if (instances[index].temp.items.length > itemIndex) {
-						instances[index].temp.activeIndex = itemIndex;
-						initMoveRight(instances[index], 0);
-						initRightSlideOut(instances[index]);
-					} else {
-						console.warn('List item not found.');
-					}
-				} else {
-					console.warn('listCont has \'rightEnabled = false\'.');
-				}
-			} else {
-				console.warn('listCont does not have lithiumlist attached.');
-			}
-		} else {
-			throw 'listCont cannot be null.';
-		}
+	var getEmptyTemp = function getEmptyTemp() {
+		return {
+			'items': [],
+			'moveType': null,
+			'itemClone': null,
+			'itemMasks': [],
+			'activeIndex': null,
+			'origIndex': null,
+			'startPageX': null,
+			'startPageY': null,
+			'lastPageX': null,
+			'lastPageY': null,
+			'sortDelayTimer': null,
+			'sortEndTimer': null,
+			'scrollInterval': null,
+			'funcOnScroll': null,
+			'funcMouseDown': null,
+			'funcTouchStart': null,
+			'funcMouseMove': null,
+			'funcMouseUp': null,
+			'funcTouchMove': null,
+			'funcTouchEnd': null
+		};
 	};
 
 	// utility functions
+
+	var getScrollTop = function getScrollTop(el) {
+		if (isWindow(el)) {
+			return el.pageYOffset;
+		} else {
+			return el.scrollTop;
+		}
+	};
+
+	var setScrollTop = function setScrollTop(el, scrollTop) {
+		if (isWindow(el)) {
+			el.scrollTo(el.pageXOffset, scrollTop);
+		} else {
+			el.scrollTop = scrollTop;
+		}
+	};
+
+	var getScrollContHeight = function getScrollContHeight(instance) {
+		if (isWindow(instance.scrollCont)) {
+			return instance.scrollCont.innerHeight;
+		} else {
+			return instance.scrollCont.clientHeight;
+		}
+	};
 
 	var getScrollMultiplier = function getScrollMultiplier(speed) {
 		switch (speed) {
@@ -1136,7 +1198,7 @@ var lithiumlistPro = function () {
 	};
 
 	var cursorIsOverRect = function cursorIsOverRect(pageX, pageY, rect) {
-		if (pageX >= rect.left && pageX <= rect.right && pageY >= rect.top && pageY <= rect.bottom) {
+		if (pageX >= rect.left + window.pageXOffset && pageX <= rect.right + window.pageXOffset && pageY >= rect.top + window.pageYOffset && pageY <= rect.bottom + window.pageYOffset) {
 			return true;
 		} else {
 			return false;
@@ -1228,7 +1290,10 @@ var lithiumlistPro = function () {
 
 	var getDeltaWithParent = function getDeltaWithParent(node, parent, delta) {
 		if (node) {
-			var newDelta = node.offsetTop + delta;
+			var newDelta = delta;
+			if (node.offsetTop) {
+				newDelta = node.offsetTop + delta;
+			}
 			if (node.parentNode !== parent) {
 				return getDeltaWithParent(node.parentNode, parent, newDelta);
 			} else {
@@ -1481,6 +1546,14 @@ var lithiumlistPro = function () {
 			} else {
 				throw 'ignoreOnClick must be an array';
 			}
+		}
+	};
+
+	var isWindow = function isWindow(value) {
+		if (typeof value !== 'undefined' && value != null && value == value.window) {
+			return true;
+		} else {
+			return false;
 		}
 	};
 
