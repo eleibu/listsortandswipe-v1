@@ -46,7 +46,9 @@ divRight.className = 'label-cont';
 // };
 
 var listProperties = {
-	sortEnabled: true
+	sortScrollSpeed: 3,
+	leftDragStartThreshold: '40%',
+	onSortEnd: sortEnd
 };
 
 function monitorWinWidth() {
@@ -80,8 +82,8 @@ function setWidthClass(classtxt) {
     }
 
 	lithiumlistPro.attachToList(
-	    scrollCont,
 	    listCont,
+	    scrollCont,
 	    eventsTarget,
 	    listItemClass,
 	    listProperties

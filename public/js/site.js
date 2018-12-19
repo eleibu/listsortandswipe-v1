@@ -16990,7 +16990,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // eventsTarget should be 'window' on desktop and NOT 'window' or 'body' on mobile
 // if 'left/righMaskClass' is not set, mask is not created
 // sortScrollSpeed: 1, 2, 3, 4, 5 (default = 3)
-// leftMasks / rightMasks must be arrays (not null)
+// leftMasks / rightMasks must be arrays (not null) and leftMasks.classNameDefault must not be undefined or null
+// setDefaultProperties only applies to instances created after it is called (use setListProperties to change properties for a paticular instance)
 
 
 // Pipeline:
@@ -17005,6 +17006,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // * Cursor is sometimes far above itemCont but still moving it (seems to happen only when moving up, but not sure).
 
 
+// TODO: If leftMasks / rightMasks have length > 1, shorten them!!!
+// TODO: Test using window as scrollCont
+// TODO: Do not add classes to scrollCont if it is 'window'
 // TODO: Remove .version() from webpack.mix.js?
 
 
@@ -17071,134 +17075,109 @@ var lithiumlistPro = function () {
 		ignoreOnClick: ['input', 'textarea', 'select', 'option', 'button']
 	};
 
-	var validateProps = function validateProps(props) {
-		if (!isUndefinedOrNull(props['onSortStart']) && !isFunction(props['onSortStart'])) {
-			throw 'onSortStart must be a function';
-		}
-
-		if (!isUndefinedOrNull(props['onSortEnd']) && !isFunction(props['onSortEnd'])) {
-			throw 'onSortEnd must be a function';
-		}
-
-		if (!isUndefinedOrNull(props['sortEnabled']) && !isBoolean(props['sortEnabled'])) {
-			throw 'sortEnabled must be a boolean';
-		}
-
-		if (!isUndefinedOrNull(props['sortByDrag']) && !isBoolean(props['sortByDrag'])) {
-			throw 'sortByDrag must be a boolean';
-		}
-	};
-
-	var isUndefinedOrNull = function isUndefinedOrNull(value) {
-		if (typeof value === 'undefined' || value == null) {
-			return true;
+	var setDefaultProperties = function setDefaultProperties(newDefaultProperties) {
+		if (isUndefinedOrNull(newDefaultProperties)) {
+			throw 'newDefaultProperties must not be undefined or null';
 		} else {
-			return false;
-		}
-	};
-
-	var isFunction = function isFunction(value) {
-		if (value && typeof value === 'function') {
-			return true;
-		} else {
-			return false;
-		}
-	};
-
-	var isBoolean = function isBoolean(value) {
-		if (typeof value === 'boolean') {
-			return true;
-		} else {
-			return false;
-		}
-	};
-
-	var isIntegar = function isIntegar(value) {
-		if (!(typeof value === 'string') && !(value instanceof String) && value === parseInt(value, 10)) {
-			return true;
-		} else {
-			return false;
-		}
-	};
-
-	var isString = function isString(value, permitZeroLength) {
-		if (typeof value === 'string' || value instanceof String) {
-			if (permitZeroLength) {
-				return true;
-			} else {
-				if (value.length > 0) {
-					return true;
-				} else {
-					return false;
-				}
-			}
-		} else {
-			return false;
-		}
-	};
-
-	var setDefaultProperties = function setDefaultProperties(userDefaultProperties) {
-		if (userDefaultProperties) {
 			for (var attrname in defaultProperties) {
-				if (typeof userDefaultProperties[attrname] !== 'undefined') {
-					defaultProperties[attrname] = userDefaultProperties[attrname];
+				if (typeof newDefaultProperties[attrname] !== 'undefined') {
+					if (isArray(newDefaultProperties[attrname])) {
+						defaultProperties[attrname] = newDefaultProperties[attrname].slice(0);
+					} else {
+						defaultProperties[attrname] = newDefaultProperties[attrname];
+					}
 				}
 			}
 		}
 	};
 
-	var setListProperties = function setListProperties(userListProperties) {
-		// to do
+	var setListProperties = function setListProperties(listCont, listProperties) {
+		if (!isUndefinedOrNull(listCont) && isDOMElement(listCont)) {
+			if (!isUndefinedOrNull(listProperties)) {
+				var index = null;
+				for (var i = 0, len = instances.length; i < len; i++) {
+					if (instances[i].listCont === listCont) {
+						index = i;
+						break;
+					}
+				}
+				if (index != null) {
+					validateProps(listProperties);
+					for (var attrname in instances[index]['props']) {
+						if (typeof listProperties[attrname] !== 'undefined') {
+							if (isArray(listProperties[attrname])) {
+								instances[index]['props'][attrname] = listProperties[attrname].slice(0);
+							} else {
+								instances[index]['props'][attrname] = listProperties[attrname];
+							}
+						}
+					}
+				} else {
+					throw 'listCont does not have lithiumlist attached ';
+				}
+			} else {
+				throw 'listProperties must not be undefined or null';
+			}
+		} else {
+			throw 'listCont must be a DOM element';
+		}
 	};
 
-	var attachToList = function attachToList(scrollCont, listCont, eventsTarget, listItemClass, listProperties) {
+	var attachToList = function attachToList(listCont, scrollCont, eventsTarget, listItemClass, listProperties) {
+		if (isUndefinedOrNull(listCont)) {
+			throw 'listCont must not be undefined or null';
+		} else {
+			if (isDOMElement(listCont)) {
+				for (var i = 0, len = instances.length; i < len; i++) {
+					if (instances[i].listCont === listCont) {
+						throw 'listCont already has lithiumlist attached';
+					}
+				}
+			} else {
+				throw 'listCont must be a DOM element';
+			}
+		}
 
-		// var test = [0, -42, '42', 4e2, '4e2', '  1  ', '', 42.1, '1a', '4e2a', null, undefined, NaN];		
-		// for (var i = 0, len = test.length; i < len; i++) {
-		// 	console.log(test[i] + ': ' + isIntegar(test[i]));
-		// }
-
-		if (scrollCont == null) {
+		if (isUndefinedOrNull(scrollCont)) {
 			scrollCont = window;
 		} else {
-			if (scrollCont !== window && scrollCont !== listCont && !scrollCont.contains(listCont)) {
-				throw 'listCont must be parent of scrollCont.';
+			if (isDOMElement(scrollCont)) {
+				if (scrollCont === listCont) {
+					console.warn('Auto scrolling may not work where scrollCont === listCont');
+				} else {
+					if (scrollCont !== window && !scrollCont.contains(listCont)) {
+						throw 'scrollCont must contain listCont';
+					}
+				}
+			} else {
+				throw 'scrollCont must be a DOM element';
 			}
 		}
 
-		if (listCont == null) {
-			throw 'listCont cannot be null.';
-		}
-		for (var i = 0, len = instances.length; i < len; i++) {
-			if (instances[i].listCont === listCont) {
-				throw 'listCont already has lithiumlist attached.';
-			}
-		}
-
-		if (eventsTarget == null) {
+		if (isUndefinedOrNull(eventsTarget)) {
 			eventsTarget = window;
 		}
 
-		if (listItemClass == null || listItemClass.length == 0) {
-			throw 'listItemClass must be a string of length > 0.';
+		if (isUndefinedOrNull(listItemClass) || !isString(listItemClass) || listItemClass.length == 0) {
+			throw 'listItemClass must be a string of length > 0';
 		}
 
-		var props = defaultProperties;
-		// if (listProperties) {
-
-		// 	// SHOULD WE VALIDATE THESE FIRST?
-
-		// 	for (var attrname in props) {
-		// 		if (typeof listProperties[attrname] !== 'undefined') {
-		// 			props[attrname] = listProperties[attrname];
-		// 		}
-		// 	}
-		// }
-		if (listProperties) {
+		var props = {};
+		if (!isUndefinedOrNull(listProperties)) {
 			validateProps(listProperties);
-			for (var attrname in props) {
-				if (typeof listProperties[attrname] !== 'undefined') {
-					props[attrname] = listProperties[attrname];
+			for (var attrname in defaultProperties) {
+				if (typeof listProperties[attrname] === 'undefined') {
+					if (isArray(defaultProperties[attrname])) {
+						props[attrname] = defaultProperties[attrname].slice(0);
+					} else {
+						props[attrname] = defaultProperties[attrname];
+					}
+				} else {
+					if (isArray(listProperties[attrname])) {
+						props[attrname] = listProperties[attrname].slice(0);
+					} else {
+						props[attrname] = listProperties[attrname];
+					}
 				}
 			}
 		}
@@ -18163,13 +18142,319 @@ var lithiumlistPro = function () {
 		});
 	};
 
+	// validation
+
+	var validateProps = function validateProps(props) {
+		if (!isUndefinedOrNull(props['onSortStart']) && !isFunction(props['onSortStart'])) {
+			throw 'onSortStart must be a function';
+		}
+
+		if (!isUndefinedOrNull(props['onSortEnd']) && !isFunction(props['onSortEnd'])) {
+			throw 'onSortEnd must be a function';
+		}
+
+		if (!isUndefinedOrNull(props['sortEnabled']) && !isBoolean(props['sortEnabled'])) {
+			throw 'sortEnabled must be a boolean';
+		}
+
+		if (!isUndefinedOrNull(props['sortByDrag']) && !isBoolean(props['sortByDrag'])) {
+			throw 'sortByDrag must be a boolean';
+		}
+
+		if (!isUndefinedOrNull(props['sortScrollClass']) && (!isString(props['sortScrollClass']) || props['sortScrollClass'].length == 0)) {
+			throw 'sortScrollClass must be a string of length >0';
+		}
+
+		if (!isUndefinedOrNull(props['sortCloneClass']) && (!isString(props['sortCloneClass']) || props['sortCloneClass'].length == 0)) {
+			throw 'sortCloneClass must be a string of length >0';
+		}
+
+		if (!isUndefinedOrNull(props['sortItemActiveClass']) && (!isString(props['sortItemActiveClass']) || props['sortItemActiveClass'].length == 0)) {
+			throw 'sortItemActiveClass must be a string of length >0';
+		}
+
+		if (!isUndefinedOrNull(props['sortDragHandleClass']) && (!isString(props['sortDragHandleClass']) || props['sortDragHandleClass'].length == 0)) {
+			throw 'sortDragHandleClass must be a string of length >0';
+		}
+
+		if (!isUndefinedOrNull(props['sortMoveStartDelay']) && (!isInteger(props['sortMoveStartDelay']) || props['sortMoveStartDelay'] < 0)) {
+			throw 'sortMoveStartDelay must be a positive integer or zero';
+		}
+
+		if (!isUndefinedOrNull(props['sortReorderDuration']) && (!isInteger(props['sortReorderDuration']) || props['sortReorderDuration'] < 0)) {
+			throw 'sortReorderDuration must be a positive integer or zero';
+		}
+
+		if (!isUndefinedOrNull(props['sortEndDockDuration']) && (!isInteger(props['sortEndDockDuration']) || props['sortEndDockDuration'] < 0)) {
+			throw 'sortEndDockDuration must be a positive integer or zero';
+		}
+
+		if (!isUndefinedOrNull(props['sortScrollSpeed']) && (!isInteger(props['sortScrollSpeed']) || props['sortScrollSpeed'] != 1 && props['sortScrollSpeed'] != 2 && props['sortScrollSpeed'] != 3 && props['sortScrollSpeed'] != 4 && props['sortScrollSpeed'] != 5)) {
+			throw 'sortScrollSpeed must be an integer 1 - 5';
+		}
+
+		if (!isUndefinedOrNull(props['onLeftStart']) && !isFunction(props['onLeftStart'])) {
+			throw 'onLeftStart must be a function';
+		}
+
+		if (!isUndefinedOrNull(props['onLeftSlideOutStart']) && !isFunction(props['onLeftSlideOutStart'])) {
+			throw 'onLeftSlideOutStart must be a function';
+		}
+
+		if (!isUndefinedOrNull(props['onLeftSlideBackStart']) && !isFunction(props['onLeftSlideBackStart'])) {
+			throw 'onLeftSlideBackStart must be a function';
+		}
+
+		if (!isUndefinedOrNull(props['onLeftEnd']) && !isFunction(props['onLeftEnd'])) {
+			throw 'onLeftEnd must be a function';
+		}
+
+		if (!isUndefinedOrNull(props['leftEnabled']) && !isBoolean(props['leftEnabled'])) {
+			throw 'leftEnabled must be a boolean';
+		}
+
+		if (!isUndefinedOrNull(props['leftByDrag']) && !isBoolean(props['leftByDrag'])) {
+			throw 'leftByDrag must be a boolean';
+		}
+
+		if (!isUndefinedOrNull(props['leftScrollClass']) && (!isString(props['leftScrollClass']) || props['leftScrollClass'].length == 0)) {
+			throw 'leftScrollClass must be a string of length >0';
+		}
+
+		if (!isUndefinedOrNull(props['leftCloneClass']) && (!isString(props['leftCloneClass']) || props['leftCloneClass'].length == 0)) {
+			throw 'leftCloneClass must be a string of length >0';
+		}
+
+		if (!isUndefinedOrNull(props['leftCloneSlideOutClass']) && (!isString(props['leftCloneSlideOutClass']) || props['leftCloneSlideOutClass'].length == 0)) {
+			throw 'leftCloneSlideOutClass must be a string of length >0';
+		}
+
+		if (!isUndefinedOrNull(props['leftCloneSlideBackClass']) && (!isString(props['leftCloneSlideBackClass']) || props['leftCloneSlideBackClass'].length == 0)) {
+			throw 'leftCloneSlideBackClass must be a string of length >0';
+		}
+
+		if (!isUndefinedOrNull(props['leftItemActiveClass']) && (!isString(props['leftItemActiveClass']) || props['leftItemActiveClass'].length == 0)) {
+			throw 'leftItemActiveClass must be a string of length >0';
+		}
+
+		if (!isUndefinedOrNull(props['leftMasks'])) {
+			if (isArray(props['leftMasks'])) {
+				for (var i = 0, len = props['leftMasks'].length; i < len; i++) {
+					var mask = props['leftMasks'][i];
+					if (isUndefinedOrNull(mask['classNameDefault']) || !isString(mask['classNameDefault']) || mask['classNameDefault'].length == 0) {
+						throw 'leftMasks.classNameDefault must not be undefined or null and must be a string of length >0';
+					}
+					if (!isUndefinedOrNull(mask['classNameSlideOut']) && (!isString(mask['classNameSlideOut']) || mask['classNameSlideOut'].length == 0)) {
+						throw 'leftMasks.classNameSlideOut must be a string of length >0';
+					}
+					if (!isUndefinedOrNull(mask['classNameSlideBack']) && (!isString(mask['classNameSlideBack']) || mask['classNameSlideBack'].length == 0)) {
+						throw 'leftMasks.classNameSlideBack must be a string of length >0';
+					}
+					if (!isUndefinedOrNull(mask['childNode']) && !isDOMElement(mask['childNode'])) {
+						throw 'leftMasks.childNode must be a DOM element';
+					}
+				}
+			} else {
+				throw 'leftMasks must be an array';
+			}
+		}
+
+		if (!isUndefinedOrNull(props['leftDragHandleClass']) && (!isString(props['leftDragHandleClass']) || props['leftDragHandleClass'].length == 0)) {
+			throw 'leftDragHandleClass must be a string of length >0';
+		}
+
+		if (!isUndefinedOrNull(props['leftDragStartThreshold']) && !isPXorPercent(props['leftDragStartThreshold'])) {
+			throw 'leftDragStartThreshold must be \'#px\', \'#%\' or \'0\' (eg. \'10px\' or \'10%\')';
+		}
+
+		if (!isUndefinedOrNull(props['leftDragEndThreshold']) && !isPXorPercent(props['leftDragEndThreshold'])) {
+			throw 'leftDragEndThreshold must be \'#px\', \'#%\' or \'0\' (eg. \'10px\' or \'10%\')';
+		}
+
+		if (!isUndefinedOrNull(props['leftSlideOutDuration']) && (!isInteger(props['leftSlideOutDuration']) || props['leftSlideOutDuration'] < 0)) {
+			throw 'leftSlideOutDuration must be a positive integer or zero';
+		}
+
+		if (!isUndefinedOrNull(props['leftSlideBackDuration']) && (!isInteger(props['leftSlideBackDuration']) || props['leftSlideBackDuration'] < 0)) {
+			throw 'leftSlideBackDuration must be a positive integer or zero';
+		}
+
+		if (!isUndefinedOrNull(props['onRightStart']) && !isFunction(props['onRightStart'])) {
+			throw 'onRightStart must be a function';
+		}
+
+		if (!isUndefinedOrNull(props['onRightSlideOutStart']) && !isFunction(props['onRightSlideOutStart'])) {
+			throw 'onRightSlideOutStart must be a function';
+		}
+
+		if (!isUndefinedOrNull(props['onRightSlideBackStart']) && !isFunction(props['onRightSlideBackStart'])) {
+			throw 'onRightSlideBackStart must be a function';
+		}
+
+		if (!isUndefinedOrNull(props['onRightEnd']) && !isFunction(props['onRightEnd'])) {
+			throw 'onRightEnd must be a function';
+		}
+
+		if (!isUndefinedOrNull(props['rightEnabled']) && !isBoolean(props['rightEnabled'])) {
+			throw 'rightEnabled must be a boolean';
+		}
+
+		if (!isUndefinedOrNull(props['rightByDrag']) && !isBoolean(props['rightByDrag'])) {
+			throw 'rightByDrag must be a boolean';
+		}
+
+		if (!isUndefinedOrNull(props['rightScrollClass']) && (!isString(props['rightScrollClass']) || props['rightScrollClass'].length == 0)) {
+			throw 'rightScrollClass must be a string of length >0';
+		}
+
+		if (!isUndefinedOrNull(props['rightCloneClass']) && (!isString(props['rightCloneClass']) || props['rightCloneClass'].length == 0)) {
+			throw 'rightCloneClass must be a string of length >0';
+		}
+
+		if (!isUndefinedOrNull(props['rightCloneSlideOutClass']) && (!isString(props['rightCloneSlideOutClass']) || props['rightCloneSlideOutClass'].length == 0)) {
+			throw 'rightCloneSlideOutClass must be a string of length >0';
+		}
+
+		if (!isUndefinedOrNull(props['rightCloneSlideBackClass']) && (!isString(props['rightCloneSlideBackClass']) || props['rightCloneSlideBackClass'].length == 0)) {
+			throw 'rightCloneSlideBackClass must be a string of length >0';
+		}
+
+		if (!isUndefinedOrNull(props['rightItemActiveClass']) && (!isString(props['rightItemActiveClass']) || props['rightItemActiveClass'].length == 0)) {
+			throw 'rightItemActiveClass must be a string of length >0';
+		}
+
+		if (!isUndefinedOrNull(props['rightMasks'])) {
+			if (isArray(props['rightMasks'])) {
+				for (var i = 0, len = props['rightMasks'].length; i < len; i++) {
+					var mask = props['rightMasks'][i];
+					if (isUndefinedOrNull(mask['classNameDefault']) || !isString(mask['classNameDefault']) || mask['classNameDefault'].length == 0) {
+						throw 'rightMasks.classNameDefault must not be undefined or null and must be a string of length >0';
+					}
+					if (!isUndefinedOrNull(mask['classNameSlideOut']) && (!isString(mask['classNameSlideOut']) || mask['classNameSlideOut'].length == 0)) {
+						throw 'rightMasks.classNameSlideOut must be a string of length >0';
+					}
+					if (!isUndefinedOrNull(mask['classNameSlideBack']) && (!isString(mask['classNameSlideBack']) || mask['classNameSlideBack'].length == 0)) {
+						throw 'rightMasks.classNameSlideBack must be a string of length >0';
+					}
+					if (!isUndefinedOrNull(mask['childNode']) && !isDOMElement(mask['childNode'])) {
+						throw 'rightMasks.childNode must be a DOM element';
+					}
+				}
+			} else {
+				throw 'rightMasks must be an array';
+			}
+		}
+
+		if (!isUndefinedOrNull(props['rightDragHandleClass']) && (!isString(props['rightDragHandleClass']) || props['rightDragHandleClass'].length == 0)) {
+			throw 'rightDragHandleClass must be a string of length >0';
+		}
+
+		if (!isUndefinedOrNull(props['rightDragStartThreshold']) && !isPXorPercent(props['rightDragStartThreshold'])) {
+			throw 'rightDragStartThreshold must be \'#px\', \'#%\' or \'0\' (eg. \'10px\' or \'10%\')';
+		}
+
+		if (!isUndefinedOrNull(props['rightDragEndThreshold']) && !isPXorPercent(props['rightDragEndThreshold'])) {
+			throw 'rightDragEndThreshold must be \'#px\', \'#%\' or \'0\' (eg. \'10px\' or \'10%\')';
+		}
+
+		if (!isUndefinedOrNull(props['rightSlideOutDuration']) && (!isInteger(props['rightSlideOutDuration']) || props['rightSlideOutDuration'] < 0)) {
+			throw 'rightSlideOutDuration must be a positive integer or zero';
+		}
+
+		if (!isUndefinedOrNull(props['rightSlideBackDuration']) && (!isInteger(props['rightSlideBackDuration']) || props['rightSlideBackDuration'] < 0)) {
+			throw 'rightSlideBackDuration must be a positive integer or zero';
+		}
+
+		if (!isUndefinedOrNull(props['ignoreOnClick'])) {
+			if (isArray(props['ignoreOnClick'])) {
+				for (var i = 0, len = props['ignoreOnClick'].length; i < len; i++) {
+					var value = props['ignoreOnClick'][i];
+					if (isUndefinedOrNull(value) || !isString(value) || value.length == 0) {
+						throw 'ignoreOnClick must be an array of strings of length >0';
+					}
+				}
+			} else {
+				throw 'ignoreOnClick must be an array';
+			}
+		}
+	};
+
+	var isUndefinedOrNull = function isUndefinedOrNull(value) {
+		if (typeof value === 'undefined' || value == null) {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+	var isFunction = function isFunction(value) {
+		if (value && typeof value === 'function') {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+	var isBoolean = function isBoolean(value) {
+		if (typeof value === 'boolean') {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+	var isInteger = function isInteger(value) {
+		if (!(typeof value === 'string') && !(value instanceof String) && value === parseInt(value, 10)) {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+	var isString = function isString(value) {
+		if (typeof value === 'string' || value instanceof String) {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+	var isArray = function isArray(value) {
+		if (value instanceof Array) {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+	var isDOMElement = function isDOMElement(value) {
+		if (value instanceof Element) {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+	var isPXorPercent = function isPXorPercent(value) {
+		if (typeof value === 'string' || value instanceof String) {
+			var rgx = /^0|[0-9]+px|[0-9]+([.][0-9]+)?%$/;
+			if (rgx.test(value)) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	};
+
 	// public properties and methods
 
 	return {
-		setDefaultProperties: setDefaultProperties,
-		setListProperties: setListProperties,
 		attachToList: attachToList,
 		detachFromList: detachFromList,
+		setListProperties: setListProperties,
+		setDefaultProperties: setDefaultProperties,
 		triggerLeft: triggerLeft,
 		triggerRight: triggerRight
 	};
@@ -18230,65 +18515,67 @@ divRight.className = 'label-cont';
 // };
 
 var listProperties = {
-    sortEnabled: true
+				sortScrollSpeed: 3,
+				leftDragStartThreshold: '40%',
+				onSortEnd: sortEnd
 };
 
 function monitorWinWidth() {
-    var width = window.innerWidth;
-    if (width > 1330) {
-        setWidthClass('xl');
-    } else if (width > 1130) {
-        setWidthClass('lg');
-    } else if (width > 760) {
-        setWidthClass('md');
-    } else if (width > 540) {
-        setWidthClass('sm');
-    } else {
-        setWidthClass('xs');
-    }
+				var width = window.innerWidth;
+				if (width > 1330) {
+								setWidthClass('xl');
+				} else if (width > 1130) {
+								setWidthClass('lg');
+				} else if (width > 760) {
+								setWidthClass('md');
+				} else if (width > 540) {
+								setWidthClass('sm');
+				} else {
+								setWidthClass('xs');
+				}
 }
 
 var event_changeWidthClass = new Event('changeWidthClass');
 function setWidthClass(classtxt) {
-    var divtarget = document.getElementById("div-scroll-cont");
-    if (divtarget.className != classtxt) {
-        divtarget.className = classtxt;
-        window.dispatchEvent(event_changeWidthClass);
-    }
+				var divtarget = document.getElementById("div-scroll-cont");
+				if (divtarget.className != classtxt) {
+								divtarget.className = classtxt;
+								window.dispatchEvent(event_changeWidthClass);
+				}
 
-    __WEBPACK_IMPORTED_MODULE_0__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].detachFromList(listCont);
+				__WEBPACK_IMPORTED_MODULE_0__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].detachFromList(listCont);
 
-    var eventsTarget = window;
-    if (classtxt == 'xs') {
-        eventsTarget = document.getElementById('div-body');
-    }
+				var eventsTarget = window;
+				if (classtxt == 'xs') {
+								eventsTarget = document.getElementById('div-body');
+				}
 
-    __WEBPACK_IMPORTED_MODULE_0__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].attachToList(scrollCont, listCont, eventsTarget, listItemClass, listProperties);
+				__WEBPACK_IMPORTED_MODULE_0__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].attachToList(listCont, scrollCont, eventsTarget, listItemClass, listProperties);
 }
 
 monitorWinWidth();
 window.addEventListener("resize", function () {
-    monitorWinWidth();
+				monitorWinWidth();
 });
 
 function sortEnd(origIndex, newIndex) {
-    if (origIndex != newIndex) {
-        var items = listCont.getElementsByClassName(listItemClass);
-        var origItem = items[origIndex];
-        var newItem = items[newIndex];
+				if (origIndex != newIndex) {
+								var items = listCont.getElementsByClassName(listItemClass);
+								var origItem = items[origIndex];
+								var newItem = items[newIndex];
 
-        listCont.removeChild(origItem);
-        if (newIndex > origIndex) {
-            listCont.insertBefore(origItem, newItem.nextSibling);
-        } else {
-            listCont.insertBefore(origItem, newItem);
-        }
-    }
+								listCont.removeChild(origItem);
+								if (newIndex > origIndex) {
+												listCont.insertBefore(origItem, newItem.nextSibling);
+								} else {
+												listCont.insertBefore(origItem, newItem);
+								}
+				}
 }
 
 var temp = document.getElementById('temp');
 temp.addEventListener('click', function () {
-    __WEBPACK_IMPORTED_MODULE_0__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].triggerRight(listCont, 23);
+				__WEBPACK_IMPORTED_MODULE_0__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].triggerRight(listCont, 23);
 });
 
 // lithiumlistPro.setDefaults({delay: 200});
