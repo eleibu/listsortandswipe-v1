@@ -589,7 +589,6 @@ var lithiumlistPro = function () {
 	};
 
 	var mouseMove = function mouseMove(e, instance) {
-		console.log('mouseMove');
 		if (instance.temp && instance.temp.moveType != null) {
 			e.preventDefault();
 		}
@@ -633,10 +632,6 @@ var lithiumlistPro = function () {
 					}
 				}
 			} else if (instance.temp.moveType == 'SORT') {
-
-				// IS pageY CHANGING AS window IS SCROLLING?????
-
-
 				var deltaY = pageY - instance.temp.lastPageY;
 				if (deltaY != 0 && instance.temp.scrollInterval) {
 					clearInterval(instance.temp.scrollInterval);
@@ -671,10 +666,6 @@ var lithiumlistPro = function () {
 					if (instance.temp.scrollOverhang == 0) {
 						if (instance.temp.itemClone.offsetTop < getScrollTop(instance.scrollCont) - instance.deltaItemsScroll) {
 							instance.temp.scrollOverhang = instance.deltaItemsScroll + instance.temp.itemClone.offsetTop - getScrollTop(instance.scrollCont);
-							// console.log('instance.deltaItemsScroll: ' + instance.deltaItemsScroll);
-							// console.log('instance.temp.itemClone.offsetTop: ' + instance.temp.itemClone.offsetTop);
-							// console.log('getScrollTop(instance.scrollCont): ' + getScrollTop(instance.scrollCont));
-							// console.log('-----------');
 						} else if (instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight > getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.deltaItemsScroll) {
 							instance.temp.scrollOverhang = instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight - (getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.deltaItemsScroll);
 						}
@@ -712,7 +703,11 @@ var lithiumlistPro = function () {
 	};
 
 	var doScroll = function doScroll(instance) {
-		console.log('doScroll');
+
+		// WHY ARE WE NOT SCROLLING UNTIL ITEMCLONE IS FULLY IN VIEW AGAIN?
+		// CLEAN UP STUFF
+
+
 		var shouldScroll = false;
 		if (instance.temp.itemClone.offsetTop < getScrollTop(instance.scrollCont) - instance.deltaItemsScroll) {
 			shouldScroll = true;
@@ -723,6 +718,9 @@ var lithiumlistPro = function () {
 		if (shouldScroll) {
 			var scrollChange = Math.round(instance.temp.scrollOverhang / instance.temp.itemClone.offsetHeight * getScrollMultiplier(instance.props.sortScrollSpeed));
 			setScrollTop(instance.scrollCont, getScrollTop(instance.scrollCont) + scrollChange);
+			if (isWindow(instance.scrollCont)) {
+				instance.temp.lastPageY = instance.temp.lastPageY + scrollChange;
+			}
 			animateItems(instance);
 
 			var movePX = scrollChange;
@@ -737,11 +735,9 @@ var lithiumlistPro = function () {
 			}
 
 			if (movePX != 0) {
-				console.log(1);
 				moveItemClone(instance, movePX);
 				animateItems(instance);
 			} else {
-				console.log(0);
 				if (instance.temp.scrollInterval) {
 					clearInterval(instance.temp.scrollInterval);
 					instance.temp.scrollInterval = null;
