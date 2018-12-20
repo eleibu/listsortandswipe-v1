@@ -39,7 +39,10 @@
 // * Position of itemCont behaves strangely when item-cont has a top or bottom margin. Temporary resolution is to remove the margin, insert a child div and add a margin to that.
 // * Cursor is sometimes far above itemCont but still moving it (seems to happen only when moving up, but not sure).
 
-
+// TODO: Check for other uses of boundingClientRect
+// TODO: Change isDOMElement to !isWindow
+// TODO: Fix diffBtwListAndScroll - need to check for null or undefined
+// TODO: Fix eventListener issue - need to allow for touch and click no same device
 // TODO: Test using window as scrollCont
 // TODO: Remove .version() from webpack.mix.js?
 
@@ -545,9 +548,9 @@ export var lithiumlistPro = (function () {
 
         		var rect = instance.temp.itemClone.getBoundingClientRect();
 	        	var shouldMove = false;
-	        	if ((deltaY < 0) && (rect.bottom > pageY)) {		// moving up - move if cursor is above bottom of itemClone
+	        	if ((deltaY < 0) && (rect.bottom + window.pageYOffset > pageY)) {		// moving up - move if cursor is above bottom of itemClone
 					shouldMove = true;
-	        	} else if ((deltaY > 0) && (rect.top < pageY)) {	// moving down - move if cursor is below top of itemClone
+	        	} else if ((deltaY > 0) && (rect.top + window.pageYOffset < pageY)) {	// moving down - move if cursor is below top of itemClone
 					shouldMove = true;
 	        	}
 
@@ -575,7 +578,6 @@ export var lithiumlistPro = (function () {
 		var shouldScroll = moveItemClone(instance, scrollChange, false);
 		if (shouldScroll) {
 			setScrollTop(instance.scrollCont, getScrollTop(instance.scrollCont) + scrollChange);
-        	// instance.scrollCont.scrollTop = instance.scrollCont.scrollTop + scrollChange;
         	animateItems(instance);
 		} else {
         	if (instance.temp.scrollInterval) {
@@ -602,10 +604,6 @@ export var lithiumlistPro = (function () {
 	        var scrollDir = 0;
 	        var outFraction = 0;
 
-	        // console.log('cloneTop + instance.temp.itemClone.offsetHeight: ' + cloneTop + instance.temp.itemClone.offsetHeight);
-	        // console.log('getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.deltaItemsScroll: ' + getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.deltaItemsScroll);
-	        // console.log(instance.deltaItemsScroll);
-
 	        if (cloneTop < (getScrollTop(instance.scrollCont) - instance.deltaItemsScroll)) {
 	        	scrollDir = -1;		// scroll up
 	        	outFraction = ((getScrollTop(instance.scrollCont) - instance.deltaItemsScroll) - cloneTop) / instance.temp.itemClone.offsetHeight;
@@ -613,13 +611,6 @@ export var lithiumlistPro = (function () {
 				scrollDir = 1;		// scroll down
 				outFraction = ((cloneTop + instance.temp.itemClone.offsetHeight) - (getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.deltaItemsScroll)) / instance.temp.itemClone.offsetHeight;
 	        }
-	   //      if (cloneTop < (instance.scrollCont.scrollTop - instance.deltaItemsScroll)) {
-	   //      	scrollDir = -1;		// scroll up
-	   //      	outFraction = ((instance.scrollCont.scrollTop - instance.deltaItemsScroll) - cloneTop) / instance.temp.itemClone.offsetHeight;
-	   //      } else if ((cloneTop + instance.temp.itemClone.offsetHeight) > (instance.scrollCont.scrollTop + instance.scrollCont.clientHeight - instance.deltaItemsScroll)) {
-				// scrollDir = 1;		// scroll down
-				// outFraction = ((cloneTop + instance.temp.itemClone.offsetHeight) - (instance.scrollCont.scrollTop + instance.scrollCont.clientHeight - instance.deltaItemsScroll)) / instance.temp.itemClone.offsetHeight;
-	   //      }
 	        return {
 	        	'scrollDir' : scrollDir,
 	        	'outFraction' : outFraction
@@ -630,9 +621,6 @@ export var lithiumlistPro = (function () {
         	if ((cloneTop < (getScrollTop(instance.scrollCont) - instance.deltaItemsScroll)) || ((cloneTop + instance.temp.itemClone.offsetHeight) > (getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.deltaItemsScroll))) {
         		shouldScroll = true;
         	}
-        	// if ((cloneTop < (instance.scrollCont.scrollTop - instance.deltaItemsScroll)) || ((cloneTop + instance.temp.itemClone.offsetHeight) > (instance.scrollCont.scrollTop + instance.scrollCont.clientHeight - instance.deltaItemsScroll))) {
-        	// 	shouldScroll = true;
-        	// }
         	return shouldScroll;
         }
 	};
