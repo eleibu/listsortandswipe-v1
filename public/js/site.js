@@ -17599,7 +17599,6 @@ var lithiumlistPro = function () {
 
 	var doScroll = function doScroll(instance) {
 
-		// WHY ARE WE NOT SCROLLING UNTIL ITEMCLONE IS FULLY IN VIEW AGAIN?
 		// CLEAN UP STUFF
 
 
@@ -17632,12 +17631,6 @@ var lithiumlistPro = function () {
 			if (movePX != 0) {
 				moveItemClone(instance, movePX);
 				animateItems(instance);
-			} else {
-				if (instance.temp.scrollInterval) {
-					clearInterval(instance.temp.scrollInterval);
-					instance.temp.scrollInterval = null;
-				}
-				instance.temp.scrollOverhang = 0;
 			}
 		} else {
 			if (instance.temp.scrollInterval) {
