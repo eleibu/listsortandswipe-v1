@@ -103,15 +103,15 @@ function sortEnd(origIndex, newIndex) {
 	}
 }
 
-var temp = document.getElementById('temp');
-temp.addEventListener('click', function() {
-	console.log('window: ' + window.pageYOffset);
-	console.log(window.innerHeight);
-	// console.log('window: ' + window.scrollTop);
-	// console.log('document: ' + document.scrollTop);
-	// console.log('body: ' + document.body.scrollTop);
-	// lithiumlistPro.triggerRight(listCont, 23);
-});
+// var temp = document.getElementById('temp');
+// temp.addEventListener('click', function() {
+// 	console.log('window: ' + window.pageYOffset);
+// 	console.log(window.innerHeight);
+// 	// console.log('window: ' + window.scrollTop);
+// 	// console.log('document: ' + document.scrollTop);
+// 	// console.log('body: ' + document.body.scrollTop);
+// 	// lithiumlistPro.triggerRight(listCont, 23);
+// });
 
 
 // lithiumlistPro.setDefaults({delay: 200});

@@ -497,6 +497,7 @@ export var lithiumlistPro = (function () {
 	};
 
 	var mouseMove = function(e, instance) {
+		console.log('mouseMove');
 		if ((instance.temp) && (instance.temp.moveType != null)) {
 			e.preventDefault();
 		}
@@ -540,6 +541,11 @@ export var lithiumlistPro = (function () {
         			}
         		}
         	} else if (instance.temp.moveType == 'SORT') {
+
+
+        		// IS pageY CHANGING AS window IS SCROLLING?????
+
+
                 var deltaY = pageY - instance.temp.lastPageY;
 	        	if ((deltaY != 0) && (instance.temp.scrollInterval)) {
 	        		clearInterval(instance.temp.scrollInterval);
@@ -555,13 +561,49 @@ export var lithiumlistPro = (function () {
 	        	}
 
 	        	if (shouldMove) {
-	        		var scrollProps = moveItemClone(instance, deltaY, true);
+	        		var movePX = deltaY;
+	        		if (deltaY < 0) {
+	        			if (instance.temp.itemClone.offsetTop + deltaY < 0) {
+	        				movePX = -1 * instance.temp.itemClone.offsetTop;
+	        			}
+	        		} else {
+	        			if (instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight + deltaY > instance.listCont.clientHeight) {
+	        				movePX = instance.listCont.clientHeight - instance.temp.itemClone.offsetTop - instance.temp.itemClone.offsetHeight;
+	        			}
+	        		}
+
+	        		moveItemClone(instance, movePX);
 	        		animateItems(instance);
 
-                    if ((scrollProps.scrollDir != 0) && (scrollProps.outFraction != 0)) {
-                    	var scrollChange = Math.round(scrollProps.scrollDir * scrollProps.outFraction * getScrollMultiplier(instance.props.sortScrollSpeed));
-                    	instance.temp.scrollInterval = setInterval(function() {doScroll(instance, scrollChange);}, 5);
-                    }
+	        		if (instance.temp.scrollOverhang == 0) {
+				        if (instance.temp.itemClone.offsetTop < (getScrollTop(instance.scrollCont) - instance.deltaItemsScroll)) {
+							instance.temp.scrollOverhang = instance.deltaItemsScroll + instance.temp.itemClone.offsetTop - getScrollTop(instance.scrollCont);
+							// console.log('instance.deltaItemsScroll: ' + instance.deltaItemsScroll);
+							// console.log('instance.temp.itemClone.offsetTop: ' + instance.temp.itemClone.offsetTop);
+							// console.log('getScrollTop(instance.scrollCont): ' + getScrollTop(instance.scrollCont));
+							// console.log('-----------');
+				        } else if ((instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight) > (getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.deltaItemsScroll)) {
+							instance.temp.scrollOverhang = (instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight) - (getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.deltaItemsScroll);
+				        }
+	        		} else {
+	        			if (instance.temp.scrollOverhang < 0) {
+	        				if (instance.temp.scrollOverhang + movePX < 0) {
+								instance.temp.scrollOverhang = instance.temp.scrollOverhang + movePX;
+	        				} else {
+								instance.temp.scrollOverhang = 0;
+	        				}
+	        			} else {
+	        				if (instance.temp.scrollOverhang + movePX > 0) {
+								instance.temp.scrollOverhang = instance.temp.scrollOverhang + movePX;
+	        				} else {
+								instance.temp.scrollOverhang = 0;
+	        				}
+	        			}
+	        		}
+
+	        		if (instance.temp.scrollOverhang != 0) {
+						instance.temp.scrollInterval = setInterval(function() {doScroll(instance);}, 5);
+	        		}
 	        	}
         	}
         }
@@ -574,55 +616,54 @@ export var lithiumlistPro = (function () {
 		mouseMove(e, instance);
 	};
 
-	var doScroll = function(instance, scrollChange) {
-		var shouldScroll = moveItemClone(instance, scrollChange, false);
-		if (shouldScroll) {
+	var doScroll = function(instance) {
+		console.log('doScroll');
+		var shouldScroll = false;
+        if (instance.temp.itemClone.offsetTop < (getScrollTop(instance.scrollCont) - instance.deltaItemsScroll)) {
+        	shouldScroll = true;
+        } else if ((instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight) > (getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.deltaItemsScroll)) {
+        	shouldScroll = true;
+        }
+
+        if (shouldScroll) {
+			var scrollChange = Math.round((instance.temp.scrollOverhang / instance.temp.itemClone.offsetHeight) * getScrollMultiplier(instance.props.sortScrollSpeed));
 			setScrollTop(instance.scrollCont, getScrollTop(instance.scrollCont) + scrollChange);
         	animateItems(instance);
-		} else {
+
+    		var movePX = scrollChange;
+    		if (scrollChange < 0) {
+    			if (instance.temp.itemClone.offsetTop + scrollChange < 0) {
+    				movePX = -1 * instance.temp.itemClone.offsetTop;
+    			}
+    		} else {
+    			if (instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight + scrollChange > instance.listCont.clientHeight) {
+    				movePX = instance.listCont.clientHeight - instance.temp.itemClone.offsetTop - instance.temp.itemClone.offsetHeight;
+    			}
+    		}
+
+    		if (movePX != 0) {
+    			console.log(1);
+	    		moveItemClone(instance, movePX);
+	    		animateItems(instance);
+    		} else {
+    			console.log(0);
+	        	if (instance.temp.scrollInterval) {
+	        		clearInterval(instance.temp.scrollInterval);
+	        		instance.temp.scrollInterval = null;
+	        	}
+	        	instance.temp.scrollOverhang = 0;
+    		}
+        } else {
         	if (instance.temp.scrollInterval) {
         		clearInterval(instance.temp.scrollInterval);
         		instance.temp.scrollInterval = null;
         	}
-		}
+        	instance.temp.scrollOverhang = 0;
+        }
 	};
 
-	var moveItemClone = function(instance, deltaTrans, withScrollProps) {
-        var cloneOrigTop = getItemCloneTop(instance);
-        var cloneTrans = getTransYNum(instance.temp.itemClone) + deltaTrans;
-
-        if (cloneOrigTop + cloneTrans < 0) {	// ensure itemClone is not above top or below bottom of listCont
-            cloneTrans = -1 * cloneOrigTop;
-        } else if (cloneOrigTop + cloneTrans + instance.temp.itemClone.offsetHeight > instance.listCont.clientHeight) {
-            cloneTrans = instance.listCont.clientHeight - cloneOrigTop - instance.temp.itemClone.offsetHeight;
-        }
-        instance.temp.itemClone.style[`${vendorPrefix}Transform`] = 'translateY('+ cloneTrans + 'px)';
-
-		var cloneTop = cloneOrigTop + cloneTrans;
-        if (withScrollProps) {
-        	// return scrollProps
-	        var scrollDir = 0;
-	        var outFraction = 0;
-
-	        if (cloneTop < (getScrollTop(instance.scrollCont) - instance.deltaItemsScroll)) {
-	        	scrollDir = -1;		// scroll up
-	        	outFraction = ((getScrollTop(instance.scrollCont) - instance.deltaItemsScroll) - cloneTop) / instance.temp.itemClone.offsetHeight;
-	        } else if ((cloneTop + instance.temp.itemClone.offsetHeight) > (getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.deltaItemsScroll)) {
-				scrollDir = 1;		// scroll down
-				outFraction = ((cloneTop + instance.temp.itemClone.offsetHeight) - (getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.deltaItemsScroll)) / instance.temp.itemClone.offsetHeight;
-	        }
-	        return {
-	        	'scrollDir' : scrollDir,
-	        	'outFraction' : outFraction
-	        };
-        } else {
-        	// return shouldScroll
-        	var shouldScroll = false;
-        	if ((cloneTop < (getScrollTop(instance.scrollCont) - instance.deltaItemsScroll)) || ((cloneTop + instance.temp.itemClone.offsetHeight) > (getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.deltaItemsScroll))) {
-        		shouldScroll = true;
-        	}
-        	return shouldScroll;
-        }
+	var moveItemClone = function(instance, movePX) {
+        instance.temp.itemClone.style.top = instance.temp.itemClone.offsetTop + movePX + 'px';
 	};
 
 	var animateItems = function(instance) {
@@ -640,10 +681,8 @@ export var lithiumlistPro = (function () {
         	moveDownBoundary = instance.temp.items[nextIndex].offsetTop + getTransYNum(instance.temp.items[nextIndex]) + (instance.temp.items[nextIndex].offsetHeight / 2);
         }
 
-        var cloneTop = getItemCloneTop(instance) + getTransYNum(instance.temp.itemClone);
-
-        if ((cloneTop < moveUpBoundary) || ((cloneTop + instance.temp.itemClone.offsetHeight) > moveDownBoundary)) {
-            if ((prevIndex !== null) && (cloneTop < moveUpBoundary)) {
+        if ((instance.temp.itemClone.offsetTop < moveUpBoundary) || ((instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight) > moveDownBoundary)) {
+            if ((prevIndex !== null) && (instance.temp.itemClone.offsetTop < moveUpBoundary)) {
                 // move up
                 var activeUp = -1 * instance.temp.items[prevIndex].offsetHeight;
 				instance.temp.items[instance.temp.activeIndex].style[`${vendorPrefix}TransitionDuration`] = instance.props.sortReorderDuration + 'ms';
@@ -657,7 +696,7 @@ export var lithiumlistPro = (function () {
                 instance.temp.items[instance.temp.activeIndex] = instance.temp.items[prevIndex];
 				instance.temp.items[prevIndex] = copyActiveTaskDivRef;
 				instance.temp.activeIndex = prevIndex;
-            } else if ((nextIndex !== null) && ((cloneTop + instance.temp.itemClone.offsetHeight) > moveDownBoundary)) {
+            } else if ((nextIndex !== null) && ((instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight) > moveDownBoundary)) {
                 // move down
                 var activeDown = instance.temp.items[nextIndex].offsetHeight;
                 instance.temp.items[instance.temp.activeIndex].style[`${vendorPrefix}TransitionDuration`] = instance.props.sortReorderDuration + 'ms';
@@ -675,16 +714,16 @@ export var lithiumlistPro = (function () {
         }
 	};
 
-	var getItemCloneTop = function(instance) {
-		var origTop = 0;
-		if ((instance.temp.itemClone) && (instance.temp.itemClone.style) && (instance.temp.itemClone.style.top)) {
-			var index = instance.temp.itemClone.style.top.indexOf('px');
-			if (index > -1) {
-				origTop = parseInt(instance.temp.itemClone.style.top.substring(0, index));
-			}
-		}
-		return origTop;
-	};
+	// var getItemCloneTop = function(instance) {
+	// 	var origTop = 0;
+	// 	if ((instance.temp.itemClone) && (instance.temp.itemClone.style) && (instance.temp.itemClone.style.top)) {
+	// 		var index = instance.temp.itemClone.style.top.indexOf('px');
+	// 		if (index > -1) {
+	// 			origTop = parseInt(instance.temp.itemClone.style.top.substring(0, index));
+	// 		}
+	// 	}
+	// 	return origTop;
+	// };
 
 	var getTransYNum = function(el) {
         var currentTransAmount = 0;
@@ -768,9 +807,10 @@ export var lithiumlistPro = (function () {
 
                 var activeTaskTop = getDeltaWithParent(instance.temp.items[instance.temp.activeIndex], instance.listCont, 0) + getTransYNum(instance.temp.items[instance.temp.activeIndex]);
 
-                var cloneTop = getItemCloneTop(instance) + getTransYNum(instance.temp.itemClone);
+                //@@
+                // var cloneTop = getItemCloneTop(instance) + getTransYNum(instance.temp.itemClone);
                 instance.temp.itemClone.style[`${vendorPrefix}TransitionDuration`] = instance.props.sortEndDockDuration + 'ms';
-                moveItemClone(instance, activeTaskTop - cloneTop, false);
+                moveItemClone(instance, activeTaskTop - instance.temp.itemClone.offsetTop, false);
 
                 instance.temp.sortEndTimer = setTimeout(function() {sortEnd(instance)}, instance.props.sortEndDockDuration);
         	}
@@ -1014,6 +1054,7 @@ export var lithiumlistPro = (function () {
 			'lastPageY' : null,
 			'sortDelayTimer' : null,
 			'sortEndTimer' : null,
+			'scrollOverhang' : 0,
 			'scrollInterval' : null,
 			'funcOnScroll' : null,
 			'funcMouseDown' : null,
