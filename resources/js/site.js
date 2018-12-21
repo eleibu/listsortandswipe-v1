@@ -6,6 +6,7 @@ var listCont = document.getElementById('div-list-cont');
 var scrollCont = document.getElementById('div-scroll-cont');
 // var scrollCont = document.getElementById('div-body');
 // var scrollCont = window;
+var touchEventsTarget = document.getElementById('div-body');
 var listItemClass = 'listitem-cont';
 
 
@@ -47,6 +48,14 @@ var listProperties = {
     }],
 };
 
+lithiumlistPro.attachToList(
+    listCont,
+    scrollCont,
+    touchEventsTarget,
+    listItemClass,
+    listProperties
+);
+
 function monitorWinWidth() {
     var width = window.innerWidth;
     if (width > 1330) {
@@ -62,6 +71,8 @@ function monitorWinWidth() {
     }
 }
 
+
+
 var event_changeWidthClass = new Event('changeWidthClass');
 function setWidthClass(classtxt) {
     var divtarget = document.getElementById("div-scroll-cont");
@@ -69,21 +80,6 @@ function setWidthClass(classtxt) {
         divtarget.className = classtxt;
         window.dispatchEvent(event_changeWidthClass);
     }
-
-	lithiumlistPro.detachFromList(listCont);
-
-    var touchEventsTarget = window;
-    if (classtxt == 'xs') {
-    	touchEventsTarget = document.getElementById('div-body');
-    }
-
-	lithiumlistPro.attachToList(
-	    listCont,
-	    scrollCont,
-	    null,
-	    listItemClass,
-	    listProperties
-	);
 }
 
 monitorWinWidth();

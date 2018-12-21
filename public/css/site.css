@@ -165,6 +165,10 @@ a:hover {
   overflow: auto;
 }
 
+#div-scroll-cont.xs {
+  height: 400px;
+}
+
 #div-scroll-cont.xs div.listitem-cont {
   padding: 1.4em 1em;
 }

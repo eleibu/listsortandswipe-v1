@@ -45,8 +45,6 @@
 // * Position of itemCont behaves strangely when item-cont has a top or bottom margin. Temporary resolution is to remove the margin, insert a child div and add a margin to that.
 // * Cursor is sometimes far above itemCont but still moving it (seems to happen only when moving up, but not sure).
 
-// TODO: error in scrollEnd on second call
-// TODO: Fix diffBtwListAndScroll - need to check for null or undefined
 // TODO: Remove .version() from webpack.mix.js?
 
 
@@ -583,7 +581,7 @@ export var lithiumlistPro = (function () {
 	        			}
 	        		}
 	        		if (instance.temp.scrollOverhang != 0) {
-						instance.temp.scrollInterval = setInterval(function() {doScroll(instance);}, 5);
+						instance.temp.scrollInterval = setInterval(function() {doScroll(instance);}, 10);
 	        		}
 	        	}
         	}
@@ -681,10 +679,10 @@ export var lithiumlistPro = (function () {
             instance.temp.sortDelayTimer = null;
         }
         if (instance.temp.funcMouseMove) {
-			instance.touchEventsTarget.removeEventListener('mousemove', instance.temp.funcMouseMove);
+			window.removeEventListener('mousemove', instance.temp.funcMouseMove);
         }
         if (instance.temp.funcMouseUp) {
-			instance.touchEventsTarget.removeEventListener('mouseup', instance.temp.funcMouseUp);
+			window.removeEventListener('mouseup', instance.temp.funcMouseUp);
         }
         if (instance.temp.funcTouchMove) {
 			instance.touchEventsTarget.removeEventListener('touchmove', instance.temp.funcTouchMove);
@@ -717,7 +715,7 @@ export var lithiumlistPro = (function () {
 	        		instance.temp.scrollInterval = null;
 	        	}
 
-                var activeTaskTop = getDeltaWithParent(instance.temp.items[instance.temp.activeIndex], instance.listCont, 0) + getTransYNum(instance.temp.items[instance.temp.activeIndex]);
+                var activeTaskTop = instance.temp.items[instance.temp.activeIndex].offsetTop + getTransYNum(instance.temp.items[instance.temp.activeIndex]);
                 instance.temp.itemClone.style[`${vendorPrefix}TransitionDuration`] = instance.props.sortEndDockDuration + 'ms';
                 instance.temp.itemClone.style.top = activeTaskTop + 'px';
 
