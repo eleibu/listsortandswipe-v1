@@ -20,7 +20,7 @@
 // need to set css 'box-shadow' for 'clone-sort' class if want sort clone to have a drop shadow
 // need to set css for 'sort-item-active' to hide active item while sorting
 // add 'unselectedable' classes (with vendor prefixes) to prevent text selection
-// eventsTarget should be 'window' on desktop and NOT 'window' or 'body' on mobile
+// touchEventsTarget should be 'window' on desktop and NOT 'window' or 'body' on mobile
 // if 'left/righMaskClass' is not set, mask is not created
 // sortScrollSpeed: 1, 2, 3, 4, 5 (default = 3)
 // leftMasks / rightMasks must be arrays (not null) and leftMasks.classNameDefault must not be undefined or null
@@ -28,8 +28,8 @@
 // leftScrollClass / rightScrollClass is not added to scrollCont if it is 'window'
 
 // for proper functioning on touch devices:
-	// default is 'eventsTarget = scrollCont'; set it to something else (not 'window' - see below) if you want lithiumlist to respond to touches outside scrollCont
-	// do not set 'eventsTarget = window' (prevent scrolling will not work); if need whole page to respond to touch, create a div to wrap the whole page with 'height = 100%; overflow: auto'
+	// default is 'touchEventsTarget = scrollCont'; set it to something else (not 'window' - see below) if you want lithiumlist to respond to touches outside scrollCont
+	// do not set 'touchEventsTarget = window' (prevent scrolling will not work); if need whole page to respond to touch, create a div to wrap the whole page with 'height = 100%; overflow: auto'
 	// do not set 'scrollCont = window' (prevent scrolling will not work); if need whole page to scroll, create a div to wrap the whole page with 'height = 100%; overflow: auto'
 // none of the above is necessary for desktop-only functionality
 
@@ -45,11 +45,8 @@
 // * Position of itemCont behaves strangely when item-cont has a top or bottom margin. Temporary resolution is to remove the margin, insert a child div and add a margin to that.
 // * Cursor is sometimes far above itemCont but still moving it (seems to happen only when moving up, but not sure).
 
-// TODO: Check for other uses of boundingClientRect
-// TODO: Change isDOMElement to !isWindow
+// TODO: error in scrollEnd on second call
 // TODO: Fix diffBtwListAndScroll - need to check for null or undefined
-// TODO: Fix eventListener issue - need to allow for touch and click no same device
-// TODO: Test using window as scrollCont
 // TODO: Remove .version() from webpack.mix.js?
 
 
@@ -118,7 +115,7 @@ export var lithiumlistPro = (function () {
 
 	// public methods
 
-	var attachToList = function(listCont, scrollCont, eventsTarget, listItemClass, listProperties) {
+	var attachToList = function(listCont, scrollCont, touchEventsTarget, listItemClass, listProperties) {
 		if (isUndefinedOrNull(listCont)) {
 			throw 'listCont must not be undefined or null';
 		} else {
@@ -151,8 +148,8 @@ export var lithiumlistPro = (function () {
 			}
 		}
 
-		if (isUndefinedOrNull(eventsTarget)) {
-			eventsTarget = window;
+		if (isUndefinedOrNull(touchEventsTarget)) {
+			touchEventsTarget = scrollCont;
 		}
 
 		if (isUndefinedOrNull(listItemClass) || (!isString(listItemClass)) || (listItemClass.length == 0)) {
@@ -183,7 +180,7 @@ export var lithiumlistPro = (function () {
 		var instance = {
 			'scrollCont' : scrollCont,
 			'listCont' : listCont,
-			'eventsTarget' : eventsTarget,
+			'touchEventsTarget' : touchEventsTarget,
 			'listItemClass' : listItemClass,
 			'deltaItemsScroll' : getDeltaWithParent(listCont, scrollCont, 0),
 			'props' : props,
@@ -406,10 +403,10 @@ export var lithiumlistPro = (function () {
 		instance.temp.funcTouchMove = function(e) {touchMove(e, instance);};
 		instance.temp.funcTouchEnd = function(e) {touchEnd(e, instance);};
 
-		instance.eventsTarget.addEventListener('mousemove', instance.temp.funcMouseMove);
-		instance.eventsTarget.addEventListener('mouseup', instance.temp.funcMouseUp);
-		instance.eventsTarget.addEventListener('touchmove', instance.temp.funcTouchMove);
-		instance.eventsTarget.addEventListener('touchend', instance.temp.funcTouchEnd);
+		window.addEventListener('mousemove', instance.temp.funcMouseMove);
+		window.addEventListener('mouseup', instance.temp.funcMouseUp);
+		instance.touchEventsTarget.addEventListener('touchmove', instance.temp.funcTouchMove);
+		instance.touchEventsTarget.addEventListener('touchend', instance.temp.funcTouchEnd);
 	};
 
 	var initMoveLeft = function(instance, cloneLeftPX) {
@@ -684,16 +681,16 @@ export var lithiumlistPro = (function () {
             instance.temp.sortDelayTimer = null;
         }
         if (instance.temp.funcMouseMove) {
-			instance.eventsTarget.removeEventListener('mousemove', instance.temp.funcMouseMove);
+			instance.touchEventsTarget.removeEventListener('mousemove', instance.temp.funcMouseMove);
         }
         if (instance.temp.funcMouseUp) {
-			instance.eventsTarget.removeEventListener('mouseup', instance.temp.funcMouseUp);
+			instance.touchEventsTarget.removeEventListener('mouseup', instance.temp.funcMouseUp);
         }
         if (instance.temp.funcTouchMove) {
-			instance.eventsTarget.removeEventListener('touchmove', instance.temp.funcTouchMove);
+			instance.touchEventsTarget.removeEventListener('touchmove', instance.temp.funcTouchMove);
         }
         if (instance.temp.funcTouchEnd) {
-			instance.eventsTarget.removeEventListener('touchend', instance.temp.funcTouchEnd);
+			instance.touchEventsTarget.removeEventListener('touchend', instance.temp.funcTouchEnd);
         }
 
         if (instance.temp.moveType) {

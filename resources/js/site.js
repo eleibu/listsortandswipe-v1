@@ -3,8 +3,8 @@ require('bootstrap');
 import { lithiumlistPro } from './lithiumlist-pro-1.0.0.js';
 
 var listCont = document.getElementById('div-list-cont');
-// var scrollCont = document.getElementById('div-scroll-cont');
-var scrollCont = document.getElementById('div-body');
+var scrollCont = document.getElementById('div-scroll-cont');
+// var scrollCont = document.getElementById('div-body');
 // var scrollCont = window;
 var listItemClass = 'listitem-cont';
 
@@ -72,15 +72,15 @@ function setWidthClass(classtxt) {
 
 	lithiumlistPro.detachFromList(listCont);
 
-    var eventsTarget = window;
+    var touchEventsTarget = window;
     if (classtxt == 'xs') {
-    	eventsTarget = document.getElementById('div-body');
+    	touchEventsTarget = document.getElementById('div-body');
     }
 
 	lithiumlistPro.attachToList(
 	    listCont,
 	    scrollCont,
-	    eventsTarget,
+	    null,
 	    listItemClass,
 	    listProperties
 	);
