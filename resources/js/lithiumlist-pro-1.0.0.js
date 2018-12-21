@@ -27,6 +27,12 @@
 // setDefaultProperties only applies to instances created after it is called (use setListProperties to change properties for a paticular instance)
 // leftScrollClass / rightScrollClass is not added to scrollCont if it is 'window'
 
+// for proper functioning on touch devices:
+	// default is 'eventsTarget = scrollCont'; set it to something else (not 'window' - see below) if you want lithiumlist to respond to touches outside scrollCont
+	// do not set 'eventsTarget = window' (prevent scrolling will not work); if need whole page to respond to touch, create a div to wrap the whole page with 'height = 100%; overflow: auto'
+	// do not set 'scrollCont = window' (prevent scrolling will not work); if need whole page to scroll, create a div to wrap the whole page with 'height = 100%; overflow: auto'
+// none of the above is necessary for desktop-only functionality
+
 
 // Pipeline:
 // confirm left / right
@@ -371,7 +377,6 @@ export var lithiumlistPro = (function () {
 					initMoveLeft(instance, 0);
 					initLeftSlideOut(instance);
 				} else if (instance.props.rightEnabled && checkClassClicked(e, instance.temp.items[index], instance.props.rightDragHandleClass)) {
-
 					instance.temp.activeIndex = index;
 					initMoveRight(instance, 0);
 					initRightSlideOut(instance);
@@ -555,42 +560,31 @@ export var lithiumlistPro = (function () {
 	        	}
 
 	        	if (shouldMove) {
-	        		var movePX = deltaY;
-	        		if (deltaY < 0) {
-	        			if (instance.temp.itemClone.offsetTop + deltaY < 0) {
-	        				movePX = -1 * instance.temp.itemClone.offsetTop;
-	        			}
-	        		} else {
-	        			if (instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight + deltaY > instance.listCont.clientHeight) {
-	        				movePX = instance.listCont.clientHeight - instance.temp.itemClone.offsetTop - instance.temp.itemClone.offsetHeight;
-	        			}
-	        		}
-
-	        		moveItemClone(instance, movePX);
+	        		var yChange = getYChange(instance, deltaY);
+	        		instance.temp.itemClone.style.top = instance.temp.itemClone.offsetTop + yChange + 'px';
 	        		animateItems(instance);
 
 	        		if (instance.temp.scrollOverhang == 0) {
-				        if (instance.temp.itemClone.offsetTop < (getScrollTop(instance.scrollCont) - instance.deltaItemsScroll)) {
+	        			if (isItemCloneAboveScrollTop(instance)) {
 							instance.temp.scrollOverhang = instance.deltaItemsScroll + instance.temp.itemClone.offsetTop - getScrollTop(instance.scrollCont);
-				        } else if ((instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight) > (getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.deltaItemsScroll)) {
+	        			} else if (isItemCloneBelowScrollBottom(instance)) {
 							instance.temp.scrollOverhang = (instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight) - (getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.deltaItemsScroll);
-				        }
+	        			}
 	        		} else {
 	        			if (instance.temp.scrollOverhang < 0) {
-	        				if (instance.temp.scrollOverhang + movePX < 0) {
-								instance.temp.scrollOverhang = instance.temp.scrollOverhang + movePX;
+	        				if (instance.temp.scrollOverhang + yChange < 0) {
+								instance.temp.scrollOverhang = instance.temp.scrollOverhang + yChange;
 	        				} else {
 								instance.temp.scrollOverhang = 0;
 	        				}
 	        			} else {
-	        				if (instance.temp.scrollOverhang + movePX > 0) {
-								instance.temp.scrollOverhang = instance.temp.scrollOverhang + movePX;
+	        				if (instance.temp.scrollOverhang + yChange > 0) {
+								instance.temp.scrollOverhang = instance.temp.scrollOverhang + yChange;
 	        				} else {
 								instance.temp.scrollOverhang = 0;
 	        				}
 	        			}
 	        		}
-
 	        		if (instance.temp.scrollOverhang != 0) {
 						instance.temp.scrollInterval = setInterval(function() {doScroll(instance);}, 5);
 	        		}
@@ -607,17 +601,12 @@ export var lithiumlistPro = (function () {
 	};
 
 	var doScroll = function(instance) {
-
-
-		// CLEAN UP STUFF
-
-
 		var shouldScroll = false;
-        if (instance.temp.itemClone.offsetTop < (getScrollTop(instance.scrollCont) - instance.deltaItemsScroll)) {
-        	shouldScroll = true;
-        } else if ((instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight) > (getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.deltaItemsScroll)) {
-        	shouldScroll = true;
-        }
+		if (isItemCloneAboveScrollTop(instance)) {
+			shouldScroll = true;
+		} else if (isItemCloneBelowScrollBottom(instance)) {
+			shouldScroll = true;
+		}
 
         if (shouldScroll) {
 			var scrollChange = Math.round((instance.temp.scrollOverhang / instance.temp.itemClone.offsetHeight) * getScrollMultiplier(instance.props.sortScrollSpeed));
@@ -627,19 +616,9 @@ export var lithiumlistPro = (function () {
         	}
         	animateItems(instance);
 
-    		var movePX = scrollChange;
-    		if (scrollChange < 0) {
-    			if (instance.temp.itemClone.offsetTop + scrollChange < 0) {
-    				movePX = -1 * instance.temp.itemClone.offsetTop;
-    			}
-    		} else {
-    			if (instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight + scrollChange > instance.listCont.clientHeight) {
-    				movePX = instance.listCont.clientHeight - instance.temp.itemClone.offsetTop - instance.temp.itemClone.offsetHeight;
-    			}
-    		}
-
-    		if (movePX != 0) {
-	    		moveItemClone(instance, movePX);
+    		var yChange = getYChange(instance, scrollChange);
+    		if (yChange != 0) {
+    			instance.temp.itemClone.style.top = instance.temp.itemClone.offsetTop + yChange + 'px';
 	    		animateItems(instance);
     		}
         } else {
@@ -649,10 +628,6 @@ export var lithiumlistPro = (function () {
         	}
         	instance.temp.scrollOverhang = 0;
         }
-	};
-
-	var moveItemClone = function(instance, movePX) {
-        instance.temp.itemClone.style.top = instance.temp.itemClone.offsetTop + movePX + 'px';
 	};
 
 	var animateItems = function(instance) {
@@ -703,55 +678,6 @@ export var lithiumlistPro = (function () {
         }
 	};
 
-	// var getItemCloneTop = function(instance) {
-	// 	var origTop = 0;
-	// 	if ((instance.temp.itemClone) && (instance.temp.itemClone.style) && (instance.temp.itemClone.style.top)) {
-	// 		var index = instance.temp.itemClone.style.top.indexOf('px');
-	// 		if (index > -1) {
-	// 			origTop = parseInt(instance.temp.itemClone.style.top.substring(0, index));
-	// 		}
-	// 	}
-	// 	return origTop;
-	// };
-
-	var getTransYNum = function(el) {
-        var currentTransAmount = 0;
-        if ((el.style) && (el.style[`${vendorPrefix}Transform`])) {
-            var index = el.style[`${vendorPrefix}Transform`].indexOf('px');
-            if (index >  -1) {
-                currentTransAmount = parseInt(el.style[`${vendorPrefix}Transform`].substring(11, index));
-            }
-        }
-        return currentTransAmount;
-	};
-
-	var setTransY = function(el, transAmount) {
-		var currentTransAmount = getTransYNum(el);
-        var newTransAmount = 0;
-        if (currentTransAmount != 0) {
-            newTransAmount = currentTransAmount + transAmount;
-        } else {
-            newTransAmount = transAmount;
-        }
-        if (newTransAmount != 0) {
-            el.style[`${vendorPrefix}Transform`] = 'translateY('+ newTransAmount + 'px)';
-        } else {
-            el.style[`${vendorPrefix}Transform`] = '';
-        }
-	}
-
-	var vendorPrefix = (function() {
-        var styles = window.getComputedStyle(document.documentElement, '') || ['-moz-hidden-iframe'];
-        var prefix = (Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/) || (styles.OLink === ('' && ['', 'o'])))[1];
-
-        switch (prefix) {
-        case 'ms':
-            return 'ms';
-        default:
-            return prefix && prefix.length ? prefix[0].toUpperCase() + prefix.substr(1) : '';
-        }
-	})();
-
 	var mouseUp = function(e, instance) {
         if (instance.temp.sortDelayTimer) {
             clearTimeout(instance.temp.sortDelayTimer);
@@ -795,11 +721,8 @@ export var lithiumlistPro = (function () {
 	        	}
 
                 var activeTaskTop = getDeltaWithParent(instance.temp.items[instance.temp.activeIndex], instance.listCont, 0) + getTransYNum(instance.temp.items[instance.temp.activeIndex]);
-
-                //@@
-                // var cloneTop = getItemCloneTop(instance) + getTransYNum(instance.temp.itemClone);
                 instance.temp.itemClone.style[`${vendorPrefix}TransitionDuration`] = instance.props.sortEndDockDuration + 'ms';
-                moveItemClone(instance, activeTaskTop - instance.temp.itemClone.offsetTop, false);
+                instance.temp.itemClone.style.top = activeTaskTop + 'px';
 
                 instance.temp.sortEndTimer = setTimeout(function() {sortEnd(instance)}, instance.props.sortEndDockDuration);
         	}
@@ -1056,6 +979,74 @@ export var lithiumlistPro = (function () {
 	};
 
 	// utility functions
+
+	var getYChange = function(instance, defaultYChange) {
+		var yChange = defaultYChange;
+		if (defaultYChange < 0) {
+			if (instance.temp.itemClone.offsetTop + defaultYChange < 0) {
+				yChange = -1 * instance.temp.itemClone.offsetTop;
+			}
+		} else {
+			if (instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight + defaultYChange > instance.listCont.clientHeight) {
+				yChange = instance.listCont.clientHeight - instance.temp.itemClone.offsetTop - instance.temp.itemClone.offsetHeight;
+			}
+		}
+		return yChange;
+	};
+
+	var isItemCloneAboveScrollTop = function(instance) {
+		if (instance.temp.itemClone.offsetTop < (getScrollTop(instance.scrollCont) - instance.deltaItemsScroll)) {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+	var isItemCloneBelowScrollBottom = function(instance) {
+		if ((instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight) > (getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.deltaItemsScroll)) {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+	var getTransYNum = function(el) {
+        var currentTransAmount = 0;
+        if ((el.style) && (el.style[`${vendorPrefix}Transform`])) {
+            var index = el.style[`${vendorPrefix}Transform`].indexOf('px');
+            if (index >  -1) {
+                currentTransAmount = parseInt(el.style[`${vendorPrefix}Transform`].substring(11, index));
+            }
+        }
+        return currentTransAmount;
+	};
+
+	var setTransY = function(el, transAmount) {
+		var currentTransAmount = getTransYNum(el);
+        var newTransAmount = 0;
+        if (currentTransAmount != 0) {
+            newTransAmount = currentTransAmount + transAmount;
+        } else {
+            newTransAmount = transAmount;
+        }
+        if (newTransAmount != 0) {
+            el.style[`${vendorPrefix}Transform`] = 'translateY('+ newTransAmount + 'px)';
+        } else {
+            el.style[`${vendorPrefix}Transform`] = '';
+        }
+	}
+
+	var vendorPrefix = (function() {
+        var styles = window.getComputedStyle(document.documentElement, '') || ['-moz-hidden-iframe'];
+        var prefix = (Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/) || (styles.OLink === ('' && ['', 'o'])))[1];
+
+        switch (prefix) {
+        case 'ms':
+            return 'ms';
+        default:
+            return prefix && prefix.length ? prefix[0].toUpperCase() + prefix.substr(1) : '';
+        }
+	})();
 
 	var getScrollTop = function(el) {
 		if (isWindow(el)) {

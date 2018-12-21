@@ -4,7 +4,8 @@ import { lithiumlistPro } from './lithiumlist-pro-1.0.0.js';
 
 var listCont = document.getElementById('div-list-cont');
 // var scrollCont = document.getElementById('div-scroll-cont');
-var scrollCont = window;
+var scrollCont = document.getElementById('div-body');
+// var scrollCont = window;
 var listItemClass = 'listitem-cont';
 
 
