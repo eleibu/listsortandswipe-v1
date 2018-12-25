@@ -16,10 +16,15 @@
 
 // Notes:
 // scrollCont should be a DOM element or window (not 'document' or 'document.body')
+// scrollCont must have a height other than 'auto' (eg. px, %, em)
+// scrollCont must have overflow 'auto', 'scroll' or 'hidden' (will be set to 'hidden' during automatic scrolling to deal with Safari auto scrolling issue)
+// set 'sortAutoScrollOverflow = false' to prevent setting 'scrollCont.style.overflow = hidden' upon auto scroll (will break auto scroll on Mac Safari)
+// if set 'sortBodyUnselectable = false', consider adding unselectable styles to an outer object (eg. body, document, etc) even if 'listitem-cont' or a sub-element is
+	// unselectable - otherwise, unintended selection of elements outside scrollCont can cause problems
 // listCont should have 'position: relative'
 // need to set css 'box-shadow' for 'clone-sort' class if want sort clone to have a drop shadow
 // need to set css for 'sort-item-active' to hide active item while sorting
-// add 'unselectedable' classes (with vendor prefixes) to prevent text selection
+// add 'unselectable' classes (with vendor prefixes) to prevent text selection
 // touchEventsTarget should be 'window' on desktop and NOT 'window' or 'body' on mobile
 // if 'left/righMaskClass' is not set, mask is not created
 // sortScrollSpeed: 1, 2, 3, 4, 5 (default = 3)
@@ -45,6 +50,7 @@
 // * Position of itemCont behaves strangely when item-cont has a top or bottom margin. Temporary resolution is to remove the margin, insert a child div and add a margin to that.
 // * Cursor is sometimes far above itemCont but still moving it (seems to happen only when moving up, but not sure).
 
+// TODO: Do not attach to window, attach to outer div instead - change validation to check for this
 // TODO: Remove .version() from webpack.mix.js?
 
 
@@ -54,6 +60,8 @@ export var lithiumlistPro = (function () {
 	var defaultProperties = {
 		onSortStart: null,
 		onSortEnd: null,
+		onSortAutoScrollStart: null,
+		onSortAutoScrollEnd: null,
         sortEnabled: true,
         sortByDrag: true,
         sortScrollClass: 'sort-scroll',
@@ -63,7 +71,9 @@ export var lithiumlistPro = (function () {
         sortMoveStartDelay: 400,
         sortReorderDuration: 200,
         sortEndDockDuration: 200,
+        sortBodyUnselectable: true,
         sortScrollSpeed: 3,
+        sortAutoScrollOverflow: true,
 		onLeftStart: null,
 		onLeftSlideOutStart: null,
 		onLeftSlideBackStart: null,
@@ -480,6 +490,10 @@ export var lithiumlistPro = (function () {
 					instance.props.onSortStart(instance.temp.activeIndex);
 		        }
 
+		        if (instance.props.sortBodyUnselectable) {
+		        	unselectableStylesAdd(document.body);
+		        }
+
 		        if ((instance.props.sortScrollClass) && isDOMElement(instance.scrollCont)) {	// check that scrollCont is not 'window' or 'document'
 		        	addClass(instance.scrollCont, instance.props.sortScrollClass);
 		        }
@@ -542,8 +556,12 @@ export var lithiumlistPro = (function () {
         	} else if (instance.temp.moveType == 'SORT') {
                 var deltaY = pageY - instance.temp.lastPageY;
 	        	if ((deltaY != 0) && (instance.temp.scrollInterval)) {
+	    			if (instance.props.onSortAutoScrollEnd) {
+	    				instance.props.onSortAutoScrollEnd(instance.temp.origIndex);
+	    			}
 	        		clearInterval(instance.temp.scrollInterval);
 	        		instance.temp.scrollInterval = null;
+	        		scrollContOverflowRevert(instance);
 	        	}
 
         		var rect = instance.temp.itemClone.getBoundingClientRect();
@@ -581,7 +599,15 @@ export var lithiumlistPro = (function () {
 	        			}
 	        		}
 	        		if (instance.temp.scrollOverhang != 0) {
-						instance.temp.scrollInterval = setInterval(function() {doScroll(instance);}, 10);
+	        			if (instance.props.onSortAutoScrollStart) {
+	        				var scrollingUp = true;
+	        				if (instance.temp.scrollOverhang > 0) {
+	        					scrollingUp = false;
+	        				}
+	        				instance.props.onSortAutoScrollStart(instance.temp.origIndex, scrollingUp);
+	        			}
+	        			scrollContOverflowHidden(instance);
+						instance.temp.scrollInterval = setInterval(function() {doScroll(instance);}, 5);
 	        		}
 	        	}
         	}
@@ -617,10 +643,14 @@ export var lithiumlistPro = (function () {
 	    		animateItems(instance);
     		}
         } else {
+			if (instance.props.onSortAutoScrollEnd) {
+				instance.props.onSortAutoScrollEnd(instance.temp.origIndex);
+			}
         	if (instance.temp.scrollInterval) {
         		clearInterval(instance.temp.scrollInterval);
         		instance.temp.scrollInterval = null;
         	}
+        	scrollContOverflowRevert(instance);
         	instance.temp.scrollOverhang = 0;
         }
 	};
@@ -711,8 +741,12 @@ export var lithiumlistPro = (function () {
         		}
         	} else if (instance.temp.moveType == 'SORT') {
 	        	if (instance.temp.scrollInterval) {
+	    			if (instance.props.onSortAutoScrollEnd) {
+	    				instance.props.onSortAutoScrollEnd(instance.temp.origIndex);
+	    			}
 	        		clearInterval(instance.temp.scrollInterval);
 	        		instance.temp.scrollInterval = null;
+	        		scrollContOverflowRevert(instance);
 	        	}
 
                 var activeTaskTop = instance.temp.items[instance.temp.activeIndex].offsetTop + getTransYNum(instance.temp.items[instance.temp.activeIndex]);
@@ -874,6 +908,10 @@ export var lithiumlistPro = (function () {
 
 		destroyTempDivs(instance);
 
+        if (instance.props.sortBodyUnselectable) {
+        	unselectableStylesRemove(document.body);
+        }
+
 		if (instance.props.onSortEnd) {
 			instance.props.onSortEnd(instance.temp.origIndex, instance.temp.activeIndex);
 		}
@@ -963,6 +1001,7 @@ export var lithiumlistPro = (function () {
 			'sortEndTimer' : null,
 			'scrollOverhang' : 0,
 			'scrollInterval' : null,
+			'origScrollContOverflow' : null,
 			'funcOnScroll' : null,
 			'funcMouseDown' : null,
 			'funcTouchStart' : null,
@@ -974,6 +1013,29 @@ export var lithiumlistPro = (function () {
 	};
 
 	// utility functions
+
+	var scrollContOverflowHidden = function(instance) {
+		if ((!isWindow(instance.scrollCont)) && (instance.props.sortAutoScrollOverflow)) {
+			if ((instance.scrollCont.style) && (instance.scrollCont.style.overflow)) {
+				instance.temp.origScrollContOverflow = instance.scrollCont.style.overflow;
+			}
+			instance.scrollCont.style.overflow = 'hidden';
+		}
+	};
+
+	var scrollContOverflowRevert = function(instance) {
+		if ((!isWindow(instance.scrollCont)) && (instance.props.sortAutoScrollOverflow)) {
+			if (instance.temp.origScrollContOverflow) {
+				instance.scrollCont.style.overflow = instance.temp.origScrollContOverflow;
+				instance.temp.origScrollContOverflow = null;
+			} else {
+				instance.scrollCont.style.overflow = null;
+			}
+			if (!instance.scrollCont.style || (instance.scrollCont.style.length == 0)) {
+				instance.scrollCont.removeAttribute('style');
+			}
+		}
+	};
 
 	var getYChange = function(instance, defaultYChange) {
 		var yChange = defaultYChange;
@@ -1029,7 +1091,7 @@ export var lithiumlistPro = (function () {
         } else {
             el.style[`${vendorPrefix}Transform`] = '';
         }
-	}
+	};
 
 	var vendorPrefix = (function() {
         var styles = window.getComputedStyle(document.documentElement, '') || ['-moz-hidden-iframe'];
@@ -1042,6 +1104,24 @@ export var lithiumlistPro = (function () {
             return prefix && prefix.length ? prefix[0].toUpperCase() + prefix.substr(1) : '';
         }
 	})();
+
+	var unselectableStylesAdd = function(el) {
+		el.style['-webkit-touch-callout'] = 'none';	/* iOS Safari */
+		el.style['-webkit-user-select'] = 'none';	/* Safari */
+		el.style['-khtml-user-select'] = 'none';	/* Konqueror HTML */
+		el.style['-moz-user-select'] = 'none';		/* Firefox */
+		el.style['-ms-user-select'] = 'none';		/* Internet Explorer/Edge */
+		el.style['user-select'] = 'none';
+	};
+
+	var unselectableStylesRemove = function(el) {
+		el.style['-webkit-touch-callout'] = null;
+		el.style['-webkit-user-select'] = null;
+		el.style['-khtml-user-select'] = null;
+		el.style['-moz-user-select'] = null;
+		el.style['-ms-user-select'] = null;
+		el.style['user-select'] = null;
+	};
 
 	var getScrollTop = function(el) {
 		if (isWindow(el)) {
@@ -1209,6 +1289,14 @@ export var lithiumlistPro = (function () {
 			throw 'onSortEnd must be a function';
 		}
 
+		if ((!isUndefinedOrNull(props['onSortAutoScrollStart'])) && (!isFunction(props['onSortAutoScrollStart']))) {
+			throw 'onSortAutoScrollStart must be a function';
+		}
+
+		if ((!isUndefinedOrNull(props['onSortAutoScrollEnd'])) && (!isFunction(props['onSortAutoScrollEnd']))) {
+			throw 'onSortAutoScrollEnd must be a function';
+		}
+
 		if ((!isUndefinedOrNull(props['sortEnabled'])) && (!isBoolean(props['sortEnabled']))) {
 			throw 'sortEnabled must be a boolean';
 		}
@@ -1245,8 +1333,16 @@ export var lithiumlistPro = (function () {
 			throw 'sortEndDockDuration must be a positive integer or zero';
 		}
 
+		if ((!isUndefinedOrNull(props['sortBodyUnselectable'])) && (!isBoolean(props['sortBodyUnselectable']))) {
+			throw 'sortBodyUnselectable must be a boolean';
+		}
+
 		if ((!isUndefinedOrNull(props['sortScrollSpeed'])) && ((!isInteger(props['sortScrollSpeed'])) || ((props['sortScrollSpeed'] != 1) && (props['sortScrollSpeed'] != 2) && (props['sortScrollSpeed'] != 3) && (props['sortScrollSpeed'] != 4) && (props['sortScrollSpeed'] != 5)))) {
 			throw 'sortScrollSpeed must be an integer 1 - 5';
+		}
+
+		if ((!isUndefinedOrNull(props['sortAutoScrollOverflow'])) && (!isBoolean(props['sortAutoScrollOverflow']))) {
+			throw 'sortAutoScrollOverflow must be a boolean';
 		}
 
 		if ((!isUndefinedOrNull(props['onLeftStart'])) && (!isFunction(props['onLeftStart']))) {

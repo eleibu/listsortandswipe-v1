@@ -29,6 +29,8 @@ var listProperties = {
 	leftDragHandleClass: 'budicon-trash',
 	rightDragHandleClass: 'budicon-reload-ui',
 	onSortEnd: sortEnd,
+	onSortAutoScrollStart: onSortAutoScrollStart,
+	onSortAutoScrollEnd: onSortAutoScrollEnd,
 	sortScrollSpeed: 3,
 	leftEnabled: true,
 	leftByDrag: true,
@@ -55,6 +57,15 @@ lithiumlistPro.attachToList(
     listItemClass,
     listProperties
 );
+
+function onSortAutoScrollStart(index, up) {
+	// console.log('index: ' + index + ' up: ' + up);
+}
+
+function onSortAutoScrollEnd(index) {
+	// console.log('index: ' + index);
+}
+
 
 function monitorWinWidth() {
     var width = window.innerWidth;

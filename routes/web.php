@@ -14,6 +14,6 @@
 Route::get('/', 'Controller_Site@page_home');
 Route::get('/home', 'Controller_Site@page_home')->name('home');
 
-// Route::get('/', function () {
-//     return view('welcome');
+// Route::get('/site2', function () {
+//     return view('site2');
 // });
