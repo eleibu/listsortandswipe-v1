@@ -24,6 +24,12 @@ var divRight = document.createElement("div");
 divRight.appendChild(spanRight);
 divRight.className = 'label-cont';
 
+// if (window.safari !== undefined) {
+// 	alert('Is Safari on Mac');
+// } else {
+// 	alert('Not Safari on Mac');
+// }
+
 var listProperties = {
 	sortDragHandleClass: 'budicon-grab-ui',
 	leftDragHandleClass: 'budicon-trash',

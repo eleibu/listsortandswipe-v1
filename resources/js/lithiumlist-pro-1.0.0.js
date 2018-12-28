@@ -54,7 +54,7 @@
 // TODO: Remove .version() from webpack.mix.js?
 
 
-export var lithiumlistPro = (function () {
+export var lithiumlistPro = (function () {	
 	var instances = [];
 
 	var defaultProperties = {
@@ -71,9 +71,9 @@ export var lithiumlistPro = (function () {
         sortMoveStartDelay: 400,
         sortReorderDuration: 200,
         sortEndDockDuration: 200,
-        sortBodyUnselectable: true,
+        sortBodyUnselectable: true,		// applies only to Safari on MacOS
         sortScrollSpeed: 3,
-        sortAutoScrollOverflow: true,
+        sortAutoScrollOverflow: true,	// applies only to Safari on MacOS
 		onLeftStart: null,
 		onLeftSlideOutStart: null,
 		onLeftSlideBackStart: null,
@@ -120,6 +120,11 @@ export var lithiumlistPro = (function () {
         rightSlideBackDuration: 200,
         ignoreOnClick: ['input', 'textarea', 'select', 'option', 'button']
 	};
+
+	var isSafariMacOS = false;
+	if (window.safari !== undefined) {
+		isSafariMacOS = true;
+	}
 
 	// public methods
 
@@ -490,8 +495,9 @@ export var lithiumlistPro = (function () {
 					instance.props.onSortStart(instance.temp.activeIndex);
 		        }
 
-		        if (instance.props.sortBodyUnselectable) {
-		        	unselectableStylesAdd(document.body);
+		        if (isSafariMacOS && instance.props.sortBodyUnselectable) {
+					document.body.style['-webkit-user-select'] = 'none';
+					document.body.style['user-select'] = 'none';
 		        }
 
 		        if ((instance.props.sortScrollClass) && isDOMElement(instance.scrollCont)) {	// check that scrollCont is not 'window' or 'document'
@@ -908,8 +914,9 @@ export var lithiumlistPro = (function () {
 
 		destroyTempDivs(instance);
 
-        if (instance.props.sortBodyUnselectable) {
-        	unselectableStylesRemove(document.body);
+        if (isSafariMacOS && instance.props.sortBodyUnselectable) {
+			document.body.style['-webkit-user-select'] = null;
+			document.body.style['user-select'] = null;
         }
 
 		if (instance.props.onSortEnd) {
@@ -1015,7 +1022,7 @@ export var lithiumlistPro = (function () {
 	// utility functions
 
 	var scrollContOverflowHidden = function(instance) {
-		if ((!isWindow(instance.scrollCont)) && (instance.props.sortAutoScrollOverflow)) {
+		if (isSafariMacOS && !isWindow(instance.scrollCont) && instance.props.sortAutoScrollOverflow) {
 			if ((instance.scrollCont.style) && (instance.scrollCont.style.overflow)) {
 				instance.temp.origScrollContOverflow = instance.scrollCont.style.overflow;
 			}
@@ -1024,7 +1031,7 @@ export var lithiumlistPro = (function () {
 	};
 
 	var scrollContOverflowRevert = function(instance) {
-		if ((!isWindow(instance.scrollCont)) && (instance.props.sortAutoScrollOverflow)) {
+		if (isSafariMacOS && !isWindow(instance.scrollCont) && instance.props.sortAutoScrollOverflow) {
 			if (instance.temp.origScrollContOverflow) {
 				instance.scrollCont.style.overflow = instance.temp.origScrollContOverflow;
 				instance.temp.origScrollContOverflow = null;
@@ -1104,24 +1111,6 @@ export var lithiumlistPro = (function () {
             return prefix && prefix.length ? prefix[0].toUpperCase() + prefix.substr(1) : '';
         }
 	})();
-
-	var unselectableStylesAdd = function(el) {
-		el.style['-webkit-touch-callout'] = 'none';	/* iOS Safari */
-		el.style['-webkit-user-select'] = 'none';	/* Safari */
-		el.style['-khtml-user-select'] = 'none';	/* Konqueror HTML */
-		el.style['-moz-user-select'] = 'none';		/* Firefox */
-		el.style['-ms-user-select'] = 'none';		/* Internet Explorer/Edge */
-		el.style['user-select'] = 'none';
-	};
-
-	var unselectableStylesRemove = function(el) {
-		el.style['-webkit-touch-callout'] = null;
-		el.style['-webkit-user-select'] = null;
-		el.style['-khtml-user-select'] = null;
-		el.style['-moz-user-select'] = null;
-		el.style['-ms-user-select'] = null;
-		el.style['user-select'] = null;
-	};
 
 	var getScrollTop = function(el) {
 		if (isWindow(el)) {
