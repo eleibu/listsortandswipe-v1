@@ -17018,6 +17018,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // * Position of itemCont behaves strangely when item-cont has a top or bottom margin. Temporary resolution is to remove the margin, insert a child div and add a margin to that.
 // * Cursor is sometimes far above itemCont but still moving it (seems to happen only when moving up, but not sure).
 
+// TODO: Change left / right to use translate
+// TODO: Add code to call server for unlock code
 // TODO: Do not attach to window, attach to outer div instead - change validation to check for this
 // TODO: Remove .version() from webpack.mix.js?
 
@@ -18636,7 +18638,6 @@ __webpack_require__("./node_modules/bootstrap/dist/js/bootstrap.js");
 var listCont = document.getElementById('div-list-cont');
 var scrollCont = document.getElementById('div-scroll-cont');
 // var scrollCont = document.getElementById('div-body');
-// var scrollCont = window;
 var touchEventsTarget = document.getElementById('div-body');
 var listItemClass = 'listitem-cont';
 
@@ -18653,12 +18654,6 @@ spanRight.appendChild(textRight);
 var divRight = document.createElement("div");
 divRight.appendChild(spanRight);
 divRight.className = 'label-cont';
-
-// if (window.safari !== undefined) {
-// 	alert('Is Safari on Mac');
-// } else {
-// 	alert('Not Safari on Mac');
-// }
 
 var listProperties = {
 				sortDragHandleClass: 'budicon-grab-ui',
