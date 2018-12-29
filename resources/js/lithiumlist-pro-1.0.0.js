@@ -550,15 +550,24 @@ export var lithiumlistPro = (function () {
         	}
         } else {
         	if ((instance.temp.moveType == 'LEFT') || (instance.temp.moveType == 'RIGHT')) {
+        		//@@
         		if (instance.temp.moveType == 'LEFT') {
         			if (cursorX < 0) {
-	        			var left = cursorX + 'px';
-	        			instance.temp.itemClone.style.left = left;
+        				// TRANSLATE
+	        			// var left = cursorX + 'px';
+	        			// instance.temp.itemClone.style.left = left;
+	        			instance.temp.itemClone.style.transition = 'left 0s';
+	        			setTransX(instance.temp.itemClone, cursorX);
+	        			
         			}
         		} else {
         			if (cursorX > 0) {
-	        			var left = cursorX + 'px';
-	        			instance.temp.itemClone.style.left = left;
+        				// TRANSLATE
+	        			// var left = cursorX + 'px';
+	        			// instance.temp.itemClone.style.left = left;
+	        			instance.temp.itemClone.style.transition = 'left 0s';
+	        			setTransX(instance.temp.itemClone, cursorX);
+	        			
         			}
         		}
         	} else if (instance.temp.moveType == 'SORT') {
@@ -683,11 +692,11 @@ export var lithiumlistPro = (function () {
                 // move up
                 var activeUp = -1 * instance.temp.items[prevIndex].offsetHeight;
 				instance.temp.items[instance.temp.activeIndex].style[`${vendorPrefix}TransitionDuration`] = instance.props.sortReorderDuration + 'ms';
-				setTransY(instance.temp.items[instance.temp.activeIndex], activeUp);
+				deltaTransY(instance.temp.items[instance.temp.activeIndex], activeUp);
 
                 var prevDown = instance.temp.items[instance.temp.activeIndex].offsetHeight;
 				instance.temp.items[prevIndex].style[`${vendorPrefix}TransitionDuration`] = instance.props.sortReorderDuration + 'ms';
-				setTransY(instance.temp.items[prevIndex], prevDown);
+				deltaTransY(instance.temp.items[prevIndex], prevDown);
 
                 var copyActiveTaskDivRef = instance.temp.items[instance.temp.activeIndex];
                 instance.temp.items[instance.temp.activeIndex] = instance.temp.items[prevIndex];
@@ -697,11 +706,11 @@ export var lithiumlistPro = (function () {
                 // move down
                 var activeDown = instance.temp.items[nextIndex].offsetHeight;
                 instance.temp.items[instance.temp.activeIndex].style[`${vendorPrefix}TransitionDuration`] = instance.props.sortReorderDuration + 'ms';
-				setTransY(instance.temp.items[instance.temp.activeIndex], activeDown);
+				deltaTransY(instance.temp.items[instance.temp.activeIndex], activeDown);
 
                 var nextUp = -1 * instance.temp.items[instance.temp.activeIndex].offsetHeight;
                 instance.temp.items[nextIndex].style[`${vendorPrefix}TransitionDuration`] = instance.props.sortReorderDuration + 'ms';
-                setTransY(instance.temp.items[nextIndex], nextUp);
+                deltaTransY(instance.temp.items[nextIndex], nextUp);
 
                 var copyActiveTaskDivRef = instance.temp.items[instance.temp.activeIndex];
                 instance.temp.items[instance.temp.activeIndex] = instance.temp.items[nextIndex];
@@ -731,6 +740,7 @@ export var lithiumlistPro = (function () {
 
         if (instance.temp.moveType) {
         	if ((instance.temp.moveType == 'LEFT') || (instance.temp.moveType == 'RIGHT')) {
+        		// TRANSLATE
 				var cloneX = Math.abs(instance.temp.itemClone.offsetLeft);
         		if (instance.temp.moveType == 'LEFT') {
         			var leftDET = getPXorPercent(instance.props.leftDragEndThreshold, instance.temp.items[instance.temp.activeIndex].offsetWidth);
@@ -1076,6 +1086,15 @@ export var lithiumlistPro = (function () {
 		}
 	};
 
+	var setTransX = function(el, transPX) {
+		console.log(transPX);
+        if (!isUndefinedOrNull(transPX) && transPX != 0) {
+            el.style[`${vendorPrefix}Transform`] = 'translateX('+ transPX + 'px)';
+        } else {
+            el.style[`${vendorPrefix}Transform`] = 'translateX(0px)';
+        }
+	};
+
 	var getTransYNum = function(el) {
         var currentTransAmount = 0;
         if ((el.style) && (el.style[`${vendorPrefix}Transform`])) {
@@ -1087,18 +1106,18 @@ export var lithiumlistPro = (function () {
         return currentTransAmount;
 	};
 
-	var setTransY = function(el, transAmount) {
+	var deltaTransY = function(el, deltaTrans) {
 		var currentTransAmount = getTransYNum(el);
         var newTransAmount = 0;
         if (currentTransAmount != 0) {
-            newTransAmount = currentTransAmount + transAmount;
+            newTransAmount = currentTransAmount + deltaTrans;
         } else {
-            newTransAmount = transAmount;
+            newTransAmount = deltaTrans;
         }
         if (newTransAmount != 0) {
             el.style[`${vendorPrefix}Transform`] = 'translateY('+ newTransAmount + 'px)';
         } else {
-            el.style[`${vendorPrefix}Transform`] = '';
+            el.style[`${vendorPrefix}Transform`] = 'translateY(0px)';
         }
 	};
 
