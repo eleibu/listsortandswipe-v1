@@ -50,6 +50,7 @@ var listProperties = {
 };
 
 lithiumlistPro.attachToList(
+	'123456789',
     listCont,
     scrollCont,
     touchEventsTarget,

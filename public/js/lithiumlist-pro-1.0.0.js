@@ -123,9 +123,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // * Position of itemCont behaves strangely when item-cont has a top or bottom margin. Temporary resolution is to remove the margin, insert a child div and add a margin to that.
 // * Cursor is sometimes far above itemCont but still moving it (seems to happen only when moving up, but not sure).
 
+
+// TODO: Delete setTransX and //TRANSLATE flags
 // TODO: Change left / right to use translate
 // TODO: Add code to call server for unlock code
 // TODO: Do not attach to window, attach to outer div instead - change validation to check for this
+// TODO: Remove validation code?
 // TODO: Remove .version() from webpack.mix.js?
 
 
@@ -203,7 +206,7 @@ var lithiumlistPro = function () {
 
 	// public methods
 
-	var attachToList = function attachToList(listCont, scrollCont, touchEventsTarget, listItemClass, listProperties) {
+	var attachToList = function attachToList(key, listCont, scrollCont, touchEventsTarget, listItemClass, listProperties) {
 		if (isUndefinedOrNull(listCont)) {
 			throw 'listCont must not be undefined or null';
 		} else {
@@ -288,6 +291,50 @@ var lithiumlistPro = function () {
 		instance.scrollCont.addEventListener('scroll', instance.temp.funcOnScroll);
 		instance.listCont.addEventListener('mousedown', instance.temp.funcMouseDown);
 		instance.listCont.addEventListener('touchstart', instance.temp.funcTouchStart);
+
+		// DISABLE EVERYTHING IF rMsg()	IS NOT FOUND
+
+		rkey = key;
+		if (!isUndefinedOrNull(rkey) && isFunction(rSend) && isFunction(rLoad)) {
+			rSend(instance);
+		} else {
+			rMsg(instance);
+		}
+	};
+
+	var rkey = null;
+
+	var rSend = function rSend(instance) {
+		var request = new XMLHttpRequest();
+		request.onload = function () {
+			rLoad(request, instance);
+		};
+		var url = 'http://localhost/~elliotleibu/listsortandswipe-v1/public/api/v1/rcheck?host=' + window.location.hostname + '&key=' + rkey;
+		request.open('GET', url, true);
+		request.send();
+	};
+
+	var rLoad = function rLoad(request, instance) {
+		var json = JSON.parse(request.responseText);
+		if (json.status == 0) {
+			rMsg(instance);
+		}
+	};
+
+	var rMsg = function rMsg(instance) {
+		// HOW TO CHECK THAT THIS FUNCTION HAS CONTENT?
+
+		var divTop = document.createElement('div');
+		divTop.style.position = 'absolute';
+		divTop.style.left = '0';
+		divTop.style.top = '0';
+		divTop.style.color = 'red';
+		divTop.style.fontWeight = 'bold';
+		divTop.style.padding = '0.3em';
+		divTop.style.zIndex = '9999';
+		var textTop = document.createTextNode('Lithium List - unlicensed version');
+		divTop.appendChild(textTop);
+		instance.scrollCont.appendChild(divTop);
 	};
 
 	var detachFromList = function detachFromList(listCont) {
@@ -646,18 +693,18 @@ var lithiumlistPro = function () {
 				if (instance.temp.moveType == 'LEFT') {
 					if (cursorX < 0) {
 						// TRANSLATE
-						// var left = cursorX + 'px';
-						// instance.temp.itemClone.style.left = left;
-						instance.temp.itemClone.style.transition = 'left 0s';
-						setTransX(instance.temp.itemClone, cursorX);
+						var left = cursorX + 'px';
+						instance.temp.itemClone.style.left = left;
+						// instance.temp.itemClone.style.transition = 'left 0s';
+						// setTransX(instance.temp.itemClone, cursorX);
 					}
 				} else {
 					if (cursorX > 0) {
 						// TRANSLATE
-						// var left = cursorX + 'px';
-						// instance.temp.itemClone.style.left = left;
-						instance.temp.itemClone.style.transition = 'left 0s';
-						setTransX(instance.temp.itemClone, cursorX);
+						var left = cursorX + 'px';
+						instance.temp.itemClone.style.left = left;
+						// instance.temp.itemClone.style.transition = 'left 0s';
+						// setTransX(instance.temp.itemClone, cursorX);
 					}
 				}
 			} else if (instance.temp.moveType == 'SORT') {
@@ -1402,6 +1449,9 @@ var lithiumlistPro = function () {
 			return v.toString(16).toUpperCase();
 		});
 	};
+
+	// reg
+
 
 	// validation
 
