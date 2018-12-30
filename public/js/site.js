@@ -17019,6 +17019,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // * Cursor is sometimes far above itemCont but still moving it (seems to happen only when moving up, but not sure).
 
 
+// TODO: Safari left/right select all issue
+// TODO: Update url in rSend
 // TODO: Delete setTransX and //TRANSLATE flags
 // TODO: Change left / right to use translate
 // TODO: Add code to call server for unlock code
@@ -17164,6 +17166,8 @@ var lithiumlistPro = function () {
 		tempFunctionRemoveMasks(props);
 
 		var instance = {
+			'rkey': key,
+			'isr': false,
 			'scrollCont': scrollCont,
 			'listCont': listCont,
 			'touchEventsTarget': touchEventsTarget,
@@ -17174,62 +17178,29 @@ var lithiumlistPro = function () {
 		};
 		instances.push(instance);
 
-		instance.temp.funcOnScroll = function (e) {
-			onScroll(e, instance);
-		};
-		instance.temp.funcMouseDown = function (e) {
-			mouseDown(e, instance);
-		};
-		instance.temp.funcTouchStart = function (e) {
-			touchStart(e, instance);
-		};
-		instance.scrollCont.addEventListener('scroll', instance.temp.funcOnScroll);
-		instance.listCont.addEventListener('mousedown', instance.temp.funcMouseDown);
-		instance.listCont.addEventListener('touchstart', instance.temp.funcTouchStart);
+		if (rMsg(instance, true)) {
+			// reg
+			instance.temp.funcOnScroll = function (e) {
+				onScroll(e, instance);
+			};
+			instance.temp.funcMouseDown = function (e) {
+				mouseDown(e, instance);
+			};
+			instance.temp.funcTouchStart = function (e) {
+				touchStart(e, instance);
+			};
+			instance.scrollCont.addEventListener('scroll', instance.temp.funcOnScroll);
+			instance.listCont.addEventListener('mousedown', instance.temp.funcMouseDown);
+			instance.listCont.addEventListener('touchstart', instance.temp.funcTouchStart);
+		} // reg
 
-		// DISABLE EVERYTHING IF rMsg()	IS NOT FOUND
-
-		rkey = key;
-		if (!isUndefinedOrNull(rkey) && isFunction(rSend) && isFunction(rLoad)) {
+		// reg - start
+		if (!isUndefinedOrNull(instance.rkey) && isFunction(rSend) && isFunction(rLoad)) {
 			rSend(instance);
 		} else {
 			rMsg(instance);
 		}
-	};
-
-	var rkey = null;
-
-	var rSend = function rSend(instance) {
-		var request = new XMLHttpRequest();
-		request.onload = function () {
-			rLoad(request, instance);
-		};
-		var url = 'http://localhost/~elliotleibu/listsortandswipe-v1/public/api/v1/rcheck?host=' + window.location.hostname + '&key=' + rkey;
-		request.open('GET', url, true);
-		request.send();
-	};
-
-	var rLoad = function rLoad(request, instance) {
-		var json = JSON.parse(request.responseText);
-		if (json.status == 0) {
-			rMsg(instance);
-		}
-	};
-
-	var rMsg = function rMsg(instance) {
-		// HOW TO CHECK THAT THIS FUNCTION HAS CONTENT?
-
-		var divTop = document.createElement('div');
-		divTop.style.position = 'absolute';
-		divTop.style.left = '0';
-		divTop.style.top = '0';
-		divTop.style.color = 'red';
-		divTop.style.fontWeight = 'bold';
-		divTop.style.padding = '0.3em';
-		divTop.style.zIndex = '9999';
-		var textTop = document.createTextNode('Lithium List - unlicensed version');
-		divTop.appendChild(textTop);
-		instance.scrollCont.appendChild(divTop);
+		// reg - end
 	};
 
 	var detachFromList = function detachFromList(listCont) {
@@ -17446,6 +17417,7 @@ var lithiumlistPro = function () {
 		instance.temp.funcTouchEnd = function (e) {
 			touchEnd(e, instance);
 		};
+		if (!instance.isr) rSend(instance); // reg
 
 		window.addEventListener('mousemove', instance.temp.funcMouseMove);
 		window.addEventListener('mouseup', instance.temp.funcMouseUp);
@@ -17464,6 +17436,7 @@ var lithiumlistPro = function () {
 			// check that scrollCont is not 'window' or 'document'
 			addClass(instance.scrollCont, instance.props.leftScrollClass);
 		}
+		if (!instance.isr) rSend(instance); // reg
 
 		if (instance.props.leftMasks.length > 0 && instance.temp.itemMasks.length == 0) {
 			createMasks(instance);
@@ -17491,6 +17464,7 @@ var lithiumlistPro = function () {
 			// check that scrollCont is not 'window' or 'document'
 			addClass(instance.scrollCont, instance.props.rightScrollClass);
 		}
+		if (!instance.isr) rSend(instance); // reg
 
 		if (instance.props.rightMasks.length > 0 && instance.temp.itemMasks.length == 0) {
 			createMasks(instance);
@@ -18347,6 +18321,44 @@ var lithiumlistPro = function () {
 
 	// reg
 
+	var rSend = function rSend(instance) {
+		var request = new XMLHttpRequest();
+		request.onload = function () {
+			rLoad(request, instance);
+		};
+		var url = 'http://localhost/~elliotleibu/listsortandswipe-v1/public/api/v1/rcheck?host=' + window.location.hostname + '&key=' + instance.rkey;
+		request.open('GET', url, true);
+		request.send();
+	};
+
+	var rLoad = function rLoad(request, instance) {
+		if (request.status == 200) {
+			var json = JSON.parse(request.responseText);
+			if (json.data == 0) {
+				rMsg(instance);
+			} else if (json.data == 1) {
+				instance.isr = true;
+			}
+		}
+	};
+
+	var rMsg = function rMsg(instance, rtn) {
+		var div = document.createElement('div');
+		div.style.position = 'absolute';
+		div.style.left = '0';
+		div.style.top = '0';
+		if (rtn) return true; // it's a trap: see rMsg(instance, true) in attachToList() - ensures listeners are not attached if content of this function is deleted
+		div.style.color = 'red';
+		div.style.fontWeight = 'bold';
+		div.style.padding = '0.3em';
+		div.style.zIndex = '9999';
+
+		div.appendChild(document.createTextNode('Lithi'));
+		div.appendChild(document.createTextNode('um List - unlic'));
+		div.appendChild(document.createTextNode('ensed ver'));
+		div.appendChild(document.createTextNode('sion'));
+		instance.listCont.appendChild(div);
+	};
 
 	// validation
 

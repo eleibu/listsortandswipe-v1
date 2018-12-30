@@ -16,7 +16,7 @@ class Controller_API_Registration extends Controller
     		}
     	}
 		return response()->json([
-			'status' => $status
+			'data' => $status
 		], 200);
     }
 }
