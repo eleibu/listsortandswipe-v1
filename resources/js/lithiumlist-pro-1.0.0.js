@@ -1,6 +1,13 @@
 
 
-// BROWSER COMPATIBIILITY
+// TESTED ON:
+// IE11
+// Edge38
+// Chrome 71 on Windows
+// Chrome 71 on Mac
+// Safari 12 on Mac
+
+// SHOULD WORK ON:
 // IE 9
 // Edge 12
 // Firefox 12
@@ -18,8 +25,8 @@
 // scrollCont should be a DOM element or window (not 'document' or 'document.body')
 // scrollCont must have a height other than 'auto' (eg. px, %, em)
 // scrollCont must have overflow 'auto', 'scroll' or 'hidden' (will be set to 'hidden' during automatic scrolling to deal with Safari auto scrolling issue)
-// set 'sortAutoScrollOverflow = false' to prevent setting 'scrollCont.style.overflow = hidden' upon auto scroll (will break auto scroll on Mac Safari)
-// if set 'sortBodyUnselectable = false', consider adding unselectable styles to an outer object (eg. body, document, etc) even if 'listitem-cont' or a sub-element is
+// set 'safariAutoScrollOverflow = false' to prevent setting 'scrollCont.style.overflow = hidden' upon auto scroll (will break auto scroll on Mac Safari)
+// if set 'safariBodyUnselectable = false', consider adding unselectable styles to an outer object (eg. body, document, etc) even if 'listitem-cont' or a sub-element is
 	// unselectable - otherwise, unintended selection of elements outside scrollCont can cause problems
 // listCont should have 'position: relative'
 // need to set css 'box-shadow' for 'clone-sort' class if want sort clone to have a drop shadow
@@ -50,13 +57,13 @@
 // * Position of itemCont behaves strangely when item-cont has a top or bottom margin. Temporary resolution is to remove the margin, insert a child div and add a margin to that.
 // * Cursor is sometimes far above itemCont but still moving it (seems to happen only when moving up, but not sure).
 
+// Medium articles:
+// Validation using plain JS
 
-// TODO: Safari left/right select all issue
-// TODO: Update url in rSend
-// TODO: Delete setTransX and //TRANSLATE flags
+
 // TODO: Change left / right to use translate
-// TODO: Add code to call server for unlock code
 // TODO: Do not attach to window, attach to outer div instead - change validation to check for this
+// TODO: Update url in rSend
 // TODO: Remove validation code?
 // TODO: Remove .version() from webpack.mix.js?
 
@@ -78,9 +85,9 @@ export var lithiumlistPro = (function () {
         sortMoveStartDelay: 400,
         sortReorderDuration: 200,
         sortEndDockDuration: 200,
-        sortBodyUnselectable: true,		// applies only to Safari on MacOS
         sortScrollSpeed: 3,
-        sortAutoScrollOverflow: true,	// applies only to Safari on MacOS
+        safariBodyUnselectable: true,		// applies only to Safari on MacOS
+        safariAutoScrollOverflow: true,		// applies only to Safari on MacOS
 		onLeftStart: null,
 		onLeftSlideOutStart: null,
 		onLeftSlideBackStart: null,
@@ -449,6 +456,8 @@ export var lithiumlistPro = (function () {
 			instance.props.onLeftStart(instance.temp.activeIndex);
         }
 
+        safariBodyUnselectableAdd(instance);
+
         if ((instance.props.leftScrollClass) && isDOMElement(instance.scrollCont)) {	// check that scrollCont is not 'window' or 'document'
         	addClass(instance.scrollCont, instance.props.leftScrollClass);
         }
@@ -475,6 +484,8 @@ export var lithiumlistPro = (function () {
         if (instance.props.onRightStart) {
 			instance.props.onRightStart(instance.temp.activeIndex);
         }
+
+        safariBodyUnselectableAdd(instance);
 
         if ((instance.props.rightScrollClass) && isDOMElement(instance.scrollCont)) {	// check that scrollCont is not 'window' or 'document'
         	addClass(instance.scrollCont, instance.props.rightScrollClass);
@@ -517,10 +528,7 @@ export var lithiumlistPro = (function () {
 					instance.props.onSortStart(instance.temp.activeIndex);
 		        }
 
-		        if (isSafariMacOS && instance.props.sortBodyUnselectable) {
-					document.body.style['-webkit-user-select'] = 'none';
-					document.body.style['user-select'] = 'none';
-		        }
+				safariBodyUnselectableAdd(instance);
 
 		        if ((instance.props.sortScrollClass) && isDOMElement(instance.scrollCont)) {	// check that scrollCont is not 'window' or 'document'
 		        	addClass(instance.scrollCont, instance.props.sortScrollClass);
@@ -570,24 +578,15 @@ export var lithiumlistPro = (function () {
         	}
         } else {
         	if ((instance.temp.moveType == 'LEFT') || (instance.temp.moveType == 'RIGHT')) {
-        		//@@
         		if (instance.temp.moveType == 'LEFT') {
         			if (cursorX < 0) {
-        				// TRANSLATE
 	        			var left = cursorX + 'px';
 	        			instance.temp.itemClone.style.left = left;
-	        			// instance.temp.itemClone.style.transition = 'left 0s';
-	        			// setTransX(instance.temp.itemClone, cursorX);
-	        			
         			}
         		} else {
         			if (cursorX > 0) {
-        				// TRANSLATE
 	        			var left = cursorX + 'px';
-	        			instance.temp.itemClone.style.left = left;
-	        			// instance.temp.itemClone.style.transition = 'left 0s';
-	        			// setTransX(instance.temp.itemClone, cursorX);
-	        			
+	        			instance.temp.itemClone.style.left = left;	        			
         			}
         		}
         	} else if (instance.temp.moveType == 'SORT') {
@@ -760,7 +759,6 @@ export var lithiumlistPro = (function () {
 
         if (instance.temp.moveType) {
         	if ((instance.temp.moveType == 'LEFT') || (instance.temp.moveType == 'RIGHT')) {
-        		// TRANSLATE
 				var cloneX = Math.abs(instance.temp.itemClone.offsetLeft);
         		if (instance.temp.moveType == 'LEFT') {
         			var leftDET = getPXorPercent(instance.props.leftDragEndThreshold, instance.temp.items[instance.temp.activeIndex].offsetWidth);
@@ -908,6 +906,8 @@ export var lithiumlistPro = (function () {
 
 	        destroyTempDivs(instance);
 
+	        safariBodyUnselectableRemove(instance);
+
 			if (instance.props.onLeftEnd) {
 				instance.props.onLeftEnd(instance.temp.activeIndex, didSlideOut);
 			}
@@ -946,10 +946,7 @@ export var lithiumlistPro = (function () {
 
 		destroyTempDivs(instance);
 
-        if (isSafariMacOS && instance.props.sortBodyUnselectable) {
-			document.body.style['-webkit-user-select'] = null;
-			document.body.style['user-select'] = null;
-        }
+		safariBodyUnselectableRemove(instance);
 
 		if (instance.props.onSortEnd) {
 			instance.props.onSortEnd(instance.temp.origIndex, instance.temp.activeIndex);
@@ -981,6 +978,8 @@ export var lithiumlistPro = (function () {
 		instance.temp.itemClone.style.position = 'absolute';
 		instance.temp.itemClone.style.left = left;
 		instance.temp.itemClone.style.top = top;
+		instance.temp.itemClone.style.width = instance.temp.items[instance.temp.activeIndex].offsetWidth + 'px';
+		instance.temp.itemClone.style.boxSizing = 'border-box';
 
 		if (instance.temp.moveType == 'SORT') {
 			if (instance.props.sortCloneClass) {
@@ -1012,7 +1011,8 @@ export var lithiumlistPro = (function () {
 				instance.temp.itemMasks[i].style.left = '0';
 				instance.temp.itemMasks[i].style.top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
 				instance.temp.itemMasks[i].style.height = instance.temp.items[instance.temp.activeIndex].offsetHeight + 'px';
-				instance.temp.itemMasks[i].style.width = '100%';
+				instance.temp.itemMasks[i].style.width = instance.temp.items[instance.temp.activeIndex].offsetWidth + 'px';
+				instance.temp.itemMasks[i].style.boxSizing = 'border-box';
 
 				if (masks[i].classNameDefault) {
 					addClass(instance.temp.itemMasks[i], masks[i].classNameDefault);
@@ -1053,8 +1053,22 @@ export var lithiumlistPro = (function () {
 
 	// utility functions
 
+	var safariBodyUnselectableAdd = function(instance) {
+        if (isSafariMacOS && instance.props.safariBodyUnselectable) {
+			document.body.style['-webkit-user-select'] = 'none';
+			document.body.style['user-select'] = 'none';
+        }
+	};
+
+	var safariBodyUnselectableRemove = function(instance) {
+        if (isSafariMacOS && instance.props.safariBodyUnselectable) {
+			document.body.style['-webkit-user-select'] = null;
+			document.body.style['user-select'] = null;
+        }
+	};
+
 	var scrollContOverflowHidden = function(instance) {
-		if (isSafariMacOS && !isWindow(instance.scrollCont) && instance.props.sortAutoScrollOverflow) {
+		if (isSafariMacOS && !isWindow(instance.scrollCont) && instance.props.safariAutoScrollOverflow) {
 			if ((instance.scrollCont.style) && (instance.scrollCont.style.overflow)) {
 				instance.temp.origScrollContOverflow = instance.scrollCont.style.overflow;
 			}
@@ -1063,7 +1077,7 @@ export var lithiumlistPro = (function () {
 	};
 
 	var scrollContOverflowRevert = function(instance) {
-		if (isSafariMacOS && !isWindow(instance.scrollCont) && instance.props.sortAutoScrollOverflow) {
+		if (isSafariMacOS && !isWindow(instance.scrollCont) && instance.props.safariAutoScrollOverflow) {
 			if (instance.temp.origScrollContOverflow) {
 				instance.scrollCont.style.overflow = instance.temp.origScrollContOverflow;
 				instance.temp.origScrollContOverflow = null;
@@ -1104,15 +1118,6 @@ export var lithiumlistPro = (function () {
 		} else {
 			return false;
 		}
-	};
-
-	var setTransX = function(el, transPX) {
-		console.log(transPX);
-        if (!isUndefinedOrNull(transPX) && transPX != 0) {
-            el.style[`${vendorPrefix}Transform`] = 'translateX('+ transPX + 'px)';
-        } else {
-            el.style[`${vendorPrefix}Transform`] = 'translateX(0px)';
-        }
 	};
 
 	var getTransYNum = function(el) {
@@ -1313,7 +1318,10 @@ export var lithiumlistPro = (function () {
 	var rSend = function(instance) {
 		var request = new XMLHttpRequest();
 		request.onload = function() {rLoad(request, instance);};
-		var url = 'http://localhost/~elliotleibu/listsortandswipe-v1/public/api/v1/rcheck?host=' + window.location.hostname + '&key=' + instance.rkey;
+		var url0 = 'http://localho';
+		var url1 = 'st/~elliotleibu/listso';
+		var url2 = 'rtandswipe-v1/public/api/v1/rcheck?host=';
+		var url = url0 + url1 + url2 + window.location.hostname + '&key=' + instance.rkey;
 		request.open('GET', url, true);
 		request.send();
 	};
@@ -1402,16 +1410,16 @@ export var lithiumlistPro = (function () {
 			throw 'sortEndDockDuration must be a positive integer or zero';
 		}
 
-		if ((!isUndefinedOrNull(props['sortBodyUnselectable'])) && (!isBoolean(props['sortBodyUnselectable']))) {
-			throw 'sortBodyUnselectable must be a boolean';
-		}
-
 		if ((!isUndefinedOrNull(props['sortScrollSpeed'])) && ((!isInteger(props['sortScrollSpeed'])) || ((props['sortScrollSpeed'] != 1) && (props['sortScrollSpeed'] != 2) && (props['sortScrollSpeed'] != 3) && (props['sortScrollSpeed'] != 4) && (props['sortScrollSpeed'] != 5)))) {
 			throw 'sortScrollSpeed must be an integer 1 - 5';
 		}
 
-		if ((!isUndefinedOrNull(props['sortAutoScrollOverflow'])) && (!isBoolean(props['sortAutoScrollOverflow']))) {
-			throw 'sortAutoScrollOverflow must be a boolean';
+		if ((!isUndefinedOrNull(props['safariBodyUnselectable'])) && (!isBoolean(props['safariBodyUnselectable']))) {
+			throw 'safariBodyUnselectable must be a boolean';
+		}
+
+		if ((!isUndefinedOrNull(props['safariAutoScrollOverflow'])) && (!isBoolean(props['safariAutoScrollOverflow']))) {
+			throw 'safariAutoScrollOverflow must be a boolean';
 		}
 
 		if ((!isUndefinedOrNull(props['onLeftStart'])) && (!isFunction(props['onLeftStart']))) {

@@ -7,7 +7,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Roboto';
-  background-color: #FAFAFA;
+  background-color: #EEEEEE;
 }
 
 a {
@@ -39,11 +39,11 @@ a:hover {
 
 #div-scroll-cont {
 	position: relative;
-	border: 1px solid #AAAAAA;
 	overflow: auto;
 
 	#div-list-cont {
 		position: relative;
+		margin: 0 4px;
 		// margin-top: 4em;
 
 		div.listitem-cont {
@@ -62,15 +62,6 @@ a:hover {
 
 		div.sort-clone {
 			box-shadow: 0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12);
-			width: 100%;
-		}
-
-		div.left-clone {
-			width: 100%;
-		}
-
-		div.right-clone {
-			width: 100%;
 		}
 
 		div.left-mask {
@@ -109,8 +100,12 @@ a:hover {
 	}
 }
 
+#div-scroll-cont.left-scroll #div-list-cont, #div-scroll-cont.right-scroll #div-list-cont {
+	overflow-x: hidden;
+}
+
 #div-scroll-cont.xl, #div-scroll-cont.lg, #div-scroll-cont.md, #div-scroll-cont.sm {
-	height: 1000px;
+	height: 800px;
 	max-width: 600px;
 	margin: 0 auto;
 
