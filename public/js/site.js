@@ -16976,7 +16976,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // Safari 12 on Mac
 
 // SHOULD WORK ON:
-// IE 9
+// IE 10	(IE9 and below does not support 'transition')
 // Edge 12
 // Firefox 12
 // Chrome 4
@@ -17029,6 +17029,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // Validation using plain JS
 
 
+// TODO: If start new sort while old one is still docking, get problem
+// TODO: Only add unlicensed message once
+
 // TODO: Change left / right to use translate
 // TODO: Do not attach to window, attach to outer div instead - change validation to check for this
 // TODO: Update url in rSend
@@ -17039,6 +17042,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var lithiumlistPro = function () {
 	var instances = [];
 
+	// sortStartDuration
+	// sortEndDuration
+	// sortCloneClass: 'sort-clone',
+	// sortStartCloneClass: 'sort-start-clone',
+	// sortMiddleCloneClass: 'sort-start-clone',
+	// sortEndCloneClass: 'sort-end-clone',
+
+
 	var defaultProperties = {
 		onSortStart: null,
 		onSortEnd: null,
@@ -17046,13 +17057,17 @@ var lithiumlistPro = function () {
 		onSortAutoScrollEnd: null,
 		sortEnabled: true,
 		sortByDrag: true,
+		sortStartDuration: 1000, // validate
+		sortEndDuration: 1000, // reorder
 		sortScrollClass: 'sort-scroll',
 		sortCloneClass: 'sort-clone',
+		sortStartCloneClass: 'sort-start-clone', // validate
+		sortMiddleCloneClass: 'sort-middle-clone', // validate
+		sortEndCloneClass: 'sort-end-clone', // validate
 		sortItemActiveClass: 'sort-item-active',
 		sortDragHandleClass: 'sort-drag-handle',
 		sortMoveStartDelay: 400,
 		sortReorderDuration: 200,
-		sortEndDockDuration: 200,
 		sortScrollSpeed: 3,
 		safariBodyUnselectable: true, // applies only to Safari on MacOS
 		safariAutoScrollOverflow: true, // applies only to Safari on MacOS
@@ -17526,6 +17541,24 @@ var lithiumlistPro = function () {
 					var top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
 					createClone(instance, 0, top);
 				}
+				if (instance.props.sortCloneClass) {
+					addClass(instance.temp.itemClone, instance.props.sortCloneClass);
+				}
+				//@@
+				// if (instance.props.sortStartCloneClass) {
+				// 	addClass(instance.temp.itemClone, instance.props.sortStartCloneClass);
+				// }
+				// instance.temp.sortStartTimer = setTimeout(function() {
+				// 	if (instance.props.sortStartCloneClass && instance.temp.itemClone) {
+				// 		removeClass(instance.temp.itemClone, instance.props.sortStartCloneClass);
+				// 	}
+				// 	if (instance.props.sortMiddleCloneClass && instance.temp.itemClone) {
+				// 		addClass(instance.temp.itemClone, instance.props.sortMiddleCloneClass);
+				// 	}
+				// }, instance.props.sortStartDuration);
+				if (instance.props.sortMiddleCloneClass && instance.temp.itemClone) {
+					addClass(instance.temp.itemClone, instance.props.sortMiddleCloneClass);
+				}
 
 				if (instance.props.sortItemActiveClass) {
 					addClass(instance.temp.items[instance.temp.activeIndex], instance.props.sortItemActiveClass);
@@ -17700,13 +17733,15 @@ var lithiumlistPro = function () {
 
 		if (instance.temp.itemClone.offsetTop < moveUpBoundary || instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight > moveDownBoundary) {
 			if (prevIndex !== null && instance.temp.itemClone.offsetTop < moveUpBoundary) {
+				//##
+
 				// move up
 				var activeUp = -1 * instance.temp.items[prevIndex].offsetHeight;
-				instance.temp.items[instance.temp.activeIndex].style[vendorPrefix + 'TransitionDuration'] = instance.props.sortReorderDuration + 'ms';
+				instance.temp.items[instance.temp.activeIndex].style.transitionDuration = instance.props.sortReorderDuration + 'ms';
 				deltaTransY(instance.temp.items[instance.temp.activeIndex], activeUp);
 
 				var prevDown = instance.temp.items[instance.temp.activeIndex].offsetHeight;
-				instance.temp.items[prevIndex].style[vendorPrefix + 'TransitionDuration'] = instance.props.sortReorderDuration + 'ms';
+				instance.temp.items[prevIndex].style.transitionDuration = instance.props.sortReorderDuration + 'ms';
 				deltaTransY(instance.temp.items[prevIndex], prevDown);
 
 				var copyActiveTaskDivRef = instance.temp.items[instance.temp.activeIndex];
@@ -17716,11 +17751,11 @@ var lithiumlistPro = function () {
 			} else if (nextIndex !== null && instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight > moveDownBoundary) {
 				// move down
 				var activeDown = instance.temp.items[nextIndex].offsetHeight;
-				instance.temp.items[instance.temp.activeIndex].style[vendorPrefix + 'TransitionDuration'] = instance.props.sortReorderDuration + 'ms';
+				instance.temp.items[instance.temp.activeIndex].style.transitionDuration = instance.props.sortReorderDuration + 'ms';
 				deltaTransY(instance.temp.items[instance.temp.activeIndex], activeDown);
 
 				var nextUp = -1 * instance.temp.items[instance.temp.activeIndex].offsetHeight;
-				instance.temp.items[nextIndex].style[vendorPrefix + 'TransitionDuration'] = instance.props.sortReorderDuration + 'ms';
+				instance.temp.items[nextIndex].style.transitionDuration = instance.props.sortReorderDuration + 'ms';
 				deltaTransY(instance.temp.items[nextIndex], nextUp);
 
 				var copyActiveTaskDivRef = instance.temp.items[instance.temp.activeIndex];
@@ -17777,13 +17812,30 @@ var lithiumlistPro = function () {
 					scrollContOverflowRevert(instance);
 				}
 
+				//@@
+				if (instance.temp.sortStartTimer) {
+					clearTimeout(instance.temp.sortStartTimer);
+					instance.temp.sortStartTimer = null;
+				}
+				if (instance.props.sortMiddleCloneClass) {
+					removeClass(instance.temp.itemClone, instance.props.sortMiddleCloneClass);
+				}
+				// if (instance.props.sortEndCloneClass) {
+				// 	addClass(instance.temp.itemClone, instance.props.sortEndCloneClass);
+				// }
+
 				var activeTaskTop = instance.temp.items[instance.temp.activeIndex].offsetTop + getTransYNum(instance.temp.items[instance.temp.activeIndex]);
-				instance.temp.itemClone.style[vendorPrefix + 'TransitionDuration'] = instance.props.sortEndDockDuration + 'ms';
+				// instance.temp.itemClone.style[`${vendorPrefix}TransitionDuration`] = instance.props.sortEndDuration + 'ms';
+
+				// NEXT LINE IS CAUSING THE PROBLEM - IT OVERRIDES THE 'TRANSITION' SET IN THE EXTERNAL STYLESHEET - NEED TO
+				// SET THIS TO 'top 3ms; transform 3ms'
+
+				instance.temp.itemClone.style.transition = 'top ' + instance.props.sortEndDuration + 'ms';
 				instance.temp.itemClone.style.top = activeTaskTop + 'px';
 
 				instance.temp.sortEndTimer = setTimeout(function () {
 					sortEnd(instance);
-				}, instance.props.sortEndDockDuration);
+				}, instance.props.sortEndDuration);
 			}
 		}
 	};
@@ -17942,7 +17994,8 @@ var lithiumlistPro = function () {
 
 	var sortEnd = function sortEnd(instance) {
 		for (var i = 0, len = instance.temp.items.length; i < len; i++) {
-			instance.temp.items[i].style[vendorPrefix + 'TransitionDuration'] = '';
+			// instance.temp.items[i].style[`${vendorPrefix}TransitionDuration`] = '';
+			instance.temp.items[i].style.transitionDuration = '';
 			instance.temp.items[i].style[vendorPrefix + 'Transform'] = '';
 		}
 
@@ -17992,9 +18045,10 @@ var lithiumlistPro = function () {
 		instance.temp.itemClone.style.boxSizing = 'border-box';
 
 		if (instance.temp.moveType == 'SORT') {
-			if (instance.props.sortCloneClass) {
-				addClass(instance.temp.itemClone, instance.props.sortCloneClass);
-			}
+			//@@
+			// if (instance.props.sortCloneClass) {
+			// 	addClass(instance.temp.itemClone, instance.props.sortCloneClass);
+			// }
 		} else if (instance.temp.moveType == 'LEFT') {
 			if (instance.props.leftCloneClass) {
 				addClass(instance.temp.itemClone, instance.props.leftCloneClass);
@@ -18047,6 +18101,7 @@ var lithiumlistPro = function () {
 			'lastPageX': null,
 			'lastPageY': null,
 			'sortDelayTimer': null,
+			'sortStartTimer': null,
 			'sortEndTimer': null,
 			'scrollOverhang': 0,
 			'scrollInterval': null,
@@ -18421,8 +18476,8 @@ var lithiumlistPro = function () {
 			throw 'sortReorderDuration must be a positive integer or zero';
 		}
 
-		if (!isUndefinedOrNull(props['sortEndDockDuration']) && (!isInteger(props['sortEndDockDuration']) || props['sortEndDockDuration'] < 0)) {
-			throw 'sortEndDockDuration must be a positive integer or zero';
+		if (!isUndefinedOrNull(props['sortEndDuration']) && (!isInteger(props['sortEndDuration']) || props['sortEndDuration'] < 0)) {
+			throw 'sortEndDuration must be a positive integer or zero';
 		}
 
 		if (!isUndefinedOrNull(props['sortScrollSpeed']) && (!isInteger(props['sortScrollSpeed']) || props['sortScrollSpeed'] != 1 && props['sortScrollSpeed'] != 2 && props['sortScrollSpeed'] != 3 && props['sortScrollSpeed'] != 4 && props['sortScrollSpeed'] != 5)) {

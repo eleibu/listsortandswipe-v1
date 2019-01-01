@@ -7,7 +7,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Roboto';
-  background-color: #EEEEEE;
+  background-color: #D7DEEF;
 }
 
 a {
@@ -43,7 +43,7 @@ a:hover {
 
 #div-scroll-cont #div-list-cont {
   position: relative;
-  margin: 0 4px;
+  margin: 0 12px;
 }
 
 #div-scroll-cont #div-list-cont div.listitem-cont {
@@ -61,8 +61,22 @@ a:hover {
 }
 
 #div-scroll-cont #div-list-cont div.sort-clone {
+  -webkit-transition: -webkit-transform 400ms ease-in;
+  transition: -webkit-transform 400ms ease-in;
+  transition: transform 400ms ease-in;
+  transition: transform 400ms ease-in, -webkit-transform 400ms ease-in;
   -webkit-box-shadow: 0 5px 14px rgba(0, 0, 0, 0.15), 0 6px 6px rgba(0, 0, 0, 0.12);
           box-shadow: 0 5px 14px rgba(0, 0, 0, 0.15), 0 6px 6px rgba(0, 0, 0, 0.12);
+}
+
+#div-scroll-cont #div-list-cont div.sort-middle-clone {
+  -webkit-transform: scale(1.02);
+          transform: scale(1.02);
+}
+
+#div-scroll-cont #div-list-cont div.sort-end-clone {
+  -webkit-transform: scale(1);
+          transform: scale(1);
 }
 
 #div-scroll-cont #div-list-cont div.left-mask {
@@ -101,7 +115,7 @@ a:hover {
   color: #F8F8F8;
 }
 
-#div-scroll-cont.left-scroll #div-list-cont, #div-scroll-cont.right-scroll #div-list-cont {
+.left-scroll #div-list-cont, .right-scroll #div-list-cont {
   overflow-x: hidden;
 }
 

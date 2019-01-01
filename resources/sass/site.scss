@@ -7,7 +7,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Roboto';
-  background-color: #EEEEEE;
+  background-color: #D7DEEF;
 }
 
 a {
@@ -43,7 +43,7 @@ a:hover {
 
 	#div-list-cont {
 		position: relative;
-		margin: 0 4px;
+		margin: 0 12px;
 		// margin-top: 4em;
 
 		div.listitem-cont {
@@ -61,8 +61,26 @@ a:hover {
 		}
 
 		div.sort-clone {
-			box-shadow: 0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12);
+			// transition-duration: 1000ms;
+			transition: transform 400ms ease-in;
+			// transform: scale(1.02);
+			box-shadow: 0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12);	// recommended to create clone drop shadow
 		}
+
+		div.sort-start-clone {
+			// transition: transform 1000ms ease-in;
+			// transform: scale(1.02);
+		}
+
+		div.sort-middle-clone {
+			transform: scale(1.02);
+		}
+
+		div.sort-end-clone {
+
+			transform: scale(1.0);
+		}
+
 
 		div.left-mask {
 			background-color: red;
@@ -100,8 +118,8 @@ a:hover {
 	}
 }
 
-#div-scroll-cont.left-scroll #div-list-cont, #div-scroll-cont.right-scroll #div-list-cont {
-	overflow-x: hidden;
+.left-scroll #div-list-cont, .right-scroll #div-list-cont {
+	overflow-x: hidden;	// recommended to allow left/right shadow when scrolling but hide clone when swiping left/right
 }
 
 #div-scroll-cont.xl, #div-scroll-cont.lg, #div-scroll-cont.md, #div-scroll-cont.sm {
