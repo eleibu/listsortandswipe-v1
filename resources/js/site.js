@@ -34,6 +34,7 @@ var listProperties = {
 	leftEnabled: true,
 	leftByDrag: true,
     leftMasks: [{
+    	background: 'rgba(252, 13, 27, 1)',
 		classNameDefault: 'left-mask',
 		classNameSlideOut: 'left-mask-slide-out',
 		classNameSlideBack: 'left-mask-slide-back',
@@ -42,6 +43,7 @@ var listProperties = {
 	rightEnabled: true,
 	rightByDrag: true,
     rightMasks: [{
+    	background: 'rgba(15, 127, 18, 1)',
 		classNameDefault: 'right-mask',
 		classNameSlideOut: 'right-mask-slide-out',
 		classNameSlideBack: 'right-mask-slide-back',
@@ -111,15 +113,16 @@ function sortEnd(origIndex, newIndex) {
 	}
 }
 
-// var temp = document.getElementById('temp');
-// temp.addEventListener('click', function() {
-// 	console.log('window: ' + window.pageYOffset);
-// 	console.log(window.innerHeight);
-// 	// console.log('window: ' + window.scrollTop);
-// 	// console.log('document: ' + document.scrollTop);
-// 	// console.log('body: ' + document.body.scrollTop);
-// 	// lithiumlistPro.triggerRight(listCont, 23);
-// });
+var temp = document.getElementById('temp');
+temp.addEventListener('click', function() {
+	// console.log('window: ' + window.pageYOffset);
+	// console.log(window.innerHeight);
+	// // console.log('window: ' + window.scrollTop);
+	// // console.log('document: ' + document.scrollTop);
+	// // console.log('body: ' + document.body.scrollTop);
+	lithiumlistPro.triggerRight(listCont, 2);
+	lithiumlistPro.triggerRight(listCont, 4);
+});
 
 
 // lithiumlistPro.setDefaults({delay: 200});

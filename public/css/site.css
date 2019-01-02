@@ -55,34 +55,6 @@ a:hover {
   position: relative;
 }
 
-#div-scroll-cont #div-list-cont div.listitem-cont.sort-item-active {
-  visibility: hidden;
-  opacity: 0;
-}
-
-#div-scroll-cont #div-list-cont div.sort-clone {
-  -webkit-transition: -webkit-transform 400ms ease-in;
-  transition: -webkit-transform 400ms ease-in;
-  transition: transform 400ms ease-in;
-  transition: transform 400ms ease-in, -webkit-transform 400ms ease-in;
-  -webkit-box-shadow: 0 5px 14px rgba(0, 0, 0, 0.15), 0 6px 6px rgba(0, 0, 0, 0.12);
-          box-shadow: 0 5px 14px rgba(0, 0, 0, 0.15), 0 6px 6px rgba(0, 0, 0, 0.12);
-}
-
-#div-scroll-cont #div-list-cont div.sort-middle-clone {
-  -webkit-transform: scale(1.02);
-          transform: scale(1.02);
-}
-
-#div-scroll-cont #div-list-cont div.sort-end-clone {
-  -webkit-transform: scale(1);
-          transform: scale(1);
-}
-
-#div-scroll-cont #div-list-cont div.left-mask {
-  background-color: red;
-}
-
 #div-scroll-cont #div-list-cont div.left-mask div.label-cont {
   position: relative;
   height: 100%;
@@ -95,10 +67,6 @@ a:hover {
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
   color: #F8F8F8;
-}
-
-#div-scroll-cont #div-list-cont div.right-mask {
-  background-color: green;
 }
 
 #div-scroll-cont #div-list-cont div.right-mask div.label-cont {

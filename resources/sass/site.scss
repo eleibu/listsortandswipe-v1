@@ -55,36 +55,7 @@ a:hover {
 			}
 		}
 
-		div.listitem-cont.sort-item-active {
-			visibility: hidden;
-			opacity: 0;
-		}
-
-		div.sort-clone {
-			// transition-duration: 1000ms;
-			transition: transform 400ms ease-in;
-			// transform: scale(1.02);
-			box-shadow: 0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12);	// recommended to create clone drop shadow
-		}
-
-		div.sort-start-clone {
-			// transition: transform 1000ms ease-in;
-			// transform: scale(1.02);
-		}
-
-		div.sort-middle-clone {
-			transform: scale(1.02);
-		}
-
-		div.sort-end-clone {
-
-			transform: scale(1.0);
-		}
-
-
 		div.left-mask {
-			background-color: red;
-
 			div.label-cont {
 				position: relative;
 				height: 100%;
@@ -100,8 +71,6 @@ a:hover {
 		}
 
 		div.right-mask {
-			background-color: green;
-
 			div.label-cont {
 				position: relative;
 				height: 100%;

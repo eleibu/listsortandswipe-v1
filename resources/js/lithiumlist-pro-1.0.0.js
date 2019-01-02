@@ -47,6 +47,7 @@
 
 
 // Pipeline:
+// allow trigger left/right on multiple items at the same time
 // confirm left / right
 // left / right buttons and multiple (remember to delete tempFunctionRemoveMasks())
 // elastic drag left / right
@@ -61,9 +62,6 @@
 // Validation using plain JS
 
 
-// TODO: If start new sort while old one is still docking, get problem
-// TODO: Only add unlicensed message once
-
 // TODO: Change left / right to use translate
 // TODO: Do not attach to window, attach to outer div instead - change validation to check for this
 // TODO: Update url in rSend
@@ -74,14 +72,6 @@
 export var lithiumlistPro = (function () {	
 	var instances = [];
 
-// sortStartDuration
-// sortEndDuration
-// sortCloneClass: 'sort-clone',
-// sortStartCloneClass: 'sort-start-clone',
-// sortMiddleCloneClass: 'sort-start-clone',
-// sortEndCloneClass: 'sort-end-clone',
-
-
 	var defaultProperties = {
 		onSortStart: null,
 		onSortEnd: null,
@@ -89,20 +79,20 @@ export var lithiumlistPro = (function () {
 		onSortAutoScrollEnd: null,
         sortEnabled: true,
         sortByDrag: true,
-        sortStartDuration: 1000,					// validate
-        sortEndDuration: 1000,						// reorder
+        sortStartDuration: 300,
+        sortEndDuration: 300,
         sortScrollClass: 'sort-scroll',
         sortCloneClass: 'sort-clone',
-		sortStartCloneClass: 'sort-start-clone',	// validate
-		sortMiddleCloneClass: 'sort-middle-clone',	// validate
-		sortEndCloneClass: 'sort-end-clone',		// validate
+        sortCloneBoxShadow: '0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12)',		// not validated
+        sortCloneScale: '1.02',																// not validated
+        sortItemActiveHide: true,
         sortItemActiveClass: 'sort-item-active',
         sortDragHandleClass: 'sort-drag-handle',
         sortMoveStartDelay: 400,
         sortReorderDuration: 200,
         sortScrollSpeed: 3,
-        safariBodyUnselectable: true,		// applies only to Safari on MacOS
-        safariAutoScrollOverflow: true,		// applies only to Safari on MacOS
+        safariBodyUnselectable: true,														// applies only to Safari on MacOS
+        safariAutoScrollOverflow: true,														// applies only to Safari on MacOS
 		onLeftStart: null,
 		onLeftSlideOutStart: null,
 		onLeftSlideBackStart: null,
@@ -115,6 +105,7 @@ export var lithiumlistPro = (function () {
         leftCloneSlideBackClass: 'left-clone-slide-back',
         leftItemActiveClass: 'left-item-active',
         leftMasks: [{
+        	background: 'rgba(252, 13, 27, 1)',												// not validated
 			classNameDefault: 'left-mask',
 			classNameSlideOut: 'left-mask-slide-out',
 			classNameSlideBack: 'left-mask-slide-back',
@@ -137,6 +128,7 @@ export var lithiumlistPro = (function () {
         rightCloneSlideBackClass: 'right-clone-slide-back',
         rightItemActiveClass: 'right-item-active',
         rightMasks: [{
+        	background: 'rgba(15, 127, 18, 1)',												// not validated
 			classNameDefault: 'right-mask',
 			classNameSlideOut: 'right-mask-slide-out',
 			classNameSlideBack: 'right-mask-slide-back',
@@ -405,7 +397,7 @@ export var lithiumlistPro = (function () {
 	};
 
 	var mouseDown = function(e, instance) {
-		if ((instance != null) && ((instance.props.sortEnabled) || (instance.props.leftEnabled) || (instance.props.rightEnabled))) {
+		if ((instance != null) && (!instance.temp.ignoreClicks) && ((instance.props.sortEnabled) || (instance.props.leftEnabled) || (instance.props.rightEnabled))) {
 			setItems(instance);
 
 			var index = null;
@@ -465,6 +457,7 @@ export var lithiumlistPro = (function () {
 	};
 
 	var initMoveLeft = function(instance, cloneLeftPX) {
+		instance.temp.ignoreClicks = true;
 		instance.temp.moveType = 'LEFT';
 
         if (instance.props.onLeftStart) {
@@ -494,6 +487,7 @@ export var lithiumlistPro = (function () {
 	};
 
 	var initMoveRight = function(instance, cloneLeftPX) {
+		instance.temp.ignoreClicks = true;
 		instance.temp.moveType = 'RIGHT';
 
         if (instance.props.onRightStart) {
@@ -536,6 +530,8 @@ export var lithiumlistPro = (function () {
 		if ((instance.temp) && (instance.temp.lastPageX != null) && (instance.temp.lastPageY != null)) {
 			var rect = instance.temp.items[instance.temp.activeIndex].getBoundingClientRect();
 			if (cursorIsOverRect(instance.temp.lastPageX, instance.temp.lastPageY, rect)) {
+				instance.temp.ignoreClicks = true;
+
 		        instance.temp.sortDelayTimer = null;
 		        instance.temp.moveType = 'SORT';
 
@@ -553,25 +549,10 @@ export var lithiumlistPro = (function () {
 		        	 var top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
 		        	 createClone(instance, 0, top);
 		        }
-				if (instance.props.sortCloneClass) {
-					addClass(instance.temp.itemClone, instance.props.sortCloneClass);
-				}
-		        //@@
-				// if (instance.props.sortStartCloneClass) {
-				// 	addClass(instance.temp.itemClone, instance.props.sortStartCloneClass);
-				// }
-				// instance.temp.sortStartTimer = setTimeout(function() {
-				// 	if (instance.props.sortStartCloneClass && instance.temp.itemClone) {
-				// 		removeClass(instance.temp.itemClone, instance.props.sortStartCloneClass);
-				// 	}
-				// 	if (instance.props.sortMiddleCloneClass && instance.temp.itemClone) {
-				// 		addClass(instance.temp.itemClone, instance.props.sortMiddleCloneClass);
-				// 	}
-				// }, instance.props.sortStartDuration);
-					if (instance.props.sortMiddleCloneClass && instance.temp.itemClone) {
-						addClass(instance.temp.itemClone, instance.props.sortMiddleCloneClass);
-					}
 
+				if (instance.props.sortItemActiveHide) {
+					instance.temp.items[instance.temp.activeIndex].style.visibility = 'hidden';
+				}
 				if (instance.props.sortItemActiveClass) {
 					addClass(instance.temp.items[instance.temp.activeIndex], instance.props.sortItemActiveClass);
 				}
@@ -741,8 +722,6 @@ export var lithiumlistPro = (function () {
 
         if ((instance.temp.itemClone.offsetTop < moveUpBoundary) || ((instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight) > moveDownBoundary)) {
             if ((prevIndex !== null) && (instance.temp.itemClone.offsetTop < moveUpBoundary)) {
-            	//##
-
                 // move up
                 var activeUp = -1 * instance.temp.items[prevIndex].offsetHeight;
 				instance.temp.items[instance.temp.activeIndex].style.transitionDuration = instance.props.sortReorderDuration + 'ms';
@@ -820,26 +799,13 @@ export var lithiumlistPro = (function () {
 	        		scrollContOverflowRevert(instance);
 	        	}
 
-				//@@
-				if (instance.temp.sortStartTimer) {
-		    		clearTimeout(instance.temp.sortStartTimer);
-		    		instance.temp.sortStartTimer = null;
+				instance.temp.itemClone.style.top = instance.temp.items[instance.temp.activeIndex].offsetTop + getTransYNum(instance.temp.items[instance.temp.activeIndex]) + 'px'; 
+				if (instance.props.sortCloneScale) {
+					instance.temp.itemClone.style[`${vendorPrefix}Transform`] = 'scale(1)';
+					instance.temp.itemClone.style.transition = 'top ' + instance.props.sortEndDuration + 'ms, transform ' + instance.props.sortEndDuration + 'ms';
+				} else {
+					instance.temp.itemClone.style.transition = 'top ' + instance.props.sortEndDuration + 'ms';
 				}
-				if (instance.props.sortMiddleCloneClass) {
-					removeClass(instance.temp.itemClone, instance.props.sortMiddleCloneClass);
-				}
-				// if (instance.props.sortEndCloneClass) {
-				// 	addClass(instance.temp.itemClone, instance.props.sortEndCloneClass);
-				// }
-
-                var activeTaskTop = instance.temp.items[instance.temp.activeIndex].offsetTop + getTransYNum(instance.temp.items[instance.temp.activeIndex]);
-                // instance.temp.itemClone.style[`${vendorPrefix}TransitionDuration`] = instance.props.sortEndDuration + 'ms';
-
-                // NEXT LINE IS CAUSING THE PROBLEM - IT OVERRIDES THE 'TRANSITION' SET IN THE EXTERNAL STYLESHEET - NEED TO
-                // SET THIS TO 'top 3ms; transform 3ms'
-
-                instance.temp.itemClone.style.transition = 'top ' + instance.props.sortEndDuration + 'ms';
-                instance.temp.itemClone.style.top = activeTaskTop + 'px';               
 
                 instance.temp.sortEndTimer = setTimeout(function() {sortEnd(instance)}, instance.props.sortEndDuration);
         	}
@@ -984,13 +950,15 @@ export var lithiumlistPro = (function () {
 
 	var sortEnd = function(instance) {
 		for (var i = 0, len = instance.temp.items.length; i < len; i++) {
-			// instance.temp.items[i].style[`${vendorPrefix}TransitionDuration`] = '';
 			instance.temp.items[i].style.transitionDuration = '';
 			instance.temp.items[i].style[`${vendorPrefix}Transform`] = '';
 		}
 
 		if (instance.props.sortItemActiveClass) {
 			removeClass(instance.temp.items[instance.temp.activeIndex], instance.props.sortItemActiveClass);
+		}
+		if (instance.props.sortItemActiveHide) {
+			instance.temp.items[instance.temp.activeIndex].style.visibility = 'visible';
 		}
 
 		if ((instance.props.sortScrollClass) && isDOMElement(instance.scrollCont)) {
@@ -1035,10 +1003,16 @@ export var lithiumlistPro = (function () {
 		instance.temp.itemClone.style.boxSizing = 'border-box';
 
 		if (instance.temp.moveType == 'SORT') {
-			//@@
-			// if (instance.props.sortCloneClass) {
-			// 	addClass(instance.temp.itemClone, instance.props.sortCloneClass);
-			// }
+			if (instance.props.sortCloneClass) {
+				addClass(instance.temp.itemClone, instance.props.sortCloneClass);
+			}
+			if (instance.props.sortCloneBoxShadow) {
+				instance.temp.itemClone.style.boxShadow = instance.props.sortCloneBoxShadow;
+			}
+			if (instance.props.sortCloneScale) {
+				instance.temp.itemClone.style[`${vendorPrefix}Transform`] = 'scale(' + instance.props.sortCloneScale + ')';
+				instance.temp.itemClone.style.transition = 'transform ' + instance.props.sortStartDuration + 'ms';
+			}
 		} else if (instance.temp.moveType == 'LEFT') {
 			if (instance.props.leftCloneClass) {
 				addClass(instance.temp.itemClone, instance.props.leftCloneClass);
@@ -1068,6 +1042,9 @@ export var lithiumlistPro = (function () {
 				instance.temp.itemMasks[i].style.width = instance.temp.items[instance.temp.activeIndex].offsetWidth + 'px';
 				instance.temp.itemMasks[i].style.boxSizing = 'border-box';
 
+				if (masks[i].background) {
+					instance.temp.itemMasks[i].style.background = masks[i].background;
+				}
 				if (masks[i].classNameDefault) {
 					addClass(instance.temp.itemMasks[i], masks[i].classNameDefault);
 				}
@@ -1082,6 +1059,7 @@ export var lithiumlistPro = (function () {
 		return {
 			'items' : [],
 			'moveType' : null,
+			'ignoreClicks' : false,
 			'itemClone' : null,
 			'itemMasks' : [],
 			'activeIndex' : null,
@@ -1091,7 +1069,6 @@ export var lithiumlistPro = (function () {
 			'lastPageX' : null,
 			'lastPageY' : null,
 			'sortDelayTimer' : null,
-			'sortStartTimer' : null,
 			'sortEndTimer' : null,
 			'scrollOverhang' : 0,
 			'scrollInterval' : null,
@@ -1393,21 +1370,28 @@ export var lithiumlistPro = (function () {
 	};
 
 	var rMsg = function(instance, rtn) {
-		var div = document.createElement('div');
-		div.style.position = 'absolute';
-		div.style.left = '0';
-		div.style.top = '0';
-		if (rtn) return true;// it's a trap: see rMsg(instance, true) in attachToList() - ensures listeners are not attached if content of this function is deleted
-		div.style.color = 'red';
-		div.style.fontWeight = 'bold';
-		div.style.padding = '0.3em';
-		div.style.zIndex = '9999';
+		var id0 = 'div-lit';
+		var id1 = 'hiuml';
+		var id2 = 'ist-rm';
+		var id3 = 'sg';
+		if (!document.getElementById(id0 + id1 + id2 + id3)) {
+			var div = document.createElement('div');
+			div.id = id0 + id1 + id2 + id3;
+			div.style.position = 'absolute';
+			div.style.left = '0';
+			div.style.top = '0';
+			if (rtn) return true;// it's a trap: see rMsg(instance, true) in attachToList() - ensures listeners are not attached if content of this function is deleted
+			div.style.color = 'red';
+			div.style.fontWeight = 'bold';
+			div.style.padding = '0.3em';
+			div.style.zIndex = '9999';
 
-		div.appendChild(document.createTextNode('Lithi'));
-		div.appendChild(document.createTextNode('um List - unlic'));
-		div.appendChild(document.createTextNode('ensed ver'));
-		div.appendChild(document.createTextNode('sion'));
-		instance.listCont.appendChild(div);
+			div.appendChild(document.createTextNode('Lithi'));
+			div.appendChild(document.createTextNode('um List - unlic'));
+			div.appendChild(document.createTextNode('ensed ver'));
+			div.appendChild(document.createTextNode('sion'));
+			instance.listCont.appendChild(div);
+		}
 	};
 
 	// validation
@@ -1437,12 +1421,24 @@ export var lithiumlistPro = (function () {
 			throw 'sortByDrag must be a boolean';
 		}
 
+		if ((!isUndefinedOrNull(props['sortStartDuration'])) && ((!isInteger(props['sortStartDuration'])) || (props['sortStartDuration'] < 0))) {
+			throw 'sortStartDuration must be a positive integer or zero';
+		}
+
+		if ((!isUndefinedOrNull(props['sortEndDuration'])) && ((!isInteger(props['sortEndDuration'])) || (props['sortEndDuration'] < 0))) {
+			throw 'sortEndDuration must be a positive integer or zero';
+		}
+
 		if ((!isUndefinedOrNull(props['sortScrollClass'])) && ((!isString(props['sortScrollClass'])) || (props['sortScrollClass'].length == 0))) {
 			throw 'sortScrollClass must be a string of length >0';
 		}
 
 		if ((!isUndefinedOrNull(props['sortCloneClass'])) && ((!isString(props['sortCloneClass'])) || (props['sortCloneClass'].length == 0))) {
 			throw 'sortCloneClass must be a string of length >0';
+		}
+
+		if ((!isUndefinedOrNull(props['sortItemActiveHide'])) && (!isBoolean(props['sortItemActiveHide']))) {
+			throw 'sortItemActiveHide must be a boolean';
 		}
 
 		if ((!isUndefinedOrNull(props['sortItemActiveClass'])) && ((!isString(props['sortItemActiveClass'])) || (props['sortItemActiveClass'].length == 0))) {
@@ -1459,10 +1455,6 @@ export var lithiumlistPro = (function () {
 
 		if ((!isUndefinedOrNull(props['sortReorderDuration'])) && ((!isInteger(props['sortReorderDuration'])) || (props['sortReorderDuration'] < 0))) {
 			throw 'sortReorderDuration must be a positive integer or zero';
-		}
-
-		if ((!isUndefinedOrNull(props['sortEndDuration'])) && ((!isInteger(props['sortEndDuration'])) || (props['sortEndDuration'] < 0))) {
-			throw 'sortEndDuration must be a positive integer or zero';
 		}
 
 		if ((!isUndefinedOrNull(props['sortScrollSpeed'])) && ((!isInteger(props['sortScrollSpeed'])) || ((props['sortScrollSpeed'] != 1) && (props['sortScrollSpeed'] != 2) && (props['sortScrollSpeed'] != 3) && (props['sortScrollSpeed'] != 4) && (props['sortScrollSpeed'] != 5)))) {
