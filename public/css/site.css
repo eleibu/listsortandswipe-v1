@@ -44,6 +44,7 @@ a:hover {
 #div-scroll-cont #div-list-cont {
   position: relative;
   margin: 0 12px;
+  border-top: 0.1px solid transparent;
 }
 
 #div-scroll-cont #div-list-cont div.listitem-cont {

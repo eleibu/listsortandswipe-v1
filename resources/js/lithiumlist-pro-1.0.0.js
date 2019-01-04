@@ -1,3 +1,4 @@
+// Beautifully engineered sortable and swipeable list that works perfectly on desktop and mobile
 
 
 // TESTED ON:
@@ -55,12 +56,16 @@
 
 
 // Known issues:
-// * Position of itemCont behaves strangely when item-cont has a top or bottom margin. Temporary resolution is to remove the margin, insert a child div and add a margin to that.
 // * Cursor is sometimes far above itemCont but still moving it (seems to happen only when moving up, but not sure).
+// * When: (i) listItems have non-uniform top/bottom margins; (ii) listCont has a top/bottom margin; or (iii) both (i) and (ii), items in the list can jump up and down when
+		// any item is dragged left or right - solution is to apply a top-border (even if 0.01px and transparent) to listCont
+
 
 // Medium articles:
 // Validation using plain JS
 
+
+// TODO: XMLHttpRequest not working in Edge or IE
 
 // TODO: Change left / right to use translate
 // TODO: Do not attach to window, attach to outer div instead - change validation to check for this
@@ -721,13 +726,23 @@ export var lithiumlistPro = (function () {
         }
 
         if ((instance.temp.itemClone.offsetTop < moveUpBoundary) || ((instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight) > moveDownBoundary)) {
+        	// Items are moved as follows:
+        		// Item which is moving up - shift up by: (diff btw item tops) + (diff btw top margins)
+        		// Item which is moving down - shift down by: (diff btw item tops) + (diff btw (height + btm margin) for both items)
+        		// See: 'Variable height and margin animation diagrams.jpg' in LithiumList folder
+        	var activeStyle = window.getComputedStyle(instance.temp.items[instance.temp.activeIndex]);
+
             if ((prevIndex !== null) && (instance.temp.itemClone.offsetTop < moveUpBoundary)) {
                 // move up
-                var activeUp = -1 * instance.temp.items[prevIndex].offsetHeight;
+                // 
+                var topDiff = (instance.temp.items[instance.temp.activeIndex].offsetTop + getTransYNum(instance.temp.items[instance.temp.activeIndex])) - (instance.temp.items[prevIndex].offsetTop + getTransYNum(instance.temp.items[prevIndex]));
+                var prevStyle = window.getComputedStyle(instance.temp.items[prevIndex]);
+
+                var activeUp = (-1 * topDiff) + (getIntFromPX(activeStyle.marginTop) - getIntFromPX(prevStyle.marginTop));
 				instance.temp.items[instance.temp.activeIndex].style.transitionDuration = instance.props.sortReorderDuration + 'ms';
 				deltaTransY(instance.temp.items[instance.temp.activeIndex], activeUp);
 
-                var prevDown = instance.temp.items[instance.temp.activeIndex].offsetHeight;
+                var prevDown = topDiff + ((instance.temp.items[instance.temp.activeIndex].offsetHeight + getIntFromPX(activeStyle.marginBottom)) - (instance.temp.items[prevIndex].offsetHeight + getIntFromPX(prevStyle.marginBottom)));
 				instance.temp.items[prevIndex].style.transitionDuration = instance.props.sortReorderDuration + 'ms';
 				deltaTransY(instance.temp.items[prevIndex], prevDown);
 
@@ -737,11 +752,14 @@ export var lithiumlistPro = (function () {
 				instance.temp.activeIndex = prevIndex;
             } else if ((nextIndex !== null) && ((instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight) > moveDownBoundary)) {
                 // move down
-                var activeDown = instance.temp.items[nextIndex].offsetHeight;
+                var topDiff = (instance.temp.items[nextIndex].offsetTop + getTransYNum(instance.temp.items[nextIndex])) - (instance.temp.items[instance.temp.activeIndex].offsetTop + getTransYNum(instance.temp.items[instance.temp.activeIndex]));
+                var nextStyle = window.getComputedStyle(instance.temp.items[nextIndex]);
+
+                var activeDown = topDiff + ((instance.temp.items[nextIndex].offsetHeight + getIntFromPX(nextStyle.marginBottom)) - (instance.temp.items[instance.temp.activeIndex].offsetHeight + getIntFromPX(activeStyle.marginBottom)));
                 instance.temp.items[instance.temp.activeIndex].style.transitionDuration = instance.props.sortReorderDuration + 'ms';
 				deltaTransY(instance.temp.items[instance.temp.activeIndex], activeDown);
 
-                var nextUp = -1 * instance.temp.items[instance.temp.activeIndex].offsetHeight;
+                var nextUp = (-1 * topDiff) + (getIntFromPX(nextStyle.marginTop) - getIntFromPX(activeStyle.marginTop));
                 instance.temp.items[nextIndex].style.transitionDuration = instance.props.sortReorderDuration + 'ms';
                 deltaTransY(instance.temp.items[nextIndex], nextUp);
 
@@ -1001,6 +1019,7 @@ export var lithiumlistPro = (function () {
 		instance.temp.itemClone.style.top = top;
 		instance.temp.itemClone.style.width = instance.temp.items[instance.temp.activeIndex].offsetWidth + 'px';
 		instance.temp.itemClone.style.boxSizing = 'border-box';
+		instance.temp.itemClone.style.margin = '0';		// ensures clone is placed properly even if listItems have margins
 
 		if (instance.temp.moveType == 'SORT') {
 			if (instance.props.sortCloneClass) {
@@ -1176,6 +1195,17 @@ export var lithiumlistPro = (function () {
         } else {
             el.style[`${vendorPrefix}Transform`] = 'translateY(0px)';
         }
+	};
+
+	var getIntFromPX = function(val) {
+		var int = 0;
+		if (val != null) {
+			var index = val.indexOf('px');
+			if (index > -1) {
+				int = parseInt(val.substring(0, index));
+			}
+		}
+        return int;
 	};
 
 	var vendorPrefix = (function() {

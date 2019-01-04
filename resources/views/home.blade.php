@@ -15,7 +15,7 @@
                 <div class="listitem-outer">
                     <i class="sld budicon-grab-ui sort" title="Sort"></i>
                     <i class="sld budicon-reload-ui archive" title="Archive"></i>
-                    <div class="text">Hydrogen</div>
+                    <div class="text">Hydrogen<br/>And another line<br/>And another line<br/>And another line</div>
                     <i class="oln budicon-trash delete" title="Delete"></i>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                 <div class="listitem-outer">
                     <i class="sld budicon-grab-ui sort" title="Sort"></i>
                     <i class="sld budicon-reload-ui archive" title="Archive"></i>
-                    <div class="text">LITHIUM</div>
+                    <div class="text">LITHIUM<br/>And another line</div>
                     <i class="oln budicon-trash delete" title="Delete"></i>
                 </div>
             </div>
@@ -47,7 +47,7 @@
                 <div class="listitem-outer">
                     <i class="sld budicon-grab-ui sort" title="Sort"></i>
                     <i class="sld budicon-reload-ui archive" title="Archive"></i>
-                    <div class="text">Boron</div>
+                    <div class="text">Boron<br/>And another line<br/>And another line</div>
                     <i class="oln budicon-trash delete" title="Delete"></i>
                 </div>
             </div>
