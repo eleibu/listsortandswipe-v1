@@ -140,10 +140,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 // TODO: XMLHttpRequest not working in Edge or IE
 
-// TODO: Change left / right to use translate
 // TODO: Do not attach to window, attach to outer div instead - change validation to check for this
 // TODO: Update url in rSend
-// TODO: Remove validation code?
 // TODO: Remove .version() from webpack.mix.js?
 
 
@@ -161,8 +159,8 @@ var lithiumlistPro = function () {
 		sortEndDuration: 300,
 		sortScrollClass: 'sort-scroll',
 		sortCloneClass: 'sort-clone',
-		sortCloneBoxShadow: '0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12)', // not validated
-		sortCloneScale: '1.02', // not validated
+		sortCloneBoxShadow: '0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12)', // not validated (other than string of length >0)
+		sortCloneScale: '1.02', // not validated (other than string of length >0)
 		sortItemActiveHide: true,
 		sortItemActiveClass: 'sort-item-active',
 		sortDragHandleClass: 'sort-drag-handle',
@@ -183,7 +181,7 @@ var lithiumlistPro = function () {
 		leftCloneSlideBackClass: 'left-clone-slide-back',
 		leftItemActiveClass: 'left-item-active',
 		leftMasks: [{
-			background: 'rgba(252, 13, 27, 1)', // not validated
+			background: 'rgba(252, 13, 27, 1)', // not validated (other than string of length >0)
 			classNameDefault: 'left-mask',
 			classNameSlideOut: 'left-mask-slide-out',
 			classNameSlideBack: 'left-mask-slide-back',
@@ -206,7 +204,7 @@ var lithiumlistPro = function () {
 		rightCloneSlideBackClass: 'right-clone-slide-back',
 		rightItemActiveClass: 'right-item-active',
 		rightMasks: [{
-			background: 'rgba(15, 127, 18, 1)', // not validated
+			background: 'rgba(15, 127, 18, 1)', // not validated (other than string of length >0)
 			classNameDefault: 'right-mask',
 			classNameSlideOut: 'right-mask-slide-out',
 			classNameSlideBack: 'right-mask-slide-back',
@@ -1587,6 +1585,14 @@ var lithiumlistPro = function () {
 			throw 'sortCloneClass must be a string of length >0';
 		}
 
+		if (!isUndefinedOrNull(props['sortCloneBoxShadow']) && (!isString(props['sortCloneBoxShadow']) || props['sortCloneBoxShadow'].length == 0)) {
+			throw 'sortCloneBoxShadow must be a string of length >0';
+		}
+
+		if (!isUndefinedOrNull(props['sortCloneScale']) && (!isString(props['sortCloneScale']) || props['sortCloneScale'].length == 0)) {
+			throw 'sortCloneScale must be a string of length >0';
+		}
+
 		if (!isUndefinedOrNull(props['sortItemActiveHide']) && !isBoolean(props['sortItemActiveHide'])) {
 			throw 'sortItemActiveHide must be a boolean';
 		}
@@ -1667,8 +1673,11 @@ var lithiumlistPro = function () {
 			if (isArray(props['leftMasks'])) {
 				for (var i = 0, len = props['leftMasks'].length; i < len; i++) {
 					var mask = props['leftMasks'][i];
-					if (isUndefinedOrNull(mask['classNameDefault']) || !isString(mask['classNameDefault']) || mask['classNameDefault'].length == 0) {
-						throw 'leftMasks.classNameDefault must not be undefined or null and must be a string of length >0';
+					if (!isUndefinedOrNull(mask['background']) && (!isString(mask['background']) || mask['background'].length == 0)) {
+						throw 'leftMasks.background must be a string of length >0';
+					}
+					if (!isUndefinedOrNull(mask['classNameDefault']) && (!isString(mask['classNameDefault']) || mask['classNameDefault'].length == 0)) {
+						throw 'leftMasks.classNameDefault must be a string of length >0';
 					}
 					if (!isUndefinedOrNull(mask['classNameSlideOut']) && (!isString(mask['classNameSlideOut']) || mask['classNameSlideOut'].length == 0)) {
 						throw 'leftMasks.classNameSlideOut must be a string of length >0';
@@ -1753,8 +1762,11 @@ var lithiumlistPro = function () {
 			if (isArray(props['rightMasks'])) {
 				for (var i = 0, len = props['rightMasks'].length; i < len; i++) {
 					var mask = props['rightMasks'][i];
-					if (isUndefinedOrNull(mask['classNameDefault']) || !isString(mask['classNameDefault']) || mask['classNameDefault'].length == 0) {
-						throw 'rightMasks.classNameDefault must not be undefined or null and must be a string of length >0';
+					if (!isUndefinedOrNull(mask['background']) && (!isString(mask['background']) || mask['background'].length == 0)) {
+						throw 'rightMasks.background must be a string of length >0';
+					}
+					if (!isUndefinedOrNull(mask['classNameDefault']) && (!isString(mask['classNameDefault']) || mask['classNameDefault'].length == 0)) {
+						throw 'rightMasks.classNameDefault must be a string of length >0';
 					}
 					if (!isUndefinedOrNull(mask['classNameSlideOut']) && (!isString(mask['classNameSlideOut']) || mask['classNameSlideOut'].length == 0)) {
 						throw 'rightMasks.classNameSlideOut must be a string of length >0';

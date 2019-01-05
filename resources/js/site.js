@@ -115,14 +115,13 @@ function sortEnd(origIndex, newIndex) {
 
 var temp = document.getElementById('temp');
 temp.addEventListener('click', function() {
-	listCont.style.border = '0.1px solid transparent';
 	// console.log('window: ' + window.pageYOffset);
 	// console.log(window.innerHeight);
 	// // console.log('window: ' + window.scrollTop);
 	// // console.log('document: ' + document.scrollTop);
 	// // console.log('body: ' + document.body.scrollTop);
-	// lithiumlistPro.triggerRight(listCont, 2);
-	// lithiumlistPro.triggerRight(listCont, 4);
+	lithiumlistPro.triggerRight(listCont, 2);
+	lithiumlistPro.triggerRight(listCont, 4);
 });
 
 
