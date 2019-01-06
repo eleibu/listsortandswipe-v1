@@ -17033,6 +17033,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // Validation using plain JS
 
 
+// TODO: Small gaps between animated items when scrolling to bottom - do we need to round (or int) the results of getComputedStyle?
 // TODO: XMLHttpRequest not working in Edge or IE
 
 // TODO: Do not attach to window, attach to outer div instead - change validation to check for this
@@ -17083,7 +17084,7 @@ var lithiumlistPro = function () {
 			childNode: null
 		}],
 		leftDragHandleClass: 'left-drag-handle',
-		leftDragStartThreshold: '10%',
+		leftDragStartThreshold: '10px',
 		leftDragEndThreshold: '30%',
 		leftSlideOutDuration: 300,
 		leftSlideBackDuration: 200,
@@ -17442,9 +17443,10 @@ var lithiumlistPro = function () {
 		instance.touchEventsTarget.addEventListener('touchend', instance.temp.funcTouchEnd);
 	};
 
-	var initMoveLeft = function initMoveLeft(instance, cloneLeftPX) {
+	var initMoveLeft = function initMoveLeft(instance, cursorX) {
 		instance.temp.ignoreClicks = true;
 		instance.temp.moveType = 'LEFT';
+		instance.temp.activeOrigX = instance.temp.items[instance.temp.activeIndex].offsetLeft;
 
 		if (instance.props.onLeftStart) {
 			instance.props.onLeftStart(instance.temp.activeIndex);
@@ -17468,14 +17470,15 @@ var lithiumlistPro = function () {
 
 		var top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
 		if (!instance.temp.itemClone) {
-			var left = cloneLeftPX + 'px';
+			var left = cursorX + instance.temp.activeOrigX + 'px';
 			createClone(instance, left, top);
 		}
 	};
 
-	var initMoveRight = function initMoveRight(instance, cloneLeftPX) {
+	var initMoveRight = function initMoveRight(instance, cursorX) {
 		instance.temp.ignoreClicks = true;
 		instance.temp.moveType = 'RIGHT';
+		instance.temp.activeOrigX = instance.temp.items[instance.temp.activeIndex].offsetLeft;
 
 		if (instance.props.onRightStart) {
 			instance.props.onRightStart(instance.temp.activeIndex);
@@ -17499,7 +17502,7 @@ var lithiumlistPro = function () {
 
 		var top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
 		if (!instance.temp.itemClone) {
-			var left = cloneLeftPX + 'px';
+			var left = cursorX + instance.temp.activeOrigX + 'px';
 			createClone(instance, left, top);
 		}
 	};
@@ -17524,6 +17527,7 @@ var lithiumlistPro = function () {
 
 				instance.temp.sortDelayTimer = null;
 				instance.temp.moveType = 'SORT';
+				instance.temp.activeOrigX = instance.temp.items[instance.temp.activeIndex].offsetLeft;
 
 				if (instance.props.onSortStart) {
 					instance.props.onSortStart(instance.temp.activeIndex);
@@ -17537,8 +17541,9 @@ var lithiumlistPro = function () {
 				}
 
 				if (!instance.temp.itemClone) {
+					var left = instance.temp.activeOrigX + 'px';
 					var top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
-					createClone(instance, 0, top);
+					createClone(instance, left, top);
 				}
 
 				if (instance.props.sortItemActiveHide) {
@@ -17585,12 +17590,12 @@ var lithiumlistPro = function () {
 			if (instance.temp.moveType == 'LEFT' || instance.temp.moveType == 'RIGHT') {
 				if (instance.temp.moveType == 'LEFT') {
 					if (cursorX < 0) {
-						var left = cursorX + 'px';
+						var left = cursorX + instance.temp.activeOrigX + 'px';
 						instance.temp.itemClone.style.left = left;
 					}
 				} else {
 					if (cursorX > 0) {
-						var left = cursorX + 'px';
+						var left = cursorX + instance.temp.activeOrigX + 'px';
 						instance.temp.itemClone.style.left = left;
 					}
 				}
@@ -17724,7 +17729,6 @@ var lithiumlistPro = function () {
 
 			if (prevIndex !== null && instance.temp.itemClone.offsetTop < moveUpBoundary) {
 				// move up
-				// 
 				var topDiff = instance.temp.items[instance.temp.activeIndex].offsetTop + getTransYNum(instance.temp.items[instance.temp.activeIndex]) - (instance.temp.items[prevIndex].offsetTop + getTransYNum(instance.temp.items[prevIndex]));
 				var prevStyle = window.getComputedStyle(instance.temp.items[prevIndex]);
 
@@ -17781,7 +17785,7 @@ var lithiumlistPro = function () {
 
 		if (instance.temp.moveType) {
 			if (instance.temp.moveType == 'LEFT' || instance.temp.moveType == 'RIGHT') {
-				var cloneX = Math.abs(instance.temp.itemClone.offsetLeft);
+				var cloneX = Math.abs(instance.temp.itemClone.offsetLeft - instance.temp.activeOrigX);
 				if (instance.temp.moveType == 'LEFT') {
 					var leftDET = getPXorPercent(instance.props.leftDragEndThreshold, instance.temp.items[instance.temp.activeIndex].offsetWidth);
 					if (cloneX > leftDET) {
@@ -17876,7 +17880,7 @@ var lithiumlistPro = function () {
 			}
 		}
 
-		instance.temp.itemClone.style.left = '0';
+		instance.temp.itemClone.style.left = instance.temp.activeOrigX + 'px';
 		setTimeout(function () {
 			completeSlide(instance, false);
 		}, instance.props.leftSlideBackDuration);
@@ -17932,7 +17936,7 @@ var lithiumlistPro = function () {
 			}
 		}
 
-		instance.temp.itemClone.style.left = '0';
+		instance.temp.itemClone.style.left = instance.temp.activeOrigX + 'px';
 		setTimeout(function () {
 			completeSlide(instance, false);
 		}, instance.props.rightSlideBackDuration);
@@ -18063,7 +18067,8 @@ var lithiumlistPro = function () {
 				var newDiv = document.createElement('div');
 				instance.temp.itemMasks[i] = instance.listCont.appendChild(newDiv);
 				instance.temp.itemMasks[i].style.position = 'absolute';
-				instance.temp.itemMasks[i].style.left = '0';
+				// instance.temp.itemMasks[i].style.left = '0';
+				instance.temp.itemMasks[i].style.left = instance.temp.items[instance.temp.activeIndex].offsetLeft + 'px';
 				instance.temp.itemMasks[i].style.top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
 				instance.temp.itemMasks[i].style.height = instance.temp.items[instance.temp.activeIndex].offsetHeight + 'px';
 				instance.temp.itemMasks[i].style.width = instance.temp.items[instance.temp.activeIndex].offsetWidth + 'px';
@@ -18095,6 +18100,7 @@ var lithiumlistPro = function () {
 			'startPageY': null,
 			'lastPageX': null,
 			'lastPageY': null,
+			'activeOrigX': null,
 			'sortDelayTimer': null,
 			'sortEndTimer': null,
 			'scrollOverhang': 0,
