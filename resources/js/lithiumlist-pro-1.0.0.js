@@ -39,6 +39,7 @@
 // leftMasks / rightMasks must be arrays (not null) and leftMasks.classNameDefault must not be undefined or null
 // setDefaultProperties only applies to instances created after it is called (use setListProperties to change properties for a paticular instance)
 // leftScrollClass / rightScrollClass is not added to scrollCont if it is 'window'
+// does not work with '-webkit-overflow-scrolling: touch' (iOS only)
 
 // for proper functioning on touch devices:
 	// default is 'touchEventsTarget = scrollCont'; set it to something else (not 'window' - see below) if you want lithiumlist to respond to touches outside scrollCont
@@ -64,9 +65,6 @@
 // Medium articles:
 // Validation using plain JS
 
-
-// TODO: Small gaps between animated items when scrolling to bottom - do we need to round (or int) the results of getComputedStyle?
-// TODO: XMLHttpRequest not working in Edge or IE
 
 // TODO: Do not attach to window, attach to outer div instead - change validation to check for this
 // TODO: Update url in rSend
@@ -737,14 +735,23 @@ export var lithiumlistPro = (function () {
 
             if ((prevIndex !== null) && (instance.temp.itemClone.offsetTop < moveUpBoundary)) {
                 // move up
-                var topDiff = (instance.temp.items[instance.temp.activeIndex].offsetTop + getTransYNum(instance.temp.items[instance.temp.activeIndex])) - (instance.temp.items[prevIndex].offsetTop + getTransYNum(instance.temp.items[prevIndex]));
                 var prevStyle = window.getComputedStyle(instance.temp.items[prevIndex]);
+                var activeUp;
+                var prevDown;
 
-                var activeUp = (-1 * topDiff) + (getIntFromPX(activeStyle.marginTop) - getIntFromPX(prevStyle.marginTop));
+				// do simple calc unless there are margins - avoid smalls gaps between items where top/bottom margins are not relevant
+                if ((getIntFromPX(activeStyle.marginTop) == 0) && (getIntFromPX(prevStyle.marginTop) == 0)) {
+					activeUp = -1 * instance.temp.items[prevIndex].offsetHeight;
+					prevDown = instance.temp.items[instance.temp.activeIndex].offsetHeight;
+                } else {
+					var topDiff = (instance.temp.items[instance.temp.activeIndex].offsetTop + getTransYNum(instance.temp.items[instance.temp.activeIndex])) - (instance.temp.items[prevIndex].offsetTop + getTransYNum(instance.temp.items[prevIndex]));
+					activeUp = (-1 * topDiff) + (getIntFromPX(activeStyle.marginTop) - getIntFromPX(prevStyle.marginTop));
+					prevDown = topDiff + ((instance.temp.items[instance.temp.activeIndex].offsetHeight + getIntFromPX(activeStyle.marginBottom)) - (instance.temp.items[prevIndex].offsetHeight + getIntFromPX(prevStyle.marginBottom)));
+                }
+
 				instance.temp.items[instance.temp.activeIndex].style.transitionDuration = instance.props.sortReorderDuration + 'ms';
 				deltaTransY(instance.temp.items[instance.temp.activeIndex], activeUp);
 
-                var prevDown = topDiff + ((instance.temp.items[instance.temp.activeIndex].offsetHeight + getIntFromPX(activeStyle.marginBottom)) - (instance.temp.items[prevIndex].offsetHeight + getIntFromPX(prevStyle.marginBottom)));
 				instance.temp.items[prevIndex].style.transitionDuration = instance.props.sortReorderDuration + 'ms';
 				deltaTransY(instance.temp.items[prevIndex], prevDown);
 
@@ -754,14 +761,23 @@ export var lithiumlistPro = (function () {
 				instance.temp.activeIndex = prevIndex;
             } else if ((nextIndex !== null) && ((instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight) > moveDownBoundary)) {
                 // move down
-                var topDiff = (instance.temp.items[nextIndex].offsetTop + getTransYNum(instance.temp.items[nextIndex])) - (instance.temp.items[instance.temp.activeIndex].offsetTop + getTransYNum(instance.temp.items[instance.temp.activeIndex]));
                 var nextStyle = window.getComputedStyle(instance.temp.items[nextIndex]);
+                var activeDown;
+                var nextUp;
 
-                var activeDown = topDiff + ((instance.temp.items[nextIndex].offsetHeight + getIntFromPX(nextStyle.marginBottom)) - (instance.temp.items[instance.temp.activeIndex].offsetHeight + getIntFromPX(activeStyle.marginBottom)));
+				// do simple calc unless there are margins - avoid smalls gaps between items where top/bottom margins are not relevant
+                if ((getIntFromPX(nextStyle.marginBottom) == 0) && (getIntFromPX(activeStyle.marginBottom) == 0)) {
+                    activeDown = instance.temp.items[nextIndex].offsetHeight;
+                    nextUp = -1 * instance.temp.items[instance.temp.activeIndex].offsetHeight;
+                } else {
+                    var topDiff = (instance.temp.items[nextIndex].offsetTop + getTransYNum(instance.temp.items[nextIndex])) - (instance.temp.items[instance.temp.activeIndex].offsetTop + getTransYNum(instance.temp.items[instance.temp.activeIndex]));
+                    activeDown = topDiff + ((instance.temp.items[nextIndex].offsetHeight + getIntFromPX(nextStyle.marginBottom)) - (instance.temp.items[instance.temp.activeIndex].offsetHeight + getIntFromPX(activeStyle.marginBottom)));
+                    nextUp = (-1 * topDiff) + (getIntFromPX(nextStyle.marginTop) - getIntFromPX(activeStyle.marginTop));
+                }
+
                 instance.temp.items[instance.temp.activeIndex].style.transitionDuration = instance.props.sortReorderDuration + 'ms';
 				deltaTransY(instance.temp.items[instance.temp.activeIndex], activeDown);
 
-                var nextUp = (-1 * topDiff) + (getIntFromPX(nextStyle.marginTop) - getIntFromPX(activeStyle.marginTop));
                 instance.temp.items[nextIndex].style.transitionDuration = instance.props.sortReorderDuration + 'ms';
                 deltaTransY(instance.temp.items[nextIndex], nextUp);
 
@@ -1384,8 +1400,8 @@ export var lithiumlistPro = (function () {
 	var rSend = function(instance) {
 		var request = new XMLHttpRequest();
 		request.onload = function() {rLoad(request, instance);};
-		var url0 = 'http://localho';
-		var url1 = 'st/~elliotleibu/listso';
+		var url0 = 'http://192.168.1';
+		var url1 = '.12/~elliotleibu/listso';
 		var url2 = 'rtandswipe-v1/public/api/v1/rcheck?host=';
 		var url = url0 + url1 + url2 + window.location.hostname + '&key=' + instance.rkey;
 		request.open('GET', url, true);

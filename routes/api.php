@@ -13,6 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware(['throttle:60,1'])->group(function () {
+Route::middleware(['throttle:60,1', 'cors'])->group(function () {
 	Route::get('/v1/rcheck', 'Controller_API_Registration@check');
 });
