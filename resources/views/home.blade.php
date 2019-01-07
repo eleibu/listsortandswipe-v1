@@ -155,7 +155,7 @@
                     <i class="oln budicon-trash delete" title="Delete"></i>
                 </div>
             </div>
-            <div class="listitem-cont unselectable" style="margin: 12px 0;">
+            <div class="listitem-cont unselectable" style="margin: 32px 0 0 0;">
                 <div class="listitem-outer">
                     <i class="sld budicon-grab-ui sort" title="Sort"></i>
                     <i class="sld budicon-reload-ui archive" title="Archive"></i>

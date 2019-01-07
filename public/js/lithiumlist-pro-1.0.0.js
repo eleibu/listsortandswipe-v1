@@ -837,7 +837,7 @@ var lithiumlistPro = function () {
 				var prevDown;
 
 				// do simple calc unless there are margins - avoid smalls gaps between items where top/bottom margins are not relevant
-				if (getIntFromPX(activeStyle.marginTop) == 0 && getIntFromPX(prevStyle.marginTop) == 0) {
+				if (getIntFromPX(activeStyle.marginTop) == 0 && getIntFromPX(activeStyle.marginBottom) == 0 && getIntFromPX(prevStyle.marginTop) == 0 && getIntFromPX(prevStyle.marginBottom) == 0) {
 					activeUp = -1 * instance.temp.items[prevIndex].offsetHeight;
 					prevDown = instance.temp.items[instance.temp.activeIndex].offsetHeight;
 				} else {
@@ -863,7 +863,7 @@ var lithiumlistPro = function () {
 				var nextUp;
 
 				// do simple calc unless there are margins - avoid smalls gaps between items where top/bottom margins are not relevant
-				if (getIntFromPX(nextStyle.marginBottom) == 0 && getIntFromPX(activeStyle.marginBottom) == 0) {
+				if (getIntFromPX(activeStyle.marginTop) == 0 && getIntFromPX(activeStyle.marginBottom) == 0 && getIntFromPX(nextStyle.marginTop) == 0 && getIntFromPX(nextStyle.marginBottom) == 0) {
 					activeDown = instance.temp.items[nextIndex].offsetHeight;
 					nextUp = -1 * instance.temp.items[instance.temp.activeIndex].offsetHeight;
 				} else {
