@@ -7,7 +7,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Roboto';
-  background-color: #D7DEEF;
+  background-color: #FFFFFF;
 }
 
 a {
@@ -36,14 +36,40 @@ a:hover {
   user-select: none;
 }
 
-#div-scroll-cont {
-  position: relative;
+#div-body {
+  height: 100%;
   overflow: auto;
+}
+
+#div-body div.siteheader-cont {
+  background-color: rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 1px 2px 0 #AAAAAA;
+          box-shadow: 0 1px 2px 0 #AAAAAA;
+}
+
+#div-body div.siteheader-cont div.siteheader-outer {
+  position: relative;
+  padding: 20px 16px;
+}
+
+#div-body div.siteheader-cont div.siteheader-outer div.authlinks-cont {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  right: 16px;
+}
+
+#div-scroll-cont {
+  background-color: #e5ecff;
+  padding: 3em 0;
+  -webkit-box-shadow: 0 10px 12px 4px #CCCCCC;
+          box-shadow: 0 10px 12px 4px #CCCCCC;
 }
 
 #div-scroll-cont #div-list-cont {
   position: relative;
-  margin: 0 12px;
+  margin: 0 4em;
   border-top: 0.1px solid transparent;
 }
 
@@ -54,6 +80,13 @@ a:hover {
 
 #div-scroll-cont #div-list-cont div.listitem-cont div.listitem-outer {
   position: relative;
+}
+
+#div-scroll-cont #div-list-cont div.listitem-cont div.listitem-outer div.text span {
+  display: inline-block;
+  font-weight: bold;
+  width: 1.6em;
+  margin: 0 0.6em;
 }
 
 #div-scroll-cont #div-list-cont div.left-mask div.label-cont {
@@ -89,7 +122,6 @@ a:hover {
 }
 
 #div-scroll-cont.xl, #div-scroll-cont.lg, #div-scroll-cont.md, #div-scroll-cont.sm {
-  height: 800px;
   max-width: 600px;
   margin: 0 auto;
 }
@@ -136,10 +168,6 @@ a:hover {
 
 #div-scroll-cont.xl div.listitem-cont:hover div.listitem-outer i, #div-scroll-cont.lg div.listitem-cont:hover div.listitem-outer i, #div-scroll-cont.md div.listitem-cont:hover div.listitem-outer i, #div-scroll-cont.sm div.listitem-cont:hover div.listitem-outer i {
   color: #000000;
-}
-
-#div-scroll-cont.xs {
-  height: 400px;
 }
 
 #div-scroll-cont.xs div.listitem-cont {

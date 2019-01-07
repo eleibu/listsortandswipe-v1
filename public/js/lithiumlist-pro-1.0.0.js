@@ -77,9 +77,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // TESTED ON:
 // IE11
 // Edge38
+// Safari 12 on Mac
 // Chrome 71 on Windows
 // Chrome 71 on Mac
-// Safari 12 on Mac
+// Chrome 59 on Android
+// Samsung Browser 5.4 on Android
+
 
 // SHOULD WORK ON:
 // IE 10	(IE9 and below does not support 'transition')
@@ -127,6 +130,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // left / right buttons and multiple (remember to delete tempFunctionRemoveMasks())
 // elastic drag left / right
 // slow auto scroll when approach top / bottom
+// triggerSort - item to new position
 
 
 // Known issues:
@@ -137,6 +141,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 // Medium articles:
 // Validation using plain JS
+
+// TODO: Calculate deltaItemsScroll when scrolling starts
 
 
 // TODO: Do not attach to window, attach to outer div instead - change validation to check for this
@@ -286,6 +292,20 @@ var lithiumlistPro = function () {
 		}
 		tempFunctionRemoveMasks(props);
 
+		// console.log('getDeltaWithParent(listCont, scrollCont, 0): ' + getDeltaWithParent(listCont, scrollCont, 0));
+		// var rectScrollCont = scrollCont.getBoundingClientRect();
+		// var rectListCont = listCont.getBoundingClientRect();
+		// console.log('rectListCont.top: ' + rectListCont.top + ' rectScrollCont.top: ' + rectScrollCont.top + 'rectListCont.top - rectScrollCont.top: ' + (rectListCont.top - rectScrollCont.top));
+
+		// var deltaItemsScroll = 0;
+		// if (scrollCont !== listCont) {
+		// 	if (isWindow(scrollCont)) {
+		// 		deltaItemsScroll = listCont.getBoundingClientRect().top - 0;
+		// 	} else {
+		// 		deltaItemsScroll = listCont.getBoundingClientRect().top - scrollCont.getBoundingClientRect().top;
+		// 	}
+		// }
+
 		var instance = {
 			'rkey': key,
 			'isr': false,
@@ -293,10 +313,12 @@ var lithiumlistPro = function () {
 			'listCont': listCont,
 			'touchEventsTarget': touchEventsTarget,
 			'listItemClass': listItemClass,
-			'deltaItemsScroll': getDeltaWithParent(listCont, scrollCont, 0),
+			// 'deltaItemsScroll' : deltaItemsScroll,
+			// 'deltaItemsScroll' : getDeltaWithParent(listCont, scrollCont, 0),
 			'props': props,
 			'temp': getEmptyTemp()
 		};
+
 		instances.push(instance);
 
 		if (rMsg(instance, true)) {
@@ -632,6 +654,15 @@ var lithiumlistPro = function () {
 				instance.temp.moveType = 'SORT';
 				instance.temp.activeOrigX = instance.temp.items[instance.temp.activeIndex].offsetLeft;
 
+				instance.temp.deltaItemsScroll = 0;
+				if (instance.scrollCont !== instance.listCont) {
+					if (isWindow(instance.scrollCont)) {
+						instance.temp.deltaItemsScroll = instance.listCont.getBoundingClientRect().top - 0;
+					} else {
+						instance.temp.deltaItemsScroll = instance.listCont.getBoundingClientRect().top - instance.scrollCont.getBoundingClientRect().top;
+					}
+				}
+
 				if (instance.props.onSortStart) {
 					instance.props.onSortStart(instance.temp.activeIndex);
 				}
@@ -730,9 +761,9 @@ var lithiumlistPro = function () {
 
 					if (instance.temp.scrollOverhang == 0) {
 						if (isItemCloneAboveScrollTop(instance)) {
-							instance.temp.scrollOverhang = instance.deltaItemsScroll + instance.temp.itemClone.offsetTop - getScrollTop(instance.scrollCont);
+							instance.temp.scrollOverhang = instance.temp.deltaItemsScroll + instance.temp.itemClone.offsetTop - getScrollTop(instance.scrollCont);
 						} else if (isItemCloneBelowScrollBottom(instance)) {
-							instance.temp.scrollOverhang = instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight - (getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.deltaItemsScroll);
+							instance.temp.scrollOverhang = instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight - (getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.temp.deltaItemsScroll);
 						}
 					} else {
 						if (instance.temp.scrollOverhang < 0) {
@@ -1213,6 +1244,7 @@ var lithiumlistPro = function () {
 			'items': [],
 			'moveType': null,
 			'ignoreClicks': false,
+			'deltaItemsScroll': null,
 			'itemClone': null,
 			'itemMasks': [],
 			'activeIndex': null,
@@ -1291,7 +1323,7 @@ var lithiumlistPro = function () {
 	};
 
 	var isItemCloneAboveScrollTop = function isItemCloneAboveScrollTop(instance) {
-		if (instance.temp.itemClone.offsetTop < getScrollTop(instance.scrollCont) - instance.deltaItemsScroll) {
+		if (instance.temp.itemClone.offsetTop < getScrollTop(instance.scrollCont) - instance.temp.deltaItemsScroll) {
 			return true;
 		} else {
 			return false;
@@ -1299,7 +1331,7 @@ var lithiumlistPro = function () {
 	};
 
 	var isItemCloneBelowScrollBottom = function isItemCloneBelowScrollBottom(instance) {
-		if (instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight > getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.deltaItemsScroll) {
+		if (instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight > getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.temp.deltaItemsScroll) {
 			return true;
 		} else {
 			return false;

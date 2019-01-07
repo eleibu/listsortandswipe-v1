@@ -3,8 +3,8 @@ require('bootstrap');
 import { lithiumlistPro } from './lithiumlist-pro-1.0.0.js';
 
 var listCont = document.getElementById('div-list-cont');
-var scrollCont = document.getElementById('div-scroll-cont');
-// var scrollCont = document.getElementById('div-body');
+// var scrollCont = document.getElementById('div-scroll-cont');
+var scrollCont = document.getElementById('div-body');
 var touchEventsTarget = document.getElementById('div-body');
 var listItemClass = 'listitem-cont';
 
@@ -113,16 +113,16 @@ function sortEnd(origIndex, newIndex) {
 	}
 }
 
-var temp = document.getElementById('temp');
-temp.addEventListener('click', function() {
-	// console.log('window: ' + window.pageYOffset);
-	// console.log(window.innerHeight);
-	// // console.log('window: ' + window.scrollTop);
-	// // console.log('document: ' + document.scrollTop);
-	// // console.log('body: ' + document.body.scrollTop);
-	lithiumlistPro.triggerRight(listCont, 2);
-	lithiumlistPro.triggerRight(listCont, 4);
-});
+// var temp = document.getElementById('temp');
+// temp.addEventListener('click', function() {
+// 	// console.log('window: ' + window.pageYOffset);
+// 	// console.log(window.innerHeight);
+// 	// // console.log('window: ' + window.scrollTop);
+// 	// // console.log('document: ' + document.scrollTop);
+// 	// // console.log('body: ' + document.body.scrollTop);
+// 	lithiumlistPro.triggerRight(listCont, 2);
+// 	lithiumlistPro.triggerRight(listCont, 4);
+// });
 
 
 // lithiumlistPro.setDefaults({delay: 200});

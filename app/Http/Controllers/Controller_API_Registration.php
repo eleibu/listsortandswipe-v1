@@ -11,7 +11,7 @@ class Controller_API_Registration extends Controller
 
     	$status = 0;
     	if ($request->filled('host', 'key')) {
-    		if (($request->input('host') == 'localhost') && ($request->input('key') == '12345678')) {
+    		if (($request->input('host') == 'localhost') && ($request->input('key') == '123456789')) {
     			$status = 1;
     		}
     	}

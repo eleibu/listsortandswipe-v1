@@ -7,8 +7,9 @@ body {
 	margin: 0;
 	padding: 0;
 	font-family: 'Roboto';
-	background-color: #D7DEEF;
-	// background-color: #FFFFFF;
+	// background-color: #D7DEEF;
+	// background-color: #e5ecff;
+	background-color: #FFFFFF;
 }
 
 a {
@@ -33,18 +34,39 @@ a:hover {
             user-select: none;
 }
 
-// #div-body {
-// 	height: 100%;
-// 	overflow: auto;
-// }
+#div-body {
+	height: 100%;
+	overflow: auto;
+
+	div.siteheader-cont {
+		// background-color: rgba(246, 246, 246, 0.9);
+		background-color: rgba(0, 0, 0, 0.1);
+		box-shadow: 0 1px 2px 0 #AAAAAA;
+
+		div.siteheader-outer {
+			position: relative;
+			padding: 20px 16px;
+
+			div.authlinks-cont {
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				right: 16px;
+			}
+		}
+	}
+}
 
 #div-scroll-cont {
-	position: relative;
-	overflow: auto;
+	// position: relative;
+	background-color: #e5ecff;
+	padding: 3em 0;
+	box-shadow: 0 10px 12px 4px #CCCCCC;
+	// overflow: auto;
 
 	#div-list-cont {
 		position: relative;
-		margin: 0 12px;
+		margin: 0 4em;
 		// margin-top: 4em;
 		border-top: 0.1px solid transparent;
 
@@ -56,6 +78,13 @@ a:hover {
 
 			div.listitem-outer {
 				position: relative;
+
+				div.text span {
+					display: inline-block;
+					font-weight: bold;
+					width: 1.6em;
+					margin: 0 0.6em;
+				}
 			}
 		}
 
@@ -96,7 +125,7 @@ a:hover {
 }
 
 #div-scroll-cont.xl, #div-scroll-cont.lg, #div-scroll-cont.md, #div-scroll-cont.sm {
-	height: 800px;
+	// height: 800px;
 	max-width: 600px;
 	margin: 0 auto;
 
@@ -149,7 +178,7 @@ a:hover {
 }
 
 #div-scroll-cont.xs {
-	height: 400px;
+	// height: 400px;
 
 	div.listitem-cont {
 		padding: 1.4em 1em;
