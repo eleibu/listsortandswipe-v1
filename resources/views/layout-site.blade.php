@@ -17,7 +17,7 @@
     <div id="div-body">
         <div id="div-siteheader" class="siteheader-cont">
             <div class="siteheader-outer">
-                <a id="a-logo" href="" title="Syndeal - home"><img src="{{ url('/images/LithiumList-icon.png') }}" alt="Lithium List logo" height="32" width="36" /></a>Lithium List
+                <a id="a-logo" href="" title="Syndeal - home"><img src="{{ url('/images/LithiumListLogo-white.png') }}" alt="Lithium List logo" height="60" width="113" /></a>
             </div>
         </div>
         <div id="div-sitecontent">

@@ -34,13 +34,50 @@ a:hover {
             user-select: none;
 }
 
+.button-word-cont {
+	display: inline-block;
+	padding: 0.6em 1em;
+	border-radius: 4px;
+	text-align: center;
+	font-weight: bold;
+}
+
+a.button-word-cont {
+	display: inline-block;
+	text-decoration: none;
+}
+
+.button-word-cont.grey {
+	color: #666666;
+	background-color: #EEEEEE;
+	box-shadow: 0 1px 4px 0 #CCCCCC;
+}
+
+.button-word-cont.grey:hover {
+	background-color: #F2F2F2;
+	box-shadow: 0 1px 4px 0 #BBBBBB;
+}
+
+.button-word-cont.darkblue {
+	color: #FFFFFF;
+	background-color: #003182;
+	box-shadow: 0 1px 4px 0 #BBBBBB;
+}
+
+.button-word-cont.darkblue:hover {
+	background-color: #003999;
+	box-shadow: 0 1px 4px 0 #AAAAAA;
+}
+
+
 #div-body {
 	height: 100%;
 	overflow: auto;
 
 	div.siteheader-cont {
 		// background-color: rgba(246, 246, 246, 0.9);
-		background-color: rgba(0, 0, 0, 0.1);
+		// background-color: rgba(0, 0, 0, 0.1);
+		background-color: #003182;
 		box-shadow: 0 1px 2px 0 #AAAAAA;
 
 		div.siteheader-outer {
@@ -55,24 +92,59 @@ a:hover {
 			}
 		}
 	}
+
+	#div-title {
+		max-width: 800px;
+		margin: 0 auto;
+		font-size: 200%;
+		line-height: 130%;
+		color: #222222;
+	}
+
+	#div-buttons {
+		max-width: 800px;
+		margin: 0 auto;
+		font-size: 110%;
+		line-height: 130%;
+	}
+
+	#div-game {
+		max-width: 500px;
+		margin: 0 auto;
+
+		div.title {
+			color: #444444;
+			font-size: 110%;
+			font-weight: bold;
+		}
+
+		div.subtitle {
+			margin: 0.6em 0 1em 0;
+			color: #777777;
+			line-height: 130%;
+		}
+
+	}
+
 }
 
 #div-scroll-cont {
 	// position: relative;
-	background-color: #e5ecff;
-	padding: 3em 0;
-	box-shadow: 0 10px 12px 4px #CCCCCC;
+	// background-color: #e5ecff;
+	// padding: 3em 0;
+	// box-shadow: 0 10px 12px 4px #CCCCCC;
 	// overflow: auto;
 
 	#div-list-cont {
 		position: relative;
-		margin: 0 4em;
+		// margin: 0 4em;
 		// margin-top: 4em;
 		border-top: 0.1px solid transparent;
 
 		div.listitem-cont {
-			background-color: #FFFFFF;
-			border-bottom: 1px solid #F4F4F4;
+			// background-color: #FFFFFF;
+			// background-color: #FFFFFF;
+			// border-bottom: 1px solid #F4F4F4;
 			// margin: 0 10%;
 			// margin: 5% 0;
 
@@ -86,6 +158,46 @@ a:hover {
 					margin: 0 0.6em;
 				}
 			}
+		}
+
+		div.listitem-cont.othernonmetal {
+			background-color: #F56E44;
+		}
+
+		div.listitem-cont.noblegas {
+			background-color: #F8951D;
+		}
+
+		div.listitem-cont.alkali {
+			background-color: #F2DF29;
+		}
+
+		div.listitem-cont.alkaline {
+			background-color: #C6C848;
+		}
+
+		div.listitem-cont.metalloid {
+			background-color: #B0CD9D;
+		}
+
+		div.listitem-cont.posttransition {
+			background-color: #A3DAD2;
+		}
+
+		div.listitem-cont.transition {
+			background-color: #A2A18E;
+		}
+
+		div.listitem-cont.lanthanoid {
+			background-color: #C9B481;
+		}
+
+		div.listitem-cont.actinoid {
+			background-color: #FBB5B0;
+		}
+
+		div.listitem-cont.unknown {
+
 		}
 
 		div.left-mask {
@@ -126,8 +238,8 @@ a:hover {
 
 #div-scroll-cont.xl, #div-scroll-cont.lg, #div-scroll-cont.md, #div-scroll-cont.sm {
 	// height: 800px;
-	max-width: 600px;
-	margin: 0 auto;
+	// max-width: 600px;
+	// margin: 0 auto;
 
 	div.listitem-cont {
 		padding: 1.8em 0;
