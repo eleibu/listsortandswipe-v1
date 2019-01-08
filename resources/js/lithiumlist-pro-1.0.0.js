@@ -567,9 +567,9 @@ export var lithiumlistPro = (function () {
 				instance.temp.deltaItemsScroll = 0;
 				if (instance.scrollCont !== instance.listCont) {
 					if (isWindow(instance.scrollCont)) {
-						instance.temp.deltaItemsScroll = instance.listCont.getBoundingClientRect().top - 0;
+						instance.temp.deltaItemsScroll = instance.listCont.getBoundingClientRect().top + getScrollTop(instance.scrollCont);
 					} else {
-						instance.temp.deltaItemsScroll = instance.listCont.getBoundingClientRect().top - instance.scrollCont.getBoundingClientRect().top;
+						instance.temp.deltaItemsScroll = instance.listCont.getBoundingClientRect().top - instance.scrollCont.getBoundingClientRect().top + getScrollTop(instance.scrollCont);
 					}
 				}
 
@@ -1106,7 +1106,6 @@ export var lithiumlistPro = (function () {
 				var newDiv = document.createElement('div');
 				instance.temp.itemMasks[i] = instance.listCont.appendChild(newDiv);
 				instance.temp.itemMasks[i].style.position = 'absolute';
-				// instance.temp.itemMasks[i].style.left = '0';
 				instance.temp.itemMasks[i].style.left = instance.temp.items[instance.temp.activeIndex].offsetLeft + 'px';
 				instance.temp.itemMasks[i].style.top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
 				instance.temp.itemMasks[i].style.height = instance.temp.items[instance.temp.activeIndex].offsetHeight + 'px';

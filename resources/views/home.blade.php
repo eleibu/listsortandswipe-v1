@@ -13,7 +13,7 @@
     </div>
     <br/><br/>
     <div id="div-buttons">
-        <a class="button-word-cont grey" href="" title="">LEARN ABOUT FEATURES</a>&nbsp;&nbsp;<a class="button-word-cont darkblue" href="" title="">CHECK OUT ALL THE DEMOS</a>
+        <a class="button-word-cont grey" href="" title="">LEARN ABOUT FEATURES</a>&nbsp;&nbsp;<a class="button-word-cont darkblue" href="" title="">HOW TO USE</a>
     </div>
     <br/><br/><br/><br/>
     <div id="div-game">
