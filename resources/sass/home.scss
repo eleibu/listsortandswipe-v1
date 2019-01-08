@@ -1,0 +1,210 @@
+@import 'site';
+
+#div-body {
+	height: 100%;
+	overflow: auto;
+
+	#div-sitecont {
+		text-align: center;
+		padding: 0 1em;
+
+		div.sitecont-outer {
+			display: inline-block;
+			text-align: left;
+			max-width: 800px;
+		}		
+	}
+
+	#div-title {
+		line-height: 130%;
+		color: #222222;
+	}
+
+	#div-buttons {
+		line-height: 130%;
+
+		a.button-word-cont {
+			margin: 0.3em 0;
+		}
+	}
+
+	#div-ptable {
+		max-width: 500px;
+		margin: 0 auto;
+
+		div.restore {
+			text-align: right;
+			font-size: 0.9em;
+			margin-bottom: 0.4em;
+		}
+	}
+}
+
+#div-list-cont {
+	position: relative;
+	border-top: 0.1px solid transparent;
+
+	div.listitem-cont {
+		div.listitem-outer {
+			position: relative;
+
+			div.text span {
+				display: inline-block;
+				font-weight: bold;
+				width: 1.6em;
+				margin: 0 0.6em;
+			}
+		}
+	}
+
+	div.listitem-cont.othernonmetal {
+		background-color: #F56E44;
+	}
+
+	div.listitem-cont.noblegas {
+		background-color: #F8951D;
+	}
+
+	div.listitem-cont.alkali {
+		background-color: #F2DF29;
+	}
+
+	div.listitem-cont.alkaline {
+		background-color: #C6C848;
+	}
+
+	div.listitem-cont.metalloid {
+		background-color: #B0CD9D;
+	}
+
+	div.listitem-cont.posttransition {
+		background-color: #A3DAD2;
+	}
+
+	div.listitem-cont.transition {
+		background-color: #A2A18E;
+	}
+
+	div.listitem-cont.lanthanoid {
+		background-color: #C9B481;
+	}
+
+	div.listitem-cont.actinoid {
+		background-color: #FBB5B0;
+	}
+
+	div.listitem-cont.unknown {
+
+	}
+
+	div.left-mask {
+		div.label-cont {
+			position: relative;
+			height: 100%;
+
+			span {
+				position: absolute;
+				right: 0.4em;
+				top: 50%;
+				transform: translateY(-50%);
+				color: #F8F8F8;
+			}
+		}
+	}
+
+	div.right-mask {
+		div.label-cont {
+			position: relative;
+			height: 100%;
+
+			span {
+				position: absolute;
+				left: 0.4em;
+				top: 50%;
+				transform: translateY(-50%);
+				color: #F8F8F8;
+			}
+		}
+	}
+}
+
+.left-scroll #div-list-cont, .right-scroll #div-list-cont {
+	overflow-x: hidden;	// recommended to allow left/right shadow when scrolling but hide clone when swiping left/right
+}
+
+#div-body.xl, #div-body.lg, #div-body.md, #div-body.sm {
+	#div-title {
+		font-size: 200%;
+	}
+
+	#div-buttons {
+		font-size: 110%;
+	}
+
+	div.listitem-cont {
+		padding: 1.8em 0;
+
+		div.listitem-outer {
+			margin: 0 0.8em;
+
+			i {
+				display: inline-block;
+				padding: 0.5em;
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				border-radius: 999px;
+				color: #DDDDDD;
+			}
+
+			i:hover {
+				cursor: pointer;
+				background: rgba(0, 0, 0, 0.06);
+			}
+
+			i.sort {
+				left : 0;
+			}
+
+			i.archive {
+				left : 1.6em;
+			}
+
+			i.delete {
+				right : 0;
+			}
+
+			div.text {
+				margin: 0 2em 0 4em;
+			}
+		}
+	}
+
+	div.listitem-cont:hover {
+		div.listitem-outer {
+			i {
+				color: #000000;
+			}
+		}
+	}
+}
+
+#div-body.xs {
+	#div-title {
+		font-size: 130%;
+	}
+
+	#div-buttons {
+		font-size: 90%;
+	}
+
+	div.listitem-cont {
+		padding: 1.4em 1em;
+
+		div.listitem-outer {
+			i {
+				display: none;
+			}
+		}
+	}
+}

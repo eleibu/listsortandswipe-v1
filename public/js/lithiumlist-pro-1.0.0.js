@@ -71,9 +71,6 @@
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "lithiumlistPro", function() { return lithiumlistPro; });
-// Beautifully engineered sortable and swipeable list that works perfectly on desktop and mobile
-
-
 // TESTED ON:
 // IE11
 // Edge38
@@ -142,7 +139,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // Medium articles:
 // Validation using plain JS
 
-// TODO: Calculate deltaItemsScroll when scrolling starts
+// TODO: Reset props for already attached list
+// TODO: Change prop combinations
 
 
 // TODO: Do not attach to window, attach to outer div instead - change validation to check for this
@@ -292,20 +290,6 @@ var lithiumlistPro = function () {
 		}
 		tempFunctionRemoveMasks(props);
 
-		// console.log('getDeltaWithParent(listCont, scrollCont, 0): ' + getDeltaWithParent(listCont, scrollCont, 0));
-		// var rectScrollCont = scrollCont.getBoundingClientRect();
-		// var rectListCont = listCont.getBoundingClientRect();
-		// console.log('rectListCont.top: ' + rectListCont.top + ' rectScrollCont.top: ' + rectScrollCont.top + 'rectListCont.top - rectScrollCont.top: ' + (rectListCont.top - rectScrollCont.top));
-
-		// var deltaItemsScroll = 0;
-		// if (scrollCont !== listCont) {
-		// 	if (isWindow(scrollCont)) {
-		// 		deltaItemsScroll = listCont.getBoundingClientRect().top - 0;
-		// 	} else {
-		// 		deltaItemsScroll = listCont.getBoundingClientRect().top - scrollCont.getBoundingClientRect().top;
-		// 	}
-		// }
-
 		var instance = {
 			'rkey': key,
 			'isr': false,
@@ -313,8 +297,6 @@ var lithiumlistPro = function () {
 			'listCont': listCont,
 			'touchEventsTarget': touchEventsTarget,
 			'listItemClass': listItemClass,
-			// 'deltaItemsScroll' : deltaItemsScroll,
-			// 'deltaItemsScroll' : getDeltaWithParent(listCont, scrollCont, 0),
 			'props': props,
 			'temp': getEmptyTemp()
 		};

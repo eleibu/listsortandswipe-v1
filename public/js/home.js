@@ -16960,15 +16960,139 @@ module.exports = g;
 
 /***/ }),
 
+/***/ "./resources/js/home.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__monitor_win_width_js__ = __webpack_require__("./resources/js/monitor-win-width.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lithiumlist_pro_1_0_0_js__ = __webpack_require__("./resources/js/lithiumlist-pro-1.0.0.js");
+__webpack_require__("./node_modules/bootstrap/dist/js/bootstrap.js");
+
+
+
+
+Object(__WEBPACK_IMPORTED_MODULE_0__monitor_win_width_js__["a" /* monitorWinWidth */])();
+window.addEventListener("resize", function () {
+	Object(__WEBPACK_IMPORTED_MODULE_0__monitor_win_width_js__["a" /* monitorWinWidth */])();
+});
+
+var aPageMenuShow = document.getElementById('a-pagemenu-show');
+var aPageMenuHide = document.getElementById('a-pagemenu-hide');
+var divPageMask = document.getElementById('div-pagemask');
+var divPageMenu = document.getElementById('div-pagemenu-cont');
+aPageMenuShow.addEventListener('click', function () {
+	menuShow();
+});
+aPageMenuHide.addEventListener('click', function () {
+	menuHide();
+});
+divPageMask.addEventListener('click', function () {
+	menuHide();
+});
+function menuShow() {
+	addClass(divPageMask, 'show');
+	addClass(divPageMenu, 'show');
+	setTimeout(function () {
+		addClass(divPageMenu, 'revealed');
+	}, 1);
+}
+function menuHide() {
+	removeClass(divPageMenu, 'revealed');
+	setTimeout(function () {
+		removeClass(divPageMenu, 'show');
+		removeClass(divPageMask, 'show');
+	}, 200);
+}
+
+var listCont = document.getElementById('div-list-cont');
+// var scrollCont = document.getElementById('div-scroll-cont');
+var scrollCont = document.getElementById('div-body');
+var touchEventsTarget = document.getElementById('div-body');
+var listItemClass = 'listitem-cont';
+
+var textLeft = document.createTextNode("Delete");
+var spanLeft = document.createElement("span");
+spanLeft.appendChild(textLeft);
+var divLeft = document.createElement("div");
+divLeft.appendChild(spanLeft);
+divLeft.className = 'label-cont';
+
+var textRight = document.createTextNode("Archive");
+var spanRight = document.createElement("span");
+spanRight.appendChild(textRight);
+var divRight = document.createElement("div");
+divRight.appendChild(spanRight);
+divRight.className = 'label-cont';
+
+var listProperties = {
+	sortDragHandleClass: 'budicon-grab-ui',
+	leftDragHandleClass: 'budicon-trash',
+	rightDragHandleClass: 'budicon-reload-ui',
+	onSortEnd: sortEnd,
+	sortScrollSpeed: 3,
+	leftEnabled: true,
+	leftByDrag: true,
+	leftMasks: [{
+		background: 'rgba(252, 13, 27, 1)',
+		classNameDefault: 'left-mask',
+		classNameSlideOut: 'left-mask-slide-out',
+		classNameSlideBack: 'left-mask-slide-back',
+		childNode: divLeft
+	}],
+	rightEnabled: true,
+	rightByDrag: true,
+	rightMasks: [{
+		background: 'rgba(15, 127, 18, 1)',
+		classNameDefault: 'right-mask',
+		classNameSlideOut: 'right-mask-slide-out',
+		classNameSlideBack: 'right-mask-slide-back',
+		childNode: divRight
+	}]
+};
+
+__WEBPACK_IMPORTED_MODULE_1__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].attachToList('123456789', listCont, scrollCont, touchEventsTarget, listItemClass, listProperties);
+
+function sortEnd(origIndex, newIndex) {
+	if (origIndex != newIndex) {
+		var items = listCont.getElementsByClassName(listItemClass);
+		var origItem = items[origIndex];
+		var newItem = items[newIndex];
+
+		listCont.removeChild(origItem);
+		if (newIndex > origIndex) {
+			listCont.insertBefore(origItem, newItem.nextSibling);
+		} else {
+			listCont.insertBefore(origItem, newItem);
+		}
+	}
+}
+
+var addClass = function addClass(el, className) {
+	if (el.classList) {
+		el.classList.add(className);
+	} else if (!hasClass(el, className)) {
+		el.className += " " + className;
+	}
+};
+
+var removeClass = function removeClass(el, className) {
+	if (el.classList) {
+		el.classList.remove(className);
+	} else if (hasClass(el, className)) {
+		var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+		el.className = el.className.replace(reg, ' ');
+	}
+};
+
+/***/ }),
+
 /***/ "./resources/js/lithiumlist-pro-1.0.0.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "lithiumlistPro", function() { return lithiumlistPro; });
-// Beautifully engineered sortable and swipeable list that works perfectly on desktop and mobile
-
-
 // TESTED ON:
 // IE11
 // Edge38
@@ -17037,7 +17161,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // Medium articles:
 // Validation using plain JS
 
-// TODO: Calculate deltaItemsScroll when scrolling starts
+// TODO: Reset props for already attached list
+// TODO: Change prop combinations
 
 
 // TODO: Do not attach to window, attach to outer div instead - change validation to check for this
@@ -17187,20 +17312,6 @@ var lithiumlistPro = function () {
 		}
 		tempFunctionRemoveMasks(props);
 
-		// console.log('getDeltaWithParent(listCont, scrollCont, 0): ' + getDeltaWithParent(listCont, scrollCont, 0));
-		// var rectScrollCont = scrollCont.getBoundingClientRect();
-		// var rectListCont = listCont.getBoundingClientRect();
-		// console.log('rectListCont.top: ' + rectListCont.top + ' rectScrollCont.top: ' + rectScrollCont.top + 'rectListCont.top - rectScrollCont.top: ' + (rectListCont.top - rectScrollCont.top));
-
-		// var deltaItemsScroll = 0;
-		// if (scrollCont !== listCont) {
-		// 	if (isWindow(scrollCont)) {
-		// 		deltaItemsScroll = listCont.getBoundingClientRect().top - 0;
-		// 	} else {
-		// 		deltaItemsScroll = listCont.getBoundingClientRect().top - scrollCont.getBoundingClientRect().top;
-		// 	}
-		// }
-
 		var instance = {
 			'rkey': key,
 			'isr': false,
@@ -17208,8 +17319,6 @@ var lithiumlistPro = function () {
 			'listCont': listCont,
 			'touchEventsTarget': touchEventsTarget,
 			'listItemClass': listItemClass,
-			// 'deltaItemsScroll' : deltaItemsScroll,
-			// 'deltaItemsScroll' : getDeltaWithParent(listCont, scrollCont, 0),
 			'props': props,
 			'temp': getEmptyTemp()
 		};
@@ -18856,137 +18965,39 @@ var lithiumlistPro = function () {
 
 /***/ }),
 
-/***/ "./resources/js/site.js":
+/***/ "./resources/js/monitor-win-width.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lithiumlist_pro_1_0_0_js__ = __webpack_require__("./resources/js/lithiumlist-pro-1.0.0.js");
-__webpack_require__("./node_modules/bootstrap/dist/js/bootstrap.js");
-
-
-
-var listCont = document.getElementById('div-list-cont');
-// var scrollCont = document.getElementById('div-scroll-cont');
-var scrollCont = document.getElementById('div-body');
-var touchEventsTarget = document.getElementById('div-body');
-var listItemClass = 'listitem-cont';
-
-var textLeft = document.createTextNode("Delete");
-var spanLeft = document.createElement("span");
-spanLeft.appendChild(textLeft);
-var divLeft = document.createElement("div");
-divLeft.appendChild(spanLeft);
-divLeft.className = 'label-cont';
-
-var textRight = document.createTextNode("Archive");
-var spanRight = document.createElement("span");
-spanRight.appendChild(textRight);
-var divRight = document.createElement("div");
-divRight.appendChild(spanRight);
-divRight.className = 'label-cont';
-
-var listProperties = {
-				sortDragHandleClass: 'budicon-grab-ui',
-				leftDragHandleClass: 'budicon-trash',
-				rightDragHandleClass: 'budicon-reload-ui',
-				onSortEnd: sortEnd,
-				onSortAutoScrollStart: onSortAutoScrollStart,
-				onSortAutoScrollEnd: onSortAutoScrollEnd,
-				sortScrollSpeed: 3,
-				leftEnabled: true,
-				leftByDrag: true,
-				leftMasks: [{
-								background: 'rgba(252, 13, 27, 1)',
-								classNameDefault: 'left-mask',
-								classNameSlideOut: 'left-mask-slide-out',
-								classNameSlideBack: 'left-mask-slide-back',
-								childNode: divLeft
-				}],
-				rightEnabled: true,
-				rightByDrag: true,
-				rightMasks: [{
-								background: 'rgba(15, 127, 18, 1)',
-								classNameDefault: 'right-mask',
-								classNameSlideOut: 'right-mask-slide-out',
-								classNameSlideBack: 'right-mask-slide-back',
-								childNode: divRight
-				}]
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return monitorWinWidth; });
+var monitorWinWidth = function monitorWinWidth() {
+    var width = window.innerWidth;
+    if (width > 1330) {
+        setWidthClass('xl');
+    } else if (width > 1130) {
+        setWidthClass('lg');
+    } else if (width > 760) {
+        setWidthClass('md');
+    } else if (width > 540) {
+        setWidthClass('sm');
+    } else {
+        setWidthClass('xs');
+    }
 };
 
-__WEBPACK_IMPORTED_MODULE_0__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].attachToList('123456789', listCont, scrollCont, touchEventsTarget, listItemClass, listProperties);
-
-function onSortAutoScrollStart(index, up) {
-				// console.log('index: ' + index + ' up: ' + up);
-}
-
-function onSortAutoScrollEnd(index) {
-				// console.log('index: ' + index);
-}
-
-function monitorWinWidth() {
-				var width = window.innerWidth;
-				if (width > 1330) {
-								setWidthClass('xl');
-				} else if (width > 1130) {
-								setWidthClass('lg');
-				} else if (width > 760) {
-								setWidthClass('md');
-				} else if (width > 540) {
-								setWidthClass('sm');
-				} else {
-								setWidthClass('xs');
-				}
-}
-
 var event_changeWidthClass = new Event('changeWidthClass');
+
 function setWidthClass(classtxt) {
-				var divtarget = document.getElementById("div-scroll-cont");
-				if (divtarget.className != classtxt) {
-								divtarget.className = classtxt;
-								window.dispatchEvent(event_changeWidthClass);
-				}
+    var divtarget = document.getElementById("div-body");
+    if (divtarget.className != classtxt) {
+        divtarget.className = classtxt;
+        window.dispatchEvent(event_changeWidthClass);
+    }
 }
-
-monitorWinWidth();
-window.addEventListener("resize", function () {
-				monitorWinWidth();
-});
-
-function sortEnd(origIndex, newIndex) {
-				if (origIndex != newIndex) {
-								var items = listCont.getElementsByClassName(listItemClass);
-								var origItem = items[origIndex];
-								var newItem = items[newIndex];
-
-								listCont.removeChild(origItem);
-								if (newIndex > origIndex) {
-												listCont.insertBefore(origItem, newItem.nextSibling);
-								} else {
-												listCont.insertBefore(origItem, newItem);
-								}
-				}
-}
-
-// var temp = document.getElementById('temp');
-// temp.addEventListener('click', function() {
-// 	// console.log('window: ' + window.pageYOffset);
-// 	// console.log(window.innerHeight);
-// 	// // console.log('window: ' + window.scrollTop);
-// 	// // console.log('document: ' + document.scrollTop);
-// 	// // console.log('body: ' + document.body.scrollTop);
-// 	lithiumlistPro.triggerRight(listCont, 2);
-// 	lithiumlistPro.triggerRight(listCont, 4);
-// });
-
-
-// lithiumlistPro.setDefaults({delay: 200});
-
-// lithiumlistPro.detach(listCont);
 
 /***/ }),
 
-/***/ "./resources/sass/site.scss":
+/***/ "./resources/sass/home.scss":
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
@@ -18996,8 +19007,8 @@ function sortEnd(origIndex, newIndex) {
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__("./resources/js/site.js");
-module.exports = __webpack_require__("./resources/sass/site.scss");
+__webpack_require__("./resources/js/home.js");
+module.exports = __webpack_require__("./resources/sass/home.scss");
 
 
 /***/ })

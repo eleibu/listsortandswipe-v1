@@ -8,27 +8,52 @@
     <meta name="csrf-token" content="{{csrf_token()}}">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <title>@yield('pageTitle')</title>
-    <link rel="stylesheet" href="{{ url(mix('/css/site.css')) }}">
+    <link rel="stylesheet" href="{{ url(mix('/css/home.css')) }}">
     <link rel="stylesheet" href="{{ url('/css/icons-outline.css') }}">
     <link rel="stylesheet" href="{{ url('/css/icons-solid.css') }}">
     @yield('jsLinks')
 </head>
 <body>
     <div id="div-body">
-        <div id="div-siteheader" class="siteheader-cont">
+        <div id="div-siteheader">
             <div class="siteheader-outer">
-                <a id="a-logo" href="" title="Syndeal - home"><img src="{{ url('/images/LithiumListLogo-white.png') }}" alt="Lithium List logo" height="60" width="113" /></a>
+                <a id="a-logo" href="" title="Lithium List - home"><img src="{{ url('/images/LithiumListLogo-white.png') }}" alt="Lithium List logo" height="60" width="113" /></a>
+                <div class="links-cont">
+                    <a class="button-word-cont hlink" href="" title="">PRICING</a>
+                    <a class="button-word-cont hlink" href="" title="">DEMOS</a>
+                    <a class="button-word-cont hlink" href="" title="">DOCS</a>
+                    <a class="button-word-cont hlink" href="" title="">SUPPORT</a>
+                    <a class="button-word-cont login" href="" title="">LOG IN</a>
+                </div>
+                <div class="menubtn-cont">
+                    <a id="a-pagemenu-show" class="menubtn"><i class="sld budicon-hamburger-ui"></i></a>
+                </div>
             </div>
         </div>
-        <div id="div-sitecontent">
+        <div id="div-sitecont">
             @yield('content')
         </div>
-        <div id="div-sitefooter" class="sitefooter-cont">
+        <br/><br/>
+        <div id="div-sitefooter">
             <div class="sitefooter-outer">
                 © 2019
             </div>
         </div>
-        <br/><br/>
+        <div id="div-pagemask"></div>
+        <div id="div-pagemenu-cont">
+            <div class="menu-outer">
+                <div class="menuclose-cont">
+                    <a id="a-pagemenu-hide" class="menubtn"><i class="sld budicon-cross-ui"></i></a>
+                </div>
+                <div class="links-cont">
+                    <a class="button-word-cont hlink" href="" title="">PRICING</a>
+                    <a class="button-word-cont hlink" href="" title="">DEMOS</a>
+                    <a class="button-word-cont hlink" href="" title="">DOCS</a>
+                    <a class="button-word-cont hlink" href="" title="">SUPPORT</a>
+                    <a class="button-word-cont login" href="" title="">LOG IN</a>
+                </div>
+            </div>
+        </div>
     </div>
     @yield('scriptBottom')
 </body>

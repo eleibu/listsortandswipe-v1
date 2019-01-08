@@ -1,0 +1,426 @@
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto';
+  background-color: #FFFFFF;
+}
+
+a {
+  color: #3366CC;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.unselectable {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+}
+
+.button-word-cont {
+  display: inline-block;
+  padding: 0.6em 1em;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: bold;
+}
+
+a.button-word-cont {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.button-word-cont.hlink {
+  color: #F8F8F8;
+}
+
+.button-word-cont.hlink:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.button-word-cont.login {
+  color: #003182;
+  background-color: #F8F8F8;
+  -webkit-box-shadow: 0 1px 4px 0 #444444;
+          box-shadow: 0 1px 4px 0 #444444;
+}
+
+.button-word-cont.login:hover {
+  background-color: #FFFFFF;
+  -webkit-box-shadow: 0 1px 4px 0 #333333;
+          box-shadow: 0 1px 4px 0 #333333;
+}
+
+.button-word-cont.grey {
+  color: #666666;
+  background-color: #EEEEEE;
+  -webkit-box-shadow: 0 1px 4px 0 #CCCCCC;
+          box-shadow: 0 1px 4px 0 #CCCCCC;
+}
+
+.button-word-cont.grey:hover {
+  background-color: #F2F2F2;
+  -webkit-box-shadow: 0 1px 4px 0 #BBBBBB;
+          box-shadow: 0 1px 4px 0 #BBBBBB;
+}
+
+.button-word-cont.darkblue {
+  color: #FFFFFF;
+  background-color: #003182;
+  -webkit-box-shadow: 0 1px 4px 0 #BBBBBB;
+          box-shadow: 0 1px 4px 0 #BBBBBB;
+}
+
+.button-word-cont.darkblue:hover {
+  background-color: #003999;
+  -webkit-box-shadow: 0 1px 4px 0 #AAAAAA;
+          box-shadow: 0 1px 4px 0 #AAAAAA;
+}
+
+a.menubtn {
+  display: inline-block;
+  padding: 0.3em;
+  border-radius: 999px;
+  color: #F8F8F8;
+}
+
+a.menubtn:hover {
+  text-decoration: none;
+}
+
+a.menubtn:active {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+#div-siteheader {
+  background-color: #003182;
+  -webkit-box-shadow: 0 1px 2px 0 #AAAAAA;
+          box-shadow: 0 1px 2px 0 #AAAAAA;
+}
+
+#div-siteheader div.siteheader-outer {
+  position: relative;
+  padding: 20px 16px;
+}
+
+#div-siteheader div.siteheader-outer div.links-cont {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  right: 16px;
+  font-size: 90%;
+}
+
+#div-siteheader div.siteheader-outer div.menubtn-cont {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  right: 16px;
+  font-size: 200%;
+}
+
+#div-pagemask {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 10000;
+}
+
+#div-pagemask.show {
+  display: block;
+}
+
+#div-pagemenu-cont {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  height: 100%;
+  width: 80%;
+  background-color: #003182;
+  -webkit-box-shadow: -5px 0 14px rgba(0, 0, 0, 0.25);
+          box-shadow: -5px 0 14px rgba(0, 0, 0, 0.25);
+  -webkit-transition: left 200ms ease;
+  transition: left 200ms ease;
+  z-index: 10001;
+}
+
+#div-pagemenu-cont div.menu-outer div.menuclose-cont {
+  text-align: right;
+  padding: 20px 16px;
+  color: #F8F8F8;
+  font-size: 200%;
+}
+
+#div-pagemenu-cont div.menu-outer div.links-cont {
+  margin: 0 16px;
+}
+
+#div-pagemenu-cont div.menu-outer div.links-cont a.hlink {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+#div-pagemenu-cont.show {
+  display: block;
+}
+
+#div-pagemenu-cont.show.revealed {
+  left: 20%;
+}
+
+#div-body.xl #div-siteheader div.links-cont, #div-body.lg #div-siteheader div.links-cont, #div-body.md #div-siteheader div.links-cont, #div-body.sm #div-siteheader div.links-cont {
+  display: block;
+}
+
+#div-body.xl #div-siteheader div.menubtn-cont, #div-body.lg #div-siteheader div.menubtn-cont, #div-body.md #div-siteheader div.menubtn-cont, #div-body.sm #div-siteheader div.menubtn-cont {
+  display: none;
+}
+
+#div-body.xl div.menu-outer, #div-body.lg div.menu-outer, #div-body.md div.menu-outer, #div-body.sm div.menu-outer {
+  text-align: center;
+}
+
+#div-body.xl div.menu-outer div.links-cont a, #div-body.lg div.menu-outer div.links-cont a, #div-body.md div.menu-outer div.links-cont a, #div-body.sm div.menu-outer div.links-cont a {
+  width: 40%;
+  margin: 0.8em 0.4em;
+}
+
+#div-body.xs #div-siteheader div.links-cont {
+  display: none;
+}
+
+#div-body.xs #div-siteheader div.menubtn-cont {
+  display: block;
+}
+
+#div-body.xs div.menu-outer div.links-cont a {
+  display: block;
+  margin: 1.2em 0;
+}
+
+#div-sitefooter {
+  border-top: 1px solid #DDDDDD;
+  background-color: #EEEEEE;
+}
+
+#div-sitefooter div.sitefooter-outer {
+  position: relative;
+  padding: 20px 16px;
+}
+
+#div-body {
+  height: 100%;
+  overflow: auto;
+}
+
+#div-body #div-sitecont {
+  text-align: center;
+  padding: 0 1em;
+}
+
+#div-body #div-sitecont div.sitecont-outer {
+  display: inline-block;
+  text-align: left;
+  max-width: 800px;
+}
+
+#div-body #div-title {
+  line-height: 130%;
+  color: #222222;
+}
+
+#div-body #div-buttons {
+  line-height: 130%;
+}
+
+#div-body #div-buttons a.button-word-cont {
+  margin: 0.3em 0;
+}
+
+#div-body #div-ptable {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+#div-body #div-ptable div.restore {
+  text-align: right;
+  font-size: 0.9em;
+  margin-bottom: 0.4em;
+}
+
+#div-list-cont {
+  position: relative;
+  border-top: 0.1px solid transparent;
+}
+
+#div-list-cont div.listitem-cont div.listitem-outer {
+  position: relative;
+}
+
+#div-list-cont div.listitem-cont div.listitem-outer div.text span {
+  display: inline-block;
+  font-weight: bold;
+  width: 1.6em;
+  margin: 0 0.6em;
+}
+
+#div-list-cont div.listitem-cont.othernonmetal {
+  background-color: #F56E44;
+}
+
+#div-list-cont div.listitem-cont.noblegas {
+  background-color: #F8951D;
+}
+
+#div-list-cont div.listitem-cont.alkali {
+  background-color: #F2DF29;
+}
+
+#div-list-cont div.listitem-cont.alkaline {
+  background-color: #C6C848;
+}
+
+#div-list-cont div.listitem-cont.metalloid {
+  background-color: #B0CD9D;
+}
+
+#div-list-cont div.listitem-cont.posttransition {
+  background-color: #A3DAD2;
+}
+
+#div-list-cont div.listitem-cont.transition {
+  background-color: #A2A18E;
+}
+
+#div-list-cont div.listitem-cont.lanthanoid {
+  background-color: #C9B481;
+}
+
+#div-list-cont div.listitem-cont.actinoid {
+  background-color: #FBB5B0;
+}
+
+#div-list-cont div.left-mask div.label-cont {
+  position: relative;
+  height: 100%;
+}
+
+#div-list-cont div.left-mask div.label-cont span {
+  position: absolute;
+  right: 0.4em;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  color: #F8F8F8;
+}
+
+#div-list-cont div.right-mask div.label-cont {
+  position: relative;
+  height: 100%;
+}
+
+#div-list-cont div.right-mask div.label-cont span {
+  position: absolute;
+  left: 0.4em;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  color: #F8F8F8;
+}
+
+.left-scroll #div-list-cont, .right-scroll #div-list-cont {
+  overflow-x: hidden;
+}
+
+#div-body.xl #div-title, #div-body.lg #div-title, #div-body.md #div-title, #div-body.sm #div-title {
+  font-size: 200%;
+}
+
+#div-body.xl #div-buttons, #div-body.lg #div-buttons, #div-body.md #div-buttons, #div-body.sm #div-buttons {
+  font-size: 110%;
+}
+
+#div-body.xl div.listitem-cont, #div-body.lg div.listitem-cont, #div-body.md div.listitem-cont, #div-body.sm div.listitem-cont {
+  padding: 1.8em 0;
+}
+
+#div-body.xl div.listitem-cont div.listitem-outer, #div-body.lg div.listitem-cont div.listitem-outer, #div-body.md div.listitem-cont div.listitem-outer, #div-body.sm div.listitem-cont div.listitem-outer {
+  margin: 0 0.8em;
+}
+
+#div-body.xl div.listitem-cont div.listitem-outer i, #div-body.lg div.listitem-cont div.listitem-outer i, #div-body.md div.listitem-cont div.listitem-outer i, #div-body.sm div.listitem-cont div.listitem-outer i {
+  display: inline-block;
+  padding: 0.5em;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  border-radius: 999px;
+  color: #DDDDDD;
+}
+
+#div-body.xl div.listitem-cont div.listitem-outer i:hover, #div-body.lg div.listitem-cont div.listitem-outer i:hover, #div-body.md div.listitem-cont div.listitem-outer i:hover, #div-body.sm div.listitem-cont div.listitem-outer i:hover {
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+#div-body.xl div.listitem-cont div.listitem-outer i.sort, #div-body.lg div.listitem-cont div.listitem-outer i.sort, #div-body.md div.listitem-cont div.listitem-outer i.sort, #div-body.sm div.listitem-cont div.listitem-outer i.sort {
+  left: 0;
+}
+
+#div-body.xl div.listitem-cont div.listitem-outer i.archive, #div-body.lg div.listitem-cont div.listitem-outer i.archive, #div-body.md div.listitem-cont div.listitem-outer i.archive, #div-body.sm div.listitem-cont div.listitem-outer i.archive {
+  left: 1.6em;
+}
+
+#div-body.xl div.listitem-cont div.listitem-outer i.delete, #div-body.lg div.listitem-cont div.listitem-outer i.delete, #div-body.md div.listitem-cont div.listitem-outer i.delete, #div-body.sm div.listitem-cont div.listitem-outer i.delete {
+  right: 0;
+}
+
+#div-body.xl div.listitem-cont div.listitem-outer div.text, #div-body.lg div.listitem-cont div.listitem-outer div.text, #div-body.md div.listitem-cont div.listitem-outer div.text, #div-body.sm div.listitem-cont div.listitem-outer div.text {
+  margin: 0 2em 0 4em;
+}
+
+#div-body.xl div.listitem-cont:hover div.listitem-outer i, #div-body.lg div.listitem-cont:hover div.listitem-outer i, #div-body.md div.listitem-cont:hover div.listitem-outer i, #div-body.sm div.listitem-cont:hover div.listitem-outer i {
+  color: #000000;
+}
+
+#div-body.xs #div-title {
+  font-size: 130%;
+}
+
+#div-body.xs #div-buttons {
+  font-size: 90%;
+}
+
+#div-body.xs div.listitem-cont {
+  padding: 1.4em 1em;
+}
+
+#div-body.xs div.listitem-cont div.listitem-outer i {
+  display: none;
+}

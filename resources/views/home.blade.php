@@ -1,38 +1,27 @@
 @extends('layout-site')
 
-@section('pageTitle', 'Temp')
+@section('pageTitle', 'Lithium List - home')
 
 @section('jsLinks')
-    <script defer src="{{ url(mix('/js/site.js')) }}"></script>
+    <script defer src="{{ url(mix('/js/home.js')) }}"></script>
 @endsection
 
 @section('content')
-    <br/><br/><br/>
-    <div id="div-title">
-        A beautifully engineered <strong>sortable</strong> and <strong>swipeable</strong> list that works perfectly on desktop and mobile
-    </div>
-    <br/><br/>
-    <div id="div-buttons">
-        <a class="button-word-cont grey" href="" title="">LEARN ABOUT FEATURES</a>&nbsp;&nbsp;<a class="button-word-cont darkblue" href="" title="">HOW TO USE</a>
-    </div>
-    <br/><br/><br/><br/>
-    <div id="div-game">
-        <!--
-        <div class="header">
-            <div class="title">
-                CAN YOU PUT THE ELEMENTS IN THE CORRECT ORDER?
-            </div>
-            <div class="subtitle">
-                <div><strong>How to play</strong></div>
-                <div>(1) Hit &#39;START GAME&#39;</div>
-                <div>(2) Delete elements with chemical numbers above 10</div>
-                <div>(3) Sort the remaining elements in the correct order</div>
-                <div>(4) Hit &#39;FINISHED&#39;</div>
-            </div>
+    <div class="sitecont-outer">
+        <br/><br/><br/>
+        <div id="div-title">
+            A beautifully engineered <strong>sortable</strong> and <strong>swipeable</strong> list that works perfectly on desktop and mobile
         </div>
-        -->
-        <div id="div-scroll-cont" class="lg">
-            <div id="div-list-cont">
+        <br/><br/>
+        <div id="div-buttons">
+            <a class="button-word-cont grey" href="" title="">LEARN ABOUT FEATURES</a>&nbsp;&nbsp;<a class="button-word-cont darkblue" href="" title="">GET STARTED</a>
+        </div>
+        <br/><br/><br/><br/>
+        <div id="div-ptable">
+            <div class="restore">
+                <a href="" title="">Restore and shuffle</a>
+            </div>
+            <div id="div-list-cont" class="lg">
                 <div class="listitem-cont othernonmetal unselectable">
                     <div class="listitem-outer">
                         <i class="sld budicon-grab-ui sort" title="Sort"></i>
@@ -227,6 +216,6 @@
                 </div>
             </div>
         </div>
+        <br/><br/>
     </div>
-    <br/><br/>
 @endsection

@@ -1,6 +1,36 @@
 require('bootstrap');
 
+import { monitorWinWidth } from './monitor-win-width.js';
 import { lithiumlistPro } from './lithiumlist-pro-1.0.0.js';
+
+monitorWinWidth();
+window.addEventListener("resize", function() { monitorWinWidth() });
+
+var aPageMenuShow = document.getElementById('a-pagemenu-show');
+var aPageMenuHide = document.getElementById('a-pagemenu-hide');
+var divPageMask = document.getElementById('div-pagemask');
+var divPageMenu = document.getElementById('div-pagemenu-cont');
+aPageMenuShow.addEventListener('click', function () {
+	menuShow();
+});
+aPageMenuHide.addEventListener('click', function () {
+	menuHide();
+});
+divPageMask.addEventListener('click', function () {
+	menuHide();
+});
+function menuShow() {
+	addClass(divPageMask, 'show');
+	addClass(divPageMenu, 'show');
+	setTimeout(function() {addClass(divPageMenu, 'revealed');}, 1);
+}
+function menuHide() {
+	removeClass(divPageMenu, 'revealed');
+	setTimeout(function() {
+		removeClass(divPageMenu, 'show');
+		removeClass(divPageMask, 'show');
+	}, 200);	
+}
 
 var listCont = document.getElementById('div-list-cont');
 // var scrollCont = document.getElementById('div-scroll-cont');
@@ -28,8 +58,6 @@ var listProperties = {
 	leftDragHandleClass: 'budicon-trash',
 	rightDragHandleClass: 'budicon-reload-ui',
 	onSortEnd: sortEnd,
-	onSortAutoScrollStart: onSortAutoScrollStart,
-	onSortAutoScrollEnd: onSortAutoScrollEnd,
 	sortScrollSpeed: 3,
 	leftEnabled: true,
 	leftByDrag: true,
@@ -60,44 +88,6 @@ lithiumlistPro.attachToList(
     listProperties
 );
 
-function onSortAutoScrollStart(index, up) {
-	// console.log('index: ' + index + ' up: ' + up);
-}
-
-function onSortAutoScrollEnd(index) {
-	// console.log('index: ' + index);
-}
-
-
-function monitorWinWidth() {
-    var width = window.innerWidth;
-    if (width > 1330) {
-        setWidthClass('xl');
-    } else if (width > 1130) {
-        setWidthClass('lg');
-    } else if (width > 760) {
-        setWidthClass('md');
-    } else if (width > 540) {
-        setWidthClass('sm');
-    } else {
-        setWidthClass('xs');
-    }
-}
-
-
-
-var event_changeWidthClass = new Event('changeWidthClass');
-function setWidthClass(classtxt) {
-    var divtarget = document.getElementById("div-scroll-cont");
-    if (divtarget.className != classtxt) {
-        divtarget.className = classtxt;
-        window.dispatchEvent(event_changeWidthClass);
-    }
-}
-
-monitorWinWidth();
-window.addEventListener("resize", function() { monitorWinWidth() });
-
 function sortEnd(origIndex, newIndex) {
 	if (origIndex != newIndex) {
 		var items = listCont.getElementsByClassName(listItemClass);
@@ -113,18 +103,19 @@ function sortEnd(origIndex, newIndex) {
 	}
 }
 
-// var temp = document.getElementById('temp');
-// temp.addEventListener('click', function() {
-// 	// console.log('window: ' + window.pageYOffset);
-// 	// console.log(window.innerHeight);
-// 	// // console.log('window: ' + window.scrollTop);
-// 	// // console.log('document: ' + document.scrollTop);
-// 	// // console.log('body: ' + document.body.scrollTop);
-// 	lithiumlistPro.triggerRight(listCont, 2);
-// 	lithiumlistPro.triggerRight(listCont, 4);
-// });
+var addClass = function(el, className) {
+	if (el.classList) {
+		el.classList.add(className);
+	} else if (!hasClass(el, className)) {
+		el.className += " " + className;
+	}
+};
 
-
-// lithiumlistPro.setDefaults({delay: 200});
-
-// lithiumlistPro.detach(listCont);
+var removeClass = function(el, className) {
+	if (el.classList) {
+		el.classList.remove(className);
+	} else if (hasClass(el, className)) {
+        var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+        el.className = el.className.replace(reg, ' ');
+	}
+};
