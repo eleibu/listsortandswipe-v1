@@ -1,4 +1,61 @@
-@import 'site';
+@import 'shared-all';
+
+.unselectable {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
+}
+
+.button-word-cont.hlink {
+	color: #F8F8F8;
+}
+
+.button-word-cont.hlink:hover {
+	background: rgba(255, 255, 255, 0.1);
+}
+
+.button-word-cont.login {
+	color: #003182;
+	background-color: #F8F8F8;
+	box-shadow: 0 1px 4px 0 #444444;
+}
+
+.button-word-cont.login:hover {
+	background-color: #FFFFFF;
+	box-shadow: 0 1px 4px 0 #333333;
+}
+
+a.menubtn {
+	color: #F8F8F8;
+}
+
+a.menubtn:active {
+	background: rgba(255, 255, 255, 0.06);
+}
+
+#div-siteheader {
+	background-color: #003182;
+	box-shadow: 0 1px 2px 0 #AAAAAA;
+}
+
+#div-pagemenu-cont {
+	background-color: #003182;
+
+	div.menu-outer {
+		div.menuclose-cont {
+			color: #F8F8F8;
+		}
+
+		div.links-cont {
+			a.hlink {
+				background: rgba(255, 255, 255, 0.025);
+			}
+		}
+	}
+}
 
 #div-body {
 	height: 100%;

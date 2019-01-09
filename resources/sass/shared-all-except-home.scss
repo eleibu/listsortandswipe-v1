@@ -1,0 +1,47 @@
+.button-word-cont.hlink {
+	color: #003182;
+}
+
+.button-word-cont.hlink:hover {
+	background: rgba(0, 0, 0, 0.05);
+}
+
+.button-word-cont.login {
+	color: #F8F8F8;
+	background-color: #003182;
+	box-shadow: 0 1px 4px 0 #AAAAAA;
+}
+
+.button-word-cont.login:hover {
+	background-color: #003999;
+	box-shadow: 0 1px 4px 0 #999999;
+}
+
+a.menubtn {
+	color: #003182;
+}
+
+a.menubtn:active {
+	background: rgba(0, 0, 0, 0.06);
+}
+
+#div-siteheader {
+	// background-color: #FFFFFF;
+	// box-shadow: 0 1px 2px 0 #AAAAAA;
+}
+
+#div-pagemenu-cont {
+	background-color: #FFFFFF;
+
+	div.menu-outer {
+		div.menuclose-cont {
+			color: #003182;
+		}
+
+		div.links-cont {
+			a.hlink {
+				background: rgba(0, 0, 0, 0.025);
+			}
+		}
+	}
+}

@@ -1,43 +1,13 @@
 require('bootstrap');
 
 import { monitorWinWidth } from './monitor-win-width.js';
+import { pageMenuShowHide } from './page-menu-show-hide.js';
 import { lithiumlistPro } from './lithiumlist-pro-1.0.0.js';
 
-monitorWinWidth();
-window.addEventListener("resize", function() { monitorWinWidth() });
-
-var aPageMenuShow = document.getElementById('a-pagemenu-show');
-var aPageMenuHide = document.getElementById('a-pagemenu-hide');
-var divPageMask = document.getElementById('div-pagemask');
-var divPageMenu = document.getElementById('div-pagemenu-cont');
-aPageMenuShow.addEventListener('click', function () {
-	menuShow();
-});
-aPageMenuHide.addEventListener('click', function () {
-	menuHide();
-});
-divPageMask.addEventListener('click', function () {
-	menuHide();
-});
-function menuShow() {
-	addClass(divPageMask, 'show');
-	addClass(divPageMenu, 'show');
-	setTimeout(function() {addClass(divPageMenu, 'revealed');}, 1);
-}
-function menuHide() {
-	removeClass(divPageMenu, 'revealed');
-	setTimeout(function() {
-		removeClass(divPageMenu, 'show');
-		removeClass(divPageMask, 'show');
-	}, 200);	
-}
-
 var listCont = document.getElementById('div-list-cont');
-// var scrollCont = document.getElementById('div-scroll-cont');
 var scrollCont = document.getElementById('div-body');
 var touchEventsTarget = document.getElementById('div-body');
 var listItemClass = 'listitem-cont';
-
 
 var textLeft = document.createTextNode("Delete");
 var spanLeft = document.createElement("span");
@@ -102,20 +72,3 @@ function sortEnd(origIndex, newIndex) {
 		}		
 	}
 }
-
-var addClass = function(el, className) {
-	if (el.classList) {
-		el.classList.add(className);
-	} else if (!hasClass(el, className)) {
-		el.className += " " + className;
-	}
-};
-
-var removeClass = function(el, className) {
-	if (el.classList) {
-		el.classList.remove(className);
-	} else if (hasClass(el, className)) {
-        var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
-        el.className = el.className.replace(reg, ' ');
-	}
-};

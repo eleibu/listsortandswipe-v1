@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -139,6 +139,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // Medium articles:
 // Validation using plain JS
 
+// TODO: Include version number and send it to server
+// TODO: allow '-webkit-overflow-scrolling: touch' by turning it off when sorting starts?
 // TODO: Reset props for already attached list
 // TODO: Change prop combinations
 
@@ -1502,30 +1504,6 @@ var lithiumlistPro = function () {
 		}
 	};
 
-	var getDeltaWithParent = function getDeltaWithParent(node, parent, delta) {
-		if (node) {
-			var newDelta = delta;
-			if (node.offsetTop) {
-				newDelta = node.offsetTop + delta;
-			}
-			if (node.parentNode !== parent) {
-				return getDeltaWithParent(node.parentNode, parent, newDelta);
-			} else {
-				return newDelta;
-			}
-		} else {
-			return delta;
-		}
-	};
-
-	var uuidv4 = function uuidv4() {
-		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-			var r = Math.random() * 16 | 0,
-			    v = c == 'x' ? r : r & 0x3 | 0x8;
-			return v.toString(16).toUpperCase();
-		});
-	};
-
 	// reg
 
 	var rSend = function rSend(instance) {
@@ -1943,7 +1921,7 @@ var lithiumlistPro = function () {
 
 /***/ }),
 
-/***/ 1:
+/***/ 2:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__("./resources/js/lithiumlist-pro-1.0.0.js");

@@ -67,6 +67,8 @@
 // Medium articles:
 // Validation using plain JS
 
+// TODO: Include version number and send it to server
+// TODO: allow '-webkit-overflow-scrolling: touch' by turning it off when sorting starts?
 // TODO: Reset props for already attached list
 // TODO: Change prop combinations
 
@@ -76,7 +78,7 @@
 // TODO: Remove .version() from webpack.mix.js?
 
 
-export var lithiumlistPro = (function () {	
+export var lithiumlistPro = (function () {
 	var instances = [];
 
 	var defaultProperties = {
@@ -1385,29 +1387,6 @@ export var lithiumlistPro = (function () {
 	        var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
 	        el.className = el.className.replace(reg, ' ');
 		}
-	};
-
-	var getDeltaWithParent = function(node, parent, delta) {
-	    if (node) {
-	    	var newDelta = delta;
-	    	if (node.offsetTop) {
-	    		newDelta = node.offsetTop + delta;
-	    	}
-	        if (node.parentNode !== parent) {
-	            return getDeltaWithParent(node.parentNode, parent, newDelta);
-	        } else {
-	            return newDelta;
-	        }
-	    } else {
-	        return delta;
-	    }
-	};
-
-	var uuidv4 = function() {
-	    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-	        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-	        return v.toString(16).toUpperCase();
-	    });
 	};
 
 	// reg

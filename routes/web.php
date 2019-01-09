@@ -14,6 +14,4 @@
 Route::get('/', 'Controller_Site@page_home');
 Route::get('/home', 'Controller_Site@page_home')->name('home');
 
-// Route::get('/site2', function () {
-//     return view('site2');
-// });
+Route::get('/docs/{subsection?}', 'Controller_Site@section_docs');

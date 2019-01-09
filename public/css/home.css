@@ -23,19 +23,6 @@ a:hover {
   visibility: hidden;
 }
 
-.unselectable {
-  -webkit-touch-callout: none;
-  /* iOS Safari */
-  -webkit-user-select: none;
-  /* Safari */
-  /* Konqueror HTML */
-  -moz-user-select: none;
-  /* Firefox */
-  -ms-user-select: none;
-  /* Internet Explorer/Edge */
-  user-select: none;
-}
-
 .button-word-cont {
   display: inline-block;
   padding: 0.6em 1em;
@@ -47,27 +34,6 @@ a:hover {
 a.button-word-cont {
   display: inline-block;
   text-decoration: none;
-}
-
-.button-word-cont.hlink {
-  color: #F8F8F8;
-}
-
-.button-word-cont.hlink:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.button-word-cont.login {
-  color: #003182;
-  background-color: #F8F8F8;
-  -webkit-box-shadow: 0 1px 4px 0 #444444;
-          box-shadow: 0 1px 4px 0 #444444;
-}
-
-.button-word-cont.login:hover {
-  background-color: #FFFFFF;
-  -webkit-box-shadow: 0 1px 4px 0 #333333;
-          box-shadow: 0 1px 4px 0 #333333;
 }
 
 .button-word-cont.grey {
@@ -100,21 +66,10 @@ a.menubtn {
   display: inline-block;
   padding: 0.3em;
   border-radius: 999px;
-  color: #F8F8F8;
 }
 
 a.menubtn:hover {
   text-decoration: none;
-}
-
-a.menubtn:active {
-  background: rgba(255, 255, 255, 0.06);
-}
-
-#div-siteheader {
-  background-color: #003182;
-  -webkit-box-shadow: 0 1px 2px 0 #AAAAAA;
-          box-shadow: 0 1px 2px 0 #AAAAAA;
 }
 
 #div-siteheader div.siteheader-outer {
@@ -148,11 +103,18 @@ a.menubtn:active {
   height: 100%;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.2);
+  -webkit-transition: opacity 100ms;
+  transition: opacity 100ms;
   z-index: 10000;
 }
 
 #div-pagemask.show {
   display: block;
+  opacity: 0;
+}
+
+#div-pagemask.show.revealed {
+  opacity: 1;
 }
 
 #div-pagemenu-cont {
@@ -162,7 +124,6 @@ a.menubtn:active {
   left: 100%;
   height: 100%;
   width: 80%;
-  background-color: #003182;
   -webkit-box-shadow: -5px 0 14px rgba(0, 0, 0, 0.25);
           box-shadow: -5px 0 14px rgba(0, 0, 0, 0.25);
   -webkit-transition: left 200ms ease;
@@ -173,16 +134,11 @@ a.menubtn:active {
 #div-pagemenu-cont div.menu-outer div.menuclose-cont {
   text-align: right;
   padding: 20px 16px;
-  color: #F8F8F8;
   font-size: 200%;
 }
 
 #div-pagemenu-cont div.menu-outer div.links-cont {
   margin: 0 16px;
-}
-
-#div-pagemenu-cont div.menu-outer div.links-cont a.hlink {
-  background: rgba(255, 255, 255, 0.025);
 }
 
 #div-pagemenu-cont.show {
@@ -224,13 +180,72 @@ a.menubtn:active {
 }
 
 #div-sitefooter {
-  border-top: 1px solid #DDDDDD;
   background-color: #EEEEEE;
 }
 
 #div-sitefooter div.sitefooter-outer {
   position: relative;
   padding: 20px 16px;
+}
+
+.unselectable {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+}
+
+.button-word-cont.hlink {
+  color: #F8F8F8;
+}
+
+.button-word-cont.hlink:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.button-word-cont.login {
+  color: #003182;
+  background-color: #F8F8F8;
+  -webkit-box-shadow: 0 1px 4px 0 #444444;
+          box-shadow: 0 1px 4px 0 #444444;
+}
+
+.button-word-cont.login:hover {
+  background-color: #FFFFFF;
+  -webkit-box-shadow: 0 1px 4px 0 #333333;
+          box-shadow: 0 1px 4px 0 #333333;
+}
+
+a.menubtn {
+  color: #F8F8F8;
+}
+
+a.menubtn:active {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+#div-siteheader {
+  background-color: #003182;
+  -webkit-box-shadow: 0 1px 2px 0 #AAAAAA;
+          box-shadow: 0 1px 2px 0 #AAAAAA;
+}
+
+#div-pagemenu-cont {
+  background-color: #003182;
+}
+
+#div-pagemenu-cont div.menu-outer div.menuclose-cont {
+  color: #F8F8F8;
+}
+
+#div-pagemenu-cont div.menu-outer div.links-cont a.hlink {
+  background: rgba(255, 255, 255, 0.025);
 }
 
 #div-body {
