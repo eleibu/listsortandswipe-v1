@@ -16977,7 +16977,6 @@ __webpack_require__("./node_modules/bootstrap/dist/js/bootstrap.js");
 var listCont = document.getElementById('div-list-cont');
 var scrollCont = document.getElementById('div-body');
 // var scrollCont = window;
-var touchEventsTarget = document.getElementById('div-body');
 var listItemClass = 'listitem-cont';
 
 var textLeft = document.createTextNode("Delete");
@@ -17020,7 +17019,7 @@ var listProperties = {
 	}]
 };
 
-__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].attachToList('123456789', listCont, scrollCont, touchEventsTarget, listItemClass, listProperties);
+__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].attachToList('123456789', listCont, scrollCont, listItemClass, listProperties);
 
 function sortEnd(origIndex, newIndex) {
 	if (origIndex != newIndex) {
@@ -17071,7 +17070,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 // Notes:
 // scrollCont should be a DOM element or window (not 'document' or 'document.body')
-// if want whole page to scroll and performance on mobile is important, consider using a div to wrap the whole page and making it the scrollCont
+// if want whole page to scroll and performance on mobile is important, consider using a div to wrap the whole page (with height: 100%; overflow: auto) and making it the scrollCont
 // if scrollCont != window:
 // scrollCont must have a height other than 'auto' (eg. px, %, em)
 // scrollCont must have overflow 'auto', 'scroll' or 'hidden' (will be set to 'hidden' during automatic scrolling to deal with Safari auto scrolling issue)
@@ -17082,19 +17081,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // need to set css 'box-shadow' for 'clone-sort' class if want sort clone to have a drop shadow
 // need to set css for 'sort-item-active' to hide active item while sorting
 // add 'unselectable' classes (with vendor prefixes) to prevent text selection
-// touchEventsTarget should be 'window' on desktop and NOT 'window' or 'body' on mobile
 // if 'left/righMaskClass' is not set, mask is not created
 // sortScrollSpeed: 1, 2, 3, 4, 5 (default = 3)
 // leftMasks / rightMasks must be arrays (not null) and leftMasks.classNameDefault must not be undefined or null
 // setDefaultProperties only applies to instances created after it is called (use setListProperties to change properties for a paticular instance)
 // leftScrollClass / rightScrollClass is not added to scrollCont if it is 'window'
 // does not work with '-webkit-overflow-scrolling: touch' (iOS only)
-
-// for proper functioning on touch devices:
-// default is 'touchEventsTarget = scrollCont'; set it to something else (not 'window' - see below) if you want lithiumlist to respond to touches outside scrollCont
-// do not set 'touchEventsTarget = window' (prevent scrolling will not work); if need whole page to respond to touch, create a div to wrap the whole page with 'height = 100%; overflow: auto'
-// do not set 'scrollCont = window' (prevent scrolling will not work); if need whole page to scroll, create a div to wrap the whole page with 'height = 100%; overflow: auto'
-// none of the above is necessary for desktop-only functionality
 
 
 // Pipeline:
@@ -17117,6 +17109,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 // TODO: Will it work with 'window' if we fix the issues (see when scrollCont = window.document)?
 
+// TODO: Test 'supportsPassive' in Edge and IE
 // TODO: Include version number and send it to server
 // TODO: Favicon
 // TODO: Can we improve auto-scrolling when scrollCont = window?
@@ -17211,7 +17204,7 @@ var lithiumlistPro = function () {
 
 	// public methods
 
-	var attachToList = function attachToList(key, listCont, scrollCont, touchEventsTarget, listItemClass, listProperties) {
+	var attachToList = function attachToList(key, listCont, scrollCont, listItemClass, listProperties) {
 		if (isUndefinedOrNull(listCont)) {
 			throw 'listCont must not be undefined or null';
 		} else {
@@ -17244,10 +17237,6 @@ var lithiumlistPro = function () {
 			}
 		}
 
-		if (isUndefinedOrNull(touchEventsTarget)) {
-			touchEventsTarget = scrollCont;
-		}
-
 		if (isUndefinedOrNull(listItemClass) || !isString(listItemClass) || listItemClass.length == 0) {
 			throw 'listItemClass must be a string of length > 0';
 		}
@@ -17278,7 +17267,6 @@ var lithiumlistPro = function () {
 			'isr': false,
 			'scrollCont': scrollCont,
 			'listCont': listCont,
-			'touchEventsTarget': touchEventsTarget,
 			'listItemClass': listItemClass,
 			'props': props,
 			'temp': getEmptyTemp()
@@ -17529,10 +17517,22 @@ var lithiumlistPro = function () {
 
 		window.addEventListener('mousemove', instance.temp.funcMouseMove);
 		window.addEventListener('mouseup', instance.temp.funcMouseUp);
-		window.addEventListener('touchmove', instance.temp.funcTouchMove, { passive: false });
+		if (supportsPassive) {
+			window.addEventListener('touchmove', instance.temp.funcTouchMove, { passive: false });
+		} else {
+			window.addEventListener('touchmove', instance.temp.funcTouchMove);
+		}
 		window.addEventListener('touchend', instance.temp.funcTouchEnd);
-		// instance.touchEventsTarget.addEventListener('touchmove', instance.temp.funcTouchMove);
-		// instance.touchEventsTarget.addEventListener('touchend', instance.temp.funcTouchEnd);
+	};
+
+	var supportsPassive = function supportsPassive() {
+		var supportsPassive = false;
+		try {
+			window.addEventListener("test", null, Object.defineProperty({}, "passive", { get: function get() {
+					supportsPassive = true;
+				} }));
+		} catch (err) {}
+		return supportsPassive;
 	};
 
 	var initMoveLeft = function initMoveLeft(instance, cursorX) {
@@ -17897,11 +17897,9 @@ var lithiumlistPro = function () {
 		}
 		if (instance.temp.funcTouchMove) {
 			window.removeEventListener('touchmove', instance.temp.funcTouchMove);
-			// instance.touchEventsTarget.removeEventListener('touchmove', instance.temp.funcTouchMove);
 		}
 		if (instance.temp.funcTouchEnd) {
 			window.removeEventListener('touchend', instance.temp.funcTouchEnd);
-			// instance.touchEventsTarget.removeEventListener('touchend', instance.temp.funcTouchEnd);
 		}
 
 		if (instance.temp.moveType) {
