@@ -1,29 +1,48 @@
-@extends('layout-info')
-
-@section('pageTitle', 'Lithium List - documentation')
-
-@section('jsLinks')
-@endsection
-
-@section('content')
-	<br/><br/>
-    <div class="sitecont-outer">
-    	<div class="toc-cont">
-    		<div class="toc-outer">
-    			<div class="title">Documentation</div>
-    			<div class="button-word-cont selected">Installation</div>
-    			<a class="button-word-cont" href="" title="Options, Events and Methods">Options, Events and Methods</a>
-    			<a class="button-word-cont" href="" title="Upgrade">Upgrade</a>
-    			<br/><br/><br/>
-    			<div class="subtitle">Other resources</div>
-    			<a class="button-word-cont" href="" title="Demos">Demos</a>
-    			<a class="button-word-cont" href="" title="Browser support">Browser support</a>
-    		</div>
-    	</div>
-    	<div class="details-cont">
-    		<div class="details-outer">
-    			<div class="title">Installation</div>
-    		</div>
-    	</div>
-    </div>
-@endsection
+@php
+    $refs = array(
+        'install' => array(
+            'aref' => 'ref-install',
+            'title' => 'Install'
+        ),
+        'import' => array(
+            'aref' => 'ref-import',
+            'title' => 'Import'
+        ),
+        'update' => array(
+            'aref' => 'ref-update',
+            'title' => 'Update'
+        )
+    );
+@endphp
+<div class="pagelinks">
+    @foreach ($refs as $ref)
+        <a class="button-word-cont" href="{{ url($selectedpage['url'] . '#' . $ref['aref']) }}" title="{{$ref['title']}}">{{$ref['title']}}</a>
+    @endforeach
+</div>
+<div class="section-cont">
+	<a id="{{$refs['install']['aref']}}" class="title-section">
+        {{$refs['install']['title']}}
+    </a>
+	<p>
+		Install Lithium List with npm:
+	</p>
+    <pre><code class="language-js">$ npm install lithium-list</code></pre>
+</div>
+<div class="section-cont">
+	<a id="{{$refs['import']['aref']}}" class="title-section">
+        {{$refs['import']['title']}}
+    </a>
+	<p>
+		Import Lithium List into your code bundle:
+	</p>
+    <pre class="line-numbers"><code class="language-js">import LithiumList from 'lithium-list';</code></pre>
+</div>
+<div class="section-cont">
+	<a id="{{$refs['update']['aref']}}" class="title-section">
+        {{$refs['update']['title']}}
+    </a>
+	<p>
+		Update to the latest version via npm:
+	</p>
+    <pre><code class="language-js">$ npm update lithium-list</code></pre>
+</div>

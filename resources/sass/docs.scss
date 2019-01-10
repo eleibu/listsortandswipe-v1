@@ -8,9 +8,9 @@ div.sitecont-outer {
 div.toc-cont {
 
 	div.toc-outer {
-		margin: 0 1em;
+		margin: 0 1.4em;
 
-		div.title {
+		div.title-main {
 			font-weight: bold;
 			font-size: 110%;
 			color: #222222;
@@ -19,7 +19,7 @@ div.toc-cont {
 			border-bottom: 1px solid #EEEEEE;
 		}
 
-		div.subtitle {
+		div.subtitle-main {
 			font-size: 110%;
 			color: #666666;
 			margin-bottom: 1em;
@@ -49,21 +49,84 @@ div.toc-cont {
 div.details-cont {
 	
 	div.details-outer {
-		margin: 0 1em;
+		margin: 0 1.4em;
 
-
-		div.title {
-			font-size: 160%;
+		div.title-main {
+			font-size: 180%;
 			color: #222222;
 			padding: 0.4em 0;
 			margin-bottom: 0.8em;
 			border-bottom: 1px solid #EEEEEE;
 		}
 
-		div.subtitle {
+		div.subtitle-main {
 			font-size: 110%;
 			color: #666666;
 			margin-bottom: 1em;
+		}
+
+		div.pagelinks {
+			padding-bottom: 1em;
+			border-bottom: 1px solid #EEEEEE;
+			margin-bottom: 2em;
+
+			a.button-word-cont:hover {
+				background-color: #F8F8F8;
+			}
+		}
+
+		div.section-cont {
+			padding: 1.6em 0;
+
+			.title-section {
+				font-size: 140%;
+				font-weight: bold;
+				color: #222222;
+				margin-bottom: 2em;
+			}
+
+			a.title-section {
+				display: block;
+			}
+
+			a.title-section:hover {
+				text-decoration: none;
+			}
+
+			div.subsection-cont {
+				margin: 2em 0 4em 0;
+			}
+
+			div.title-subsection {
+				font-size: 120%;
+				font-weight: bold;
+				color: #333333;
+				margin-bottom: 1em;
+			}
+
+			div.params-cont {
+				padding-left: 3em;
+				font-size: 90%;
+				color: #555555;
+				line-height: 130%;
+				margin-bottom: 2em;
+
+				div.param {
+					margin: 0.4em 0;
+				}
+			}
+
+			div.title-codeblock {
+				font-size: 90%;
+				font-weight: lighter;
+				color: #777777;
+				margin-top: 2em;
+			}
+
+			p {
+				color: #444444;
+				line-height: 130%;
+			}
 		}
 
 	}
