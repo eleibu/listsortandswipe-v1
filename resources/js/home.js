@@ -25,12 +25,12 @@ divRight.className = 'label-cont';
 
 var listProperties = {
 	sortDragHandleClass: 'budicon-grab-ui',
-	leftDragHandleClass: 'budicon-trash',
-	rightDragHandleClass: 'budicon-reload-ui',
+	leftButtonClass: 'budicon-trash',
+	rightButtonClass: 'budicon-reload-ui',
 	onSortEnd: sortEnd,
 	sortScrollSpeed: 3,
 	leftEnabled: true,
-	leftByDrag: true,
+	leftBySwipe: true,
     leftMasks: [{
     	background: 'rgba(252, 13, 27, 1)',
 		classNameDefault: 'left-mask',
@@ -39,7 +39,7 @@ var listProperties = {
 		childNode: divLeft
     }],
 	rightEnabled: true,
-	rightByDrag: true,
+	rightBySwipe: true,
     rightMasks: [{
     	background: 'rgba(15, 127, 18, 1)',
 		classNameDefault: 'right-mask',

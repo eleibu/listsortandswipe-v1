@@ -331,6 +331,10 @@ div.details-cont div.details-outer div.section-cont div.subsection-links {
   margin-bottom: 2em;
 }
 
+div.details-cont div.details-outer div.section-cont div.subsection-links a.button-word-cont {
+  color: #3399FF;
+}
+
 div.details-cont div.details-outer div.section-cont div.subsection-links a.button-word-cont:hover {
   background-color: #F8F8F8;
 }
@@ -418,6 +422,18 @@ div.details-cont div.details-outer div.section-cont p {
   padding: 0.2em 0;
 }
 
+span.outer-cont {
+  color: red;
+}
+
+span.list-cont {
+  color: blue;
+}
+
+span.list-items {
+  color: green;
+}
+
 #div-diag-outer-cont {
   margin: 0 auto;
   min-width: 200px;
@@ -440,4 +456,8 @@ div.details-cont div.details-outer div.section-cont p {
   border: 5px solid green;
   color: green;
   text-align: center;
+}
+
+#div-diag-outer-cont #div-diag-list-cont.left-list, #div-diag-outer-cont #div-diag-list-cont.right-list {
+  overflow-x: hidden;
 }

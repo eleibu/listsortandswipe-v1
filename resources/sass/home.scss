@@ -176,7 +176,7 @@ a.menubtn:active {
 	}
 }
 
-.left-scroll #div-list-cont, .right-scroll #div-list-cont {
+#div-list-cont.left-list, #div-list-cont.right-list {
 	overflow-x: hidden;	// recommended to allow left/right shadow when scrolling but hide clone when swiping left/right
 }
 

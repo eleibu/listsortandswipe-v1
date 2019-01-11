@@ -91,6 +91,10 @@ div.details-cont {
 				font-size: 90%;
 				margin-bottom: 2em;
 
+				a.button-word-cont {
+					color: #3399FF;
+				}
+
 				a.button-word-cont:hover {
 					background-color: #F8F8F8;
 				}
@@ -186,6 +190,18 @@ div.details-cont {
 	}
 }
 
+span.outer-cont {
+	color: red;
+}
+
+span.list-cont {
+	color: blue;
+}
+
+span.list-items {
+	color: green;
+}
+
 #div-diag-outer-cont {
 	margin: 0 auto;
 	min-width: 200px;
@@ -207,5 +223,9 @@ div.details-cont {
 			color: green;
 			text-align: center;
 		}
+	}
+
+	#div-diag-list-cont.left-list, #div-diag-list-cont.right-list {
+		overflow-x: hidden;
 	}
 }

@@ -49,13 +49,13 @@
     <p>
         <ul id="ul-html-structure">
             <li>
-                <strong><span style="color: red;">outerCont:</span></strong> An outer container element.
+                <strong><span class="outer-cont">outerCont:</span></strong> An outer container element.
             </li>
             <li>
-                <strong><span style="color: blue;">listCont:</span></strong> An inner container for the <strong><span style="color: green;">listItems</span></strong>.
+                <strong><span class="list-cont">listCont:</span></strong> An inner container for the <strong><span class="list-items">listItems</span></strong>.
             </li>
             <li>
-                <strong><span style="color: green;">listItems:</span></strong> The list items.
+                <strong><span class="list-items">listItems:</span></strong> The list items.
             </li>
         </ul>
     </p>
@@ -132,7 +132,7 @@
         {{$refs['required-css']['title']}}
     </a>
     <p>
-        The only required CSS is that <strong><span style="color: blue;">listCont</span></strong> must be positioned. That is, it must have position &#39;relative&#39;, &#39;absolute&#39;, &#39;fixed&#39;, or &#39;sticky&#39;.
+        The only required CSS is that <strong><span class="list-cont">listCont</span></strong> must be positioned. That is, it must have position &#39;relative&#39;, &#39;absolute&#39;, &#39;fixed&#39;, or &#39;sticky&#39;.
     </p>
     <div class="title-codeblock">
         EXAMPLE CSS:
@@ -150,7 +150,7 @@
             Automatic scrolling
         </div>
         <p>
-            One of Lithium List&#39;s key features is its ability to automatically scroll up/down as items are moved towards the top/bottom of the list. For this to work, <strong><span style="color: red;">outerCont</span></strong> must have its height constrained and its overflow style set to &#39;auto&#39; or &#39;scroll&#39;.
+            One of Lithium List&#39;s key features is its ability to automatically scroll up/down as items are moved towards the top/bottom of the list. For this to work, <strong><span class="outer-cont">outerCont</span></strong> must have its height constrained and its overflow style set to &#39;auto&#39; or &#39;scroll&#39;.
         </p>
         <div class="title-codeblock">
             EXAMPLE CSS:
@@ -184,7 +184,7 @@
             Fix bouncing items
         </div>
         <p>
-            If <strong><span style="color: blue;">listCont</span></strong> and/or <strong><span style="color: green;">listItems</span></strong> have top/bottom margins, in some browsers items will &#39;bounce&#39; during sorting and swiping. Applying a top border to <strong><span style="color: blue;">listCont</span></strong> fixes this.
+            If <strong><span class="list-cont">listCont</span></strong> and/or <strong><span class="list-items">listItems</span></strong> have top/bottom margins, in some browsers items will &#39;bounce&#39; during sorting and swiping. Applying a top border, even if minimal, to <strong><span class="list-cont">listCont</span></strong> fixes this.
         </p>
         <div class="title-codeblock">
             EXAMPLE CSS:
@@ -215,10 +215,10 @@ lithiumlist.attachToList(
         {{$refs['window-as-outercont']['title']}}
     </a>
     <p>
-        If you want the whole window to scroll when list items are sorted (like the <a href="{{ url('/') }}" title="Lithium List - home">Lithium List home page</a>), you could set <code class="language-js">var outerCont = window;</code>. However, in this case automatic scrolling is not smooth in some mobile browsers.
+        If you want the whole window to scroll when list items are sorted (like the <a href="{{ url('/') }}" title="Lithium List - home">Lithium List home page</a>), you can set <code class="language-js">var outerCont = window;</code>. However, in this case automatic scrolling will be rough and unreliable in some mobile browsers.
     </p>
     <p>
-        Instead, it&#39;s recommended you wrap the whole page in a DIV and use it as <strong><span style="color: red;">outerCont</span></strong>.
+        Instead, it&#39;s recommended you wrap the whole page in a DIV and use it as <strong><span class="outer-cont">outerCont</span></strong>.
     </p>
     <div class="title-codeblock">
         EXAMPLE HTML:
@@ -273,11 +273,11 @@ body {
     <div class="title-codeblock">
         EXAMPLE JS:
     </div>
-<pre class="line-numbers"><code class="language-js">var outerCont = document.getElementById('pageWrapper');
+<pre class="line-numbers"><code class="language-js">var pageWrapper = document.getElementById('pageWrapper');
 var listCont = document.getElementById('listCont');
 lithiumlist.attachToList(
     '0123456789',
-    outerCont,
+    pageWrapper,
     listCont,
     'listItem'
 );</code></pre>

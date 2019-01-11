@@ -20,29 +20,17 @@
     @endforeach
 </div>
 <div class="section-cont">
-<!--         sortEnabled: true,
-        sortByDrag: true,
-        sortStartDuration: 300,
-        sortEndDuration: 300,
-        sortScrollClass: 'sort-scroll',
-        sortCloneClass: 'sort-clone',
-        sortCloneBoxShadow: '0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12)',      // not validated (other than string of length >0)
-        sortCloneScale: '1.02',                                                             // not validated (other than string of length >0)
-        sortItemActiveHide: true,
-        sortItemActiveClass: 'sort-item-active',
-        sortDragHandleClass: 'sort-drag-handle',
-        sortMoveStartDelay: 400,
-        sortReorderDuration: 200,
-        sortScrollSpeed: 3,
-        safariBodyUnselectable: true,                                                       // applies only to Safari on MacOS
-        safariAutoScrollOverflow: true,                                                     // applies only to Safari on MacOS
+<!--
+        ignoreOnClick: ['input', 'textarea', 'select', 'option', 'button']
 
-
-        leftScrollClass: 'left-scroll',
+        leftButtonClass: 'left-button',
+        leftBySwipe
         leftCloneClass: 'left-clone',
-        leftCloneSlideOutClass: 'left-clone-slide-out',
         leftCloneSlideBackClass: 'left-clone-slide-back',
+        leftCloneSlideOutClass: 'left-clone-slide-out',
+        leftEnabled
         leftItemActiveClass: 'left-item-active',
+        leftListClass: 'left-list',
         leftMasks: [{
             background: 'rgba(252, 13, 27, 1)',                                             // not validated (other than string of length >0)
             classNameDefault: 'left-mask',
@@ -50,14 +38,17 @@
             classNameSlideBack: 'left-mask-slide-back',
             childNode: null
         }],
-        leftDragHandleClass: 'left-drag-handle',
-        leftDragStartThreshold: '10px',
-        leftDragEndThreshold: '30%',
-        leftSlideOutDuration: 300,
+        leftOuterClass: 'left-outer',
         leftSlideBackDuration: 200,
+        leftSlideOutDuration: 300,
+        leftSwipeEndThreshold: '30%',
+        leftSwipeStartThreshold: '10px',
+
+
         rightEnabled: true,
         rightBySwipe: true,
-        rightScrollClass: 'right-scroll',
+        rightOuterClass: 'right-outer',
+        rightListClass: 'right-list',
         rightCloneClass: 'right-clone',
         rightCloneSlideOutClass: 'right-clone-slide-out',
         rightCloneSlideBackClass: 'right-clone-slide-back',
@@ -69,30 +60,58 @@
             classNameSlideBack: 'right-mask-slide-back',
             childNode: null
         }],
-        rightDragHandleClass: 'right-drag-handle',
-        rightDragStartThreshold: '10px',
-        rightDragEndThreshold: '30%',
+        rightButtonClass: 'right-button',
+        rightSwipeStartThreshold: '10px',
+        rightSwipeEndThreshold: '30%',
         rightSlideOutDuration: 300,
         rightSlideBackDuration: 200,
-        ignoreOnClick: ['input', 'textarea', 'select', 'option', 'button'] -->
+
+        sortEnabled: true,
+        sortByDrag: true,
+        sortStartDuration: 300,
+        sortEndDuration: 300,
+        sortOuterClass: 'sort-outer',
+        sortCloneClass: 'sort-clone',
+        sortListClass: 'sort-list',
+        sortCloneBoxShadow: '0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12)',      // not validated (other than string of length >0)
+        sortCloneScale: '1.02',                                                             // not validated (other than string of length >0)
+        sortItemActiveHide: true,
+        sortItemActiveClass: 'sort-item-active',
+        sortDragHandleClass: 'sort-drag-handle',
+        sortMoveStartDelay: 400,
+        sortReorderDuration: 200,
+        sortScrollSpeed: 3,
+        safariBodyUnselectable: true,                                                       // applies only to Safari on MacOS
+        safariAutoOuterOverflow: true,                                                     // applies only to Safari on MacOS
+
+-->
  @php
     $refs_options = array(
-        'leftEnabled' => array(
-            'aref' => 'ref-leftEnabled',
-            'title' => 'leftEnabled'
+        'ignoreOnClick' => array(
+            'aref' => 'ref-ignoreOnClick',
+            'title' => 'ignoreOnClick'
+        ),
+        'leftButtonClass' => array(
+            'aref' => 'ref-leftButtonClass',
+            'title' => 'leftButtonClass'
         ),
         'leftBySwipe' => array(
             'aref' => 'ref-leftBySwipe',
             'title' => 'leftBySwipe'
         ),
-        'leftScrollClass' => array(
-            'aref' => 'ref-leftScrollClass',
-            'title' => 'leftScrollClass'
+
+        'leftEnabled' => array(
+            'aref' => 'ref-leftEnabled',
+            'title' => 'leftEnabled'
         ),
-        'leftCloneClass' => array(
-            'aref' => 'ref-leftCloneClass',
-            'title' => 'leftCloneClass'
-        )
+        'leftListClass' => array(
+            'aref' => 'ref-leftListClass',
+            'title' => 'leftListClass'
+        ),
+        'leftOuterClass' => array(
+            'aref' => 'ref-leftOuterClass',
+            'title' => 'leftOuterClass'
+        ),
     );
 @endphp
     <a id="{{$refs['options']['aref']}}" class="title-section">
@@ -104,25 +123,25 @@
         @endforeach
     </div>
     <div class="subsection-cont">
-        <a id="{{$refs_options['leftEnabled']['aref']}}" class="title-subsection">
-            {{$refs_options['leftEnabled']['title']}}
+        <a id="{{$refs_options['ignoreOnClick']['aref']}}" class="title-subsection">
+            {{$refs_options['ignoreOnClick']['title']}}
         </a>
         <div class="params-cont">
             <div class="param">
-                <strong>Type:</strong> Boolean
+                <strong>Type:</strong> Array
             </div>
             <div class="param">
-                <strong>Default:</strong> <code class="language-js">true</code>
+                <strong>Default:</strong> <code class="language-js">[&#39;input&#39;, &#39;textarea&#39;, &#39;select&#39;, &#39;option&#39;, &#39;button&#39;]</code>
             </div>
         </div>
         <p>
-            Enable or disable sliding items to the left. If set to <code class="language-js">false</code>, swiping an item to the left or clicking/tapping its left drag handle will do nothing.
+            The names of DOM elements to ignore when clicked/tapped.
         </p>
         <div class="title-codeblock">
             EXAMPLE JS
         </div>
 <pre class="line-numbers"><code class="language-js">var options = {
-    leftEnabled: false
+    ignoreOnClick: [&#39;input&#39;, &#39;textarea&#39;, &#39;select&#39;, &#39;option&#39;, &#39;button&#39;]
 };
 lithiumlist.attachToList(
     ...,
@@ -130,6 +149,35 @@ lithiumlist.attachToList(
 );
 </code></pre>
     </div>
+    <div class="subsection-cont">
+        <a id="{{$refs_options['leftButtonClass']['aref']}}" class="title-subsection">
+            {{$refs_options['leftButtonClass']['title']}}
+        </a>
+        <div class="params-cont">
+            <div class="param">
+                <strong>Type:</strong> String
+            </div>
+            <div class="param">
+                <strong>Default:</strong> <code class="language-js">&#39;left-button&#39;</code>
+            </div>
+        </div>
+        <p>
+            The class name of DOM elements that will act as buttons to trigger a full left swipe of the list item.
+        </p>
+        <div class="title-codeblock">
+            EXAMPLE JS
+        </div>
+<pre class="line-numbers"><code class="language-js">var options = {
+    leftButon: &#39;left-button&#39;
+};
+lithiumlist.attachToList(
+    ...,
+    options
+);
+</code></pre>
+    </div>
+
+
     <div class="subsection-cont">
         <a id="{{$refs_options['leftBySwipe']['aref']}}" class="title-subsection">
             {{$refs_options['leftBySwipe']['title']}}
@@ -143,7 +191,7 @@ lithiumlist.attachToList(
             </div>
         </div>
         <p>
-            Enable or disable swiping items to the left.
+            Enable or disable swiping list items to the left.
         </p>
         <div class="title-codeblock">
             EXAMPLE JS
@@ -158,25 +206,25 @@ lithiumlist.attachToList(
 </code></pre>
     </div>
     <div class="subsection-cont">
-        <a id="{{$refs_options['leftScrollClass']['aref']}}" class="title-subsection">
-            {{$refs_options['leftScrollClass']['title']}}
+        <a id="{{$refs_options['leftEnabled']['aref']}}" class="title-subsection">
+            {{$refs_options['leftEnabled']['title']}}
         </a>
         <div class="params-cont">
             <div class="param">
-                <strong>Type:</strong> String
+                <strong>Type:</strong> Boolean
             </div>
             <div class="param">
-                <strong>Default:</strong> <code class="language-js">&#39;left-scroll&#39;</code>
+                <strong>Default:</strong> <code class="language-js">true</code>
             </div>
         </div>
         <p>
-            []
+            Enable or disable sliding list items to the left. If set to <code class="language-js">false</code>, swiping a list item to the left or clicking/tapping a left button will do nothing.
         </p>
         <div class="title-codeblock">
             EXAMPLE JS
         </div>
 <pre class="line-numbers"><code class="language-js">var options = {
-    leftScrollClass: 'left-scroll'
+    leftEnabled: false
 };
 lithiumlist.attachToList(
     ...,
@@ -184,4 +232,59 @@ lithiumlist.attachToList(
 );
 </code></pre>
     </div>
+    <div class="subsection-cont">
+        <a id="{{$refs_options['leftListClass']['aref']}}" class="title-subsection">
+            {{$refs_options['leftListClass']['title']}}
+        </a>
+        <div class="params-cont">
+            <div class="param">
+                <strong>Type:</strong> String
+            </div>
+            <div class="param">
+                <strong>Default:</strong> <code class="language-js">&#39;left-list&#39;</code>
+            </div>
+        </div>
+        <p>
+            A class that is added to <strong><span class="list-cont">listCont</span></strong> when a list item begins sliding to the left (either via a swipe or because a left button was clicked/tapped).
+        </p>
+        <div class="title-codeblock">
+            EXAMPLE JS
+        </div>
+<pre class="line-numbers"><code class="language-js">var options = {
+    leftListClass: 'left-list'
+};
+lithiumlist.attachToList(
+    ...,
+    options
+);
+</code></pre>
+    </div>
+    <div class="subsection-cont">
+        <a id="{{$refs_options['leftOuterClass']['aref']}}" class="title-subsection">
+            {{$refs_options['leftOuterClass']['title']}}
+        </a>
+        <div class="params-cont">
+            <div class="param">
+                <strong>Type:</strong> String
+            </div>
+            <div class="param">
+                <strong>Default:</strong> <code class="language-js">&#39;left-outer&#39;</code>
+            </div>
+        </div>
+        <p>
+            A class that is added to <strong><span class="outer-cont">outerCont</span></strong> when a list item begins sliding to the left (either via a swipe or because a left button was clicked/tapped).
+        </p>
+        <div class="title-codeblock">
+            EXAMPLE JS
+        </div>
+<pre class="line-numbers"><code class="language-js">var options = {
+    leftOuterClass: 'left-outer'
+};
+lithiumlist.attachToList(
+    ...,
+    options
+);
+</code></pre>
+    </div>
+
 </div>

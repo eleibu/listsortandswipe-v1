@@ -16995,12 +16995,12 @@ divRight.className = 'label-cont';
 
 var listProperties = {
 	sortDragHandleClass: 'budicon-grab-ui',
-	leftDragHandleClass: 'budicon-trash',
-	rightDragHandleClass: 'budicon-reload-ui',
+	leftButtonClass: 'budicon-trash',
+	rightButtonClass: 'budicon-reload-ui',
 	onSortEnd: sortEnd,
 	sortScrollSpeed: 3,
 	leftEnabled: true,
-	leftByDrag: true,
+	leftBySwipe: true,
 	leftMasks: [{
 		background: 'rgba(252, 13, 27, 1)',
 		classNameDefault: 'left-mask',
@@ -17009,7 +17009,7 @@ var listProperties = {
 		childNode: divLeft
 	}],
 	rightEnabled: true,
-	rightByDrag: true,
+	rightBySwipe: true,
 	rightMasks: [{
 		background: 'rgba(15, 127, 18, 1)',
 		classNameDefault: 'right-mask',
@@ -17074,7 +17074,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // if outerCont != window:
 // outerCont must have a height other than 'auto' (eg. px, %, em)
 // outerCont must have overflow 'auto', 'scroll' or 'hidden' (will be set to 'hidden' during automatic scrolling to deal with Safari auto scrolling issue)
-// set 'safariAutoScrollOverflow = false' to prevent setting 'outerCont.style.overflow = hidden' upon auto scroll (will break auto scroll on Mac Safari)
+// set 'safariAutoOuterOverflow = false' to prevent setting 'outerCont.style.overflow = hidden' upon auto scroll (will break auto scroll on Mac Safari)
 // if set 'safariBodyUnselectable = false', consider adding unselectable styles to an outer object (eg. body, document, etc) even if 'listitem-cont' or a sub-element is
 // unselectable - otherwise, unintended selection of elements outside outerCont can cause problems
 // need to set css for 'sort-item-active' to hide active item while sorting
@@ -17082,7 +17082,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // sortScrollSpeed: 1, 2, 3, 4, 5 (default = 3)
 // leftMasks / rightMasks must be arrays (not null) and leftMasks.classNameDefault must not be undefined or null
 // setDefaultProperties only applies to instances created after it is called (use setListProperties to change properties for a paticular instance)
-// leftScrollClass / rightScrollClass is not added to outerCont if it is 'window'
+// leftOuterClass / rightOuterClass is not added to outerCont if it is 'window'
 // does not work with '-webkit-overflow-scrolling: touch' (iOS only)
 
 
@@ -17127,6 +17127,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var lithiumlistPro = function () {
 	var instances = [];
 
+	// leftButtonClass
+	// leftSwipeStartThreshold
+	// leftSwipeEndThreshold
+
+
+	//rightButtonClass
+	// rightSwipeStartThreshold
+	// rightSwipeEndThreshold
+
+
 	var defaultProperties = {
 		onSortStart: null,
 		onSortEnd: null,
@@ -17136,7 +17146,8 @@ var lithiumlistPro = function () {
 		sortByDrag: true,
 		sortStartDuration: 300,
 		sortEndDuration: 300,
-		sortScrollClass: 'sort-scroll',
+		sortOuterClass: 'sort-outer',
+		sortListClass: 'sort-list',
 		sortCloneClass: 'sort-clone',
 		sortCloneBoxShadow: '0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12)', // not validated (other than string of length >0)
 		sortCloneScale: '1.02', // not validated (other than string of length >0)
@@ -17147,14 +17158,15 @@ var lithiumlistPro = function () {
 		sortReorderDuration: 200,
 		sortScrollSpeed: 3,
 		safariBodyUnselectable: true, // applies only to Safari on MacOS
-		safariAutoScrollOverflow: true, // applies only to Safari on MacOS
+		safariAutoOuterOverflow: true, // applies only to Safari on MacOS
 		onLeftStart: null,
 		onLeftSlideOutStart: null,
 		onLeftSlideBackStart: null,
 		onLeftEnd: null,
 		leftEnabled: true,
 		leftBySwipe: true,
-		leftScrollClass: 'left-scroll',
+		leftOuterClass: 'left-outer',
+		leftListClass: 'left-list',
 		leftCloneClass: 'left-clone',
 		leftCloneSlideOutClass: 'left-clone-slide-out',
 		leftCloneSlideBackClass: 'left-clone-slide-back',
@@ -17166,9 +17178,9 @@ var lithiumlistPro = function () {
 			classNameSlideBack: 'left-mask-slide-back',
 			childNode: null
 		}],
-		leftDragHandleClass: 'left-drag-handle',
-		leftDragStartThreshold: '10px',
-		leftDragEndThreshold: '30%',
+		leftButtonClass: 'left-button',
+		leftSwipeStartThreshold: '10px',
+		leftSwipeEndThreshold: '30%',
 		leftSlideOutDuration: 300,
 		leftSlideBackDuration: 200,
 		onRightStart: null,
@@ -17177,7 +17189,8 @@ var lithiumlistPro = function () {
 		onRightEnd: null,
 		rightEnabled: true,
 		rightBySwipe: true,
-		rightScrollClass: 'right-scroll',
+		rightOuterClass: 'right-outer',
+		rightListClass: 'right-list',
 		rightCloneClass: 'right-clone',
 		rightCloneSlideOutClass: 'right-clone-slide-out',
 		rightCloneSlideBackClass: 'right-clone-slide-back',
@@ -17189,9 +17202,9 @@ var lithiumlistPro = function () {
 			classNameSlideBack: 'right-mask-slide-back',
 			childNode: null
 		}],
-		rightDragHandleClass: 'right-drag-handle',
-		rightDragStartThreshold: '10px',
-		rightDragEndThreshold: '30%',
+		rightButtonClass: 'right-button',
+		rightSwipeStartThreshold: '10px',
+		rightSwipeEndThreshold: '30%',
 		rightSlideOutDuration: 300,
 		rightSlideBackDuration: 200,
 		ignoreOnClick: ['input', 'textarea', 'select', 'option', 'button']
@@ -17205,20 +17218,6 @@ var lithiumlistPro = function () {
 	// public methods
 
 	var attachToList = function attachToList(key, outerCont, listCont, listItemClass, listProperties) {
-		if (isUndefinedOrNull(listCont)) {
-			throw 'listCont must not be undefined or null';
-		} else {
-			if (isDOMElement(listCont)) {
-				for (var i = 0, len = instances.length; i < len; i++) {
-					if (instances[i].listCont === listCont) {
-						throw 'listCont already has lithiumlist attached';
-					}
-				}
-			} else {
-				throw 'listCont must be a DOM element';
-			}
-		}
-
 		if (isUndefinedOrNull(outerCont)) {
 			outerCont = window;
 		} else {
@@ -17234,6 +17233,20 @@ var lithiumlistPro = function () {
 				} else {
 					throw 'outerCont must be a DOM element';
 				}
+			}
+		}
+
+		if (isUndefinedOrNull(listCont)) {
+			throw 'listCont must not be undefined or null';
+		} else {
+			if (isDOMElement(listCont)) {
+				for (var i = 0, len = instances.length; i < len; i++) {
+					if (instances[i].listCont === listCont) {
+						throw 'listCont already has lithiumlist attached';
+					}
+				}
+			} else {
+				throw 'listCont must be a DOM element';
 			}
 		}
 
@@ -17481,11 +17494,11 @@ var lithiumlistPro = function () {
 						setItems(instance);
 						activateSort(instance);
 					}, 1); // delay allows itemCont to show :hover classes
-				} else if (instance.props.leftEnabled && checkClassClicked(e, instance.temp.items[index], instance.props.leftDragHandleClass)) {
+				} else if (instance.props.leftEnabled && checkClassClicked(e, instance.temp.items[index], instance.props.leftButtonClass)) {
 					instance.temp.activeIndex = index;
 					initMoveLeft(instance, 0);
 					initLeftSlideOut(instance);
-				} else if (instance.props.rightEnabled && checkClassClicked(e, instance.temp.items[index], instance.props.rightDragHandleClass)) {
+				} else if (instance.props.rightEnabled && checkClassClicked(e, instance.temp.items[index], instance.props.rightButtonClass)) {
 					instance.temp.activeIndex = index;
 					initMoveRight(instance, 0);
 					initRightSlideOut(instance);
@@ -17555,9 +17568,12 @@ var lithiumlistPro = function () {
 
 		safariBodyUnselectableAdd(instance);
 
-		if (instance.props.leftScrollClass && isDOMElement(instance.outerCont)) {
+		if (instance.props.leftOuterClass && isDOMElement(instance.outerCont)) {
 			// check that outerCont is not 'window' or 'document'
-			addClass(instance.outerCont, instance.props.leftScrollClass);
+			addClass(instance.outerCont, instance.props.leftOuterClass);
+		}
+		if (instance.props.leftListClass) {
+			addClass(instance.listCont, instance.props.leftListClass);
 		}
 		if (!instance.isr) rSend(instance); // reg
 
@@ -17587,9 +17603,12 @@ var lithiumlistPro = function () {
 
 		safariBodyUnselectableAdd(instance);
 
-		if (instance.props.rightScrollClass && isDOMElement(instance.outerCont)) {
+		if (instance.props.rightOuterClass && isDOMElement(instance.outerCont)) {
 			// check that outerCont is not 'window' or 'document'
-			addClass(instance.outerCont, instance.props.rightScrollClass);
+			addClass(instance.outerCont, instance.props.rightOuterClass);
+		}
+		if (instance.props.rightListClass) {
+			addClass(instance.listCont, instance.props.rightListClass);
 		}
 		if (!instance.isr) rSend(instance); // reg
 
@@ -17630,12 +17649,12 @@ var lithiumlistPro = function () {
 				instance.temp.moveType = 'SORT';
 				instance.temp.activeOrigX = instance.temp.items[instance.temp.activeIndex].offsetLeft;
 
-				instance.temp.deltaItemsScroll = 0;
+				instance.temp.deltaItemsOuter = 0;
 				if (instance.outerCont !== instance.listCont) {
 					if (isWindow(instance.outerCont)) {
-						instance.temp.deltaItemsScroll = instance.listCont.getBoundingClientRect().top + getScrollTop(instance.outerCont);
+						instance.temp.deltaItemsOuter = instance.listCont.getBoundingClientRect().top + getOuterTop(instance.outerCont);
 					} else {
-						instance.temp.deltaItemsScroll = instance.listCont.getBoundingClientRect().top - instance.outerCont.getBoundingClientRect().top + getScrollTop(instance.outerCont);
+						instance.temp.deltaItemsOuter = instance.listCont.getBoundingClientRect().top - instance.outerCont.getBoundingClientRect().top + getOuterTop(instance.outerCont);
 					}
 				}
 
@@ -17645,9 +17664,13 @@ var lithiumlistPro = function () {
 
 				safariBodyUnselectableAdd(instance);
 
-				if (instance.props.sortScrollClass && isDOMElement(instance.outerCont)) {
+				if (instance.props.sortOuterClass && isDOMElement(instance.outerCont)) {
 					// check that outerCont is not 'window' or 'document'
-					addClass(instance.outerCont, instance.props.sortScrollClass);
+					addClass(instance.outerCont, instance.props.sortOuterClass);
+				}
+
+				if (instance.props.sortListClass) {
+					addClass(instance.listCont, instance.props.sortListClass);
 				}
 
 				if (!instance.temp.itemClone) {
@@ -17680,14 +17703,14 @@ var lithiumlistPro = function () {
 				var rect = instance.temp.items[instance.temp.activeIndex].getBoundingClientRect();
 				if (cursorIsOverRect(pageX, pageY, rect)) {
 					if (cursorX < 0 && instance.props.leftEnabled && instance.props.leftBySwipe) {
-						var leftDST = getPXorPercent(instance.props.leftDragStartThreshold, instance.temp.items[instance.temp.activeIndex].offsetWidth);
+						var leftDST = getPXorPercent(instance.props.leftSwipeStartThreshold, instance.temp.items[instance.temp.activeIndex].offsetWidth);
 						if (Math.abs(cursorX) > leftDST) {
 							clearTimeout(instance.temp.sortDelayTimer);
 							instance.temp.sortDelayTimer = null;
 							initMoveLeft(instance, cursorX);
 						}
 					} else if (cursorX > 0 && instance.props.rightEnabled && instance.props.rightBySwipe) {
-						var rightDST = getPXorPercent(instance.props.rightDragStartThreshold, instance.temp.items[instance.temp.activeIndex].offsetWidth);
+						var rightDST = getPXorPercent(instance.props.rightSwipeStartThreshold, instance.temp.items[instance.temp.activeIndex].offsetWidth);
 						if (cursorX > rightDST) {
 							clearTimeout(instance.temp.sortDelayTimer);
 							instance.temp.sortDelayTimer = null;
@@ -17735,31 +17758,31 @@ var lithiumlistPro = function () {
 					instance.temp.itemClone.style.top = instance.temp.itemClone.offsetTop + yChange + 'px';
 					animateItems(instance);
 
-					if (instance.temp.scrollOverhang == 0) {
-						if (isItemCloneAboveScrollTop(instance)) {
-							instance.temp.scrollOverhang = instance.temp.deltaItemsScroll + instance.temp.itemClone.offsetTop - getScrollTop(instance.outerCont);
-						} else if (isItemCloneBelowScrollBottom(instance)) {
-							instance.temp.scrollOverhang = instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight - (getScrollTop(instance.outerCont) + getouterContHeight(instance) - instance.temp.deltaItemsScroll);
+					if (instance.temp.outerOverhang == 0) {
+						if (isItemCloneAboveOuterTop(instance)) {
+							instance.temp.outerOverhang = instance.temp.deltaItemsOuter + instance.temp.itemClone.offsetTop - getOuterTop(instance.outerCont);
+						} else if (isItemCloneBelowOuterBottom(instance)) {
+							instance.temp.outerOverhang = instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight - (getOuterTop(instance.outerCont) + getouterContHeight(instance) - instance.temp.deltaItemsOuter);
 						}
 					} else {
-						if (instance.temp.scrollOverhang < 0) {
-							if (instance.temp.scrollOverhang + yChange < 0) {
-								instance.temp.scrollOverhang = instance.temp.scrollOverhang + yChange;
+						if (instance.temp.outerOverhang < 0) {
+							if (instance.temp.outerOverhang + yChange < 0) {
+								instance.temp.outerOverhang = instance.temp.outerOverhang + yChange;
 							} else {
-								instance.temp.scrollOverhang = 0;
+								instance.temp.outerOverhang = 0;
 							}
 						} else {
-							if (instance.temp.scrollOverhang + yChange > 0) {
-								instance.temp.scrollOverhang = instance.temp.scrollOverhang + yChange;
+							if (instance.temp.outerOverhang + yChange > 0) {
+								instance.temp.outerOverhang = instance.temp.outerOverhang + yChange;
 							} else {
-								instance.temp.scrollOverhang = 0;
+								instance.temp.outerOverhang = 0;
 							}
 						}
 					}
-					if (instance.temp.scrollOverhang != 0) {
+					if (instance.temp.outerOverhang != 0) {
 						if (instance.props.onSortAutoScrollStart) {
 							var scrollingUp = true;
-							if (instance.temp.scrollOverhang > 0) {
+							if (instance.temp.outerOverhang > 0) {
 								scrollingUp = false;
 							}
 							instance.props.onSortAutoScrollStart(instance.temp.origIndex, scrollingUp);
@@ -17783,15 +17806,15 @@ var lithiumlistPro = function () {
 
 	var doScroll = function doScroll(instance) {
 		var shouldScroll = false;
-		if (isItemCloneAboveScrollTop(instance)) {
+		if (isItemCloneAboveOuterTop(instance)) {
 			shouldScroll = true;
-		} else if (isItemCloneBelowScrollBottom(instance)) {
+		} else if (isItemCloneBelowOuterBottom(instance)) {
 			shouldScroll = true;
 		}
 
 		if (shouldScroll) {
-			var scrollChange = Math.round(instance.temp.scrollOverhang / instance.temp.itemClone.offsetHeight * getScrollMultiplier(instance.props.sortScrollSpeed));
-			setScrollTop(instance.outerCont, getScrollTop(instance.outerCont) + scrollChange);
+			var scrollChange = Math.round(instance.temp.outerOverhang / instance.temp.itemClone.offsetHeight * getScrollMultiplier(instance.props.sortScrollSpeed));
+			setScrollTop(instance.outerCont, getOuterTop(instance.outerCont) + scrollChange);
 			if (isWindow(instance.outerCont)) {
 				instance.temp.lastPageY = instance.temp.lastPageY + scrollChange;
 			}
@@ -17811,7 +17834,7 @@ var lithiumlistPro = function () {
 				instance.temp.scrollInterval = null;
 			}
 			outerContOverflowRevert(instance);
-			instance.temp.scrollOverhang = 0;
+			instance.temp.outerOverhang = 0;
 		}
 	};
 
@@ -17915,14 +17938,14 @@ var lithiumlistPro = function () {
 			if (instance.temp.moveType == 'LEFT' || instance.temp.moveType == 'RIGHT') {
 				var cloneX = Math.abs(instance.temp.itemClone.offsetLeft - instance.temp.activeOrigX);
 				if (instance.temp.moveType == 'LEFT') {
-					var leftDET = getPXorPercent(instance.props.leftDragEndThreshold, instance.temp.items[instance.temp.activeIndex].offsetWidth);
+					var leftDET = getPXorPercent(instance.props.leftSwipeEndThreshold, instance.temp.items[instance.temp.activeIndex].offsetWidth);
 					if (cloneX > leftDET) {
 						initLeftSlideOut(instance);
 					} else {
 						initLeftSlideBack(instance);
 					}
 				} else {
-					var rightDET = getPXorPercent(instance.props.rightDragEndThreshold, instance.temp.items[instance.temp.activeIndex].offsetWidth);
+					var rightDET = getPXorPercent(instance.props.rightSwipeEndThreshold, instance.temp.items[instance.temp.activeIndex].offsetWidth);
 					if (cloneX > rightDET) {
 						initRightSlideOut(instance);
 					} else {
@@ -18076,8 +18099,11 @@ var lithiumlistPro = function () {
 				removeClass(instance.temp.items[instance.temp.activeIndex], instance.props.leftItemActiveClass);
 			}
 
-			if (instance.props.leftScrollClass && isDOMElement(instance.outerCont)) {
-				removeClass(instance.outerCont, instance.props.leftScrollClass);
+			if (instance.props.leftListClass) {
+				removeClass(instance.listCont, instance.props.leftListClass);
+			}
+			if (instance.props.leftOuterClass && isDOMElement(instance.outerCont)) {
+				removeClass(instance.outerCont, instance.props.leftOuterClass);
 			}
 
 			destroyTempDivs(instance);
@@ -18092,8 +18118,11 @@ var lithiumlistPro = function () {
 				removeClass(instance.temp.items[instance.temp.activeIndex], instance.props.rightItemActiveClass);
 			}
 
-			if (instance.props.rightScrollClass && isDOMElement(instance.outerCont)) {
-				removeClass(instance.outerCont, instance.props.rightScrollClass);
+			if (instance.props.rightListClass) {
+				removeClass(instance.listCont, instance.props.rightListClass);
+			}
+			if (instance.props.rightOuterClass && isDOMElement(instance.outerCont)) {
+				removeClass(instance.outerCont, instance.props.rightOuterClass);
 			}
 
 			destroyTempDivs(instance);
@@ -18119,8 +18148,12 @@ var lithiumlistPro = function () {
 			instance.temp.items[instance.temp.activeIndex].style.visibility = 'visible';
 		}
 
-		if (instance.props.sortScrollClass && isDOMElement(instance.outerCont)) {
-			removeClass(instance.outerCont, instance.props.sortScrollClass);
+		if (instance.props.sortListClass) {
+			removeClass(instance.listCont, instance.props.sortListClass);
+		}
+
+		if (instance.props.sortOuterClass && isDOMElement(instance.outerCont)) {
+			removeClass(instance.outerCont, instance.props.sortOuterClass);
 		}
 
 		destroyTempDivs(instance);
@@ -18219,7 +18252,7 @@ var lithiumlistPro = function () {
 			'items': [],
 			'moveType': null,
 			'ignoreClicks': false,
-			'deltaItemsScroll': null,
+			'deltaItemsOuter': null,
 			'itemClone': null,
 			'itemMasks': [],
 			'activeIndex': null,
@@ -18231,7 +18264,7 @@ var lithiumlistPro = function () {
 			'activeOrigX': null,
 			'sortDelayTimer': null,
 			'sortEndTimer': null,
-			'scrollOverhang': 0,
+			'outerOverhang': 0,
 			'scrollInterval': null,
 			'origouterContOverflow': null,
 			'funcOnScroll': null,
@@ -18261,7 +18294,7 @@ var lithiumlistPro = function () {
 	};
 
 	var outerContOverflowHidden = function outerContOverflowHidden(instance) {
-		if (isSafariMacOS && !isWindow(instance.outerCont) && instance.props.safariAutoScrollOverflow) {
+		if (isSafariMacOS && !isWindow(instance.outerCont) && instance.props.safariAutoOuterOverflow) {
 			if (instance.outerCont.style && instance.outerCont.style.overflow) {
 				instance.temp.origouterContOverflow = instance.outerCont.style.overflow;
 			}
@@ -18270,7 +18303,7 @@ var lithiumlistPro = function () {
 	};
 
 	var outerContOverflowRevert = function outerContOverflowRevert(instance) {
-		if (isSafariMacOS && !isWindow(instance.outerCont) && instance.props.safariAutoScrollOverflow) {
+		if (isSafariMacOS && !isWindow(instance.outerCont) && instance.props.safariAutoOuterOverflow) {
 			if (instance.temp.origouterContOverflow) {
 				instance.outerCont.style.overflow = instance.temp.origouterContOverflow;
 				instance.temp.origouterContOverflow = null;
@@ -18297,16 +18330,16 @@ var lithiumlistPro = function () {
 		return yChange;
 	};
 
-	var isItemCloneAboveScrollTop = function isItemCloneAboveScrollTop(instance) {
-		if (instance.temp.itemClone.offsetTop < getScrollTop(instance.outerCont) - instance.temp.deltaItemsScroll) {
+	var isItemCloneAboveOuterTop = function isItemCloneAboveOuterTop(instance) {
+		if (instance.temp.itemClone.offsetTop < getOuterTop(instance.outerCont) - instance.temp.deltaItemsOuter) {
 			return true;
 		} else {
 			return false;
 		}
 	};
 
-	var isItemCloneBelowScrollBottom = function isItemCloneBelowScrollBottom(instance) {
-		if (instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight > getScrollTop(instance.outerCont) + getouterContHeight(instance) - instance.temp.deltaItemsScroll) {
+	var isItemCloneBelowOuterBottom = function isItemCloneBelowOuterBottom(instance) {
+		if (instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight > getOuterTop(instance.outerCont) + getouterContHeight(instance) - instance.temp.deltaItemsOuter) {
 			return true;
 		} else {
 			return false;
@@ -18362,7 +18395,7 @@ var lithiumlistPro = function () {
 		}
 	}();
 
-	var getScrollTop = function getScrollTop(el) {
+	var getOuterTop = function getOuterTop(el) {
 		if (isWindow(el)) {
 			return el.pageYOffset;
 		} else {
@@ -18535,6 +18568,7 @@ var lithiumlistPro = function () {
 			div.style.top = '0';
 			if (rtn) return true; // it's a trap: see rMsg(instance, true) in attachToList() - ensures listeners are not attached if content of this function is deleted
 			div.style.color = 'red';
+			div.style.textShadow = '0 0 6px #FFFFFF, 0 0 6px #FFFFFF, 0 0 6px #FFFFFF';
 			div.style.fontWeight = 'bold';
 			div.style.padding = '0.3em';
 			div.style.zIndex = '9999';
@@ -18582,8 +18616,12 @@ var lithiumlistPro = function () {
 			throw 'sortEndDuration must be a positive integer or zero';
 		}
 
-		if (!isUndefinedOrNull(props['sortScrollClass']) && (!isString(props['sortScrollClass']) || props['sortScrollClass'].length == 0)) {
-			throw 'sortScrollClass must be a string of length >0';
+		if (!isUndefinedOrNull(props['sortOuterClass']) && (!isString(props['sortOuterClass']) || props['sortOuterClass'].length == 0)) {
+			throw 'sortOuterClass must be a string of length >0';
+		}
+
+		if (!isUndefinedOrNull(props['sortListClass']) && (!isString(props['sortListClass']) || props['sortListClass'].length == 0)) {
+			throw 'sortListClass must be a string of length >0';
 		}
 
 		if (!isUndefinedOrNull(props['sortCloneClass']) && (!isString(props['sortCloneClass']) || props['sortCloneClass'].length == 0)) {
@@ -18626,8 +18664,8 @@ var lithiumlistPro = function () {
 			throw 'safariBodyUnselectable must be a boolean';
 		}
 
-		if (!isUndefinedOrNull(props['safariAutoScrollOverflow']) && !isBoolean(props['safariAutoScrollOverflow'])) {
-			throw 'safariAutoScrollOverflow must be a boolean';
+		if (!isUndefinedOrNull(props['safariAutoOuterOverflow']) && !isBoolean(props['safariAutoOuterOverflow'])) {
+			throw 'safariAutoOuterOverflow must be a boolean';
 		}
 
 		if (!isUndefinedOrNull(props['onLeftStart']) && !isFunction(props['onLeftStart'])) {
@@ -18654,8 +18692,12 @@ var lithiumlistPro = function () {
 			throw 'leftBySwipe must be a boolean';
 		}
 
-		if (!isUndefinedOrNull(props['leftScrollClass']) && (!isString(props['leftScrollClass']) || props['leftScrollClass'].length == 0)) {
-			throw 'leftScrollClass must be a string of length >0';
+		if (!isUndefinedOrNull(props['leftOuterClass']) && (!isString(props['leftOuterClass']) || props['leftOuterClass'].length == 0)) {
+			throw 'leftOuterClass must be a string of length >0';
+		}
+
+		if (!isUndefinedOrNull(props['leftListClass']) && (!isString(props['leftListClass']) || props['leftListClass'].length == 0)) {
+			throw 'leftListClass must be a string of length >0';
 		}
 
 		if (!isUndefinedOrNull(props['leftCloneClass']) && (!isString(props['leftCloneClass']) || props['leftCloneClass'].length == 0)) {
@@ -18699,16 +18741,16 @@ var lithiumlistPro = function () {
 			}
 		}
 
-		if (!isUndefinedOrNull(props['leftDragHandleClass']) && (!isString(props['leftDragHandleClass']) || props['leftDragHandleClass'].length == 0)) {
-			throw 'leftDragHandleClass must be a string of length >0';
+		if (!isUndefinedOrNull(props['leftButtonClass']) && (!isString(props['leftButtonClass']) || props['leftButtonClass'].length == 0)) {
+			throw 'leftButtonClass must be a string of length >0';
 		}
 
-		if (!isUndefinedOrNull(props['leftDragStartThreshold']) && !isPXorPercent(props['leftDragStartThreshold'])) {
-			throw 'leftDragStartThreshold must be \'#px\', \'#%\' or \'0\' (eg. \'10px\' or \'10%\')';
+		if (!isUndefinedOrNull(props['leftSwipeStartThreshold']) && !isPXorPercent(props['leftSwipeStartThreshold'])) {
+			throw 'leftSwipeStartThreshold must be \'#px\', \'#%\' or \'0\' (eg. \'10px\' or \'10%\')';
 		}
 
-		if (!isUndefinedOrNull(props['leftDragEndThreshold']) && !isPXorPercent(props['leftDragEndThreshold'])) {
-			throw 'leftDragEndThreshold must be \'#px\', \'#%\' or \'0\' (eg. \'10px\' or \'10%\')';
+		if (!isUndefinedOrNull(props['leftSwipeEndThreshold']) && !isPXorPercent(props['leftSwipeEndThreshold'])) {
+			throw 'leftSwipeEndThreshold must be \'#px\', \'#%\' or \'0\' (eg. \'10px\' or \'10%\')';
 		}
 
 		if (!isUndefinedOrNull(props['leftSlideOutDuration']) && (!isInteger(props['leftSlideOutDuration']) || props['leftSlideOutDuration'] < 0)) {
@@ -18743,8 +18785,12 @@ var lithiumlistPro = function () {
 			throw 'rightBySwipe must be a boolean';
 		}
 
-		if (!isUndefinedOrNull(props['rightScrollClass']) && (!isString(props['rightScrollClass']) || props['rightScrollClass'].length == 0)) {
-			throw 'rightScrollClass must be a string of length >0';
+		if (!isUndefinedOrNull(props['rightOuterClass']) && (!isString(props['rightOuterClass']) || props['rightOuterClass'].length == 0)) {
+			throw 'rightOuterClass must be a string of length >0';
+		}
+
+		if (!isUndefinedOrNull(props['rightListClass']) && (!isString(props['rightListClass']) || props['rightListClass'].length == 0)) {
+			throw 'rightListClass must be a string of length >0';
 		}
 
 		if (!isUndefinedOrNull(props['rightCloneClass']) && (!isString(props['rightCloneClass']) || props['rightCloneClass'].length == 0)) {
@@ -18788,16 +18834,16 @@ var lithiumlistPro = function () {
 			}
 		}
 
-		if (!isUndefinedOrNull(props['rightDragHandleClass']) && (!isString(props['rightDragHandleClass']) || props['rightDragHandleClass'].length == 0)) {
-			throw 'rightDragHandleClass must be a string of length >0';
+		if (!isUndefinedOrNull(props['rightButtonClass']) && (!isString(props['rightButtonClass']) || props['rightButtonClass'].length == 0)) {
+			throw 'rightButtonClass must be a string of length >0';
 		}
 
-		if (!isUndefinedOrNull(props['rightDragStartThreshold']) && !isPXorPercent(props['rightDragStartThreshold'])) {
-			throw 'rightDragStartThreshold must be \'#px\', \'#%\' or \'0\' (eg. \'10px\' or \'10%\')';
+		if (!isUndefinedOrNull(props['rightSwipeStartThreshold']) && !isPXorPercent(props['rightSwipeStartThreshold'])) {
+			throw 'rightSwipeStartThreshold must be \'#px\', \'#%\' or \'0\' (eg. \'10px\' or \'10%\')';
 		}
 
-		if (!isUndefinedOrNull(props['rightDragEndThreshold']) && !isPXorPercent(props['rightDragEndThreshold'])) {
-			throw 'rightDragEndThreshold must be \'#px\', \'#%\' or \'0\' (eg. \'10px\' or \'10%\')';
+		if (!isUndefinedOrNull(props['rightSwipeEndThreshold']) && !isPXorPercent(props['rightSwipeEndThreshold'])) {
+			throw 'rightSwipeEndThreshold must be \'#px\', \'#%\' or \'0\' (eg. \'10px\' or \'10%\')';
 		}
 
 		if (!isUndefinedOrNull(props['rightSlideOutDuration']) && (!isInteger(props['rightSlideOutDuration']) || props['rightSlideOutDuration'] < 0)) {
