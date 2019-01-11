@@ -5,8 +5,8 @@ import { pageMenuShowHide } from './page-menu-show-hide.js';
 import { lithiumlistPro } from './lithiumlist-pro-1.0.0.js';
 
 var listCont = document.getElementById('div-list-cont');
-var scrollCont = document.getElementById('div-body');
-// var scrollCont = window;
+var outerCont = document.getElementById('div-body');
+// var outerCont = window;
 var listItemClass = 'listitem-cont';
 
 var textLeft = document.createTextNode("Delete");
@@ -51,8 +51,8 @@ var listProperties = {
 
 lithiumlistPro.attachToList(
 	'123456789',
+    outerCont,
     listCont,
-    scrollCont,
     listItemClass,
     listProperties
 );

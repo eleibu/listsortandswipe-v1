@@ -35,7 +35,7 @@
 	<p>
 		Import Lithium List into your code bundle:
 	</p>
-    <pre class="line-numbers"><code class="language-js">import LithiumList from 'lithium-list';</code></pre>
+    <pre class="line-numbers"><code class="language-js">import { lithiumlist } from 'lithiumlist';</code></pre>
 </div>
 <div class="section-cont">
 	<a id="{{$refs['update']['aref']}}" class="title-section">

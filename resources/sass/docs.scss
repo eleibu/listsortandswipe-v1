@@ -6,7 +6,6 @@ div.sitecont-outer {
 }
 
 div.toc-cont {
-
 	div.toc-outer {
 		margin: 0 1.4em;
 
@@ -82,7 +81,19 @@ div.details-cont {
 				font-size: 140%;
 				font-weight: bold;
 				color: #222222;
+				margin-bottom: 1em;
+			}
+
+			div.subsection-links {
+				border-top: 1px solid #EEEEEE;
+				border-bottom: 1px solid #EEEEEE;
+				padding: 0.6em 0;
+				font-size: 90%;
 				margin-bottom: 2em;
+
+				a.button-word-cont:hover {
+					background-color: #F8F8F8;
+				}
 			}
 
 			a.title-section {
@@ -94,14 +105,22 @@ div.details-cont {
 			}
 
 			div.subsection-cont {
-				margin: 2em 0 4em 0;
+				margin: 2em 0 4em 2em;
 			}
 
-			div.title-subsection {
-				font-size: 120%;
+			.title-subsection {
+				font-size: 110%;
 				font-weight: bold;
-				color: #333333;
+				color: #444444;
 				margin-bottom: 1em;
+			}
+
+			a.title-subsection {
+				display: block;
+			}
+
+			a.title-subsection:hover {
+				text-decoration: none;
 			}
 
 			div.params-cont {
@@ -123,15 +142,17 @@ div.details-cont {
 				margin-top: 2em;
 			}
 
+			div.diag-cont {
+				margin: 2em 0;
+			}
+
 			p {
 				color: #444444;
 				line-height: 130%;
 			}
 		}
-
 	}
 }
-
 
 #div-body.xl, #div-body.lg, #div-body.md, #div-body.sm {
 	div.toc-cont {
@@ -154,5 +175,37 @@ div.details-cont {
 	div.toc-cont {
 		border-bottom: 1px solid #EEEEEE;
 		margin-bottom: 2em;
+	}
+}
+
+#ul-html-structure {
+	list-style-type: disc;
+
+	li {
+		padding: 0.2em 0;
+	}
+}
+
+#div-diag-outer-cont {
+	margin: 0 auto;
+	min-width: 200px;
+	max-width: 400px;
+	border: 10px solid red;
+	height: 400px;
+	overflow: auto;
+
+	#div-diag-list-cont {
+		margin: 1em;
+		border: 10px solid blue;
+		position: relative;
+
+		div.list-item {
+			margin: 1em;
+			padding: 1em 0;
+			background-color: #FFFFFF;
+			border: 5px solid green;
+			color: green;
+			text-align: center;
+		}
 	}
 }

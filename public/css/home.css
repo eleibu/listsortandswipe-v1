@@ -23,6 +23,19 @@ a:hover {
   visibility: hidden;
 }
 
+.unselectable {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+}
+
 .button-word-cont {
   display: inline-block;
   padding: 0.6em 1em;
@@ -186,19 +199,6 @@ a.menubtn:hover {
 #div-sitefooter div.sitefooter-outer {
   position: relative;
   padding: 20px 16px;
-}
-
-.unselectable {
-  -webkit-touch-callout: none;
-  /* iOS Safari */
-  -webkit-user-select: none;
-  /* Safari */
-  /* Konqueror HTML */
-  -moz-user-select: none;
-  /* Firefox */
-  -ms-user-select: none;
-  /* Internet Explorer/Edge */
-  user-select: none;
 }
 
 .button-word-cont.hlink {

@@ -24,23 +24,20 @@
 
 
 // Notes:
-// scrollCont should be a DOM element or window (not 'document' or 'document.body')
-// if want whole page to scroll and performance on mobile is important, consider using a div to wrap the whole page (with height: 100%; overflow: auto) and making it the scrollCont
-// if scrollCont != window:
-	// scrollCont must have a height other than 'auto' (eg. px, %, em)
-	// scrollCont must have overflow 'auto', 'scroll' or 'hidden' (will be set to 'hidden' during automatic scrolling to deal with Safari auto scrolling issue)
-// set 'safariAutoScrollOverflow = false' to prevent setting 'scrollCont.style.overflow = hidden' upon auto scroll (will break auto scroll on Mac Safari)
+// outerCont should be a DOM element or window (not 'document' or 'document.body')
+// if want whole page to scroll and performance on mobile is important, consider using a div to wrap the whole page (with height: 100%; overflow: auto) and making it the outerCont
+// if outerCont != window:
+	// outerCont must have a height other than 'auto' (eg. px, %, em)
+	// outerCont must have overflow 'auto', 'scroll' or 'hidden' (will be set to 'hidden' during automatic scrolling to deal with Safari auto scrolling issue)
+// set 'safariAutoScrollOverflow = false' to prevent setting 'outerCont.style.overflow = hidden' upon auto scroll (will break auto scroll on Mac Safari)
 // if set 'safariBodyUnselectable = false', consider adding unselectable styles to an outer object (eg. body, document, etc) even if 'listitem-cont' or a sub-element is
-	// unselectable - otherwise, unintended selection of elements outside scrollCont can cause problems
-// listCont should have 'position: relative'
-// need to set css 'box-shadow' for 'clone-sort' class if want sort clone to have a drop shadow
+	// unselectable - otherwise, unintended selection of elements outside outerCont can cause problems
 // need to set css for 'sort-item-active' to hide active item while sorting
-// add 'unselectable' classes (with vendor prefixes) to prevent text selection
 // if 'left/righMaskClass' is not set, mask is not created
 // sortScrollSpeed: 1, 2, 3, 4, 5 (default = 3)
 // leftMasks / rightMasks must be arrays (not null) and leftMasks.classNameDefault must not be undefined or null
 // setDefaultProperties only applies to instances created after it is called (use setListProperties to change properties for a paticular instance)
-// leftScrollClass / rightScrollClass is not added to scrollCont if it is 'window'
+// leftScrollClass / rightScrollClass is not added to outerCont if it is 'window'
 // does not work with '-webkit-overflow-scrolling: touch' (iOS only)
 
 
@@ -62,12 +59,15 @@
 // Medium articles:
 // Validation using plain JS
 
-// TODO: Will it work with 'window' if we fix the issues (see when scrollCont = window.document)?
+// TODO: Will it work with 'window' if we fix the issues (see when outerCont = window.document)?
 
+// TODO: CHange 'lithiumlistPro' to 'lithiumlist'
+// TODO: Change 'detachFromList', 'triggerLeft' and 'triggerRight' to use 'outerCont' rather than 'listCont'?
+// TODO: Why is 'unlicensed' message not showing in docs/setup?
 // TODO: Test 'supportsPassive' in Edge and IE
 // TODO: Include version number and send it to server
 // TODO: Favicon
-// TODO: Can we improve auto-scrolling when scrollCont = window?
+// TODO: Can we improve auto-scrolling when outerCont = window?
 // TODO: Allow '-webkit-overflow-scrolling: touch' by turning it off when sorting starts?
 // TODO: Reset props for already attached list
 // TODO: Change prop combinations
@@ -160,7 +160,7 @@ export var lithiumlistPro = (function () {
 
 	// public methods
 
-	var attachToList = function(key, listCont, scrollCont, listItemClass, listProperties) {
+	var attachToList = function(key, outerCont, listCont, listItemClass, listProperties) {
 		if (isUndefinedOrNull(listCont)) {
 			throw 'listCont must not be undefined or null';
 		} else {
@@ -175,20 +175,20 @@ export var lithiumlistPro = (function () {
 			}
 		}
 
-		if (isUndefinedOrNull(scrollCont)) {
-			scrollCont = window;
+		if (isUndefinedOrNull(outerCont)) {
+			outerCont = window;
 		} else {
-			if (!isWindow(scrollCont)) {
-				if (isDOMElement(scrollCont)) {
-					if (scrollCont === listCont) {
-						console.warn('Auto scrolling may not work where scrollCont === listCont');
+			if (!isWindow(outerCont)) {
+				if (isDOMElement(outerCont)) {
+					if (outerCont === listCont) {
+						console.warn('Auto scrolling may not work where outerCont === listCont');
 					} else {
-						if (!scrollCont.contains(listCont)) {
-							throw 'scrollCont must contain listCont';
+						if (!outerCont.contains(listCont)) {
+							throw 'outerCont must contain listCont';
 						}
 					}
 				} else {
-					throw 'scrollCont must be a DOM element';
+					throw 'outerCont must be a DOM element';
 				}
 			}
 		}
@@ -198,7 +198,15 @@ export var lithiumlistPro = (function () {
 		}
 
 		var props = {};
-		if (!isUndefinedOrNull(listProperties)) {
+		if (isUndefinedOrNull(listProperties)) {
+			for (var attrname in defaultProperties) {
+				if (isArray(defaultProperties[attrname])) {
+					props[attrname] = defaultProperties[attrname].slice(0);
+				} else {
+					props[attrname] = defaultProperties[attrname];
+				}
+			}
+		} else {
 			validateProps(listProperties);
 			for (var attrname in defaultProperties) {
 				if (typeof listProperties[attrname] === 'undefined') {
@@ -221,13 +229,12 @@ export var lithiumlistPro = (function () {
 		var instance = {
 			'rkey' : key,
 			'isr' : false,
-			'scrollCont' : scrollCont,
+			'outerCont' : outerCont,
 			'listCont' : listCont,
 			'listItemClass' : listItemClass,
 			'props' : props,
 			'temp' : getEmptyTemp()
 		};
-
 
 		instances.push(instance);
 
@@ -235,7 +242,7 @@ export var lithiumlistPro = (function () {
 			instance.temp.funcOnScroll = function(e) {onScroll(e, instance);};
 			instance.temp.funcMouseDown = function(e) {mouseDown(e, instance);};
 			instance.temp.funcTouchStart = function(e) {touchStart(e, instance);};
-			instance.scrollCont.addEventListener('scroll', instance.temp.funcOnScroll);
+			instance.outerCont.addEventListener('scroll', instance.temp.funcOnScroll);
 			instance.listCont.addEventListener('mousedown', instance.temp.funcMouseDown);
 			instance.listCont.addEventListener('touchstart', instance.temp.funcTouchStart);			
 		}// reg
@@ -260,7 +267,7 @@ export var lithiumlistPro = (function () {
 			}
 			if (index != null) {
 				if (instances[index].temp.funcOnScroll) {
-					instances[index].scrollCont.removeEventListener('scroll', instances[index].temp.funcOnScroll);
+					instances[index].outerCont.removeEventListener('scroll', instances[index].temp.funcOnScroll);
 				}
 		        if (instances[index].temp.funcMouseDown) {
 					listCont.removeEventListener('mousedown', instances[index].temp.funcMouseDown);
@@ -388,10 +395,10 @@ export var lithiumlistPro = (function () {
 	// private functions
 
 	var tempFunctionRemoveMasks = function(props) {
-		if (props.leftMasks.length > 1) {
+		if (props.leftMasks && (props.leftMasks.length > 1)) {
 			props.leftMasks.length = 1;
 		}
-		if (props.rightMasks.length > 1) {
+		if (props.rightMasks && (props.rightMasks.length > 1)) {
 			props.rightMasks.length = 1;
 		}
 	};
@@ -405,6 +412,7 @@ export var lithiumlistPro = (function () {
 
 	var mouseDown = function(e, instance) {
 		if ((instance != null) && (!instance.temp.ignoreClicks) && ((instance.props.sortEnabled) || (instance.props.leftEnabled) || (instance.props.rightEnabled))) {
+			
 			setItems(instance);
 
 			var index = null;
@@ -486,8 +494,8 @@ export var lithiumlistPro = (function () {
 
         safariBodyUnselectableAdd(instance);
 
-        if ((instance.props.leftScrollClass) && isDOMElement(instance.scrollCont)) {	// check that scrollCont is not 'window' or 'document'
-        	addClass(instance.scrollCont, instance.props.leftScrollClass);
+        if ((instance.props.leftScrollClass) && isDOMElement(instance.outerCont)) {	// check that outerCont is not 'window' or 'document'
+        	addClass(instance.outerCont, instance.props.leftScrollClass);
         }
         if (!instance.isr) rSend(instance);// reg
 
@@ -517,8 +525,8 @@ export var lithiumlistPro = (function () {
 
         safariBodyUnselectableAdd(instance);
 
-        if ((instance.props.rightScrollClass) && isDOMElement(instance.scrollCont)) {	// check that scrollCont is not 'window' or 'document'
-        	addClass(instance.scrollCont, instance.props.rightScrollClass);
+        if ((instance.props.rightScrollClass) && isDOMElement(instance.outerCont)) {	// check that outerCont is not 'window' or 'document'
+        	addClass(instance.outerCont, instance.props.rightScrollClass);
         }
         if (!instance.isr) rSend(instance);// reg
 
@@ -558,11 +566,11 @@ export var lithiumlistPro = (function () {
 				instance.temp.activeOrigX = instance.temp.items[instance.temp.activeIndex].offsetLeft;
 
 				instance.temp.deltaItemsScroll = 0;
-				if (instance.scrollCont !== instance.listCont) {
-					if (isWindow(instance.scrollCont)) {
-						instance.temp.deltaItemsScroll = instance.listCont.getBoundingClientRect().top + getScrollTop(instance.scrollCont);
+				if (instance.outerCont !== instance.listCont) {
+					if (isWindow(instance.outerCont)) {
+						instance.temp.deltaItemsScroll = instance.listCont.getBoundingClientRect().top + getScrollTop(instance.outerCont);
 					} else {
-						instance.temp.deltaItemsScroll = instance.listCont.getBoundingClientRect().top - instance.scrollCont.getBoundingClientRect().top + getScrollTop(instance.scrollCont);
+						instance.temp.deltaItemsScroll = instance.listCont.getBoundingClientRect().top - instance.outerCont.getBoundingClientRect().top + getScrollTop(instance.outerCont);
 					}
 				}
 
@@ -572,8 +580,8 @@ export var lithiumlistPro = (function () {
 
 				safariBodyUnselectableAdd(instance);
 
-		        if ((instance.props.sortScrollClass) && isDOMElement(instance.scrollCont)) {	// check that scrollCont is not 'window' or 'document'
-		        	addClass(instance.scrollCont, instance.props.sortScrollClass);
+		        if ((instance.props.sortScrollClass) && isDOMElement(instance.outerCont)) {	// check that outerCont is not 'window' or 'document'
+		        	addClass(instance.outerCont, instance.props.sortScrollClass);
 		        }
 
 		        if (!instance.temp.itemClone) {
@@ -643,7 +651,7 @@ export var lithiumlistPro = (function () {
 	    			}
 	        		clearInterval(instance.temp.scrollInterval);
 	        		instance.temp.scrollInterval = null;
-	        		scrollContOverflowRevert(instance);
+	        		outerContOverflowRevert(instance);
 	        	}
 
         		var rect = instance.temp.itemClone.getBoundingClientRect();
@@ -661,9 +669,9 @@ export var lithiumlistPro = (function () {
 
 	        		if (instance.temp.scrollOverhang == 0) {
 	        			if (isItemCloneAboveScrollTop(instance)) {
-							instance.temp.scrollOverhang = instance.temp.deltaItemsScroll + instance.temp.itemClone.offsetTop - getScrollTop(instance.scrollCont);
+							instance.temp.scrollOverhang = instance.temp.deltaItemsScroll + instance.temp.itemClone.offsetTop - getScrollTop(instance.outerCont);
 	        			} else if (isItemCloneBelowScrollBottom(instance)) {
-							instance.temp.scrollOverhang = (instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight) - (getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.temp.deltaItemsScroll);
+							instance.temp.scrollOverhang = (instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight) - (getScrollTop(instance.outerCont) + getouterContHeight(instance) - instance.temp.deltaItemsScroll);
 	        			}
 	        		} else {
 	        			if (instance.temp.scrollOverhang < 0) {
@@ -688,7 +696,7 @@ export var lithiumlistPro = (function () {
 	        				}
 	        				instance.props.onSortAutoScrollStart(instance.temp.origIndex, scrollingUp);
 	        			}
-	        			scrollContOverflowHidden(instance);
+	        			outerContOverflowHidden(instance);
 						instance.temp.scrollInterval = setInterval(function() {doScroll(instance);}, 5);
 	        		}
 	        	}
@@ -713,8 +721,8 @@ export var lithiumlistPro = (function () {
 
         if (shouldScroll) {
 			var scrollChange = Math.round((instance.temp.scrollOverhang / instance.temp.itemClone.offsetHeight) * getScrollMultiplier(instance.props.sortScrollSpeed));
-			setScrollTop(instance.scrollCont, getScrollTop(instance.scrollCont) + scrollChange);
-        	if (isWindow(instance.scrollCont)) {
+			setScrollTop(instance.outerCont, getScrollTop(instance.outerCont) + scrollChange);
+        	if (isWindow(instance.outerCont)) {
         		instance.temp.lastPageY = instance.temp.lastPageY + scrollChange;
         	}
         	animateItems(instance);
@@ -732,7 +740,7 @@ export var lithiumlistPro = (function () {
         		clearInterval(instance.temp.scrollInterval);
         		instance.temp.scrollInterval = null;
         	}
-        	scrollContOverflowRevert(instance);
+        	outerContOverflowRevert(instance);
         	instance.temp.scrollOverhang = 0;
         }
 	};
@@ -858,7 +866,7 @@ export var lithiumlistPro = (function () {
 	    			}
 	        		clearInterval(instance.temp.scrollInterval);
 	        		instance.temp.scrollInterval = null;
-	        		scrollContOverflowRevert(instance);
+	        		outerContOverflowRevert(instance);
 	        	}
 
 				instance.temp.itemClone.style.top = instance.temp.items[instance.temp.activeIndex].offsetTop + getTransYNum(instance.temp.items[instance.temp.activeIndex]) + 'px'; 
@@ -980,8 +988,8 @@ export var lithiumlistPro = (function () {
 				removeClass(instance.temp.items[instance.temp.activeIndex], instance.props.leftItemActiveClass);
 			}
 
-	        if ((instance.props.leftScrollClass) && isDOMElement(instance.scrollCont)) {
-	        	removeClass(instance.scrollCont, instance.props.leftScrollClass);
+	        if ((instance.props.leftScrollClass) && isDOMElement(instance.outerCont)) {
+	        	removeClass(instance.outerCont, instance.props.leftScrollClass);
 	        }
 
 	        destroyTempDivs(instance);
@@ -996,8 +1004,8 @@ export var lithiumlistPro = (function () {
 				removeClass(instance.temp.items[instance.temp.activeIndex], instance.props.rightItemActiveClass);
 			}
 
-	        if ((instance.props.rightScrollClass) && isDOMElement(instance.scrollCont)) {
-	        	removeClass(instance.scrollCont, instance.props.rightScrollClass);
+	        if ((instance.props.rightScrollClass) && isDOMElement(instance.outerCont)) {
+	        	removeClass(instance.outerCont, instance.props.rightScrollClass);
 	        }
 
 	        destroyTempDivs(instance);
@@ -1023,8 +1031,8 @@ export var lithiumlistPro = (function () {
 			instance.temp.items[instance.temp.activeIndex].style.visibility = 'visible';
 		}
 
-		if ((instance.props.sortScrollClass) && isDOMElement(instance.scrollCont)) {
-			removeClass(instance.scrollCont, instance.props.sortScrollClass);
+		if ((instance.props.sortScrollClass) && isDOMElement(instance.outerCont)) {
+			removeClass(instance.outerCont, instance.props.sortScrollClass);
 		}
 
 		destroyTempDivs(instance);
@@ -1137,7 +1145,7 @@ export var lithiumlistPro = (function () {
 			'sortEndTimer' : null,
 			'scrollOverhang' : 0,
 			'scrollInterval' : null,
-			'origScrollContOverflow' : null,
+			'origouterContOverflow' : null,
 			'funcOnScroll' : null,
 			'funcMouseDown' : null,
 			'funcTouchStart' : null,
@@ -1164,25 +1172,25 @@ export var lithiumlistPro = (function () {
         }
 	};
 
-	var scrollContOverflowHidden = function(instance) {
-		if (isSafariMacOS && !isWindow(instance.scrollCont) && instance.props.safariAutoScrollOverflow) {
-			if ((instance.scrollCont.style) && (instance.scrollCont.style.overflow)) {
-				instance.temp.origScrollContOverflow = instance.scrollCont.style.overflow;
+	var outerContOverflowHidden = function(instance) {
+		if (isSafariMacOS && !isWindow(instance.outerCont) && instance.props.safariAutoScrollOverflow) {
+			if ((instance.outerCont.style) && (instance.outerCont.style.overflow)) {
+				instance.temp.origouterContOverflow = instance.outerCont.style.overflow;
 			}
-			instance.scrollCont.style.overflow = 'hidden';
+			instance.outerCont.style.overflow = 'hidden';
 		}
 	};
 
-	var scrollContOverflowRevert = function(instance) {
-		if (isSafariMacOS && !isWindow(instance.scrollCont) && instance.props.safariAutoScrollOverflow) {
-			if (instance.temp.origScrollContOverflow) {
-				instance.scrollCont.style.overflow = instance.temp.origScrollContOverflow;
-				instance.temp.origScrollContOverflow = null;
+	var outerContOverflowRevert = function(instance) {
+		if (isSafariMacOS && !isWindow(instance.outerCont) && instance.props.safariAutoScrollOverflow) {
+			if (instance.temp.origouterContOverflow) {
+				instance.outerCont.style.overflow = instance.temp.origouterContOverflow;
+				instance.temp.origouterContOverflow = null;
 			} else {
-				instance.scrollCont.style.overflow = null;
+				instance.outerCont.style.overflow = null;
 			}
-			if (!instance.scrollCont.style || (instance.scrollCont.style.length == 0)) {
-				instance.scrollCont.removeAttribute('style');
+			if (!instance.outerCont.style || (instance.outerCont.style.length == 0)) {
+				instance.outerCont.removeAttribute('style');
 			}
 		}
 	};
@@ -1202,7 +1210,7 @@ export var lithiumlistPro = (function () {
 	};
 
 	var isItemCloneAboveScrollTop = function(instance) {
-		if (instance.temp.itemClone.offsetTop < (getScrollTop(instance.scrollCont) - instance.temp.deltaItemsScroll)) {
+		if (instance.temp.itemClone.offsetTop < (getScrollTop(instance.outerCont) - instance.temp.deltaItemsScroll)) {
 			return true;
 		} else {
 			return false;
@@ -1210,7 +1218,7 @@ export var lithiumlistPro = (function () {
 	};
 
 	var isItemCloneBelowScrollBottom = function(instance) {
-		if ((instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight) > (getScrollTop(instance.scrollCont) + getScrollContHeight(instance) - instance.temp.deltaItemsScroll)) {
+		if ((instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight) > (getScrollTop(instance.outerCont) + getouterContHeight(instance) - instance.temp.deltaItemsScroll)) {
 			return true;
 		} else {
 			return false;
@@ -1282,11 +1290,11 @@ export var lithiumlistPro = (function () {
 		}
 	};
 
-	var getScrollContHeight = function(instance) {
-		if (isWindow(instance.scrollCont)) {
-			return instance.scrollCont.innerHeight;
+	var getouterContHeight = function(instance) {
+		if (isWindow(instance.outerCont)) {
+			return instance.outerCont.innerHeight;
 		} else {
-			return instance.scrollCont.clientHeight;
+			return instance.outerCont.clientHeight;
 		}
 	};
 
