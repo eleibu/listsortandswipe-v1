@@ -95,6 +95,68 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // (based on getBoundingClientRect - see caniuse)
 
 
+// OVERVIEW AND FEATURES
+// Vertical only
+// Sorts and swipes left/right (sliding 'out' and 'back')
+// Sort start delay allows time to swipe first
+// Drag handles / buttons
+// Active item clone
+
+
+// BACKGROUND
+
+// Lithium List turns a series of vertically arranged items into a sortable and swipeable list, much like tables in iOS and Adroid. As it works equally well on desktop and mobile it enables developers
+// to easily offer app-like functionality in web pages.
+
+// SORTING
+
+// Users can sort items in two ways. One is by clicking/tapping a drag handle. The other is by clicking/tapping on a list item (other than on its drag handle) and holding
+// until it pops up for sorting. In both cases the item can then be dragged/dropped to its new location in the list. Of course developers can specify which elements are to
+// be drag handles, set the delay before sorting begins, turn off sorting via one way or the other, or turn off sorting altogether.
+
+// Related options, events and methods:
+//// ignoreOnClick, onSortStart, onSortEnd, sortEnabled, sortByDrag, sortStartDuration, sortEndDuration, sortOuterClass, sortListClass, sortCloneClass, sortCloneBoxShadow,
+//// sortCloneScale, sortItemActiveHide, sortItemActiveClass, sortDragHandleClass, sortMoveStartDelay, sortReorderDuration, safariBodyUnselectable,
+//// safariAutoOuterOverflow
+
+
+// AUTOMATIC SCROLLING
+
+// []
+
+// Related options, events and methods:
+//// sortScrollSpeed, onSortAutoScrollStart, onSortAutoScrollEnd
+
+
+// SLIDING AND SWIPING
+
+// Users can slide items left and right. Like in many mobile apps, sliding left will typically delete the item and sliding right will typically archive it. Developers
+// can, of course, determine what sliding left and right actually does. There are two ways to slide items in either direction. One is by clicking/tapping a slide button.
+// The other is by clicking/tapping on a list item (other than on a slide button) and, while holding down, swiping left or right before the item pops up for sorting. As
+// long as the user has swiped by at least the left or right slide-start threshold, sliding mode will be activated. This enables a nice user experience, espcially on
+// mobile - users can sort or swipe using simple touch gestures that they are already familiar with from their use of mobile apps.
+
+// After sliding has commenced and the user releases their click/tap, the item will either slide 'out' or slide 'back'. Which of these occurs depends on whether or not
+// it was swiped beyond the left/right slide-end threshold. Sliding 'out' means the item will automatically slide all the way out of the list. Sliding 'back' means it will
+// automatically slide back to its starting position.
+
+// Developers can control all aspects of sliding and swiping, including specifying which elements are to be slide buttons, setting the slide-start and slide-end thresholds
+// and turning off sliding and/or swiping in one or both directions.
+
+// Related options, events and methods:
+//// ignoreOnClick
+
+
+// ACTIVE ITEM CLONE
+
+// Under the hood, Lithium List clones the active list item during sorting and swiping. The active list item is hidden and the clone is moved up/down during sorting
+// and left/right during sliding. Developers can control various ascpects of the clone, such as its box-shadow and scale during sorting and class names during other
+// activities.
+
+
+// MASKS
+
+
 // Notes:
 // outerCont should be a DOM element or window (not 'document' or 'document.body')
 // if want whole page to scroll and performance on mobile is important, consider using a div to wrap the whole page (with height: 100%; overflow: auto) and making it the outerCont
@@ -153,16 +215,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 var lithiumlistPro = function () {
 	var instances = [];
-
-	// leftButtonClass
-	// leftSwipeStartThreshold
-	// leftSwipeEndThreshold
-
-
-	//rightButtonClass
-	// rightSwipeStartThreshold
-	// rightSwipeEndThreshold
-
 
 	var defaultProperties = {
 		onSortStart: null,

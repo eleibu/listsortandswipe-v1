@@ -21,10 +21,10 @@
 </div>
 <div class="section-cont">
 <!--
-        ignoreOnClick: ['input', 'textarea', 'select', 'option', 'button']
+        DONE ignoreOnClick: ['input', 'textarea', 'select', 'option', 'button']
 
-        leftButtonClass: 'left-button',
-        leftBySwipe
+        DONE leftButtonClass: 'left-button',
+        DONE leftBySwipe
         leftCloneClass: 'left-clone',
         leftCloneSlideBackClass: 'left-clone-slide-back',
         leftCloneSlideOutClass: 'left-clone-slide-out',
@@ -99,6 +99,12 @@
             'aref' => 'ref-leftBySwipe',
             'title' => 'leftBySwipe'
         ),
+        'leftCloneClass' => array(
+            'aref' => 'ref-leftCloneClass',
+            'title' => 'leftCloneClass'
+        ),
+
+
 
         'leftEnabled' => array(
             'aref' => 'ref-leftEnabled',
@@ -162,7 +168,7 @@ lithiumlist.attachToList(
             </div>
         </div>
         <p>
-            The class name of DOM elements that will act as buttons to trigger a full left swipe of the list item.
+            The class name of DOM elements that will act as buttons to trigger an automatic full left swipe of the list item.
         </p>
         <div class="title-codeblock">
             EXAMPLE JS
@@ -205,6 +211,35 @@ lithiumlist.attachToList(
 );
 </code></pre>
     </div>
+
+    <div class="subsection-cont">
+        <a id="{{$refs_options['leftCloneClass']['aref']}}" class="title-subsection">
+            {{$refs_options['leftCloneClass']['title']}}
+        </a>
+        <div class="params-cont">
+            <div class="param">
+                <strong>Type:</strong> String
+            </div>
+            <div class="param">
+                <strong>Default:</strong> <code class="language-js">&#39;left-clone&#39;</code>
+            </div>
+        </div>
+        <p>
+            The class name added to the [ACTIVE ITEM CLONE - make this a link] during left sliding.
+        </p>
+        <div class="title-codeblock">
+            EXAMPLE JS
+        </div>
+<pre class="line-numbers"><code class="language-js">var options = {
+    leftCloneClass: &#39;left-clone&#39;
+};
+lithiumlist.attachToList(
+    ...,
+    options
+);
+</code></pre>
+    </div>
+
     <div class="subsection-cont">
         <a id="{{$refs_options['leftEnabled']['aref']}}" class="title-subsection">
             {{$refs_options['leftEnabled']['title']}}

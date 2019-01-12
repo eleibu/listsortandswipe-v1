@@ -11,7 +11,7 @@ var outerCont = document.getElementById('div-diag-outer-cont');
 var listCont = document.getElementById('div-diag-list-cont');
 if (outerCont && listCont) {
 	lithiumlistPro.attachToList(
-		'12345678',
+		'123456789',
 	    outerCont,
 	    listCont,
 	    'list-item'
