@@ -15,3 +15,6 @@ Route::get('/', 'Controller_Site@page_home');
 Route::get('/home', 'Controller_Site@page_home')->name('home');
 
 Route::get('/docs/{subsection?}', 'Controller_Site@section_docs');
+Route::get('/temp-overview-images', function() {
+	return view('temp-overview-images');
+});

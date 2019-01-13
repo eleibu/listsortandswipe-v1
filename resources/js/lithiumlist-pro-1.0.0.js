@@ -6,6 +6,7 @@
 // Chrome 71 on Mac
 // Chrome 59 on Android
 // Samsung Browser 5.4 on Android
+// Firefox 64 on Mac
 
 
 
@@ -33,14 +34,14 @@
 
 // BACKGROUND
 
-// Lithium List turns a series of vertically arranged items into a sortable and swipeable list, much like tables in iOS and Adroid. As it works equally well on desktop and mobile it enables developers
-// to easily offer app-like functionality in web pages.
+// Lithium List turns a series of vertically arranged items into a sortable and swipeable list, much like tables in iOS and Adroid. It works equally well on desktop
+// and mobile, enabling developers to easily offer app-like functionality in their web pages.
 
 // SORTING
 
-// Users can sort items in two ways. One is by clicking/tapping a drag handle. The other is by clicking/tapping on a list item (other than on its drag handle) and holding
-// until it pops up for sorting. In both cases the item can then be dragged/dropped to its new location in the list. Of course developers can specify which elements are to
-// be drag handles, set the delay before sorting begins, turn off sorting via one way or the other, or turn off sorting altogether.
+// Users can sort list items in two ways. One is by clicking/tapping a drag handle. The other is by clicking/tapping on a list item (other than on its drag handle) and holding
+// until it pops up for sorting. In both cases the item can then be dragged/dropped to its new location. Of course developers can specify which elements are
+// drag handles, set the delay before sorting begins, turn off sorting via one way or the other, or turn off sorting altogether.
 
 // Related options, events and methods:
 //// ignoreOnClick, onSortStart, onSortEnd, sortEnabled, sortByDrag, sortStartDuration, sortEndDuration, sortOuterClass, sortListClass, sortCloneClass, sortCloneBoxShadow,
@@ -50,26 +51,27 @@
 
 // AUTOMATIC SCROLLING
 
-// []
+// If the list of items extends beyond the bottom or top of its container, Lithium List automatically scrolls during sorting. Scrolling is fluid, responsive and...
+// just nice. Developers can control the scroll speed and, if desired, turn off automatic scrolling altogether.
 
 // Related options, events and methods:
-//// sortScrollSpeed, onSortAutoScrollStart, onSortAutoScrollEnd
+//// sortScrollEnabled, sortScrollSpeed, onSortAutoScrollStart, onSortAutoScrollEnd
 
 
 // SLIDING AND SWIPING
 
 // Users can slide items left and right. Like in many mobile apps, sliding left will typically delete the item and sliding right will typically archive it. Developers
-// can, of course, determine what sliding left and right actually does. There are two ways to slide items in either direction. One is by clicking/tapping a slide button.
-// The other is by clicking/tapping on a list item (other than on a slide button) and, while holding down, swiping left or right before the item pops up for sorting. As
+// can, of course, determine what sliding left and right does. There are two ways to slide items in either direction. One is by clicking/tapping a slide button.
+// The other is by clicking/tapping on a list item (other than on a slide button) and, while holding down, swiping left or right. As
 // long as the user has swiped by at least the left or right slide-start threshold, sliding mode will be activated. This enables a nice user experience, espcially on
-// mobile - users can sort or swipe using simple touch gestures that they are already familiar with from their use of mobile apps.
+// mobile - users can sort or swipe using simple touch gestures that they are already familiar with.
 
 // After sliding has commenced and the user releases their click/tap, the item will either slide 'out' or slide 'back'. Which of these occurs depends on whether or not
 // it was swiped beyond the left/right slide-end threshold. Sliding 'out' means the item will automatically slide all the way out of the list. Sliding 'back' means it will
 // automatically slide back to its starting position.
 
-// Developers can control all aspects of sliding and swiping, including specifying which elements are to be slide buttons, setting the slide-start and slide-end thresholds
-// and turning off sliding and/or swiping in one or both directions.
+// Developers can control all aspects of sliding and swiping, including specifying which elements are slide buttons, setting the slide-start and slide-end thresholds,
+// determining the speed at which items will slide out/back and turning off sliding and/or swiping altogether.
 
 // Related options, events and methods:
 //// ignoreOnClick
@@ -77,13 +79,25 @@
 
 // ACTIVE ITEM CLONE
 
-// Under the hood, Lithium List clones the active list item during sorting and swiping. The active list item is hidden and the clone is moved up/down during sorting
-// and left/right during sliding. Developers can control various ascpects of the clone, such as its box-shadow and scale during sorting and class names during other
-// activities.
+// Under the hood, Lithium List clones the active list item during sorting and swiping. The active list item is hidden while the clone is physically moved around.
+// Developers can control various ascpects of the clone, such as its box-shadow and scale during sorting, and class names during other activities.
 
 
 // MASKS
 
+// During sliding, Lithium List covers over the active list item with a mask. The mask is a DIV with the exact dimensions and location of the active list item. By default
+// the mask is given a red background for left sliding (indicating that the item will be deleted) and a green background for right sliding (indicating that the item will
+// by archived). Developers can change the background colour of the masks, apply class names during sliding and define child nodes for insertion into the masks (for example,
+// to show a label indicating what action will occur upon completion of the slide). Developers can also turn masks off altogther and instead use class names added to
+// the active list item to show their desired content.
+
+// Related options, events and methods:
+//// leftItemActiveClass, leftMasks, rightItemActiveClass, rightMasks
+
+
+// ADD ITEMS WITH NO CODE (PLAYS NICELY WITH REACT)
+// VARIABLE HEIGHT LIST ITEMS
+// LIST ITEM PADDING
 
 
 
@@ -166,6 +180,7 @@ export var lithiumlistPro = (function () {
         sortDragHandleClass: 'sort-drag-handle',
         sortMoveStartDelay: 400,
         sortReorderDuration: 200,
+        sortScrollEnabled: true,
         sortScrollSpeed: 3,
         safariBodyUnselectable: true,														// applies only to Safari on MacOS
         safariAutoOuterOverflow: true,														// applies only to Safari on MacOS
@@ -744,37 +759,39 @@ export var lithiumlistPro = (function () {
 	        		instance.temp.itemClone.style.top = instance.temp.itemClone.offsetTop + yChange + 'px';
 	        		animateItems(instance);
 
-	        		if (instance.temp.outerOverhang == 0) {
-	        			if (isItemCloneAboveOuterTop(instance)) {
-							instance.temp.outerOverhang = instance.temp.deltaItemsOuter + instance.temp.itemClone.offsetTop - getOuterTop(instance.outerCont);
-	        			} else if (isItemCloneBelowOuterBottom(instance)) {
-							instance.temp.outerOverhang = (instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight) - (getOuterTop(instance.outerCont) + getouterContHeight(instance) - instance.temp.deltaItemsOuter);
-	        			}
-	        		} else {
-	        			if (instance.temp.outerOverhang < 0) {
-	        				if (instance.temp.outerOverhang + yChange < 0) {
-								instance.temp.outerOverhang = instance.temp.outerOverhang + yChange;
-	        				} else {
-								instance.temp.outerOverhang = 0;
-	        				}
-	        			} else {
-	        				if (instance.temp.outerOverhang + yChange > 0) {
-								instance.temp.outerOverhang = instance.temp.outerOverhang + yChange;
-	        				} else {
-								instance.temp.outerOverhang = 0;
-	        				}
-	        			}
-	        		}
-	        		if (instance.temp.outerOverhang != 0) {
-	        			if (instance.props.onSortAutoScrollStart) {
-	        				var scrollingUp = true;
-	        				if (instance.temp.outerOverhang > 0) {
-	        					scrollingUp = false;
-	        				}
-	        				instance.props.onSortAutoScrollStart(instance.temp.origIndex, scrollingUp);
-	        			}
-	        			outerContOverflowHidden(instance);
-						instance.temp.scrollInterval = setInterval(function() {doScroll(instance);}, 5);
+	        		if (instance.props.sortScrollEnabled) {
+		        		if (instance.temp.outerOverhang == 0) {
+		        			if (isItemCloneAboveOuterTop(instance)) {
+								instance.temp.outerOverhang = instance.temp.deltaItemsOuter + instance.temp.itemClone.offsetTop - getOuterTop(instance.outerCont);
+		        			} else if (isItemCloneBelowOuterBottom(instance)) {
+								instance.temp.outerOverhang = (instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight) - (getOuterTop(instance.outerCont) + getouterContHeight(instance) - instance.temp.deltaItemsOuter);
+		        			}
+		        		} else {
+		        			if (instance.temp.outerOverhang < 0) {
+		        				if (instance.temp.outerOverhang + yChange < 0) {
+									instance.temp.outerOverhang = instance.temp.outerOverhang + yChange;
+		        				} else {
+									instance.temp.outerOverhang = 0;
+		        				}
+		        			} else {
+		        				if (instance.temp.outerOverhang + yChange > 0) {
+									instance.temp.outerOverhang = instance.temp.outerOverhang + yChange;
+		        				} else {
+									instance.temp.outerOverhang = 0;
+		        				}
+		        			}
+		        		}
+		        		if (instance.temp.outerOverhang != 0) {
+		        			if (instance.props.onSortAutoScrollStart) {
+		        				var scrollingUp = true;
+		        				if (instance.temp.outerOverhang > 0) {
+		        					scrollingUp = false;
+		        				}
+		        				instance.props.onSortAutoScrollStart(instance.temp.origIndex, scrollingUp);
+		        			}
+		        			outerContOverflowHidden(instance);
+							instance.temp.scrollInterval = setInterval(function() {doScroll(instance);}, 5);
+		        		}	        			
 	        		}
 	        	}
         	}
@@ -1616,6 +1633,10 @@ export var lithiumlistPro = (function () {
 
 		if ((!isUndefinedOrNull(props['sortReorderDuration'])) && ((!isInteger(props['sortReorderDuration'])) || (props['sortReorderDuration'] < 0))) {
 			throw 'sortReorderDuration must be a positive integer or zero';
+		}
+
+		if ((!isUndefinedOrNull(props['sortScrollEnabled'])) && (!isBoolean(props['sortScrollEnabled']))) {
+			throw 'sortScrollEnabled must be a boolean';
 		}
 
 		if ((!isUndefinedOrNull(props['sortScrollSpeed'])) && ((!isInteger(props['sortScrollSpeed'])) || ((props['sortScrollSpeed'] != 1) && (props['sortScrollSpeed'] != 2) && (props['sortScrollSpeed'] != 3) && (props['sortScrollSpeed'] != 4) && (props['sortScrollSpeed'] != 5)))) {

@@ -80,6 +80,7 @@
         sortDragHandleClass: 'sort-drag-handle',
         sortMoveStartDelay: 400,
         sortReorderDuration: 200,
+        sortScrollEnabled: true,
         sortScrollSpeed: 3,
         safariBodyUnselectable: true,                                                       // applies only to Safari on MacOS
         safariAutoOuterOverflow: true,                                                     // applies only to Safari on MacOS

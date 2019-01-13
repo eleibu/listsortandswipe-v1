@@ -12,6 +12,13 @@ class Controller_Site extends Controller
 
 	public function section_docs(Request $request, $subpage = '') {
 		$subpages = array(
+			'overview-and-features' => array(
+				'selected' => false,
+				'url' => url('/docs/overview-and-features'),
+				'pageTitle' => 'Lithium List - docs - overview and features',
+				'detailsTitle' => 'Overview and features',
+				'detailsView' => 'docs-overview'
+			),
 			'installation' => array(
 				'selected' => false,
 				'url' => url('/docs/installation'),
