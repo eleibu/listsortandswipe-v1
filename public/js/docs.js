@@ -18585,10 +18585,20 @@ __webpack_require__("./node_modules/bootstrap/dist/js/bootstrap.js");
 
 __WEBPACK_IMPORTED_MODULE_3_prismjs_components_prism_core___default.a.highlightAll();
 
-var outerCont = document.getElementById('div-diag-outer-cont');
-var listCont = document.getElementById('div-diag-list-cont');
-if (outerCont && listCont) {
-	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].attachToList('123456789', outerCont, listCont, 'list-item');
+var outerContSetup = document.getElementById('div-diag-outer-cont-setup');
+var listContSetup = document.getElementById('div-diag-list-cont-setup');
+if (outerContSetup && listContSetup) {
+	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].attachToList('123456789', outerContSetup, listContSetup, 'list-item');
+}
+
+var outerContSorting = document.getElementById('div-diag-outer-cont-sorting');
+var listContSorting = document.getElementById('div-diag-list-cont-sorting');
+if (outerContSorting && listContSorting) {
+	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].attachToList('123456789', outerContSorting, listContSorting, 'list-item', {
+		sortDragHandleClass: 'budicon-grab-ui',
+		leftEnabled: false,
+		rightEnabled: false
+	});
 }
 
 /***/ }),

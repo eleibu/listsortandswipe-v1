@@ -434,30 +434,93 @@ span.list-items {
   color: green;
 }
 
-#div-diag-outer-cont {
+div.diag-outer-cont {
   margin: 0 auto;
-  min-width: 200px;
-  max-width: 400px;
-  border: 10px solid red;
-  height: 400px;
+  min-width: 250px;
   overflow: auto;
 }
 
-#div-diag-outer-cont #div-diag-list-cont {
-  margin: 1em;
-  border: 10px solid blue;
+div.diag-outer-cont div.diag-list-cont {
   position: relative;
 }
 
-#div-diag-outer-cont #div-diag-list-cont div.list-item {
+div.diag-outer-cont div.diag-list-cont div.list-item div.inner {
+  position: relative;
+  margin: 0 0.2em;
+}
+
+div.diag-outer-cont div.diag-list-cont div.list-item div.inner i {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  display: inline-block;
+  font-weight: bold;
+  padding: 0.5em;
+  border-radius: 999px;
+  color: #777777;
+}
+
+div.diag-outer-cont div.diag-list-cont div.list-item div.inner i:hover, div.diag-outer-cont div.diag-list-cont div.list-item div.inner i:active {
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+div.diag-outer-cont div.diag-list-cont div.list-item div.inner i.sort {
+  left: 0;
+}
+
+div.diag-outer-cont div.diag-list-cont div.list-item div.inner i.archive {
+  left: 1.6em;
+}
+
+div.diag-outer-cont div.diag-list-cont div.list-item div.inner i.delete {
+  right: 0;
+}
+
+div.diag-outer-cont div.diag-list-cont div.list-item div.inner div.text {
+  margin: 0 4.6em;
+  text-align: center;
+}
+
+div.diag-outer-cont div.diag-list-cont.left-list, div.diag-outer-cont div.diag-list-cont.right-list {
+  overflow-x: hidden;
+}
+
+#div-diag-outer-cont-sorting {
+  max-width: 300px;
+  border: 1px solid red;
+  height: 300px;
+}
+
+#div-diag-outer-cont-sorting #div-diag-list-cont-sorting div.list-item {
+  margin: 0.4em;
+  padding: 1em 0;
+  background-color: #FAFAFA;
+  border: 1px solid green;
+  color: green;
+}
+
+#div-diag-outer-cont-sorting #div-diag-list-cont-sorting div.list-item div.inner div.text {
+  font-size: 80%;
+}
+
+#div-diag-outer-cont-setup {
+  border: 10px solid red;
+  height: 400px;
+  max-width: 400px;
+}
+
+#div-diag-outer-cont-setup #div-diag-list-cont-setup {
+  margin: 1em;
+  border: 10px solid blue;
+}
+
+#div-diag-outer-cont-setup #div-diag-list-cont-setup div.list-item {
   margin: 1em;
   padding: 1em 0;
   background-color: #FFFFFF;
   border: 5px solid green;
   color: green;
   text-align: center;
-}
-
-#div-diag-outer-cont #div-diag-list-cont.left-list, #div-diag-outer-cont #div-diag-list-cont.right-list {
-  overflow-x: hidden;
 }

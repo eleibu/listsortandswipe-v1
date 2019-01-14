@@ -7,13 +7,29 @@ import { lithiumlistPro } from './lithiumlist-pro-1.0.0.js';
 import Prism from 'prismjs';
 Prism.highlightAll();
 
-var outerCont = document.getElementById('div-diag-outer-cont');
-var listCont = document.getElementById('div-diag-list-cont');
-if (outerCont && listCont) {
+var outerContSetup = document.getElementById('div-diag-outer-cont-setup');
+var listContSetup = document.getElementById('div-diag-list-cont-setup');
+if (outerContSetup && listContSetup) {
 	lithiumlistPro.attachToList(
 		'123456789',
-	    outerCont,
-	    listCont,
+	    outerContSetup,
+	    listContSetup,
 	    'list-item'
+	);	
+}
+
+var outerContSorting = document.getElementById('div-diag-outer-cont-sorting');
+var listContSorting = document.getElementById('div-diag-list-cont-sorting');
+if (outerContSorting && listContSorting) {
+	lithiumlistPro.attachToList(
+		'123456789',
+	    outerContSorting,
+	    listContSorting,
+	    'list-item',
+	    {
+	    	sortDragHandleClass: 'budicon-grab-ui',
+	    	leftEnabled: false,
+	    	rightEnabled: false
+	    }
 	);	
 }

@@ -63,8 +63,8 @@
         This is illustrated here:
     </p>
     <div class="diag-cont">
-        <div id="div-diag-outer-cont">
-            <div id="div-diag-list-cont">
+        <div id="div-diag-outer-cont-setup" class="diag-outer-cont">
+            <div id="div-diag-list-cont-setup" class="diag-list-cont">
                 <div class="list-item unselectable">
                     List item
                 </div>
