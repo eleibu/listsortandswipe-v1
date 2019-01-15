@@ -54,7 +54,6 @@ if (outerContAutomaticScrolling && listContAutomaticScrolling) {
 	    listItemClass,
 	    {
 	    	sortDragHandleClass: 'budicon-grab-ui',
-	    	sortScrollSpeed: 3,
 	    	leftEnabled: false,
 	    	rightEnabled: false,
 	    	onSortEnd: function(origIndex, newIndex) {
@@ -90,12 +89,10 @@ if (outerContSlidingAndSwiping && listContSlidingAndSwiping) {
 	);	
 }
 
-
 var selectLeftSwipeStartThreshold = document.getElementById('select-leftSwipeStartThreshold');
 var selectLeftSwipeEndThreshold = document.getElementById('select-leftSwipeEndThreshold');
 var selectLeftSlideOutDuration = document.getElementById('select-leftSlideOutDuration');
 var selectLeftSlideBackDuration = document.getElementById('select-leftSlideBackDuration');
-
 if (selectLeftSwipeStartThreshold && selectLeftSwipeEndThreshold && selectLeftSlideOutDuration && selectLeftSlideBackDuration) {
 	selectLeftSwipeStartThreshold.addEventListener('change', function() {
 		slideSwipeChange();
@@ -120,6 +117,44 @@ function slideSwipeChange() {
 	});
 }
 
+
+// active item clone
+var outerContActiveItemClone = document.getElementById('div-diag-outer-cont-active-item-clone');
+var listContActiveItemClone = document.getElementById('div-diag-list-cont-active-item-clone');
+if (outerContActiveItemClone && listContActiveItemClone) {
+	lithiumlistPro.attachToList(
+		'123456789',
+	    outerContActiveItemClone,
+	    listContActiveItemClone,
+	    listItemClass,
+	    {
+	    	sortDragHandleClass: 'budicon-grab-ui',
+	    	leftEnabled: false,
+	    	rightEnabled: false,
+	    	onSortEnd: function(origIndex, newIndex) {
+	    		sortEnd(listContActiveItemClone, origIndex, newIndex);
+	    	}
+	    }
+	);	
+}
+
+var selectSortCloneBoxShadow = document.getElementById('select-sortCloneBoxShadow');
+var selectSortCloneScale = document.getElementById('select-sortCloneScale');
+if (selectSortCloneBoxShadow && selectSortCloneScale) {
+	selectSortCloneBoxShadow.addEventListener('change', function() {
+		itemCloneChange();
+	});
+	selectSortCloneScale.addEventListener('change', function() {
+		itemCloneChange();
+	});
+}
+
+function itemCloneChange() {
+	lithiumlistPro.setListProperties(listContActiveItemClone, {
+        sortCloneBoxShadow: selectSortCloneBoxShadow.options[selectSortCloneBoxShadow.selectedIndex].value,
+        sortCloneScale: selectSortCloneScale.options[selectSortCloneScale.selectedIndex].value
+	});
+}
 
 // setup
 var outerContSetup = document.getElementById('div-diag-outer-cont-setup');

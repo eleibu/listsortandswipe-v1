@@ -10,7 +10,7 @@
         ),
         'automatic-scrolling' => array(
             'aref' => 'ref-automatic-scrolling',
-            'title' => 'Automatic-scrolling'
+            'title' => 'Automatic scrolling'
         ),
         'sliding-and-swiping' => array(
             'aref' => 'ref-sliding-and-swiping',
@@ -49,7 +49,7 @@
         {{$refs['what-is-lithium-list']['title']}}
     </a>
 	<p>
-		Lithium List turns a series of vertically arranged items into a sortable and swipeable list, much like tables in iOS and Android. It works equally well on desktop and mobile, enabling developers to easily offer app-like functionality in their web pages.
+		Lithium List turns a series of vertically arranged items into a sortable and swipeable list, much like tables in iOS and Android. It works equally well on desktop and mobile, enabling developers to easily offer app-like functionality in their web pages. [UX, beautiful animations, fully customisable, settings changeable on the fly, add new items with no function calls]
 	</p>
 </div>
 
@@ -277,6 +277,70 @@
     <p>
         Developers can control all aspects of sliding and swiping, including specifying which elements are slide buttons, setting the slide-start and slide-end thresholds,
         determining the speed at which items will slide out/back and turning off sliding and/or swiping altogether.
+    </p>
+    <div class="related-cont">
+        <div class="title-related">
+            Related options and events:
+        </div>
+        <div class="related-links">
+            <a class="button-word-cont" href="{{ url($optionsUrl) . 'ignoreOnClick' }}" title="ignoreOnClick">ignoreOnClick</a>
+        </div>
+    </div>
+</div>
+
+<div class="section-cont">
+    <a id="{{$refs['active-item-clone']['aref']}}" class="title-section">
+        {{$refs['active-item-clone']['title']}}
+    </a>
+    <div id="div-diag-container-active-item-clone" class="diag-cont">
+        <div id="div-diag-outer-cont-active-item-clone" class="diag-outer-cont">
+            <div id="div-diag-list-cont-active-item-clone" class="diag-list-cont">
+                <div class="list-item unselectable">
+                    <div class='inner'>
+                        <i class="sld budicon-grab-ui sort"></i>
+                        <div class='text'>
+                            Start sorting to see my box-shadow and scale change
+                        </div>
+                    </div>
+                </div>
+                <div class="list-item unselectable">
+                    &nbsp;
+                </div>
+                <div class="list-item unselectable">
+                    &nbsp;
+                </div>
+                <div class="list-item unselectable">
+                    &nbsp;
+                </div>
+            </div>
+        </div>
+        <div class="diag-options-cont">
+            <div class="label">
+                sortCloneBoxShadow:
+            </div>
+            <div class="option">
+                <select id="select-sortCloneBoxShadow">
+                    <option value="none">none</option>
+                    <option value="4px 4px 4px rgba(0,0,0,0.05)">4 4px 4px rgba(0,0,0,0.05)</option>
+                    <option value="0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12)" selected="selected">0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12)</option>
+                    <option value="0 15px 30px rgba(0,0,0,0.5), 0 10px 6px rgba(0,0,0,0.45)">0 15px 30px rgba(0,0,0,0.5), 0 10px 6px rgba(0,0,0,0.45)</option>
+                </select>
+            </div>
+            <div class="label">
+                sortCloneScale:
+            </div>
+            <div class="option">
+                <select id="select-sortCloneScale">
+                    <option value="1">1</option>
+                    <option value="1.02" selected="selected">1.02</option>
+                    <option value="1.05">1.05</option>
+                    <option value="1.10">1.10</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <p>
+        Under the hood, Lithium List clones the active list item during sorting and swiping. The active list item is hidden while the clone is physically moved around the screen. Developers can control various aspects of the clone, such as its box-shadow and scale during sorting, and class names during other activities.
     </p>
     <div class="related-cont">
         <div class="title-related">

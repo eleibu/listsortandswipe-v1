@@ -399,6 +399,10 @@ div.details-cont div.details-outer div.section-cont div.diag-cont div.diag-optio
   color: #444444;
 }
 
+div.details-cont div.details-outer div.section-cont div.diag-cont div.diag-options-cont div.option select {
+  max-width: 100%;
+}
+
 div.details-cont div.details-outer div.section-cont p {
   color: #444444;
   line-height: 130%;
@@ -573,6 +577,27 @@ div.diag-outer-cont div.diag-list-cont.left-list, div.diag-outer-cont div.diag-l
 }
 
 #div-diag-container-sliding-and-swiping #div-diag-outer-cont-sliding-and-swiping #div-diag-list-cont-sliding-and-swiping div.list-item div.inner div.text {
+  font-size: 80%;
+}
+
+#div-diag-container-active-item-clone {
+  max-width: 300px;
+}
+
+#div-diag-container-active-item-clone #div-diag-outer-cont-active-item-clone {
+  border: 1px solid red;
+  height: 340px;
+}
+
+#div-diag-container-active-item-clone #div-diag-outer-cont-active-item-clone #div-diag-list-cont-active-item-clone div.list-item {
+  margin: 1.2em;
+  padding: 1em 0;
+  background-color: #FAFAFA;
+  border: 1px solid green;
+  color: green;
+}
+
+#div-diag-container-active-item-clone #div-diag-outer-cont-active-item-clone #div-diag-list-cont-active-item-clone div.list-item div.inner div.text {
   font-size: 80%;
 }
 

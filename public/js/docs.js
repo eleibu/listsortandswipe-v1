@@ -18621,7 +18621,6 @@ var listContAutomaticScrolling = document.getElementById('div-diag-list-cont-aut
 if (outerContAutomaticScrolling && listContAutomaticScrolling) {
 	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].attachToList('123456789', outerContAutomaticScrolling, listContAutomaticScrolling, listItemClass, {
 		sortDragHandleClass: 'budicon-grab-ui',
-		sortScrollSpeed: 3,
 		leftEnabled: false,
 		rightEnabled: false,
 		onSortEnd: function onSortEnd(origIndex, newIndex) {
@@ -18654,7 +18653,6 @@ var selectLeftSwipeStartThreshold = document.getElementById('select-leftSwipeSta
 var selectLeftSwipeEndThreshold = document.getElementById('select-leftSwipeEndThreshold');
 var selectLeftSlideOutDuration = document.getElementById('select-leftSlideOutDuration');
 var selectLeftSlideBackDuration = document.getElementById('select-leftSlideBackDuration');
-
 if (selectLeftSwipeStartThreshold && selectLeftSwipeEndThreshold && selectLeftSlideOutDuration && selectLeftSlideBackDuration) {
 	selectLeftSwipeStartThreshold.addEventListener('change', function () {
 		slideSwipeChange();
@@ -18676,6 +18674,38 @@ function slideSwipeChange() {
 		leftSwipeEndThreshold: selectLeftSwipeEndThreshold.options[selectLeftSwipeEndThreshold.selectedIndex].value,
 		leftSlideOutDuration: parseInt(selectLeftSlideOutDuration.options[selectLeftSlideOutDuration.selectedIndex].value),
 		leftSlideBackDuration: parseInt(selectLeftSlideBackDuration.options[selectLeftSlideBackDuration.selectedIndex].value)
+	});
+}
+
+// active item clone
+var outerContActiveItemClone = document.getElementById('div-diag-outer-cont-active-item-clone');
+var listContActiveItemClone = document.getElementById('div-diag-list-cont-active-item-clone');
+if (outerContActiveItemClone && listContActiveItemClone) {
+	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].attachToList('123456789', outerContActiveItemClone, listContActiveItemClone, listItemClass, {
+		sortDragHandleClass: 'budicon-grab-ui',
+		leftEnabled: false,
+		rightEnabled: false,
+		onSortEnd: function onSortEnd(origIndex, newIndex) {
+			sortEnd(listContActiveItemClone, origIndex, newIndex);
+		}
+	});
+}
+
+var selectSortCloneBoxShadow = document.getElementById('select-sortCloneBoxShadow');
+var selectSortCloneScale = document.getElementById('select-sortCloneScale');
+if (selectSortCloneBoxShadow && selectSortCloneScale) {
+	selectSortCloneBoxShadow.addEventListener('change', function () {
+		itemCloneChange();
+	});
+	selectSortCloneScale.addEventListener('change', function () {
+		itemCloneChange();
+	});
+}
+
+function itemCloneChange() {
+	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].setListProperties(listContActiveItemClone, {
+		sortCloneBoxShadow: selectSortCloneBoxShadow.options[selectSortCloneBoxShadow.selectedIndex].value,
+		sortCloneScale: selectSortCloneScale.options[selectSortCloneScale.selectedIndex].value
 	});
 }
 
@@ -18728,12 +18758,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 // NEXT PAGE LINK BELOW EACH PAGE!!!!!!
-
-
-// ACTIVE ITEM CLONE
-
-// Under the hood, Lithium List clones the active list item during sorting and swiping. The active list item is hidden while the clone is physically moved around.
-// Developers can control various ascpects of the clone, such as its box-shadow and scale during sorting, and class names during other activities.
 
 
 // MASKS

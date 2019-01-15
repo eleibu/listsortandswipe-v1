@@ -107,12 +107,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // NEXT PAGE LINK BELOW EACH PAGE!!!!!!
 
 
-// ACTIVE ITEM CLONE
-
-// Under the hood, Lithium List clones the active list item during sorting and swiping. The active list item is hidden while the clone is physically moved around.
-// Developers can control various ascpects of the clone, such as its box-shadow and scale during sorting, and class names during other activities.
-
-
 // MASKS
 
 // During sliding, Lithium List covers over the active list item with a mask. The mask is a DIV with the exact dimensions and location of the active list item. By default

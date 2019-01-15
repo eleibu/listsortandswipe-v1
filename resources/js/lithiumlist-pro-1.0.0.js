@@ -37,10 +37,6 @@
 
 
 
-// ACTIVE ITEM CLONE
-
-// Under the hood, Lithium List clones the active list item during sorting and swiping. The active list item is hidden while the clone is physically moved around.
-// Developers can control various ascpects of the clone, such as its box-shadow and scale during sorting, and class names during other activities.
 
 
 // MASKS
