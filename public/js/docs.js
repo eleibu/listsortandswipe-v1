@@ -18585,20 +18585,105 @@ __webpack_require__("./node_modules/bootstrap/dist/js/bootstrap.js");
 
 __WEBPACK_IMPORTED_MODULE_3_prismjs_components_prism_core___default.a.highlightAll();
 
+var listItemClass = 'list-item';
+function sortEnd(listCont, origIndex, newIndex) {
+	if (origIndex != newIndex) {
+		var items = listCont.getElementsByClassName(listItemClass);
+		var origItem = items[origIndex];
+		var newItem = items[newIndex];
+
+		listCont.removeChild(origItem);
+		if (newIndex > origIndex) {
+			listCont.insertBefore(origItem, newItem.nextSibling);
+		} else {
+			listCont.insertBefore(origItem, newItem);
+		}
+	}
+}
+
+// sorting
+var outerContSorting = document.getElementById('div-diag-outer-cont-sorting');
+var listContSorting = document.getElementById('div-diag-list-cont-sorting');
+if (outerContSorting && listContSorting) {
+	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].attachToList('123456789', outerContSorting, listContSorting, listItemClass, {
+		sortDragHandleClass: 'budicon-grab-ui',
+		leftEnabled: false,
+		rightEnabled: false,
+		onSortEnd: function onSortEnd(origIndex, newIndex) {
+			sortEnd(listContSorting, origIndex, newIndex);
+		}
+	});
+}
+
+// automatic scrolling
+var outerContAutomaticScrolling = document.getElementById('div-diag-outer-cont-automatic-scrolling');
+var listContAutomaticScrolling = document.getElementById('div-diag-list-cont-automatic-scrolling');
+if (outerContAutomaticScrolling && listContAutomaticScrolling) {
+	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].attachToList('123456789', outerContAutomaticScrolling, listContAutomaticScrolling, listItemClass, {
+		sortDragHandleClass: 'budicon-grab-ui',
+		sortScrollSpeed: 3,
+		leftEnabled: false,
+		rightEnabled: false,
+		onSortEnd: function onSortEnd(origIndex, newIndex) {
+			sortEnd(listContAutomaticScrolling, origIndex, newIndex);
+		}
+	});
+}
+
+var selectSortScrollSpeed = document.getElementById('select-sortScrollSpeed');
+if (selectSortScrollSpeed) {
+	selectSortScrollSpeed.addEventListener('change', function () {
+		__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].setListProperties(listContAutomaticScrolling, {
+			sortScrollSpeed: parseInt(selectSortScrollSpeed.options[selectSortScrollSpeed.selectedIndex].value)
+		});
+	});
+}
+
+// sliding and swiping
+var outerContSlidingAndSwiping = document.getElementById('div-diag-outer-cont-sliding-and-swiping');
+var listContSlidingAndSwiping = document.getElementById('div-diag-list-cont-sliding-and-swiping');
+if (outerContSlidingAndSwiping && listContSlidingAndSwiping) {
+	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].attachToList('123456789', outerContSlidingAndSwiping, listContSlidingAndSwiping, listItemClass, {
+		sortEnabled: false,
+		leftButtonClass: 'budicon-trash',
+		rightButtonClass: 'budicon-reload-ui'
+	});
+}
+
+var selectLeftSwipeStartThreshold = document.getElementById('select-leftSwipeStartThreshold');
+var selectLeftSwipeEndThreshold = document.getElementById('select-leftSwipeEndThreshold');
+var selectLeftSlideOutDuration = document.getElementById('select-leftSlideOutDuration');
+var selectLeftSlideBackDuration = document.getElementById('select-leftSlideBackDuration');
+
+if (selectLeftSwipeStartThreshold && selectLeftSwipeEndThreshold && selectLeftSlideOutDuration && selectLeftSlideBackDuration) {
+	selectLeftSwipeStartThreshold.addEventListener('change', function () {
+		slideSwipeChange();
+	});
+	selectLeftSwipeEndThreshold.addEventListener('change', function () {
+		slideSwipeChange();
+	});
+	selectLeftSlideOutDuration.addEventListener('change', function () {
+		slideSwipeChange();
+	});
+	selectLeftSlideBackDuration.addEventListener('change', function () {
+		slideSwipeChange();
+	});
+}
+
+function slideSwipeChange() {
+	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].setListProperties(listContSlidingAndSwiping, {
+		leftSwipeStartThreshold: selectLeftSwipeStartThreshold.options[selectLeftSwipeStartThreshold.selectedIndex].value,
+		leftSwipeEndThreshold: selectLeftSwipeEndThreshold.options[selectLeftSwipeEndThreshold.selectedIndex].value,
+		leftSlideOutDuration: parseInt(selectLeftSlideOutDuration.options[selectLeftSlideOutDuration.selectedIndex].value),
+		leftSlideBackDuration: parseInt(selectLeftSlideBackDuration.options[selectLeftSlideBackDuration.selectedIndex].value)
+	});
+}
+
+// setup
 var outerContSetup = document.getElementById('div-diag-outer-cont-setup');
 var listContSetup = document.getElementById('div-diag-list-cont-setup');
 if (outerContSetup && listContSetup) {
 	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].attachToList('123456789', outerContSetup, listContSetup, 'list-item');
-}
-
-var outerContSorting = document.getElementById('div-diag-outer-cont-sorting');
-var listContSorting = document.getElementById('div-diag-list-cont-sorting');
-if (outerContSorting && listContSorting) {
-	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].attachToList('123456789', outerContSorting, listContSorting, 'list-item', {
-		sortDragHandleClass: 'budicon-grab-ui',
-		leftEnabled: false,
-		rightEnabled: false
-	});
 }
 
 /***/ }),
@@ -18642,49 +18727,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // Active item clone
 
 
-// BACKGROUND
-
-// Lithium List turns a series of vertically arranged items into a sortable and swipeable list, much like tables in iOS and Adroid. It works equally well on desktop
-// and mobile, enabling developers to easily offer app-like functionality in their web pages.
-
-// SORTING
-
-// Users can sort list items in two ways. One is by clicking/tapping a drag handle. The other is by clicking/tapping on a list item (other than on its drag handle) and holding
-// until it pops up for sorting. In both cases the item can then be dragged/dropped to its new location. Of course developers can specify which elements are
-// drag handles, set the delay before sorting begins, turn off sorting via one way or the other, or turn off sorting altogether.
-
-// Related options, events and methods:
-//// ignoreOnClick, onSortStart, onSortEnd, sortEnabled, sortByDrag, sortStartDuration, sortEndDuration, sortOuterClass, sortListClass, sortCloneClass, sortCloneBoxShadow,
-//// sortCloneScale, sortItemActiveHide, sortItemActiveClass, sortDragHandleClass, sortMoveStartDelay, sortReorderDuration, safariBodyUnselectable,
-//// safariAutoOuterOverflow
-
-
-// AUTOMATIC SCROLLING
-
-// If the list of items extends beyond the bottom or top of its container, Lithium List automatically scrolls during sorting. Scrolling is fluid, responsive and...
-// just nice. Developers can control the scroll speed and, if desired, turn off automatic scrolling altogether.
-
-// Related options, events and methods:
-//// sortScrollEnabled, sortScrollSpeed, onSortAutoScrollStart, onSortAutoScrollEnd
-
-
-// SLIDING AND SWIPING
-
-// Users can slide items left and right. Like in many mobile apps, sliding left will typically delete the item and sliding right will typically archive it. Developers
-// can, of course, determine what sliding left and right does. There are two ways to slide items in either direction. One is by clicking/tapping a slide button.
-// The other is by clicking/tapping on a list item (other than on a slide button) and, while holding down, swiping left or right. As
-// long as the user has swiped by at least the left or right slide-start threshold, sliding mode will be activated. This enables a nice user experience, espcially on
-// mobile - users can sort or swipe using simple touch gestures that they are already familiar with.
-
-// After sliding has commenced and the user releases their click/tap, the item will either slide 'out' or slide 'back'. Which of these occurs depends on whether or not
-// it was swiped beyond the left/right slide-end threshold. Sliding 'out' means the item will automatically slide all the way out of the list. Sliding 'back' means it will
-// automatically slide back to its starting position.
-
-// Developers can control all aspects of sliding and swiping, including specifying which elements are slide buttons, setting the slide-start and slide-end thresholds,
-// determining the speed at which items will slide out/back and turning off sliding and/or swiping altogether.
-
-// Related options, events and methods:
-//// ignoreOnClick
+// NEXT PAGE LINK BELOW EACH PAGE!!!!!!
 
 
 // ACTIVE ITEM CLONE
@@ -18746,9 +18789,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // Medium articles:
 // Validation using plain JS
 
+// TODO: Check if clone is in correct place even when it has a margin
+
 // TODO: Will it work with 'window' if we fix the issues (see when outerCont = window.document)?
 
-// TODO: CHange 'lithiumlistPro' to 'lithiumlist'
+
+// TODO: Change 'lithiumlistPro' to 'lithiumlist'
 // TODO: Change 'detachFromList', 'triggerLeft' and 'triggerRight' to use 'outerCont' rather than 'listCont'?
 // TODO: Why is 'unlicensed' message not showing in docs/setup?
 // TODO: Test 'supportsPassive' in Edge and IE
@@ -19109,7 +19155,6 @@ var lithiumlistPro = function () {
 
 	var mouseDown = function mouseDown(e, instance) {
 		if (instance != null && !instance.temp.ignoreClicks && (instance.props.sortEnabled || instance.props.leftEnabled || instance.props.rightEnabled)) {
-
 			setItems(instance);
 
 			var index = null;
@@ -19332,7 +19377,7 @@ var lithiumlistPro = function () {
 		var cursorX = pageX - instance.temp.startPageX;
 
 		if (!instance.temp.moveType) {
-			if (instance.temp.sortDelayTimer && (instance.props.leftEnabled && instance.props.leftBySwipe || instance.props.rightEnabled && instance.props.rightBySwipe)) {
+			if (instance.props.leftEnabled && instance.props.leftBySwipe || instance.props.rightEnabled && instance.props.rightBySwipe) {
 				var rect = instance.temp.items[instance.temp.activeIndex].getBoundingClientRect();
 				if (cursorIsOverRect(pageX, pageY, rect)) {
 					if (cursorX < 0 && instance.props.leftEnabled && instance.props.leftBySwipe) {

@@ -386,12 +386,44 @@ div.details-cont div.details-outer div.section-cont div.title-codeblock {
 }
 
 div.details-cont div.details-outer div.section-cont div.diag-cont {
-  margin: 2em 0;
+  margin: 2em auto;
+  min-width: 250px;
+}
+
+div.details-cont div.details-outer div.section-cont div.diag-cont div.diag-options-cont {
+  font-size: 80%;
+}
+
+div.details-cont div.details-outer div.section-cont div.diag-cont div.diag-options-cont div.label {
+  margin: 1em 0 0.2em 0;
+  color: #444444;
 }
 
 div.details-cont div.details-outer div.section-cont p {
   color: #444444;
   line-height: 130%;
+}
+
+div.details-cont div.details-outer div.section-cont div.related-cont {
+  margin: 2em 0 2em 2em;
+}
+
+div.details-cont div.details-outer div.section-cont div.related-cont div.title-related {
+  font-weight: bold;
+  color: #666666;
+  margin-bottom: 0.4em;
+}
+
+div.details-cont div.details-outer div.section-cont div.related-cont div.related-links {
+  font-size: 90%;
+}
+
+div.details-cont div.details-outer div.section-cont div.related-cont div.related-links a.button-word-cont {
+  color: #3399FF;
+}
+
+div.details-cont div.details-outer div.section-cont div.related-cont div.related-links a.button-word-cont:hover {
+  background-color: #F8F8F8;
 }
 
 #div-body.xl div.toc-cont, #div-body.lg div.toc-cont, #div-body.md div.toc-cont, #div-body.sm div.toc-cont {
@@ -435,8 +467,6 @@ span.list-items {
 }
 
 div.diag-outer-cont {
-  margin: 0 auto;
-  min-width: 250px;
   overflow: auto;
 }
 
@@ -466,12 +496,8 @@ div.diag-outer-cont div.diag-list-cont div.list-item div.inner i:hover, div.diag
   background: rgba(0, 0, 0, 0.06);
 }
 
-div.diag-outer-cont div.diag-list-cont div.list-item div.inner i.sort {
+div.diag-outer-cont div.diag-list-cont div.list-item div.inner i.sort, div.diag-outer-cont div.diag-list-cont div.list-item div.inner i.archive {
   left: 0;
-}
-
-div.diag-outer-cont div.diag-list-cont div.list-item div.inner i.archive {
-  left: 1.6em;
 }
 
 div.diag-outer-cont div.diag-list-cont div.list-item div.inner i.delete {
@@ -487,13 +513,16 @@ div.diag-outer-cont div.diag-list-cont.left-list, div.diag-outer-cont div.diag-l
   overflow-x: hidden;
 }
 
-#div-diag-outer-cont-sorting {
+#div-diag-container-sorting {
   max-width: 300px;
+}
+
+#div-diag-container-sorting #div-diag-outer-cont-sorting {
   border: 1px solid red;
   height: 300px;
 }
 
-#div-diag-outer-cont-sorting #div-diag-list-cont-sorting div.list-item {
+#div-diag-container-sorting #div-diag-outer-cont-sorting #div-diag-list-cont-sorting div.list-item {
   margin: 0.4em;
   padding: 1em 0;
   background-color: #FAFAFA;
@@ -501,22 +530,67 @@ div.diag-outer-cont div.diag-list-cont.left-list, div.diag-outer-cont div.diag-l
   color: green;
 }
 
-#div-diag-outer-cont-sorting #div-diag-list-cont-sorting div.list-item div.inner div.text {
+#div-diag-container-sorting #div-diag-outer-cont-sorting #div-diag-list-cont-sorting div.list-item div.inner div.text {
   font-size: 80%;
 }
 
-#div-diag-outer-cont-setup {
-  border: 10px solid red;
-  height: 400px;
+#div-diag-container-automatic-scrolling {
+  max-width: 300px;
+}
+
+#div-diag-container-automatic-scrolling #div-diag-outer-cont-automatic-scrolling {
+  border: 1px solid red;
+  height: 300px;
+}
+
+#div-diag-container-automatic-scrolling #div-diag-outer-cont-automatic-scrolling #div-diag-list-cont-automatic-scrolling div.list-item {
+  margin: 0.4em;
+  padding: 1em 0;
+  background-color: #FAFAFA;
+  border: 1px solid green;
+  color: green;
+}
+
+#div-diag-container-automatic-scrolling #div-diag-outer-cont-automatic-scrolling #div-diag-list-cont-automatic-scrolling div.list-item div.inner div.text {
+  font-size: 80%;
+}
+
+#div-diag-container-sliding-and-swiping {
+  max-width: 300px;
+}
+
+#div-diag-container-sliding-and-swiping #div-diag-outer-cont-sliding-and-swiping {
+  border: 1px solid red;
+  height: 300px;
+}
+
+#div-diag-container-sliding-and-swiping #div-diag-outer-cont-sliding-and-swiping #div-diag-list-cont-sliding-and-swiping div.list-item {
+  margin: 0.4em;
+  padding: 1em 0;
+  background-color: #FAFAFA;
+  border: 1px solid green;
+  color: green;
+}
+
+#div-diag-container-sliding-and-swiping #div-diag-outer-cont-sliding-and-swiping #div-diag-list-cont-sliding-and-swiping div.list-item div.inner div.text {
+  font-size: 80%;
+}
+
+#div-diag-container-setup {
   max-width: 400px;
 }
 
-#div-diag-outer-cont-setup #div-diag-list-cont-setup {
+#div-diag-container-setup #div-diag-outer-cont-setup {
+  border: 10px solid red;
+  height: 400px;
+}
+
+#div-diag-container-setup #div-diag-outer-cont-setup #div-diag-list-cont-setup {
   margin: 1em;
   border: 10px solid blue;
 }
 
-#div-diag-outer-cont-setup #div-diag-list-cont-setup div.list-item {
+#div-diag-container-setup #div-diag-outer-cont-setup #div-diag-list-cont-setup div.list-item {
   margin: 1em;
   padding: 1em 0;
   background-color: #FFFFFF;
