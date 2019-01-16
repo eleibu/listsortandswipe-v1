@@ -124,7 +124,7 @@ export var lithiumlistPro = (function () {
 		onSortAutoScrollStart: null,
 		onSortAutoScrollEnd: null,
         sortEnabled: true,
-        sortByDrag: true,
+        sortByLongPress: true,
         sortStartDuration: 300,
         sortEndDuration: 300,
         sortOuterClass: 'sort-outer',
@@ -590,10 +590,10 @@ export var lithiumlistPro = (function () {
 	};
 
 	var backgroundClick = function(e, index, instance) {
-		if ((instance.props.sortEnabled && instance.props.sortByDrag) || (instance.props.leftEnabled && instance.props.leftBySwipe) || (instance.props.rightEnabled && instance.props.rightBySwipe)) {
+		if ((instance.props.sortEnabled && instance.props.sortByLongPress) || (instance.props.leftEnabled && instance.props.leftBySwipe) || (instance.props.rightEnabled && instance.props.rightBySwipe)) {
 			initItemMove(e, index, instance);
 			setItems(instance);
-			if (instance.props.sortEnabled && instance.props.sortByDrag && (instance.temp.items.length > 1)) {
+			if (instance.props.sortEnabled && instance.props.sortByLongPress && (instance.temp.items.length > 1)) {
 				instance.temp.sortDelayTimer = setTimeout(function() {activateSort(instance);}, instance.props.sortMoveStartDelay);
 			}
 		}
@@ -1539,8 +1539,8 @@ export var lithiumlistPro = (function () {
 			throw 'sortEnabled must be a boolean';
 		}
 
-		if ((!isUndefinedOrNull(props['sortByDrag'])) && (!isBoolean(props['sortByDrag']))) {
-			throw 'sortByDrag must be a boolean';
+		if ((!isUndefinedOrNull(props['sortByLongPress'])) && (!isBoolean(props['sortByLongPress']))) {
+			throw 'sortByLongPress must be a boolean';
 		}
 
 		if ((!isUndefinedOrNull(props['sortStartDuration'])) && ((!isInteger(props['sortStartDuration'])) || (props['sortStartDuration'] < 0))) {

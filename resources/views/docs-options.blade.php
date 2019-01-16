@@ -21,27 +21,7 @@
     @endforeach
 </div>
 <div class="section-cont">
-<!--
-DONE safariAutoOuterOverflow: true,                                                     // applies only to Safari on MacOS
-DONE safariBodyUnselectable: true,                                                       // applies only to Safari on MacOS
-sortByDrag: true,
-sortCloneBoxShadow: '0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12)',      // not validated (other than string of length >0)
-sortCloneClass: 'sort-clone',
-sortCloneScale: '1.02',                                                             // not validated (other than string of length >0)
-sortDragHandleClass: 'sort-drag-handle',
-sortEnabled: true,
-sortEndDuration: 300,
-sortItemActiveHide: true,
-sortItemActiveClass: 'sort-item-active',
-sortListClass: 'sort-list',
-sortMoveStartDelay: 400,
-sortOuterClass: 'sort-outer',
-sortScrollEnabled: true,
-sortScrollSpeed: 3,
-sortStartDuration: 300,
-sortReorderDuration: 200,
--->
- @php
+@php
     $refs_options = array(
         'ignoreOnClick' => array(
             'aref' => 'ref-ignoreOnClick',
@@ -112,8 +92,56 @@ sortReorderDuration: 200,
             'aref' => 'ref-safariBodyUnselectable',
             'title' => 'safariBodyUnselectable'
         ),
+        'sortByLongPress' => array(
+            'aref' => 'ref-sortByLongPress',
+            'title' => 'sortByLongPress'
+        ),
+        'sortCloneBoxShadow' => array(
+            'aref' => 'ref-sortCloneBoxShadow',
+            'title' => 'sortCloneBoxShadow'
+        ),
+        'sortCloneClass' => array(
+            'aref' => 'ref-sortCloneClass',
+            'title' => 'sortCloneClass'
+        ),
+        'sortCloneScale' => array(
+            'aref' => 'ref-sortCloneScale',
+            'title' => 'sortCloneScale'
+        ),
+        'sortDragHandleClass' => array(
+            'aref' => 'ref-sortDragHandleClass',
+            'title' => 'sortDragHandleClass'
+        ),
+        'sortEnabled' => array(
+            'aref' => 'ref-sortEnabled',
+            'title' => 'sortEnabled'
+        ),
+        'sortEndDuration' => array(
+            'aref' => 'ref-sortEndDuration',
+            'title' => 'sortEndDuration'
+        ),
 
     );
+
+// DONE safariAutoOuterOverflow: true,                                                     // applies only to Safari on MacOS
+// DONE safariBodyUnselectable: true,                                                       // applies only to Safari on MacOS
+// DONE sortByLongPress: true,
+// DONE sortCloneBoxShadow: '0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12)',      // not validated (other than string of length >0)
+// DONE sortCloneClass: 'sort-clone',
+// DONE sortCloneScale: '1.02',                                                             // not validated (other than string of length >0)
+// DONE sortDragHandleClass: 'sort-drag-handle',
+// DONE sortEnabled: true,
+// DONE sortEndDuration: 300,
+// sortItemActiveHide: true,
+// sortItemActiveClass: 'sort-item-active',
+// sortListClass: 'sort-list',
+// sortMoveStartDelay: 400,
+// sortOuterClass: 'sort-outer',
+// sortScrollEnabled: true,
+// sortScrollSpeed: 3,
+// sortStartDuration: 300,
+// sortReorderDuration: 200,
+
 @endphp
     <a id="{{$refs['options']['aref']}}" class="title-section">
         {{$refs['options']['title']}}
@@ -359,7 +387,7 @@ lithiumlist.attachToList(
             </div>
         </div>
         <p>
-            A class that is added to <strong><span class="list-cont">listCont</span></strong> when a list item begins sliding to the left (either via a swipe or because a left button was clicked/tapped).
+            A class name that is added to <strong><span class="list-cont">listCont</span></strong> when a list item begins sliding to the left (either via a swipe or because a left button was clicked/tapped).
         </p>
         <div class="title-codeblock">
             EXAMPLE JS
@@ -488,7 +516,7 @@ lithiumlist.attachToList(
             </div>
         </div>
         <p>
-            A class that is added to <strong><span class="outer-cont">outerCont</span></strong> when a list item begins sliding to the left (either via a swipe or because a left button was clicked/tapped). Has no effect if <strong><span class="outer-cont">outerCont</span></strong> is <code class="language-js">window</code>.
+            A class name that is added to <strong><span class="outer-cont">outerCont</span></strong> when a list item begins sliding to the left (either via a swipe or because a left button was clicked/tapped). Has no effect if <strong><span class="outer-cont">outerCont</span></strong> is <code class="language-js">window</code>.
         </p>
         <div class="title-codeblock">
             EXAMPLE JS
@@ -669,6 +697,202 @@ lithiumlist.attachToList(
         </div>
 <pre class="line-numbers"><code class="language-js">var props = {
     safariBodyUnselectable: false
+};
+lithiumlist.attachToList(
+    ...,
+    props
+);
+</code></pre>
+    </div>
+
+    <div class="subsection-cont">
+        <a id="{{$refs_options['sortByLongPress']['aref']}}" class="title-subsection">
+            {{$refs_options['sortByLongPress']['title']}}
+        </a>
+        <div class="params-cont">
+            <div class="param">
+                <strong>Type:</strong> Boolean
+            </div>
+            <div class="param">
+                <strong>Default:</strong> <code class="language-js">true</code>
+            </div>
+        </div>
+        <p>
+            Enable or disable sorting by long-pressing on an item.
+        </p>
+        <div class="title-codeblock">
+            EXAMPLE JS
+        </div>
+<pre class="line-numbers"><code class="language-js">var props = {
+    sortByLongPress: false
+};
+lithiumlist.attachToList(
+    ...,
+    props
+);
+</code></pre>
+    </div>
+
+    <div class="subsection-cont">
+        <a id="{{$refs_options['sortCloneBoxShadow']['aref']}}" class="title-subsection">
+            {{$refs_options['sortCloneBoxShadow']['title']}}
+        </a>
+        <div class="params-cont">
+            <div class="param">
+                <strong>Type:</strong> String
+            </div>
+            <div class="param">
+                <strong>Default:</strong> <code class="language-js">&#39;0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12)&#39;</code>
+            </div>
+        </div>
+        <p>
+            A value that is set as the &#39;box-shadow&#39; style of the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone</a> during sorting.
+        </p>
+        <div class="title-codeblock">
+            EXAMPLE JS
+        </div>
+<pre class="line-numbers"><code class="language-js">var props = {
+    sortCloneBoxShadow: &#39;0 5px 20px rgba(0,0,0,0.5)&#39;
+};
+lithiumlist.attachToList(
+    ...,
+    props
+);
+</code></pre>
+    </div>
+
+    <div class="subsection-cont">
+        <a id="{{$refs_options['sortCloneClass']['aref']}}" class="title-subsection">
+            {{$refs_options['sortCloneClass']['title']}}
+        </a>
+        <div class="params-cont">
+            <div class="param">
+                <strong>Type:</strong> String
+            </div>
+            <div class="param">
+                <strong>Default:</strong> <code class="language-js">&#39;sort-clone&#39;</code>
+            </div>
+        </div>
+        <p>
+            A class name that is added to the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone</a> during sorting.
+        </p>
+        <div class="title-codeblock">
+            EXAMPLE JS
+        </div>
+<pre class="line-numbers"><code class="language-js">var props = {
+    sortCloneClass: 'sort-clone'
+};
+lithiumlist.attachToList(
+    ...,
+    props
+);
+</code></pre>
+    </div>
+
+    <div class="subsection-cont">
+        <a id="{{$refs_options['sortCloneScale']['aref']}}" class="title-subsection">
+            {{$refs_options['sortCloneScale']['title']}}
+        </a>
+        <div class="params-cont">
+            <div class="param">
+                <strong>Type:</strong> String
+            </div>
+            <div class="param">
+                <strong>Default:</strong> <code class="language-js">&#39;1.02&#39;</code>
+            </div>
+        </div>
+        <p>
+            A value that is set as the &#39;transform: scale()&#39; style of the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone</a> during sorting.
+        </p>
+        <div class="title-codeblock">
+            EXAMPLE JS
+        </div>
+<pre class="line-numbers"><code class="language-js">var props = {
+    sortCloneScale: '1.05, 1.08'
+};
+lithiumlist.attachToList(
+    ...,
+    props
+);
+</code></pre>
+    </div>
+
+    <div class="subsection-cont">
+        <a id="{{$refs_options['sortDragHandleClass']['aref']}}" class="title-subsection">
+            {{$refs_options['sortDragHandleClass']['title']}}
+        </a>
+        <div class="params-cont">
+            <div class="param">
+                <strong>Type:</strong> String
+            </div>
+            <div class="param">
+                <strong>Default:</strong> <code class="language-js">&#39;sort-drag-handle&#39;</code>
+            </div>
+        </div>
+        <p>
+            The class name of DOM elements that will act as drag handles for sorting.
+        </p>
+        <div class="title-codeblock">
+            EXAMPLE JS
+        </div>
+<pre class="line-numbers"><code class="language-js">var props = {
+    sortDragHandleClass: &#39;drag-handle&#39;
+};
+lithiumlist.attachToList(
+    ...,
+    props
+);
+</code></pre>
+    </div>
+
+    <div class="subsection-cont">
+        <a id="{{$refs_options['sortEnabled']['aref']}}" class="title-subsection">
+            {{$refs_options['sortEnabled']['title']}}
+        </a>
+        <div class="params-cont">
+            <div class="param">
+                <strong>Type:</strong> Boolean
+            </div>
+            <div class="param">
+                <strong>Default:</strong> <code class="language-js">true</code>
+            </div>
+        </div>
+        <p>
+            Enable or disable sorting of items. If set to <code class="language-js">false</code>, long-pressing an item or clicking/tapping its drag handle will do nothing.
+        </p>
+        <div class="title-codeblock">
+            EXAMPLE JS
+        </div>
+<pre class="line-numbers"><code class="language-js">var props = {
+    sortEnabled: false
+};
+lithiumlist.attachToList(
+    ...,
+    props
+);
+</code></pre>
+    </div>
+
+    <div class="subsection-cont">
+        <a id="{{$refs_options['sortEndDuration']['aref']}}" class="title-subsection">
+            {{$refs_options['sortEndDuration']['title']}}
+        </a>
+        <div class="params-cont">
+            <div class="param">
+                <strong>Type:</strong> Integer
+            </div>
+            <div class="param">
+                <strong>Default:</strong> <code class="language-js">300</code>
+            </div>
+        </div>
+        <p>
+            At the end of sorting the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone</a> animates to its final position. This option sets the duration of that animation.
+        </p>
+        <div class="title-codeblock">
+            EXAMPLE JS
+        </div>
+<pre class="line-numbers"><code class="language-js">var props = {
+    sortEndDuration: 300
 };
 lithiumlist.attachToList(
     ...,
