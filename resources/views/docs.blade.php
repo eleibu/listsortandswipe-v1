@@ -26,6 +26,11 @@
     		<div class="details-outer">
                 <div class="title-main">{{$selectedpage['detailsTitle']}}</div>
                 @include($selectedpage['detailsView'])
+                @if (isset($nextpage))
+                    <div class="nextpage-cont">
+                        <a class="button-word-cont" href="{{ url($nextpage['url']) }}" title="{{$nextpage['detailsTitle']}}">{{$nextpage['detailsTitle']}}&nbsp;&gt;</a>
+                    </div>
+                @endif
     		</div>
     	</div>
     </div>

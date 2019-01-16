@@ -18601,6 +18601,30 @@ function sortEnd(listCont, origIndex, newIndex) {
 	}
 }
 
+// sales points
+var outerContSalesPoints = document.getElementById('div-salespoints-outer-cont');
+var listContSalesPoints = document.getElementById('div-salespoints-list-cont');
+if (outerContSalesPoints && listContSalesPoints) {
+	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].attachToList('123456789', outerContSalesPoints, listContSalesPoints, listItemClass, {
+		onSortEnd: function onSortEnd(origIndex, newIndex) {
+			sortEnd(listContSalesPoints, origIndex, newIndex);
+		},
+		rightEnabled: false,
+		leftSwipeStartThreshold: '15%',
+		leftSwipeEndThreshold: '40%',
+		leftMasks: [],
+		onLeftEnd: function onLeftEnd(activeIndex, didSlideOut) {
+			if (didSlideOut) {
+				var items = listContSalesPoints.getElementsByClassName(listItemClass);
+				items[activeIndex].className = items[activeIndex].className + ' deleting';
+				setTimeout(function () {
+					listContSalesPoints.removeChild(items[activeIndex]);
+				}, 200);
+			}
+		}
+	});
+}
+
 // sorting
 var outerContSorting = document.getElementById('div-diag-outer-cont-sorting');
 var listContSorting = document.getElementById('div-diag-list-cont-sorting');
@@ -18677,16 +18701,16 @@ function slideSwipeChange() {
 	});
 }
 
-// active item clone
-var outerContActiveItemClone = document.getElementById('div-diag-outer-cont-active-item-clone');
-var listContActiveItemClone = document.getElementById('div-diag-list-cont-active-item-clone');
-if (outerContActiveItemClone && listContActiveItemClone) {
-	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].attachToList('123456789', outerContActiveItemClone, listContActiveItemClone, listItemClass, {
+// clone
+var outerContClone = document.getElementById('div-diag-outer-cont-clone');
+var listContClone = document.getElementById('div-diag-list-cont-clone');
+if (outerContClone && listContClone) {
+	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].attachToList('123456789', outerContClone, listContClone, listItemClass, {
 		sortDragHandleClass: 'budicon-grab-ui',
 		leftEnabled: false,
 		rightEnabled: false,
 		onSortEnd: function onSortEnd(origIndex, newIndex) {
-			sortEnd(listContActiveItemClone, origIndex, newIndex);
+			sortEnd(listContClone, origIndex, newIndex);
 		}
 	});
 }
@@ -18703,10 +18727,82 @@ if (selectSortCloneBoxShadow && selectSortCloneScale) {
 }
 
 function itemCloneChange() {
-	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].setListProperties(listContActiveItemClone, {
+	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].setListProperties(listContClone, {
 		sortCloneBoxShadow: selectSortCloneBoxShadow.options[selectSortCloneBoxShadow.selectedIndex].value,
 		sortCloneScale: selectSortCloneScale.options[selectSortCloneScale.selectedIndex].value
 	});
+}
+
+// masks
+var outerContMasks = document.getElementById('div-diag-outer-cont-masks');
+var listContMasks = document.getElementById('div-diag-list-cont-masks');
+if (outerContMasks && listContMasks) {
+	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].attachToList('123456789', outerContMasks, listContMasks, listItemClass, {
+		sortEnabled: false,
+		leftButtonClass: 'budicon-trash',
+		rightButtonClass: 'budicon-reload-ui'
+	});
+}
+
+var selectLeftMaskBackground = document.getElementById('select-leftMaskBackground');
+var selectLeftMaskLabel = document.getElementById('select-leftMaskLabel');
+var selectRightMaskBackground = document.getElementById('select-rightMaskBackground');
+var selectRightMaskLabel = document.getElementById('select-rightMaskLabel');
+
+if (selectLeftMaskBackground && selectLeftMaskLabel && selectRightMaskBackground && selectRightMaskLabel) {
+	selectLeftMaskBackground.addEventListener('change', function () {
+		masksChange();
+	});
+	selectLeftMaskLabel.addEventListener('change', function () {
+		masksChange();
+	});
+	selectRightMaskBackground.addEventListener('change', function () {
+		masksChange();
+	});
+	selectRightMaskLabel.addEventListener('change', function () {
+		masksChange();
+	});
+}
+
+function masksChange() {
+	var leftDiv = null;
+	var leftValue = selectLeftMaskLabel.options[selectLeftMaskLabel.selectedIndex].value;
+	if (leftValue != 'none') {
+		leftDiv = createBgdDiv(leftValue);
+	}
+
+	var rightDiv = null;
+	var rightValue = selectRightMaskLabel.options[selectRightMaskLabel.selectedIndex].value;
+	if (rightValue != 'none') {
+		rightDiv = createBgdDiv(rightValue);
+	}
+
+	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].setListProperties(listContMasks, {
+		leftMasks: [{
+			background: selectLeftMaskBackground.options[selectLeftMaskBackground.selectedIndex].value,
+			classNameDefault: 'left-mask',
+			classNameSlideOut: 'left-mask-slide-out',
+			classNameSlideBack: 'left-mask-slide-back',
+			childNode: leftDiv
+		}],
+		rightMasks: [{
+			background: selectRightMaskBackground.options[selectRightMaskBackground.selectedIndex].value,
+			classNameDefault: 'right-mask',
+			classNameSlideOut: 'right-mask-slide-out',
+			classNameSlideBack: 'right-mask-slide-back',
+			childNode: rightDiv
+		}]
+	});
+}
+
+function createBgdDiv(text) {
+	var textNode = document.createTextNode(text);
+	var span = document.createElement("span");
+	span.appendChild(textNode);
+	var div = document.createElement("div");
+	div.appendChild(span);
+	div.className = 'label-cont';
+	return div;
 }
 
 // setup
@@ -18787,11 +18883,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // if set 'safariBodyUnselectable = false', consider adding unselectable styles to an outer object (eg. body, document, etc) even if 'listitem-cont' or a sub-element is
 // unselectable - otherwise, unintended selection of elements outside outerCont can cause problems
 // need to set css for 'sort-item-active' to hide active item while sorting
-// if 'left/righMaskClass' is not set, mask is not created
-// sortScrollSpeed: 1, 2, 3, 4, 5 (default = 3)
 // leftMasks / rightMasks must be arrays (not null) and leftMasks.classNameDefault must not be undefined or null
 // setDefaultProperties only applies to instances created after it is called (use setListProperties to change properties for a paticular instance)
-// leftOuterClass / rightOuterClass is not added to outerCont if it is 'window'
 // does not work with '-webkit-overflow-scrolling: touch' (iOS only)
 
 
@@ -18813,6 +18906,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // Medium articles:
 // Validation using plain JS
 
+// TODO: In events, replace 'activeIndex' with 'activeItem'?
 // TODO: Check if clone is in correct place even when it has a margin
 
 // TODO: Will it work with 'window' if we fix the issues (see when outerCont = window.document)?
@@ -19283,14 +19377,14 @@ var lithiumlistPro = function () {
 			createMasks(instance);
 		}
 
-		if (instance.props.leftItemActiveClass) {
-			addClass(instance.temp.items[instance.temp.activeIndex], instance.props.leftItemActiveClass);
-		}
-
 		var top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
 		if (!instance.temp.itemClone) {
 			var left = cursorX + instance.temp.activeOrigX + 'px';
 			createClone(instance, left, top);
+		}
+
+		if (instance.props.leftItemActiveClass) {
+			addClass(instance.temp.items[instance.temp.activeIndex], instance.props.leftItemActiveClass);
 		}
 	};
 
@@ -19318,14 +19412,14 @@ var lithiumlistPro = function () {
 			createMasks(instance);
 		}
 
-		if (instance.props.rightItemActiveClass) {
-			addClass(instance.temp.items[instance.temp.activeIndex], instance.props.rightItemActiveClass);
-		}
-
 		var top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
 		if (!instance.temp.itemClone) {
 			var left = cursorX + instance.temp.activeOrigX + 'px';
 			createClone(instance, left, top);
+		}
+
+		if (instance.props.rightItemActiveClass) {
+			addClass(instance.temp.items[instance.temp.activeIndex], instance.props.rightItemActiveClass);
 		}
 	};
 

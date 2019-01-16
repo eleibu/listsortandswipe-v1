@@ -17029,11 +17029,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // if set 'safariBodyUnselectable = false', consider adding unselectable styles to an outer object (eg. body, document, etc) even if 'listitem-cont' or a sub-element is
 // unselectable - otherwise, unintended selection of elements outside outerCont can cause problems
 // need to set css for 'sort-item-active' to hide active item while sorting
-// if 'left/righMaskClass' is not set, mask is not created
-// sortScrollSpeed: 1, 2, 3, 4, 5 (default = 3)
 // leftMasks / rightMasks must be arrays (not null) and leftMasks.classNameDefault must not be undefined or null
 // setDefaultProperties only applies to instances created after it is called (use setListProperties to change properties for a paticular instance)
-// leftOuterClass / rightOuterClass is not added to outerCont if it is 'window'
 // does not work with '-webkit-overflow-scrolling: touch' (iOS only)
 
 
@@ -17055,6 +17052,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // Medium articles:
 // Validation using plain JS
 
+// TODO: In events, replace 'activeIndex' with 'activeItem'?
 // TODO: Check if clone is in correct place even when it has a margin
 
 // TODO: Will it work with 'window' if we fix the issues (see when outerCont = window.document)?
@@ -17525,14 +17523,14 @@ var lithiumlistPro = function () {
 			createMasks(instance);
 		}
 
-		if (instance.props.leftItemActiveClass) {
-			addClass(instance.temp.items[instance.temp.activeIndex], instance.props.leftItemActiveClass);
-		}
-
 		var top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
 		if (!instance.temp.itemClone) {
 			var left = cursorX + instance.temp.activeOrigX + 'px';
 			createClone(instance, left, top);
+		}
+
+		if (instance.props.leftItemActiveClass) {
+			addClass(instance.temp.items[instance.temp.activeIndex], instance.props.leftItemActiveClass);
 		}
 	};
 
@@ -17560,14 +17558,14 @@ var lithiumlistPro = function () {
 			createMasks(instance);
 		}
 
-		if (instance.props.rightItemActiveClass) {
-			addClass(instance.temp.items[instance.temp.activeIndex], instance.props.rightItemActiveClass);
-		}
-
 		var top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
 		if (!instance.temp.itemClone) {
 			var left = cursorX + instance.temp.activeOrigX + 'px';
 			createClone(instance, left, top);
+		}
+
+		if (instance.props.rightItemActiveClass) {
+			addClass(instance.temp.items[instance.temp.activeIndex], instance.props.rightItemActiveClass);
 		}
 	};
 

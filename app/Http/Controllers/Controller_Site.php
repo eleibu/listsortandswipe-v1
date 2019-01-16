@@ -12,12 +12,12 @@ class Controller_Site extends Controller
 
 	public function section_docs(Request $request, $subpage = '') {
 		$subpages = array(
-			'overview-and-features' => array(
+			'why-lithium-list' => array(
 				'selected' => false,
-				'url' => url('/docs/overview-and-features'),
-				'pageTitle' => 'Lithium List - docs - overview and features',
-				'detailsTitle' => 'Overview and features',
-				'detailsView' => 'docs-overview'
+				'url' => url('/docs/why-lithium-list'),
+				'pageTitle' => 'Lithium List - docs - why Lithium List?',
+				'detailsTitle' => 'Why Lithium List?',
+				'detailsView' => 'docs-whylithiumlist'
 			),
 			'installation' => array(
 				'selected' => false,
@@ -26,12 +26,19 @@ class Controller_Site extends Controller
 				'detailsTitle' => 'Installation',
 				'detailsView' => 'docs-installation'
 			),
-			'set-up-and-attachment' => array(
+			'set-up' => array(
 				'selected' => false,
-				'url' => url('/docs/set-up-and-attachment'),
-				'pageTitle' => 'Lithium List - docs - set up and attachment',
-				'detailsTitle' => 'Set up and attachment',
+				'url' => url('/docs/set-up'),
+				'pageTitle' => 'Lithium List - docs - set up',
+				'detailsTitle' => 'Set up',
 				'detailsView' => 'docs-setup'
+			),
+			'overview-of-functionality' => array(
+				'selected' => false,
+				'url' => url('/docs/overview-of-functionality'),
+				'pageTitle' => 'Lithium List - docs - overview of functionality',
+				'detailsTitle' => 'Overview of functionality',
+				'detailsView' => 'docs-overview'
 			),
 			'options-events-and-methods' => array(
 				'selected' => false,
@@ -49,17 +56,24 @@ class Controller_Site extends Controller
 			)
 		);
 		if ($subpage == '') {
-			$subpage = 'installation';
+			$subpage = 'why-lithium-list';
 		}
+		$nextpage = null;
+		$setNext = false;
 		foreach($subpages as $key => $value) {
 			if ($key == $subpage) {
 				$value['selected'] = true;
 				$selectedpage = $value;
+				$setNext = true;
+			} elseif ($setNext) {
+				$nextpage = $value;
+				$setNext = false;
 			}
 		}
 		if (isset($selectedpage)) {
 			return view('docs')
 				->with('selectedpage', $selectedpage)
+				->with('nextpage', $nextpage)
 				->with('subpages', $subpages);
 		} else {
 			abort(403);

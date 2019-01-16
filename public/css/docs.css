@@ -378,6 +378,14 @@ div.details-cont div.details-outer div.section-cont div.params-cont div.param {
   margin: 0.4em 0;
 }
 
+div.details-cont div.details-outer div.section-cont div.params-cont div.sub-params-cont {
+  padding-left: 3em;
+}
+
+div.details-cont div.details-outer div.section-cont div.params-cont div.sub-params-cont div.sub-param {
+  margin: 0.2em 0;
+}
+
 div.details-cont div.details-outer div.section-cont div.title-codeblock {
   font-size: 90%;
   font-weight: lighter;
@@ -427,6 +435,20 @@ div.details-cont div.details-outer div.section-cont div.related-cont div.related
 }
 
 div.details-cont div.details-outer div.section-cont div.related-cont div.related-links a.button-word-cont:hover {
+  background-color: #F8F8F8;
+}
+
+div.details-cont div.details-outer div.nextpage-cont {
+  margin: 1em 0;
+  text-align: right;
+  font-size: 120%;
+}
+
+div.details-cont div.details-outer div.nextpage-cont a.button-word-cont {
+  font-weight: normal;
+}
+
+div.details-cont div.details-outer div.nextpage-cont a.button-word-cont:hover {
   background-color: #F8F8F8;
 }
 
@@ -517,6 +539,109 @@ div.diag-outer-cont div.diag-list-cont.left-list, div.diag-outer-cont div.diag-l
   overflow-x: hidden;
 }
 
+#div-salespoints-outer-cont #div-salespoints-list-cont {
+  position: relative;
+  margin-left: 4em;
+  max-width: 700px;
+}
+
+#div-salespoints-outer-cont #div-salespoints-list-cont div.list-item {
+  position: relative;
+  max-height: 10em;
+  overflow: hidden;
+}
+
+#div-salespoints-outer-cont #div-salespoints-list-cont div.list-item div.inner-mask-cont {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#div-salespoints-outer-cont #div-salespoints-list-cont div.list-item div.inner-mask-cont div.inner-mask-outer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#div-salespoints-outer-cont #div-salespoints-list-cont div.list-item div.inner-mask-cont div.inner-mask-outer span {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  color: #EEEEEE;
+  font-size: 110%;
+}
+
+#div-salespoints-outer-cont #div-salespoints-list-cont div.list-item div.inner-mask-cont.left {
+  background-color: red;
+}
+
+#div-salespoints-outer-cont #div-salespoints-list-cont div.list-item div.inner-mask-cont.left span {
+  right: 0.4em;
+}
+
+#div-salespoints-outer-cont #div-salespoints-list-cont div.list-item.left-item-active div.inner-mask-cont.left, #div-salespoints-outer-cont #div-salespoints-list-cont div.list-item.deleting div.inner-mask-cont.left {
+  display: block;
+}
+
+#div-salespoints-outer-cont #div-salespoints-list-cont div.list-item.deleting {
+  -webkit-transition: max-height 200ms ease;
+  transition: max-height 200ms ease;
+  max-height: 0;
+}
+
+#div-salespoints-outer-cont #div-salespoints-list-cont div.sales-point {
+  background-color: #FFFFFF;
+  padding: 2em 1em;
+  cursor: pointer;
+  max-height: 10em;
+  -webkit-transition: max-height 300ms ease;
+  transition: max-height 300ms ease;
+}
+
+#div-salespoints-outer-cont #div-salespoints-list-cont div.sales-point div.title {
+  font-size: 120%;
+  color: #222222;
+  font-weight: bold;
+  margin-bottom: 0.4em;
+}
+
+#div-salespoints-outer-cont #div-salespoints-list-cont div.sales-point div.description {
+  line-height: 130%;
+  color: #777777;
+}
+
+#div-salespoints-outer-cont #div-salespoints-list-cont div.sales-point.collapsed {
+  max-height: 0;
+}
+
+#div-salespoints-outer-cont #div-salespoints-list-cont div.sales-point.red {
+  border-left: 14px solid #F56E44;
+}
+
+#div-salespoints-outer-cont #div-salespoints-list-cont div.sales-point.orange {
+  border-left: 14px solid #F8951D;
+}
+
+#div-salespoints-outer-cont #div-salespoints-list-cont div.sales-point.yellow {
+  border-left: 14px solid #F2DF29;
+}
+
+#div-salespoints-outer-cont #div-salespoints-list-cont div.sales-point.khaki {
+  border-left: 14px solid #C6C848;
+}
+
+#div-salespoints-outer-cont #div-salespoints-list-cont div.sales-point.moss {
+  border-left: 14px solid #B0CD9D;
+}
+
+#div-salespoints-outer-cont #div-salespoints-list-cont.left-list, #div-salespoints-outer-cont #div-salespoints-list-cont.right-list {
+  overflow-x: hidden;
+}
+
 #div-diag-container-sorting {
   max-width: 300px;
 }
@@ -580,16 +705,16 @@ div.diag-outer-cont div.diag-list-cont.left-list, div.diag-outer-cont div.diag-l
   font-size: 80%;
 }
 
-#div-diag-container-active-item-clone {
+#div-diag-container-clone {
   max-width: 300px;
 }
 
-#div-diag-container-active-item-clone #div-diag-outer-cont-active-item-clone {
+#div-diag-container-clone #div-diag-outer-cont-clone {
   border: 1px solid red;
   height: 340px;
 }
 
-#div-diag-container-active-item-clone #div-diag-outer-cont-active-item-clone #div-diag-list-cont-active-item-clone div.list-item {
+#div-diag-container-clone #div-diag-outer-cont-clone #div-diag-list-cont-clone div.list-item {
   margin: 1.2em;
   padding: 1em 0;
   background-color: #FAFAFA;
@@ -597,8 +722,51 @@ div.diag-outer-cont div.diag-list-cont.left-list, div.diag-outer-cont div.diag-l
   color: green;
 }
 
-#div-diag-container-active-item-clone #div-diag-outer-cont-active-item-clone #div-diag-list-cont-active-item-clone div.list-item div.inner div.text {
+#div-diag-container-clone #div-diag-outer-cont-clone #div-diag-list-cont-clone div.list-item div.inner div.text {
   font-size: 80%;
+}
+
+#div-diag-container-masks {
+  max-width: 300px;
+}
+
+#div-diag-container-masks #div-diag-outer-cont-masks {
+  border: 1px solid red;
+  height: 300px;
+}
+
+#div-diag-container-masks #div-diag-outer-cont-masks #div-diag-list-cont-masks div.list-item {
+  margin: 0.4em;
+  padding: 1em 0;
+  background-color: #FAFAFA;
+  border: 1px solid green;
+  color: green;
+}
+
+#div-diag-container-masks #div-diag-outer-cont-masks #div-diag-list-cont-masks div.list-item div.inner div.text {
+  font-size: 80%;
+}
+
+#div-diag-container-masks #div-diag-outer-cont-masks #div-diag-list-cont-masks div.left-mask div.label-cont, #div-diag-container-masks #div-diag-outer-cont-masks #div-diag-list-cont-masks div.right-mask div.label-cont {
+  position: relative;
+  height: 100%;
+}
+
+#div-diag-container-masks #div-diag-outer-cont-masks #div-diag-list-cont-masks div.left-mask div.label-cont span, #div-diag-container-masks #div-diag-outer-cont-masks #div-diag-list-cont-masks div.right-mask div.label-cont span {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  color: #F8F8F8;
+  font-size: 80%;
+}
+
+#div-diag-container-masks #div-diag-outer-cont-masks #div-diag-list-cont-masks div.left-mask div.label-cont span {
+  right: 0.4em;
+}
+
+#div-diag-container-masks #div-diag-outer-cont-masks #div-diag-list-cont-masks div.right-mask div.label-cont span {
+  left: 0.4em;
 }
 
 #div-diag-container-setup {
