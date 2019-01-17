@@ -120,6 +120,26 @@
             'aref' => 'ref-sortEndDuration',
             'title' => 'sortEndDuration'
         ),
+        'sortItemActiveClass' => array(
+            'aref' => 'ref-sortItemActiveClass',
+            'title' => 'sortItemActiveClass'
+        ),
+        'sortItemActiveHide' => array(
+            'aref' => 'ref-sortItemActiveHide',
+            'title' => 'sortItemActiveHide'
+        ),
+        'sortListClass' => array(
+            'aref' => 'ref-sortListClass',
+            'title' => 'sortListClass'
+        ),
+        'sortMoveStartDelay' => array(
+            'aref' => 'ref-sortMoveStartDelay',
+            'title' => 'sortMoveStartDelay'
+        ),
+        'sortOuterClass' => array(
+            'aref' => 'ref-sortOuterClass',
+            'title' => 'sortOuterClass'
+        ),
 
     );
 
@@ -132,11 +152,11 @@
 // DONE sortDragHandleClass: 'sort-drag-handle',
 // DONE sortEnabled: true,
 // DONE sortEndDuration: 300,
-// sortItemActiveHide: true,
-// sortItemActiveClass: 'sort-item-active',
-// sortListClass: 'sort-list',
-// sortMoveStartDelay: 400,
-// sortOuterClass: 'sort-outer',
+// DONE sortItemActiveClass: 'sort-item-active',
+// DONE sortItemActiveHide: true,
+// DONE sortListClass: 'sort-list',
+// DONE sortMoveStartDelay: 400,
+// DONE sortOuterClass: 'sort-outer',
 // sortScrollEnabled: true,
 // sortScrollSpeed: 3,
 // sortStartDuration: 300,
@@ -893,6 +913,146 @@ lithiumlist.attachToList(
         </div>
 <pre class="line-numbers"><code class="language-js">var props = {
     sortEndDuration: 300
+};
+lithiumlist.attachToList(
+    ...,
+    props
+);
+</code></pre>
+    </div>
+
+    <div class="subsection-cont">
+        <a id="{{$refs_options['sortItemActiveClass']['aref']}}" class="title-subsection">
+            {{$refs_options['sortItemActiveClass']['title']}}
+        </a>
+        <div class="params-cont">
+            <div class="param">
+                <strong>Type:</strong> String
+            </div>
+            <div class="param">
+                <strong>Default:</strong> <code class="language-js">&#39;sort-item-active&#39;</code>
+            </div>
+        </div>
+        <p>
+            A class name that is added to the active list item during sorting.
+        </p>
+        <div class="title-codeblock">
+            EXAMPLE JS
+        </div>
+<pre class="line-numbers"><code class="language-js">var props = {
+    sortItemActiveClass: 'active'
+};
+lithiumlist.attachToList(
+    ...,
+    props
+);
+</code></pre>
+    </div>
+
+    <div class="subsection-cont">
+        <a id="{{$refs_options['sortItemActiveHide']['aref']}}" class="title-subsection">
+            {{$refs_options['sortItemActiveHide']['title']}}
+        </a>
+        <div class="params-cont">
+            <div class="param">
+                <strong>Type:</strong> Boolean
+            </div>
+            <div class="param">
+                <strong>Default:</strong> <code class="language-js">true</code>
+            </div>
+        </div>
+        <p>
+            Enable or disable automatic hiding of the active list item during sorting. If this option is set to <code class="language-js">true</code>, the &#39;visibility&#39; style of the active list item is set to &#39;hidden&#39; during sorting, and &#39;visible&#39; at other times.
+        </p>
+        <div class="title-codeblock">
+            EXAMPLE JS
+        </div>
+<pre class="line-numbers"><code class="language-js">var props = {
+    sortItemActiveHide: false
+};
+lithiumlist.attachToList(
+    ...,
+    props
+);
+</code></pre>
+    </div>
+
+    <div class="subsection-cont">
+        <a id="{{$refs_options['sortListClass']['aref']}}" class="title-subsection">
+            {{$refs_options['sortListClass']['title']}}
+        </a>
+        <div class="params-cont">
+            <div class="param">
+                <strong>Type:</strong> String
+            </div>
+            <div class="param">
+                <strong>Default:</strong> <code class="language-js">&#39;sort-list&#39;</code>
+            </div>
+        </div>
+        <p>
+            A class name that is added to <strong><span class="list-cont">listCont</span></strong> during sorting.
+        </p>
+        <div class="title-codeblock">
+            EXAMPLE JS
+        </div>
+<pre class="line-numbers"><code class="language-js">var props = {
+    sortListClass: 'sorting'
+};
+lithiumlist.attachToList(
+    ...,
+    props
+);
+</code></pre>
+    </div>
+
+    <div class="subsection-cont">
+        <a id="{{$refs_options['sortMoveStartDelay']['aref']}}" class="title-subsection">
+            {{$refs_options['sortMoveStartDelay']['title']}}
+        </a>
+        <div class="params-cont">
+            <div class="param">
+                <strong>Type:</strong> Integer
+            </div>
+            <div class="param">
+                <strong>Default:</strong> <code class="language-js">400</code>
+            </div>
+        </div>
+        <p>
+            The duration, in milliseconds, of the long-press required to start sorting an item. Does not apply to pressing a sort drag handle.
+        </p>
+        <div class="title-codeblock">
+            EXAMPLE JS
+        </div>
+<pre class="line-numbers"><code class="language-js">var props = {
+    sortMoveStartDelay: 800
+};
+lithiumlist.attachToList(
+    ...,
+    props
+);
+</code></pre>
+    </div>
+
+    <div class="subsection-cont">
+        <a id="{{$refs_options['sortOuterClass']['aref']}}" class="title-subsection">
+            {{$refs_options['sortOuterClass']['title']}}
+        </a>
+        <div class="params-cont">
+            <div class="param">
+                <strong>Type:</strong> String
+            </div>
+            <div class="param">
+                <strong>Default:</strong> <code class="language-js">&#39;sort-outer&#39;</code>
+            </div>
+        </div>
+        <p>
+            A class name that is added to <strong><span class="outer-cont">outerCont</span></strong> during sorting. Has no effect if <strong><span class="outer-cont">outerCont</span></strong> is <code class="language-js">window</code>.
+        </p>
+        <div class="title-codeblock">
+            EXAMPLE JS
+        </div>
+<pre class="line-numbers"><code class="language-js">var props = {
+    sortOuterClass: 'sorting'
 };
 lithiumlist.attachToList(
     ...,
