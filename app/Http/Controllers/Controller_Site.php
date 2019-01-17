@@ -40,12 +40,12 @@ class Controller_Site extends Controller
 				'detailsTitle' => 'Overview of functionality',
 				'detailsView' => 'docs-overview'
 			),
-			'options-events-and-methods' => array(
+			'options-events-methods-and-objects' => array(
 				'selected' => false,
-				'url' => url('/docs/options-events-and-methods'),
-				'pageTitle' => 'Lithium List - docs - options, events and methods',
-				'detailsTitle' => 'Options, events and methods',
-				'detailsView' => 'docs-oem'
+				'url' => url('/docs/options-events-methods-and-objects'),
+				'pageTitle' => 'Lithium List - docs - options, events, methods and objects',
+				'detailsTitle' => 'Options, events, methods and objects',
+				'detailsView' => 'docs-oemo'
 			),
 			'changelog' => array(
 				'selected' => false,

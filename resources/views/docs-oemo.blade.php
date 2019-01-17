@@ -11,6 +11,10 @@
         'methods' => array(
             'aref' => 'ref-methods',
             'title' => 'Methods'
+        ),
+        'objects' => array(
+            'aref' => 'ref-objects',
+            'title' => 'Objects'
         )
     );
 @endphp
@@ -20,6 +24,6 @@
     @endforeach
 </div>
 <div class="section-cont">
-    @include('docs-oem-options')
-    @include('docs-oem-events')
+    @include('docs-oemo-options')
+    @include('docs-oemo-events')
 </div>

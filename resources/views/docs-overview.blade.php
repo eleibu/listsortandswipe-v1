@@ -72,7 +72,7 @@
 //// safariAutoOuterOverflow
     -->
         <div class="related-links">
-            <a class="button-word-cont" href="{{ $subpages['options-events-and-methods']['url'] . '#ref-ignoreOnClick' }}" title="ignoreOnClick">ignoreOnClick</a>
+            <a class="button-word-cont" href="{{ $subpages['options-events-methods-and-objects']['url'] . '#ref-ignoreOnClick' }}" title="ignoreOnClick">ignoreOnClick</a>
         </div>
     </div>
 </div>
@@ -158,10 +158,10 @@
             Related options and events:
         </div>
         <div class="related-links">
-            <a class="button-word-cont" href="{{ $subpages['options-events-and-methods']['url'] . '#ref-sortScrollEnabled' }}" title="sortScrollEnabled">sortScrollEnabled</a>
-            <a class="button-word-cont" href="{{ $subpages['options-events-and-methods']['url'] . '#ref-sortScrollSpeed' }}" title="sortScrollSpeed">sortScrollSpeed</a>
-            <a class="button-word-cont" href="{{ $subpages['options-events-and-methods']['url'] . '#ref-onSortAutoScrollStart' }}" title="onSortAutoScrollStart">onSortAutoScrollStart</a>
-            <a class="button-word-cont" href="{{ $subpages['options-events-and-methods']['url'] . '#ref-onSortAutoScrollEnd' }}" title="onSortAutoScrollEnd">onSortAutoScrollEnd</a>
+            <a class="button-word-cont" href="{{ $subpages['options-events-methods-and-objects']['url'] . '#ref-sortScrollEnabled' }}" title="sortScrollEnabled">sortScrollEnabled</a>
+            <a class="button-word-cont" href="{{ $subpages['options-events-methods-and-objects']['url'] . '#ref-sortScrollSpeed' }}" title="sortScrollSpeed">sortScrollSpeed</a>
+            <a class="button-word-cont" href="{{ $subpages['options-events-methods-and-objects']['url'] . '#ref-onSortAutoScrollStart' }}" title="onSortAutoScrollStart">onSortAutoScrollStart</a>
+            <a class="button-word-cont" href="{{ $subpages['options-events-methods-and-objects']['url'] . '#ref-onSortAutoScrollEnd' }}" title="onSortAutoScrollEnd">onSortAutoScrollEnd</a>
         </div>
     </div>
 </div>
@@ -258,7 +258,7 @@
             Related options and events:
         </div>
         <div class="related-links">
-            <a class="button-word-cont" href="{{ $subpages['options-events-and-methods']['url'] . '#ref-ignoreOnClick' }}" title="ignoreOnClick">ignoreOnClick</a>
+            <a class="button-word-cont" href="{{ $subpages['options-events-methods-and-objects']['url'] . '#ref-ignoreOnClick' }}" title="ignoreOnClick">ignoreOnClick</a>
         </div>
     </div>
 </div>
@@ -322,7 +322,7 @@
             Related options and events:
         </div>
         <div class="related-links">
-            <a class="button-word-cont" href="{{ $subpages['options-events-and-methods']['url'] . '#ref-ignoreOnClick' }}" title="ignoreOnClick">ignoreOnClick</a>
+            <a class="button-word-cont" href="{{ $subpages['options-events-methods-and-objects']['url'] . '#ref-ignoreOnClick' }}" title="ignoreOnClick">ignoreOnClick</a>
         </div>
     </div>
 </div>
@@ -409,7 +409,7 @@
             Related options and events:
         </div>
         <div class="related-links">
-            <a class="button-word-cont" href="{{ $subpages['options-events-and-methods']['url'] . '#ref-ignoreOnClick' }}" title="ignoreOnClick">ignoreOnClick</a>
+            <a class="button-word-cont" href="{{ $subpages['options-events-methods-and-objects']['url'] . '#ref-ignoreOnClick' }}" title="ignoreOnClick">ignoreOnClick</a>
         </div>
     </div>
 </div>

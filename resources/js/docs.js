@@ -40,12 +40,12 @@ if (outerContSalesPoints && listContSalesPoints) {
 	    	leftSwipeStartThreshold: '15%',
 	    	leftSwipeEndThreshold: '40%',
 	        leftMasks: [],
-	    	onLeftEnd: function(activeIndex, didSlideOut) {
+	    	onLeftEnd: function(instance, activeIndex, didSlideOut) {
 	    		if (didSlideOut) {
-		    		var items = listContSalesPoints.getElementsByClassName(listItemClass);
+		    		var items = instance.listCont.getElementsByClassName(instance.listItemClass);
 		    		items[activeIndex].className = items[activeIndex].className + ' deleting';
 		    		setTimeout(function() {
-		    			listContSalesPoints.removeChild(items[activeIndex]);
+		    			instance.listCont.removeChild(items[activeIndex]);
 		    		}, 200);
 	    		}
 	    	}

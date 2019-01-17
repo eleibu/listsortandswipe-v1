@@ -33,29 +33,6 @@
 
 
 
-// NEXT PAGE LINK BELOW EACH PAGE!!!!!!
-
-
-
-
-
-// MASKS
-
-// During sliding, Lithium List covers over the active list item with a mask. The mask is a DIV with the exact dimensions and location of the active list item. By default
-// the mask is given a red background for left sliding (indicating that the item will be deleted) and a green background for right sliding (indicating that the item will
-// by archived). Developers can change the background colour of the masks, apply class names during sliding and define child nodes for insertion into the masks (for example,
-// to show a label indicating what action will occur upon completion of the slide). Developers can also turn masks off altogther and instead use class names added to
-// the active list item to show their desired content.
-
-// Related options, events and methods:
-//// leftItemActiveClass, leftMasks, rightItemActiveClass, rightMasks
-
-
-// ADD ITEMS WITH NO CODE (PLAYS NICELY WITH REACT)
-// VARIABLE HEIGHT LIST ITEMS
-// LIST ITEM PADDING
-
-
 
 // Notes:
 // outerCont should be a DOM element or window (not 'document' or 'document.body')
@@ -527,7 +504,7 @@ export var lithiumlistPro = (function () {
 		instance.temp.activeOrigX = instance.temp.items[instance.temp.activeIndex].offsetLeft;
 
         if (instance.props.onLeftStart) {
-			instance.props.onLeftStart(instance.temp.activeIndex);
+			instance.props.onLeftStart(getReturnInstance(instance), instance.temp.activeIndex);
         }
 
         safariBodyUnselectableAdd(instance);
@@ -561,7 +538,7 @@ export var lithiumlistPro = (function () {
 		instance.temp.activeOrigX = instance.temp.items[instance.temp.activeIndex].offsetLeft;
 
         if (instance.props.onRightStart) {
-			instance.props.onRightStart(instance.temp.activeIndex);
+			instance.props.onRightStart(getReturnInstance(instance), instance.temp.activeIndex);
         }
 
         safariBodyUnselectableAdd(instance);
@@ -619,7 +596,7 @@ export var lithiumlistPro = (function () {
 				}
 
 		        if (instance.props.onSortStart) {
-					instance.props.onSortStart(instance.temp.activeIndex);
+					instance.props.onSortStart(getReturnInstance(instance), instance.temp.activeIndex);
 		        }
 
 				safariBodyUnselectableAdd(instance);
@@ -695,7 +672,7 @@ export var lithiumlistPro = (function () {
                 var deltaY = pageY - instance.temp.lastPageY;
 	        	if ((deltaY != 0) && (instance.temp.scrollInterval)) {
 	    			if (instance.props.onSortAutoScrollEnd) {
-	    				instance.props.onSortAutoScrollEnd(instance.temp.origIndex);
+	    				instance.props.onSortAutoScrollEnd(getReturnInstance(instance), instance.temp.origIndex);
 	    			}
 	        		clearInterval(instance.temp.scrollInterval);
 	        		instance.temp.scrollInterval = null;
@@ -743,7 +720,7 @@ export var lithiumlistPro = (function () {
 		        				if (instance.temp.outerOverhang > 0) {
 		        					scrollingUp = false;
 		        				}
-		        				instance.props.onSortAutoScrollStart(instance.temp.origIndex, scrollingUp);
+		        				instance.props.onSortAutoScrollStart(getReturnInstance(instance), instance.temp.origIndex, scrollingUp);
 		        			}
 		        			outerContOverflowHidden(instance);
 							instance.temp.scrollInterval = setInterval(function() {doScroll(instance);}, 5);
@@ -784,7 +761,7 @@ export var lithiumlistPro = (function () {
     		}
         } else {
 			if (instance.props.onSortAutoScrollEnd) {
-				instance.props.onSortAutoScrollEnd(instance.temp.origIndex);
+				instance.props.onSortAutoScrollEnd(getReturnInstance(instance), instance.temp.origIndex);
 			}
         	if (instance.temp.scrollInterval) {
         		clearInterval(instance.temp.scrollInterval);
@@ -912,7 +889,7 @@ export var lithiumlistPro = (function () {
         	} else if (instance.temp.moveType == 'SORT') {
 	        	if (instance.temp.scrollInterval) {
 	    			if (instance.props.onSortAutoScrollEnd) {
-	    				instance.props.onSortAutoScrollEnd(instance.temp.origIndex);
+	    				instance.props.onSortAutoScrollEnd(getReturnInstance(instance), instance.temp.origIndex);
 	    			}
 	        		clearInterval(instance.temp.scrollInterval);
 	        		instance.temp.scrollInterval = null;
@@ -943,7 +920,7 @@ export var lithiumlistPro = (function () {
 
 	var doLeftSlideOut = function(instance) {
 		if (instance.props.onLeftSlideOutStart) {
-			instance.props.onLeftSlideOutStart(instance.temp.activeIndex);
+			instance.props.onLeftSlideOutStart(getReturnInstance(instance), instance.temp.activeIndex);
 		}
 
 		if (instance.props.leftCloneSlideOutClass) {
@@ -967,7 +944,7 @@ export var lithiumlistPro = (function () {
 
 	var doLeftSlideBack = function(instance) {
 		if (instance.props.onLeftSlideBackStart) {
-			instance.props.onLeftSlideBackStart(instance.temp.activeIndex);
+			instance.props.onLeftSlideBackStart(getReturnInstance(instance), instance.temp.activeIndex);
 		}
 
 		if (instance.props.leftCloneSlideBackClass) {
@@ -991,7 +968,7 @@ export var lithiumlistPro = (function () {
 
 	var doRightSlideOut = function(instance) {
 		if (instance.props.onRightSlideOutStart) {
-			instance.props.onRightSlideOutStart(instance.temp.activeIndex);
+			instance.props.onRightSlideOutStart(getReturnInstance(instance), instance.temp.activeIndex);
 		}
 
 		if (instance.props.rightCloneSlideOutClass) {
@@ -1015,7 +992,7 @@ export var lithiumlistPro = (function () {
 
 	var doRightSlideBack = function(instance) {
 		if (instance.props.onRightSlideBackStart) {
-			instance.props.onRightSlideBackStart(instance.temp.activeIndex);
+			instance.props.onRightSlideBackStart(getReturnInstance(instance), instance.temp.activeIndex);
 		}
 
 		if (instance.props.rightCloneSlideBackClass) {
@@ -1050,7 +1027,7 @@ export var lithiumlistPro = (function () {
 	        safariBodyUnselectableRemove(instance);
 
 			if (instance.props.onLeftEnd) {
-				instance.props.onLeftEnd(instance.temp.activeIndex, didSlideOut);
+				instance.props.onLeftEnd(getReturnInstance(instance), instance.temp.activeIndex, didSlideOut);
 			}
 		} else if (instance.temp.moveType == 'RIGHT') {
 			if ((instance.temp.items[instance.temp.activeIndex]) && (instance.props.rightItemActiveClass)) {
@@ -1067,7 +1044,7 @@ export var lithiumlistPro = (function () {
 	        destroyTempDivs(instance);
 
 			if (instance.props.onRightEnd) {
-				instance.props.onRightEnd(instance.temp.activeIndex, didSlideOut);
+				instance.props.onRightEnd(getReturnInstance(instance), instance.temp.activeIndex, didSlideOut);
 			}
 		}
 
@@ -1100,7 +1077,7 @@ export var lithiumlistPro = (function () {
 		safariBodyUnselectableRemove(instance);
 
 		if (instance.props.onSortEnd) {
-			instance.props.onSortEnd(instance.temp.origIndex, instance.temp.activeIndex);
+			instance.props.onSortEnd(getReturnInstance(instance), instance.temp.origIndex, instance.temp.activeIndex);
 		}
 
 		instance.temp = getEmptyTemp();
@@ -1217,6 +1194,15 @@ export var lithiumlistPro = (function () {
 	};
 
 	// utility functions
+
+	var getReturnInstance = function(instance) {
+		return {
+			'outerCont' : instance.outerCont,
+			'listCont' : instance.listCont,
+			'listItemClass' : instance.listItemClass,
+			'props' : instance.props
+		};
+	};
 
 	var safariBodyUnselectableAdd = function(instance) {
         if (isSafariMacOS && instance.props.safariBodyUnselectable) {

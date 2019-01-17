@@ -57,17 +57,17 @@ lithiumlistPro.attachToList(
     listProperties
 );
 
-function sortEnd(origIndex, newIndex) {
+function sortEnd(instance, origIndex, newIndex) {
 	if (origIndex != newIndex) {
-		var items = listCont.getElementsByClassName(listItemClass);
+		var items = instance.listCont.getElementsByClassName(instance.listItemClass);
 		var origItem = items[origIndex];
 		var newItem = items[newIndex];
 
-		listCont.removeChild(origItem);	
+		instance.listCont.removeChild(origItem);	
 		if (newIndex > origIndex) {
-			listCont.insertBefore(origItem, newItem.nextSibling);
+			instance.listCont.insertBefore(origItem, newItem.nextSibling);
 		} else {
-			listCont.insertBefore(origItem, newItem);
+			instance.listCont.insertBefore(origItem, newItem);
 		}		
 	}
 }

@@ -82,9 +82,20 @@
         Triggered at the completion of a left slide.
     </p>
     <div class="function">
-        onLeftEnd(index, didSlideOut)
+        onLeftEnd(instance, index, didSlideOut)
     </div>
     <div class="params-cont">
+        <div class="param">
+            <strong>listCont</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Element
+            </div>
+            <div class="sub-param">
+                The <strong><span class="list-cont">listCont</span></strong> in which the event occurred.
+            </div>
+        </div>
         <div class="param">
             <strong>index</strong>
         </div>
@@ -112,9 +123,8 @@
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    onLeftEnd: function(index, didSlideOut) {
+    onLeftEnd: function(listCont, index, didSlideOut) {
         if (didSlideOut) {
-            var listCont = document.getElementById(&#39;list-cont&#39;);
             var items = listCont.getElementsByClassName(&#39;list-item&#39;);
             listCont.removeChild(items[index]);
         }
