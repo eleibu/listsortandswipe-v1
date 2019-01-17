@@ -333,6 +333,11 @@ div.details-cont div.details-outer div.section-cont div.subsection-links {
 
 div.details-cont div.details-outer div.section-cont div.subsection-links a.button-word-cont {
   color: #3399FF;
+  width: 13em;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 div.details-cont div.details-outer div.section-cont div.subsection-links a.button-word-cont:hover {
@@ -364,6 +369,13 @@ div.details-cont div.details-outer div.section-cont a.title-subsection {
 
 div.details-cont div.details-outer div.section-cont a.title-subsection:hover {
   text-decoration: none;
+}
+
+div.details-cont div.details-outer div.section-cont div.function {
+  color: #555555;
+  font-weight: bold;
+  margin: 1.6em 0 1em 0;
+  padding-left: 2em;
 }
 
 div.details-cont div.details-outer div.section-cont div.params-cont {

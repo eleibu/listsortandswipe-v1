@@ -92,6 +92,11 @@ div.details-cont {
 
 				a.button-word-cont {
 					color: #3399FF;
+					width: 13em;
+					text-align: left;
+					white-space: nowrap;
+					overflow: hidden;
+					text-overflow: ellipsis;
 				}
 
 				a.button-word-cont:hover {
@@ -124,6 +129,14 @@ div.details-cont {
 
 			a.title-subsection:hover {
 				text-decoration: none;
+			}
+
+
+			div.function {
+				color: #555555;
+				font-weight: bold;
+				margin: 1.6em 0 1em 0;
+				padding-left: 2em;
 			}
 
 			div.params-cont {

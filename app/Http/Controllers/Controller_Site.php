@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 class Controller_Site extends Controller
-{
+{	
 	public function page_home(Request $request) {
 		return view('home');
 	}
@@ -45,7 +45,7 @@ class Controller_Site extends Controller
 				'url' => url('/docs/options-events-and-methods'),
 				'pageTitle' => 'Lithium List - docs - options, events and methods',
 				'detailsTitle' => 'Options, events and methods',
-				'detailsView' => 'docs-options'
+				'detailsView' => 'docs-oem'
 			),
 			'changelog' => array(
 				'selected' => false,
