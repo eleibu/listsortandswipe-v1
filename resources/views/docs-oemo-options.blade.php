@@ -204,10 +204,10 @@
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> Array
+            Type: Array
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">[&#39;input&#39;, &#39;textarea&#39;, &#39;select&#39;, &#39;option&#39;, &#39;button&#39;]</code>
+            Default: <code class="language-js">[&#39;input&#39;, &#39;textarea&#39;, &#39;select&#39;, &#39;option&#39;, &#39;button&#39;]</code>
         </div>
     </div>
     <p>
@@ -232,10 +232,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> String
+            Type: String
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">&#39;left-button&#39;</code>
+            Default: <code class="language-js">&#39;left-button&#39;</code>
         </div>
     </div>
     <p>
@@ -260,10 +260,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> Boolean
+            Type: Boolean
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">true</code>
+            Default: <code class="language-js">true</code>
         </div>
     </div>
     <p>
@@ -288,10 +288,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> String
+            Type: String
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">&#39;left-clone&#39;</code>
+            Default: <code class="language-js">&#39;left-clone&#39;</code>
         </div>
     </div>
     <p>
@@ -316,10 +316,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> String
+            Type: String
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">&#39;left-clone-slide-back&#39;</code>
+            Default: <code class="language-js">&#39;left-clone-slide-back&#39;</code>
         </div>
     </div>
     <p>
@@ -344,10 +344,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> String
+            Type: String
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">&#39;left-clone-slide-out&#39;</code>
+            Default: <code class="language-js">&#39;left-clone-slide-out&#39;</code>
         </div>
     </div>
     <p>
@@ -372,10 +372,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> Boolean
+            Type: Boolean
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">true</code>
+            Default: <code class="language-js">true</code>
         </div>
     </div>
     <p>
@@ -400,10 +400,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> String
+            Type: String
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">&#39;left-item-active&#39;</code>
+            Default: <code class="language-js">&#39;left-item-active&#39;</code>
         </div>
     </div>
     <p>
@@ -428,10 +428,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> String
+            Type: String
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">&#39;left-list&#39;</code>
+            Default: <code class="language-js">&#39;left-list&#39;</code>
         </div>
     </div>
     <p>
@@ -456,10 +456,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> Array
+            Type: Array
         </div>
         <div class="param">
-            <strong>Default:</strong>
+            Default:
             <pre><code class="language-js">[{
     background: &#39;rgba(252, 13, 27, 1)&#39;,
     classNameDefault: &#39;left-mask&#39;,
@@ -557,10 +557,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> String
+            Type: String
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">&#39;left-outer&#39;</code>
+            Default: <code class="language-js">&#39;left-outer&#39;</code>
         </div>
     </div>
     <p>
@@ -585,10 +585,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> Integer
+            Type: Integer
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">200</code>
+            Default: <code class="language-js">200</code>
         </div>
     </div>
     <p>
@@ -613,10 +613,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> Integer
+            Type: Integer
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">300</code>
+            Default: <code class="language-js">300</code>
         </div>
     </div>
     <p>
@@ -641,10 +641,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> String
+            Type: String
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">&#39;30%&#39;</code>
+            Default: <code class="language-js">&#39;30%&#39;</code>
         </div>
     </div>
     <p>
@@ -669,10 +669,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> String
+            Type: String
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">&#39;10px&#39;</code>
+            Default: <code class="language-js">&#39;10px&#39;</code>
         </div>
     </div>
     <p>
@@ -697,10 +697,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> String
+            Type: String
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">&#39;right-button&#39;</code>
+            Default: <code class="language-js">&#39;right-button&#39;</code>
         </div>
     </div>
     <p>
@@ -725,10 +725,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> Boolean
+            Type: Boolean
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">true</code>
+            Default: <code class="language-js">true</code>
         </div>
     </div>
     <p>
@@ -753,10 +753,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> String
+            Type: String
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">&#39;right-clone&#39;</code>
+            Default: <code class="language-js">&#39;right-clone&#39;</code>
         </div>
     </div>
     <p>
@@ -781,10 +781,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> String
+            Type: String
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">&#39;right-clone-slide-back&#39;</code>
+            Default: <code class="language-js">&#39;right-clone-slide-back&#39;</code>
         </div>
     </div>
     <p>
@@ -809,10 +809,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> String
+            Type: String
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">&#39;right-clone-slide-out&#39;</code>
+            Default: <code class="language-js">&#39;right-clone-slide-out&#39;</code>
         </div>
     </div>
     <p>
@@ -837,10 +837,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> Boolean
+            Type: Boolean
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">true</code>
+            Default: <code class="language-js">true</code>
         </div>
     </div>
     <p>
@@ -865,10 +865,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> String
+            Type: String
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">&#39;right-item-active&#39;</code>
+            Default: <code class="language-js">&#39;right-item-active&#39;</code>
         </div>
     </div>
     <p>
@@ -893,10 +893,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> String
+            Type: String
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">&#39;right-list&#39;</code>
+            Default: <code class="language-js">&#39;right-list&#39;</code>
         </div>
     </div>
     <p>
@@ -921,10 +921,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> Array
+            Type: Array
         </div>
         <div class="param">
-            <strong>Default:</strong>
+            Default:
             <pre><code class="language-js">[{
     background: &#39;rgba(252, 13, 27, 1)&#39;,
     classNameDefault: &#39;right-mask&#39;,
@@ -1022,10 +1022,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> String
+            Type: String
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">&#39;right-outer&#39;</code>
+            Default: <code class="language-js">&#39;right-outer&#39;</code>
         </div>
     </div>
     <p>
@@ -1050,10 +1050,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> Integer
+            Type: Integer
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">200</code>
+            Default: <code class="language-js">200</code>
         </div>
     </div>
     <p>
@@ -1078,10 +1078,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> Integer
+            Type: Integer
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">300</code>
+            Default: <code class="language-js">300</code>
         </div>
     </div>
     <p>
@@ -1106,10 +1106,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> String
+            Type: String
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">&#39;30%&#39;</code>
+            Default: <code class="language-js">&#39;30%&#39;</code>
         </div>
     </div>
     <p>
@@ -1134,10 +1134,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> String
+            Type: String
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">&#39;10px&#39;</code>
+            Default: <code class="language-js">&#39;10px&#39;</code>
         </div>
     </div>
     <p>
@@ -1162,10 +1162,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> Boolean
+            Type: Boolean
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">true</code>
+            Default: <code class="language-js">true</code>
         </div>
     </div>
     <p>
@@ -1193,10 +1193,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> Boolean
+            Type: Boolean
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">true</code>
+            Default: <code class="language-js">true</code>
         </div>
     </div>
     <p>
@@ -1224,10 +1224,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> Boolean
+            Type: Boolean
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">true</code>
+            Default: <code class="language-js">true</code>
         </div>
     </div>
     <p>
@@ -1252,10 +1252,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> String
+            Type: String
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">&#39;0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12)&#39;</code>
+            Default: <code class="language-js">&#39;0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12)&#39;</code>
         </div>
     </div>
     <p>
@@ -1280,10 +1280,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> String
+            Type: String
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">&#39;sort-clone&#39;</code>
+            Default: <code class="language-js">&#39;sort-clone&#39;</code>
         </div>
     </div>
     <p>
@@ -1308,10 +1308,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> String
+            Type: String
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">&#39;1.02&#39;</code>
+            Default: <code class="language-js">&#39;1.02&#39;</code>
         </div>
     </div>
     <p>
@@ -1336,10 +1336,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> String
+            Type: String
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">&#39;sort-drag-handle&#39;</code>
+            Default: <code class="language-js">&#39;sort-drag-handle&#39;</code>
         </div>
     </div>
     <p>
@@ -1364,10 +1364,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> Boolean
+            Type: Boolean
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">true</code>
+            Default: <code class="language-js">true</code>
         </div>
     </div>
     <p>
@@ -1392,10 +1392,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> Integer
+            Type: Integer
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">300</code>
+            Default: <code class="language-js">300</code>
         </div>
     </div>
     <p>
@@ -1420,10 +1420,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> String
+            Type: String
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">&#39;sort-item-active&#39;</code>
+            Default: <code class="language-js">&#39;sort-item-active&#39;</code>
         </div>
     </div>
     <p>
@@ -1448,10 +1448,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> Boolean
+            Type: Boolean
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">true</code>
+            Default: <code class="language-js">true</code>
         </div>
     </div>
     <p>
@@ -1476,10 +1476,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> String
+            Type: String
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">&#39;sort-list&#39;</code>
+            Default: <code class="language-js">&#39;sort-list&#39;</code>
         </div>
     </div>
     <p>
@@ -1504,10 +1504,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> Integer
+            Type: Integer
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">400</code>
+            Default: <code class="language-js">400</code>
         </div>
     </div>
     <p>
@@ -1532,10 +1532,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> String
+            Type: String
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">&#39;sort-outer&#39;</code>
+            Default: <code class="language-js">&#39;sort-outer&#39;</code>
         </div>
     </div>
     <p>
@@ -1560,10 +1560,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> Boolean
+            Type: Boolean
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">true</code>
+            Default: <code class="language-js">true</code>
         </div>
     </div>
     <p>
@@ -1588,10 +1588,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> Integer
+            Type: Integer
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">3</code>
+            Default: <code class="language-js">3</code>
         </div>
     </div>
     <p>
@@ -1616,10 +1616,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> Integer
+            Type: Integer
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">300</code>
+            Default: <code class="language-js">300</code>
         </div>
     </div>
     <p>
@@ -1644,10 +1644,10 @@ lithiumlist.attachToList(
     </a>
     <div class="params-cont">
         <div class="param">
-            <strong>Type:</strong> Integer
+            Type: Integer
         </div>
         <div class="param">
-            <strong>Default:</strong> <code class="language-js">200</code>
+            Default: <code class="language-js">200</code>
         </div>
     </div>
     <p>

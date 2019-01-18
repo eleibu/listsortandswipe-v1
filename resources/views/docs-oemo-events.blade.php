@@ -60,8 +60,8 @@
         // onRightSlideOutStart: null,
         // onRightStart: null,
 
-        // onSortAutoScrollEnd: null,
-        // onSortAutoScrollStart: null,
+        // DONE onSortAutoScrollEnd: null,
+        // DONE onSortAutoScrollStart: null,
         // onSortEnd: null,
         // onSortStart: null,
 
@@ -285,5 +285,117 @@ lithiumlist.attachToList(
 </code></pre>
 </div>
 
+<div class="subsection-cont">
+    <a id="{{$refs_events['onSortAutoScrollEnd']['aref']}}" class="title-subsection">
+        {{$refs_events['onSortAutoScrollEnd']['title']}}
+    </a>
+    <p>
+        Triggered when automatic scrolling stops.
+    </p>
+    <div class="function">
+        onSortAutoScrollEnd(instance, index)
+    </div>
+    <div class="params-cont">
+        <div class="param">
+            <strong>instance</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Object
+            </div>
+            <div class="sub-param">
+                The Lithium List <a href="{{ url($selectedpage['url'] . '#' . $refs_objects['instance']['aref']) }}" title="{{$refs_objects['instance']['title']}}">{{$refs_objects['instance']['title']}}</a> object.
+            </div>
+        </div>
+        <div class="param">
+            <strong>index</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Integer
+            </div>
+            <div class="sub-param">
+                The index of the active list item.
+            </div>
+        </div>
+    </div>
+    <div class="title-codeblock">
+        EXAMPLE JS
+    </div>
+<pre class="line-numbers"><code class="language-js">var props = {
+    onSortAutoScrollEnd: function(instance, index) {
+        console.log(&#39;Automatic scrolling stopped and list item &#39; + index + &#39; was sorted&#39;);
+    }
+};
+lithiumlist.attachToList(
+    ...,
+    props
+);
+</code></pre>
+</div>
+
+<div class="subsection-cont">
+    <a id="{{$refs_events['onSortAutoScrollStart']['aref']}}" class="title-subsection">
+        {{$refs_events['onSortAutoScrollStart']['title']}}
+    </a>
+    <p>
+        Triggered when automatic scrolling starts.
+    </p>
+    <div class="function">
+        onSortAutoScrollStart(instance, index, scrollingUp)
+    </div>
+    <div class="params-cont">
+        <div class="param">
+            <strong>instance</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Object
+            </div>
+            <div class="sub-param">
+                The Lithium List <a href="{{ url($selectedpage['url'] . '#' . $refs_objects['instance']['aref']) }}" title="{{$refs_objects['instance']['title']}}">{{$refs_objects['instance']['title']}}</a> object.
+            </div>
+        </div>
+        <div class="param">
+            <strong>index</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Integer
+            </div>
+            <div class="sub-param">
+                The index of the active list item.
+            </div>
+        </div>
+        <div class="param">
+            <strong>scrollingUp</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Boolean
+            </div>
+            <div class="sub-param">
+                <code class="language-js">True</code> if the list is scrolling up and <code class="language-js">false</code> if it is scrolling down.
+            </div>
+        </div>
+    </div>
+    <div class="title-codeblock">
+        EXAMPLE JS
+    </div>
+<pre class="line-numbers"><code class="language-js">var props = {
+    onSortAutoScrollStart: function(instance, index, scrollingUp) {
+        if (scrollingUp) {
+            console.log(&#39;Automatic up-scrolling started and list item &#39; + index + &#39; is being sorted&#39;);
+        } else {
+            console.log(&#39;Automatic down-scrolling started and list item &#39; + index + &#39; is being sorted&#39;);
+        }
+    }
+};
+lithiumlist.attachToList(
+    ...,
+    props
+);
+</code></pre>
+</div>
 
 
