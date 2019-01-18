@@ -51,9 +51,9 @@
     );
 
         // DONE onLeftEnd: null,
-        // onLeftSlideBackStart: null,
-        // onLeftSlideOutStart: null,
-        // onLeftStart: null,
+        // DONE onLeftSlideBackStart: null,
+        // DONE onLeftSlideOutStart: null,
+        // DONE onLeftStart: null,
 
         // onRightEnd: null,
         // onRightSlideBackStart: null,
@@ -86,14 +86,14 @@
     </div>
     <div class="params-cont">
         <div class="param">
-            <strong>listCont</strong>
+            <strong>instance</strong>
         </div>
         <div class="sub-params-cont">
             <div class="sub-param">
-                Type: Element
+                Type: Object
             </div>
             <div class="sub-param">
-                The <strong><span class="list-cont">listCont</span></strong> in which the event occurred.
+                The Lithium List <a href="{{ url($selectedpage['url'] . '#' . $refs_objects['instance']['aref']) }}" title="{{$refs_objects['instance']['title']}}">{{$refs_objects['instance']['title']}}</a> object.
             </div>
         </div>
         <div class="param">
@@ -123,10 +123,11 @@
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    onLeftEnd: function(listCont, index, didSlideOut) {
+    onLeftEnd: function(instance, index, didSlideOut) {
         if (didSlideOut) {
-            var items = listCont.getElementsByClassName(&#39;list-item&#39;);
-            listCont.removeChild(items[index]);
+            console.log(&#39;List item &#39; + index + &#39; slid out of the list&#39;);
+        } else {
+            console.log(&#39;List item &#39; + index + &#39; slid back to its starting position&#39;);
         }
     }
 };
@@ -137,9 +138,152 @@ lithiumlist.attachToList(
 </code></pre>
 </div>
 
+<div class="subsection-cont">
+    <a id="{{$refs_events['onLeftSlideBackStart']['aref']}}" class="title-subsection">
+        {{$refs_events['onLeftSlideBackStart']['title']}}
+    </a>
+    <p>
+        Triggered when a list item starts sliding back to its starting position after being swiped to the left.
+    </p>
+    <div class="function">
+        onLeftSlideBackStart(instance, index)
+    </div>
+    <div class="params-cont">
+        <div class="param">
+            <strong>instance</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Object
+            </div>
+            <div class="sub-param">
+                The Lithium List <a href="{{ url($selectedpage['url'] . '#' . $refs_objects['instance']['aref']) }}" title="{{$refs_objects['instance']['title']}}">{{$refs_objects['instance']['title']}}</a> object.
+            </div>
+        </div>
+        <div class="param">
+            <strong>index</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Integer
+            </div>
+            <div class="sub-param">
+                The index of the active list item.
+            </div>
+        </div>
+    </div>
+    <div class="title-codeblock">
+        EXAMPLE JS
+    </div>
+<pre class="line-numbers"><code class="language-js">var props = {
+    onLeftSlideBackStart: function(instance, index) {
+        console.log(&#39;List item &#39; + index + &#39; is starting to slide back to its starting position&#39;);
+    }
+};
+lithiumlist.attachToList(
+    ...,
+    props
+);
+</code></pre>
+</div>
 
+<div class="subsection-cont">
+    <a id="{{$refs_events['onLeftSlideOutStart']['aref']}}" class="title-subsection">
+        {{$refs_events['onLeftSlideOutStart']['title']}}
+    </a>
+    <p>
+        Triggered when a list item starts sliding out of the list after being swiped to the left.
+    </p>
+    <div class="function">
+        onLeftSlideOutStart(instance, index)
+    </div>
+    <div class="params-cont">
+        <div class="param">
+            <strong>instance</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Object
+            </div>
+            <div class="sub-param">
+                The Lithium List <a href="{{ url($selectedpage['url'] . '#' . $refs_objects['instance']['aref']) }}" title="{{$refs_objects['instance']['title']}}">{{$refs_objects['instance']['title']}}</a> object.
+            </div>
+        </div>
+        <div class="param">
+            <strong>index</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Integer
+            </div>
+            <div class="sub-param">
+                The index of the active list item.
+            </div>
+        </div>
+    </div>
+    <div class="title-codeblock">
+        EXAMPLE JS
+    </div>
+<pre class="line-numbers"><code class="language-js">var props = {
+    onLeftSlideOutStart: function(instance, index) {
+        console.log(&#39;List item &#39; + index + &#39; is starting to slide out of the list&#39;);
+    }
+};
+lithiumlist.attachToList(
+    ...,
+    props
+);
+</code></pre>
+</div>
 
-
+<div class="subsection-cont">
+    <a id="{{$refs_events['onLeftStart']['aref']}}" class="title-subsection">
+        {{$refs_events['onLeftStart']['title']}}
+    </a>
+    <p>
+        Triggered at the start of a left slide.
+    </p>
+    <div class="function">
+        onLeftStart(instance, index)
+    </div>
+    <div class="params-cont">
+        <div class="param">
+            <strong>instance</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Object
+            </div>
+            <div class="sub-param">
+                The Lithium List <a href="{{ url($selectedpage['url'] . '#' . $refs_objects['instance']['aref']) }}" title="{{$refs_objects['instance']['title']}}">{{$refs_objects['instance']['title']}}</a> object.
+            </div>
+        </div>
+        <div class="param">
+            <strong>index</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Integer
+            </div>
+            <div class="sub-param">
+                The index of the active list item.
+            </div>
+        </div>
+    </div>
+    <div class="title-codeblock">
+        EXAMPLE JS
+    </div>
+<pre class="line-numbers"><code class="language-js">var props = {
+    onLeftStart: function(instance, index) {
+        console.log(&#39;List item &#39; + index + &#39; is starting to slide left&#39;);
+    }
+};
+lithiumlist.attachToList(
+    ...,
+    props
+);
+</code></pre>
+</div>
 
 
 

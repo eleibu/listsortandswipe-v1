@@ -17,6 +17,17 @@
             'title' => 'Objects'
         )
     );
+
+    $refs_objects = array(
+        'instance' => array(
+            'aref' => 'ref-instance',
+            'title' => 'instance'
+        ),
+        'props' => array(
+            'aref' => 'ref-props',
+            'title' => 'props'
+        ),
+    );
 @endphp
 <div class="pagelinks">
     @foreach ($refs as $ref)
@@ -26,4 +37,6 @@
 <div class="section-cont">
     @include('docs-oemo-options')
     @include('docs-oemo-events')
+
+    @include('docs-oemo-objects')
 </div>

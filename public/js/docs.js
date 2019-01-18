@@ -18586,17 +18586,17 @@ __webpack_require__("./node_modules/bootstrap/dist/js/bootstrap.js");
 __WEBPACK_IMPORTED_MODULE_3_prismjs_components_prism_core___default.a.highlightAll();
 
 var listItemClass = 'list-item';
-function sortEnd(listCont, origIndex, newIndex) {
+function sortEnd(instance, origIndex, newIndex) {
 	if (origIndex != newIndex) {
-		var items = listCont.getElementsByClassName(listItemClass);
+		var items = instance.listCont.getElementsByClassName(instance.listItemClass);
 		var origItem = items[origIndex];
 		var newItem = items[newIndex];
 
-		listCont.removeChild(origItem);
+		instance.listCont.removeChild(origItem);
 		if (newIndex > origIndex) {
-			listCont.insertBefore(origItem, newItem.nextSibling);
+			instance.listCont.insertBefore(origItem, newItem.nextSibling);
 		} else {
-			listCont.insertBefore(origItem, newItem);
+			instance.listCont.insertBefore(origItem, newItem);
 		}
 	}
 }
@@ -18606,8 +18606,8 @@ var outerContSalesPoints = document.getElementById('div-salespoints-outer-cont')
 var listContSalesPoints = document.getElementById('div-salespoints-list-cont');
 if (outerContSalesPoints && listContSalesPoints) {
 	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].attachToList('123456789', outerContSalesPoints, listContSalesPoints, listItemClass, {
-		onSortEnd: function onSortEnd(origIndex, newIndex) {
-			sortEnd(listContSalesPoints, origIndex, newIndex);
+		onSortEnd: function onSortEnd(instance, origIndex, newIndex) {
+			sortEnd(instance, origIndex, newIndex);
 		},
 		rightEnabled: false,
 		leftSwipeStartThreshold: '15%',
@@ -18633,8 +18633,8 @@ if (outerContSorting && listContSorting) {
 		sortDragHandleClass: 'budicon-grab-ui',
 		leftEnabled: false,
 		rightEnabled: false,
-		onSortEnd: function onSortEnd(origIndex, newIndex) {
-			sortEnd(listContSorting, origIndex, newIndex);
+		onSortEnd: function onSortEnd(instance, origIndex, newIndex) {
+			sortEnd(instance, origIndex, newIndex);
 		}
 	});
 }
@@ -18647,8 +18647,8 @@ if (outerContAutomaticScrolling && listContAutomaticScrolling) {
 		sortDragHandleClass: 'budicon-grab-ui',
 		leftEnabled: false,
 		rightEnabled: false,
-		onSortEnd: function onSortEnd(origIndex, newIndex) {
-			sortEnd(listContAutomaticScrolling, origIndex, newIndex);
+		onSortEnd: function onSortEnd(instance, origIndex, newIndex) {
+			sortEnd(instance, origIndex, newIndex);
 		}
 	});
 }
@@ -18709,8 +18709,8 @@ if (outerContClone && listContClone) {
 		sortDragHandleClass: 'budicon-grab-ui',
 		leftEnabled: false,
 		rightEnabled: false,
-		onSortEnd: function onSortEnd(origIndex, newIndex) {
-			sortEnd(listContClone, origIndex, newIndex);
+		onSortEnd: function onSortEnd(instance, origIndex, newIndex) {
+			sortEnd(instance, origIndex, newIndex);
 		}
 	});
 }

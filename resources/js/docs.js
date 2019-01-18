@@ -8,17 +8,17 @@ import Prism from 'prismjs';
 Prism.highlightAll();
 
 var listItemClass = 'list-item';
-function sortEnd(listCont, origIndex, newIndex) {
+function sortEnd(instance, origIndex, newIndex) {
 	if (origIndex != newIndex) {
-		var items = listCont.getElementsByClassName(listItemClass);
+		var items = instance.listCont.getElementsByClassName(instance.listItemClass);
 		var origItem = items[origIndex];
 		var newItem = items[newIndex];
 
-		listCont.removeChild(origItem);	
+		instance.listCont.removeChild(origItem);	
 		if (newIndex > origIndex) {
-			listCont.insertBefore(origItem, newItem.nextSibling);
+			instance.listCont.insertBefore(origItem, newItem.nextSibling);
 		} else {
-			listCont.insertBefore(origItem, newItem);
+			instance.listCont.insertBefore(origItem, newItem);
 		}		
 	}
 }
@@ -33,8 +33,8 @@ if (outerContSalesPoints && listContSalesPoints) {
 	    listContSalesPoints,
 	    listItemClass,
 	    {
-	    	onSortEnd: function(origIndex, newIndex) {
-	    		sortEnd(listContSalesPoints, origIndex, newIndex);
+	    	onSortEnd: function(instance, origIndex, newIndex) {
+	    		sortEnd(instance, origIndex, newIndex);
 	    	},
 	    	rightEnabled: false,
 	    	leftSwipeStartThreshold: '15%',
@@ -66,8 +66,8 @@ if (outerContSorting && listContSorting) {
 	    	sortDragHandleClass: 'budicon-grab-ui',
 	    	leftEnabled: false,
 	    	rightEnabled: false,
-	    	onSortEnd: function(origIndex, newIndex) {
-	    		sortEnd(listContSorting, origIndex, newIndex);
+	    	onSortEnd: function(instance, origIndex, newIndex) {
+	    		sortEnd(instance, origIndex, newIndex);
 	    	}
 	    }
 	);
@@ -86,8 +86,8 @@ if (outerContAutomaticScrolling && listContAutomaticScrolling) {
 	    	sortDragHandleClass: 'budicon-grab-ui',
 	    	leftEnabled: false,
 	    	rightEnabled: false,
-	    	onSortEnd: function(origIndex, newIndex) {
-	    		sortEnd(listContAutomaticScrolling, origIndex, newIndex);
+	    	onSortEnd: function(instance, origIndex, newIndex) {
+	    		sortEnd(instance, origIndex, newIndex);
 	    	}
 	    }
 	);	
@@ -161,8 +161,8 @@ if (outerContClone && listContClone) {
 	    	sortDragHandleClass: 'budicon-grab-ui',
 	    	leftEnabled: false,
 	    	rightEnabled: false,
-	    	onSortEnd: function(origIndex, newIndex) {
-	    		sortEnd(listContClone, origIndex, newIndex);
+	    	onSortEnd: function(instance, origIndex, newIndex) {
+	    		sortEnd(instance, origIndex, newIndex);
 	    	}
 	    }
 	);	
