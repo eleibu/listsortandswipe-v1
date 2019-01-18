@@ -18862,8 +18862,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // set 'safariAutoOuterOverflow = false' to prevent setting 'outerCont.style.overflow = hidden' upon auto scroll (will break auto scroll on Mac Safari)
 // if set 'safariBodyUnselectable = false', consider adding unselectable styles to an outer object (eg. body, document, etc) even if 'listitem-cont' or a sub-element is
 // unselectable - otherwise, unintended selection of elements outside outerCont can cause problems
-// need to set css for 'sort-item-active' to hide active item while sorting
-// leftMasks / rightMasks must be arrays (not null) and leftMasks.classNameDefault must not be undefined or null
 // setDefaultProperties only applies to instances created after it is called (use setListProperties to change properties for a paticular instance)
 // does not work with '-webkit-overflow-scrolling: touch' (iOS only)
 
@@ -18886,6 +18884,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // Medium articles:
 // Validation using plain JS
 
+// TODO: Test setDefaultProperties
 // TODO: In events, replace 'activeIndex' with 'activeItem'?
 // TODO: Check if clone is in correct place even when it has a margin
 

@@ -16,21 +16,21 @@
             'aref' => 'ref-onLeftStart',
             'title' => 'onLeftStart'
         ),
-        'onrightEnd' => array(
-            'aref' => 'ref-onrightEnd',
-            'title' => 'onrightEnd'
+        'onRightEnd' => array(
+            'aref' => 'ref-onRightEnd',
+            'title' => 'onRightEnd'
         ),
-        'onrightSlideBackStart' => array(
-            'aref' => 'ref-onrightSlideBackStart',
-            'title' => 'onrightSlideBackStart'
+        'onRightSlideBackStart' => array(
+            'aref' => 'ref-onRightSlideBackStart',
+            'title' => 'onRightSlideBackStart'
         ),
-        'onrightSlideOutStart' => array(
-            'aref' => 'ref-onrightSlideOutStart',
-            'title' => 'onrightSlideOutStart'
+        'onRightSlideOutStart' => array(
+            'aref' => 'ref-onRightSlideOutStart',
+            'title' => 'onRightSlideOutStart'
         ),
-        'onrightStart' => array(
-            'aref' => 'ref-onrightStart',
-            'title' => 'onrightStart'
+        'onRightStart' => array(
+            'aref' => 'ref-onRightStart',
+            'title' => 'onRightStart'
         ),
         'onSortAutoScrollEnd' => array(
             'aref' => 'ref-onSortAutoScrollEnd',
@@ -49,22 +49,6 @@
             'title' => 'onSortStart'
         ),
     );
-
-        // DONE onLeftEnd: null,
-        // DONE onLeftSlideBackStart: null,
-        // DONE onLeftSlideOutStart: null,
-        // DONE onLeftStart: null,
-
-        // onRightEnd: null,
-        // onRightSlideBackStart: null,
-        // onRightSlideOutStart: null,
-        // onRightStart: null,
-
-        // DONE onSortAutoScrollEnd: null,
-        // DONE onSortAutoScrollStart: null,
-        // onSortEnd: null,
-        // onSortStart: null,
-
 @endphp
 <a id="{{$refs['events']['aref']}}" class="title-section">
     {{$refs['events']['title']}}
@@ -286,6 +270,217 @@ lithiumlist.attachToList(
 </div>
 
 <div class="subsection-cont">
+    <a id="{{$refs_events['onRightEnd']['aref']}}" class="title-subsection">
+        {{$refs_events['onRightEnd']['title']}}
+    </a>
+    <p>
+        Triggered at the completion of a right slide.
+    </p>
+    <div class="function">
+        onRightEnd(instance, index, didSlideOut)
+    </div>
+    <div class="params-cont">
+        <div class="param">
+            <strong>instance</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Object
+            </div>
+            <div class="sub-param">
+                The Lithium List <a href="{{ url($selectedpage['url'] . '#' . $refs_objects['instance']['aref']) }}" title="{{$refs_objects['instance']['title']}}">{{$refs_objects['instance']['title']}}</a> object.
+            </div>
+        </div>
+        <div class="param">
+            <strong>index</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Integer
+            </div>
+            <div class="sub-param">
+                The index of the active list item.
+            </div>
+        </div>
+        <div class="param">
+            <strong>didSlideOut</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Boolean
+            </div>
+            <div class="sub-param">
+                <code class="language-js">True</code> if the slide finished with the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone</a> sliding out of the list. <code class="language-js">False</code> if the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone</a> slid back to its starting position.
+            </div>
+        </div>
+    </div>
+    <div class="title-codeblock">
+        EXAMPLE JS
+    </div>
+<pre class="line-numbers"><code class="language-js">var props = {
+    onRightEnd: function(instance, index, didSlideOut) {
+        if (didSlideOut) {
+            console.log(&#39;List item &#39; + index + &#39; slid out of the list&#39;);
+        } else {
+            console.log(&#39;List item &#39; + index + &#39; slid back to its starting position&#39;);
+        }
+    }
+};
+lithiumlist.attachToList(
+    ...,
+    props
+);
+</code></pre>
+</div>
+
+<div class="subsection-cont">
+    <a id="{{$refs_events['onRightSlideBackStart']['aref']}}" class="title-subsection">
+        {{$refs_events['onRightSlideBackStart']['title']}}
+    </a>
+    <p>
+        Triggered when a list item starts sliding back to its starting position after being swiped to the right.
+    </p>
+    <div class="function">
+        onRightSlideBackStart(instance, index)
+    </div>
+    <div class="params-cont">
+        <div class="param">
+            <strong>instance</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Object
+            </div>
+            <div class="sub-param">
+                The Lithium List <a href="{{ url($selectedpage['url'] . '#' . $refs_objects['instance']['aref']) }}" title="{{$refs_objects['instance']['title']}}">{{$refs_objects['instance']['title']}}</a> object.
+            </div>
+        </div>
+        <div class="param">
+            <strong>index</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Integer
+            </div>
+            <div class="sub-param">
+                The index of the active list item.
+            </div>
+        </div>
+    </div>
+    <div class="title-codeblock">
+        EXAMPLE JS
+    </div>
+<pre class="line-numbers"><code class="language-js">var props = {
+    onRightSlideBackStart: function(instance, index) {
+        console.log(&#39;List item &#39; + index + &#39; is starting to slide back to its starting position&#39;);
+    }
+};
+lithiumlist.attachToList(
+    ...,
+    props
+);
+</code></pre>
+</div>
+
+<div class="subsection-cont">
+    <a id="{{$refs_events['onRightSlideOutStart']['aref']}}" class="title-subsection">
+        {{$refs_events['onRightSlideOutStart']['title']}}
+    </a>
+    <p>
+        Triggered when a list item starts sliding out of the list after being swiped to the right.
+    </p>
+    <div class="function">
+        onRightSlideOutStart(instance, index)
+    </div>
+    <div class="params-cont">
+        <div class="param">
+            <strong>instance</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Object
+            </div>
+            <div class="sub-param">
+                The Lithium List <a href="{{ url($selectedpage['url'] . '#' . $refs_objects['instance']['aref']) }}" title="{{$refs_objects['instance']['title']}}">{{$refs_objects['instance']['title']}}</a> object.
+            </div>
+        </div>
+        <div class="param">
+            <strong>index</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Integer
+            </div>
+            <div class="sub-param">
+                The index of the active list item.
+            </div>
+        </div>
+    </div>
+    <div class="title-codeblock">
+        EXAMPLE JS
+    </div>
+<pre class="line-numbers"><code class="language-js">var props = {
+    onRightSlideOutStart: function(instance, index) {
+        console.log(&#39;List item &#39; + index + &#39; is starting to slide out of the list&#39;);
+    }
+};
+lithiumlist.attachToList(
+    ...,
+    props
+);
+</code></pre>
+</div>
+
+<div class="subsection-cont">
+    <a id="{{$refs_events['onRightStart']['aref']}}" class="title-subsection">
+        {{$refs_events['onRightStart']['title']}}
+    </a>
+    <p>
+        Triggered at the start of a right slide.
+    </p>
+    <div class="function">
+        onRightStart(instance, index)
+    </div>
+    <div class="params-cont">
+        <div class="param">
+            <strong>instance</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Object
+            </div>
+            <div class="sub-param">
+                The Lithium List <a href="{{ url($selectedpage['url'] . '#' . $refs_objects['instance']['aref']) }}" title="{{$refs_objects['instance']['title']}}">{{$refs_objects['instance']['title']}}</a> object.
+            </div>
+        </div>
+        <div class="param">
+            <strong>index</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Integer
+            </div>
+            <div class="sub-param">
+                The index of the active list item.
+            </div>
+        </div>
+    </div>
+    <div class="title-codeblock">
+        EXAMPLE JS
+    </div>
+<pre class="line-numbers"><code class="language-js">var props = {
+    onRightStart: function(instance, index) {
+        console.log(&#39;List item &#39; + index + &#39; is starting to slide right&#39;);
+    }
+};
+lithiumlist.attachToList(
+    ...,
+    props
+);
+</code></pre>
+</div>
+
+<div class="subsection-cont">
     <a id="{{$refs_events['onSortAutoScrollEnd']['aref']}}" class="title-subsection">
         {{$refs_events['onSortAutoScrollEnd']['title']}}
     </a>
@@ -399,3 +594,122 @@ lithiumlist.attachToList(
 </div>
 
 
+<div class="subsection-cont">
+    <a id="{{$refs_events['onSortEnd']['aref']}}" class="title-subsection">
+        {{$refs_events['onSortEnd']['title']}}
+    </a>
+    <p>
+        Triggered when sorting stops.
+    </p>
+    <div class="function">
+        onSortEnd(instance, oldIndex, newIndex)
+    </div>
+    <div class="params-cont">
+        <div class="param">
+            <strong>instance</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Object
+            </div>
+            <div class="sub-param">
+                The Lithium List <a href="{{ url($selectedpage['url'] . '#' . $refs_objects['instance']['aref']) }}" title="{{$refs_objects['instance']['title']}}">{{$refs_objects['instance']['title']}}</a> object.
+            </div>
+        </div>
+        <div class="param">
+            <strong>oldIndex</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Integer
+            </div>
+            <div class="sub-param">
+                The old index of the active list item.
+            </div>
+        </div>
+        <div class="param">
+            <strong>newIndex</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Integer
+            </div>
+            <div class="sub-param">
+                The new index of the active list item.
+            </div>
+        </div>
+    </div>
+    <div class="title-codeblock">
+        EXAMPLE JS
+    </div>
+<pre class="line-numbers"><code class="language-js">var props = {
+    onSortEnd: function(instance, oldIndex, newIndex) {
+        if (oldIndex != newIndex) {
+            var items = instance.listCont.getElementsByClassName(instance.listItemClass);
+            var oldItem = items[oldIndex];
+            var newItem = items[newIndex];
+
+            instance.listCont.removeChild(oldItem);    
+            if (newIndex > oldIndex) {
+                instance.listCont.insertBefore(oldItem, newItem.nextSibling);
+            } else {
+                instance.listCont.insertBefore(oldItem, newItem);
+            }       
+        }
+    }
+};
+lithiumlist.attachToList(
+    ...,
+    props
+);
+</code></pre>
+</div>
+
+<div class="subsection-cont">
+    <a id="{{$refs_events['onSortStart']['aref']}}" class="title-subsection">
+        {{$refs_events['onSortStart']['title']}}
+    </a>
+    <p>
+        Triggered when sorting starts.
+    </p>
+    <div class="function">
+        onSortStart(instance, index)
+    </div>
+    <div class="params-cont">
+        <div class="param">
+            <strong>instance</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Object
+            </div>
+            <div class="sub-param">
+                The Lithium List <a href="{{ url($selectedpage['url'] . '#' . $refs_objects['instance']['aref']) }}" title="{{$refs_objects['instance']['title']}}">{{$refs_objects['instance']['title']}}</a> object.
+            </div>
+        </div>
+        <div class="param">
+            <strong>index</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Integer
+            </div>
+            <div class="sub-param">
+                The index of the active list item.
+            </div>
+        </div>
+    </div>
+    <div class="title-codeblock">
+        EXAMPLE JS
+    </div>
+<pre class="line-numbers"><code class="language-js">var props = {
+    onSortStart: function(instance, index) {
+        console.log(&#39;Sorting of list item &#39; + index + &#39; started&#39;);
+    }
+};
+lithiumlist.attachToList(
+    ...,
+    props
+);
+</code></pre>
+</div>

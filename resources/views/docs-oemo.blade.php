@@ -37,6 +37,6 @@
 <div class="section-cont">
     @include('docs-oemo-options')
     @include('docs-oemo-events')
-
+    @include('docs-oemo-methods')
     @include('docs-oemo-objects')
 </div>

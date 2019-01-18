@@ -22,7 +22,7 @@
                 Type: Element
             </div>
             <div class="sub-param">
-                The <strong><span class="outer-cont">outerCont</span></strong> to which the Lithium List instance is attached.
+                The <strong><span class="outer-cont">outerCont</span></strong> element to which the Lithium List instance is attached.
             </div>
         </div>
         <div class="param">
@@ -33,7 +33,7 @@
                 Type: Element
             </div>
             <div class="sub-param">
-                The <strong><span class="list-cont">listCont</span></strong> to which the Lithium List instance is attached.
+                The <strong><span class="list-cont">listCont</span></strong> element to which the Lithium List instance is attached.
             </div>
         </div>
         <div class="param">
