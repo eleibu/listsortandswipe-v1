@@ -275,5 +275,5 @@ if (outerContSetup && listContSetup) {
 	    outerContSetup,
 	    listContSetup,
 	    'list-item'
-	);	
+	);
 }

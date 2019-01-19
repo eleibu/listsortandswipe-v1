@@ -105,15 +105,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 // Notes:
-// outerCont should be a DOM element or window (not 'document' or 'document.body')
-// if want whole page to scroll and performance on mobile is important, consider using a div to wrap the whole page (with height: 100%; overflow: auto) and making it the outerCont
 // if outerCont != window:
 // outerCont must have a height other than 'auto' (eg. px, %, em)
 // outerCont must have overflow 'auto', 'scroll' or 'hidden' (will be set to 'hidden' during automatic scrolling to deal with Safari auto scrolling issue)
 // set 'safariAutoOuterOverflow = false' to prevent setting 'outerCont.style.overflow = hidden' upon auto scroll (will break auto scroll on Mac Safari)
 // if set 'safariBodyUnselectable = false', consider adding unselectable styles to an outer object (eg. body, document, etc) even if 'listitem-cont' or a sub-element is
 // unselectable - otherwise, unintended selection of elements outside outerCont can cause problems
-// setDefaultProperties only applies to instances created after it is called (use setListProperties to change properties for a paticular instance)
 // does not work with '-webkit-overflow-scrolling: touch' (iOS only)
 
 
@@ -136,6 +133,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // Validation using plain JS
 
 // TODO: Test setDefaultProperties
+// TODO: Can two lists share the same outerCont (especially if outerCont wraps the whole page)?
 // TODO: In events, replace 'activeIndex' with 'activeItem'?
 // TODO: Check if clone is in correct place even when it has a margin
 

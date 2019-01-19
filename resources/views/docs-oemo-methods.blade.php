@@ -4,15 +4,26 @@
             'aref' => 'ref-attachToList',
             'title' => 'attachToList'
         ),
-
-
-        // attachToList: attachToList,
-        // detachFromList: detachFromList,
-        // setListProperties: setListProperties,
-        // setDefaultProperties: setDefaultProperties,
-        // triggerLeft: triggerLeft,
-        // triggerRight: triggerRight
-
+        'detachFromList' => array(
+            'aref' => 'ref-detachFromList',
+            'title' => 'detachFromList'
+        ),
+        'setListProperties' => array(
+            'aref' => 'ref-setListProperties',
+            'title' => 'setListProperties'
+        ),
+        'setDefaultProperties' => array(
+            'aref' => 'ref-setDefaultProperties',
+            'title' => 'setDefaultProperties'
+        ),
+        'triggerLeft' => array(
+            'aref' => 'ref-triggerLeft',
+            'title' => 'triggerLeft'
+        ),
+        'triggerRight' => array(
+            'aref' => 'ref-triggerRight',
+            'title' => 'triggerRight'
+        ),
     );
 @endphp
 <a id="{{$refs['methods']['aref']}}" class="title-section">
@@ -28,7 +39,7 @@
         {{$refs_methods['attachToList']['title']}}
     </a>
     <p>
-        Attaches Lithium List to a list. See the <a href="{{$subpages['set-up']['url']}}" title="set up page">set up page</a> for a discussion of the required HTML and CSS. Each attachment creates its own <a href="{{$selectedpage['url'] . '#' . $refs_objects['instance']['aref']}}" title="instance">instance</a> object.
+        Attaches Lithium List to a list. See the <a href="{{$subpages['set-up']['url']}}" title="set up page">set up page</a> for a discussion of the required HTML and CSS. Each attachment creates its own <a href="{{$selectedpage['url'] . '#' . $refs_objects['instance']['aref']}}" title="instance">instance</a>.
     </p>
     <div class="function">
         lithiumlist.attachToList(key, outerCont, listCont, listItemClass [, props])
@@ -86,7 +97,7 @@
                 Type: Object
             </div>
             <div class="sub-param">
-                If provided, will override the default settings for this instance. May contain only the settings to be overrided. Others will inherit their default values.
+                If provided, overrides the default settings for this instance. May contain only the settings to be overridden. Others will inherit their default values.
             </div>
         </div>
     </div>
@@ -100,6 +111,210 @@
     'list-item',
     {
         sortDragHandleClass: 'drag-handle'
+    }
+);
+</code></pre>
+</div>
+
+<div class="subsection-cont">
+    <a id="{{$refs_methods['detachFromList']['aref']}}" class="title-subsection">
+        {{$refs_methods['detachFromList']['title']}}
+    </a>
+    <p>
+        Detaches Lithium List from a list.
+    </p>
+    <div class="function">
+        lithiumlist.detachFromList(listCont)
+    </div>
+    <div class="params-cont">
+        <div class="param">
+            <strong>listCont</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Element
+            </div>
+            <div class="sub-param">
+                A <strong><span class="list-cont">listCont</span></strong> element to which Lithium List is attached.
+            </div>
+        </div>
+    </div>
+    <div class="title-codeblock">
+        EXAMPLE JS
+    </div>
+<pre class="line-numbers"><code class="language-js">lithiumlist.detachFromList(
+    document.getElementById('list-cont')
+);
+</code></pre>
+</div>
+
+<div class="subsection-cont">
+    <a id="{{$refs_methods['setListProperties']['aref']}}" class="title-subsection">
+        {{$refs_methods['setListProperties']['title']}}
+    </a>
+    <p>
+        Changes the settings for a Lithium List instance.
+    </p>
+    <div class="function">
+        lithiumlist.setListProperties(listCont, props)
+    </div>
+    <div class="params-cont">
+        <div class="param">
+            <strong>listCont</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Element
+            </div>
+            <div class="sub-param">
+                A <strong><span class="list-cont">listCont</span></strong> element to which Lithium List is attached.
+            </div>
+        </div>
+        <div class="param">
+            <strong>props</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Object
+            </div>
+            <div class="sub-param">
+                The settings to be changed, and their new values.
+            </div>
+        </div>
+    </div>
+    <div class="title-codeblock">
+        EXAMPLE JS
+    </div>
+<pre class="line-numbers"><code class="language-js">lithiumlist.setListProperties(
+    document.getElementById('list-cont'),
+    {
+        sortDragHandleClass: 'new-drag-handle'
+    }
+);
+</code></pre>
+</div>
+
+<div class="subsection-cont">
+    <a id="{{$refs_methods['setDefaultProperties']['aref']}}" class="title-subsection">
+        {{$refs_methods['setDefaultProperties']['title']}}
+    </a>
+    <p>
+        Changes the default settings for all Lithium List instances created after the change.
+    </p>
+    <div class="function">
+        lithiumlist.setDefaultProperties(props)
+    </div>
+    <div class="params-cont">
+        <div class="param">
+            <strong>props</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Object
+            </div>
+            <div class="sub-param">
+                The default settings to be changed, and their new values.
+            </div>
+        </div>
+    </div>
+    <div class="title-codeblock">
+        EXAMPLE JS
+    </div>
+<pre class="line-numbers"><code class="language-js">lithiumlist.setDefaultProperties(
+    {
+        sortDragHandleClass: 'new-default-drag-handle'
+    }
+);
+</code></pre>
+</div>
+
+<div class="subsection-cont">
+    <a id="{{$refs_methods['triggerLeft']['aref']}}" class="title-subsection">
+        {{$refs_methods['triggerLeft']['title']}}
+    </a>
+    <p>
+        Triggers a full left slide of a list item. Has no effect (and displays a console warning) if <code class="language-js">leftEnabled: false</code> for the Lithium List instance.
+    </p>
+    <div class="function">
+        lithiumlist.triggerLeft(listCont, index)
+    </div>
+    <div class="params-cont">
+        <div class="param">
+            <strong>listCont</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Element
+            </div>
+            <div class="sub-param">
+                A <strong><span class="list-cont">listCont</span></strong> element to which Lithium List is attached.
+            </div>
+        </div>
+        <div class="param">
+            <strong>index</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Integer
+            </div>
+            <div class="sub-param">
+                The index of the list item to slide left.
+            </div>
+        </div>
+    </div>
+    <div class="title-codeblock">
+        EXAMPLE JS
+    </div>
+<pre class="line-numbers"><code class="language-js">lithiumlist.triggerLeft(
+    {
+        document.getElementById('list-cont'),
+        5
+    }
+);
+</code></pre>
+</div>
+
+<div class="subsection-cont">
+    <a id="{{$refs_methods['triggerRight']['aref']}}" class="title-subsection">
+        {{$refs_methods['triggerRight']['title']}}
+    </a>
+    <p>
+        Triggers a full right slide of a list item. Has no effect (and displays a console warning) if <code class="language-js">rightEnabled: false</code> for the Lithium List instance.
+    </p>
+    <div class="function">
+        lithiumlist.triggerRight(listCont, index)
+    </div>
+    <div class="params-cont">
+        <div class="param">
+            <strong>listCont</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Element
+            </div>
+            <div class="sub-param">
+                A <strong><span class="list-cont">listCont</span></strong> element to which Lithium List is attached.
+            </div>
+        </div>
+        <div class="param">
+            <strong>index</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                Type: Integer
+            </div>
+            <div class="sub-param">
+                The index of the list item to slide right.
+            </div>
+        </div>
+    </div>
+    <div class="title-codeblock">
+        EXAMPLE JS
+    </div>
+<pre class="line-numbers"><code class="language-js">lithiumlist.triggerRight(
+    {
+        document.getElementById('list-cont'),
+        5
     }
 );
 </code></pre>
