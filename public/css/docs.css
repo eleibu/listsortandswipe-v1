@@ -296,6 +296,40 @@ div.details-cont div.details-outer div.title-main {
   border-bottom: 1px solid #EEEEEE;
 }
 
+div.details-cont div.details-outer div.nextpage-cont {
+  margin: 1em 0;
+  text-align: right;
+  font-size: 120%;
+}
+
+div.details-cont div.details-outer div.nextpage-cont a.button-word-cont {
+  font-weight: normal;
+}
+
+div.details-cont div.details-outer div.nextpage-cont a.button-word-cont:hover {
+  background-color: #F8F8F8;
+}
+
+#div-body.xl div.toc-cont, #div-body.lg div.toc-cont, #div-body.md div.toc-cont, #div-body.sm div.toc-cont {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 360px;
+  height: 100%;
+  overflow: auto;
+}
+
+#div-body.xl div.details-cont, #div-body.lg div.details-cont, #div-body.md div.details-cont, #div-body.sm div.details-cont {
+  border-left: 1px solid #EEEEEE;
+  min-height: 40em;
+  margin-left: 360px;
+}
+
+#div-body.xs div.toc-cont {
+  border-bottom: 1px solid #EEEEEE;
+  margin-bottom: 2em;
+}
+
 div.details-cont div.details-outer div.subtitle-main {
   font-size: 110%;
   color: #666666;

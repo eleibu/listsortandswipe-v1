@@ -8,10 +8,9 @@
     <meta name="csrf-token" content="{{csrf_token()}}">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <title>@yield('pageTitle')</title>
-    <link rel="stylesheet" href="{{ url(mix('/css/docs.css')) }}">
+    @yield('cssLinks')
     <link rel="stylesheet" href="{{ url('/css/icons-outline.css') }}">
     <link rel="stylesheet" href="{{ url('/css/icons-solid.css') }}">
-    <script defer src="{{ url(mix('/js/docs.js')) }}"></script>
     @yield('jsLinks')
 </head>
 <body>

@@ -62,6 +62,14 @@
 // Medium articles:
 // Validation using plain JS
 
+// TO FINALISE DOCS
+// Replace 'click/tap' with 'press'
+// Move 'Why Lithium List?' to its own page, remove delete functionality and add a line about great docs
+// Change 'Overview of functionality' to 'Concepts' and re-read/write (including explaining difference between 'slide' and 'swipe')
+// Look for square brackets and fix
+// Make all examples CHANGE the default settings
+// Ensure all links actually link to something (especially in docs.blade.php and demos.blade.php)
+
 // TODO: Test setDefaultProperties
 // TODO: Can two lists share the same outerCont (especially if outerCont wraps the whole page)?
 // TODO: In events, replace 'activeIndex' with 'activeItem'?
@@ -71,7 +79,6 @@
 
 
 // TODO: Change 'lithiumlistPro' to 'lithiumlist'
-// TODO: Change 'detachFromList', 'triggerLeft' and 'triggerRight' to use 'outerCont' rather than 'listCont'?
 // TODO: Why is 'unlicensed' message not showing in docs/setup?
 // TODO: Test 'supportsPassive' in Edge and IE
 // TODO: Include version number and send it to server

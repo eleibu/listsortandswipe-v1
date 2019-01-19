@@ -17,7 +17,6 @@
             'title' => 'Objects'
         )
     );
-
     $refs_objects = array(
         'instance' => array(
             'aref' => 'ref-instance',
