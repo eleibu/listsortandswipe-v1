@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ url('/css/icons-outline.css') }}">
     <link rel="stylesheet" href="{{ url('/css/icons-solid.css') }}">
     @yield('jsLinks')
+    @yield('pageStyle')
 </head>
 <body>
     <div id="div-body">

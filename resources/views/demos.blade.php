@@ -6,10 +6,6 @@
     <link rel="stylesheet" href="{{ url(mix('/css/demos.css')) }}">
 @endsection
 
-@section('jsLinks')
-    <script defer src="{{ url(mix('/js/demos.js')) }}"></script>
-@endsection
-
 @section('content')
 	<br/><br/>
     <div class="sitecont-outer">

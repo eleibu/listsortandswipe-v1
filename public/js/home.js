@@ -17019,7 +17019,7 @@ var listProperties = {
 	}]
 };
 
-__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["lithiumlistPro"].attachToList('123456789', outerCont, listCont, listItemClass, listProperties);
+__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["a" /* lithiumlistPro */].attachToList('123456789', outerCont, listCont, listItemClass, listProperties);
 
 function sortEnd(instance, origIndex, newIndex) {
 	if (origIndex != newIndex) {
@@ -17042,8 +17042,7 @@ function sortEnd(instance, origIndex, newIndex) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "lithiumlistPro", function() { return lithiumlistPro; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return lithiumlistPro; });
 // TESTED ON:
 // IE11
 // Edge38
