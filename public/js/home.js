@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -16967,7 +16967,7 @@ module.exports = g;
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__monitor_win_width_js__ = __webpack_require__("./resources/js/monitor-win-width.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__page_menu_show_hide_js__ = __webpack_require__("./resources/js/page-menu-show-hide.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__ = __webpack_require__("./resources/js/lithiumlist-pro-1.0.0.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lithiumlist_1_0_0_js__ = __webpack_require__("./resources/js/lithiumlist-1.0.0.js");
 __webpack_require__("./node_modules/bootstrap/dist/js/bootstrap.js");
 
 
@@ -17019,7 +17019,7 @@ var listProperties = {
 	}]
 };
 
-__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["a" /* lithiumlistPro */].attachToList('123456789', outerCont, listCont, listItemClass, listProperties);
+__WEBPACK_IMPORTED_MODULE_2__lithiumlist_1_0_0_js__["a" /* lithiumlist */].attachToList('123456789', outerCont, listCont, listItemClass, listProperties);
 
 function sortEnd(instance, origIndex, newIndex) {
 	if (origIndex != newIndex) {
@@ -17038,11 +17038,11 @@ function sortEnd(instance, origIndex, newIndex) {
 
 /***/ }),
 
-/***/ "./resources/js/lithiumlist-pro-1.0.0.js":
+/***/ "./resources/js/lithiumlist-1.0.0.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return lithiumlistPro; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return lithiumlist; });
 // TESTED ON:
 // IE11
 // Edge38
@@ -17137,7 +17137,7 @@ function sortEnd(instance, origIndex, newIndex) {
 // TODO: Remove .version() from webpack.mix.js?
 
 
-var lithiumlistPro = function () {
+var lithiumlist = function () {
 	var instances = [];
 
 	var defaultProperties = {
@@ -19079,14 +19079,14 @@ var pageMenuShowHide = function () {
 
 /***/ }),
 
-/***/ "./resources/sass/demos.scss":
+/***/ "./resources/sass/documentation.scss":
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ "./resources/sass/docs.scss":
+/***/ "./resources/sass/examples.scss":
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
@@ -19100,13 +19100,13 @@ var pageMenuShowHide = function () {
 
 /***/ }),
 
-/***/ 1:
+/***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__("./resources/js/home.js");
 __webpack_require__("./resources/sass/home.scss");
-__webpack_require__("./resources/sass/docs.scss");
-module.exports = __webpack_require__("./resources/sass/demos.scss");
+__webpack_require__("./resources/sass/documentation.scss");
+module.exports = __webpack_require__("./resources/sass/examples.scss");
 
 
 /***/ })

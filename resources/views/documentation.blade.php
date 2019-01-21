@@ -3,7 +3,11 @@
 @section('pageTitle', $selectedpage['pageTitle'])
 
 @section('cssLinks')
-    <link rel="stylesheet" href="{{ url(mix('/css/demos.css')) }}">
+    <link rel="stylesheet" href="{{ url(mix('/css/documentation.css')) }}">
+@endsection
+
+@section('jsLinks')
+    <script defer src="{{ url(mix('/js/documentation.js')) }}"></script>
 @endsection
 
 @section('content')
@@ -11,7 +15,7 @@
     <div class="sitecont-outer">
     	<div class="toc-cont">
     		<div class="toc-outer">
-    			<div class="title-main">Demos</div>
+    			<div class="title-main">Documentation</div>
                 @foreach ($subpages as $subpage)
                     @if ($subpage['selected'])
                         <div class="button-word-cont selected">{{$subpage['detailsTitle']}}</div>
@@ -21,7 +25,7 @@
                 @endforeach
     			<br/><br/><br/>
     			<div class="subtitle-main">Other resources</div>
-    			<a class="button-word-cont" href="" title="Docs">Docs</a>
+    			<a class="button-word-cont" href="" title="Examples">Examples</a>
     			<a class="button-word-cont" href="" title="Browser support">Browser support</a>
     			<a class="button-word-cont" href="" title="Upcoming features">Upcoming features</a>
     		</div>

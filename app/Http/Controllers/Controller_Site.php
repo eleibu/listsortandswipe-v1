@@ -10,84 +10,84 @@ class Controller_Site extends Controller
 		return view('home');
 	}
 
-	public function section_demos(Request $request, $subpage = '') {
+	public function section_examples(Request $request, $subpage = '') {
 		$subpages = array(
 			'simple-fixedheight' => array(
 				'selected' => false,
-				'url' => url('/demos/simple-fixedheight'),
-				'pageTitle' => 'Lithium List - demos - simple - fixed height',
+				'url' => url('/examples/simple-fixedheight'),
+				'pageTitle' => 'Lithium List - examples - simple - fixed height',
 				'detailsTitle' => 'Simple - fixed height',
-				'detailsView' => 'demos-simple-fixedheight'
+				'detailsView' => 'examples-simple-fixedheight'
 			),
 			'simple-wholepage' => array(
 				'selected' => false,
-				'url' => url('/demos/simple-wholepage'),
-				'pageTitle' => 'Lithium List - demos - simple - whole page',
+				'url' => url('/examples/simple-wholepage'),
+				'pageTitle' => 'Lithium List - examples - simple - whole page',
 				'detailsTitle' => 'Simple - whole page',
-				'detailsView' => 'demos-simple-wholepage'
+				'detailsView' => 'examples-simple-wholepage'
 			),
 			'sort-only' => array(
 				'selected' => false,
-				'url' => url('/demos/sort-only'),
-				'pageTitle' => 'Lithium List - demos - sort only',
+				'url' => url('/examples/sort-only'),
+				'pageTitle' => 'Lithium List - examples - sort only',
 				'detailsTitle' => 'Sort only',
-				'detailsView' => 'demos-sort-only'
+				'detailsView' => 'examples-sort-only'
 			),
 			'background-labels' => array(
 				'selected' => false,
-				'url' => url('/demos/background-labels'),
-				'pageTitle' => 'Lithium List - demos - background labels',
+				'url' => url('/examples/background-labels'),
+				'pageTitle' => 'Lithium List - examples - background labels',
 				'detailsTitle' => 'Background labels',
-				'detailsView' => 'demos-background-labels'
+				'detailsView' => 'examples-background-labels'
 			),
 			'no-masks' => array(
 				'selected' => false,
-				'url' => url('/demos/no-masks'),
-				'pageTitle' => 'Lithium List - demos - no masks',
+				'url' => url('/examples/no-masks'),
+				'pageTitle' => 'Lithium List - examples - no masks',
 				'detailsTitle' => 'No masks',
-				'detailsView' => 'demos-no-masks'
+				'detailsView' => 'examples-no-masks'
 			),
 			'delete-item-withmasks' => array(
 				'selected' => false,
-				'url' => url('/demos/delete-item-withmasks'),
-				'pageTitle' => 'Lithium List - demos - delete item - with masks',
+				'url' => url('/examples/delete-item-withmasks'),
+				'pageTitle' => 'Lithium List - examples - delete item - with masks',
 				'detailsTitle' => 'Delete item - with masks',
-				'detailsView' => 'demos-delete-item-withmasks'
+				'detailsView' => 'examples-delete-item-withmasks'
 			),
 			'delete-item-nomasks' => array(
 				'selected' => false,
-				'url' => url('/demos/delete-item-nomasks'),
-				'pageTitle' => 'Lithium List - demos - delete item - no masks',
+				'url' => url('/examples/delete-item-nomasks'),
+				'pageTitle' => 'Lithium List - examples - delete item - no masks',
 				'detailsTitle' => 'Delete item - no masks',
-				'detailsView' => 'demos-delete-item-nomasks'
+				'detailsView' => 'examples-delete-item-nomasks'
 			),
 			'detach-from-list' => array(
 				'selected' => false,
-				'url' => url('/demos/detach-from-list'),
-				'pageTitle' => 'Lithium List - demos - detach from list',
+				'url' => url('/examples/detach-from-list'),
+				'pageTitle' => 'Lithium List - examples - detach from list',
 				'detailsTitle' => 'Detach from list',
-				'detailsView' => 'demos-detach-from-list'
+				'detailsView' => 'examples-detach-from-list'
 			),
 			'set-list-properties' => array(
 				'selected' => false,
-				'url' => url('/demos/set-list-properties'),
-				'pageTitle' => 'Lithium List - demos - set list properties',
+				'url' => url('/examples/set-list-properties'),
+				'pageTitle' => 'Lithium List - examples - set list properties',
 				'detailsTitle' => 'Set list properties',
-				'detailsView' => 'demos-set-list-properties'
+				'detailsView' => 'examples-set-list-properties'
 			),
 			'trigger-leftandright' => array(
 				'selected' => false,
-				'url' => url('/demos/trigger-leftandright'),
-				'pageTitle' => 'Lithium List - demos - trigger left and right',
+				'url' => url('/examples/trigger-leftandright'),
+				'pageTitle' => 'Lithium List - examples - trigger left and right',
 				'detailsTitle' => 'Trigger left and right',
-				'detailsView' => 'demos-trigger-leftandright'
+				'detailsView' => 'examples-trigger-leftandright'
 			),
 			'react' => array(
 				'selected' => false,
-				'url' => url('/demos/react'),
-				'pageTitle' => 'Lithium List - demos - react',
+				'url' => url('/examples/react'),
+				'pageTitle' => 'Lithium List - examples - react',
 				'detailsTitle' => 'React',
-				'detailsView' => 'demos-react'
+				'detailsView' => 'examples-react'
 			),
 		);
 		if ($subpage == '') {
@@ -106,7 +106,7 @@ class Controller_Site extends Controller
 			}
 		}
 		if (isset($selectedpage)) {
-			return view('demos')
+			return view('examples')
 				->with('selectedpage', $selectedpage)
 				->with('nextpage', $nextpage)
 				->with('subpages', $subpages);
@@ -115,53 +115,46 @@ class Controller_Site extends Controller
 		}
 	}
 
-	public function section_docs(Request $request, $subpage = '') {
+	public function section_documentation(Request $request, $subpage = '') {
 		$subpages = array(
-			'why-lithium-list' => array(
-				'selected' => false,
-				'url' => url('/docs/why-lithium-list'),
-				'pageTitle' => 'Lithium List - docs - why Lithium List?',
-				'detailsTitle' => 'Why Lithium List?',
-				'detailsView' => 'docs-whylithiumlist'
-			),
 			'installation' => array(
 				'selected' => false,
-				'url' => url('/docs/installation'),
-				'pageTitle' => 'Lithium List - docs - installation',
+				'url' => url('/documentation/installation'),
+				'pageTitle' => 'Lithium List - documentation - installation',
 				'detailsTitle' => 'Installation',
-				'detailsView' => 'docs-installation'
+				'detailsView' => 'documentation-installation'
 			),
 			'set-up' => array(
 				'selected' => false,
-				'url' => url('/docs/set-up'),
-				'pageTitle' => 'Lithium List - docs - set up',
+				'url' => url('/documentation/set-up'),
+				'pageTitle' => 'Lithium List - documentation - set up',
 				'detailsTitle' => 'Set up',
-				'detailsView' => 'docs-setup'
+				'detailsView' => 'documentation-setup'
 			),
-			'overview-of-functionality' => array(
+			'concepts' => array(
 				'selected' => false,
-				'url' => url('/docs/overview-of-functionality'),
-				'pageTitle' => 'Lithium List - docs - overview of functionality',
-				'detailsTitle' => 'Overview of functionality',
-				'detailsView' => 'docs-overview'
+				'url' => url('/documentation/concepts'),
+				'pageTitle' => 'Lithium List - documentation - concepts',
+				'detailsTitle' => 'Concepts',
+				'detailsView' => 'documentation-concepts'
 			),
 			'options-events-methods-and-objects' => array(
 				'selected' => false,
-				'url' => url('/docs/options-events-methods-and-objects'),
-				'pageTitle' => 'Lithium List - docs - options, events, methods and objects',
+				'url' => url('/documentation/options-events-methods-and-objects'),
+				'pageTitle' => 'Lithium List - documentation - options, events, methods and objects',
 				'detailsTitle' => 'Options, events, methods and objects',
-				'detailsView' => 'docs-oemo'
+				'detailsView' => 'documentation-oemo'
 			),
 			'changelog' => array(
 				'selected' => false,
-				'url' => url('/docs/changelog'),
-				'pageTitle' => 'Lithium List - docs - changelog',
+				'url' => url('/documentation/changelog'),
+				'pageTitle' => 'Lithium List - documentation - changelog',
 				'detailsTitle' => 'Changelog',
-				'detailsView' => 'docs-changelog'
+				'detailsView' => 'documentation-changelog'
 			)
 		);
 		if ($subpage == '') {
-			$subpage = 'why-lithium-list';
+			$subpage = 'installation';
 		}
 		$nextpage = null;
 		$setNext = false;
@@ -176,12 +169,24 @@ class Controller_Site extends Controller
 			}
 		}
 		if (isset($selectedpage)) {
-			return view('docs')
+			return view('documentation')
 				->with('selectedpage', $selectedpage)
 				->with('nextpage', $nextpage)
 				->with('subpages', $subpages);
 		} else {
 			abort(403);
 		}
+	}
+
+	public function page_why_lithium_list(Request $request) {
+		return view('why-lithium-list');
+	}
+
+	public function page_pricing(Request $request) {
+		return view('pricing');
+	}
+
+	public function page_support(Request $request) {
+		return view('support');
 	}
 }

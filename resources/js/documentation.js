@@ -2,7 +2,7 @@ require('bootstrap');
 
 import { monitorWinWidth } from './monitor-win-width.js';
 import { pageMenuShowHide } from './page-menu-show-hide.js';
-import { lithiumlistPro } from './lithiumlist-pro-1.0.0.js';
+import { lithiumlist } from './lithiumlist-1.0.0.js';
 
 import Prism from 'prismjs';
 Prism.highlightAll();
@@ -27,7 +27,7 @@ function sortEnd(instance, origIndex, newIndex) {
 var outerContSalesPoints = document.getElementById('div-salespoints-outer-cont');
 var listContSalesPoints = document.getElementById('div-salespoints-list-cont');
 if (outerContSalesPoints && listContSalesPoints) {
-	lithiumlistPro.attachToList(
+	lithiumlist.attachToList(
 		'123456789',
 	    outerContSalesPoints,
 	    listContSalesPoints,
@@ -57,7 +57,7 @@ if (outerContSalesPoints && listContSalesPoints) {
 var outerContSorting = document.getElementById('div-diag-outer-cont-sorting');
 var listContSorting = document.getElementById('div-diag-list-cont-sorting');
 if (outerContSorting && listContSorting) {
-	lithiumlistPro.attachToList(
+	lithiumlist.attachToList(
 		'123456789',
 	    outerContSorting,
 	    listContSorting,
@@ -77,7 +77,7 @@ if (outerContSorting && listContSorting) {
 var outerContAutomaticScrolling = document.getElementById('div-diag-outer-cont-automatic-scrolling');
 var listContAutomaticScrolling = document.getElementById('div-diag-list-cont-automatic-scrolling');
 if (outerContAutomaticScrolling && listContAutomaticScrolling) {
-	lithiumlistPro.attachToList(
+	lithiumlist.attachToList(
 		'123456789',
 	    outerContAutomaticScrolling,
 	    listContAutomaticScrolling,
@@ -96,7 +96,7 @@ if (outerContAutomaticScrolling && listContAutomaticScrolling) {
 var selectSortScrollSpeed = document.getElementById('select-sortScrollSpeed');
 if (selectSortScrollSpeed) {
 	selectSortScrollSpeed.addEventListener('change', function() {
-		lithiumlistPro.setListProperties(listContAutomaticScrolling, {
+		lithiumlist.setListProperties(listContAutomaticScrolling, {
 			sortScrollSpeed: parseInt(selectSortScrollSpeed.options[selectSortScrollSpeed.selectedIndex].value)
 		});
 	});	
@@ -106,7 +106,7 @@ if (selectSortScrollSpeed) {
 var outerContSlidingAndSwiping = document.getElementById('div-diag-outer-cont-sliding-and-swiping');
 var listContSlidingAndSwiping = document.getElementById('div-diag-list-cont-sliding-and-swiping');
 if (outerContSlidingAndSwiping && listContSlidingAndSwiping) {
-	lithiumlistPro.attachToList(
+	lithiumlist.attachToList(
 		'123456789',
 	    outerContSlidingAndSwiping,
 	    listContSlidingAndSwiping,
@@ -139,7 +139,7 @@ if (selectLeftSwipeStartThreshold && selectLeftSwipeEndThreshold && selectLeftSl
 }
 
 function slideSwipeChange() {
-	lithiumlistPro.setListProperties(listContSlidingAndSwiping, {
+	lithiumlist.setListProperties(listContSlidingAndSwiping, {
         leftSwipeStartThreshold: selectLeftSwipeStartThreshold.options[selectLeftSwipeStartThreshold.selectedIndex].value,
         leftSwipeEndThreshold: selectLeftSwipeEndThreshold.options[selectLeftSwipeEndThreshold.selectedIndex].value,
         leftSlideOutDuration: parseInt(selectLeftSlideOutDuration.options[selectLeftSlideOutDuration.selectedIndex].value),
@@ -152,7 +152,7 @@ function slideSwipeChange() {
 var outerContClone = document.getElementById('div-diag-outer-cont-clone');
 var listContClone = document.getElementById('div-diag-list-cont-clone');
 if (outerContClone && listContClone) {
-	lithiumlistPro.attachToList(
+	lithiumlist.attachToList(
 		'123456789',
 	    outerContClone,
 	    listContClone,
@@ -180,7 +180,7 @@ if (selectSortCloneBoxShadow && selectSortCloneScale) {
 }
 
 function itemCloneChange() {
-	lithiumlistPro.setListProperties(listContClone, {
+	lithiumlist.setListProperties(listContClone, {
         sortCloneBoxShadow: selectSortCloneBoxShadow.options[selectSortCloneBoxShadow.selectedIndex].value,
         sortCloneScale: selectSortCloneScale.options[selectSortCloneScale.selectedIndex].value
 	});
@@ -190,7 +190,7 @@ function itemCloneChange() {
 var outerContMasks = document.getElementById('div-diag-outer-cont-masks');
 var listContMasks = document.getElementById('div-diag-list-cont-masks');
 if (outerContMasks && listContMasks) {
-	lithiumlistPro.attachToList(
+	lithiumlist.attachToList(
 		'123456789',
 	    outerContMasks,
 	    listContMasks,
@@ -236,7 +236,7 @@ function masksChange() {
 		rightDiv = createBgdDiv(rightValue);
 	}
 
-	lithiumlistPro.setListProperties(listContMasks, {
+	lithiumlist.setListProperties(listContMasks, {
         leftMasks: [{
         	background: selectLeftMaskBackground.options[selectLeftMaskBackground.selectedIndex].value,
 			classNameDefault: 'left-mask',
@@ -270,7 +270,7 @@ function createBgdDiv(text) {
 var outerContSetup = document.getElementById('div-diag-outer-cont-setup');
 var listContSetup = document.getElementById('div-diag-list-cont-setup');
 if (outerContSetup && listContSetup) {
-	lithiumlistPro.attachToList(
+	lithiumlist.attachToList(
 		'123456789',
 	    outerContSetup,
 	    listContSetup,

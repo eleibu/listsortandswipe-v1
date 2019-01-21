@@ -295,7 +295,7 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        A class name that is added to the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone</a> during left sliding.
+        A class name that is added to the <a href="{{$subpages['concepts']['url'] . '#ref-clone'}}" title="clone">clone</a> during left sliding.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
@@ -323,7 +323,7 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        A class name that is added to the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone</a> for left sliding while it is sliding back to its starting position.
+        A class name that is added to the <a href="{{$subpages['concepts']['url'] . '#ref-clone'}}" title="clone">clone</a> for left sliding while it is sliding back to its starting position.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
@@ -351,7 +351,7 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        A class name that is added to the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone</a> for left sliding while it is sliding out of the list.
+        A class name that is added to the <a href="{{$subpages['concepts']['url'] . '#ref-clone'}}" title="clone">clone</a> for left sliding while it is sliding out of the list.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
@@ -470,7 +470,7 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        An array of objects, each of which contains the properties of a <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-masks'}}" title="mask">mask</a> that will cover the active list item during left sliding. Currently, only the first element in the array is used. All others are ignored. If the array is empty, no <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-masks'}}" title="mask">mask</a> will appear during left sliding.
+        An array of objects, each of which contains the properties of a <a href="{{$subpages['concepts']['url'] . '#ref-masks'}}" title="mask">mask</a> that will cover the active list item during left sliding. Currently, only the first element in the array is used. All others are ignored. If the array is empty, no <a href="{{$subpages['concepts']['url'] . '#ref-masks'}}" title="mask">mask</a> will appear during left sliding.
     </p>
     <p>
         Each object must have the following properties:
@@ -484,7 +484,7 @@ lithiumlist.attachToList(
                 Type: String
             </div>
             <div class="sub-param">
-                A value that is set as the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-masks'}}" title="mask">mask&#39;s</a> &#39;background&#39; style.
+                A value that is set as the <a href="{{$subpages['concepts']['url'] . '#ref-masks'}}" title="mask">mask&#39;s</a> &#39;background&#39; style.
             </div>
         </div>
         <div class="param">
@@ -495,7 +495,7 @@ lithiumlist.attachToList(
                 Type: String
             </div>
             <div class="sub-param">
-                A class name that is added to the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-masks'}}" title="mask">mask</a>.
+                A class name that is added to the <a href="{{$subpages['concepts']['url'] . '#ref-masks'}}" title="mask">mask</a>.
             </div>
         </div>
         <div class="param">
@@ -506,7 +506,7 @@ lithiumlist.attachToList(
                 Type: String
             </div>
             <div class="sub-param">
-                A class name that is added to the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-masks'}}" title="mask">mask</a> while the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone</a> is sliding out of the list.
+                A class name that is added to the <a href="{{$subpages['concepts']['url'] . '#ref-masks'}}" title="mask">mask</a> while the <a href="{{$subpages['concepts']['url'] . '#ref-clone'}}" title="clone">clone</a> is sliding out of the list.
             </div>
         </div>
         <div class="param">
@@ -517,7 +517,7 @@ lithiumlist.attachToList(
                 Type: String
             </div>
             <div class="sub-param">
-                A class name that is added to the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-masks'}}" title="mask">mask</a> while the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone</a> is sliding back to its starting position.
+                A class name that is added to the <a href="{{$subpages['concepts']['url'] . '#ref-masks'}}" title="mask">mask</a> while the <a href="{{$subpages['concepts']['url'] . '#ref-clone'}}" title="clone">clone</a> is sliding back to its starting position.
             </div>
         </div>
         <div class="param">
@@ -528,7 +528,7 @@ lithiumlist.attachToList(
                 Type: Element
             </div>
             <div class="sub-param">
-                An HTML element (which way contain child elements) that is appended to the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-masks'}}" title="mask">mask</a>. Useful for inserting an icon or label indicating to the user what left sliding will do.
+                An HTML element (which way contain child elements) that is appended to the <a href="{{$subpages['concepts']['url'] . '#ref-masks'}}" title="mask">mask</a>. Useful for inserting an icon or label indicating to the user what left sliding will do.
             </div>
         </div>
     </div>
@@ -760,7 +760,7 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        A class name that is added to the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone</a> during right sliding.
+        A class name that is added to the <a href="{{$subpages['concepts']['url'] . '#ref-clone'}}" title="clone">clone</a> during right sliding.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
@@ -788,7 +788,7 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        A class name that is added to the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone</a> for right sliding while it is sliding back to its starting position.
+        A class name that is added to the <a href="{{$subpages['concepts']['url'] . '#ref-clone'}}" title="clone">clone</a> for right sliding while it is sliding back to its starting position.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
@@ -816,7 +816,7 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        A class name that is added to the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone</a> for right sliding while it is sliding out of the list.
+        A class name that is added to the <a href="{{$subpages['concepts']['url'] . '#ref-clone'}}" title="clone">clone</a> for right sliding while it is sliding out of the list.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
@@ -935,7 +935,7 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        An array of objects, each of which contains the properties of a <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-masks'}}" title="mask">mask</a> that will cover the active list item during right sliding. Currently, only the first element in the array is used. All others are ignored. If the array is empty, no <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-masks'}}" title="mask">mask</a> will appear during right sliding.
+        An array of objects, each of which contains the properties of a <a href="{{$subpages['concepts']['url'] . '#ref-masks'}}" title="mask">mask</a> that will cover the active list item during right sliding. Currently, only the first element in the array is used. All others are ignored. If the array is empty, no <a href="{{$subpages['concepts']['url'] . '#ref-masks'}}" title="mask">mask</a> will appear during right sliding.
     </p>
     <p>
         Each object must have the following properties:
@@ -949,7 +949,7 @@ lithiumlist.attachToList(
                 Type: String
             </div>
             <div class="sub-param">
-                A value that is set as the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-masks'}}" title="mask">mask&#39;s</a> &#39;background&#39; style.
+                A value that is set as the <a href="{{$subpages['concepts']['url'] . '#ref-masks'}}" title="mask">mask&#39;s</a> &#39;background&#39; style.
             </div>
         </div>
         <div class="param">
@@ -960,7 +960,7 @@ lithiumlist.attachToList(
                 Type: String
             </div>
             <div class="sub-param">
-                A class name that is added to the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-masks'}}" title="mask">mask</a>.
+                A class name that is added to the <a href="{{$subpages['concepts']['url'] . '#ref-masks'}}" title="mask">mask</a>.
             </div>
         </div>
         <div class="param">
@@ -971,7 +971,7 @@ lithiumlist.attachToList(
                 Type: String
             </div>
             <div class="sub-param">
-                A class name that is added to the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-masks'}}" title="mask">mask</a> while the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone</a> is sliding out of the list.
+                A class name that is added to the <a href="{{$subpages['concepts']['url'] . '#ref-masks'}}" title="mask">mask</a> while the <a href="{{$subpages['concepts']['url'] . '#ref-clone'}}" title="clone">clone</a> is sliding out of the list.
             </div>
         </div>
         <div class="param">
@@ -982,7 +982,7 @@ lithiumlist.attachToList(
                 Type: String
             </div>
             <div class="sub-param">
-                A class name that is added to the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-masks'}}" title="mask">mask</a> while the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone</a> is sliding back to its starting position.
+                A class name that is added to the <a href="{{$subpages['concepts']['url'] . '#ref-masks'}}" title="mask">mask</a> while the <a href="{{$subpages['concepts']['url'] . '#ref-clone'}}" title="clone">clone</a> is sliding back to its starting position.
             </div>
         </div>
         <div class="param">
@@ -993,7 +993,7 @@ lithiumlist.attachToList(
                 Type: Element
             </div>
             <div class="sub-param">
-                An HTML element (which way contain child elements) that is appended to the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-masks'}}" title="mask">mask</a>. Useful for inserting an icon or label indicating to the user what right sliding will do.
+                An HTML element (which way contain child elements) that is appended to the <a href="{{$subpages['concepts']['url'] . '#ref-masks'}}" title="mask">mask</a>. Useful for inserting an icon or label indicating to the user what right sliding will do.
             </div>
         </div>
     </div>
@@ -1259,7 +1259,7 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        A value that is set as the &#39;box-shadow&#39; style of the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone</a> during sorting.
+        A value that is set as the &#39;box-shadow&#39; style of the <a href="{{$subpages['concepts']['url'] . '#ref-clone'}}" title="clone">clone</a> during sorting.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
@@ -1287,7 +1287,7 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        A class name that is added to the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone</a> during sorting.
+        A class name that is added to the <a href="{{$subpages['concepts']['url'] . '#ref-clone'}}" title="clone">clone</a> during sorting.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
@@ -1315,7 +1315,7 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        A value that is set as the &#39;transform: scale()&#39; style of the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone</a> during sorting. To prevent scaling the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone</a>, set this to &#39;1&#39;.
+        A value that is set as the &#39;transform: scale()&#39; style of the <a href="{{$subpages['concepts']['url'] . '#ref-clone'}}" title="clone">clone</a> during sorting. To prevent scaling the <a href="{{$subpages['concepts']['url'] . '#ref-clone'}}" title="clone">clone</a>, set this to &#39;1&#39;.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
@@ -1399,7 +1399,7 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        At the end of sorting the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone</a> animates to its final position. This option sets the duration of that animation.
+        At the end of sorting the <a href="{{$subpages['concepts']['url'] . '#ref-clone'}}" title="clone">clone</a> animates to its final position. This option sets the duration of that animation.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
@@ -1623,7 +1623,7 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        At the start of sorting the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone&#39;s</a> scale animates to <a href="{{ url($selectedpage['url'] . '#ref-sortCloneScale') }}" title="sortCloneScale">sortCloneScale</a>. This option sets the duration of that animation.
+        At the start of sorting the <a href="{{$subpages['concepts']['url'] . '#ref-clone'}}" title="clone">clone&#39;s</a> scale animates to <a href="{{ url($selectedpage['url'] . '#ref-sortCloneScale') }}" title="sortCloneScale">sortCloneScale</a>. This option sets the duration of that animation.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
@@ -1651,7 +1651,7 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        During sorting, list items animate to new positions as the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone</a> is moved up and down. This option sets the duration of that animation.
+        During sorting, list items animate to new positions as the <a href="{{$subpages['concepts']['url'] . '#ref-clone'}}" title="clone">clone</a> is moved up and down. This option sets the duration of that animation.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS

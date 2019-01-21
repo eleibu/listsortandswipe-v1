@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -18544,14 +18544,14 @@ module.exports = g;
 
 /***/ }),
 
-/***/ "./resources/js/docs.js":
+/***/ "./resources/js/documentation.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__monitor_win_width_js__ = __webpack_require__("./resources/js/monitor-win-width.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__page_menu_show_hide_js__ = __webpack_require__("./resources/js/page-menu-show-hide.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__ = __webpack_require__("./resources/js/lithiumlist-pro-1.0.0.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lithiumlist_1_0_0_js__ = __webpack_require__("./resources/js/lithiumlist-1.0.0.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prismjs_components_prism_core__ = __webpack_require__("./node_modules/prismjs/components/prism-core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prismjs_components_prism_core___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_prismjs_components_prism_core__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_prismjs_components_prism_clike__ = __webpack_require__("./node_modules/prismjs/components/prism-clike.js");
@@ -18605,7 +18605,7 @@ function sortEnd(instance, origIndex, newIndex) {
 var outerContSalesPoints = document.getElementById('div-salespoints-outer-cont');
 var listContSalesPoints = document.getElementById('div-salespoints-list-cont');
 if (outerContSalesPoints && listContSalesPoints) {
-	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["a" /* lithiumlistPro */].attachToList('123456789', outerContSalesPoints, listContSalesPoints, listItemClass, {
+	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_1_0_0_js__["a" /* lithiumlist */].attachToList('123456789', outerContSalesPoints, listContSalesPoints, listItemClass, {
 		onSortEnd: function onSortEnd(instance, origIndex, newIndex) {
 			sortEnd(instance, origIndex, newIndex);
 		},
@@ -18629,7 +18629,7 @@ if (outerContSalesPoints && listContSalesPoints) {
 var outerContSorting = document.getElementById('div-diag-outer-cont-sorting');
 var listContSorting = document.getElementById('div-diag-list-cont-sorting');
 if (outerContSorting && listContSorting) {
-	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["a" /* lithiumlistPro */].attachToList('123456789', outerContSorting, listContSorting, listItemClass, {
+	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_1_0_0_js__["a" /* lithiumlist */].attachToList('123456789', outerContSorting, listContSorting, listItemClass, {
 		sortDragHandleClass: 'budicon-grab-ui',
 		leftEnabled: false,
 		rightEnabled: false,
@@ -18643,7 +18643,7 @@ if (outerContSorting && listContSorting) {
 var outerContAutomaticScrolling = document.getElementById('div-diag-outer-cont-automatic-scrolling');
 var listContAutomaticScrolling = document.getElementById('div-diag-list-cont-automatic-scrolling');
 if (outerContAutomaticScrolling && listContAutomaticScrolling) {
-	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["a" /* lithiumlistPro */].attachToList('123456789', outerContAutomaticScrolling, listContAutomaticScrolling, listItemClass, {
+	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_1_0_0_js__["a" /* lithiumlist */].attachToList('123456789', outerContAutomaticScrolling, listContAutomaticScrolling, listItemClass, {
 		sortDragHandleClass: 'budicon-grab-ui',
 		leftEnabled: false,
 		rightEnabled: false,
@@ -18656,7 +18656,7 @@ if (outerContAutomaticScrolling && listContAutomaticScrolling) {
 var selectSortScrollSpeed = document.getElementById('select-sortScrollSpeed');
 if (selectSortScrollSpeed) {
 	selectSortScrollSpeed.addEventListener('change', function () {
-		__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["a" /* lithiumlistPro */].setListProperties(listContAutomaticScrolling, {
+		__WEBPACK_IMPORTED_MODULE_2__lithiumlist_1_0_0_js__["a" /* lithiumlist */].setListProperties(listContAutomaticScrolling, {
 			sortScrollSpeed: parseInt(selectSortScrollSpeed.options[selectSortScrollSpeed.selectedIndex].value)
 		});
 	});
@@ -18666,7 +18666,7 @@ if (selectSortScrollSpeed) {
 var outerContSlidingAndSwiping = document.getElementById('div-diag-outer-cont-sliding-and-swiping');
 var listContSlidingAndSwiping = document.getElementById('div-diag-list-cont-sliding-and-swiping');
 if (outerContSlidingAndSwiping && listContSlidingAndSwiping) {
-	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["a" /* lithiumlistPro */].attachToList('123456789', outerContSlidingAndSwiping, listContSlidingAndSwiping, listItemClass, {
+	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_1_0_0_js__["a" /* lithiumlist */].attachToList('123456789', outerContSlidingAndSwiping, listContSlidingAndSwiping, listItemClass, {
 		sortEnabled: false,
 		leftButtonClass: 'budicon-trash',
 		rightButtonClass: 'budicon-reload-ui'
@@ -18693,7 +18693,7 @@ if (selectLeftSwipeStartThreshold && selectLeftSwipeEndThreshold && selectLeftSl
 }
 
 function slideSwipeChange() {
-	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["a" /* lithiumlistPro */].setListProperties(listContSlidingAndSwiping, {
+	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_1_0_0_js__["a" /* lithiumlist */].setListProperties(listContSlidingAndSwiping, {
 		leftSwipeStartThreshold: selectLeftSwipeStartThreshold.options[selectLeftSwipeStartThreshold.selectedIndex].value,
 		leftSwipeEndThreshold: selectLeftSwipeEndThreshold.options[selectLeftSwipeEndThreshold.selectedIndex].value,
 		leftSlideOutDuration: parseInt(selectLeftSlideOutDuration.options[selectLeftSlideOutDuration.selectedIndex].value),
@@ -18705,7 +18705,7 @@ function slideSwipeChange() {
 var outerContClone = document.getElementById('div-diag-outer-cont-clone');
 var listContClone = document.getElementById('div-diag-list-cont-clone');
 if (outerContClone && listContClone) {
-	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["a" /* lithiumlistPro */].attachToList('123456789', outerContClone, listContClone, listItemClass, {
+	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_1_0_0_js__["a" /* lithiumlist */].attachToList('123456789', outerContClone, listContClone, listItemClass, {
 		sortDragHandleClass: 'budicon-grab-ui',
 		leftEnabled: false,
 		rightEnabled: false,
@@ -18727,7 +18727,7 @@ if (selectSortCloneBoxShadow && selectSortCloneScale) {
 }
 
 function itemCloneChange() {
-	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["a" /* lithiumlistPro */].setListProperties(listContClone, {
+	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_1_0_0_js__["a" /* lithiumlist */].setListProperties(listContClone, {
 		sortCloneBoxShadow: selectSortCloneBoxShadow.options[selectSortCloneBoxShadow.selectedIndex].value,
 		sortCloneScale: selectSortCloneScale.options[selectSortCloneScale.selectedIndex].value
 	});
@@ -18737,7 +18737,7 @@ function itemCloneChange() {
 var outerContMasks = document.getElementById('div-diag-outer-cont-masks');
 var listContMasks = document.getElementById('div-diag-list-cont-masks');
 if (outerContMasks && listContMasks) {
-	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["a" /* lithiumlistPro */].attachToList('123456789', outerContMasks, listContMasks, listItemClass, {
+	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_1_0_0_js__["a" /* lithiumlist */].attachToList('123456789', outerContMasks, listContMasks, listItemClass, {
 		sortEnabled: false,
 		leftButtonClass: 'budicon-trash',
 		rightButtonClass: 'budicon-reload-ui'
@@ -18777,7 +18777,7 @@ function masksChange() {
 		rightDiv = createBgdDiv(rightValue);
 	}
 
-	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["a" /* lithiumlistPro */].setListProperties(listContMasks, {
+	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_1_0_0_js__["a" /* lithiumlist */].setListProperties(listContMasks, {
 		leftMasks: [{
 			background: selectLeftMaskBackground.options[selectLeftMaskBackground.selectedIndex].value,
 			classNameDefault: 'left-mask',
@@ -18809,16 +18809,16 @@ function createBgdDiv(text) {
 var outerContSetup = document.getElementById('div-diag-outer-cont-setup');
 var listContSetup = document.getElementById('div-diag-list-cont-setup');
 if (outerContSetup && listContSetup) {
-	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_pro_1_0_0_js__["a" /* lithiumlistPro */].attachToList('123456789', outerContSetup, listContSetup, 'list-item');
+	__WEBPACK_IMPORTED_MODULE_2__lithiumlist_1_0_0_js__["a" /* lithiumlist */].attachToList('123456789', outerContSetup, listContSetup, 'list-item');
 }
 
 /***/ }),
 
-/***/ "./resources/js/lithiumlist-pro-1.0.0.js":
+/***/ "./resources/js/lithiumlist-1.0.0.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return lithiumlistPro; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return lithiumlist; });
 // TESTED ON:
 // IE11
 // Edge38
@@ -18913,7 +18913,7 @@ if (outerContSetup && listContSetup) {
 // TODO: Remove .version() from webpack.mix.js?
 
 
-var lithiumlistPro = function () {
+var lithiumlist = function () {
 	var instances = [];
 
 	var defaultProperties = {
@@ -20855,10 +20855,10 @@ var pageMenuShowHide = function () {
 
 /***/ }),
 
-/***/ 0:
+/***/ 1:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__("./resources/js/docs.js");
+module.exports = __webpack_require__("./resources/js/documentation.js");
 
 
 /***/ })

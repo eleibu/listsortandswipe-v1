@@ -34,8 +34,8 @@
     @endforeach
 </div>
 <div class="section-cont">
-    @include('docs-oemo-options')
-    @include('docs-oemo-events')
-    @include('docs-oemo-methods')
-    @include('docs-oemo-objects')
+    @include('documentation-oemo-options')
+    @include('documentation-oemo-events')
+    @include('documentation-oemo-methods')
+    @include('documentation-oemo-objects')
 </div>

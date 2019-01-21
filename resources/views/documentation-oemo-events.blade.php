@@ -99,7 +99,7 @@
                 Type: Boolean
             </div>
             <div class="sub-param">
-                <code class="language-js">True</code> if the slide finished with the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone</a> sliding out of the list. <code class="language-js">False</code> if the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone</a> slid back to its starting position.
+                <code class="language-js">True</code> if the slide finished with the <a href="{{$subpages['concepts']['url'] . '#ref-clone'}}" title="clone">clone</a> sliding out of the list. <code class="language-js">False</code> if the <a href="{{$subpages['concepts']['url'] . '#ref-clone'}}" title="clone">clone</a> slid back to its starting position.
             </div>
         </div>
     </div>
@@ -310,7 +310,7 @@ lithiumlist.attachToList(
                 Type: Boolean
             </div>
             <div class="sub-param">
-                <code class="language-js">True</code> if the slide finished with the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone</a> sliding out of the list. <code class="language-js">False</code> if the <a href="{{$subpages['overview-of-functionality']['url'] . '#ref-clone'}}" title="clone">clone</a> slid back to its starting position.
+                <code class="language-js">True</code> if the slide finished with the <a href="{{$subpages['concepts']['url'] . '#ref-clone'}}" title="clone">clone</a> sliding out of the list. <code class="language-js">False</code> if the <a href="{{$subpages['concepts']['url'] . '#ref-clone'}}" title="clone">clone</a> slid back to its starting position.
             </div>
         </div>
     </div>

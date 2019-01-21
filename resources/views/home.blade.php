@@ -20,8 +20,8 @@
                 <a id="a-logo" href="{{ url('/') }}" title="Lithium List - home"><img src="{{ url('/images/LithiumListLogo-white.png') }}" alt="Lithium List logo" height="60" width="113" /></a>
                 <div class="links-cont">
                     <a class="button-word-cont hlink" href="" title="">PRICING</a>
-                    <a class="button-word-cont hlink" href="" title="">DEMOS</a>
-                    <a class="button-word-cont hlink" href="{{ url('/docs') }}" title="">DOCS</a>
+                    <a class="button-word-cont hlink" href="" title="">EXAMPLES</a>
+                    <a class="button-word-cont hlink" href="{{ url('/documentation') }}" title="">DOCUMENTATION</a>
                     <a class="button-word-cont hlink" href="" title="">SUPPORT</a>
                     <a class="button-word-cont login" href="" title="">LOG IN</a>
                 </div>
@@ -38,7 +38,7 @@
                 </div>
                 <br/><br/>
                 <div id="div-buttons">
-                    <a class="button-word-cont grey" href="{{url('/docs/why-lithium-list')}}">WHY LITHIUM LIST?</a>&nbsp;&nbsp;<a class="button-word-cont darkblue" href="{{url('/docs/installation')}}">INSTALLATION</a>
+                    <a class="button-word-cont grey" href="{{url('/documentation/why-lithium-list')}}">WHY LITHIUM LIST?</a>&nbsp;&nbsp;<a class="button-word-cont darkblue" href="{{url('/documentation/installation')}}">INSTALLATION</a>
                 </div>
                 <br/><br/><br/><br/>
                 <div id="div-ptable">
@@ -257,8 +257,8 @@
                 </div>
                 <div class="links-cont">
                     <a class="button-word-cont hlink" href="" title="">PRICING</a>
-                    <a class="button-word-cont hlink" href="" title="">DEMOS</a>
-                    <a class="button-word-cont hlink" href="{{ url('/docs') }}" title="">DOCS</a>
+                    <a class="button-word-cont hlink" href="" title="">EXAMPLES</a>
+                    <a class="button-word-cont hlink" href="{{ url('/documentation') }}" title="">DOCUMENTATION</a>
                     <a class="button-word-cont hlink" href="" title="">SUPPORT</a>
                     <a class="button-word-cont login" href="" title="">LOG IN</a>
                 </div>

@@ -1,0 +1,30 @@
+@import 'shared-all';
+@import 'shared-all-except-home';
+@import 'toc-details';
+
+#div-diag {
+	max-width: 400px;
+	margin: 0 auto;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+#outerCont-simple-fixedheight {
+	height: 300px;
+	overflow: auto;
+	border: 1px solid #444444;
+}
+
+#listCont-simple-fixedheight {
+	position: relative;
+
+	.listItem {
+		padding: 1.4em;
+		background-color: #FFFFFF;
+		border-bottom: 1px solid #DDDDDD;
+	}
+}
