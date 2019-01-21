@@ -227,7 +227,7 @@ div.details-cont {
 	}
 }
 
-#div-body.xl, #div-body.lg, #div-body.md, #div-body.sm {
+#pageWrapper.xl, #pageWrapper.lg, #pageWrapper.md, #pageWrapper.sm {
 	div.toc-cont {
 		position: absolute;
 		left: 0;
@@ -244,7 +244,7 @@ div.details-cont {
 	}
 }
 
-#div-body.xs {
+#pageWrapper.xs {
 	div.toc-cont {
 		border-bottom: 1px solid #EEEEEE;
 		margin-bottom: 2em;

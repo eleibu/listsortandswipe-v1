@@ -162,32 +162,32 @@ a.menubtn:hover {
   left: 20%;
 }
 
-#div-body.xl #div-siteheader div.links-cont, #div-body.lg #div-siteheader div.links-cont, #div-body.md #div-siteheader div.links-cont, #div-body.sm #div-siteheader div.links-cont {
+#pageWrapper.xl #div-siteheader div.links-cont, #pageWrapper.lg #div-siteheader div.links-cont, #pageWrapper.md #div-siteheader div.links-cont, #pageWrapper.sm #div-siteheader div.links-cont {
   display: block;
 }
 
-#div-body.xl #div-siteheader div.menubtn-cont, #div-body.lg #div-siteheader div.menubtn-cont, #div-body.md #div-siteheader div.menubtn-cont, #div-body.sm #div-siteheader div.menubtn-cont {
+#pageWrapper.xl #div-siteheader div.menubtn-cont, #pageWrapper.lg #div-siteheader div.menubtn-cont, #pageWrapper.md #div-siteheader div.menubtn-cont, #pageWrapper.sm #div-siteheader div.menubtn-cont {
   display: none;
 }
 
-#div-body.xl div.menu-outer, #div-body.lg div.menu-outer, #div-body.md div.menu-outer, #div-body.sm div.menu-outer {
+#pageWrapper.xl div.menu-outer, #pageWrapper.lg div.menu-outer, #pageWrapper.md div.menu-outer, #pageWrapper.sm div.menu-outer {
   text-align: center;
 }
 
-#div-body.xl div.menu-outer div.links-cont a, #div-body.lg div.menu-outer div.links-cont a, #div-body.md div.menu-outer div.links-cont a, #div-body.sm div.menu-outer div.links-cont a {
+#pageWrapper.xl div.menu-outer div.links-cont a, #pageWrapper.lg div.menu-outer div.links-cont a, #pageWrapper.md div.menu-outer div.links-cont a, #pageWrapper.sm div.menu-outer div.links-cont a {
   width: 40%;
   margin: 0.8em 0.4em;
 }
 
-#div-body.xs #div-siteheader div.links-cont {
+#pageWrapper.xs #div-siteheader div.links-cont {
   display: none;
 }
 
-#div-body.xs #div-siteheader div.menubtn-cont {
+#pageWrapper.xs #div-siteheader div.menubtn-cont {
   display: block;
 }
 
-#div-body.xs div.menu-outer div.links-cont a {
+#pageWrapper.xs div.menu-outer div.links-cont a {
   display: block;
   margin: 1.2em 0;
 }
@@ -310,7 +310,7 @@ div.details-cont div.details-outer div.nextpage-cont a.button-word-cont:hover {
   background-color: #F8F8F8;
 }
 
-#div-body.xl div.toc-cont, #div-body.lg div.toc-cont, #div-body.md div.toc-cont, #div-body.sm div.toc-cont {
+#pageWrapper.xl div.toc-cont, #pageWrapper.lg div.toc-cont, #pageWrapper.md div.toc-cont, #pageWrapper.sm div.toc-cont {
   position: absolute;
   left: 0;
   top: 0;
@@ -319,13 +319,13 @@ div.details-cont div.details-outer div.nextpage-cont a.button-word-cont:hover {
   overflow: auto;
 }
 
-#div-body.xl div.details-cont, #div-body.lg div.details-cont, #div-body.md div.details-cont, #div-body.sm div.details-cont {
+#pageWrapper.xl div.details-cont, #pageWrapper.lg div.details-cont, #pageWrapper.md div.details-cont, #pageWrapper.sm div.details-cont {
   border-left: 1px solid #EEEEEE;
   min-height: 40em;
   margin-left: 360px;
 }
 
-#div-body.xs div.toc-cont {
+#pageWrapper.xs div.toc-cont {
   border-bottom: 1px solid #EEEEEE;
   margin-bottom: 2em;
 }

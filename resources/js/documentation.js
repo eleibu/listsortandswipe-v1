@@ -63,7 +63,7 @@ if (outerContSorting && listContSorting) {
 	    listContSorting,
 	    listItemClass,
 	    {
-	    	sortDragHandleClass: 'budicon-grab-ui',
+	    	sortDragHandleClass: 'icon-grab-ui',
 	    	leftEnabled: false,
 	    	rightEnabled: false,
 	    	onSortEnd: function(instance, origIndex, newIndex) {
@@ -83,7 +83,7 @@ if (outerContAutomaticScrolling && listContAutomaticScrolling) {
 	    listContAutomaticScrolling,
 	    listItemClass,
 	    {
-	    	sortDragHandleClass: 'budicon-grab-ui',
+	    	sortDragHandleClass: 'icon-grab-ui',
 	    	leftEnabled: false,
 	    	rightEnabled: false,
 	    	onSortEnd: function(instance, origIndex, newIndex) {
@@ -113,8 +113,8 @@ if (outerContSlidingAndSwiping && listContSlidingAndSwiping) {
 	    listItemClass,
 	    {
 	    	sortEnabled: false,
-	    	leftButtonClass: 'budicon-trash',
-	    	rightButtonClass: 'budicon-reload-ui',
+	    	leftButtonClass: 'icon-arrow-left-circle',
+	    	rightButtonClass: 'icon-arrow-right-circle',
 	    }
 	);	
 }
@@ -158,7 +158,7 @@ if (outerContClone && listContClone) {
 	    listContClone,
 	    listItemClass,
 	    {
-	    	sortDragHandleClass: 'budicon-grab-ui',
+	    	sortDragHandleClass: 'icon-grab-ui',
 	    	leftEnabled: false,
 	    	rightEnabled: false,
 	    	onSortEnd: function(instance, origIndex, newIndex) {
@@ -197,8 +197,8 @@ if (outerContMasks && listContMasks) {
 	    listItemClass,
 	    {
 	    	sortEnabled: false,
-	    	leftButtonClass: 'budicon-trash',
-	    	rightButtonClass: 'budicon-reload-ui'
+	    	leftButtonClass: 'icon-arrow-left-circle',
+	    	rightButtonClass: 'icon-arrow-right-circle'
 	    }
 	);	
 }

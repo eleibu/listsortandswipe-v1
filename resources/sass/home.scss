@@ -48,7 +48,7 @@ a.menubtn:active {
 	}
 }
 
-#div-body {
+#pageWrapper {
 	height: 100%;
 	overflow: auto;
 
@@ -180,7 +180,7 @@ a.menubtn:active {
 	overflow-x: hidden;	// recommended to allow left/right shadow when scrolling but hide clone when swiping left/right
 }
 
-#div-body.xl, #div-body.lg, #div-body.md, #div-body.sm {
+#pageWrapper.xl, #pageWrapper.lg, #pageWrapper.md, #pageWrapper.sm {
 	#div-title {
 		font-size: 200%;
 	}
@@ -202,7 +202,7 @@ a.menubtn:active {
 				top: 50%;
 				transform: translateY(-50%);
 				border-radius: 999px;
-				color: #DDDDDD;
+				color: #666666;
 			}
 
 			i:hover {
@@ -237,7 +237,7 @@ a.menubtn:active {
 	}
 }
 
-#div-body.xs {
+#pageWrapper.xs {
 	#div-title {
 		font-size: 130%;
 	}

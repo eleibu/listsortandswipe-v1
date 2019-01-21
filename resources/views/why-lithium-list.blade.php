@@ -10,7 +10,7 @@
     <title>Lithium List - why Lithium List?</title>
 </head>
 <body>
-    <div id="div-body">
+    <div id="pageWrapper">
         Why Lithium List?
     </div>
 </body>

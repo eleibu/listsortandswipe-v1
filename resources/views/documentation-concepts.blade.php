@@ -47,7 +47,7 @@
                 </div>
                 <div class="list-item unselectable">
                     <div class='inner'>
-                        <i class="sld budicon-grab-ui sort"></i>
+                        <i class="sld icon-grab-ui sort"></i>
                         <div class='text'>
                             Try using my drag handle to sort me
                         </div>
@@ -88,7 +88,7 @@
             <div id="div-diag-list-cont-automatic-scrolling" class="diag-list-cont">
                 <div class="list-item unselectable">
                     <div class='inner'>
-                        <i class="sld budicon-grab-ui sort"></i>
+                        <i class="sld icon-grab-ui sort"></i>
                         <div class='text'>
                             Move me all the way to the bottom and then back up again
                         </div>
@@ -191,11 +191,11 @@
                 </div>
                 <div class="list-item unselectable">
                     <div class='inner'>
-                        <i class="sld budicon-reload-ui archive"></i>
+                        <i class="oln icon-arrow-right-circle archive"></i>
                         <div class='text'>
                             Try using my left or right slide buttons
                         </div>
-                        <i class="oln budicon-trash delete"></i>
+                        <i class="oln icon-arrow-left-circle delete"></i>
                     </div>
                 </div>
                 <div class="list-item unselectable">
@@ -275,7 +275,7 @@
             <div id="div-diag-list-cont-clone" class="diag-list-cont">
                 <div class="list-item unselectable">
                     <div class='inner'>
-                        <i class="sld budicon-grab-ui sort"></i>
+                        <i class="sld icon-grab-ui sort"></i>
                         <div class='text'>
                             Start sorting to see my box-shadow and scale change
                         </div>
@@ -339,11 +339,11 @@
             <div id="div-diag-list-cont-masks" class="diag-list-cont">
                 <div class="list-item unselectable">
                     <div class='inner'>
-                        <i class="sld budicon-reload-ui archive"></i>
+                        <i class="oln icon-arrow-right-circle archive"></i>
                         <div class='text'>
                             Slide me left or right to reveal my masks
                         </div>
-                        <i class="oln budicon-trash delete"></i>
+                        <i class="oln icon-arrow-left-circle delete"></i>
                     </div>
                 </div>
                 <div class="list-item unselectable">

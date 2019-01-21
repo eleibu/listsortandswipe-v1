@@ -14,7 +14,7 @@
     @yield('jsLinks')
 </head>
 <body>
-    <div id="div-body">
+    <div id="pageWrapper">
         <div id="div-siteheader">
             <div class="siteheader-outer">
                 <a id="a-logo" href="" title="Lithium List - home"><img src="{{ url('/images/LithiumListLogo-white.png') }}" alt="Lithium List logo" height="60" width="113" /></a>

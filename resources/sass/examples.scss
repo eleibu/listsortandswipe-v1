@@ -3,6 +3,7 @@
 @import 'toc-details';
 
 #div-diag {
+	min-width: 240px;
 	max-width: 400px;
 	margin: 0 auto;
 	-webkit-touch-callout: none;
@@ -13,18 +14,104 @@
 	user-select: none;
 }
 
-#outerCont-simple-fixedheight {
-	height: 300px;
-	overflow: auto;
-	border: 1px solid #444444;
+div.section-cont {
+	div.title-codeblock {
+		font-size: 90%;
+		font-weight: lighter;
+		color: #777777;
+		margin-top: 2em;
+	}
 }
 
-#listCont-simple-fixedheight {
-	position: relative;
+#outerCont-super-simple {
+	height: 300px;
+	overflow: auto;
+	border: 1px solid #777777;
 
-	.listItem {
-		padding: 1.4em;
-		background-color: #FFFFFF;
-		border-bottom: 1px solid #DDDDDD;
+	#listCont-super-simple {
+		position: relative;
+
+		.listItem {
+			padding: 1.4em;
+			background-color: #FFFFFF;
+			border-bottom: 1px solid #DDDDDD;
+		}
+	}
+}
+
+#outerCont-full-page-scrolling {
+	border: 1px solid #777777;
+
+	#listCont-full-page-scrolling {
+		position: relative;
+
+		.listItem {
+			padding: 1.4em;
+			background-color: #FFFFFF;
+			border-bottom: 1px solid #DDDDDD;
+		}
+	}
+
+	#listCont-full-page-scrolling.left-list, #listCont-full-page-scrolling.right-list, {
+		overflow-x: hidden;
+	}
+}
+
+#outerCont-buttons {
+	height: 300px;
+	overflow: auto;
+	border: 1px solid #777777;
+
+	#listCont-buttons {
+		position: relative;
+
+		.listItem {
+			padding: 1.4em;
+			background-color: #FFFFFF;
+			border-bottom: 1px solid #DDDDDD;
+
+			.inner {
+				position: relative;
+				text-align: center;
+
+				i {
+					position: absolute;
+					bottom: 0;
+				}
+
+				i:hover, i:active {
+					cursor: pointer;
+					font-weight: bold;
+				}
+
+				i.icon-grab-ui {
+					left: 0;
+				}
+
+				i.icon-arrow-right-circle {
+					left: 2em;
+				}
+
+				i.icon-arrow-left-circle {
+					right: 0;
+				}
+			}
+		}
+	}
+}
+
+#outerCont-on-sort-end {
+	height: 300px;
+	overflow: auto;
+	border: 1px solid #777777;
+
+	#listCont-on-sort-end {
+		position: relative;
+
+		.listItem {
+			padding: 1.4em;
+			background-color: #FFFFFF;
+			border-bottom: 1px solid #DDDDDD;
+		}
 	}
 }

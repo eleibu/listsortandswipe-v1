@@ -1,16 +1,11 @@
-@section('jsLinks')
-    <script defer src="{{ url(mix('/js/examples.js')) }}"></script>
+@section('cssLinks')
+    <link rel="stylesheet" href="{{ url(mix('/css/examples.css')) }}">
 @endsection
 
-@section('pageStyle')
-	<style>
-
-	</style>
-@endsection
 <br/><br/>
 <div id="div-diag">
-	<div id="outerCont-simple-fixedheight">
-	    <div id="listCont-simple-fixedheight">
+	<div id="outerCont-super-simple">
+	    <div id="listCont-super-simple">
 	        <div class="listItem">
 	            List item
 	        </div>
@@ -44,28 +39,28 @@
 	    </div>
 	</div>
 </div>
-<br/><br/><br/><br/>
+<br/><br/>
 <div class="section-cont">
-<div class="title-codeblock">
-    HTML:
-</div>
+	<div class="title-codeblock">
+	    HTML:
+	</div>
 <pre class="line-numbers"><code class="language-markup">{{'<div id=\'outerCont\'>
     <div id=\'listCont\'>
         <div class=\'listItem\'>
             List item
         </div>
-        ...
         <div class=\'listItem\'>
             List item
-        </div>        
+        </div>
+        ...
     </div>
 </div>'}}</code></pre>
-</div>
-<br/><br/>
-<div class="section-cont">
-<div class="title-codeblock">
-    CSS:
-</div>
+	</div>
+	<br/>
+	<div class="section-cont">
+	<div class="title-codeblock">
+	    CSS:
+	</div>
 <pre class="line-numbers"><code class="language-css">#outerCont {
 	height: 300px;
 	overflow: auto;
@@ -82,22 +77,17 @@
 	border-bottom: 1px solid #DDDDDD;
 }
 </code></pre>
-</div>
-<br/><br/>
-<div class="section-cont">
-<div class="title-codeblock">
-    JS:
-</div>
+	</div>
+	<br/>
+	<div class="section-cont">
+	<div class="title-codeblock">
+	    JS:
+	</div>
 <pre class="line-numbers"><code class="language-js">lithiumlist.attachToList(
-    '123456789',
-    document.getElementById('outerCont'),
-    document.getElementById('listCont'),
-    'listItem'
+    &#39;123456789&#39;,
+    document.getElementById(&#39;outerCont&#39;),
+    document.getElementById(&#39;listCont&#39;),
+    &#39;listItem&#39;
 );
 </code></pre>
 </div>
-
-@section('scriptBottom')
-    <script>
-    </script>
-@endsection

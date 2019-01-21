@@ -17,7 +17,7 @@ export var monitorWinWidth = (function () {
     };
 
     var setWidthClass = function(classtxt) {
-        var divtarget = document.getElementById("div-body");
+        var divtarget = document.getElementById("pageWrapper");
         if (divtarget && (divtarget.className != classtxt)) {
             divtarget.className = classtxt;
             window.dispatchEvent(event_changeWidthClass);

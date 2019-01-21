@@ -10,7 +10,7 @@
     <title>Lithium List - support</title>
 </head>
 <body>
-    <div id="div-body">
+    <div id="pageWrapper">
         Support
     </div>
 </body>

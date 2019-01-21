@@ -12,26 +12,33 @@ class Controller_Site extends Controller
 
 	public function section_examples(Request $request, $subpage = '') {
 		$subpages = array(
-			'simple-fixedheight' => array(
+			'super-simple' => array(
 				'selected' => false,
-				'url' => url('/examples/simple-fixedheight'),
-				'pageTitle' => 'Lithium List - examples - simple - fixed height',
-				'detailsTitle' => 'Simple - fixed height',
-				'detailsView' => 'examples-simple-fixedheight'
+				'url' => url('/examples/super-simple'),
+				'pageTitle' => 'Lithium List - examples - super simple',
+				'detailsTitle' => 'Super simple',
+				'detailsView' => 'examples-super-simple'
 			),
-			'simple-wholepage' => array(
+			'full-page-scrolling' => array(
 				'selected' => false,
-				'url' => url('/examples/simple-wholepage'),
-				'pageTitle' => 'Lithium List - examples - simple - whole page',
-				'detailsTitle' => 'Simple - whole page',
-				'detailsView' => 'examples-simple-wholepage'
+				'url' => url('/examples/full-page-scrolling'),
+				'pageTitle' => 'Lithium List - examples - full page scrolling',
+				'detailsTitle' => 'Full page scrolling',
+				'detailsView' => 'examples-full-page-scrolling'
 			),
-			'sort-only' => array(
+			'on-sort-end' => array(
 				'selected' => false,
-				'url' => url('/examples/sort-only'),
-				'pageTitle' => 'Lithium List - examples - sort only',
-				'detailsTitle' => 'Sort only',
-				'detailsView' => 'examples-sort-only'
+				'url' => url('/examples/on-sort-end'),
+				'pageTitle' => 'Lithium List - examples - on sort end',
+				'detailsTitle' => 'onSortEnd',
+				'detailsView' => 'examples-on-sort-end'
+			),
+			'buttons' => array(
+				'selected' => false,
+				'url' => url('/examples/buttons'),
+				'pageTitle' => 'Lithium List - examples - buttons',
+				'detailsTitle' => 'Buttons',
+				'detailsView' => 'examples-buttons'
 			),
 			'background-labels' => array(
 				'selected' => false,

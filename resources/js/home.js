@@ -5,7 +5,7 @@ import { pageMenuShowHide } from './page-menu-show-hide.js';
 import { lithiumlist } from './lithiumlist-1.0.0.js';
 
 var listCont = document.getElementById('div-list-cont');
-var outerCont = document.getElementById('div-body');
+var outerCont = document.getElementById('pageWrapper');
 // var outerCont = window;
 var listItemClass = 'listitem-cont';
 
@@ -24,9 +24,9 @@ divRight.appendChild(spanRight);
 divRight.className = 'label-cont';
 
 var listProperties = {
-	sortDragHandleClass: 'budicon-grab-ui',
-	leftButtonClass: 'budicon-trash',
-	rightButtonClass: 'budicon-reload-ui',
+	sortDragHandleClass: 'icon-grab-ui',
+	leftButtonClass: 'icon-trash',
+	rightButtonClass: 'icon-archive',
 	onSortEnd: sortEnd,
 	sortScrollSpeed: 3,
 	leftEnabled: true,

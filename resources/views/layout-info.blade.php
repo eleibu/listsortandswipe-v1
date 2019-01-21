@@ -15,7 +15,7 @@
     @yield('pageStyle')
 </head>
 <body>
-    <div id="div-body">
+    <div id="pageWrapper">
         <div id="div-siteheader">
             <div class="siteheader-outer">
                 <a id="a-logo" href="{{ url('/') }}" title="Lithium List - home"><img src="{{ url('/images/LithiumListLogo-blue.png') }}" alt="Lithium List logo" height="60" width="113" /></a>

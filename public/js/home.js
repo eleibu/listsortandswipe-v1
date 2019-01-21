@@ -16975,7 +16975,7 @@ __webpack_require__("./node_modules/bootstrap/dist/js/bootstrap.js");
 
 
 var listCont = document.getElementById('div-list-cont');
-var outerCont = document.getElementById('div-body');
+var outerCont = document.getElementById('pageWrapper');
 // var outerCont = window;
 var listItemClass = 'listitem-cont';
 
@@ -16994,9 +16994,9 @@ divRight.appendChild(spanRight);
 divRight.className = 'label-cont';
 
 var listProperties = {
-	sortDragHandleClass: 'budicon-grab-ui',
-	leftButtonClass: 'budicon-trash',
-	rightButtonClass: 'budicon-reload-ui',
+	sortDragHandleClass: 'icon-grab-ui',
+	leftButtonClass: 'icon-trash',
+	rightButtonClass: 'icon-archive',
 	onSortEnd: sortEnd,
 	sortScrollSpeed: 3,
 	leftEnabled: true,
@@ -19001,7 +19001,7 @@ var monitorWinWidth = function () {
     };
 
     var setWidthClass = function setWidthClass(classtxt) {
-        var divtarget = document.getElementById("div-body");
+        var divtarget = document.getElementById("pageWrapper");
         if (divtarget && divtarget.className != classtxt) {
             divtarget.className = classtxt;
             window.dispatchEvent(event_changeWidthClass);

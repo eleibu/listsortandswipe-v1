@@ -2,8 +2,8 @@
 
 @section('pageTitle', $selectedpage['pageTitle'])
 
-@section('cssLinks')
-    <link rel="stylesheet" href="{{ url(mix('/css/examples.css')) }}">
+@section('jsLinks')
+    <script defer src="{{ url(mix('/js/examples.js')) }}"></script>
 @endsection
 
 @section('content')

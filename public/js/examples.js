@@ -18585,10 +18585,49 @@ __webpack_require__("./node_modules/bootstrap/dist/js/bootstrap.js");
 
 __WEBPACK_IMPORTED_MODULE_3_prismjs_components_prism_core___default.a.highlightAll();
 
-var outerContSimpleFixedheight = document.getElementById('outerCont-simple-fixedheight');
-var listContSimpleFixedheight = document.getElementById('listCont-simple-fixedheight');
-if (outerContSimpleFixedheight && listContSimpleFixedheight) {
-    __WEBPACK_IMPORTED_MODULE_2__lithiumlist_1_0_0_js__["a" /* lithiumlist */].attachToList('123456789', outerContSimpleFixedheight, listContSimpleFixedheight, 'listItem');
+var outerContSuperSimple = document.getElementById('outerCont-super-simple');
+var listContSuperSimple = document.getElementById('listCont-super-simple');
+if (outerContSuperSimple && listContSuperSimple) {
+    __WEBPACK_IMPORTED_MODULE_2__lithiumlist_1_0_0_js__["a" /* lithiumlist */].attachToList('123456789', outerContSuperSimple, listContSuperSimple, 'listItem');
+}
+
+var outerContFullPageScrolling = document.getElementById('pageWrapper');
+var listContFullPageScrolling = document.getElementById('listCont-full-page-scrolling');
+if (outerContFullPageScrolling && listContFullPageScrolling) {
+    __WEBPACK_IMPORTED_MODULE_2__lithiumlist_1_0_0_js__["a" /* lithiumlist */].attachToList('123456789', outerContFullPageScrolling, listContFullPageScrolling, 'listItem');
+}
+
+var outerContButtons = document.getElementById('outerCont-buttons');
+var listContButtons = document.getElementById('listCont-buttons');
+if (outerContButtons && listContButtons) {
+    __WEBPACK_IMPORTED_MODULE_2__lithiumlist_1_0_0_js__["a" /* lithiumlist */].attachToList('123456789', outerContButtons, listContButtons, 'listItem', {
+        sortDragHandleClass: 'icon-grab-ui',
+        leftButtonClass: 'icon-arrow-left-circle',
+        rightButtonClass: 'icon-arrow-right-circle'
+    });
+}
+
+var outerContOnSortEnd = document.getElementById('outerCont-on-sort-end');
+var listContOnSortEnd = document.getElementById('listCont-on-sort-end');
+if (outerContOnSortEnd && listContOnSortEnd) {
+    __WEBPACK_IMPORTED_MODULE_2__lithiumlist_1_0_0_js__["a" /* lithiumlist */].attachToList('123456789', outerContOnSortEnd, listContOnSortEnd, 'listItem', {
+        leftEnabled: false,
+        rightEnabled: false,
+        onSortEnd: function onSortEnd(instance, oldIndex, newIndex) {
+            if (oldIndex != newIndex) {
+                var items = instance.listCont.getElementsByClassName(instance.listItemClass);
+                var oldItem = items[oldIndex];
+                var newItem = items[newIndex];
+
+                instance.listCont.removeChild(oldItem);
+                if (newIndex > oldIndex) {
+                    instance.listCont.insertBefore(oldItem, newItem.nextSibling);
+                } else {
+                    instance.listCont.insertBefore(oldItem, newItem);
+                }
+            }
+        }
+    });
 }
 
 /***/ }),
@@ -20556,7 +20595,7 @@ var monitorWinWidth = function () {
     };
 
     var setWidthClass = function setWidthClass(classtxt) {
-        var divtarget = document.getElementById("div-body");
+        var divtarget = document.getElementById("pageWrapper");
         if (divtarget && divtarget.className != classtxt) {
             divtarget.className = classtxt;
             window.dispatchEvent(event_changeWidthClass);

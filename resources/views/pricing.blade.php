@@ -10,7 +10,7 @@
     <title>Lithium List - pricing</title>
 </head>
 <body>
-    <div id="div-body">
+    <div id="pageWrapper">
         Pricing
     </div>
 </body>

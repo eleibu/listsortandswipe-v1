@@ -162,32 +162,32 @@ a.menubtn:hover {
   left: 20%;
 }
 
-#div-body.xl #div-siteheader div.links-cont, #div-body.lg #div-siteheader div.links-cont, #div-body.md #div-siteheader div.links-cont, #div-body.sm #div-siteheader div.links-cont {
+#pageWrapper.xl #div-siteheader div.links-cont, #pageWrapper.lg #div-siteheader div.links-cont, #pageWrapper.md #div-siteheader div.links-cont, #pageWrapper.sm #div-siteheader div.links-cont {
   display: block;
 }
 
-#div-body.xl #div-siteheader div.menubtn-cont, #div-body.lg #div-siteheader div.menubtn-cont, #div-body.md #div-siteheader div.menubtn-cont, #div-body.sm #div-siteheader div.menubtn-cont {
+#pageWrapper.xl #div-siteheader div.menubtn-cont, #pageWrapper.lg #div-siteheader div.menubtn-cont, #pageWrapper.md #div-siteheader div.menubtn-cont, #pageWrapper.sm #div-siteheader div.menubtn-cont {
   display: none;
 }
 
-#div-body.xl div.menu-outer, #div-body.lg div.menu-outer, #div-body.md div.menu-outer, #div-body.sm div.menu-outer {
+#pageWrapper.xl div.menu-outer, #pageWrapper.lg div.menu-outer, #pageWrapper.md div.menu-outer, #pageWrapper.sm div.menu-outer {
   text-align: center;
 }
 
-#div-body.xl div.menu-outer div.links-cont a, #div-body.lg div.menu-outer div.links-cont a, #div-body.md div.menu-outer div.links-cont a, #div-body.sm div.menu-outer div.links-cont a {
+#pageWrapper.xl div.menu-outer div.links-cont a, #pageWrapper.lg div.menu-outer div.links-cont a, #pageWrapper.md div.menu-outer div.links-cont a, #pageWrapper.sm div.menu-outer div.links-cont a {
   width: 40%;
   margin: 0.8em 0.4em;
 }
 
-#div-body.xs #div-siteheader div.links-cont {
+#pageWrapper.xs #div-siteheader div.links-cont {
   display: none;
 }
 
-#div-body.xs #div-siteheader div.menubtn-cont {
+#pageWrapper.xs #div-siteheader div.menubtn-cont {
   display: block;
 }
 
-#div-body.xs div.menu-outer div.links-cont a {
+#pageWrapper.xs div.menu-outer div.links-cont a {
   display: block;
   margin: 1.2em 0;
 }
@@ -248,41 +248,41 @@ a.menubtn:active {
   background: rgba(255, 255, 255, 0.025);
 }
 
-#div-body {
+#pageWrapper {
   height: 100%;
   overflow: auto;
 }
 
-#div-body #div-sitecont {
+#pageWrapper #div-sitecont {
   text-align: center;
   padding: 0 1em;
 }
 
-#div-body #div-sitecont div.sitecont-outer {
+#pageWrapper #div-sitecont div.sitecont-outer {
   display: inline-block;
   text-align: left;
   max-width: 800px;
 }
 
-#div-body #div-title {
+#pageWrapper #div-title {
   line-height: 130%;
   color: #222222;
 }
 
-#div-body #div-buttons {
+#pageWrapper #div-buttons {
   line-height: 130%;
 }
 
-#div-body #div-buttons a.button-word-cont {
+#pageWrapper #div-buttons a.button-word-cont {
   margin: 0.3em 0;
 }
 
-#div-body #div-ptable {
+#pageWrapper #div-ptable {
   max-width: 500px;
   margin: 0 auto;
 }
 
-#div-body #div-ptable div.restore {
+#pageWrapper #div-ptable div.restore {
   text-align: right;
   font-size: 0.9em;
   margin-bottom: 0.4em;
@@ -365,23 +365,23 @@ a.menubtn:active {
   overflow-x: hidden;
 }
 
-#div-body.xl #div-title, #div-body.lg #div-title, #div-body.md #div-title, #div-body.sm #div-title {
+#pageWrapper.xl #div-title, #pageWrapper.lg #div-title, #pageWrapper.md #div-title, #pageWrapper.sm #div-title {
   font-size: 200%;
 }
 
-#div-body.xl #div-buttons, #div-body.lg #div-buttons, #div-body.md #div-buttons, #div-body.sm #div-buttons {
+#pageWrapper.xl #div-buttons, #pageWrapper.lg #div-buttons, #pageWrapper.md #div-buttons, #pageWrapper.sm #div-buttons {
   font-size: 110%;
 }
 
-#div-body.xl div.listitem-cont, #div-body.lg div.listitem-cont, #div-body.md div.listitem-cont, #div-body.sm div.listitem-cont {
+#pageWrapper.xl div.listitem-cont, #pageWrapper.lg div.listitem-cont, #pageWrapper.md div.listitem-cont, #pageWrapper.sm div.listitem-cont {
   padding: 1.8em 0;
 }
 
-#div-body.xl div.listitem-cont div.listitem-outer, #div-body.lg div.listitem-cont div.listitem-outer, #div-body.md div.listitem-cont div.listitem-outer, #div-body.sm div.listitem-cont div.listitem-outer {
+#pageWrapper.xl div.listitem-cont div.listitem-outer, #pageWrapper.lg div.listitem-cont div.listitem-outer, #pageWrapper.md div.listitem-cont div.listitem-outer, #pageWrapper.sm div.listitem-cont div.listitem-outer {
   margin: 0 0.8em;
 }
 
-#div-body.xl div.listitem-cont div.listitem-outer i, #div-body.lg div.listitem-cont div.listitem-outer i, #div-body.md div.listitem-cont div.listitem-outer i, #div-body.sm div.listitem-cont div.listitem-outer i {
+#pageWrapper.xl div.listitem-cont div.listitem-outer i, #pageWrapper.lg div.listitem-cont div.listitem-outer i, #pageWrapper.md div.listitem-cont div.listitem-outer i, #pageWrapper.sm div.listitem-cont div.listitem-outer i {
   display: inline-block;
   padding: 0.5em;
   position: absolute;
@@ -389,46 +389,46 @@ a.menubtn:active {
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
   border-radius: 999px;
-  color: #DDDDDD;
+  color: #666666;
 }
 
-#div-body.xl div.listitem-cont div.listitem-outer i:hover, #div-body.lg div.listitem-cont div.listitem-outer i:hover, #div-body.md div.listitem-cont div.listitem-outer i:hover, #div-body.sm div.listitem-cont div.listitem-outer i:hover {
+#pageWrapper.xl div.listitem-cont div.listitem-outer i:hover, #pageWrapper.lg div.listitem-cont div.listitem-outer i:hover, #pageWrapper.md div.listitem-cont div.listitem-outer i:hover, #pageWrapper.sm div.listitem-cont div.listitem-outer i:hover {
   cursor: pointer;
   background: rgba(0, 0, 0, 0.06);
 }
 
-#div-body.xl div.listitem-cont div.listitem-outer i.sort, #div-body.lg div.listitem-cont div.listitem-outer i.sort, #div-body.md div.listitem-cont div.listitem-outer i.sort, #div-body.sm div.listitem-cont div.listitem-outer i.sort {
+#pageWrapper.xl div.listitem-cont div.listitem-outer i.sort, #pageWrapper.lg div.listitem-cont div.listitem-outer i.sort, #pageWrapper.md div.listitem-cont div.listitem-outer i.sort, #pageWrapper.sm div.listitem-cont div.listitem-outer i.sort {
   left: 0;
 }
 
-#div-body.xl div.listitem-cont div.listitem-outer i.archive, #div-body.lg div.listitem-cont div.listitem-outer i.archive, #div-body.md div.listitem-cont div.listitem-outer i.archive, #div-body.sm div.listitem-cont div.listitem-outer i.archive {
+#pageWrapper.xl div.listitem-cont div.listitem-outer i.archive, #pageWrapper.lg div.listitem-cont div.listitem-outer i.archive, #pageWrapper.md div.listitem-cont div.listitem-outer i.archive, #pageWrapper.sm div.listitem-cont div.listitem-outer i.archive {
   left: 1.6em;
 }
 
-#div-body.xl div.listitem-cont div.listitem-outer i.delete, #div-body.lg div.listitem-cont div.listitem-outer i.delete, #div-body.md div.listitem-cont div.listitem-outer i.delete, #div-body.sm div.listitem-cont div.listitem-outer i.delete {
+#pageWrapper.xl div.listitem-cont div.listitem-outer i.delete, #pageWrapper.lg div.listitem-cont div.listitem-outer i.delete, #pageWrapper.md div.listitem-cont div.listitem-outer i.delete, #pageWrapper.sm div.listitem-cont div.listitem-outer i.delete {
   right: 0;
 }
 
-#div-body.xl div.listitem-cont div.listitem-outer div.text, #div-body.lg div.listitem-cont div.listitem-outer div.text, #div-body.md div.listitem-cont div.listitem-outer div.text, #div-body.sm div.listitem-cont div.listitem-outer div.text {
+#pageWrapper.xl div.listitem-cont div.listitem-outer div.text, #pageWrapper.lg div.listitem-cont div.listitem-outer div.text, #pageWrapper.md div.listitem-cont div.listitem-outer div.text, #pageWrapper.sm div.listitem-cont div.listitem-outer div.text {
   margin: 0 2em 0 4em;
 }
 
-#div-body.xl div.listitem-cont:hover div.listitem-outer i, #div-body.lg div.listitem-cont:hover div.listitem-outer i, #div-body.md div.listitem-cont:hover div.listitem-outer i, #div-body.sm div.listitem-cont:hover div.listitem-outer i {
+#pageWrapper.xl div.listitem-cont:hover div.listitem-outer i, #pageWrapper.lg div.listitem-cont:hover div.listitem-outer i, #pageWrapper.md div.listitem-cont:hover div.listitem-outer i, #pageWrapper.sm div.listitem-cont:hover div.listitem-outer i {
   color: #000000;
 }
 
-#div-body.xs #div-title {
+#pageWrapper.xs #div-title {
   font-size: 130%;
 }
 
-#div-body.xs #div-buttons {
+#pageWrapper.xs #div-buttons {
   font-size: 90%;
 }
 
-#div-body.xs div.listitem-cont {
+#pageWrapper.xs div.listitem-cont {
   padding: 1.4em 1em;
 }
 
-#div-body.xs div.listitem-cont div.listitem-outer i {
+#pageWrapper.xs div.listitem-cont div.listitem-outer i {
   display: none;
 }
