@@ -348,54 +348,37 @@ div.section-cont div.title-codeblock {
   margin-top: 2em;
 }
 
+.outerCont {
+  border: 1px solid #777777;
+}
+
+.outerCont .listCont {
+  position: relative;
+}
+
+.outerCont .listCont .listItem {
+  padding: 1.4em;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #DDDDDD;
+}
+
 #outerCont-super-simple {
   height: 300px;
   overflow: auto;
-  border: 1px solid #777777;
-}
-
-#outerCont-super-simple #listCont-super-simple {
-  position: relative;
-}
-
-#outerCont-super-simple #listCont-super-simple .listItem {
-  padding: 1.4em;
-  background-color: #FFFFFF;
-  border-bottom: 1px solid #DDDDDD;
-}
-
-#outerCont-full-page-scrolling {
-  border: 1px solid #777777;
-}
-
-#outerCont-full-page-scrolling #listCont-full-page-scrolling {
-  position: relative;
-}
-
-#outerCont-full-page-scrolling #listCont-full-page-scrolling .listItem {
-  padding: 1.4em;
-  background-color: #FFFFFF;
-  border-bottom: 1px solid #DDDDDD;
 }
 
 #outerCont-full-page-scrolling #listCont-full-page-scrolling.left-list, #outerCont-full-page-scrolling #listCont-full-page-scrolling.right-list {
   overflow-x: hidden;
 }
 
+#outerCont-on-sort-end {
+  height: 300px;
+  overflow: auto;
+}
+
 #outerCont-buttons {
   height: 300px;
   overflow: auto;
-  border: 1px solid #777777;
-}
-
-#outerCont-buttons #listCont-buttons {
-  position: relative;
-}
-
-#outerCont-buttons #listCont-buttons .listItem {
-  padding: 1.4em;
-  background-color: #FFFFFF;
-  border-bottom: 1px solid #DDDDDD;
 }
 
 #outerCont-buttons #listCont-buttons .listItem .inner {
@@ -428,15 +411,61 @@ div.section-cont div.title-codeblock {
 #outerCont-on-sort-end {
   height: 300px;
   overflow: auto;
-  border: 1px solid #777777;
 }
 
-#outerCont-on-sort-end #listCont-on-sort-end {
+#outerCont-background-labels {
+  height: 300px;
+  overflow: auto;
+}
+
+#outerCont-background-labels #listCont-background-labels .mask div {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#outerCont-background-labels #listCont-background-labels .mask div span {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  color: white;
+}
+
+#outerCont-background-labels #listCont-background-labels .mask div span.left {
+  right: 0.6em;
+}
+
+#outerCont-background-labels #listCont-background-labels .mask div span.right {
+  left: 0.6em;
+}
+
+#outerCont-no-masks {
+  height: 300px;
+  overflow: auto;
+}
+
+#outerCont-no-masks #listCont-no-masks .listItem {
   position: relative;
 }
 
-#outerCont-on-sort-end #listCont-on-sort-end .listItem {
-  padding: 1.4em;
-  background-color: #FFFFFF;
-  border-bottom: 1px solid #DDDDDD;
+#outerCont-no-masks #listCont-no-masks .listItem .inner {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.8);
+          box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.8);
+}
+
+#outerCont-no-masks #listCont-no-masks .listItem.left-item-active .inner.left {
+  display: block;
+  background-color: red;
+}
+
+#outerCont-no-masks #listCont-no-masks .listItem.right-item-active .inner.right {
+  display: block;
+  background-color: green;
 }

@@ -71,9 +71,11 @@
 // Ensure all links actually link to something (especially in docs.blade.php and demos.blade.php)
 
 // TODO: Test setDefaultProperties
+// TODO: hasClass, addClass and removeClass should be able to handle 'mask left' (at the moment they can't) - if not, update docs to say this
 // TODO: Can two lists share the same outerCont (especially if outerCont wraps the whole page)?
 // TODO: In events, replace 'activeIndex' with 'activeItem'?
 // TODO: Check if clone is in correct place even when it has a margin
+
 
 // TODO: Will it work with 'window' if we fix the issues (see when outerCont = window.document)?
 
@@ -1661,8 +1663,8 @@ export var lithiumlist = (function () {
 					if ((!isUndefinedOrNull(mask['classNameSlideBack'])) && ((!isString(mask['classNameSlideBack'])) || (mask['classNameSlideBack'].length == 0))) {
 						throw 'leftMasks.classNameSlideBack must be a string of length >0';
 					}
-					if ((!isUndefinedOrNull(mask['childNode'])) && (!isDOMElement(mask['childNode']))) {
-						throw 'leftMasks.childNode must be a DOM element';
+					if ((!isUndefinedOrNull(mask['childNode'])) && (!isTextNode(mask['childNode']) && !isDOMElement(mask['childNode']))) {
+						throw 'leftMasks.childNode must be a text node or a DOM element';
 					}
 				}
 			} else {
@@ -1754,8 +1756,8 @@ export var lithiumlist = (function () {
 					if ((!isUndefinedOrNull(mask['classNameSlideBack'])) && ((!isString(mask['classNameSlideBack'])) || (mask['classNameSlideBack'].length == 0))) {
 						throw 'rightMasks.classNameSlideBack must be a string of length >0';
 					}
-					if ((!isUndefinedOrNull(mask['childNode'])) && (!isDOMElement(mask['childNode']))) {
-						throw 'rightMasks.childNode must be a DOM element';
+					if ((!isUndefinedOrNull(mask['childNode'])) && (!isTextNode(mask['childNode']) && !isDOMElement(mask['childNode']))) {
+						throw 'rightMasks.childNode must be a text node or a DOM element';
 					}
 				}
 			} else {
@@ -1855,6 +1857,14 @@ export var lithiumlist = (function () {
 
 	var isDOMElement = function(value) {
 		if (value instanceof Element) {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+	var isTextNode = function(value) {
+		if (value && value.nodeType && value.nodeType == Node.TEXT_NODE) {
 			return true;
 		} else {
 			return false;

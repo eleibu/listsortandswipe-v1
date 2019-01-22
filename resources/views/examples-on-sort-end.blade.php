@@ -4,8 +4,8 @@
 
 <br/><br/>
 <div id="div-diag">
-	<div id="outerCont-on-sort-end">
-	    <div id="listCont-on-sort-end">
+	<div id="outerCont-on-sort-end" class="outerCont">
+	    <div id="listCont-on-sort-end" class="listCont">
 	        <div class="listItem">
 	            List item 1
 	        </div>

@@ -10,8 +10,8 @@
 
 <br/><br/>
 <div id="div-diag">
-	<div id="outerCont-full-page-scrolling">
-	    <div id="listCont-full-page-scrolling">
+	<div id="outerCont-full-page-scrolling" class="outerCont">
+	    <div id="listCont-full-page-scrolling" class="listCont">
 	        <div class="listItem">
 	            List item
 	        </div>

@@ -54,19 +54,12 @@ class Controller_Site extends Controller
 				'detailsTitle' => 'No masks',
 				'detailsView' => 'examples-no-masks'
 			),
-			'delete-item-withmasks' => array(
+			'delete-item' => array(
 				'selected' => false,
-				'url' => url('/examples/delete-item-withmasks'),
-				'pageTitle' => 'Lithium List - examples - delete item - with masks',
-				'detailsTitle' => 'Delete item - with masks',
-				'detailsView' => 'examples-delete-item-withmasks'
-			),
-			'delete-item-nomasks' => array(
-				'selected' => false,
-				'url' => url('/examples/delete-item-nomasks'),
-				'pageTitle' => 'Lithium List - examples - delete item - no masks',
-				'detailsTitle' => 'Delete item - no masks',
-				'detailsView' => 'examples-delete-item-nomasks'
+				'url' => url('/examples/delete-item'),
+				'pageTitle' => 'Lithium List - examples - delete item',
+				'detailsTitle' => 'Delete item',
+				'detailsView' => 'examples-delete-item'
 			),
 			'detach-from-list' => array(
 				'selected' => false,

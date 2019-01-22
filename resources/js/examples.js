@@ -73,3 +73,49 @@ if (outerContOnSortEnd && listContOnSortEnd) {
         }
     );
 }
+
+var outerContBackgroundLabels = document.getElementById('outerCont-background-labels');
+var listContBackgroundLabels = document.getElementById('listCont-background-labels');
+if (outerContBackgroundLabels && listContBackgroundLabels) {
+	var labelLeft = document.createElement('div');
+	labelLeft.innerHTML = '<span class=\'left\'>Delete</span>';
+
+	var labelRight = document.createElement('div');
+	labelRight.innerHTML = '<span class=\'right\'>Archive</span>';
+
+    lithiumlist.attachToList(
+        '123456789',
+        outerContBackgroundLabels,
+        listContBackgroundLabels,
+        'listItem',
+        {
+        	sortEnabled: false,
+		    leftMasks: [{
+		    	background: 'red',
+		    	classNameDefault: 'mask',
+				childNode: labelLeft
+		    }],
+		    rightMasks: [{
+		    	background: 'green',
+		    	classNameDefault: 'mask',
+				childNode: labelRight
+		    }]
+        }
+    );
+}
+
+var outerContNoMasks = document.getElementById('outerCont-no-masks');
+var listContNoMasks = document.getElementById('listCont-no-masks');
+if (outerContNoMasks && listContNoMasks) {
+    lithiumlist.attachToList(
+        '123456789',
+        outerContNoMasks,
+        listContNoMasks,
+        'listItem',
+        {
+        	sortEnabled: false,
+		    leftMasks: [],
+		    rightMasks: []
+        }
+    );
+}

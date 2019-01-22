@@ -4,8 +4,8 @@
 
 <br/><br/>
 <div id="div-diag">
-	<div id="outerCont-buttons">
-	    <div id="listCont-buttons">
+	<div id="outerCont-buttons" class="outerCont">
+	    <div id="listCont-buttons" class="listCont">
 	        <div class="listItem">
 	        	<div class="inner">
 		            <i class="icon-grab-ui oln"></i>
