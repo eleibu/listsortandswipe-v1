@@ -7,6 +7,9 @@
 	<div id="outerCont-on-sort-end" class="outerCont">
 	    <div id="listCont-on-sort-end" class="listCont">
 	        <div class="listItem">
+	            List item 0
+	        </div>
+	        <div class="listItem">
 	            List item 1
 	        </div>
 	        <div class="listItem">
@@ -32,9 +35,6 @@
 	        </div>
 	        <div class="listItem">
 	            List item 9
-	        </div>
-	        <div class="listItem">
-	            List item 10
 	        </div>
 	    </div>
 	</div>

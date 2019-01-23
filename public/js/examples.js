@@ -18664,6 +18664,39 @@ if (outerContNoMasks && listContNoMasks) {
     });
 }
 
+var outerContDeleteItem = document.getElementById('outerCont-delete-item');
+var listContDeleteItem = document.getElementById('listCont-delete-item');
+if (outerContDeleteItem && listContDeleteItem) {
+    var items = Array.prototype.slice.call(listContDeleteItem.getElementsByClassName('listItem'));
+    var aRefresh = document.getElementById('a-delete-item-refresh');
+    if (aRefresh) {
+        aRefresh.addEventListener("click", function () {
+            listContDeleteItem.innerHTML = '';
+            for (var i = 0, len = items.length; i < len; i++) {
+                listContDeleteItem.appendChild(items[i]);
+            }
+        });
+    }
+
+    __WEBPACK_IMPORTED_MODULE_2__lithiumlist_1_0_0_js__["a" /* lithiumlist */].attachToList('123456789', outerContDeleteItem, listContDeleteItem, 'listItem', {
+        sortEnabled: false,
+        rightEnabled: false,
+        leftButtonClass: 'icon-trash',
+        leftMasks: [],
+        onLeftEnd: function onLeftEnd(instance, activeIndex, didSlideOut) {
+            if (didSlideOut) {
+                var items = instance.listCont.getElementsByClassName(instance.listItemClass);
+                var origLength = items[activeIndex].className.length;
+                items[activeIndex].className = items[activeIndex].className + ' deleting';
+                setTimeout(function () {
+                    items[activeIndex].className = items[activeIndex].className.substr(0, origLength);
+                    instance.listCont.removeChild(items[activeIndex]);
+                }, 200);
+            }
+        }
+    });
+}
+
 /***/ }),
 
 /***/ "./resources/js/lithiumlist-1.0.0.js":
@@ -18745,6 +18778,7 @@ if (outerContNoMasks && listContNoMasks) {
 // TODO: Can two lists share the same outerCont (especially if outerCont wraps the whole page)?
 // TODO: In events, replace 'activeIndex' with 'activeItem'?
 // TODO: Check if clone is in correct place even when it has a margin
+// TODO: Say in documentation that childNode can be a textNode
 
 
 // TODO: Will it work with 'window' if we fix the issues (see when outerCont = window.document)?

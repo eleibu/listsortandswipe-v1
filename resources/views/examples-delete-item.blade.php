@@ -4,76 +4,89 @@
 
 <br/><br/>
 <div id="div-diag">
-	<div id="outerCont-no-masks" class="outerCont">
-	    <div id="listCont-no-masks" class="listCont">
+	<div class="button-top">
+		<a id="a-delete-item-refresh" title="Refresh">Refresh</a>
+	</div>
+	<div id="outerCont-delete-item" class="outerCont">
+	    <div id="listCont-delete-item" class="listCont">
 	        <div class="listItem">
-	            List item
-	            <div class="innerMask left">
-	            </div>
-	            <div class="innerMask right">
+	        	<div class="innerCont">
+		            <i class="icon-trash oln"></i>
+		            List item 0
+	        	</div>
+	            <div class="innerMask">
 	            </div>
 	        </div>
 	        <div class="listItem">
-	            List item
-	            <div class="innerMask left">
-	            </div>
-	            <div class="innerMask right">
-	            </div>
-	        </div>
-	        <div class="listItem">
-	            List item
-	            <div class="innerMask left">
-	            </div>
-	            <div class="innerMask right">
+	        	<div class="innerCont">
+		            <i class="icon-trash oln"></i>
+		            List item 1
+	        	</div>
+	            <div class="innerMask">
 	            </div>
 	        </div>
 	        <div class="listItem">
-	            List item
-	            <div class="innerMask left">
-	            </div>
-	            <div class="innerMask right">
-	            </div>
-	        </div>
-	        <div class="listItem">
-	            List item
-	            <div class="innerMask left">
-	            </div>
-	            <div class="innerMask right">
+	        	<div class="innerCont">
+		            <i class="icon-trash oln"></i>
+		            List item 2
+	        	</div>
+	            <div class="innerMask">
 	            </div>
 	        </div>
 	        <div class="listItem">
-	            List item
-	            <div class="innerMask left">
-	            </div>
-	            <div class="innerMask right">
-	            </div>
-	        </div>
-	        <div class="listItem">
-	            List item
-	            <div class="innerMask left">
-	            </div>
-	            <div class="innerMask right">
+	        	<div class="innerCont">
+		            <i class="icon-trash oln"></i>
+		            List item 3
+	        	</div>
+	            <div class="innerMask">
 	            </div>
 	        </div>
 	        <div class="listItem">
-	            List item
-	            <div class="innerMask left">
-	            </div>
-	            <div class="innerMask right">
-	            </div>
-	        </div>
-	        <div class="listItem">
-	            List item
-	            <div class="innerMask left">
-	            </div>
-	            <div class="innerMask right">
+	        	<div class="innerCont">
+		            <i class="icon-trash oln"></i>
+		            List item 4
+	        	</div>
+	            <div class="innerMask">
 	            </div>
 	        </div>
 	        <div class="listItem">
-	            List item
-	            <div class="innerMask left">
+	        	<div class="innerCont">
+		            <i class="icon-trash oln"></i>
+		            List item 5
+	        	</div>
+	            <div class="innerMask">
 	            </div>
-	            <div class="innerMask right">
+	        </div>
+	        <div class="listItem">
+	        	<div class="innerCont">
+		            <i class="icon-trash oln"></i>
+		            List item 6
+	        	</div>
+	            <div class="innerMask">
+	            </div>
+	        </div>
+	        <div class="listItem">
+	        	<div class="innerCont">
+		            <i class="icon-trash oln"></i>
+		            List item 7
+	        	</div>
+	            <div class="innerMask">
+	            </div>
+	        </div>
+	        <div class="listItem">
+	        	<div class="innerCont">
+		            <i class="icon-trash oln"></i>
+		            List item 8
+	        	</div>
+	            <div class="innerMask">
+	            </div>
+	        </div>
+	        <div class="listItem">
+	        	<div class="innerCont">
+		            <i class="icon-trash oln"></i>
+		            List item 9
+	        	</div>
+	            <div class="innerMask">
 	            </div>
 	        </div>
 	    </div>
@@ -88,16 +101,16 @@
     <div id=\'listCont\'>
         <div class=\'listItem\'>
             List item
-            <div class=\'innerMask left\'>
+            <div class=\'inner left\'>
             </div>
-            <div class=\'innerMask right\'>
+            <div class=\'inner right\'>
             </div>
         </div>
         <div class=\'listItem\'>
             List item
-            <div class=\'innerMask left\'>
+            <div class=\'inner left\'>
             </div>
-            <div class=\'innerMask right\'>
+            <div class=\'inner right\'>
             </div>
         </div>
         ...
@@ -126,7 +139,7 @@
 	position: relative;
 }
 
-.listItem .innerMask {
+.listItem .inner {
 	display: none;
 	position: absolute;
 	left: 0;
@@ -136,12 +149,12 @@
 	box-shadow: inset 0 0 4px rgba(0,0,0,0.8);
 }
 
-.listItem.left-item-active .innerMask.left {
+.listItem.left-item-active .inner.left {
 	display: block;
 	background-color: red;
 }
 
-.listItem.right-item-active .innerMask.right {
+.listItem.right-item-active .inner.right {
 	display: block;
 	background-color: green;
 }

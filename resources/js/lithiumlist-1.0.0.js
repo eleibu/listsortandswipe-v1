@@ -75,6 +75,7 @@
 // TODO: Can two lists share the same outerCont (especially if outerCont wraps the whole page)?
 // TODO: In events, replace 'activeIndex' with 'activeItem'?
 // TODO: Check if clone is in correct place even when it has a margin
+// TODO: Say in documentation that childNode can be a textNode
 
 
 // TODO: Will it work with 'window' if we fix the issues (see when outerCont = window.document)?

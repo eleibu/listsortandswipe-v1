@@ -12,6 +12,16 @@
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+
+	div.button-top {
+		text-align: right;
+		font-size: 90%;
+		margin-bottom: 0.4em;
+
+		a:hover, a:active {
+			cursor: pointer;
+		}
+	}
 }
 
 div.section-cont {
@@ -59,7 +69,7 @@ div.section-cont {
 
 	#listCont-buttons {
 		.listItem {
-			.inner {
+			.innerCont {
 				position: relative;
 				text-align: center;
 
@@ -133,7 +143,7 @@ div.section-cont {
 		.listItem {
 			position: relative;
 
-			.inner {
+			.innerMask {
 				display: none;
 				position: absolute;
 				left: 0;
@@ -144,15 +154,64 @@ div.section-cont {
 			}
 		}
 
-		.listItem.left-item-active .inner.left {
+		.listItem.left-item-active .innerMask.left {
 			display: block;
 			background-color: red;
 		}
 
-		.listItem.right-item-active .inner.right {
+		.listItem.right-item-active .innerMask.right {
 			display: block;
 			background-color: green;
 		}
 	}
 }
 
+#outerCont-delete-item {
+	height: 300px;
+	overflow: auto;
+
+	#listCont-delete-item {
+		.listItem {
+			position: relative;
+			max-height: 4em;
+			transition: max-height 200ms ease;
+
+			.innerCont {
+				position: relative;
+
+				i {
+					position: absolute;
+					bottom: 0;
+				}
+
+				i:hover, i:active {
+					cursor: pointer;
+					font-weight: bold;
+				}
+
+				i.icon-trash {
+					right: 0;
+				}
+			}
+
+			.innerMask {
+				display: none;
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				box-shadow: inset 0 0 4px rgba(0,0,0,0.8);
+				background-color: red;
+			}
+		}
+
+		.listItem.left-item-active .innerMask, .listItem.deleting .innerMask {
+			display: block;
+		}
+
+		.listItem.deleting {
+			max-height: 0;
+		}
+	}
+}

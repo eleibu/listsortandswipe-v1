@@ -7,7 +7,7 @@
 	<div id="outerCont-buttons" class="outerCont">
 	    <div id="listCont-buttons" class="listCont">
 	        <div class="listItem">
-	        	<div class="inner">
+	        	<div class="innerCont">
 		            <i class="icon-grab-ui oln"></i>
 		            <i class="icon-arrow-right-circle oln"></i>
 		            <i class="icon-arrow-left-circle oln"></i>
@@ -15,7 +15,7 @@
 	        	</div>
 	        </div>
 	        <div class="listItem">
-	        	<div class="inner">
+	        	<div class="innerCont">
 		            <i class="icon-grab-ui oln"></i>
 		            <i class="icon-arrow-right-circle oln"></i>
 		            <i class="icon-arrow-left-circle oln"></i>
@@ -23,7 +23,7 @@
 	        	</div>
 	        </div>
 	        <div class="listItem">
-	        	<div class="inner">
+	        	<div class="innerCont">
 		            <i class="icon-grab-ui oln"></i>
 		            <i class="icon-arrow-right-circle oln"></i>
 		            <i class="icon-arrow-left-circle oln"></i>
@@ -31,7 +31,7 @@
 	        	</div>
 	        </div>
 	        <div class="listItem">
-	        	<div class="inner">
+	        	<div class="innerCont">
 		            <i class="icon-grab-ui oln"></i>
 		            <i class="icon-arrow-right-circle oln"></i>
 		            <i class="icon-arrow-left-circle oln"></i>
@@ -39,7 +39,7 @@
 	        	</div>
 	        </div>
 	        <div class="listItem">
-	        	<div class="inner">
+	        	<div class="innerCont">
 		            <i class="icon-grab-ui oln"></i>
 		            <i class="icon-arrow-right-circle oln"></i>
 		            <i class="icon-arrow-left-circle oln"></i>
@@ -47,7 +47,7 @@
 	        	</div>
 	        </div>
 	        <div class="listItem">
-	        	<div class="inner">
+	        	<div class="innerCont">
 		            <i class="icon-grab-ui oln"></i>
 		            <i class="icon-arrow-right-circle oln"></i>
 		            <i class="icon-arrow-left-circle oln"></i>
@@ -55,7 +55,7 @@
 	        	</div>
 	        </div>
 	        <div class="listItem">
-	        	<div class="inner">
+	        	<div class="innerCont">
 		            <i class="icon-grab-ui oln"></i>
 		            <i class="icon-arrow-right-circle oln"></i>
 		            <i class="icon-arrow-left-circle oln"></i>
@@ -63,7 +63,7 @@
 	        	</div>
 	        </div>
 	        <div class="listItem">
-	        	<div class="inner">
+	        	<div class="innerCont">
 		            <i class="icon-grab-ui oln"></i>
 		            <i class="icon-arrow-right-circle oln"></i>
 		            <i class="icon-arrow-left-circle oln"></i>
@@ -71,7 +71,7 @@
 	        	</div>
 	        </div>
 	        <div class="listItem">
-	        	<div class="inner">
+	        	<div class="innerCont">
 		            <i class="icon-grab-ui oln"></i>
 		            <i class="icon-arrow-right-circle oln"></i>
 		            <i class="icon-arrow-left-circle oln"></i>
@@ -79,7 +79,7 @@
 	        	</div>
 	        </div>
 	        <div class="listItem">
-	        	<div class="inner">
+	        	<div class="innerCont">
 		            <i class="icon-grab-ui oln"></i>
 		            <i class="icon-arrow-right-circle oln"></i>
 		            <i class="icon-arrow-left-circle oln"></i>
@@ -97,7 +97,7 @@
 <pre class="line-numbers"><code class="language-markup">{{'<div id=\'outerCont\'>
     <div id=\'listCont\'>
         <div class=\'listItem\'>
-        	<div class=\'inner\'>
+        	<div class=\'innerCont\'>
 	            <i class=\'icon-grab-ui oln\'></i>
 	            <i class=\'icon-arrow-right-circle oln\'></i>
 	            <i class=\'icon-arrow-left-circle oln\'></i>
@@ -105,7 +105,7 @@
         	</div>
         </div>
         <div class=\'listItem\'>
-        	<div class=\'inner\'>
+        	<div class=\'innerCont\'>
 	            <i class=\'icon-grab-ui oln\'></i>
 	            <i class=\'icon-arrow-right-circle oln\'></i>
 	            <i class=\'icon-arrow-left-circle oln\'></i>
@@ -137,7 +137,7 @@
 	border-bottom: 1px solid #DDDDDD;
 }
 
-.inner {
+.innerCont {
 	position: relative;
 	text-align: center;
 }
