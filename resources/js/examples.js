@@ -144,14 +144,14 @@ if (outerContDeleteItem && listContDeleteItem) {
         	rightEnabled: false,
         	leftButtonClass: 'icon-trash',
 		    leftMasks: [],
-	    	onLeftEnd: function(instance, activeIndex, didSlideOut) {
+	    	onLeftEnd: function(instance, index, didSlideOut) {
 	    		if (didSlideOut) {
 		    		var items = instance.listCont.getElementsByClassName(instance.listItemClass);
-		    		var origLength = items[activeIndex].className.length;
-		    		items[activeIndex].className = items[activeIndex].className + ' deleting';
+		    		var origLength = items[index].className.length;
+		    		items[index].className = items[index].className + ' deleting';
 		    		setTimeout(function() {
-		    			items[activeIndex].className = items[activeIndex].className.substr(0, origLength);
-		    			instance.listCont.removeChild(items[activeIndex]);
+		    			items[index].className = items[index].className.substr(0, origLength);
+		    			instance.listCont.removeChild(items[index]);
 		    		}, 200);
 	    		}
 	    	}
@@ -159,5 +159,38 @@ if (outerContDeleteItem && listContDeleteItem) {
     );
 }
 
+var outerContDetachFromList = document.getElementById('outerCont-detach-from-list');
+var listContDetachFromList = document.getElementById('listCont-detach-from-list');
+var aDetach = document.getElementById('a-detach');
+var aAttach = document.getElementById('a-attach');
+
+if (outerContDetachFromList && listContDetachFromList && aDetach && aAttach) {
+	attachToList();
+	aDetach.addEventListener("click", function() {
+		detachFromList();
+		aDetach.style.display = 'none';
+		aAttach.style.display = 'inline';
+	});
+	aAttach.addEventListener("click", function() {
+		attachToList();
+		aDetach.style.display = 'inline';
+		aAttach.style.display = 'none';
+	});
+}
+
+function attachToList() {
+	outerContDetachFromList.style.border = '1px solid #777777';
+    lithiumlist.attachToList(
+        '123456789',
+        outerContDetachFromList,
+        listContDetachFromList,
+        'listItem'
+    );
+}
+
+function detachFromList() {
+	outerContDetachFromList.style.border = '1px solid #CCCCCC';
+	lithiumlist.detachFromList(listContDetachFromList);
+}
 
 

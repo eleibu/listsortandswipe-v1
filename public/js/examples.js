@@ -18683,18 +18683,47 @@ if (outerContDeleteItem && listContDeleteItem) {
         rightEnabled: false,
         leftButtonClass: 'icon-trash',
         leftMasks: [],
-        onLeftEnd: function onLeftEnd(instance, activeIndex, didSlideOut) {
+        onLeftEnd: function onLeftEnd(instance, index, didSlideOut) {
             if (didSlideOut) {
                 var items = instance.listCont.getElementsByClassName(instance.listItemClass);
-                var origLength = items[activeIndex].className.length;
-                items[activeIndex].className = items[activeIndex].className + ' deleting';
+                var origLength = items[index].className.length;
+                items[index].className = items[index].className + ' deleting';
                 setTimeout(function () {
-                    items[activeIndex].className = items[activeIndex].className.substr(0, origLength);
-                    instance.listCont.removeChild(items[activeIndex]);
+                    items[index].className = items[index].className.substr(0, origLength);
+                    instance.listCont.removeChild(items[index]);
                 }, 200);
             }
         }
     });
+}
+
+var outerContDetachFromList = document.getElementById('outerCont-detach-from-list');
+var listContDetachFromList = document.getElementById('listCont-detach-from-list');
+var aDetach = document.getElementById('a-detach');
+var aAttach = document.getElementById('a-attach');
+
+if (outerContDetachFromList && listContDetachFromList && aDetach && aAttach) {
+    attachToList();
+    aDetach.addEventListener("click", function () {
+        detachFromList();
+        aDetach.style.display = 'none';
+        aAttach.style.display = 'inline';
+    });
+    aAttach.addEventListener("click", function () {
+        attachToList();
+        aDetach.style.display = 'inline';
+        aAttach.style.display = 'none';
+    });
+}
+
+function attachToList() {
+    outerContDetachFromList.style.border = '1px solid #777777';
+    __WEBPACK_IMPORTED_MODULE_2__lithiumlist_1_0_0_js__["a" /* lithiumlist */].attachToList('123456789', outerContDetachFromList, listContDetachFromList, 'listItem');
+}
+
+function detachFromList() {
+    outerContDetachFromList.style.border = '1px solid #CCCCCC';
+    __WEBPACK_IMPORTED_MODULE_2__lithiumlist_1_0_0_js__["a" /* lithiumlist */].detachFromList(listContDetachFromList);
 }
 
 /***/ }),
@@ -18958,7 +18987,7 @@ var lithiumlist = function () {
 			'listCont': listCont,
 			'listItemClass': listItemClass,
 			'props': props,
-			'temp': getEmptyTemp()
+			'temp': getNewTemp()
 		};
 
 		instances.push(instance);
@@ -19801,7 +19830,7 @@ var lithiumlist = function () {
 			}
 		}
 
-		instance.temp = getEmptyTemp();
+		instance.temp = getNewTemp(instance.temp);
 	};
 
 	var sortEnd = function sortEnd(instance) {
@@ -19833,7 +19862,7 @@ var lithiumlist = function () {
 			instance.props.onSortEnd(getReturnInstance(instance), instance.temp.origIndex, instance.temp.activeIndex);
 		}
 
-		instance.temp = getEmptyTemp();
+		instance.temp = getNewTemp(instance.temp);
 	};
 
 	var destroyTempDivs = function destroyTempDivs(instance) {
@@ -19916,8 +19945,8 @@ var lithiumlist = function () {
 		}
 	};
 
-	var getEmptyTemp = function getEmptyTemp() {
-		return {
+	var getNewTemp = function getNewTemp(temp) {
+		var newTemp = {
 			'items': [],
 			'moveType': null,
 			'ignoreClicks': false,
@@ -19936,14 +19965,21 @@ var lithiumlist = function () {
 			'outerOverhang': 0,
 			'scrollInterval': null,
 			'origouterContOverflow': null,
-			'funcOnScroll': null,
-			'funcMouseDown': null,
-			'funcTouchStart': null,
 			'funcMouseMove': null,
 			'funcMouseUp': null,
 			'funcTouchMove': null,
 			'funcTouchEnd': null
 		};
+		if (temp) {
+			newTemp.funcOnScroll = temp.funcOnScroll;
+			newTemp.funcMouseDown = temp.funcMouseDown;
+			newTemp.funcTouchStart = temp.funcTouchStart;
+		} else {
+			newTemp.funcOnScroll = null;
+			newTemp.funcMouseDown = null;
+			newTemp.funcTouchStart = null;
+		}
+		return newTemp;
 	};
 
 	// utility functions

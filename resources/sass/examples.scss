@@ -174,7 +174,6 @@ div.section-cont {
 		.listItem {
 			position: relative;
 			max-height: 4em;
-			transition: max-height 200ms ease;
 
 			.innerCont {
 				position: relative;
@@ -211,7 +210,13 @@ div.section-cont {
 		}
 
 		.listItem.deleting {
+			transition: max-height 200ms ease;
 			max-height: 0;
 		}
 	}
+}
+
+#outerCont-detach-from-list {
+	height: 300px;
+	overflow: auto;
 }

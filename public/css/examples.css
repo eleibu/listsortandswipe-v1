@@ -488,8 +488,6 @@ div.section-cont div.title-codeblock {
 #outerCont-delete-item #listCont-delete-item .listItem {
   position: relative;
   max-height: 4em;
-  -webkit-transition: max-height 200ms ease;
-  transition: max-height 200ms ease;
 }
 
 #outerCont-delete-item #listCont-delete-item .listItem .innerCont {
@@ -527,5 +525,12 @@ div.section-cont div.title-codeblock {
 }
 
 #outerCont-delete-item #listCont-delete-item .listItem.deleting {
+  -webkit-transition: max-height 200ms ease;
+  transition: max-height 200ms ease;
   max-height: 0;
+}
+
+#outerCont-detach-from-list {
+  height: 300px;
+  overflow: auto;
 }

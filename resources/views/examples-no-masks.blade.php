@@ -112,7 +112,7 @@
 <pre class="line-numbers"><code class="language-css">#outerCont {
 	height: 300px;
 	overflow: auto;
-	border: 1px solid #444444;
+	border: 1px solid #777777;
 }
 
 #listCont {

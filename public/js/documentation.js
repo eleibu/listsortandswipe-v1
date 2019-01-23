@@ -19073,7 +19073,7 @@ var lithiumlist = function () {
 			'listCont': listCont,
 			'listItemClass': listItemClass,
 			'props': props,
-			'temp': getEmptyTemp()
+			'temp': getNewTemp()
 		};
 
 		instances.push(instance);
@@ -19916,7 +19916,7 @@ var lithiumlist = function () {
 			}
 		}
 
-		instance.temp = getEmptyTemp();
+		instance.temp = getNewTemp(instance.temp);
 	};
 
 	var sortEnd = function sortEnd(instance) {
@@ -19948,7 +19948,7 @@ var lithiumlist = function () {
 			instance.props.onSortEnd(getReturnInstance(instance), instance.temp.origIndex, instance.temp.activeIndex);
 		}
 
-		instance.temp = getEmptyTemp();
+		instance.temp = getNewTemp(instance.temp);
 	};
 
 	var destroyTempDivs = function destroyTempDivs(instance) {
@@ -20031,8 +20031,8 @@ var lithiumlist = function () {
 		}
 	};
 
-	var getEmptyTemp = function getEmptyTemp() {
-		return {
+	var getNewTemp = function getNewTemp(temp) {
+		var newTemp = {
 			'items': [],
 			'moveType': null,
 			'ignoreClicks': false,
@@ -20051,14 +20051,21 @@ var lithiumlist = function () {
 			'outerOverhang': 0,
 			'scrollInterval': null,
 			'origouterContOverflow': null,
-			'funcOnScroll': null,
-			'funcMouseDown': null,
-			'funcTouchStart': null,
 			'funcMouseMove': null,
 			'funcMouseUp': null,
 			'funcTouchMove': null,
 			'funcTouchEnd': null
 		};
+		if (temp) {
+			newTemp.funcOnScroll = temp.funcOnScroll;
+			newTemp.funcMouseDown = temp.funcMouseDown;
+			newTemp.funcTouchStart = temp.funcTouchStart;
+		} else {
+			newTemp.funcOnScroll = null;
+			newTemp.funcMouseDown = null;
+			newTemp.funcTouchStart = null;
+		}
+		return newTemp;
 	};
 
 	// utility functions

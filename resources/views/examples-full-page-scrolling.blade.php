@@ -131,7 +131,7 @@
 }
 
 #outerCont {
-	border: 1px solid #444444;
+	border: 1px solid #777777;
 }
 
 #listCont {
