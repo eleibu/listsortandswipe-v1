@@ -257,3 +257,58 @@ div.section-cont {
 	height: 300px;
 	overflow: auto;
 }
+
+#reactTopCont {
+	margin-bottom: 1em;
+
+	div.inputCont {
+		input {
+			font-family: 'Roboto';
+			box-sizing: border-box;
+			width: 100%;
+			padding: 0.6em;
+			font-size: 100%;
+			-webkit-appearance: none;
+			outline: none;
+			border: 1px solid #CCCCCC;
+		}
+	}
+
+	div.button {
+		div.button-word-cont {
+
+		}
+	}
+}
+
+#outerCont-react {
+	height: 300px;
+	overflow: auto;
+
+	#listCont-react {
+		.listItem {
+			.innerCont {
+				position: relative;
+				padding-left: 2em;
+
+				i {
+					position: absolute;
+					bottom: 0;
+				}
+
+				i:hover, i:active {
+					cursor: pointer;
+					font-weight: bold;
+				}
+
+				i.icon-grab-ui {
+					left: 0;
+				}
+
+				i.icon-trash {
+					right: 0;
+				}
+			}
+		}
+	}
+}

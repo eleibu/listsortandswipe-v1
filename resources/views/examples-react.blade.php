@@ -3,44 +3,13 @@
 @endsection
 
 @section('jsLinks')
-    <script defer src="{{ url(mix('/js/examples.js')) }}"></script>
+    <script defer src="{{ url(mix('/js/examples-react.js')) }}"></script>
 @endsection
 
 <br/><br/>
 <div id="div-diag">
-	<div id="outerCont-super-simple" class="outerCont">
-	    <div id="listCont-super-simple"  class="listCont">
-	        <div class="listItem">
-	            List item
-	        </div>
-	        <div class="listItem">
-	            List item
-	        </div>
-	        <div class="listItem">
-	            List item
-	        </div>
-	        <div class="listItem">
-	            List item
-	        </div>
-	        <div class="listItem">
-	            List item
-	        </div>
-	        <div class="listItem">
-	            List item
-	        </div>
-	        <div class="listItem">
-	            List item
-	        </div>
-	        <div class="listItem">
-	            List item
-	        </div>
-	        <div class="listItem">
-	            List item
-	        </div>
-	        <div class="listItem">
-	            List item
-	        </div>
-	    </div>
+	<div id="reactTarget">
+
 	</div>
 </div>
 <br/><br/>

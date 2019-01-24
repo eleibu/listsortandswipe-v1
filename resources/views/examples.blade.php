@@ -2,10 +2,6 @@
 
 @section('pageTitle', $selectedpage['pageTitle'])
 
-@section('jsLinks')
-    <script defer src="{{ url(mix('/js/examples.js')) }}"></script>
-@endsection
-
 @section('content')
 	<br/><br/>
     <div class="sitecont-outer">

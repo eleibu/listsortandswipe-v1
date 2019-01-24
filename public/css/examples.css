@@ -569,3 +569,47 @@ div.section-cont div.title-codeblock {
   height: 300px;
   overflow: auto;
 }
+
+#reactTopCont {
+  margin-bottom: 1em;
+}
+
+#reactTopCont div.inputCont input {
+  font-family: 'Roboto';
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+  padding: 0.6em;
+  font-size: 100%;
+  -webkit-appearance: none;
+  outline: none;
+  border: 1px solid #CCCCCC;
+}
+
+#outerCont-react {
+  height: 300px;
+  overflow: auto;
+}
+
+#outerCont-react #listCont-react .listItem .innerCont {
+  position: relative;
+  padding-left: 2em;
+}
+
+#outerCont-react #listCont-react .listItem .innerCont i {
+  position: absolute;
+  bottom: 0;
+}
+
+#outerCont-react #listCont-react .listItem .innerCont i:hover, #outerCont-react #listCont-react .listItem .innerCont i:active {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#outerCont-react #listCont-react .listItem .innerCont i.icon-grab-ui {
+  left: 0;
+}
+
+#outerCont-react #listCont-react .listItem .innerCont i.icon-trash {
+  right: 0;
+}

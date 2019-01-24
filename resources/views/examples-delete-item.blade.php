@@ -2,6 +2,10 @@
     <link rel="stylesheet" href="{{ url(mix('/css/examples.css')) }}">
 @endsection
 
+@section('jsLinks')
+    <script defer src="{{ url(mix('/js/examples.js')) }}"></script>
+@endsection
+
 <br/><br/>
 <div id="div-diag">
 	<div class="button-top">
