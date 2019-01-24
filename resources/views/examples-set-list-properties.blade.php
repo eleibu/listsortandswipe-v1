@@ -5,11 +5,11 @@
 <br/><br/>
 <div id="div-diag">
 	<div class="button-top">
-		<a id="a-detach" title="Detach">Detach</a>
-		<a id="a-attach" title="Attach" style="display: none;">Attach</a>
+		<span id="span-enabled">Left/right sliding is enabled (<a id="a-turn-off" title="turn off">turn off</a>)</span>
+		<span id="span-disabled" style="display: none;">Left/right sliding is disabled (<a id="a-turn-on" title="turn on">turn on</a>)</span>
 	</div>
-	<div id="outerCont-detach-from-list" class="outerCont">
-	    <div id="listCont-detach-from-list"  class="listCont">
+	<div id="outerCont-set-list-properties" class="outerCont">
+	    <div id="listCont-set-list-properties"  class="listCont">
 	        <div class="listItem">
 	            List item
 	        </div>
@@ -87,29 +87,38 @@
 	<div class="title-codeblock">
 	    JS:
 	</div>
-<pre class="line-numbers"><code class="language-js">function attachToList() {
-    lithiumlist.attachToList(
-	    &#39;123456789&#39;,
-	    document.getElementById(&#39;outerCont&#39;),
-	    document.getElementById(&#39;listCont&#39;),
-	    &#39;listItem&#39;
-    );
-}
+<pre class="line-numbers"><code class="language-js">lithiumlist.attachToList(
+    &#39;123456789&#39;,
+    document.getElementById(&#39;outerCont&#39;),
+    document.getElementById(&#39;listCont&#39;),
+    &#39;listItem&#39;,
+    {
+    	leftEnabled: true,
+    	rightEnabled: true,
+    	sortEnabled: false
+    }
+);
 
-function detachFromList() {
-	lithiumlist.detachFromList(document.getElementById(&#39;listCont&#39;));
-}
-
-attachToList();
-
-var aDetach = document.getElementById('a-detach');
-aDetach.addEventListener(&#39;click&#39;, function() {
-	detachFromList();
+var aTurnOff = document.getElementById(&#39;a-turn-off&#39;);
+aTurnOff.addEventListener(&#39;click&#39;, function() {
+	lithiumlist.setListProperties(
+		listContSetListProperties,
+		{
+	    	leftEnabled: false,
+	    	rightEnabled: false,
+		}
+	);
 });
 
-var aAttach = document.getElementById('a-attach');
-aAttach.addEventListener(&#39;click&#39;, function() {
-	attachToList();
+var aTurnOn = document.getElementById(&#39;a-turn-on&#39;);
+aTurnOn.addEventListener(&#39;click&#39;, function() {
+	lithiumlist.setListProperties(
+		listContSetListProperties,
+		{
+	    	leftEnabled: true,
+	    	rightEnabled: true,
+		}
+	);
 });
 </code></pre>
 </div>

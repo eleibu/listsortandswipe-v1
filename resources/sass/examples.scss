@@ -14,6 +14,7 @@
 	user-select: none;
 
 	div.button-top {
+		position: relative;
 		text-align: right;
 		font-size: 90%;
 		margin-bottom: 0.4em;
@@ -21,6 +22,31 @@
 		a:hover, a:active {
 			cursor: pointer;
 		}
+
+		div.header-middle {
+			margin: 0 3em;
+			text-align: center;
+		}
+
+		a.trigger {
+			position: absolute;
+			bottom: 0;
+			font-size: 120%;
+		}
+
+		a.trigger:hover {
+			text-decoration: none;
+			font-weight: bold;
+		}
+
+		a.trigger.left {
+			left: 0;
+		}
+
+		a.trigger.right {
+			right: 0;
+		}
+
 	}
 }
 
@@ -217,6 +243,17 @@ div.section-cont {
 }
 
 #outerCont-detach-from-list {
+	height: 300px;
+	overflow: auto;
+}
+
+#outerCont-set-list-properties {
+	height: 300px;
+	overflow: auto;
+}
+
+
+#outerCont-trigger-leftandright {
 	height: 300px;
 	overflow: auto;
 }

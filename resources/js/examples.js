@@ -7,6 +7,7 @@ import { lithiumlist } from './lithiumlist-1.0.0.js';
 import Prism from 'prismjs';
 Prism.highlightAll();
 
+// super simple
 var outerContSuperSimple = document.getElementById('outerCont-super-simple');
 var listContSuperSimple = document.getElementById('listCont-super-simple');
 if (outerContSuperSimple && listContSuperSimple) {
@@ -18,6 +19,7 @@ if (outerContSuperSimple && listContSuperSimple) {
     );
 }
 
+// page scrolling
 var outerContFullPageScrolling = document.getElementById('pageWrapper');
 var listContFullPageScrolling = document.getElementById('listCont-full-page-scrolling');
 if (outerContFullPageScrolling && listContFullPageScrolling) {
@@ -29,6 +31,7 @@ if (outerContFullPageScrolling && listContFullPageScrolling) {
     );
 }
 
+// buttons
 var outerContButtons = document.getElementById('outerCont-buttons');
 var listContButtons = document.getElementById('listCont-buttons');
 if (outerContButtons && listContButtons) {
@@ -45,6 +48,7 @@ if (outerContButtons && listContButtons) {
     );
 }
 
+// onSortEnd
 var outerContOnSortEnd = document.getElementById('outerCont-on-sort-end');
 var listContOnSortEnd = document.getElementById('listCont-on-sort-end');
 if (outerContOnSortEnd && listContOnSortEnd) {
@@ -74,6 +78,7 @@ if (outerContOnSortEnd && listContOnSortEnd) {
     );
 }
 
+// background labels
 var outerContBackgroundLabels = document.getElementById('outerCont-background-labels');
 var listContBackgroundLabels = document.getElementById('listCont-background-labels');
 if (outerContBackgroundLabels && listContBackgroundLabels) {
@@ -104,6 +109,7 @@ if (outerContBackgroundLabels && listContBackgroundLabels) {
     );
 }
 
+// no masks
 var outerContNoMasks = document.getElementById('outerCont-no-masks');
 var listContNoMasks = document.getElementById('listCont-no-masks');
 if (outerContNoMasks && listContNoMasks) {
@@ -120,6 +126,7 @@ if (outerContNoMasks && listContNoMasks) {
     );
 }
 
+// delete item
 var outerContDeleteItem = document.getElementById('outerCont-delete-item');
 var listContDeleteItem = document.getElementById('listCont-delete-item');
 if (outerContDeleteItem && listContDeleteItem) {
@@ -159,6 +166,7 @@ if (outerContDeleteItem && listContDeleteItem) {
     );
 }
 
+// detach from list
 var outerContDetachFromList = document.getElementById('outerCont-detach-from-list');
 var listContDetachFromList = document.getElementById('listCont-detach-from-list');
 var aDetach = document.getElementById('a-detach');
@@ -192,5 +200,102 @@ function detachFromList() {
 	outerContDetachFromList.style.border = '1px solid #CCCCCC';
 	lithiumlist.detachFromList(listContDetachFromList);
 }
+
+// set list properties
+var outerContSetListProperties = document.getElementById('outerCont-set-list-properties');
+var listContSetListProperties = document.getElementById('listCont-set-list-properties');
+var spanEnabled = document.getElementById('span-enabled');
+var spanDisabled = document.getElementById('span-disabled');
+var aTurnOff = document.getElementById('a-turn-off');
+var aTurnOn = document.getElementById('a-turn-on');
+
+if (outerContSetListProperties && listContSetListProperties && spanEnabled && spanDisabled && aTurnOff && aTurnOn) {
+	lithiumlist.attachToList(
+	    '123456789',
+	    outerContSetListProperties,
+	    listContSetListProperties,
+	    'listItem',
+	    {
+	    	leftEnabled: true,
+	    	rightEnabled: true,
+	    	sortEnabled: false
+	    }
+	);
+
+	aTurnOff.addEventListener("click", function() {
+		outerContSetListProperties.style.border = '1px solid #CCCCCC';
+		lithiumlist.setListProperties(
+			listContSetListProperties,
+			{
+		    	leftEnabled: false,
+		    	rightEnabled: false,
+			}
+		);
+		spanEnabled.style.display = 'none';
+		spanDisabled.style.display = 'inline';
+	});
+	aTurnOn.addEventListener("click", function() {
+		outerContSetListProperties.style.border = '1px solid #777777';
+		lithiumlist.setListProperties(
+			listContSetListProperties,
+			{
+		    	leftEnabled: true,
+		    	rightEnabled: true,
+			}
+		);
+		spanEnabled.style.display = 'inline';
+		spanDisabled.style.display = 'none';
+
+	});
+}
+
+
+// trigger left and right
+var outerContTriggerLeftAndRight = document.getElementById('outerCont-trigger-leftandright');
+var listContTriggerLeftAndRight = document.getElementById('listCont-trigger-leftandright');
+var selectListItem = document.getElementById('select-listItem');
+var aTriggerLeft = document.getElementById('a-trigger-left');
+var aTriggerRight = document.getElementById('a-trigger-right');
+
+if (outerContTriggerLeftAndRight && listContTriggerLeftAndRight && selectListItem && aTriggerLeft && aTriggerRight) {
+	lithiumlist.attachToList(
+	    '123456789',
+	    outerContTriggerLeftAndRight,
+	    listContTriggerLeftAndRight,
+	    'listItem',
+	    {
+	    	sortEnabled: false,
+	    	leftBySwipe: false,
+	    	rightBySwipe: false
+	    }
+	);
+
+	selectListItem.addEventListener('change', function() {
+		var items = listContTriggerLeftAndRight.getElementsByClassName('listItem');
+		for (var i = 0, len = items.length; i < len; i++) {
+			items[i].style.backgroundColor = '#FFFFFF';
+		}
+		items[selectListItem.options[selectListItem.selectedIndex].value].style.backgroundColor = '#FFFFCC';
+	});
+
+	aTriggerLeft.addEventListener("click", function() {
+		var index = selectListItem.options[selectListItem.selectedIndex].value;
+		lithiumlist.triggerLeft(
+			listContTriggerLeftAndRight,
+			index
+		);
+	});
+
+	aTriggerRight.addEventListener("click", function() {
+		var index = selectListItem.options[selectListItem.selectedIndex].value;
+		lithiumlist.triggerRight(
+			listContTriggerLeftAndRight,
+			index
+		);
+	});
+
+}
+
+
 
 
