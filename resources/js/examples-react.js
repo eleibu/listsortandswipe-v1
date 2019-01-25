@@ -23,6 +23,7 @@ class OuterCont extends React.Component {
         	]
         };
         this.onSortEnd = this.onSortEnd.bind(this);
+        this.onLeftEnd = this.onLeftEnd.bind(this);
     }
     componentDidMount() {
 	    lithiumlist.attachToList(
@@ -34,7 +35,8 @@ class OuterCont extends React.Component {
 	        	sortDragHandleClass: 'icon-grab-ui',
 	        	leftButtonClass: 'icon-trash',
 	        	rightEnabled: false,
-	        	onSortEnd: this.onSortEnd
+	        	onSortEnd: this.onSortEnd,
+	        	onLeftEnd: this.onLeftEnd
 	        }
 	    );
     }
@@ -56,19 +58,47 @@ class OuterCont extends React.Component {
 	        });
         }
 	}
+	onLeftEnd(instance, index, didSlideOut) {
+		if (didSlideOut) {
+			const newListItems = this.state.listItems.slice(0);
+			newListItems.splice(index, 1);
+	        this.setState({
+	           listItems: newListItems
+	        });
+		}
+	}
+    onKeyDown(e) {
+    	if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {	// enter key
+    		this.addListItem();
+    	}
+    }
+    onAddItemClick() {
+    	this.addListItem();
+    }
+	addListItem() {
+		if (this.input.value && this.input.value.length > 0) {
+			const newListItems = this.state.listItems.slice(0);
+			newListItems.unshift({'title' : this.input.value});
+	        this.setState({
+	           listItems: newListItems
+	        });			
+			this.input.value = '';
+		}
+	}
     render() {
         return (
         	<React.Fragment>
         		<div id="reactTopCont">
         			<div className="inputCont">
-        				<input type="text" />
+        				<input type="text" ref={(input) => { this.input = input; }} onKeyDown={(e) => this.onKeyDown(e)} placeholder="New item..." />
         			</div>
         			<div className="button">
-        				<div className="button-word-cont">
-        					Add item
+        				<div className="button-word-cont grey" onClick={() => this.onAddItemClick()}>
+        					ADD ITEM
         				</div>
         			</div>
         		</div>
+        		<br/>
 	        	<div ref={(div) => { this.outerCont = div; }} id="outerCont-react" className="outerCont">
 	        		<div ref={(div) => { this.listCont = div; }} id="listCont-react" className="listCont">
 	        			{this.state.listItems.map((listItem, index) => (
@@ -99,6 +129,6 @@ class ListItem extends React.Component {
 }
 
 ReactDOM.render(
-	<OuterCont/>,
+	<OuterCont />,
 	document.getElementById('reactTarget')
-)
+);

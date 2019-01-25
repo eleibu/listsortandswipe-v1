@@ -17112,6 +17112,7 @@ function sortEnd(instance, origIndex, newIndex) {
 // Make all examples CHANGE the default settings
 // Ensure all links actually link to something (especially in docs.blade.php and demos.blade.php)
 
+// TODO: Include 'hamburger' and 'cross' in font icons
 // TODO: Test setDefaultProperties
 // TODO: hasClass, addClass and removeClass should be able to handle 'mask left' (at the moment they can't) - if not, update docs to say this
 // TODO: Can two lists share the same outerCont (especially if outerCont wraps the whole page)?
@@ -17497,7 +17498,6 @@ var lithiumlist = function () {
 				if (instance.props.sortEnabled && checkClassClicked(e, instance.temp.items[index], instance.props.sortDragHandleClass)) {
 					setTimeout(function () {
 						initItemMove(e, index, instance);
-						setItems(instance);
 						activateSort(instance);
 					}, 1); // delay allows itemCont to show :hover classes
 				} else if (instance.props.leftEnabled && checkClassClicked(e, instance.temp.items[index], instance.props.leftButtonClass)) {
@@ -17637,7 +17637,7 @@ var lithiumlist = function () {
 		if (instance.props.sortEnabled && instance.props.sortByLongPress || instance.props.leftEnabled && instance.props.leftBySwipe || instance.props.rightEnabled && instance.props.rightBySwipe) {
 			initItemMove(e, index, instance);
 			setItems(instance);
-			if (instance.props.sortEnabled && instance.props.sortByLongPress && instance.temp.items.length > 1) {
+			if (instance.props.sortEnabled && instance.props.sortByLongPress) {
 				instance.temp.sortDelayTimer = setTimeout(function () {
 					activateSort(instance);
 				}, instance.props.sortMoveStartDelay);
@@ -19118,13 +19118,21 @@ var pageMenuShowHide = function () {
 
 /***/ }),
 
+/***/ "./resources/sass/why-lithium-list.scss":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__("./resources/js/home.js");
 __webpack_require__("./resources/sass/home.scss");
 __webpack_require__("./resources/sass/documentation.scss");
-module.exports = __webpack_require__("./resources/sass/examples.scss");
+__webpack_require__("./resources/sass/examples.scss");
+module.exports = __webpack_require__("./resources/sass/why-lithium-list.scss");
 
 
 /***/ })

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -42010,31 +42010,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () {
-    function defineProperties(target, props) {
-        for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-        }
-    }return function (Constructor, protoProps, staticProps) {
-        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-    };
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+  };
 }();
 
 function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-    }
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
 }
 
 function _possibleConstructorReturn(self, call) {
-    if (!self) {
-        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
 }
 
 function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
-    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 }
 
 __webpack_require__("./node_modules/bootstrap/dist/js/bootstrap.js");
@@ -42057,87 +42057,131 @@ __webpack_require__("./node_modules/bootstrap/dist/js/bootstrap.js");
 __WEBPACK_IMPORTED_MODULE_5_prismjs_components_prism_core___default.a.highlightAll();
 
 var OuterCont = function (_React$Component) {
-    _inherits(OuterCont, _React$Component);
+  _inherits(OuterCont, _React$Component);
 
-    function OuterCont(props) {
-        _classCallCheck(this, OuterCont);
+  function OuterCont(props) {
+    _classCallCheck(this, OuterCont);
 
-        var _this = _possibleConstructorReturn(this, (OuterCont.__proto__ || Object.getPrototypeOf(OuterCont)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (OuterCont.__proto__ || Object.getPrototypeOf(OuterCont)).call(this, props));
 
-        _this.state = {
-            listItems: [{ 'title': 'List item 0' }, { 'title': 'List item 1' }, { 'title': 'List item 2' }, { 'title': 'List item 3' }, { 'title': 'List item 4' }, { 'title': 'List item 5' }]
-        };
-        _this.onSortEnd = _this.onSortEnd.bind(_this);
-        return _this;
+    _this.state = {
+      listItems: [{ 'title': 'List item 0' }, { 'title': 'List item 1' }, { 'title': 'List item 2' }, { 'title': 'List item 3' }, { 'title': 'List item 4' }, { 'title': 'List item 5' }]
+    };
+    _this.onSortEnd = _this.onSortEnd.bind(_this);
+    _this.onLeftEnd = _this.onLeftEnd.bind(_this);
+    return _this;
+  }
+
+  _createClass(OuterCont, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      __WEBPACK_IMPORTED_MODULE_4__lithiumlist_1_0_0_js__["a" /* lithiumlist */].attachToList('123456789', this.outerCont, this.listCont, 'listItem', {
+        sortDragHandleClass: 'icon-grab-ui',
+        leftButtonClass: 'icon-trash',
+        rightEnabled: false,
+        onSortEnd: this.onSortEnd,
+        onLeftEnd: this.onLeftEnd
+      });
     }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      __WEBPACK_IMPORTED_MODULE_4__lithiumlist_1_0_0_js__["a" /* lithiumlist */].detachFromList(this.listCont);
+    }
+  }, {
+    key: 'onSortEnd',
+    value: function onSortEnd(instance, oldIndex, newIndex) {
+      if (oldIndex != newIndex) {
+        var newListItems = this.state.listItems.slice(0);
+        if (newIndex >= newListItems.length) {
+          var i = newIndex - newListItems.length;
+          while (i-- + 1) {
+            newListItems.push(undefined);
+          }
+        }
+        newListItems.splice(newIndex, 0, newListItems.splice(oldIndex, 1)[0]);
+        this.setState({
+          listItems: newListItems
+        });
+      }
+    }
+  }, {
+    key: 'onLeftEnd',
+    value: function onLeftEnd(instance, index, didSlideOut) {
+      if (didSlideOut) {
+        var newListItems = this.state.listItems.slice(0);
+        newListItems.splice(index, 1);
+        this.setState({
+          listItems: newListItems
+        });
+      }
+    }
+  }, {
+    key: 'onKeyDown',
+    value: function onKeyDown(e) {
+      if (e.which && e.which == 13 || e.keyCode && e.keyCode == 13) {
+        // enter key
+        this.addListItem();
+      }
+    }
+  }, {
+    key: 'onAddItemClick',
+    value: function onAddItemClick() {
+      this.addListItem();
+    }
+  }, {
+    key: 'addListItem',
+    value: function addListItem() {
+      if (this.input.value && this.input.value.length > 0) {
+        var newListItems = this.state.listItems.slice(0);
+        newListItems.unshift({ 'title': this.input.value });
+        this.setState({
+          listItems: newListItems
+        });
+        this.input.value = '';
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
 
-    _createClass(OuterCont, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            __WEBPACK_IMPORTED_MODULE_4__lithiumlist_1_0_0_js__["a" /* lithiumlist */].attachToList('123456789', this.outerCont, this.listCont, 'listItem', {
-                sortDragHandleClass: 'icon-grab-ui',
-                leftButtonClass: 'icon-trash',
-                rightEnabled: false,
-                onSortEnd: this.onSortEnd
-            });
-        }
-    }, {
-        key: 'componentWillUnmount',
-        value: function componentWillUnmount() {
-            __WEBPACK_IMPORTED_MODULE_4__lithiumlist_1_0_0_js__["a" /* lithiumlist */].detachFromList(this.listCont);
-        }
-    }, {
-        key: 'onSortEnd',
-        value: function onSortEnd(instance, oldIndex, newIndex) {
-            if (oldIndex != newIndex) {
-                var newListItems = this.state.listItems.slice(0);
-                if (newIndex >= newListItems.length) {
-                    var i = newIndex - newListItems.length;
-                    while (i-- + 1) {
-                        newListItems.push(undefined);
-                    }
-                }
-                newListItems.splice(newIndex, 0, newListItems.splice(oldIndex, 1)[0]);
-                this.setState({
-                    listItems: newListItems
-                });
-            }
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: 'reactTopCont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'inputCont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', ref: function ref(input) {
+          _this2.input = input;
+        }, onKeyDown: function onKeyDown(e) {
+          return _this2.onKeyDown(e);
+        }, placeholder: 'New item...' })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey', onClick: function onClick() {
+          return _this2.onAddItemClick();
+        } }, 'ADD ITEM'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { ref: function ref(div) {
+          _this2.outerCont = div;
+        }, id: 'outerCont-react', className: 'outerCont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { ref: function ref(div) {
+          _this2.listCont = div;
+        }, id: 'listCont-react', className: 'listCont' }, this.state.listItems.map(function (listItem, index) {
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(ListItem, { key: index, title: listItem.title });
+      }))));
+    }
+  }]);
 
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: 'reactTopCont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'inputCont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text' })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont' }, 'Add item'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { ref: function ref(div) {
-                    _this2.outerCont = div;
-                }, id: 'outerCont-react', className: 'outerCont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { ref: function ref(div) {
-                    _this2.listCont = div;
-                }, id: 'listCont-react', className: 'listCont' }, this.state.listItems.map(function (listItem, index) {
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(ListItem, { key: index, title: listItem.title });
-            }))));
-        }
-    }]);
-
-    return OuterCont;
+  return OuterCont;
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
 var ListItem = function (_React$Component2) {
-    _inherits(ListItem, _React$Component2);
+  _inherits(ListItem, _React$Component2);
 
-    function ListItem(props) {
-        _classCallCheck(this, ListItem);
+  function ListItem(props) {
+    _classCallCheck(this, ListItem);
 
-        return _possibleConstructorReturn(this, (ListItem.__proto__ || Object.getPrototypeOf(ListItem)).call(this, props));
+    return _possibleConstructorReturn(this, (ListItem.__proto__ || Object.getPrototypeOf(ListItem)).call(this, props));
+  }
+
+  _createClass(ListItem, [{
+    key: 'render',
+    value: function render() {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'listItem' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'innerCont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'icon-grab-ui oln' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'icon-trash oln' }), this.props.title));
     }
+  }]);
 
-    _createClass(ListItem, [{
-        key: 'render',
-        value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'listItem' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'innerCont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'icon-grab-ui oln' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'icon-trash oln' }), this.props.title));
-        }
-    }]);
-
-    return ListItem;
+  return ListItem;
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
 __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(OuterCont, null), document.getElementById('reactTarget'));
@@ -42218,6 +42262,7 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 // Make all examples CHANGE the default settings
 // Ensure all links actually link to something (especially in docs.blade.php and demos.blade.php)
 
+// TODO: Include 'hamburger' and 'cross' in font icons
 // TODO: Test setDefaultProperties
 // TODO: hasClass, addClass and removeClass should be able to handle 'mask left' (at the moment they can't) - if not, update docs to say this
 // TODO: Can two lists share the same outerCont (especially if outerCont wraps the whole page)?
@@ -42603,7 +42648,6 @@ var lithiumlist = function () {
 				if (instance.props.sortEnabled && checkClassClicked(e, instance.temp.items[index], instance.props.sortDragHandleClass)) {
 					setTimeout(function () {
 						initItemMove(e, index, instance);
-						setItems(instance);
 						activateSort(instance);
 					}, 1); // delay allows itemCont to show :hover classes
 				} else if (instance.props.leftEnabled && checkClassClicked(e, instance.temp.items[index], instance.props.leftButtonClass)) {
@@ -42743,7 +42787,7 @@ var lithiumlist = function () {
 		if (instance.props.sortEnabled && instance.props.sortByLongPress || instance.props.leftEnabled && instance.props.leftBySwipe || instance.props.rightEnabled && instance.props.rightBySwipe) {
 			initItemMove(e, index, instance);
 			setItems(instance);
-			if (instance.props.sortEnabled && instance.props.sortByLongPress && instance.temp.items.length > 1) {
+			if (instance.props.sortEnabled && instance.props.sortByLongPress) {
 				instance.temp.sortDelayTimer = setTimeout(function () {
 					activateSort(instance);
 				}, instance.props.sortMoveStartDelay);
@@ -44203,7 +44247,7 @@ var pageMenuShowHide = function () {
 
 /***/ }),
 
-/***/ 3:
+/***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__("./resources/js/examples-react.js");

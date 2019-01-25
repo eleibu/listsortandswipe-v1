@@ -52,6 +52,7 @@ a.button-word-cont {
 }
 
 .button-word-cont.grey:hover {
+	cursor: pointer;
 	background-color: #F2F2F2;
 	box-shadow: 0 1px 4px 0 #BBBBBB;
 }
@@ -63,6 +64,7 @@ a.button-word-cont {
 }
 
 .button-word-cont.darkblue:hover {
+	cursor: pointer;
 	background-color: #003999;
 	box-shadow: 0 1px 4px 0 #AAAAAA;
 }

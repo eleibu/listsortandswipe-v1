@@ -259,25 +259,22 @@ div.section-cont {
 }
 
 #reactTopCont {
-	margin-bottom: 1em;
-
 	div.inputCont {
+		margin-bottom: 0.4em;
+
 		input {
-			font-family: 'Roboto';
 			box-sizing: border-box;
 			width: 100%;
 			padding: 0.6em;
 			font-size: 100%;
 			-webkit-appearance: none;
 			outline: none;
-			border: 1px solid #CCCCCC;
+			border: 1px solid #AAAAAA;
 		}
 	}
 
 	div.button {
-		div.button-word-cont {
-
-		}
+		font-size: 80%;
 	}
 }
 
@@ -289,11 +286,14 @@ div.section-cont {
 		.listItem {
 			.innerCont {
 				position: relative;
-				padding-left: 2em;
+				padding: 0 2em;
+				overflow: hidden;
+				text-overflow: ellipsis;
 
 				i {
 					position: absolute;
-					bottom: 0;
+					top: 50%;
+					transform: translateY(-50%);
 				}
 
 				i:hover, i:active {

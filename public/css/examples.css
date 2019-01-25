@@ -57,6 +57,7 @@ a.button-word-cont {
 }
 
 .button-word-cont.grey:hover {
+  cursor: pointer;
   background-color: #F2F2F2;
   -webkit-box-shadow: 0 1px 4px 0 #BBBBBB;
           box-shadow: 0 1px 4px 0 #BBBBBB;
@@ -70,6 +71,7 @@ a.button-word-cont {
 }
 
 .button-word-cont.darkblue:hover {
+  cursor: pointer;
   background-color: #003999;
   -webkit-box-shadow: 0 1px 4px 0 #AAAAAA;
           box-shadow: 0 1px 4px 0 #AAAAAA;
@@ -570,12 +572,11 @@ div.section-cont div.title-codeblock {
   overflow: auto;
 }
 
-#reactTopCont {
-  margin-bottom: 1em;
+#reactTopCont div.inputCont {
+  margin-bottom: 0.4em;
 }
 
 #reactTopCont div.inputCont input {
-  font-family: 'Roboto';
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   width: 100%;
@@ -583,7 +584,11 @@ div.section-cont div.title-codeblock {
   font-size: 100%;
   -webkit-appearance: none;
   outline: none;
-  border: 1px solid #CCCCCC;
+  border: 1px solid #AAAAAA;
+}
+
+#reactTopCont div.button {
+  font-size: 80%;
 }
 
 #outerCont-react {
@@ -593,12 +598,16 @@ div.section-cont div.title-codeblock {
 
 #outerCont-react #listCont-react .listItem .innerCont {
   position: relative;
-  padding-left: 2em;
+  padding: 0 2em;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #outerCont-react #listCont-react .listItem .innerCont i {
   position: absolute;
-  bottom: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
 }
 
 #outerCont-react #listCont-react .listItem .innerCont i:hover, #outerCont-react #listCont-react .listItem .innerCont i:active {

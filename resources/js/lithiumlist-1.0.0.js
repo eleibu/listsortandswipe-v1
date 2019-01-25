@@ -70,6 +70,7 @@
 // Make all examples CHANGE the default settings
 // Ensure all links actually link to something (especially in docs.blade.php and demos.blade.php)
 
+// TODO: Include 'hamburger' and 'cross' in font icons
 // TODO: Test setDefaultProperties
 // TODO: hasClass, addClass and removeClass should be able to handle 'mask left' (at the moment they can't) - if not, update docs to say this
 // TODO: Can two lists share the same outerCont (especially if outerCont wraps the whole page)?
@@ -449,7 +450,6 @@ export var lithiumlist = (function () {
 				if (instance.props.sortEnabled && checkClassClicked(e, instance.temp.items[index], instance.props.sortDragHandleClass)) {
 					setTimeout(function() {
 						initItemMove(e, index, instance);
-						setItems(instance);
 						activateSort(instance);
 					}, 1);	// delay allows itemCont to show :hover classes
 				} else if (instance.props.leftEnabled && checkClassClicked(e, instance.temp.items[index], instance.props.leftButtonClass)) {
@@ -577,7 +577,7 @@ export var lithiumlist = (function () {
 		if ((instance.props.sortEnabled && instance.props.sortByLongPress) || (instance.props.leftEnabled && instance.props.leftBySwipe) || (instance.props.rightEnabled && instance.props.rightBySwipe)) {
 			initItemMove(e, index, instance);
 			setItems(instance);
-			if (instance.props.sortEnabled && instance.props.sortByLongPress && (instance.temp.items.length > 1)) {
+			if (instance.props.sortEnabled && instance.props.sortByLongPress) {
 				instance.temp.sortDelayTimer = setTimeout(function() {activateSort(instance);}, instance.props.sortMoveStartDelay);
 			}
 		}
