@@ -67,7 +67,7 @@
             </div>
             <div class="description">
                 <p>
-                    With piles of options, events and methods, everything is customisable and overrideable. It&#39;s easy to make Lithium List behave exactly how you want it to.
+                    With piles of <a href="{{url('/documentation/options')}}" title="options">options</a>, <a href="{{url('/documentation/events')}}" title="events">events</a> and <a href="{{url('/documentation/methods')}}" title="methods">methods</a>, everything is customisable and overrideable. It&#39;s easy to make Lithium List behave exactly how you want it to.
                 </p>
             </div>            
         </div>

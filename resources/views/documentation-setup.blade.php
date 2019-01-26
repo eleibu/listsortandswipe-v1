@@ -215,10 +215,7 @@ lithiumlist.attachToList(
         {{$refs['window-as-outercont']['title']}}
     </a>
     <p>
-        If you want the whole window to scroll when list items are sorted (like the <a href="{{ url('/') }}" title="Lithium List - home">Lithium List home page</a>), you can set <code class="language-js">var outerCont = window;</code>. However, in this case automatic scrolling will be rough and unreliable in some mobile browsers.
-    </p>
-    <p>
-        Instead, it&#39;s recommended you wrap the whole page in a DIV and use it as <strong><span class="outer-cont">outerCont</span></strong>.
+        If you want the whole window to scroll when list items are sorted (like the <a href="{{ url('/') }}" title="Lithium List - home">Lithium List home page</a>), you could set <code class="language-js">var outerCont = window;</code>. This will work, but automatic scrolling will be rough and unreliable in some mobile browsers. Instead, it&#39;s recommended you wrap the whole page in a DIV and use it as <strong><span class="outer-cont">outerCont</span></strong>.
     </p>
     <div class="title-codeblock">
         EXAMPLE HTML:

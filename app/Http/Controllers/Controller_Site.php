@@ -131,19 +131,40 @@ class Controller_Site extends Controller
 				'detailsTitle' => 'Set up',
 				'detailsView' => 'documentation-setup'
 			),
-			'concepts' => array(
+			'options' => array(
 				'selected' => false,
-				'url' => url('/documentation/concepts'),
-				'pageTitle' => 'Lithium List - documentation - concepts',
-				'detailsTitle' => 'Concepts',
-				'detailsView' => 'documentation-concepts'
+				'url' => url('/documentation/options'),
+				'pageTitle' => 'Lithium List - documentation - options',
+				'detailsTitle' => 'Options',
+				'detailsView' => 'documentation-options'
 			),
-			'options-events-methods-and-objects' => array(
+			'events' => array(
 				'selected' => false,
-				'url' => url('/documentation/options-events-methods-and-objects'),
-				'pageTitle' => 'Lithium List - documentation - options, events, methods and objects',
-				'detailsTitle' => 'Options, events, methods and objects',
-				'detailsView' => 'documentation-oemo'
+				'url' => url('/documentation/events'),
+				'pageTitle' => 'Lithium List - documentation - events',
+				'detailsTitle' => 'Events',
+				'detailsView' => 'documentation-events'
+			),
+			'methods' => array(
+				'selected' => false,
+				'url' => url('/documentation/methods'),
+				'pageTitle' => 'Lithium List - documentation - methods',
+				'detailsTitle' => 'Methods',
+				'detailsView' => 'documentation-methods'
+			),
+			'objects' => array(
+				'selected' => false,
+				'url' => url('/documentation/objects'),
+				'pageTitle' => 'Lithium List - documentation - objects',
+				'detailsTitle' => 'Objects',
+				'detailsView' => 'documentation-objects'
+			),
+			'glossary' => array(
+				'selected' => false,
+				'url' => url('/documentation/glossary'),
+				'pageTitle' => 'Lithium List - documentation - glossary',
+				'detailsTitle' => 'Glossary',
+				'detailsView' => 'documentation-glossary'
 			),
 			'changelog' => array(
 				'selected' => false,

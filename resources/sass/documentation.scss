@@ -2,62 +2,8 @@
 @import 'shared-all-except-home';
 @import 'toc-details';
 
-// div.sitecont-outer {
-// 	position: relative;	
-// }
-
-// div.toc-cont {
-// 	div.toc-outer {
-// 		margin: 0 1.4em;
-
-// 		div.title-main {
-// 			font-weight: bold;
-// 			font-size: 110%;
-// 			color: #222222;
-// 			padding: 0.4em 0;
-// 			margin-bottom: 0.8em;
-// 			border-bottom: 1px solid #EEEEEE;
-// 		}
-
-// 		div.subtitle-main {
-// 			font-size: 110%;
-// 			color: #666666;
-// 			margin-bottom: 1em;
-// 		}
-
-// 		.button-word-cont {
-// 			display: block;
-// 			text-align: left;
-// 			margin: 0.2em 0;
-// 		}
-
-// 		div.button-word-cont {
-// 			color: #777777;
-// 		}
-
-// 		div.button-word-cont.selected {
-// 			color: #222222;
-// 			background-color: #EEEEEE;
-// 		}
-
-// 		a.button-word-cont:hover {
-// 			background-color: #F8F8F8;
-// 		}
-// 	}
-// }
-
 div.details-cont {
 	div.details-outer {
-		// margin: 0 1.4em;
-
-		// div.title-main {
-		// 	font-size: 180%;
-		// 	color: #222222;
-		// 	padding: 0.4em 0;
-		// 	margin-bottom: 0.8em;
-		// 	border-bottom: 1px solid #EEEEEE;
-		// }
-
 		div.subtitle-main {
 			font-size: 110%;
 			color: #666666;
@@ -68,6 +14,15 @@ div.details-cont {
 			padding-bottom: 1em;
 			border-bottom: 1px solid #EEEEEE;
 			margin-bottom: 2em;
+
+			a.button-word-cont {
+				// color: #3399FF;
+				width: 13em;
+				text-align: left;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
 
 			a.button-word-cont:hover {
 				background-color: #F8F8F8;
@@ -84,26 +39,26 @@ div.details-cont {
 				margin-bottom: 1em;
 			}
 
-			div.subsection-links {
-				border-top: 1px solid #EEEEEE;
-				border-bottom: 1px solid #EEEEEE;
-				padding: 0.6em 0;
-				font-size: 90%;
-				margin-bottom: 2em;
+			// div.subsection-links {
+			// 	border-top: 1px solid #EEEEEE;
+			// 	border-bottom: 1px solid #EEEEEE;
+			// 	padding: 0.6em 0;
+			// 	font-size: 90%;
+			// 	margin-bottom: 2em;
 
-				a.button-word-cont {
-					color: #3399FF;
-					width: 13em;
-					text-align: left;
-					white-space: nowrap;
-					overflow: hidden;
-					text-overflow: ellipsis;
-				}
+			// 	a.button-word-cont {
+			// 		color: #3399FF;
+			// 		width: 13em;
+			// 		text-align: left;
+			// 		white-space: nowrap;
+			// 		overflow: hidden;
+			// 		text-overflow: ellipsis;
+			// 	}
 
-				a.button-word-cont:hover {
-					background-color: #F8F8F8;
-				}
-			}
+			// 	a.button-word-cont:hover {
+			// 		background-color: #F8F8F8;
+			// 	}
+			// }
 
 			a.title-section {
 				display: block;
@@ -131,7 +86,6 @@ div.details-cont {
 			a.title-subsection:hover {
 				text-decoration: none;
 			}
-
 
 			div.function {
 				color: #555555;
