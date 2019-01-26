@@ -38,7 +38,7 @@
                 </div>
                 <br/><br/>
                 <div id="div-buttons">
-                    <a class="button-word-cont grey" href="{{url('/documentation/why-lithium-list')}}">WHY LITHIUM LIST?</a>&nbsp;&nbsp;<a class="button-word-cont darkblue" href="{{url('/documentation/installation')}}">INSTALLATION</a>
+                    <a class="button-word-cont grey" href="{{url('/why-lithium-list')}}">WHY LITHIUM LIST?</a>&nbsp;&nbsp;<a class="button-word-cont darkblue" href="{{url('/documentation/installation')}}">INSTALLATION</a>
                 </div>
                 <br/><br/><br/><br/>
                 <div id="div-ptable">

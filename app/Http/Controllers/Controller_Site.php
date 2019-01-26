@@ -91,7 +91,7 @@ class Controller_Site extends Controller
 			),
 		);
 		if ($subpage == '') {
-			$subpage = 'simple-fixedheight';
+			$subpage = 'super-simple';
 		}
 		$nextpage = null;
 		$setNext = false;
