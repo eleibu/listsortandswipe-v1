@@ -85,7 +85,7 @@
             </div>
             <div class="description">
                 <p>
-                    [Something cool goes here]
+                    Everthing is fully documented in clear and simple terms, with sample code accompanying every description. You&#39;ll have no trouble getting up and running in minutes.
                 </p>
                 <p>
                     <a href="{{url('/documentation')}}" title="" class="button-word-cont">Read the docs</a>

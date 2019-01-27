@@ -18878,6 +18878,7 @@ if (outerContTriggerLeftAndRight && listContTriggerLeftAndRight && selectListIte
 // Make all examples CHANGE the default settings
 // Ensure all links actually link to something (especially in docs.blade.php and demos.blade.php)
 
+// TODO: In the examples, why does the whole list flash when pressed?
 // TODO: Include 'hamburger' and 'cross' in font icons
 // TODO: Test setDefaultProperties
 // TODO: hasClass, addClass and removeClass should be able to handle 'mask left' (at the moment they can't) - if not, update docs to say this
@@ -18953,7 +18954,7 @@ var lithiumlist = function () {
 			childNode: null
 		}],
 		leftButtonClass: 'left-button',
-		leftSwipeStartThreshold: '10px',
+		leftSwipeStartThreshold: '20px',
 		leftSwipeEndThreshold: '30%',
 		leftSlideOutDuration: 300,
 		leftSlideBackDuration: 200,
@@ -18977,7 +18978,7 @@ var lithiumlist = function () {
 			childNode: null
 		}],
 		rightButtonClass: 'right-button',
-		rightSwipeStartThreshold: '10px',
+		rightSwipeStartThreshold: '20px',
 		rightSwipeEndThreshold: '30%',
 		rightSlideOutDuration: 300,
 		rightSlideBackDuration: 200,

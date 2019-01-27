@@ -8,6 +8,8 @@
     <meta name="csrf-token" content="{{csrf_token()}}">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <title>Lithium List - home</title>
+    <link rel="icon" sizes="16x16 32x32 48x48" href="{{url('/favicon.ico?v=0')}}">
+    <link rel="apple-touch-icon-precomposed" href="{{url('/favicon-152.png?v=0')}}">
     <link rel="stylesheet" href="{{ url(mix('/css/home.css')) }}">
     <link rel="stylesheet" href="{{ url('/css/icons-outline.css') }}">
     <link rel="stylesheet" href="{{ url('/css/icons-solid.css') }}">

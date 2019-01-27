@@ -477,7 +477,7 @@ lithiumlist.attachToList(
             Type: String
         </div>
         <div class="param">
-            Default: <code class="language-js">&#39;10px&#39;</code>
+            Default: <code class="language-js">&#39;20px&#39;</code>
         </div>
     </div>
     <p>
@@ -487,7 +487,7 @@ lithiumlist.attachToList(
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    leftSwipeStartThreshold: &#39;10px&#39;
+    leftSwipeStartThreshold: &#39;20px&#39;
 };
 lithiumlist.attachToList(
     ...,
@@ -942,7 +942,7 @@ lithiumlist.attachToList(
             Type: String
         </div>
         <div class="param">
-            Default: <code class="language-js">&#39;10px&#39;</code>
+            Default: <code class="language-js">&#39;20px&#39;</code>
         </div>
     </div>
     <p>
@@ -952,7 +952,7 @@ lithiumlist.attachToList(
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    rightSwipeStartThreshold: &#39;10px&#39;
+    rightSwipeStartThreshold: &#39;20px&#39;
 };
 lithiumlist.attachToList(
     ...,
