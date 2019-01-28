@@ -16,13 +16,13 @@
         </div>
     </div>
     <p>
-        The names of DOM elements to ignore when clicked/tapped.
+        The names of DOM elements to ignore when pressed.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    ignoreOnClick: [&#39;input&#39;, &#39;textarea&#39;, &#39;select&#39;, &#39;option&#39;, &#39;button&#39;]
+    ignoreOnClick: [&#39;input&#39;, &#39;textarea&#39;]
 };
 lithiumlist.attachToList(
     ...,
@@ -44,13 +44,13 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        The class name of DOM elements that will act as buttons to trigger an automatic full left swipe of the list item.
+        The class name of DOM elements that will act as buttons to trigger an automatic full left slide of the list item.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    leftButon: &#39;left-button&#39;
+    leftButon: &#39;button-left&#39;
 };
 lithiumlist.attachToList(
     ...,
@@ -100,13 +100,13 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        A class name that is added to the <a href="{{$subpages['glossary']['url'] . '#ref-clone'}}" title="clone">clone</a> during left sliding.
+        The active list item is cloned during sorting and sliding. This option sets a class name that is added to the clone during left sliding.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    leftCloneClass: &#39;left-clone&#39;
+    leftCloneClass: &#39;clone-left&#39;
 };
 lithiumlist.attachToList(
     ...,
@@ -128,13 +128,13 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        A class name that is added to the <a href="{{$subpages['glossary']['url'] . '#ref-clone'}}" title="clone">clone</a> for left sliding while it is sliding back to its starting position.
+        The active list item is cloned during sorting and sliding. This option sets a class name that is added to the clone while it is sliding back to its starting position at the end of a left slide.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    leftCloneSlideBackClass: &#39;left-clone-slide-back&#39;
+    leftCloneSlideBackClass: &#39;back-slide-clone-left&#39;
 };
 lithiumlist.attachToList(
     ...,
@@ -156,13 +156,13 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        A class name that is added to the <a href="{{$subpages['glossary']['url'] . '#ref-clone'}}" title="clone">clone</a> for left sliding while it is sliding out of the list.
+        The active list item is cloned during sorting and sliding. This option sets a class name that is added to the clone while it is sliding out of the list at the end of a left slide.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    leftCloneSlideOutClass: &#39;left-clone-slide-out&#39;
+    leftCloneSlideOutClass: &#39;out-slide-clone-left&#39;
 };
 lithiumlist.attachToList(
     ...,
@@ -184,7 +184,7 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        Enable or disable sliding list items to the left. If set to <code class="language-js">false</code>, swiping a list item to the left or clicking/tapping a left button will do nothing.
+        Enable or disable sliding list items to the left. If set to <code class="language-js">false</code>, swiping a list item to the left or pressing a left button will do nothing.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
@@ -218,7 +218,7 @@ lithiumlist.attachToList(
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    leftItemActiveClass: 'left-item-active'
+    leftItemActiveClass: 'active-item-left'
 };
 lithiumlist.attachToList(
     ...,
@@ -240,13 +240,13 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        A class name that is added to <strong><span class="list-cont">listCont</span></strong> when a list item begins sliding to the left (either via a swipe or because a left button was clicked/tapped).
+        A class name that is added to <strong><span class="list-cont">listCont</span></strong> when a list item begins sliding to the left (either via a swipe or because a left button was pressed).
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    leftListClass: 'left-list'
+    leftListClass: 'list-left'
 };
 lithiumlist.attachToList(
     ...,
@@ -275,7 +275,7 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        An array of objects, each of which contains the properties of a <a href="{{$subpages['glossary']['url'] . '#ref-masks'}}" title="mask">mask</a> that will cover the active list item during left sliding. Currently, only the first element in the array is used. All others are ignored. If the array is empty, no <a href="{{$subpages['glossary']['url'] . '#ref-masks'}}" title="mask">mask</a> will appear during left sliding.
+        An array of objects, each of which contains the properties of a mask that will cover the active list item during left sliding. Currently, only the first element in the array is used. All others are ignored. If the array is empty, no mask will appear during left sliding.
     </p>
     <p>
         Each object must have the following properties:
@@ -289,7 +289,7 @@ lithiumlist.attachToList(
                 Type: String
             </div>
             <div class="sub-param">
-                A value that is set as the <a href="{{$subpages['glossary']['url'] . '#ref-masks'}}" title="mask">mask&#39;s</a> &#39;background&#39; style.
+                A value that is set as the mask&#39;s &#39;background&#39; style.
             </div>
         </div>
         <div class="param">
@@ -300,7 +300,7 @@ lithiumlist.attachToList(
                 Type: String
             </div>
             <div class="sub-param">
-                A class name that is added to the <a href="{{$subpages['glossary']['url'] . '#ref-masks'}}" title="mask">mask</a>.
+                A class name that is added to the mask.
             </div>
         </div>
         <div class="param">
@@ -311,7 +311,7 @@ lithiumlist.attachToList(
                 Type: String
             </div>
             <div class="sub-param">
-                A class name that is added to the <a href="{{$subpages['glossary']['url'] . '#ref-masks'}}" title="mask">mask</a> while the <a href="{{$subpages['glossary']['url'] . '#ref-clone'}}" title="clone">clone</a> is sliding out of the list.
+                A class name that is added to the mask while the clone is sliding out of the list.
             </div>
         </div>
         <div class="param">
@@ -322,7 +322,7 @@ lithiumlist.attachToList(
                 Type: String
             </div>
             <div class="sub-param">
-                A class name that is added to the <a href="{{$subpages['glossary']['url'] . '#ref-masks'}}" title="mask">mask</a> while the <a href="{{$subpages['glossary']['url'] . '#ref-clone'}}" title="clone">clone</a> is sliding back to its starting position.
+                A class name that is added to the mask while the clone is sliding back to its starting position.
             </div>
         </div>
         <div class="param">
@@ -333,7 +333,7 @@ lithiumlist.attachToList(
                 Type: Element
             </div>
             <div class="sub-param">
-                An HTML element (which way contain child elements) that is appended to the <a href="{{$subpages['glossary']['url'] . '#ref-masks'}}" title="mask">mask</a>. Useful for inserting an icon or label indicating to the user what left sliding will do.
+                An HTML element (which way contain child elements) that is appended to the mask. Useful for inserting an icon or label indicating to the user what left sliding will do.
             </div>
         </div>
     </div>
@@ -343,9 +343,9 @@ lithiumlist.attachToList(
 <pre class="line-numbers"><code class="language-js">var props = {
     leftMasks: [{
         background: &#39;rgba(252, 13, 27, 1)&#39;,
-        classNameDefault: &#39;left-mask&#39;,
-        classNameSlideOut: &#39;left-mask-slide-out&#39;,
-        classNameSlideBack: &#39;left-mask-slide-back&#39;,
+        classNameDefault: &#39;mask-left&#39;,
+        classNameSlideOut: &#39;out-slide-mask-left&#39;,
+        classNameSlideBack: &#39;back-slide-mask-left&#39;,
         childNode: null
     }]
 };
@@ -369,13 +369,13 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        A class name that is added to <strong><span class="outer-cont">outerCont</span></strong> when a list item begins sliding to the left (either via a swipe or because a left button was clicked/tapped). Has no effect if <strong><span class="outer-cont">outerCont</span></strong> is <code class="language-js">window</code>.
+        A class name that is added to <strong><span class="outer-cont">outerCont</span></strong> when a list item begins sliding to the left (either via a swipe or because a left button was pressed). Has no effect if <strong><span class="outer-cont">outerCont</span></strong> is <code class="language-js">window</code>.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    leftOuterClass: 'left-outer'
+    leftOuterClass: 'outer-left'
 };
 lithiumlist.attachToList(
     ...,
@@ -403,7 +403,7 @@ lithiumlist.attachToList(
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    leftSlideBackDuration: 200
+    leftSlideBackDuration: 300
 };
 lithiumlist.attachToList(
     ...,
@@ -431,7 +431,7 @@ lithiumlist.attachToList(
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    leftSlideOutDuration: 300
+    leftSlideOutDuration: 400
 };
 lithiumlist.attachToList(
     ...,
@@ -459,7 +459,7 @@ lithiumlist.attachToList(
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    leftSwipeEndThreshold: &#39;30%&#39;
+    leftSwipeEndThreshold: &#39;40%&#39;
 };
 lithiumlist.attachToList(
     ...,
@@ -487,7 +487,7 @@ lithiumlist.attachToList(
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    leftSwipeStartThreshold: &#39;20px&#39;
+    leftSwipeStartThreshold: &#39;30px&#39;
 };
 lithiumlist.attachToList(
     ...,
@@ -509,13 +509,13 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        The class name of DOM elements that will act as buttons to trigger an automatic full right swipe of the list item.
+        The class name of DOM elements that will act as buttons to trigger an automatic full right slide of the list item.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    rightButon: &#39;right-button&#39;
+    rightButon: &#39;button-right&#39;
 };
 lithiumlist.attachToList(
     ...,
@@ -565,13 +565,13 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        A class name that is added to the <a href="{{$subpages['glossary']['url'] . '#ref-clone'}}" title="clone">clone</a> during right sliding.
+        The active list item is cloned during sorting and sliding. This option sets a class name that is added to the clone during right sliding.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    rightCloneClass: &#39;right-clone&#39;
+    rightCloneClass: &#39;clone-right&#39;
 };
 lithiumlist.attachToList(
     ...,
@@ -593,13 +593,13 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        A class name that is added to the <a href="{{$subpages['glossary']['url'] . '#ref-clone'}}" title="clone">clone</a> for right sliding while it is sliding back to its starting position.
+        The active list item is cloned during sorting and sliding. This option sets a class name that is added to the clone while it is sliding back to its starting position at the end of a right slide.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    rightCloneSlideBackClass: &#39;right-clone-slide-back&#39;
+    rightCloneSlideBackClass: &#39;back-slide-clone-right&#39;
 };
 lithiumlist.attachToList(
     ...,
@@ -621,13 +621,13 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        A class name that is added to the <a href="{{$subpages['glossary']['url'] . '#ref-clone'}}" title="clone">clone</a> for right sliding while it is sliding out of the list.
+        The active list item is cloned during sorting and sliding. This option sets a class name that is added to the clone while it is sliding out of the list at the end of a right slide.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    rightCloneSlideOutClass: &#39;right-clone-slide-out&#39;
+    rightCloneSlideOutClass: &#39;out-slide-clone-right&#39;
 };
 lithiumlist.attachToList(
     ...,
@@ -649,7 +649,7 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        Enable or disable sliding list items to the right. If set to <code class="language-js">false</code>, swiping a list item to the right or clicking/tapping a right button will do nothing.
+        Enable or disable sliding list items to the right. If set to <code class="language-js">false</code>, swiping a list item to the right or pressing a right button will do nothing.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
@@ -683,7 +683,7 @@ lithiumlist.attachToList(
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    rightItemActiveClass: 'right-item-active'
+    rightItemActiveClass: 'active-item-right'
 };
 lithiumlist.attachToList(
     ...,
@@ -705,13 +705,13 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        A class name that is added to <strong><span class="list-cont">listCont</span></strong> when a list item begins sliding to the right (either via a swipe or because a right button was clicked/tapped).
+        A class name that is added to <strong><span class="list-cont">listCont</span></strong> when a list item begins sliding to the right (either via a swipe or because a right button was pressed).
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    rightListClass: 'right-list'
+    rightListClass: 'list-right'
 };
 lithiumlist.attachToList(
     ...,
@@ -731,7 +731,7 @@ lithiumlist.attachToList(
         <div class="param">
             Default:
             <pre><code class="language-js">[{
-    background: &#39;rgba(252, 13, 27, 1)&#39;,
+    background: &#39;rgba(15, 127, 18, 1)&#39;,
     classNameDefault: &#39;right-mask&#39;,
     classNameSlideOut: &#39;right-mask-slide-out&#39;,
     classNameSlideBack: &#39;right-mask-slide-back&#39;,
@@ -740,7 +740,7 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        An array of objects, each of which contains the properties of a <a href="{{$subpages['glossary']['url'] . '#ref-masks'}}" title="mask">mask</a> that will cover the active list item during right sliding. Currently, only the first element in the array is used. All others are ignored. If the array is empty, no <a href="{{$subpages['glossary']['url'] . '#ref-masks'}}" title="mask">mask</a> will appear during right sliding.
+        An array of objects, each of which contains the properties of a mask that will cover the active list item during right sliding. Currently, only the first element in the array is used. All others are ignored. If the array is empty, no mask will appear during right sliding.
     </p>
     <p>
         Each object must have the following properties:
@@ -754,7 +754,7 @@ lithiumlist.attachToList(
                 Type: String
             </div>
             <div class="sub-param">
-                A value that is set as the <a href="{{$subpages['glossary']['url'] . '#ref-masks'}}" title="mask">mask&#39;s</a> &#39;background&#39; style.
+                A value that is set as the mask&#39;s &#39;background&#39; style.
             </div>
         </div>
         <div class="param">
@@ -765,7 +765,7 @@ lithiumlist.attachToList(
                 Type: String
             </div>
             <div class="sub-param">
-                A class name that is added to the <a href="{{$subpages['glossary']['url'] . '#ref-masks'}}" title="mask">mask</a>.
+                A class name that is added to the mask.
             </div>
         </div>
         <div class="param">
@@ -776,7 +776,7 @@ lithiumlist.attachToList(
                 Type: String
             </div>
             <div class="sub-param">
-                A class name that is added to the <a href="{{$subpages['glossary']['url'] . '#ref-masks'}}" title="mask">mask</a> while the <a href="{{$subpages['glossary']['url'] . '#ref-clone'}}" title="clone">clone</a> is sliding out of the list.
+                A class name that is added to the mask while the clone is sliding out of the list.
             </div>
         </div>
         <div class="param">
@@ -787,7 +787,7 @@ lithiumlist.attachToList(
                 Type: String
             </div>
             <div class="sub-param">
-                A class name that is added to the <a href="{{$subpages['glossary']['url'] . '#ref-masks'}}" title="mask">mask</a> while the <a href="{{$subpages['glossary']['url'] . '#ref-clone'}}" title="clone">clone</a> is sliding back to its starting position.
+                A class name that is added to the mask while the clone is sliding back to its starting position.
             </div>
         </div>
         <div class="param">
@@ -798,7 +798,7 @@ lithiumlist.attachToList(
                 Type: Element
             </div>
             <div class="sub-param">
-                An HTML element (which way contain child elements) that is appended to the <a href="{{$subpages['glossary']['url'] . '#ref-masks'}}" title="mask">mask</a>. Useful for inserting an icon or label indicating to the user what right sliding will do.
+                An HTML element (which way contain child elements) that is appended to the mask. Useful for inserting an icon or label indicating to the user what right sliding will do.
             </div>
         </div>
     </div>
@@ -807,10 +807,10 @@ lithiumlist.attachToList(
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
     rightMasks: [{
-        background: &#39;rgba(252, 13, 27, 1)&#39;,
-        classNameDefault: &#39;right-mask&#39;,
-        classNameSlideOut: &#39;right-mask-slide-out&#39;,
-        classNameSlideBack: &#39;right-mask-slide-back&#39;,
+        background: &#39;rgba(15, 127, 18, 1)&#39;,
+        classNameDefault: &#39;mask-right&#39;,
+        classNameSlideOut: &#39;out-slide-mask-right&#39;,
+        classNameSlideBack: &#39;back-slide-mask-right&#39;,
         childNode: null
     }]
 };
@@ -834,13 +834,13 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        A class name that is added to <strong><span class="outer-cont">outerCont</span></strong> when a list item begins sliding to the right (either via a swipe or because a right button was clicked/tapped). Has no effect if <strong><span class="outer-cont">outerCont</span></strong> is <code class="language-js">window</code>.
+        A class name that is added to <strong><span class="outer-cont">outerCont</span></strong> when a list item begins sliding to the right (either via a swipe or because a right button was pressed). Has no effect if <strong><span class="outer-cont">outerCont</span></strong> is <code class="language-js">window</code>.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    rightOuterClass: 'right-outer'
+    rightOuterClass: 'outer-right'
 };
 lithiumlist.attachToList(
     ...,
@@ -868,7 +868,7 @@ lithiumlist.attachToList(
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    rightSlideBackDuration: 200
+    rightSlideBackDuration: 300
 };
 lithiumlist.attachToList(
     ...,
@@ -896,7 +896,7 @@ lithiumlist.attachToList(
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    rightSlideOutDuration: 300
+    rightSlideOutDuration: 400
 };
 lithiumlist.attachToList(
     ...,
@@ -924,7 +924,7 @@ lithiumlist.attachToList(
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    rightSwipeEndThreshold: &#39;30%&#39;
+    rightSwipeEndThreshold: &#39;40%&#39;
 };
 lithiumlist.attachToList(
     ...,
@@ -952,7 +952,7 @@ lithiumlist.attachToList(
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    rightSwipeStartThreshold: &#39;20px&#39;
+    rightSwipeStartThreshold: &#39;30px&#39;
 };
 lithiumlist.attachToList(
     ...,
@@ -1064,7 +1064,7 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        A value that is set as the &#39;box-shadow&#39; style of the <a href="{{$subpages['glossary']['url'] . '#ref-clone'}}" title="clone">clone</a> during sorting.
+        The active list item is cloned during sorting and sliding. This value is set as the &#39;box-shadow&#39; style of the clone during sorting.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
@@ -1092,13 +1092,13 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        A class name that is added to the <a href="{{$subpages['glossary']['url'] . '#ref-clone'}}" title="clone">clone</a> during sorting.
+        The active list item is cloned during sorting and sliding. This option sets a class name that is added to the clone during sorting.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    sortCloneClass: 'sort-clone'
+    sortCloneClass: 'clone-sort'
 };
 lithiumlist.attachToList(
     ...,
@@ -1120,7 +1120,7 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        A value that is set as the &#39;transform: scale()&#39; style of the <a href="{{$subpages['glossary']['url'] . '#ref-clone'}}" title="clone">clone</a> during sorting. To prevent scaling the <a href="{{$subpages['glossary']['url'] . '#ref-clone'}}" title="clone">clone</a>, set this to &#39;1&#39;.
+        The active list item is cloned during sorting and sliding. This value is set as the &#39;transform: scale()&#39; style of the clone during sorting. To prevent scaling of the clone, set this to &#39;1&#39;.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
@@ -1154,7 +1154,7 @@ lithiumlist.attachToList(
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    sortDragHandleClass: &#39;drag-handle&#39;
+    sortDragHandleClass: &#39;handle-drag-sort&#39;
 };
 lithiumlist.attachToList(
     ...,
@@ -1176,7 +1176,7 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        Enable or disable sorting of items. If set to <code class="language-js">false</code>, long-pressing an item or clicking/tapping its drag handle will do nothing.
+        Enable or disable sorting of items. If set to <code class="language-js">false</code>, long-pressing an item or pressing its drag handle will do nothing.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
@@ -1204,13 +1204,13 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        At the end of sorting the <a href="{{$subpages['glossary']['url'] . '#ref-clone'}}" title="clone">clone</a> animates to its final position. This option sets the duration of that animation.
+        The active list item is cloned during sorting and sliding. At the end of sorting the clone animates to its final position. This option sets the duration of that animation.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    sortEndDuration: 300
+    sortEndDuration: 400
 };
 lithiumlist.attachToList(
     ...,
@@ -1238,7 +1238,7 @@ lithiumlist.attachToList(
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    sortItemActiveClass: 'active'
+    sortItemActiveClass: 'active-item-sort'
 };
 lithiumlist.attachToList(
     ...,
@@ -1294,7 +1294,7 @@ lithiumlist.attachToList(
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    sortListClass: 'sorting'
+    sortListClass: 'list-sort'
 };
 lithiumlist.attachToList(
     ...,
@@ -1350,7 +1350,7 @@ lithiumlist.attachToList(
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    sortOuterClass: 'sorting'
+    sortOuterClass: 'outer-sort'
 };
 lithiumlist.attachToList(
     ...,
@@ -1428,13 +1428,13 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        At the start of sorting the <a href="{{$subpages['glossary']['url'] . '#ref-clone'}}" title="clone">clone&#39;s</a> scale animates to <a href="{{ url($selectedpage['url'] . '#ref-sortCloneScale') }}" title="sortCloneScale">sortCloneScale</a>. This option sets the duration of that animation.
+        The active list item is cloned during sorting and sliding. At the start of sorting the clone&#39;s scale animates to <a href="{{ url($selectedpage['url'] . '#ref-sortCloneScale') }}" title="sortCloneScale">sortCloneScale</a>. This option sets the duration of that animation.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    sortStartDuration: 300
+    sortStartDuration: 400
 };
 lithiumlist.attachToList(
     ...,
@@ -1456,13 +1456,13 @@ lithiumlist.attachToList(
         </div>
     </div>
     <p>
-        During sorting, list items animate to new positions as the <a href="{{$subpages['glossary']['url'] . '#ref-clone'}}" title="clone">clone</a> is moved up and down. This option sets the duration of that animation.
+        During sorting, list items animate to new positions. This option sets the duration of that animation.
     </p>
     <div class="title-codeblock">
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    sortReorderDuration: 200
+    sortReorderDuration: 300
 };
 lithiumlist.attachToList(
     ...,
