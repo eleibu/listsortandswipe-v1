@@ -159,13 +159,6 @@ class Controller_Site extends Controller
 				'detailsTitle' => 'Objects',
 				'detailsView' => 'documentation-objects'
 			),
-			'glossary' => array(
-				'selected' => false,
-				'url' => url('/documentation/glossary'),
-				'pageTitle' => 'Lithium List - documentation - glossary',
-				'detailsTitle' => 'Glossary',
-				'detailsView' => 'documentation-glossary'
-			),
 			'changelog' => array(
 				'selected' => false,
 				'url' => url('/documentation/changelog'),

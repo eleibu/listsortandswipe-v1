@@ -1,0 +1,90 @@
+@import 'shared-all';
+@import 'shared-all-except-home';
+@import 'sales-all';
+
+// div.title-main-cont {
+// 	padding: 1em 16px 0 16px;
+
+// 	div.title-main-outer {
+// 		margin: 0 auto 20px auto;
+// 		max-width: 800px;
+// 		min-width: 300px;
+// 		font-weight: bold;
+// 		font-size: 180%;
+// 		font-weight: bold;
+// 		color: #222222;
+// 	}
+// }
+
+#pageWrapper.xl, #pageWrapper.lg, #pageWrapper.md, #pageWrapper.sm {
+	div.pricing-cont {
+		background-color: #FBFBFB;
+
+		div.pricing-outer {
+			margin: 0 auto;
+			padding: 2em 0;
+			max-width: 800px;
+			min-width: 300px;
+
+			table {
+				width: 100%;
+
+				td {
+					padding: 18px 12px;
+
+					a.button-word-cont.green {
+						background-color: #33cc66;
+						color: #FFFFFF;
+						box-shadow: 0 1px 4px 0 #CCCCCC;
+					}
+
+					a.button-word-cont.green:hover {
+						cursor: pointer;
+						background-color: #34d168;
+						box-shadow: 0 1px 4px 0 #BBBBBB;
+					}
+				}
+
+				td {
+					padding: 18px 12px;
+				}
+
+				td.line {
+					border-top: 1px solid #EEEEEE;
+				}
+
+
+				td.name, td.price, td.button, td.detail {
+					text-align: center;
+				}
+
+				td.name {
+					color: #222222;
+					font-size: 110%;
+					font-weight: bold;
+				}
+
+				td.price {
+					color: #222222;
+					font-size: 160%;
+					font-weight: bold;
+				}
+
+				td.button {
+					font-size: 90%;
+				}
+
+				td.label {
+					color: #444444;
+				}
+
+				td.detail {
+					color: #444444;
+				}
+
+
+			}
+
+		}
+	}
+}

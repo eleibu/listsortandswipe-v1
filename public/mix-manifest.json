@@ -1,11 +1,13 @@
 {
-    "/js/examples-react.js": "/js/examples-react.js?id=dd9ce87f5dc880465544",
+    "/js/examples-react.js": "/js/examples-react.js?id=7300dad0b20e1535a68f",
     "/js/examples.js": "/js/examples.js?id=57e5b94093f297bf6b2e",
-    "/js/documentation.js": "/js/documentation.js?id=34bb6017f4d5513ebf43",
-    "/js/home.js": "/js/home.js?id=35cb423a7d015f3715e1",
+    "/js/documentation.js": "/js/documentation.js?id=cb3646334221c006747f",
+    "/js/home.js": "/js/home.js?id=0e3a1801285aa83045e7",
     "/css/home.css": "/css/home.css?id=a6569523a3b92aea8ecb",
-    "/css/documentation.css": "/css/documentation.css?id=27910c3b3df1fe93caa9",
+    "/css/documentation.css": "/css/documentation.css?id=920a211b4c527bc13d6d",
     "/css/examples.css": "/css/examples.css?id=fe8987524b5945f38f96",
     "/css/why-lithium-list.css": "/css/why-lithium-list.css?id=80b5b7fed468600358db",
-    "/js/why-lithium-list.js": "/js/why-lithium-list.js?id=91dccf16e0b005cc89a4"
+    "/css/pricing.css": "/css/pricing.css?id=9c52ddac1a216ca02e23",
+    "/js/why-lithium-list.js": "/js/why-lithium-list.js?id=91dccf16e0b005cc89a4",
+    "/js/pricing.js": "/js/pricing.js?id=164b7eaf7612f52eeb4b"
 }
