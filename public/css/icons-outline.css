@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icon-font-outline';
-  src:  url('fonts/icon-font-outline.eot?um9awq');
-  src:  url('fonts/icon-font-outline.eot?um9awq#iefix') format('embedded-opentype'),
-    url('fonts/icon-font-outline.ttf?um9awq') format('truetype'),
-    url('fonts/icon-font-outline.woff?um9awq') format('woff'),
-    url('fonts/icon-font-outline.svg?um9awq#icon-font-outline') format('svg');
+  src:  url('fonts/icon-font-outline.eot?7a11w0');
+  src:  url('fonts/icon-font-outline.eot?7a11w0#iefix') format('embedded-opentype'),
+    url('fonts/icon-font-outline.ttf?7a11w0') format('truetype'),
+    url('fonts/icon-font-outline.woff?7a11w0') format('woff'),
+    url('fonts/icon-font-outline.svg?7a11w0#icon-font-outline') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,23 +24,35 @@ i.oln {
   -moz-osx-font-smoothing: grayscale;
 }
 
+i.oln.icon-archive:before {
+  content: "\e905";
+}
 i.oln.icon-arrow-left-circle:before {
   content: "\e900";
 }
 i.oln.icon-arrow-right-circle:before {
   content: "\e901";
 }
+i.oln.icon-check-ui:before {
+  content: "\e907";
+}
+i.oln.icon-circle-info:before {
+  content: "\e908";
+}
+i.oln.icon-cross-ui:before {
+  content: "\e909";
+}
 i.oln.icon-grab-ui:before {
   content: "\e902";
+}
+i.oln.icon-hamburger-ui:before {
+  content: "\e90a";
 }
 i.oln.icon-lock:before {
   content: "\e903";
 }
 i.oln.icon-profile-picture:before {
   content: "\e904";
-}
-i.oln.icon-archive:before {
-  content: "\e905";
 }
 i.oln.icon-trash:before {
   content: "\e906";

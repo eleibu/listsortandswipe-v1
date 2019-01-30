@@ -16,8 +16,7 @@
         Pricing
     </div>
 </div>
-<br/><br/>
-<div class="pricing-cont">
+<div class="pricing-cont large">
     <div class="pricing-outer">
         <table cellspacing="0" cellpadding="0">
             <tr>
@@ -90,16 +89,16 @@
                     All features
                 </td>
                 <td class="detail line">
-                    Y
+                    <i class="sld icon-check-ui"></i>
                 </td>
                 <td class="detail line">
-                    Y
+                    <i class="sld icon-check-ui"></i>
                 </td>
                 <td class="detail line">
-                    Y
+                    <i class="sld icon-check-ui"></i>
                 </td>
                 <td class="detail line">
-                    Y
+                    <i class="sld icon-check-ui"></i>
                 </td>
             </tr>
             <tr>
@@ -141,57 +140,365 @@
                     Tech support
                 </td>
                 <td class="detail line">
-                    &#9472;
+                    <span class="neg">&#9472;</span>
                 </td>
                 <td class="detail line">
-                    &#9472;
+                    <span class="neg">&#9472;</span>
                 </td>
                 <td class="detail line">
                     Standard
                 </td>
                 <td class="detail line">
-                    Premium
+                    Premium&nbsp;<i class="sld icon-circle-info"></i>
                 </td>
             </tr>
             <tr>
                 <td class="label line">
-                    Paid web app
+                    Paid web app&nbsp;<i class="sld icon-circle-info"></i>
                 </td>
                 <td class="detail line">
-                    &#9472;
+                    <span class="neg">&#9472;</span>
                 </td>
                 <td class="detail line">
-                    &#9472;
+                    <span class="neg">&#9472;</span>
                 </td>
                 <td class="detail line">
-                    Y
+                    <i class="sld icon-check-ui"></i>
                 </td>
                 <td class="detail line">
-                    Y
+                    <i class="sld icon-check-ui"></i>
                 </td>
             </tr>
             <tr>
                 <td class="label line">
-                    Reseller
+                    Reseller&nbsp;<i class="sld icon-circle-info"></i>
                 </td>
                 <td class="detail line">
-                    &#9472;
+                    <span class="neg">&#9472;</span>
                 </td>
                 <td class="detail line">
-                    &#9472;
+                    <span class="neg">&#9472;</span>
                 </td>
                 <td class="detail line">
-                    &#9472;
+                    <span class="neg">&#9472;</span>
                 </td>
                 <td class="detail line">
-                    Y
+                    <i class="sld icon-check-ui"></i>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="pricing-cont small">
+    <div class="pricing-outer">
+        <table cellspacing="0" cellpadding="0">
+            <tr>
+                <td class="name" colspan="2">
+                    Free trial
+                </td>
+            </tr>
+            <tr>
+                <td class="price" colspan="2">
+                    Free
+                </td>
+            </tr>
+            <tr>
+                <td class="button" colspan="2">
+                    <a class="button-word-cont green" href="" title="">Try it</a>
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    Licence period
+                </td>
+                <td class="detail line">
+                    30 days
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    All features
+                </td>
+                <td class="detail line">
+                    <i class="sld icon-check-ui"></i>
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    Number of domains
+                </td>
+                <td class="detail line">
+                    1
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    Licence key
+                </td>
+                <td class="detail line">
+                    Per domain
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    Tech support
+                </td>
+                <td class="detail line">
+                    <span class="neg">&#9472;</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    Paid web app&nbsp;<i class="sld icon-circle-info"></i>
+                </td>
+                <td class="detail line">
+                    <span class="neg">&#9472;</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    Reseller&nbsp;<i class="sld icon-circle-info"></i>
+                </td>
+                <td class="detail line">
+                    <span class="neg">&#9472;</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="pricing-cont small">
+    <div class="pricing-outer">
+        <table cellspacing="0" cellpadding="0">
+            <tr>
+                <td class="name" colspan="2">
+                    Basic
+                </td>
+            </tr>
+            <tr>
+                <td class="price" colspan="2">
+                    $36
+                </td>
+            </tr>
+            <tr>
+                <td class="button" colspan="2">
+                    <a class="button-word-cont grey" href="" title="">Buy now</a>
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    Licence period
+                </td>
+                <td class="detail line">
+                    1 year
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    All features
+                </td>
+                <td class="detail line">
+                    <i class="sld icon-check-ui"></i>
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    Number of domains
+                </td>
+                <td class="detail line">
+                    1
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    Licence key
+                </td>
+                <td class="detail line">
+                    Per domain
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    Tech support
+                </td>
+                <td class="detail line">
+                    <span class="neg">&#9472;</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    Paid web app&nbsp;<i class="sld icon-circle-info"></i>
+                </td>
+                <td class="detail line">
+                    <span class="neg">&#9472;</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    Reseller&nbsp;<i class="sld icon-circle-info"></i>
+                </td>
+                <td class="detail line">
+                    <span class="neg">&#9472;</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="pricing-cont small">
+    <div class="pricing-outer">
+        <table cellspacing="0" cellpadding="0">
+            <tr>
+                <td class="name" colspan="2">
+                    Professional
+                </td>
+            </tr>
+            <tr>
+                <td class="price" colspan="2">
+                    $108
+                </td>
+            </tr>
+            <tr>
+                <td class="button" colspan="2">
+                    <a class="button-word-cont grey" href="" title="">Buy now</a>
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    Licence period
+                </td>
+                <td class="detail line">
+                    1 year
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    All features
+                </td>
+                <td class="detail line">
+                    <i class="sld icon-check-ui"></i>
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    Number of domains
+                </td>
+                <td class="detail line">
+                    5
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    Licence key
+                </td>
+                <td class="detail line">
+                    Per domain
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    Tech support
+                </td>
+                <td class="detail line">
+                    Standard
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    Paid web app&nbsp;<i class="sld icon-circle-info"></i>
+                </td>
+                <td class="detail line">
+                    <i class="sld icon-check-ui"></i>
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    Reseller&nbsp;<i class="sld icon-circle-info"></i>
+                </td>
+                <td class="detail line">
+                    <span class="neg">&#9472;</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="pricing-cont small">
+    <div class="pricing-outer">
+        <table cellspacing="0" cellpadding="0">
+            <tr>
+                <td class="name" colspan="2">
+                    Enterprise
+                </td>
+            </tr>
+            <tr>
+                <td class="price" colspan="2">
+                    $648
+                </td>
+            </tr>
+            <tr>
+                <td class="button" colspan="2">
+                    <a class="button-word-cont grey" href="" title="">Buy now</a>
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    Licence period
+                </td>
+                <td class="detail line">
+                    1 year
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    All features
+                </td>
+                <td class="detail line">
+                    <i class="sld icon-check-ui"></i>
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    Number of domains
+                </td>
+                <td class="detail line">
+                    Unlimited
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    Licence key
+                </td>
+                <td class="detail line">
+                    Per domain
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    Tech support
+                </td>
+                <td class="detail line">
+                    Premium&nbsp;<i class="sld icon-circle-info"></i>
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    Paid web app&nbsp;<i class="sld icon-circle-info"></i>
+                </td>
+                <td class="detail line">
+                    <i class="sld icon-check-ui"></i>
+                </td>
+            </tr>
+            <tr>
+                <td class="label line">
+                    Reseller&nbsp;<i class="sld icon-circle-info"></i>
+                </td>
+                <td class="detail line">
+                    <i class="sld icon-check-ui"></i>
                 </td>
             </tr>
         </table>
     </div>
 </div>
 <br/><br/>
-<div class="section-cont left">
+<div class="section-cont right">
     <div class="section-outer">
         <div class="image">
             <img class="large" src="{{url('/images/browser-tick.png')}}" alt="" width="200" height="184" />
@@ -209,7 +516,7 @@
         </div>
     </div>
 </div>
-<div class="section-cont right">
+<div class="section-cont left">
     <div class="section-outer">
         <div class="image">
             <img class="large" src="{{url('/images/reload-ui.png')}}" alt="" width="200" height="200" />
@@ -221,11 +528,10 @@
             </div>
             <div class="description">
                 <p>
-                    Get 10% off renewals within one month of the licence expiry. It&#39;s just a small token of our appreciation.
+                    Get 10% off renewals within one month of the licence expiry. It&#39;s our way of saying thanks for your ongoing support.
                 </p>
             </div>            
         </div>
     </div>
 </div>
-<br/><br/><br/><br/>
 @endsection

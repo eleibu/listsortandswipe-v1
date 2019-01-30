@@ -29,7 +29,7 @@
                     <a class="button-word-cont login" href="" title="">LOG IN</a>
                 </div>
                 <div class="menubtn-cont">
-                    <a id="a-pagemenu-show" class="menubtn"><i class="sld budicon-hamburger-ui"></i></a>
+                    <a id="a-pagemenu-show" class="menubtn"><i class="sld icon-hamburger-ui"></i></a>
                 </div>
             </div>
         </div>
@@ -45,7 +45,7 @@
         <div id="div-pagemenu-cont">
             <div class="menu-outer">
                 <div class="menuclose-cont">
-                    <a id="a-pagemenu-hide" class="menubtn"><i class="sld budicon-cross-ui"></i></a>
+                    <a id="a-pagemenu-hide" class="menubtn"><i class="sld icon-cross-ui"></i></a>
                 </div>
                 <div class="links-cont">
                     <a class="button-word-cont hlink" href="" title="">PRICING</a>
