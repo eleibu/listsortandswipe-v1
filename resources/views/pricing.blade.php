@@ -8,6 +8,9 @@
 
 @section('jsLinks')
     <script defer src="{{ url(mix('/js/pricing.js')) }}"></script>
+    <script>
+        var urlArrowImg = "{{url('images/tt-arrow.png')}}";
+    </script>
 @endsection
 
 @section('content')
@@ -146,15 +149,15 @@
                     <span class="neg">&#9472;</span>
                 </td>
                 <td class="detail line">
-                    Standard
+                    Standard&nbsp;<i class="sld icon-circle-info tt-hover" data-title="Get support with <72 hour response times"></i>
                 </td>
                 <td class="detail line">
-                    Premium&nbsp;<i class="sld icon-circle-info"></i>
+                    Premium&nbsp;<i class="sld icon-circle-info tt-hover" data-title="Get priority support with <24 hour response times"></i>
                 </td>
             </tr>
             <tr>
                 <td class="label line">
-                    Paid web app&nbsp;<i class="sld icon-circle-info"></i>
+                    Paid web app&nbsp;<i class="sld icon-circle-info tt-hover" data-title="Include Lithium List in a website that people are charged to use"></i>
                 </td>
                 <td class="detail line">
                     <span class="neg">&#9472;</span>
@@ -171,7 +174,7 @@
             </tr>
             <tr>
                 <td class="label line">
-                    Reseller&nbsp;<i class="sld icon-circle-info"></i>
+                    Reseller&nbsp;<i class="sld icon-circle-info tt-hover" data-title="Include Lithium List in a website that is built and/or worked on for someone else"></i>
                 </td>
                 <td class="detail line">
                     <span class="neg">&#9472;</span>
@@ -189,7 +192,7 @@
         </table>
     </div>
 </div>
-<div class="pricing-cont small">
+<div class="pricing-cont small grey">
     <div class="pricing-outer">
         <table cellspacing="0" cellpadding="0">
             <tr>
@@ -343,7 +346,7 @@
         </table>
     </div>
 </div>
-<div class="pricing-cont small">
+<div class="pricing-cont small grey">
     <div class="pricing-outer">
         <table cellspacing="0" cellpadding="0">
             <tr>
@@ -498,7 +501,7 @@
     </div>
 </div>
 <br/><br/>
-<div class="section-cont right">
+<div class="section-cont left grey">
     <div class="section-outer">
         <div class="image">
             <img class="large" src="{{url('/images/browser-tick.png')}}" alt="" width="200" height="184" />
@@ -516,7 +519,7 @@
         </div>
     </div>
 </div>
-<div class="section-cont left">
+<div class="section-cont right">
     <div class="section-outer">
         <div class="image">
             <img class="large" src="{{url('/images/reload-ui.png')}}" alt="" width="200" height="200" />

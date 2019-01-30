@@ -37,7 +37,7 @@
         </div>
     </div>
 </div>
-<div class="section-cont right">
+<div class="section-cont right grey">
     <div class="section-outer">
         <div class="image">
             <img class="large" src="{{url('/images/desktop-smartphone.png')}}" alt="" width="193" height="200" />
@@ -73,7 +73,7 @@
         </div>
     </div>
 </div>
-<div class="section-cont right">
+<div class="section-cont right grey">
     <div class="section-outer">
         <div class="image">
             <img class="large" src="{{url('/images/front-page.png')}}" alt="" width="174" height="200" />

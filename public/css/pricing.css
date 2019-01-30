@@ -288,7 +288,7 @@ div.section-cont div.section-outer div.details div.description a.button-word-con
           box-shadow: 0 1px 4px 0 #BBBBBB;
 }
 
-div.section-cont.right {
+div.section-cont.grey {
   background-color: #FBFBFB;
 }
 
@@ -368,6 +368,34 @@ div.section-cont.right {
   font-size: 100%;
 }
 
+div.tooltip-cont {
+  background-color: rgba(0, 0, 0, 0.9);
+  border-radius: 4px;
+  max-width: 200px;
+}
+
+div.tooltip-cont div.tooltip-outer {
+  position: relative;
+}
+
+div.tooltip-cont div.tooltip-outer div.tooltip-inner {
+  padding: 8px;
+  color: #FFFFFF;
+  font-size: 80%;
+  line-height: 150%;
+  text-align: center;
+}
+
+div.tooltip-cont div.tooltip-outer div.tooltip-arrow {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  width: 11px;
+  height: 8px;
+}
+
 div.pricing-cont div.pricing-outer {
   margin: 0 auto;
   padding: 2em 0;
@@ -441,6 +469,10 @@ div.pricing-cont div.pricing-outer table td.detail i.icon-check-ui {
 
 div.pricing-cont div.pricing-outer table td.detail span.neg {
   color: #AAAAAA;
+}
+
+div.pricing-cont.grey {
+  background-color: #FBFBFB;
 }
 
 #pageWrapper.xl div.pricing-cont.large, #pageWrapper.lg div.pricing-cont.large, #pageWrapper.md div.pricing-cont.large, #pageWrapper.sm div.pricing-cont.large {
