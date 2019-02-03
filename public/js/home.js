@@ -19098,6 +19098,13 @@ var pageMenuShowHide = function () {
 
 /***/ }),
 
+/***/ "./resources/sass/console.scss":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./resources/sass/documentation.scss":
 /***/ (function(module, exports) {
 
@@ -19141,7 +19148,8 @@ __webpack_require__("./resources/sass/home.scss");
 __webpack_require__("./resources/sass/documentation.scss");
 __webpack_require__("./resources/sass/examples.scss");
 __webpack_require__("./resources/sass/why-lithium-list.scss");
-module.exports = __webpack_require__("./resources/sass/pricing.scss");
+__webpack_require__("./resources/sass/pricing.scss");
+module.exports = __webpack_require__("./resources/sass/console.scss");
 
 
 /***/ })

@@ -5,15 +5,12 @@
 div.tooltip-cont {
 	background-color: rgba(0, 0, 0, 0.9);
 	border-radius: 4px;
-	max-width: 200px;
 
 	div.tooltip-outer {
 		position: relative;
 
 		div.tooltip-inner {
-			padding: 8px;
 			color: #FFFFFF;
-			font-size: 80%;
 			line-height: 150%;
 			text-align: center;
 		}
@@ -21,10 +18,35 @@ div.tooltip-cont {
 		div.tooltip-arrow {
 			position: absolute;
 			bottom: 0;
-			left: 50%;
-			transform: translateX(-50%);			
 			width: 11px;
 			height: 8px;
+		}
+	}
+}
+
+div.tooltip-cont[x-placement='bottom'] {
+	div.tooltip-arrow {
+		display: none;
+	}
+}
+
+div.tooltip-cont.hover {
+	max-width: 200px;
+
+	div.tooltip-outer {
+		div.tooltip-inner {
+			padding: 8px;
+			font-size: 80%;
+		}
+	}
+}
+
+div.tooltip-cont.click {
+	max-width: 200px;
+
+	div.tooltip-outer {
+		div.tooltip-inner {
+			padding: 10px;
 		}
 	}
 }
@@ -53,6 +75,10 @@ div.pricing-cont {
 					background-color: #34D168;
 					box-shadow: 0 1px 4px 0 #BBBBBB;
 				}
+
+				span.tt-click {
+					color: #3366CC;
+				}
 			}
 
 			td {
@@ -62,7 +88,6 @@ div.pricing-cont {
 			td.line {
 				border-top: 1px solid #EEEEEE;
 			}
-
 
 			td.name, td.price, td.button, td.detail {
 				text-align: center;
@@ -76,12 +101,7 @@ div.pricing-cont {
 
 			td.price {
 				color: #222222;
-				font-size: 160%;
 				font-weight: bold;
-			}
-
-			td.button {
-				font-size: 90%;
 			}
 
 			td.label {
@@ -117,6 +137,14 @@ div.pricing-cont.grey {
 	div.pricing-cont.small {
 		display: none;
 	}
+
+	td.price {
+		font-size: 160%;
+	}
+
+	td.button {
+		font-size: 90%;
+	}
 }
 
 #pageWrapper.xs {
@@ -126,5 +154,27 @@ div.pricing-cont.grey {
 
 	div.pricing-cont.small {
 		display: block;
+	}
+
+	td.price {
+		font-size: 200%;
+		padding-top: 4px;
+		padding-bottom: 4px;
+	}
+
+	td.button {
+		font-size: 120%;
+		padding-bottom: 28px;
+	}
+}
+
+div.subscript-cont {
+	div.subscript-outer {
+		padding: 0 16px;
+		margin: 0 auto;
+		max-width: 800px;
+		min-width: 300px;
+		font-size: 90%;
+		color: #333333;
 	}
 }

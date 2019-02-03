@@ -118,7 +118,7 @@
                     5
                 </td>
                 <td class="detail line">
-                    Unlimited
+                    35
                 </td>
             </tr>
             <tr>
@@ -252,7 +252,7 @@
             </tr>
             <tr>
                 <td class="label line">
-                    Paid web app&nbsp;<i class="sld icon-circle-info"></i>
+                    <span class="tt-click" data-title="Include Lithium List in a website that people are charged to use">Paid web app</span>
                 </td>
                 <td class="detail line">
                     <span class="neg">&#9472;</span>
@@ -260,7 +260,7 @@
             </tr>
             <tr>
                 <td class="label line">
-                    Reseller&nbsp;<i class="sld icon-circle-info"></i>
+                    <span class="tt-click" data-title="Include Lithium List in a website that is built and/or worked on for someone else">Reseller</span>
                 </td>
                 <td class="detail line">
                     <span class="neg">&#9472;</span>
@@ -329,7 +329,7 @@
             </tr>
             <tr>
                 <td class="label line">
-                    Paid web app&nbsp;<i class="sld icon-circle-info"></i>
+                    <span class="tt-click" data-title="Include Lithium List in a website that people are charged to use">Paid web app</span>
                 </td>
                 <td class="detail line">
                     <span class="neg">&#9472;</span>
@@ -337,7 +337,7 @@
             </tr>
             <tr>
                 <td class="label line">
-                    Reseller&nbsp;<i class="sld icon-circle-info"></i>
+                    <span class="tt-click" data-title="Include Lithium List in a website that is built and/or worked on for someone else">Reseller</span>
                 </td>
                 <td class="detail line">
                     <span class="neg">&#9472;</span>
@@ -401,12 +401,12 @@
                     Tech support
                 </td>
                 <td class="detail line">
-                    Standard
+                    <span class="tt-click" data-title="Get support with <72 hour response times">Standard</span>
                 </td>
             </tr>
             <tr>
                 <td class="label line">
-                    Paid web app&nbsp;<i class="sld icon-circle-info"></i>
+                    <span class="tt-click" data-title="Include Lithium List in a website that people are charged to use">Paid web app</span>
                 </td>
                 <td class="detail line">
                     <i class="sld icon-check-ui"></i>
@@ -414,7 +414,7 @@
             </tr>
             <tr>
                 <td class="label line">
-                    Reseller&nbsp;<i class="sld icon-circle-info"></i>
+                    <span class="tt-click" data-title="Include Lithium List in a website that is built and/or worked on for someone else">Reseller</span>
                 </td>
                 <td class="detail line">
                     <span class="neg">&#9472;</span>
@@ -462,7 +462,7 @@
                     Number of domains
                 </td>
                 <td class="detail line">
-                    Unlimited
+                    35
                 </td>
             </tr>
             <tr>
@@ -478,12 +478,12 @@
                     Tech support
                 </td>
                 <td class="detail line">
-                    Premium&nbsp;<i class="sld icon-circle-info"></i>
+                    <span class="tt-click" data-title="Get priority support with <24 hour response times">Premium</span>
                 </td>
             </tr>
             <tr>
                 <td class="label line">
-                    Paid web app&nbsp;<i class="sld icon-circle-info"></i>
+                    <span class="tt-click" data-title="Include Lithium List in a website that people are charged to use">Paid web app</span>
                 </td>
                 <td class="detail line">
                     <i class="sld icon-check-ui"></i>
@@ -491,13 +491,18 @@
             </tr>
             <tr>
                 <td class="label line">
-                    Reseller&nbsp;<i class="sld icon-circle-info"></i>
+                    <span class="tt-click" data-title="Include Lithium List in a website that is built and/or worked on for someone else">Reseller</span>
                 </td>
                 <td class="detail line">
                     <i class="sld icon-check-ui"></i>
                 </td>
             </tr>
         </table>
+    </div>
+</div>
+<div class="subscript-cont">
+    <div class="subscript-outer">
+        * All prices are US dollars
     </div>
 </div>
 <br/><br/>

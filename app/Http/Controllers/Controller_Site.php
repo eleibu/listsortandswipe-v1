@@ -10,6 +10,11 @@ class Controller_Site extends Controller
 		return view('home');
 	}
 
+	public function page_console(Request $request) {
+		return view('console');
+	}
+
+
 	public function section_examples(Request $request, $subpage = '') {
 		$subpages = array(
 			'super-simple' => array(

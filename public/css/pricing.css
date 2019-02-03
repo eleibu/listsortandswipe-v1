@@ -371,7 +371,6 @@ div.section-cont.grey {
 div.tooltip-cont {
   background-color: rgba(0, 0, 0, 0.9);
   border-radius: 4px;
-  max-width: 200px;
 }
 
 div.tooltip-cont div.tooltip-outer {
@@ -379,9 +378,7 @@ div.tooltip-cont div.tooltip-outer {
 }
 
 div.tooltip-cont div.tooltip-outer div.tooltip-inner {
-  padding: 8px;
   color: #FFFFFF;
-  font-size: 80%;
   line-height: 150%;
   text-align: center;
 }
@@ -389,11 +386,29 @@ div.tooltip-cont div.tooltip-outer div.tooltip-inner {
 div.tooltip-cont div.tooltip-outer div.tooltip-arrow {
   position: absolute;
   bottom: 0;
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
   width: 11px;
   height: 8px;
+}
+
+div.tooltip-cont[x-placement='bottom'] div.tooltip-arrow {
+  display: none;
+}
+
+div.tooltip-cont.hover {
+  max-width: 200px;
+}
+
+div.tooltip-cont.hover div.tooltip-outer div.tooltip-inner {
+  padding: 8px;
+  font-size: 80%;
+}
+
+div.tooltip-cont.click {
+  max-width: 200px;
+}
+
+div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
+  padding: 10px;
 }
 
 div.pricing-cont div.pricing-outer {
@@ -425,6 +440,10 @@ div.pricing-cont div.pricing-outer table td a.button-word-cont.green:hover {
           box-shadow: 0 1px 4px 0 #BBBBBB;
 }
 
+div.pricing-cont div.pricing-outer table td span.tt-click {
+  color: #3366CC;
+}
+
 div.pricing-cont div.pricing-outer table td {
   padding: 18px 12px;
 }
@@ -445,12 +464,7 @@ div.pricing-cont div.pricing-outer table td.name {
 
 div.pricing-cont div.pricing-outer table td.price {
   color: #222222;
-  font-size: 160%;
   font-weight: bold;
-}
-
-div.pricing-cont div.pricing-outer table td.button {
-  font-size: 90%;
 }
 
 div.pricing-cont div.pricing-outer table td.label {
@@ -483,10 +497,38 @@ div.pricing-cont.grey {
   display: none;
 }
 
+#pageWrapper.xl td.price, #pageWrapper.lg td.price, #pageWrapper.md td.price, #pageWrapper.sm td.price {
+  font-size: 160%;
+}
+
+#pageWrapper.xl td.button, #pageWrapper.lg td.button, #pageWrapper.md td.button, #pageWrapper.sm td.button {
+  font-size: 90%;
+}
+
 #pageWrapper.xs div.pricing-cont.large {
   display: none;
 }
 
 #pageWrapper.xs div.pricing-cont.small {
   display: block;
+}
+
+#pageWrapper.xs td.price {
+  font-size: 200%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#pageWrapper.xs td.button {
+  font-size: 120%;
+  padding-bottom: 28px;
+}
+
+div.subscript-cont div.subscript-outer {
+  padding: 0 16px;
+  margin: 0 auto;
+  max-width: 800px;
+  min-width: 300px;
+  font-size: 90%;
+  color: #333333;
 }
