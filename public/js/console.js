@@ -65,6 +65,19 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js":
+/***/ (function(module, exports) {
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {
+    default: obj
+  };
+}
+
+module.exports = _interopRequireDefault;
+
+/***/ }),
+
 /***/ "./node_modules/bootstrap/dist/js/bootstrap.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4013,6 +4026,178 @@
 })));
 //# sourceMappingURL=bootstrap.js.map
 
+
+/***/ }),
+
+/***/ "./node_modules/classNames/dedupe.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+  Copyright (c) 2017 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var classNames = (function () {
+		// don't inherit from Object so we can skip hasOwnProperty check later
+		// http://stackoverflow.com/questions/15518328/creating-js-object-with-object-createnull#answer-21079232
+		function StorageObject() {}
+		StorageObject.prototype = Object.create(null);
+
+		function _parseArray (resultSet, array) {
+			var length = array.length;
+
+			for (var i = 0; i < length; ++i) {
+				_parse(resultSet, array[i]);
+			}
+		}
+
+		var hasOwn = {}.hasOwnProperty;
+
+		function _parseNumber (resultSet, num) {
+			resultSet[num] = true;
+		}
+
+		function _parseObject (resultSet, object) {
+			for (var k in object) {
+				if (hasOwn.call(object, k)) {
+					// set value to false instead of deleting it to avoid changing object structure
+					// https://www.smashingmagazine.com/2012/11/writing-fast-memory-efficient-javascript/#de-referencing-misconceptions
+					resultSet[k] = !!object[k];
+				}
+			}
+		}
+
+		var SPACE = /\s+/;
+		function _parseString (resultSet, str) {
+			var array = str.split(SPACE);
+			var length = array.length;
+
+			for (var i = 0; i < length; ++i) {
+				resultSet[array[i]] = true;
+			}
+		}
+
+		function _parse (resultSet, arg) {
+			if (!arg) return;
+			var argType = typeof arg;
+
+			// 'foo bar'
+			if (argType === 'string') {
+				_parseString(resultSet, arg);
+
+			// ['foo', 'bar', ...]
+			} else if (Array.isArray(arg)) {
+				_parseArray(resultSet, arg);
+
+			// { 'foo': true, ... }
+			} else if (argType === 'object') {
+				_parseObject(resultSet, arg);
+
+			// '130'
+			} else if (argType === 'number') {
+				_parseNumber(resultSet, arg);
+			}
+		}
+
+		function _classNames () {
+			// don't leak arguments
+			// https://github.com/petkaantonov/bluebird/wiki/Optimization-killers#32-leaking-arguments
+			var len = arguments.length;
+			var args = Array(len);
+			for (var i = 0; i < len; i++) {
+				args[i] = arguments[i];
+			}
+
+			var classSet = new StorageObject();
+			_parseArray(classSet, args);
+
+			var list = [];
+
+			for (var k in classSet) {
+				if (classSet[k]) {
+					list.push(k)
+				}
+			}
+
+			return list.join(' ');
+		}
+
+		return _classNames;
+	})();
+
+	if (typeof module !== 'undefined' && module.exports) {
+		classNames.default = classNames;
+		module.exports = classNames;
+	} else if (true) {
+		// register as 'classnames', consistent with npm package name
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+			return classNames;
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {
+		window.classNames = classNames;
+	}
+}());
+
+
+/***/ }),
+
+/***/ "./node_modules/dom-helpers/class/addClass.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__("./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+exports.__esModule = true;
+exports.default = addClass;
+
+var _hasClass = _interopRequireDefault(__webpack_require__("./node_modules/dom-helpers/class/hasClass.js"));
+
+function addClass(element, className) {
+  if (element.classList) element.classList.add(className);else if (!(0, _hasClass.default)(element, className)) if (typeof element.className === 'string') element.className = element.className + ' ' + className;else element.setAttribute('class', (element.className && element.className.baseVal || '') + ' ' + className);
+}
+
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./node_modules/dom-helpers/class/hasClass.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = hasClass;
+
+function hasClass(element, className) {
+  if (element.classList) return !!className && element.classList.contains(className);else return (" " + (element.className.baseVal || element.className) + " ").indexOf(" " + className + " ") !== -1;
+}
+
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./node_modules/dom-helpers/class/removeClass.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function replaceClassName(origClass, classToRemove) {
+  return origClass.replace(new RegExp('(^|\\s)' + classToRemove + '(?:\\s|$)', 'g'), '$1').replace(/\s+/g, ' ').replace(/^\s*|\s*$/g, '');
+}
+
+module.exports = function removeClass(element, className) {
+  if (element.classList) element.classList.remove(className);else if (typeof element.className === 'string') element.className = replaceClassName(element.className, className);else element.setAttribute('class', replaceClassName(element.className && element.className.baseVal || '', className));
+};
 
 /***/ }),
 
@@ -17125,6 +17310,604 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 }
 
 module.exports = checkPropTypes;
+
+
+/***/ }),
+
+/***/ "./node_modules/prop-types/factoryWithTypeCheckers.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+var assign = __webpack_require__("./node_modules/object-assign/index.js");
+
+var ReactPropTypesSecret = __webpack_require__("./node_modules/prop-types/lib/ReactPropTypesSecret.js");
+var checkPropTypes = __webpack_require__("./node_modules/prop-types/checkPropTypes.js");
+
+var printWarning = function() {};
+
+if (true) {
+  printWarning = function(text) {
+    var message = 'Warning: ' + text;
+    if (typeof console !== 'undefined') {
+      console.error(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
+  };
+}
+
+function emptyFunctionThatReturnsNull() {
+  return null;
+}
+
+module.exports = function(isValidElement, throwOnDirectAccess) {
+  /* global Symbol */
+  var ITERATOR_SYMBOL = typeof Symbol === 'function' && Symbol.iterator;
+  var FAUX_ITERATOR_SYMBOL = '@@iterator'; // Before Symbol spec.
+
+  /**
+   * Returns the iterator method function contained on the iterable object.
+   *
+   * Be sure to invoke the function with the iterable as context:
+   *
+   *     var iteratorFn = getIteratorFn(myIterable);
+   *     if (iteratorFn) {
+   *       var iterator = iteratorFn.call(myIterable);
+   *       ...
+   *     }
+   *
+   * @param {?object} maybeIterable
+   * @return {?function}
+   */
+  function getIteratorFn(maybeIterable) {
+    var iteratorFn = maybeIterable && (ITERATOR_SYMBOL && maybeIterable[ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL]);
+    if (typeof iteratorFn === 'function') {
+      return iteratorFn;
+    }
+  }
+
+  /**
+   * Collection of methods that allow declaration and validation of props that are
+   * supplied to React components. Example usage:
+   *
+   *   var Props = require('ReactPropTypes');
+   *   var MyArticle = React.createClass({
+   *     propTypes: {
+   *       // An optional string prop named "description".
+   *       description: Props.string,
+   *
+   *       // A required enum prop named "category".
+   *       category: Props.oneOf(['News','Photos']).isRequired,
+   *
+   *       // A prop named "dialog" that requires an instance of Dialog.
+   *       dialog: Props.instanceOf(Dialog).isRequired
+   *     },
+   *     render: function() { ... }
+   *   });
+   *
+   * A more formal specification of how these methods are used:
+   *
+   *   type := array|bool|func|object|number|string|oneOf([...])|instanceOf(...)
+   *   decl := ReactPropTypes.{type}(.isRequired)?
+   *
+   * Each and every declaration produces a function with the same signature. This
+   * allows the creation of custom validation functions. For example:
+   *
+   *  var MyLink = React.createClass({
+   *    propTypes: {
+   *      // An optional string or URI prop named "href".
+   *      href: function(props, propName, componentName) {
+   *        var propValue = props[propName];
+   *        if (propValue != null && typeof propValue !== 'string' &&
+   *            !(propValue instanceof URI)) {
+   *          return new Error(
+   *            'Expected a string or an URI for ' + propName + ' in ' +
+   *            componentName
+   *          );
+   *        }
+   *      }
+   *    },
+   *    render: function() {...}
+   *  });
+   *
+   * @internal
+   */
+
+  var ANONYMOUS = '<<anonymous>>';
+
+  // Important!
+  // Keep this list in sync with production version in `./factoryWithThrowingShims.js`.
+  var ReactPropTypes = {
+    array: createPrimitiveTypeChecker('array'),
+    bool: createPrimitiveTypeChecker('boolean'),
+    func: createPrimitiveTypeChecker('function'),
+    number: createPrimitiveTypeChecker('number'),
+    object: createPrimitiveTypeChecker('object'),
+    string: createPrimitiveTypeChecker('string'),
+    symbol: createPrimitiveTypeChecker('symbol'),
+
+    any: createAnyTypeChecker(),
+    arrayOf: createArrayOfTypeChecker,
+    element: createElementTypeChecker(),
+    instanceOf: createInstanceTypeChecker,
+    node: createNodeChecker(),
+    objectOf: createObjectOfTypeChecker,
+    oneOf: createEnumTypeChecker,
+    oneOfType: createUnionTypeChecker,
+    shape: createShapeTypeChecker,
+    exact: createStrictShapeTypeChecker,
+  };
+
+  /**
+   * inlined Object.is polyfill to avoid requiring consumers ship their own
+   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+   */
+  /*eslint-disable no-self-compare*/
+  function is(x, y) {
+    // SameValue algorithm
+    if (x === y) {
+      // Steps 1-5, 7-10
+      // Steps 6.b-6.e: +0 != -0
+      return x !== 0 || 1 / x === 1 / y;
+    } else {
+      // Step 6.a: NaN == NaN
+      return x !== x && y !== y;
+    }
+  }
+  /*eslint-enable no-self-compare*/
+
+  /**
+   * We use an Error-like object for backward compatibility as people may call
+   * PropTypes directly and inspect their output. However, we don't use real
+   * Errors anymore. We don't inspect their stack anyway, and creating them
+   * is prohibitively expensive if they are created too often, such as what
+   * happens in oneOfType() for any type before the one that matched.
+   */
+  function PropTypeError(message) {
+    this.message = message;
+    this.stack = '';
+  }
+  // Make `instanceof Error` still work for returned errors.
+  PropTypeError.prototype = Error.prototype;
+
+  function createChainableTypeChecker(validate) {
+    if (true) {
+      var manualPropTypeCallCache = {};
+      var manualPropTypeWarningCount = 0;
+    }
+    function checkType(isRequired, props, propName, componentName, location, propFullName, secret) {
+      componentName = componentName || ANONYMOUS;
+      propFullName = propFullName || propName;
+
+      if (secret !== ReactPropTypesSecret) {
+        if (throwOnDirectAccess) {
+          // New behavior only for users of `prop-types` package
+          var err = new Error(
+            'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
+            'Use `PropTypes.checkPropTypes()` to call them. ' +
+            'Read more at http://fb.me/use-check-prop-types'
+          );
+          err.name = 'Invariant Violation';
+          throw err;
+        } else if ("development" !== 'production' && typeof console !== 'undefined') {
+          // Old behavior for people using React.PropTypes
+          var cacheKey = componentName + ':' + propName;
+          if (
+            !manualPropTypeCallCache[cacheKey] &&
+            // Avoid spamming the console because they are often not actionable except for lib authors
+            manualPropTypeWarningCount < 3
+          ) {
+            printWarning(
+              'You are manually calling a React.PropTypes validation ' +
+              'function for the `' + propFullName + '` prop on `' + componentName  + '`. This is deprecated ' +
+              'and will throw in the standalone `prop-types` package. ' +
+              'You may be seeing this warning due to a third-party PropTypes ' +
+              'library. See https://fb.me/react-warning-dont-call-proptypes ' + 'for details.'
+            );
+            manualPropTypeCallCache[cacheKey] = true;
+            manualPropTypeWarningCount++;
+          }
+        }
+      }
+      if (props[propName] == null) {
+        if (isRequired) {
+          if (props[propName] === null) {
+            return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required ' + ('in `' + componentName + '`, but its value is `null`.'));
+          }
+          return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required in ' + ('`' + componentName + '`, but its value is `undefined`.'));
+        }
+        return null;
+      } else {
+        return validate(props, propName, componentName, location, propFullName);
+      }
+    }
+
+    var chainedCheckType = checkType.bind(null, false);
+    chainedCheckType.isRequired = checkType.bind(null, true);
+
+    return chainedCheckType;
+  }
+
+  function createPrimitiveTypeChecker(expectedType) {
+    function validate(props, propName, componentName, location, propFullName, secret) {
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== expectedType) {
+        // `propValue` being instance of, say, date/regexp, pass the 'object'
+        // check, but we can offer a more precise error message here rather than
+        // 'of type `object`'.
+        var preciseType = getPreciseType(propValue);
+
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + preciseType + '` supplied to `' + componentName + '`, expected ') + ('`' + expectedType + '`.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createAnyTypeChecker() {
+    return createChainableTypeChecker(emptyFunctionThatReturnsNull);
+  }
+
+  function createArrayOfTypeChecker(typeChecker) {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (typeof typeChecker !== 'function') {
+        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside arrayOf.');
+      }
+      var propValue = props[propName];
+      if (!Array.isArray(propValue)) {
+        var propType = getPropType(propValue);
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an array.'));
+      }
+      for (var i = 0; i < propValue.length; i++) {
+        var error = typeChecker(propValue, i, componentName, location, propFullName + '[' + i + ']', ReactPropTypesSecret);
+        if (error instanceof Error) {
+          return error;
+        }
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createElementTypeChecker() {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      if (!isValidElement(propValue)) {
+        var propType = getPropType(propValue);
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createInstanceTypeChecker(expectedClass) {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (!(props[propName] instanceof expectedClass)) {
+        var expectedClassName = expectedClass.name || ANONYMOUS;
+        var actualClassName = getClassName(props[propName]);
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + actualClassName + '` supplied to `' + componentName + '`, expected ') + ('instance of `' + expectedClassName + '`.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createEnumTypeChecker(expectedValues) {
+    if (!Array.isArray(expectedValues)) {
+       true ? printWarning('Invalid argument supplied to oneOf, expected an instance of array.') : void 0;
+      return emptyFunctionThatReturnsNull;
+    }
+
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      for (var i = 0; i < expectedValues.length; i++) {
+        if (is(propValue, expectedValues[i])) {
+          return null;
+        }
+      }
+
+      var valuesString = JSON.stringify(expectedValues);
+      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of value `' + propValue + '` ' + ('supplied to `' + componentName + '`, expected one of ' + valuesString + '.'));
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createObjectOfTypeChecker(typeChecker) {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (typeof typeChecker !== 'function') {
+        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside objectOf.');
+      }
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== 'object') {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an object.'));
+      }
+      for (var key in propValue) {
+        if (propValue.hasOwnProperty(key)) {
+          var error = typeChecker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+          if (error instanceof Error) {
+            return error;
+          }
+        }
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createUnionTypeChecker(arrayOfTypeCheckers) {
+    if (!Array.isArray(arrayOfTypeCheckers)) {
+       true ? printWarning('Invalid argument supplied to oneOfType, expected an instance of array.') : void 0;
+      return emptyFunctionThatReturnsNull;
+    }
+
+    for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
+      var checker = arrayOfTypeCheckers[i];
+      if (typeof checker !== 'function') {
+        printWarning(
+          'Invalid argument supplied to oneOfType. Expected an array of check functions, but ' +
+          'received ' + getPostfixForTypeWarning(checker) + ' at index ' + i + '.'
+        );
+        return emptyFunctionThatReturnsNull;
+      }
+    }
+
+    function validate(props, propName, componentName, location, propFullName) {
+      for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
+        var checker = arrayOfTypeCheckers[i];
+        if (checker(props, propName, componentName, location, propFullName, ReactPropTypesSecret) == null) {
+          return null;
+        }
+      }
+
+      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`.'));
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createNodeChecker() {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (!isNode(props[propName])) {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`, expected a ReactNode.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createShapeTypeChecker(shapeTypes) {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== 'object') {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
+      }
+      for (var key in shapeTypes) {
+        var checker = shapeTypes[key];
+        if (!checker) {
+          continue;
+        }
+        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+        if (error) {
+          return error;
+        }
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createStrictShapeTypeChecker(shapeTypes) {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== 'object') {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
+      }
+      // We need to check all keys in case some are required but missing from
+      // props.
+      var allKeys = assign({}, props[propName], shapeTypes);
+      for (var key in allKeys) {
+        var checker = shapeTypes[key];
+        if (!checker) {
+          return new PropTypeError(
+            'Invalid ' + location + ' `' + propFullName + '` key `' + key + '` supplied to `' + componentName + '`.' +
+            '\nBad object: ' + JSON.stringify(props[propName], null, '  ') +
+            '\nValid keys: ' +  JSON.stringify(Object.keys(shapeTypes), null, '  ')
+          );
+        }
+        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+        if (error) {
+          return error;
+        }
+      }
+      return null;
+    }
+
+    return createChainableTypeChecker(validate);
+  }
+
+  function isNode(propValue) {
+    switch (typeof propValue) {
+      case 'number':
+      case 'string':
+      case 'undefined':
+        return true;
+      case 'boolean':
+        return !propValue;
+      case 'object':
+        if (Array.isArray(propValue)) {
+          return propValue.every(isNode);
+        }
+        if (propValue === null || isValidElement(propValue)) {
+          return true;
+        }
+
+        var iteratorFn = getIteratorFn(propValue);
+        if (iteratorFn) {
+          var iterator = iteratorFn.call(propValue);
+          var step;
+          if (iteratorFn !== propValue.entries) {
+            while (!(step = iterator.next()).done) {
+              if (!isNode(step.value)) {
+                return false;
+              }
+            }
+          } else {
+            // Iterator will provide entry [k,v] tuples rather than values.
+            while (!(step = iterator.next()).done) {
+              var entry = step.value;
+              if (entry) {
+                if (!isNode(entry[1])) {
+                  return false;
+                }
+              }
+            }
+          }
+        } else {
+          return false;
+        }
+
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  function isSymbol(propType, propValue) {
+    // Native Symbol.
+    if (propType === 'symbol') {
+      return true;
+    }
+
+    // 19.4.3.5 Symbol.prototype[@@toStringTag] === 'Symbol'
+    if (propValue['@@toStringTag'] === 'Symbol') {
+      return true;
+    }
+
+    // Fallback for non-spec compliant Symbols which are polyfilled.
+    if (typeof Symbol === 'function' && propValue instanceof Symbol) {
+      return true;
+    }
+
+    return false;
+  }
+
+  // Equivalent of `typeof` but with special handling for array and regexp.
+  function getPropType(propValue) {
+    var propType = typeof propValue;
+    if (Array.isArray(propValue)) {
+      return 'array';
+    }
+    if (propValue instanceof RegExp) {
+      // Old webkits (at least until Android 4.0) return 'function' rather than
+      // 'object' for typeof a RegExp. We'll normalize this here so that /bla/
+      // passes PropTypes.object.
+      return 'object';
+    }
+    if (isSymbol(propType, propValue)) {
+      return 'symbol';
+    }
+    return propType;
+  }
+
+  // This handles more types than `getPropType`. Only used for error messages.
+  // See `createPrimitiveTypeChecker`.
+  function getPreciseType(propValue) {
+    if (typeof propValue === 'undefined' || propValue === null) {
+      return '' + propValue;
+    }
+    var propType = getPropType(propValue);
+    if (propType === 'object') {
+      if (propValue instanceof Date) {
+        return 'date';
+      } else if (propValue instanceof RegExp) {
+        return 'regexp';
+      }
+    }
+    return propType;
+  }
+
+  // Returns a string that is postfixed to a warning about an invalid type.
+  // For example, "undefined" or "of type array"
+  function getPostfixForTypeWarning(value) {
+    var type = getPreciseType(value);
+    switch (type) {
+      case 'array':
+      case 'object':
+        return 'an ' + type;
+      case 'boolean':
+      case 'date':
+      case 'regexp':
+        return 'a ' + type;
+      default:
+        return type;
+    }
+  }
+
+  // Returns class name of the object, if any.
+  function getClassName(propValue) {
+    if (!propValue.constructor || !propValue.constructor.name) {
+      return ANONYMOUS;
+    }
+    return propValue.constructor.name;
+  }
+
+  ReactPropTypes.checkPropTypes = checkPropTypes;
+  ReactPropTypes.PropTypes = ReactPropTypes;
+
+  return ReactPropTypes;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/prop-types/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+if (true) {
+  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
+    Symbol.for &&
+    Symbol.for('react.element')) ||
+    0xeac7;
+
+  var isValidElement = function(object) {
+    return typeof object === 'object' &&
+      object !== null &&
+      object.$$typeof === REACT_ELEMENT_TYPE;
+  };
+
+  // By explicitly using `prop-types` you are opting into new development behavior.
+  // http://fb.me/prop-types-in-prod
+  var throwOnDirectAccess = true;
+  module.exports = __webpack_require__("./node_modules/prop-types/factoryWithTypeCheckers.js")(isValidElement, throwOnDirectAccess);
+} else {
+  // By explicitly using `prop-types` you are opting into new production behavior.
+  // http://fb.me/prop-types-in-prod
+  module.exports = require('./factoryWithThrowingShims')();
+}
 
 
 /***/ }),
@@ -37288,6 +38071,1667 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/react-lifecycles-compat/react-lifecycles-compat.es.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "polyfill", function() { return polyfill; });
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+function componentWillMount() {
+  // Call this.constructor.gDSFP to support sub-classes.
+  var state = this.constructor.getDerivedStateFromProps(this.props, this.state);
+  if (state !== null && state !== undefined) {
+    this.setState(state);
+  }
+}
+
+function componentWillReceiveProps(nextProps) {
+  // Call this.constructor.gDSFP to support sub-classes.
+  // Use the setState() updater to ensure state isn't stale in certain edge cases.
+  function updater(prevState) {
+    var state = this.constructor.getDerivedStateFromProps(nextProps, prevState);
+    return state !== null && state !== undefined ? state : null;
+  }
+  // Binding "this" is important for shallow renderer support.
+  this.setState(updater.bind(this));
+}
+
+function componentWillUpdate(nextProps, nextState) {
+  try {
+    var prevProps = this.props;
+    var prevState = this.state;
+    this.props = nextProps;
+    this.state = nextState;
+    this.__reactInternalSnapshotFlag = true;
+    this.__reactInternalSnapshot = this.getSnapshotBeforeUpdate(
+      prevProps,
+      prevState
+    );
+  } finally {
+    this.props = prevProps;
+    this.state = prevState;
+  }
+}
+
+// React may warn about cWM/cWRP/cWU methods being deprecated.
+// Add a flag to suppress these warnings for this special case.
+componentWillMount.__suppressDeprecationWarning = true;
+componentWillReceiveProps.__suppressDeprecationWarning = true;
+componentWillUpdate.__suppressDeprecationWarning = true;
+
+function polyfill(Component) {
+  var prototype = Component.prototype;
+
+  if (!prototype || !prototype.isReactComponent) {
+    throw new Error('Can only polyfill class components');
+  }
+
+  if (
+    typeof Component.getDerivedStateFromProps !== 'function' &&
+    typeof prototype.getSnapshotBeforeUpdate !== 'function'
+  ) {
+    return Component;
+  }
+
+  // If new component APIs are defined, "unsafe" lifecycles won't be called.
+  // Error if any of these lifecycles are present,
+  // Because they would work differently between older and newer (16.3+) versions of React.
+  var foundWillMountName = null;
+  var foundWillReceivePropsName = null;
+  var foundWillUpdateName = null;
+  if (typeof prototype.componentWillMount === 'function') {
+    foundWillMountName = 'componentWillMount';
+  } else if (typeof prototype.UNSAFE_componentWillMount === 'function') {
+    foundWillMountName = 'UNSAFE_componentWillMount';
+  }
+  if (typeof prototype.componentWillReceiveProps === 'function') {
+    foundWillReceivePropsName = 'componentWillReceiveProps';
+  } else if (typeof prototype.UNSAFE_componentWillReceiveProps === 'function') {
+    foundWillReceivePropsName = 'UNSAFE_componentWillReceiveProps';
+  }
+  if (typeof prototype.componentWillUpdate === 'function') {
+    foundWillUpdateName = 'componentWillUpdate';
+  } else if (typeof prototype.UNSAFE_componentWillUpdate === 'function') {
+    foundWillUpdateName = 'UNSAFE_componentWillUpdate';
+  }
+  if (
+    foundWillMountName !== null ||
+    foundWillReceivePropsName !== null ||
+    foundWillUpdateName !== null
+  ) {
+    var componentName = Component.displayName || Component.name;
+    var newApiName =
+      typeof Component.getDerivedStateFromProps === 'function'
+        ? 'getDerivedStateFromProps()'
+        : 'getSnapshotBeforeUpdate()';
+
+    throw Error(
+      'Unsafe legacy lifecycles will not be called for components using new component APIs.\n\n' +
+        componentName +
+        ' uses ' +
+        newApiName +
+        ' but also contains the following legacy lifecycles:' +
+        (foundWillMountName !== null ? '\n  ' + foundWillMountName : '') +
+        (foundWillReceivePropsName !== null
+          ? '\n  ' + foundWillReceivePropsName
+          : '') +
+        (foundWillUpdateName !== null ? '\n  ' + foundWillUpdateName : '') +
+        '\n\nThe above lifecycles should be removed. Learn more about this warning here:\n' +
+        'https://fb.me/react-async-component-lifecycle-hooks'
+    );
+  }
+
+  // React <= 16.2 does not support static getDerivedStateFromProps.
+  // As a workaround, use cWM and cWRP to invoke the new static lifecycle.
+  // Newer versions of React will ignore these lifecycles if gDSFP exists.
+  if (typeof Component.getDerivedStateFromProps === 'function') {
+    prototype.componentWillMount = componentWillMount;
+    prototype.componentWillReceiveProps = componentWillReceiveProps;
+  }
+
+  // React <= 16.2 does not support getSnapshotBeforeUpdate.
+  // As a workaround, use cWU to invoke the new lifecycle.
+  // Newer versions of React will ignore that lifecycle if gSBU exists.
+  if (typeof prototype.getSnapshotBeforeUpdate === 'function') {
+    if (typeof prototype.componentDidUpdate !== 'function') {
+      throw new Error(
+        'Cannot polyfill getSnapshotBeforeUpdate() for components that do not define componentDidUpdate() on the prototype'
+      );
+    }
+
+    prototype.componentWillUpdate = componentWillUpdate;
+
+    var componentDidUpdate = prototype.componentDidUpdate;
+
+    prototype.componentDidUpdate = function componentDidUpdatePolyfill(
+      prevProps,
+      prevState,
+      maybeSnapshot
+    ) {
+      // 16.3+ will not execute our will-update method;
+      // It will pass a snapshot value to did-update though.
+      // Older versions will require our polyfilled will-update value.
+      // We need to handle both cases, but can't just check for the presence of "maybeSnapshot",
+      // Because for <= 15.x versions this might be a "prevContext" object.
+      // We also can't just check "__reactInternalSnapshot",
+      // Because get-snapshot might return a falsy value.
+      // So check for the explicit __reactInternalSnapshotFlag flag to determine behavior.
+      var snapshot = this.__reactInternalSnapshotFlag
+        ? this.__reactInternalSnapshot
+        : maybeSnapshot;
+
+      componentDidUpdate.call(this, prevProps, prevState, snapshot);
+    };
+  }
+
+  return Component;
+}
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/react-transition-group/CSSTransition.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var PropTypes = _interopRequireWildcard(__webpack_require__("./node_modules/prop-types/index.js"));
+
+var _addClass = _interopRequireDefault(__webpack_require__("./node_modules/dom-helpers/class/addClass.js"));
+
+var _removeClass = _interopRequireDefault(__webpack_require__("./node_modules/dom-helpers/class/removeClass.js"));
+
+var _react = _interopRequireDefault(__webpack_require__("./node_modules/react/index.js"));
+
+var _Transition = _interopRequireDefault(__webpack_require__("./node_modules/react-transition-group/Transition.js"));
+
+var _PropTypes = __webpack_require__("./node_modules/react-transition-group/utils/PropTypes.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var addClass = function addClass(node, classes) {
+  return node && classes && classes.split(' ').forEach(function (c) {
+    return (0, _addClass.default)(node, c);
+  });
+};
+
+var removeClass = function removeClass(node, classes) {
+  return node && classes && classes.split(' ').forEach(function (c) {
+    return (0, _removeClass.default)(node, c);
+  });
+};
+/**
+ * A `Transition` component using CSS transitions and animations.
+ * It's inspired by the excellent [ng-animate](http://www.nganimate.org/) library.
+ *
+ * `CSSTransition` applies a pair of class names during the `appear`, `enter`,
+ * and `exit` stages of the transition. The first class is applied and then a
+ * second "active" class in order to activate the css animation. After the animation,
+ * matching `done` class names are applied to persist the animation state.
+ *
+ * When the `in` prop is toggled to `true` the Component will get
+ * the `example-enter` CSS class and the `example-enter-active` CSS class
+ * added in the next tick. This is a convention based on the `classNames` prop.
+ */
+
+
+var CSSTransition =
+/*#__PURE__*/
+function (_React$Component) {
+  _inheritsLoose(CSSTransition, _React$Component);
+
+  function CSSTransition() {
+    var _this;
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this;
+
+    _this.onEnter = function (node, appearing) {
+      var _this$getClassNames = _this.getClassNames(appearing ? 'appear' : 'enter'),
+          className = _this$getClassNames.className;
+
+      _this.removeClasses(node, 'exit');
+
+      addClass(node, className);
+
+      if (_this.props.onEnter) {
+        _this.props.onEnter(node, appearing);
+      }
+    };
+
+    _this.onEntering = function (node, appearing) {
+      var _this$getClassNames2 = _this.getClassNames(appearing ? 'appear' : 'enter'),
+          activeClassName = _this$getClassNames2.activeClassName;
+
+      _this.reflowAndAddClass(node, activeClassName);
+
+      if (_this.props.onEntering) {
+        _this.props.onEntering(node, appearing);
+      }
+    };
+
+    _this.onEntered = function (node, appearing) {
+      var _this$getClassNames3 = _this.getClassNames('enter'),
+          doneClassName = _this$getClassNames3.doneClassName;
+
+      _this.removeClasses(node, appearing ? 'appear' : 'enter');
+
+      addClass(node, doneClassName);
+
+      if (_this.props.onEntered) {
+        _this.props.onEntered(node, appearing);
+      }
+    };
+
+    _this.onExit = function (node) {
+      var _this$getClassNames4 = _this.getClassNames('exit'),
+          className = _this$getClassNames4.className;
+
+      _this.removeClasses(node, 'appear');
+
+      _this.removeClasses(node, 'enter');
+
+      addClass(node, className);
+
+      if (_this.props.onExit) {
+        _this.props.onExit(node);
+      }
+    };
+
+    _this.onExiting = function (node) {
+      var _this$getClassNames5 = _this.getClassNames('exit'),
+          activeClassName = _this$getClassNames5.activeClassName;
+
+      _this.reflowAndAddClass(node, activeClassName);
+
+      if (_this.props.onExiting) {
+        _this.props.onExiting(node);
+      }
+    };
+
+    _this.onExited = function (node) {
+      var _this$getClassNames6 = _this.getClassNames('exit'),
+          doneClassName = _this$getClassNames6.doneClassName;
+
+      _this.removeClasses(node, 'exit');
+
+      addClass(node, doneClassName);
+
+      if (_this.props.onExited) {
+        _this.props.onExited(node);
+      }
+    };
+
+    _this.getClassNames = function (type) {
+      var classNames = _this.props.classNames;
+      var className = typeof classNames !== 'string' ? classNames[type] : classNames + '-' + type;
+      var activeClassName = typeof classNames !== 'string' ? classNames[type + 'Active'] : className + '-active';
+      var doneClassName = typeof classNames !== 'string' ? classNames[type + 'Done'] : className + '-done';
+      return {
+        className: className,
+        activeClassName: activeClassName,
+        doneClassName: doneClassName
+      };
+    };
+
+    return _this;
+  }
+
+  var _proto = CSSTransition.prototype;
+
+  _proto.removeClasses = function removeClasses(node, type) {
+    var _this$getClassNames7 = this.getClassNames(type),
+        className = _this$getClassNames7.className,
+        activeClassName = _this$getClassNames7.activeClassName,
+        doneClassName = _this$getClassNames7.doneClassName;
+
+    className && removeClass(node, className);
+    activeClassName && removeClass(node, activeClassName);
+    doneClassName && removeClass(node, doneClassName);
+  };
+
+  _proto.reflowAndAddClass = function reflowAndAddClass(node, className) {
+    // This is for to force a repaint,
+    // which is necessary in order to transition styles when adding a class name.
+    if (className) {
+      /* eslint-disable no-unused-expressions */
+      node && node.scrollTop;
+      /* eslint-enable no-unused-expressions */
+
+      addClass(node, className);
+    }
+  };
+
+  _proto.render = function render() {
+    var props = _extends({}, this.props);
+
+    delete props.classNames;
+    return _react.default.createElement(_Transition.default, _extends({}, props, {
+      onEnter: this.onEnter,
+      onEntered: this.onEntered,
+      onEntering: this.onEntering,
+      onExit: this.onExit,
+      onExiting: this.onExiting,
+      onExited: this.onExited
+    }));
+  };
+
+  return CSSTransition;
+}(_react.default.Component);
+
+CSSTransition.propTypes =  true ? _extends({}, _Transition.default.propTypes, {
+  /**
+   * The animation classNames applied to the component as it enters, exits or has finished the transition.
+   * A single name can be provided and it will be suffixed for each stage: e.g.
+   *
+   * `classNames="fade"` applies `fade-enter`, `fade-enter-active`, `fade-enter-done`,
+   * `fade-exit`, `fade-exit-active`, `fade-exit-done`, `fade-appear`, and `fade-appear-active`.
+   * Each individual classNames can also be specified independently like:
+   *
+   * ```js
+   * classNames={{
+   *  appear: 'my-appear',
+   *  appearActive: 'my-active-appear',
+   *  enter: 'my-enter',
+   *  enterActive: 'my-active-enter',
+   *  enterDone: 'my-done-enter',
+   *  exit: 'my-exit',
+   *  exitActive: 'my-active-exit',
+   *  exitDone: 'my-done-exit',
+   * }}
+   * ```
+   *
+   * If you want to set these classes using CSS Modules:
+   *
+   * ```js
+   * import styles from './styles.css';
+   * ```
+   *
+   * you might want to use camelCase in your CSS file, that way could simply spread
+   * them instead of listing them one by one:
+   *
+   * ```js
+   * classNames={{ ...styles }}
+   * ```
+   *
+   * @type {string | {
+   *  appear?: string,
+   *  appearActive?: string,
+   *  enter?: string,
+   *  enterActive?: string,
+   *  enterDone?: string,
+   *  exit?: string,
+   *  exitActive?: string,
+   *  exitDone?: string,
+   * }}
+   */
+  classNames: _PropTypes.classNamesShape,
+
+  /**
+   * A `<Transition>` callback fired immediately after the 'enter' or 'appear' class is
+   * applied.
+   *
+   * @type Function(node: HtmlElement, isAppearing: bool)
+   */
+  onEnter: PropTypes.func,
+
+  /**
+   * A `<Transition>` callback fired immediately after the 'enter-active' or
+   * 'appear-active' class is applied.
+   *
+   * @type Function(node: HtmlElement, isAppearing: bool)
+   */
+  onEntering: PropTypes.func,
+
+  /**
+   * A `<Transition>` callback fired immediately after the 'enter' or
+   * 'appear' classes are **removed** and the `done` class is added to the DOM node.
+   *
+   * @type Function(node: HtmlElement, isAppearing: bool)
+   */
+  onEntered: PropTypes.func,
+
+  /**
+   * A `<Transition>` callback fired immediately after the 'exit' class is
+   * applied.
+   *
+   * @type Function(node: HtmlElement)
+   */
+  onExit: PropTypes.func,
+
+  /**
+   * A `<Transition>` callback fired immediately after the 'exit-active' is applied.
+   *
+   * @type Function(node: HtmlElement)
+   */
+  onExiting: PropTypes.func,
+
+  /**
+   * A `<Transition>` callback fired immediately after the 'exit' classes
+   * are **removed** and the `exit-done` class is added to the DOM node.
+   *
+   * @type Function(node: HtmlElement)
+   */
+  onExited: PropTypes.func
+}) : {};
+var _default = CSSTransition;
+exports.default = _default;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./node_modules/react-transition-group/ReplaceTransition.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _propTypes = _interopRequireDefault(__webpack_require__("./node_modules/prop-types/index.js"));
+
+var _react = _interopRequireDefault(__webpack_require__("./node_modules/react/index.js"));
+
+var _reactDom = __webpack_require__("./node_modules/react-dom/index.js");
+
+var _TransitionGroup = _interopRequireDefault(__webpack_require__("./node_modules/react-transition-group/TransitionGroup.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+/**
+ * The `<ReplaceTransition>` component is a specialized `Transition` component
+ * that animates between two children.
+ *
+ * ```jsx
+ * <ReplaceTransition in>
+ *   <Fade><div>I appear first</div></Fade>
+ *   <Fade><div>I replace the above</div></Fade>
+ * </ReplaceTransition>
+ * ```
+ */
+var ReplaceTransition =
+/*#__PURE__*/
+function (_React$Component) {
+  _inheritsLoose(ReplaceTransition, _React$Component);
+
+  function ReplaceTransition() {
+    var _this;
+
+    for (var _len = arguments.length, _args = new Array(_len), _key = 0; _key < _len; _key++) {
+      _args[_key] = arguments[_key];
+    }
+
+    _this = _React$Component.call.apply(_React$Component, [this].concat(_args)) || this;
+
+    _this.handleEnter = function () {
+      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
+      }
+
+      return _this.handleLifecycle('onEnter', 0, args);
+    };
+
+    _this.handleEntering = function () {
+      for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+        args[_key3] = arguments[_key3];
+      }
+
+      return _this.handleLifecycle('onEntering', 0, args);
+    };
+
+    _this.handleEntered = function () {
+      for (var _len4 = arguments.length, args = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+        args[_key4] = arguments[_key4];
+      }
+
+      return _this.handleLifecycle('onEntered', 0, args);
+    };
+
+    _this.handleExit = function () {
+      for (var _len5 = arguments.length, args = new Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
+        args[_key5] = arguments[_key5];
+      }
+
+      return _this.handleLifecycle('onExit', 1, args);
+    };
+
+    _this.handleExiting = function () {
+      for (var _len6 = arguments.length, args = new Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
+        args[_key6] = arguments[_key6];
+      }
+
+      return _this.handleLifecycle('onExiting', 1, args);
+    };
+
+    _this.handleExited = function () {
+      for (var _len7 = arguments.length, args = new Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {
+        args[_key7] = arguments[_key7];
+      }
+
+      return _this.handleLifecycle('onExited', 1, args);
+    };
+
+    return _this;
+  }
+
+  var _proto = ReplaceTransition.prototype;
+
+  _proto.handleLifecycle = function handleLifecycle(handler, idx, originalArgs) {
+    var _child$props;
+
+    var children = this.props.children;
+
+    var child = _react.default.Children.toArray(children)[idx];
+
+    if (child.props[handler]) (_child$props = child.props)[handler].apply(_child$props, originalArgs);
+    if (this.props[handler]) this.props[handler]((0, _reactDom.findDOMNode)(this));
+  };
+
+  _proto.render = function render() {
+    var _this$props = this.props,
+        children = _this$props.children,
+        inProp = _this$props.in,
+        props = _objectWithoutPropertiesLoose(_this$props, ["children", "in"]);
+
+    var _React$Children$toArr = _react.default.Children.toArray(children),
+        first = _React$Children$toArr[0],
+        second = _React$Children$toArr[1];
+
+    delete props.onEnter;
+    delete props.onEntering;
+    delete props.onEntered;
+    delete props.onExit;
+    delete props.onExiting;
+    delete props.onExited;
+    return _react.default.createElement(_TransitionGroup.default, props, inProp ? _react.default.cloneElement(first, {
+      key: 'first',
+      onEnter: this.handleEnter,
+      onEntering: this.handleEntering,
+      onEntered: this.handleEntered
+    }) : _react.default.cloneElement(second, {
+      key: 'second',
+      onEnter: this.handleExit,
+      onEntering: this.handleExiting,
+      onEntered: this.handleExited
+    }));
+  };
+
+  return ReplaceTransition;
+}(_react.default.Component);
+
+ReplaceTransition.propTypes =  true ? {
+  in: _propTypes.default.bool.isRequired,
+  children: function children(props, propName) {
+    if (_react.default.Children.count(props[propName]) !== 2) return new Error("\"" + propName + "\" must be exactly two transition components.");
+    return null;
+  }
+} : {};
+var _default = ReplaceTransition;
+exports.default = _default;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./node_modules/react-transition-group/Transition.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = exports.EXITING = exports.ENTERED = exports.ENTERING = exports.EXITED = exports.UNMOUNTED = void 0;
+
+var PropTypes = _interopRequireWildcard(__webpack_require__("./node_modules/prop-types/index.js"));
+
+var _react = _interopRequireDefault(__webpack_require__("./node_modules/react/index.js"));
+
+var _reactDom = _interopRequireDefault(__webpack_require__("./node_modules/react-dom/index.js"));
+
+var _reactLifecyclesCompat = __webpack_require__("./node_modules/react-lifecycles-compat/react-lifecycles-compat.es.js");
+
+var _PropTypes = __webpack_require__("./node_modules/react-transition-group/utils/PropTypes.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var UNMOUNTED = 'unmounted';
+exports.UNMOUNTED = UNMOUNTED;
+var EXITED = 'exited';
+exports.EXITED = EXITED;
+var ENTERING = 'entering';
+exports.ENTERING = ENTERING;
+var ENTERED = 'entered';
+exports.ENTERED = ENTERED;
+var EXITING = 'exiting';
+/**
+ * The Transition component lets you describe a transition from one component
+ * state to another _over time_ with a simple declarative API. Most commonly
+ * it's used to animate the mounting and unmounting of a component, but can also
+ * be used to describe in-place transition states as well.
+ *
+ * By default the `Transition` component does not alter the behavior of the
+ * component it renders, it only tracks "enter" and "exit" states for the components.
+ * It's up to you to give meaning and effect to those states. For example we can
+ * add styles to a component when it enters or exits:
+ *
+ * ```jsx
+ * import Transition from 'react-transition-group/Transition';
+ *
+ * const duration = 300;
+ *
+ * const defaultStyle = {
+ *   transition: `opacity ${duration}ms ease-in-out`,
+ *   opacity: 0,
+ * }
+ *
+ * const transitionStyles = {
+ *   entering: { opacity: 0 },
+ *   entered:  { opacity: 1 },
+ * };
+ *
+ * const Fade = ({ in: inProp }) => (
+ *   <Transition in={inProp} timeout={duration}>
+ *     {(state) => (
+ *       <div style={{
+ *         ...defaultStyle,
+ *         ...transitionStyles[state]
+ *       }}>
+ *         I'm a fade Transition!
+ *       </div>
+ *     )}
+ *   </Transition>
+ * );
+ * ```
+ *
+ * As noted the `Transition` component doesn't _do_ anything by itself to its child component.
+ * What it does do is track transition states over time so you can update the
+ * component (such as by adding styles or classes) when it changes states.
+ *
+ * There are 4 main states a Transition can be in:
+ *  - `'entering'`
+ *  - `'entered'`
+ *  - `'exiting'`
+ *  - `'exited'`
+ *
+ * Transition state is toggled via the `in` prop. When `true` the component begins the
+ * "Enter" stage. During this stage, the component will shift from its current transition state,
+ * to `'entering'` for the duration of the transition and then to the `'entered'` stage once
+ * it's complete. Let's take the following example:
+ *
+ * ```jsx
+ * state = { in: false };
+ *
+ * toggleEnterState = () => {
+ *   this.setState({ in: true });
+ * }
+ *
+ * render() {
+ *   return (
+ *     <div>
+ *       <Transition in={this.state.in} timeout={500} />
+ *       <button onClick={this.toggleEnterState}>Click to Enter</button>
+ *     </div>
+ *   );
+ * }
+ * ```
+ *
+ * When the button is clicked the component will shift to the `'entering'` state and
+ * stay there for 500ms (the value of `timeout`) before it finally switches to `'entered'`.
+ *
+ * When `in` is `false` the same thing happens except the state moves from `'exiting'` to `'exited'`.
+ *
+ * ## Timing
+ *
+ * Timing is often the trickiest part of animation, mistakes can result in slight delays
+ * that are hard to pin down. A common example is when you want to add an exit transition,
+ * you should set the desired final styles when the state is `'exiting'`. That's when the
+ * transition to those styles will start and, if you matched the `timeout` prop with the
+ * CSS Transition duration, it will end exactly when the state changes to `'exited'`.
+ *
+ * > **Note**: For simpler transitions the `Transition` component might be enough, but
+ * > take into account that it's platform-agnostic, while the `CSSTransition` component
+ * > [forces reflows](https://github.com/reactjs/react-transition-group/blob/5007303e729a74be66a21c3e2205e4916821524b/src/CSSTransition.js#L208-L215)
+ * > in order to make more complex transitions more predictable. For example, even though
+ * > classes `example-enter` and `example-enter-active` are applied immediately one after
+ * > another, you can still transition from one to the other because of the forced reflow
+ * > (read [this issue](https://github.com/reactjs/react-transition-group/issues/159#issuecomment-322761171)
+ * > for more info). Take this into account when choosing between `Transition` and
+ * > `CSSTransition`.
+ */
+
+exports.EXITING = EXITING;
+
+var Transition =
+/*#__PURE__*/
+function (_React$Component) {
+  _inheritsLoose(Transition, _React$Component);
+
+  function Transition(props, context) {
+    var _this;
+
+    _this = _React$Component.call(this, props, context) || this;
+    var parentGroup = context.transitionGroup; // In the context of a TransitionGroup all enters are really appears
+
+    var appear = parentGroup && !parentGroup.isMounting ? props.enter : props.appear;
+    var initialStatus;
+    _this.appearStatus = null;
+
+    if (props.in) {
+      if (appear) {
+        initialStatus = EXITED;
+        _this.appearStatus = ENTERING;
+      } else {
+        initialStatus = ENTERED;
+      }
+    } else {
+      if (props.unmountOnExit || props.mountOnEnter) {
+        initialStatus = UNMOUNTED;
+      } else {
+        initialStatus = EXITED;
+      }
+    }
+
+    _this.state = {
+      status: initialStatus
+    };
+    _this.nextCallback = null;
+    return _this;
+  }
+
+  var _proto = Transition.prototype;
+
+  _proto.getChildContext = function getChildContext() {
+    return {
+      transitionGroup: null // allows for nested Transitions
+
+    };
+  };
+
+  Transition.getDerivedStateFromProps = function getDerivedStateFromProps(_ref, prevState) {
+    var nextIn = _ref.in;
+
+    if (nextIn && prevState.status === UNMOUNTED) {
+      return {
+        status: EXITED
+      };
+    }
+
+    return null;
+  }; // getSnapshotBeforeUpdate(prevProps) {
+  //   let nextStatus = null
+  //   if (prevProps !== this.props) {
+  //     const { status } = this.state
+  //     if (this.props.in) {
+  //       if (status !== ENTERING && status !== ENTERED) {
+  //         nextStatus = ENTERING
+  //       }
+  //     } else {
+  //       if (status === ENTERING || status === ENTERED) {
+  //         nextStatus = EXITING
+  //       }
+  //     }
+  //   }
+  //   return { nextStatus }
+  // }
+
+
+  _proto.componentDidMount = function componentDidMount() {
+    this.updateStatus(true, this.appearStatus);
+  };
+
+  _proto.componentDidUpdate = function componentDidUpdate(prevProps) {
+    var nextStatus = null;
+
+    if (prevProps !== this.props) {
+      var status = this.state.status;
+
+      if (this.props.in) {
+        if (status !== ENTERING && status !== ENTERED) {
+          nextStatus = ENTERING;
+        }
+      } else {
+        if (status === ENTERING || status === ENTERED) {
+          nextStatus = EXITING;
+        }
+      }
+    }
+
+    this.updateStatus(false, nextStatus);
+  };
+
+  _proto.componentWillUnmount = function componentWillUnmount() {
+    this.cancelNextCallback();
+  };
+
+  _proto.getTimeouts = function getTimeouts() {
+    var timeout = this.props.timeout;
+    var exit, enter, appear;
+    exit = enter = appear = timeout;
+
+    if (timeout != null && typeof timeout !== 'number') {
+      exit = timeout.exit;
+      enter = timeout.enter;
+      appear = timeout.appear;
+    }
+
+    return {
+      exit: exit,
+      enter: enter,
+      appear: appear
+    };
+  };
+
+  _proto.updateStatus = function updateStatus(mounting, nextStatus) {
+    if (mounting === void 0) {
+      mounting = false;
+    }
+
+    if (nextStatus !== null) {
+      // nextStatus will always be ENTERING or EXITING.
+      this.cancelNextCallback();
+
+      var node = _reactDom.default.findDOMNode(this);
+
+      if (nextStatus === ENTERING) {
+        this.performEnter(node, mounting);
+      } else {
+        this.performExit(node);
+      }
+    } else if (this.props.unmountOnExit && this.state.status === EXITED) {
+      this.setState({
+        status: UNMOUNTED
+      });
+    }
+  };
+
+  _proto.performEnter = function performEnter(node, mounting) {
+    var _this2 = this;
+
+    var enter = this.props.enter;
+    var appearing = this.context.transitionGroup ? this.context.transitionGroup.isMounting : mounting;
+    var timeouts = this.getTimeouts(); // no enter animation skip right to ENTERED
+    // if we are mounting and running this it means appear _must_ be set
+
+    if (!mounting && !enter) {
+      this.safeSetState({
+        status: ENTERED
+      }, function () {
+        _this2.props.onEntered(node);
+      });
+      return;
+    }
+
+    this.props.onEnter(node, appearing);
+    this.safeSetState({
+      status: ENTERING
+    }, function () {
+      _this2.props.onEntering(node, appearing); // FIXME: appear timeout?
+
+
+      _this2.onTransitionEnd(node, timeouts.enter, function () {
+        _this2.safeSetState({
+          status: ENTERED
+        }, function () {
+          _this2.props.onEntered(node, appearing);
+        });
+      });
+    });
+  };
+
+  _proto.performExit = function performExit(node) {
+    var _this3 = this;
+
+    var exit = this.props.exit;
+    var timeouts = this.getTimeouts(); // no exit animation skip right to EXITED
+
+    if (!exit) {
+      this.safeSetState({
+        status: EXITED
+      }, function () {
+        _this3.props.onExited(node);
+      });
+      return;
+    }
+
+    this.props.onExit(node);
+    this.safeSetState({
+      status: EXITING
+    }, function () {
+      _this3.props.onExiting(node);
+
+      _this3.onTransitionEnd(node, timeouts.exit, function () {
+        _this3.safeSetState({
+          status: EXITED
+        }, function () {
+          _this3.props.onExited(node);
+        });
+      });
+    });
+  };
+
+  _proto.cancelNextCallback = function cancelNextCallback() {
+    if (this.nextCallback !== null) {
+      this.nextCallback.cancel();
+      this.nextCallback = null;
+    }
+  };
+
+  _proto.safeSetState = function safeSetState(nextState, callback) {
+    // This shouldn't be necessary, but there are weird race conditions with
+    // setState callbacks and unmounting in testing, so always make sure that
+    // we can cancel any pending setState callbacks after we unmount.
+    callback = this.setNextCallback(callback);
+    this.setState(nextState, callback);
+  };
+
+  _proto.setNextCallback = function setNextCallback(callback) {
+    var _this4 = this;
+
+    var active = true;
+
+    this.nextCallback = function (event) {
+      if (active) {
+        active = false;
+        _this4.nextCallback = null;
+        callback(event);
+      }
+    };
+
+    this.nextCallback.cancel = function () {
+      active = false;
+    };
+
+    return this.nextCallback;
+  };
+
+  _proto.onTransitionEnd = function onTransitionEnd(node, timeout, handler) {
+    this.setNextCallback(handler);
+
+    if (node) {
+      if (this.props.addEndListener) {
+        this.props.addEndListener(node, this.nextCallback);
+      }
+
+      if (timeout != null) {
+        setTimeout(this.nextCallback, timeout);
+      }
+    } else {
+      setTimeout(this.nextCallback, 0);
+    }
+  };
+
+  _proto.render = function render() {
+    var status = this.state.status;
+
+    if (status === UNMOUNTED) {
+      return null;
+    }
+
+    var _this$props = this.props,
+        children = _this$props.children,
+        childProps = _objectWithoutPropertiesLoose(_this$props, ["children"]); // filter props for Transtition
+
+
+    delete childProps.in;
+    delete childProps.mountOnEnter;
+    delete childProps.unmountOnExit;
+    delete childProps.appear;
+    delete childProps.enter;
+    delete childProps.exit;
+    delete childProps.timeout;
+    delete childProps.addEndListener;
+    delete childProps.onEnter;
+    delete childProps.onEntering;
+    delete childProps.onEntered;
+    delete childProps.onExit;
+    delete childProps.onExiting;
+    delete childProps.onExited;
+
+    if (typeof children === 'function') {
+      return children(status, childProps);
+    }
+
+    var child = _react.default.Children.only(children);
+
+    return _react.default.cloneElement(child, childProps);
+  };
+
+  return Transition;
+}(_react.default.Component);
+
+Transition.contextTypes = {
+  transitionGroup: PropTypes.object
+};
+Transition.childContextTypes = {
+  transitionGroup: function transitionGroup() {}
+};
+Transition.propTypes =  true ? {
+  /**
+   * A `function` child can be used instead of a React element.
+   * This function is called with the current transition status
+   * ('entering', 'entered', 'exiting', 'exited', 'unmounted'), which can be used
+   * to apply context specific props to a component.
+   *
+   * ```jsx
+   * <Transition timeout={150}>
+   *   {(status) => (
+   *     <MyComponent className={`fade fade-${status}`} />
+   *   )}
+   * </Transition>
+   * ```
+   */
+  children: PropTypes.oneOfType([PropTypes.func.isRequired, PropTypes.element.isRequired]).isRequired,
+
+  /**
+   * Show the component; triggers the enter or exit states
+   */
+  in: PropTypes.bool,
+
+  /**
+   * By default the child component is mounted immediately along with
+   * the parent `Transition` component. If you want to "lazy mount" the component on the
+   * first `in={true}` you can set `mountOnEnter`. After the first enter transition the component will stay
+   * mounted, even on "exited", unless you also specify `unmountOnExit`.
+   */
+  mountOnEnter: PropTypes.bool,
+
+  /**
+   * By default the child component stays mounted after it reaches the `'exited'` state.
+   * Set `unmountOnExit` if you'd prefer to unmount the component after it finishes exiting.
+   */
+  unmountOnExit: PropTypes.bool,
+
+  /**
+   * Normally a component is not transitioned if it is shown when the `<Transition>` component mounts.
+   * If you want to transition on the first mount set `appear` to `true`, and the
+   * component will transition in as soon as the `<Transition>` mounts.
+   *
+   * > Note: there are no specific "appear" states. `appear` only adds an additional `enter` transition.
+   */
+  appear: PropTypes.bool,
+
+  /**
+   * Enable or disable enter transitions.
+   */
+  enter: PropTypes.bool,
+
+  /**
+   * Enable or disable exit transitions.
+   */
+  exit: PropTypes.bool,
+
+  /**
+   * The duration of the transition, in milliseconds.
+   * Required unless `addEndListener` is provided
+   *
+   * You may specify a single timeout for all transitions like: `timeout={500}`,
+   * or individually like:
+   *
+   * ```jsx
+   * timeout={{
+   *  enter: 300,
+   *  exit: 500,
+   * }}
+   * ```
+   *
+   * @type {number | { enter?: number, exit?: number }}
+   */
+  timeout: function timeout(props) {
+    var pt =  true ? _PropTypes.timeoutsShape : {};;
+    if (!props.addEndListener) pt = pt.isRequired;
+
+    for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+
+    return pt.apply(void 0, [props].concat(args));
+  },
+
+  /**
+   * Add a custom transition end trigger. Called with the transitioning
+   * DOM node and a `done` callback. Allows for more fine grained transition end
+   * logic. **Note:** Timeouts are still used as a fallback if provided.
+   *
+   * ```jsx
+   * addEndListener={(node, done) => {
+   *   // use the css transitionend event to mark the finish of a transition
+   *   node.addEventListener('transitionend', done, false);
+   * }}
+   * ```
+   */
+  addEndListener: PropTypes.func,
+
+  /**
+   * Callback fired before the "entering" status is applied. An extra parameter
+   * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
+   *
+   * @type Function(node: HtmlElement, isAppearing: bool) -> void
+   */
+  onEnter: PropTypes.func,
+
+  /**
+   * Callback fired after the "entering" status is applied. An extra parameter
+   * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
+   *
+   * @type Function(node: HtmlElement, isAppearing: bool)
+   */
+  onEntering: PropTypes.func,
+
+  /**
+   * Callback fired after the "entered" status is applied. An extra parameter
+   * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
+   *
+   * @type Function(node: HtmlElement, isAppearing: bool) -> void
+   */
+  onEntered: PropTypes.func,
+
+  /**
+   * Callback fired before the "exiting" status is applied.
+   *
+   * @type Function(node: HtmlElement) -> void
+   */
+  onExit: PropTypes.func,
+
+  /**
+   * Callback fired after the "exiting" status is applied.
+   *
+   * @type Function(node: HtmlElement) -> void
+   */
+  onExiting: PropTypes.func,
+
+  /**
+   * Callback fired after the "exited" status is applied.
+   *
+   * @type Function(node: HtmlElement) -> void
+   */
+  onExited: PropTypes.func // Name the function so it is clearer in the documentation
+
+} : {};
+
+function noop() {}
+
+Transition.defaultProps = {
+  in: false,
+  mountOnEnter: false,
+  unmountOnExit: false,
+  appear: false,
+  enter: true,
+  exit: true,
+  onEnter: noop,
+  onEntering: noop,
+  onEntered: noop,
+  onExit: noop,
+  onExiting: noop,
+  onExited: noop
+};
+Transition.UNMOUNTED = 0;
+Transition.EXITED = 1;
+Transition.ENTERING = 2;
+Transition.ENTERED = 3;
+Transition.EXITING = 4;
+
+var _default = (0, _reactLifecyclesCompat.polyfill)(Transition);
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/react-transition-group/TransitionGroup.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _propTypes = _interopRequireDefault(__webpack_require__("./node_modules/prop-types/index.js"));
+
+var _react = _interopRequireDefault(__webpack_require__("./node_modules/react/index.js"));
+
+var _reactLifecyclesCompat = __webpack_require__("./node_modules/react-lifecycles-compat/react-lifecycles-compat.es.js");
+
+var _ChildMapping = __webpack_require__("./node_modules/react-transition-group/utils/ChildMapping.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+var values = Object.values || function (obj) {
+  return Object.keys(obj).map(function (k) {
+    return obj[k];
+  });
+};
+
+var defaultProps = {
+  component: 'div',
+  childFactory: function childFactory(child) {
+    return child;
+  }
+  /**
+   * The `<TransitionGroup>` component manages a set of transition components
+   * (`<Transition>` and `<CSSTransition>`) in a list. Like with the transition
+   * components, `<TransitionGroup>` is a state machine for managing the mounting
+   * and unmounting of components over time.
+   *
+   * Consider the example below. As items are removed or added to the TodoList the
+   * `in` prop is toggled automatically by the `<TransitionGroup>`.
+   *
+   * Note that `<TransitionGroup>`  does not define any animation behavior!
+   * Exactly _how_ a list item animates is up to the individual transition
+   * component. This means you can mix and match animations across different list
+   * items.
+   */
+
+};
+
+var TransitionGroup =
+/*#__PURE__*/
+function (_React$Component) {
+  _inheritsLoose(TransitionGroup, _React$Component);
+
+  function TransitionGroup(props, context) {
+    var _this;
+
+    _this = _React$Component.call(this, props, context) || this;
+
+    var handleExited = _this.handleExited.bind(_assertThisInitialized(_assertThisInitialized(_this))); // Initial children should all be entering, dependent on appear
+
+
+    _this.state = {
+      handleExited: handleExited,
+      firstRender: true
+    };
+    return _this;
+  }
+
+  var _proto = TransitionGroup.prototype;
+
+  _proto.getChildContext = function getChildContext() {
+    return {
+      transitionGroup: {
+        isMounting: !this.appeared
+      }
+    };
+  };
+
+  _proto.componentDidMount = function componentDidMount() {
+    this.appeared = true;
+    this.mounted = true;
+  };
+
+  _proto.componentWillUnmount = function componentWillUnmount() {
+    this.mounted = false;
+  };
+
+  TransitionGroup.getDerivedStateFromProps = function getDerivedStateFromProps(nextProps, _ref) {
+    var prevChildMapping = _ref.children,
+        handleExited = _ref.handleExited,
+        firstRender = _ref.firstRender;
+    return {
+      children: firstRender ? (0, _ChildMapping.getInitialChildMapping)(nextProps, handleExited) : (0, _ChildMapping.getNextChildMapping)(nextProps, prevChildMapping, handleExited),
+      firstRender: false
+    };
+  };
+
+  _proto.handleExited = function handleExited(child, node) {
+    var currentChildMapping = (0, _ChildMapping.getChildMapping)(this.props.children);
+    if (child.key in currentChildMapping) return;
+
+    if (child.props.onExited) {
+      child.props.onExited(node);
+    }
+
+    if (this.mounted) {
+      this.setState(function (state) {
+        var children = _extends({}, state.children);
+
+        delete children[child.key];
+        return {
+          children: children
+        };
+      });
+    }
+  };
+
+  _proto.render = function render() {
+    var _this$props = this.props,
+        Component = _this$props.component,
+        childFactory = _this$props.childFactory,
+        props = _objectWithoutPropertiesLoose(_this$props, ["component", "childFactory"]);
+
+    var children = values(this.state.children).map(childFactory);
+    delete props.appear;
+    delete props.enter;
+    delete props.exit;
+
+    if (Component === null) {
+      return children;
+    }
+
+    return _react.default.createElement(Component, props, children);
+  };
+
+  return TransitionGroup;
+}(_react.default.Component);
+
+TransitionGroup.childContextTypes = {
+  transitionGroup: _propTypes.default.object.isRequired
+};
+TransitionGroup.propTypes =  true ? {
+  /**
+   * `<TransitionGroup>` renders a `<div>` by default. You can change this
+   * behavior by providing a `component` prop.
+   * If you use React v16+ and would like to avoid a wrapping `<div>` element
+   * you can pass in `component={null}`. This is useful if the wrapping div
+   * borks your css styles.
+   */
+  component: _propTypes.default.any,
+
+  /**
+   * A set of `<Transition>` components, that are toggled `in` and out as they
+   * leave. the `<TransitionGroup>` will inject specific transition props, so
+   * remember to spread them through if you are wrapping the `<Transition>` as
+   * with our `<Fade>` example.
+   */
+  children: _propTypes.default.node,
+
+  /**
+   * A convenience prop that enables or disables appear animations
+   * for all children. Note that specifying this will override any defaults set
+   * on individual children Transitions.
+   */
+  appear: _propTypes.default.bool,
+
+  /**
+   * A convenience prop that enables or disables enter animations
+   * for all children. Note that specifying this will override any defaults set
+   * on individual children Transitions.
+   */
+  enter: _propTypes.default.bool,
+
+  /**
+   * A convenience prop that enables or disables exit animations
+   * for all children. Note that specifying this will override any defaults set
+   * on individual children Transitions.
+   */
+  exit: _propTypes.default.bool,
+
+  /**
+   * You may need to apply reactive updates to a child as it is exiting.
+   * This is generally done by using `cloneElement` however in the case of an exiting
+   * child the element has already been removed and not accessible to the consumer.
+   *
+   * If you do need to update a child as it leaves you can provide a `childFactory`
+   * to wrap every child, even the ones that are leaving.
+   *
+   * @type Function(child: ReactElement) -> ReactElement
+   */
+  childFactory: _propTypes.default.func
+} : {};
+TransitionGroup.defaultProps = defaultProps;
+
+var _default = (0, _reactLifecyclesCompat.polyfill)(TransitionGroup);
+
+exports.default = _default;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./node_modules/react-transition-group/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _CSSTransition = _interopRequireDefault(__webpack_require__("./node_modules/react-transition-group/CSSTransition.js"));
+
+var _ReplaceTransition = _interopRequireDefault(__webpack_require__("./node_modules/react-transition-group/ReplaceTransition.js"));
+
+var _TransitionGroup = _interopRequireDefault(__webpack_require__("./node_modules/react-transition-group/TransitionGroup.js"));
+
+var _Transition = _interopRequireDefault(__webpack_require__("./node_modules/react-transition-group/Transition.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports = {
+  Transition: _Transition.default,
+  TransitionGroup: _TransitionGroup.default,
+  ReplaceTransition: _ReplaceTransition.default,
+  CSSTransition: _CSSTransition.default
+};
+
+/***/ }),
+
+/***/ "./node_modules/react-transition-group/utils/ChildMapping.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.getChildMapping = getChildMapping;
+exports.mergeChildMappings = mergeChildMappings;
+exports.getInitialChildMapping = getInitialChildMapping;
+exports.getNextChildMapping = getNextChildMapping;
+
+var _react = __webpack_require__("./node_modules/react/index.js");
+
+/**
+ * Given `this.props.children`, return an object mapping key to child.
+ *
+ * @param {*} children `this.props.children`
+ * @return {object} Mapping of key to child
+ */
+function getChildMapping(children, mapFn) {
+  var mapper = function mapper(child) {
+    return mapFn && (0, _react.isValidElement)(child) ? mapFn(child) : child;
+  };
+
+  var result = Object.create(null);
+  if (children) _react.Children.map(children, function (c) {
+    return c;
+  }).forEach(function (child) {
+    // run the map function here instead so that the key is the computed one
+    result[child.key] = mapper(child);
+  });
+  return result;
+}
+/**
+ * When you're adding or removing children some may be added or removed in the
+ * same render pass. We want to show *both* since we want to simultaneously
+ * animate elements in and out. This function takes a previous set of keys
+ * and a new set of keys and merges them with its best guess of the correct
+ * ordering. In the future we may expose some of the utilities in
+ * ReactMultiChild to make this easy, but for now React itself does not
+ * directly have this concept of the union of prevChildren and nextChildren
+ * so we implement it here.
+ *
+ * @param {object} prev prev children as returned from
+ * `ReactTransitionChildMapping.getChildMapping()`.
+ * @param {object} next next children as returned from
+ * `ReactTransitionChildMapping.getChildMapping()`.
+ * @return {object} a key set that contains all keys in `prev` and all keys
+ * in `next` in a reasonable order.
+ */
+
+
+function mergeChildMappings(prev, next) {
+  prev = prev || {};
+  next = next || {};
+
+  function getValueForKey(key) {
+    return key in next ? next[key] : prev[key];
+  } // For each key of `next`, the list of keys to insert before that key in
+  // the combined list
+
+
+  var nextKeysPending = Object.create(null);
+  var pendingKeys = [];
+
+  for (var prevKey in prev) {
+    if (prevKey in next) {
+      if (pendingKeys.length) {
+        nextKeysPending[prevKey] = pendingKeys;
+        pendingKeys = [];
+      }
+    } else {
+      pendingKeys.push(prevKey);
+    }
+  }
+
+  var i;
+  var childMapping = {};
+
+  for (var nextKey in next) {
+    if (nextKeysPending[nextKey]) {
+      for (i = 0; i < nextKeysPending[nextKey].length; i++) {
+        var pendingNextKey = nextKeysPending[nextKey][i];
+        childMapping[nextKeysPending[nextKey][i]] = getValueForKey(pendingNextKey);
+      }
+    }
+
+    childMapping[nextKey] = getValueForKey(nextKey);
+  } // Finally, add the keys which didn't appear before any key in `next`
+
+
+  for (i = 0; i < pendingKeys.length; i++) {
+    childMapping[pendingKeys[i]] = getValueForKey(pendingKeys[i]);
+  }
+
+  return childMapping;
+}
+
+function getProp(child, prop, props) {
+  return props[prop] != null ? props[prop] : child.props[prop];
+}
+
+function getInitialChildMapping(props, onExited) {
+  return getChildMapping(props.children, function (child) {
+    return (0, _react.cloneElement)(child, {
+      onExited: onExited.bind(null, child),
+      in: true,
+      appear: getProp(child, 'appear', props),
+      enter: getProp(child, 'enter', props),
+      exit: getProp(child, 'exit', props)
+    });
+  });
+}
+
+function getNextChildMapping(nextProps, prevChildMapping, onExited) {
+  var nextChildMapping = getChildMapping(nextProps.children);
+  var children = mergeChildMappings(prevChildMapping, nextChildMapping);
+  Object.keys(children).forEach(function (key) {
+    var child = children[key];
+    if (!(0, _react.isValidElement)(child)) return;
+    var hasPrev = key in prevChildMapping;
+    var hasNext = key in nextChildMapping;
+    var prevChild = prevChildMapping[key];
+    var isLeaving = (0, _react.isValidElement)(prevChild) && !prevChild.props.in; // item is new (entering)
+
+    if (hasNext && (!hasPrev || isLeaving)) {
+      // console.log('entering', key)
+      children[key] = (0, _react.cloneElement)(child, {
+        onExited: onExited.bind(null, child),
+        in: true,
+        exit: getProp(child, 'exit', nextProps),
+        enter: getProp(child, 'enter', nextProps)
+      });
+    } else if (!hasNext && hasPrev && !isLeaving) {
+      // item is old (exiting)
+      // console.log('leaving', key)
+      children[key] = (0, _react.cloneElement)(child, {
+        in: false
+      });
+    } else if (hasNext && hasPrev && (0, _react.isValidElement)(prevChild)) {
+      // item hasn't changed transition states
+      // copy over the last transition props;
+      // console.log('unchanged', key)
+      children[key] = (0, _react.cloneElement)(child, {
+        onExited: onExited.bind(null, child),
+        in: prevChild.props.in,
+        exit: getProp(child, 'exit', nextProps),
+        enter: getProp(child, 'enter', nextProps)
+      });
+    }
+  });
+  return children;
+}
+
+/***/ }),
+
+/***/ "./node_modules/react-transition-group/utils/PropTypes.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.classNamesShape = exports.timeoutsShape = void 0;
+
+var _propTypes = _interopRequireDefault(__webpack_require__("./node_modules/prop-types/index.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var timeoutsShape =  true ? _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.shape({
+  enter: _propTypes.default.number,
+  exit: _propTypes.default.number
+}).isRequired]) : null;
+exports.timeoutsShape = timeoutsShape;
+var classNamesShape =  true ? _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.shape({
+  enter: _propTypes.default.string,
+  exit: _propTypes.default.string,
+  active: _propTypes.default.string
+}), _propTypes.default.shape({
+  enter: _propTypes.default.string,
+  enterDone: _propTypes.default.string,
+  enterActive: _propTypes.default.string,
+  exit: _propTypes.default.string,
+  exitDone: _propTypes.default.string,
+  exitActive: _propTypes.default.string
+})]) : null;
+exports.classNamesShape = classNamesShape;
+
+/***/ }),
+
 /***/ "./node_modules/react/cjs/react.development.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -40395,6 +42839,146 @@ module.exports = g;
 
 /***/ }),
 
+/***/ "./resources/js/console-account.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Account; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__("./node_modules/react/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe__ = __webpack_require__("./node_modules/classNames/dedupe.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_classNames_dedupe__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_transition_group__ = __webpack_require__("./node_modules/react-transition-group/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_transition_group___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__);
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+}();
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError("Cannot call a class as a function");
+    }
+}
+
+function _possibleConstructorReturn(self, call) {
+    if (!self) {
+        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+
+// import { lithiumlist } from './lithiumlist-1.0.0.js';
+
+
+
+var Account = function (_React$Component) {
+    _inherits(Account, _React$Component);
+
+    function Account(props) {
+        _classCallCheck(this, Account);
+
+        return _possibleConstructorReturn(this, (Account.__proto__ || Object.getPrototypeOf(Account)).call(this, props));
+    }
+
+    _createClass(Account, [{
+        key: 'render',
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, 'Account', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null)));
+        }
+    }]);
+
+    return Account;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+/***/ }),
+
+/***/ "./resources/js/console-domains.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Domains; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__("./node_modules/react/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe__ = __webpack_require__("./node_modules/classNames/dedupe.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_classNames_dedupe__);
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+}();
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError("Cannot call a class as a function");
+    }
+}
+
+function _possibleConstructorReturn(self, call) {
+    if (!self) {
+        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+
+
+
+var Domains = function (_React$Component) {
+    _inherits(Domains, _React$Component);
+
+    function Domains(props) {
+        _classCallCheck(this, Domains);
+
+        var _this = _possibleConstructorReturn(this, (Domains.__proto__ || Object.getPrototypeOf(Domains)).call(this, props));
+
+        _this.state = {
+            textboxFocus: false
+        };
+        return _this;
+    }
+
+    _createClass(Domains, [{
+        key: 'render',
+        value: function render() {
+            var textboxClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+                'textentry-cont': true,
+                'focus': this.state.textboxFocus
+            });
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'message-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'message-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'sld icon-cross-ui' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'You have 1 product expiring in 28 days'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-item-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: textboxClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'input-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'textentry', placeholder: 'Domain...' })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'count-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'count-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'count-text' }, '1 left'))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-row' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont clear' }, 'ADD DOMAIN')))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'items-cont' }, 'Items'));
+        }
+    }]);
+
+    return Domains;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+/***/ }),
+
 /***/ "./resources/js/console.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -40405,7 +42989,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__("./node_modules/react-dom/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__monitor_win_width_js__ = __webpack_require__("./resources/js/monitor-win-width.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lithiumlist_1_0_0_js__ = __webpack_require__("./resources/js/lithiumlist-1.0.0.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_classNames_dedupe__ = __webpack_require__("./node_modules/classNames/dedupe.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_classNames_dedupe___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_classNames_dedupe__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_transition_group__ = __webpack_require__("./node_modules/react-transition-group/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_transition_group___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react_transition_group__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__console_domains_js__ = __webpack_require__("./resources/js/console-domains.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__console_account_js__ = __webpack_require__("./resources/js/console-account.js");
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () {
@@ -40443,89 +43032,32 @@ __webpack_require__("./node_modules/bootstrap/dist/js/bootstrap.js");
 
 
 
-var OuterCont = function (_React$Component) {
-    _inherits(OuterCont, _React$Component);
 
-    function OuterCont(props) {
-        _classCallCheck(this, OuterCont);
 
-        var _this = _possibleConstructorReturn(this, (OuterCont.__proto__ || Object.getPrototypeOf(OuterCont)).call(this, props));
+
+var App = function (_React$Component) {
+    _inherits(App, _React$Component);
+
+    function App(props) {
+        _classCallCheck(this, App);
+
+        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
         _this.state = {
-            listItems: [{ 'title': 'List item 0' }, { 'title': 'List item 1' }, { 'title': 'List item 2' }, { 'title': 'List item 3' }, { 'title': 'List item 4' }, { 'title': 'List item 5' }]
+            domainsLoaded: true,
+            tabIndex: 0
         };
-        _this.onSortEnd = _this.onSortEnd.bind(_this);
-        _this.onLeftEnd = _this.onLeftEnd.bind(_this);
+        _this.tabClick = _this.tabClick.bind(_this);
         return _this;
     }
 
-    _createClass(OuterCont, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            __WEBPACK_IMPORTED_MODULE_3__lithiumlist_1_0_0_js__["a" /* lithiumlist */].attachToList('123456789', this.outerCont, this.listCont, 'listItem', {
-                sortDragHandleClass: 'icon-grab-ui',
-                leftButtonClass: 'icon-trash',
-                rightEnabled: false,
-                onSortEnd: this.onSortEnd,
-                onLeftEnd: this.onLeftEnd
-            });
-        }
-    }, {
-        key: 'componentWillUnmount',
-        value: function componentWillUnmount() {
-            __WEBPACK_IMPORTED_MODULE_3__lithiumlist_1_0_0_js__["a" /* lithiumlist */].detachFromList(this.listCont);
-        }
-    }, {
-        key: 'onSortEnd',
-        value: function onSortEnd(instance, oldIndex, newIndex) {
-            if (oldIndex != newIndex) {
-                var newListItems = this.state.listItems.slice(0);
-                if (newIndex >= newListItems.length) {
-                    var i = newIndex - newListItems.length;
-                    while (i-- + 1) {
-                        newListItems.push(undefined);
-                    }
-                }
-                newListItems.splice(newIndex, 0, newListItems.splice(oldIndex, 1)[0]);
+    _createClass(App, [{
+        key: 'tabClick',
+        value: function tabClick(tabIndex) {
+            if (this.state.domainsLoaded) {
                 this.setState({
-                    listItems: newListItems
+                    tabIndex: tabIndex
                 });
-            }
-        }
-    }, {
-        key: 'onLeftEnd',
-        value: function onLeftEnd(instance, index, didSlideOut) {
-            if (didSlideOut) {
-                var newListItems = this.state.listItems.slice(0);
-                newListItems.splice(index, 1);
-                this.setState({
-                    listItems: newListItems
-                });
-            }
-        }
-    }, {
-        key: 'onKeyDown',
-        value: function onKeyDown(e) {
-            if (e.which && e.which == 13 || e.keyCode && e.keyCode == 13) {
-                // enter key
-                this.addListItem();
-            }
-        }
-    }, {
-        key: 'onAddItemClick',
-        value: function onAddItemClick() {
-            this.addListItem();
-        }
-    }, {
-        key: 'addListItem',
-        value: function addListItem() {
-            if (this.input.value && this.input.value.length > 0) {
-                var newListItems = this.state.listItems.slice(0);
-                newListItems.unshift({ 'title': this.input.value });
-                this.setState({
-                    listItems: newListItems
-                });
-                this.input.value = '';
             }
         }
     }, {
@@ -40533,2006 +43065,40 @@ var OuterCont = function (_React$Component) {
         value: function render() {
             var _this2 = this;
 
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: 'reactTopCont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'inputCont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', ref: function ref(input) {
-                    _this2.input = input;
-                }, onKeyDown: function onKeyDown(e) {
-                    return _this2.onKeyDown(e);
-                }, placeholder: 'New item...' })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey', onClick: function onClick() {
-                    return _this2.onAddItemClick();
-                } }, 'ADD ITEM'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { ref: function ref(div) {
-                    _this2.outerCont = div;
-                }, id: 'outerCont-react', className: 'outerCont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { ref: function ref(div) {
-                    _this2.listCont = div;
-                }, id: 'listCont-react', className: 'listCont' }, this.state.listItems.map(function (listItem, index) {
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(ListItem, { key: index, title: listItem.title });
-            }))));
+            var tab0Classes = __WEBPACK_IMPORTED_MODULE_3_classNames_dedupe___default()({
+                'tab-cont': true,
+                'selected': this.state.tabIndex == 0,
+                'unselected': this.state.tabIndex != 0,
+                'loaded': this.state.domainsLoaded
+            });
+            var icon0Classes = __WEBPACK_IMPORTED_MODULE_3_classNames_dedupe___default()({
+                'icon-archive': true,
+                'sld': this.state.tabIndex == 0,
+                'oln': this.state.tabIndex != 0
+            });
+            var tab1Classes = __WEBPACK_IMPORTED_MODULE_3_classNames_dedupe___default()({
+                'tab-cont': true,
+                'selected': this.state.tabIndex == 1,
+                'unselected': this.state.tabIndex != 1,
+                'loaded': this.state.domainsLoaded
+            });
+            var icon1Classes = __WEBPACK_IMPORTED_MODULE_3_classNames_dedupe___default()({
+                'icon-profile-picture': true,
+                'sld': this.state.tabIndex == 1,
+                'oln': this.state.tabIndex != 1
+            });
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'tabs-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: tab0Classes, onClick: function onClick() {
+                    _this2.tabClick(0);
+                } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: icon0Classes }), '\xA0Domains'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: tab1Classes, onClick: function onClick() {
+                    _this2.tabClick(1);
+                } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: icon1Classes }), '\xA0Account')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-cont' }, this.state.domainsLoaded ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 0, classNames: 'domains-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__console_domains_js__["a" /* Domains */], null)), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 1, classNames: 'account-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__console_account_js__["a" /* Account */], null))) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, 'Loading domains...')));
         }
     }]);
 
-    return OuterCont;
+    return App;
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
-var ListItem = function (_React$Component2) {
-    _inherits(ListItem, _React$Component2);
-
-    function ListItem(props) {
-        _classCallCheck(this, ListItem);
-
-        return _possibleConstructorReturn(this, (ListItem.__proto__ || Object.getPrototypeOf(ListItem)).call(this, props));
-    }
-
-    _createClass(ListItem, [{
-        key: 'render',
-        value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'listItem' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'innerCont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'icon-grab-ui oln' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'icon-trash oln' }), this.props.title));
-        }
-    }]);
-
-    return ListItem;
-}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
-
-// ReactDOM.render(
-// 	<OuterCont />,
-// 	document.getElementById('reactTarget')
-// );
-
-/***/ }),
-
-/***/ "./resources/js/lithiumlist-1.0.0.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return lithiumlist; });
-// TESTED ON:
-// IE11
-// Edge38
-// Safari 12 on Mac
-// Chrome 71 on Windows
-// Chrome 71 on Mac
-// Chrome 59 on Android
-// Samsung Browser 5.4 on Android
-// Firefox 64 on Mac
-
-
-// SHOULD WORK ON:
-// IE 10	(IE9 and below does not support 'transition')
-// Edge 12
-// Firefox 12
-// Chrome 4
-// Safari 4
-// Opera 11.5
-// iOS Safari 4
-// Android Browser 2.3
-// Chrome for Android all
-// Firefox for Android all
-// (based on getBoundingClientRect - see caniuse)
-
-
-// OVERVIEW AND FEATURES
-// Vertical only
-// Sorts and swipes left/right (sliding 'out' and 'back')
-// Sort start delay allows time to swipe first
-// Drag handles / buttons
-// Active item clone
-
-
-// Notes:
-// if outerCont != window:
-// outerCont must have a height other than 'auto' (eg. px, %, em)
-// outerCont must have overflow 'auto', 'scroll' or 'hidden' (will be set to 'hidden' during automatic scrolling to deal with Safari auto scrolling issue)
-// set 'safariAutoOuterOverflow = false' to prevent setting 'outerCont.style.overflow = hidden' upon auto scroll (will break auto scroll on Mac Safari)
-// if set 'safariBodyUnselectable = false', consider adding unselectable styles to an outer object (eg. body, document, etc) even if 'listitem-cont' or a sub-element is
-// unselectable - otherwise, unintended selection of elements outside outerCont can cause problems
-// does not work with '-webkit-overflow-scrolling: touch' (iOS only)
-
-
-// Pipeline:
-// allow trigger left/right on multiple items at the same time
-// confirm left / right
-// left / right buttons and multiple (remember to delete tempFunctionRemoveMasks())
-// elastic drag left / right
-// slow auto scroll when approach top / bottom
-// triggerSort - item to new position
-
-
-// Known issues:
-// * Cursor is sometimes far above itemCont but still moving it (seems to happen only when moving up, but not sure).
-// * When: (i) listItems have non-uniform top/bottom margins; (ii) listCont has a top/bottom margin; or (iii) both (i) and (ii), items in the list can jump up and down when
-// any item is dragged left or right - solution is to apply a top-border (even if 0.01px and transparent) to listCont
-
-
-// Medium articles:
-// Validation using plain JS
-
-// TO FINALISE DOCS
-// Replace 'click/tap' with 'press'
-// Move 'Why Lithium List?' to its own page, remove delete functionality and add a line about great docs
-// Change 'Overview of functionality' to 'Concepts' and re-read/write (including explaining difference between 'slide' and 'swipe')
-// Look for square brackets and fix
-// Make all examples CHANGE the default settings
-// Ensure all links actually link to something (especially in docs.blade.php and demos.blade.php)
-
-// TODO: In the examples, why does the whole list flash when pressed?
-// TODO: Include 'hamburger' and 'cross' in font icons
-// TODO: Test setDefaultProperties
-// TODO: hasClass, addClass and removeClass should be able to handle 'mask left' (at the moment they can't) - if not, update docs to say this
-// TODO: Can two lists share the same outerCont (especially if outerCont wraps the whole page)?
-// TODO: In events, replace 'activeIndex' with 'activeItem'?
-// TODO: Check if clone is in correct place even when it has a margin
-// TODO: Say in documentation that childNode can be a textNode
-
-
-// TODO: Will it work with 'window' if we fix the issues (see when outerCont = window.document)?
-
-
-// TODO: Change 'lithiumlistPro' to 'lithiumlist'
-// TODO: Why is 'unlicensed' message not showing in docs/setup?
-// TODO: Test 'supportsPassive' in Edge and IE
-// TODO: Include version number and send it to server
-// TODO: Favicon
-// TODO: Can we improve auto-scrolling when outerCont = window?
-// TODO: Allow '-webkit-overflow-scrolling: touch' by turning it off when sorting starts?
-// TODO: Reset props for already attached list
-// TODO: Change prop combinations
-// TODO: Minify and upload to NPM
-
-
-// TODO: Do not attach to window, attach to outer div instead - change validation to check for this
-// TODO: Update url in rSend
-// TODO: Remove .version() from webpack.mix.js?
-
-
-var lithiumlist = function () {
-	var instances = [];
-
-	var defaultProperties = {
-		onSortStart: null,
-		onSortEnd: null,
-		onSortAutoScrollStart: null,
-		onSortAutoScrollEnd: null,
-		sortEnabled: true,
-		sortByLongPress: true,
-		sortStartDuration: 300,
-		sortEndDuration: 300,
-		sortOuterClass: 'sort-outer',
-		sortListClass: 'sort-list',
-		sortCloneClass: 'sort-clone',
-		sortCloneBoxShadow: '0 5px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12)', // not validated (other than string of length >0)
-		sortCloneScale: '1.02', // not validated (other than string of length >0)
-		sortItemActiveHide: true,
-		sortItemActiveClass: 'sort-item-active',
-		sortDragHandleClass: 'sort-drag-handle',
-		sortMoveStartDelay: 400,
-		sortReorderDuration: 200,
-		sortScrollEnabled: true,
-		sortScrollSpeed: 3,
-		safariBodyUnselectable: true, // applies only to Safari on MacOS
-		safariAutoOuterOverflow: true, // applies only to Safari on MacOS
-		onLeftStart: null,
-		onLeftSlideOutStart: null,
-		onLeftSlideBackStart: null,
-		onLeftEnd: null,
-		leftEnabled: true,
-		leftBySwipe: true,
-		leftOuterClass: 'left-outer',
-		leftListClass: 'left-list',
-		leftCloneClass: 'left-clone',
-		leftCloneSlideOutClass: 'left-clone-slide-out',
-		leftCloneSlideBackClass: 'left-clone-slide-back',
-		leftItemActiveClass: 'left-item-active',
-		leftMasks: [{
-			background: 'rgba(252, 13, 27, 1)', // not validated (other than string of length >0)
-			classNameDefault: 'left-mask',
-			classNameSlideOut: 'left-mask-slide-out',
-			classNameSlideBack: 'left-mask-slide-back',
-			childNode: null
-		}],
-		leftButtonClass: 'left-button',
-		leftSwipeStartThreshold: '20px',
-		leftSwipeEndThreshold: '30%',
-		leftSlideOutDuration: 300,
-		leftSlideBackDuration: 200,
-		onRightStart: null,
-		onRightSlideOutStart: null,
-		onRightSlideBackStart: null,
-		onRightEnd: null,
-		rightEnabled: true,
-		rightBySwipe: true,
-		rightOuterClass: 'right-outer',
-		rightListClass: 'right-list',
-		rightCloneClass: 'right-clone',
-		rightCloneSlideOutClass: 'right-clone-slide-out',
-		rightCloneSlideBackClass: 'right-clone-slide-back',
-		rightItemActiveClass: 'right-item-active',
-		rightMasks: [{
-			background: 'rgba(15, 127, 18, 1)', // not validated (other than string of length >0)
-			classNameDefault: 'right-mask',
-			classNameSlideOut: 'right-mask-slide-out',
-			classNameSlideBack: 'right-mask-slide-back',
-			childNode: null
-		}],
-		rightButtonClass: 'right-button',
-		rightSwipeStartThreshold: '20px',
-		rightSwipeEndThreshold: '30%',
-		rightSlideOutDuration: 300,
-		rightSlideBackDuration: 200,
-		ignoreOnClick: ['input', 'textarea', 'select', 'option', 'button']
-	};
-
-	var isSafariMacOS = false;
-	if (window.safari !== undefined) {
-		isSafariMacOS = true;
-	}
-
-	// public methods
-
-	var attachToList = function attachToList(key, outerCont, listCont, listItemClass, listProperties) {
-		if (isUndefinedOrNull(outerCont)) {
-			outerCont = window;
-		} else {
-			if (!isWindow(outerCont)) {
-				if (isDOMElement(outerCont)) {
-					if (outerCont === listCont) {
-						console.warn('Auto scrolling may not work where outerCont === listCont');
-					} else {
-						if (!outerCont.contains(listCont)) {
-							throw 'outerCont must contain listCont';
-						}
-					}
-				} else {
-					throw 'outerCont must be a DOM element';
-				}
-			}
-		}
-
-		if (isUndefinedOrNull(listCont)) {
-			throw 'listCont must not be undefined or null';
-		} else {
-			if (isDOMElement(listCont)) {
-				for (var i = 0, len = instances.length; i < len; i++) {
-					if (instances[i].listCont === listCont) {
-						throw 'listCont already has lithiumlist attached';
-					}
-				}
-			} else {
-				throw 'listCont must be a DOM element';
-			}
-		}
-
-		if (isUndefinedOrNull(listItemClass) || !isString(listItemClass) || listItemClass.length == 0) {
-			throw 'listItemClass must be a string of length > 0';
-		}
-
-		var props = {};
-		if (isUndefinedOrNull(listProperties)) {
-			for (var attrname in defaultProperties) {
-				if (isArray(defaultProperties[attrname])) {
-					props[attrname] = defaultProperties[attrname].slice(0);
-				} else {
-					props[attrname] = defaultProperties[attrname];
-				}
-			}
-		} else {
-			validateProps(listProperties);
-			for (var attrname in defaultProperties) {
-				if (typeof listProperties[attrname] === 'undefined') {
-					if (isArray(defaultProperties[attrname])) {
-						props[attrname] = defaultProperties[attrname].slice(0);
-					} else {
-						props[attrname] = defaultProperties[attrname];
-					}
-				} else {
-					if (isArray(listProperties[attrname])) {
-						props[attrname] = listProperties[attrname].slice(0);
-					} else {
-						props[attrname] = listProperties[attrname];
-					}
-				}
-			}
-		}
-		tempFunctionRemoveMasks(props);
-
-		var instance = {
-			'rkey': key,
-			'isr': false,
-			'outerCont': outerCont,
-			'listCont': listCont,
-			'listItemClass': listItemClass,
-			'props': props,
-			'temp': getNewTemp()
-		};
-
-		instances.push(instance);
-
-		if (rMsg(instance, true)) {
-			// reg
-			instance.temp.funcOnScroll = function (e) {
-				onScroll(e, instance);
-			};
-			instance.temp.funcMouseDown = function (e) {
-				mouseDown(e, instance);
-			};
-			instance.temp.funcTouchStart = function (e) {
-				touchStart(e, instance);
-			};
-			instance.outerCont.addEventListener('scroll', instance.temp.funcOnScroll);
-			instance.listCont.addEventListener('mousedown', instance.temp.funcMouseDown);
-			instance.listCont.addEventListener('touchstart', instance.temp.funcTouchStart);
-		} // reg
-
-		// reg - start
-		if (!isUndefinedOrNull(instance.rkey) && isFunction(rSend) && isFunction(rLoad)) {
-			rSend(instance);
-		} else {
-			rMsg(instance);
-		}
-		// reg - end
-	};
-
-	var detachFromList = function detachFromList(listCont) {
-		if (listCont) {
-			var index = null;
-			for (var i = 0, len = instances.length; i < len; i++) {
-				if (instances[i].listCont === listCont) {
-					index = i;
-					break;
-				}
-			}
-			if (index != null) {
-				if (instances[index].temp.funcOnScroll) {
-					instances[index].outerCont.removeEventListener('scroll', instances[index].temp.funcOnScroll);
-				}
-				if (instances[index].temp.funcMouseDown) {
-					listCont.removeEventListener('mousedown', instances[index].temp.funcMouseDown);
-				}
-				if (instances[index].temp.funcTouchStart) {
-					listCont.removeEventListener('touchstart', instances[index].temp.funcTouchStart);
-				}
-				instances.splice(index, 1);
-			}
-		} else {
-			throw 'listCont cannot be null.';
-		}
-	};
-
-	var triggerLeft = function triggerLeft(listCont, itemIndex) {
-		if (listCont) {
-			var index = null;
-			for (var i = 0, len = instances.length; i < len; i++) {
-				if (instances[i].listCont === listCont) {
-					index = i;
-					break;
-				}
-			}
-			if (index != null) {
-				if (instances[index].props.leftEnabled) {
-					setItems(instances[index]);
-					if (instances[index].temp.items.length > itemIndex) {
-						instances[index].temp.activeIndex = itemIndex;
-						initMoveLeft(instances[index], 0);
-						initLeftSlideOut(instances[index]);
-					} else {
-						console.warn('List item not found.');
-					}
-				} else {
-					console.warn('listCont has \'leftEnabled = false\'.');
-				}
-			} else {
-				console.warn('listCont does not have lithiumlist attached.');
-			}
-		} else {
-			throw 'listCont cannot be null.';
-		}
-	};
-
-	var triggerRight = function triggerRight(listCont, itemIndex) {
-		if (listCont) {
-			var index = null;
-			for (var i = 0, len = instances.length; i < len; i++) {
-				if (instances[i].listCont === listCont) {
-					index = i;
-					break;
-				}
-			}
-			if (index != null) {
-				if (instances[index].props.rightEnabled) {
-					setItems(instances[index]);
-					if (instances[index].temp.items.length > itemIndex) {
-						instances[index].temp.activeIndex = itemIndex;
-						initMoveRight(instances[index], 0);
-						initRightSlideOut(instances[index]);
-					} else {
-						console.warn('List item not found.');
-					}
-				} else {
-					console.warn('listCont has \'rightEnabled = false\'.');
-				}
-			} else {
-				console.warn('listCont does not have lithiumlist attached.');
-			}
-		} else {
-			throw 'listCont cannot be null.';
-		}
-	};
-
-	var setDefaultProperties = function setDefaultProperties(newDefaultProperties) {
-		if (isUndefinedOrNull(newDefaultProperties)) {
-			throw 'newDefaultProperties must not be undefined or null';
-		} else {
-			for (var attrname in defaultProperties) {
-				if (typeof newDefaultProperties[attrname] !== 'undefined') {
-					if (isArray(newDefaultProperties[attrname])) {
-						defaultProperties[attrname] = newDefaultProperties[attrname].slice(0);
-					} else {
-						defaultProperties[attrname] = newDefaultProperties[attrname];
-					}
-				}
-			}
-			tempFunctionRemoveMasks(defaultProperties);
-		}
-	};
-
-	var setListProperties = function setListProperties(listCont, listProperties) {
-		if (!isUndefinedOrNull(listCont) && isDOMElement(listCont)) {
-			if (!isUndefinedOrNull(listProperties)) {
-				var index = null;
-				for (var i = 0, len = instances.length; i < len; i++) {
-					if (instances[i].listCont === listCont) {
-						index = i;
-						break;
-					}
-				}
-				if (index != null) {
-					validateProps(listProperties);
-					for (var attrname in instances[index]['props']) {
-						if (typeof listProperties[attrname] !== 'undefined') {
-							if (isArray(listProperties[attrname])) {
-								instances[index]['props'][attrname] = listProperties[attrname].slice(0);
-							} else {
-								instances[index]['props'][attrname] = listProperties[attrname];
-							}
-						}
-					}
-					tempFunctionRemoveMasks(instances[index]['props']);
-				} else {
-					throw 'listCont does not have lithiumlist attached ';
-				}
-			} else {
-				throw 'listProperties must not be undefined or null';
-			}
-		} else {
-			throw 'listCont must be a DOM element';
-		}
-	};
-
-	// private functions
-
-	var tempFunctionRemoveMasks = function tempFunctionRemoveMasks(props) {
-		if (props.leftMasks && props.leftMasks.length > 1) {
-			props.leftMasks.length = 1;
-		}
-		if (props.rightMasks && props.rightMasks.length > 1) {
-			props.rightMasks.length = 1;
-		}
-	};
-
-	var onScroll = function onScroll(e, instance) {
-		if (instance.temp.sortDelayTimer) {
-			clearTimeout(instance.temp.sortDelayTimer);
-			instance.temp.sortDelayTimer = null;
-		}
-	};
-
-	var mouseDown = function mouseDown(e, instance) {
-		if (instance != null && !instance.temp.ignoreClicks && (instance.props.sortEnabled || instance.props.leftEnabled || instance.props.rightEnabled)) {
-			setItems(instance);
-
-			var index = null;
-			for (var i = 0, len = instance.temp.items.length; i < len; i++) {
-				if (instance.temp.items[i] === e.target || instance.temp.items[i].contains(e.target)) {
-					index = i;
-					break;
-				}
-			}
-
-			if (index != null) {
-				if (instance.props.sortEnabled && checkClassClicked(e, instance.temp.items[index], instance.props.sortDragHandleClass)) {
-					setTimeout(function () {
-						initItemMove(e, index, instance);
-						activateSort(instance);
-					}, 1); // delay allows itemCont to show :hover classes
-				} else if (instance.props.leftEnabled && checkClassClicked(e, instance.temp.items[index], instance.props.leftButtonClass)) {
-					instance.temp.activeIndex = index;
-					initMoveLeft(instance, 0);
-					initLeftSlideOut(instance);
-				} else if (instance.props.rightEnabled && checkClassClicked(e, instance.temp.items[index], instance.props.rightButtonClass)) {
-					instance.temp.activeIndex = index;
-					initMoveRight(instance, 0);
-					initRightSlideOut(instance);
-				} else if (instance.props.ignoreOnClick.indexOf(e.target.tagName.toLowerCase()) == -1) {
-					backgroundClick(e, index, instance);
-				}
-			}
-		}
-	};
-
-	var touchStart = function touchStart(e, instance) {
-		mouseDown(e, instance);
-	};
-
-	var initItemMove = function initItemMove(e, index, instance) {
-		var pageX = getPageX(e);
-		var pageY = getPageY(e);
-
-		instance.temp.activeIndex = index;
-		instance.temp.origIndex = index;
-		instance.temp.startPageX = pageX;
-		instance.temp.startPageY = pageY;
-		instance.temp.lastPageX = pageX;
-		instance.temp.lastPageY = pageY;
-		instance.temp.funcMouseMove = function (e) {
-			mouseMove(e, instance);
-		};
-		instance.temp.funcMouseUp = function (e) {
-			mouseUp(e, instance);
-		};
-		instance.temp.funcTouchMove = function (e) {
-			touchMove(e, instance);
-		};
-		instance.temp.funcTouchEnd = function (e) {
-			touchEnd(e, instance);
-		};
-		if (!instance.isr) rSend(instance); // reg
-
-		window.addEventListener('mousemove', instance.temp.funcMouseMove);
-		window.addEventListener('mouseup', instance.temp.funcMouseUp);
-		if (supportsPassive) {
-			window.addEventListener('touchmove', instance.temp.funcTouchMove, { passive: false });
-		} else {
-			window.addEventListener('touchmove', instance.temp.funcTouchMove);
-		}
-		window.addEventListener('touchend', instance.temp.funcTouchEnd);
-	};
-
-	var supportsPassive = function supportsPassive() {
-		var supportsPassive = false;
-		try {
-			window.addEventListener("test", null, Object.defineProperty({}, "passive", { get: function get() {
-					supportsPassive = true;
-				} }));
-		} catch (err) {}
-		return supportsPassive;
-	};
-
-	var initMoveLeft = function initMoveLeft(instance, cursorX) {
-		instance.temp.ignoreClicks = true;
-		instance.temp.moveType = 'LEFT';
-		instance.temp.activeOrigX = instance.temp.items[instance.temp.activeIndex].offsetLeft;
-
-		if (instance.props.onLeftStart) {
-			instance.props.onLeftStart(getReturnInstance(instance), instance.temp.activeIndex);
-		}
-
-		safariBodyUnselectableAdd(instance);
-
-		if (instance.props.leftOuterClass && isDOMElement(instance.outerCont)) {
-			// check that outerCont is not 'window' or 'document'
-			addClass(instance.outerCont, instance.props.leftOuterClass);
-		}
-		if (instance.props.leftListClass) {
-			addClass(instance.listCont, instance.props.leftListClass);
-		}
-		if (!instance.isr) rSend(instance); // reg
-
-		if (instance.props.leftMasks.length > 0 && instance.temp.itemMasks.length == 0) {
-			createMasks(instance);
-		}
-
-		var top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
-		if (!instance.temp.itemClone) {
-			var left = cursorX + instance.temp.activeOrigX + 'px';
-			createClone(instance, left, top);
-		}
-
-		if (instance.props.leftItemActiveClass) {
-			addClass(instance.temp.items[instance.temp.activeIndex], instance.props.leftItemActiveClass);
-		}
-	};
-
-	var initMoveRight = function initMoveRight(instance, cursorX) {
-		instance.temp.ignoreClicks = true;
-		instance.temp.moveType = 'RIGHT';
-		instance.temp.activeOrigX = instance.temp.items[instance.temp.activeIndex].offsetLeft;
-
-		if (instance.props.onRightStart) {
-			instance.props.onRightStart(getReturnInstance(instance), instance.temp.activeIndex);
-		}
-
-		safariBodyUnselectableAdd(instance);
-
-		if (instance.props.rightOuterClass && isDOMElement(instance.outerCont)) {
-			// check that outerCont is not 'window' or 'document'
-			addClass(instance.outerCont, instance.props.rightOuterClass);
-		}
-		if (instance.props.rightListClass) {
-			addClass(instance.listCont, instance.props.rightListClass);
-		}
-		if (!instance.isr) rSend(instance); // reg
-
-		if (instance.props.rightMasks.length > 0 && instance.temp.itemMasks.length == 0) {
-			createMasks(instance);
-		}
-
-		var top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
-		if (!instance.temp.itemClone) {
-			var left = cursorX + instance.temp.activeOrigX + 'px';
-			createClone(instance, left, top);
-		}
-
-		if (instance.props.rightItemActiveClass) {
-			addClass(instance.temp.items[instance.temp.activeIndex], instance.props.rightItemActiveClass);
-		}
-	};
-
-	var backgroundClick = function backgroundClick(e, index, instance) {
-		if (instance.props.sortEnabled && instance.props.sortByLongPress || instance.props.leftEnabled && instance.props.leftBySwipe || instance.props.rightEnabled && instance.props.rightBySwipe) {
-			initItemMove(e, index, instance);
-			setItems(instance);
-			if (instance.props.sortEnabled && instance.props.sortByLongPress) {
-				instance.temp.sortDelayTimer = setTimeout(function () {
-					activateSort(instance);
-				}, instance.props.sortMoveStartDelay);
-			}
-		}
-	};
-
-	var activateSort = function activateSort(instance) {
-		if (instance.temp && instance.temp.lastPageX != null && instance.temp.lastPageY != null) {
-			var rect = instance.temp.items[instance.temp.activeIndex].getBoundingClientRect();
-			if (cursorIsOverRect(instance.temp.lastPageX, instance.temp.lastPageY, rect)) {
-				instance.temp.ignoreClicks = true;
-
-				instance.temp.sortDelayTimer = null;
-				instance.temp.moveType = 'SORT';
-				instance.temp.activeOrigX = instance.temp.items[instance.temp.activeIndex].offsetLeft;
-
-				instance.temp.deltaItemsOuter = 0;
-				if (instance.outerCont !== instance.listCont) {
-					if (isWindow(instance.outerCont)) {
-						instance.temp.deltaItemsOuter = instance.listCont.getBoundingClientRect().top + getOuterTop(instance.outerCont);
-					} else {
-						instance.temp.deltaItemsOuter = instance.listCont.getBoundingClientRect().top - instance.outerCont.getBoundingClientRect().top + getOuterTop(instance.outerCont);
-					}
-				}
-
-				if (instance.props.onSortStart) {
-					instance.props.onSortStart(getReturnInstance(instance), instance.temp.activeIndex);
-				}
-
-				safariBodyUnselectableAdd(instance);
-
-				if (instance.props.sortOuterClass && isDOMElement(instance.outerCont)) {
-					// check that outerCont is not 'window' or 'document'
-					addClass(instance.outerCont, instance.props.sortOuterClass);
-				}
-
-				if (instance.props.sortListClass) {
-					addClass(instance.listCont, instance.props.sortListClass);
-				}
-
-				if (!instance.temp.itemClone) {
-					var left = instance.temp.activeOrigX + 'px';
-					var top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
-					createClone(instance, left, top);
-				}
-
-				if (instance.props.sortItemActiveHide) {
-					instance.temp.items[instance.temp.activeIndex].style.visibility = 'hidden';
-				}
-				if (instance.props.sortItemActiveClass) {
-					addClass(instance.temp.items[instance.temp.activeIndex], instance.props.sortItemActiveClass);
-				}
-			}
-		}
-	};
-
-	var mouseMove = function mouseMove(e, instance) {
-		if (instance.temp && instance.temp.moveType != null) {
-			e.preventDefault();
-		}
-
-		var pageX = getPageX(e);
-		var pageY = getPageY(e);
-		var cursorX = pageX - instance.temp.startPageX;
-
-		if (!instance.temp.moveType) {
-			if (instance.props.leftEnabled && instance.props.leftBySwipe || instance.props.rightEnabled && instance.props.rightBySwipe) {
-				var rect = instance.temp.items[instance.temp.activeIndex].getBoundingClientRect();
-				if (cursorIsOverRect(pageX, pageY, rect)) {
-					if (cursorX < 0 && instance.props.leftEnabled && instance.props.leftBySwipe) {
-						var leftDST = getPXorPercent(instance.props.leftSwipeStartThreshold, instance.temp.items[instance.temp.activeIndex].offsetWidth);
-						if (Math.abs(cursorX) > leftDST) {
-							clearTimeout(instance.temp.sortDelayTimer);
-							instance.temp.sortDelayTimer = null;
-							initMoveLeft(instance, cursorX);
-						}
-					} else if (cursorX > 0 && instance.props.rightEnabled && instance.props.rightBySwipe) {
-						var rightDST = getPXorPercent(instance.props.rightSwipeStartThreshold, instance.temp.items[instance.temp.activeIndex].offsetWidth);
-						if (cursorX > rightDST) {
-							clearTimeout(instance.temp.sortDelayTimer);
-							instance.temp.sortDelayTimer = null;
-							initMoveRight(instance, cursorX);
-						}
-					}
-				}
-			}
-		} else {
-			if (instance.temp.moveType == 'LEFT' || instance.temp.moveType == 'RIGHT') {
-				if (instance.temp.moveType == 'LEFT') {
-					if (cursorX < 0) {
-						var left = cursorX + instance.temp.activeOrigX + 'px';
-						instance.temp.itemClone.style.left = left;
-					}
-				} else {
-					if (cursorX > 0) {
-						var left = cursorX + instance.temp.activeOrigX + 'px';
-						instance.temp.itemClone.style.left = left;
-					}
-				}
-			} else if (instance.temp.moveType == 'SORT') {
-				var deltaY = pageY - instance.temp.lastPageY;
-				if (deltaY != 0 && instance.temp.scrollInterval) {
-					if (instance.props.onSortAutoScrollEnd) {
-						instance.props.onSortAutoScrollEnd(getReturnInstance(instance), instance.temp.origIndex);
-					}
-					clearInterval(instance.temp.scrollInterval);
-					instance.temp.scrollInterval = null;
-					outerContOverflowRevert(instance);
-				}
-
-				var rect = instance.temp.itemClone.getBoundingClientRect();
-				var shouldMove = false;
-				if (deltaY < 0 && rect.bottom + window.pageYOffset > pageY) {
-					// moving up - move if cursor is above bottom of itemClone
-					shouldMove = true;
-				} else if (deltaY > 0 && rect.top + window.pageYOffset < pageY) {
-					// moving down - move if cursor is below top of itemClone
-					shouldMove = true;
-				}
-
-				if (shouldMove) {
-					var yChange = getYChange(instance, deltaY);
-					instance.temp.itemClone.style.top = instance.temp.itemClone.offsetTop + yChange + 'px';
-					animateItems(instance);
-
-					if (instance.props.sortScrollEnabled) {
-						if (instance.temp.outerOverhang == 0) {
-							if (isItemCloneAboveOuterTop(instance)) {
-								instance.temp.outerOverhang = instance.temp.deltaItemsOuter + instance.temp.itemClone.offsetTop - getOuterTop(instance.outerCont);
-							} else if (isItemCloneBelowOuterBottom(instance)) {
-								instance.temp.outerOverhang = instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight - (getOuterTop(instance.outerCont) + getouterContHeight(instance) - instance.temp.deltaItemsOuter);
-							}
-						} else {
-							if (instance.temp.outerOverhang < 0) {
-								if (instance.temp.outerOverhang + yChange < 0) {
-									instance.temp.outerOverhang = instance.temp.outerOverhang + yChange;
-								} else {
-									instance.temp.outerOverhang = 0;
-								}
-							} else {
-								if (instance.temp.outerOverhang + yChange > 0) {
-									instance.temp.outerOverhang = instance.temp.outerOverhang + yChange;
-								} else {
-									instance.temp.outerOverhang = 0;
-								}
-							}
-						}
-						if (instance.temp.outerOverhang != 0) {
-							if (instance.props.onSortAutoScrollStart) {
-								var scrollingUp = true;
-								if (instance.temp.outerOverhang > 0) {
-									scrollingUp = false;
-								}
-								instance.props.onSortAutoScrollStart(getReturnInstance(instance), instance.temp.origIndex, scrollingUp);
-							}
-							outerContOverflowHidden(instance);
-							instance.temp.scrollInterval = setInterval(function () {
-								doScroll(instance);
-							}, 5);
-						}
-					}
-				}
-			}
-		}
-
-		instance.temp.lastPageX = pageX;
-		instance.temp.lastPageY = pageY;
-	};
-
-	var touchMove = function touchMove(e, instance) {
-		mouseMove(e, instance);
-	};
-
-	var doScroll = function doScroll(instance) {
-		var shouldScroll = false;
-		if (isItemCloneAboveOuterTop(instance)) {
-			shouldScroll = true;
-		} else if (isItemCloneBelowOuterBottom(instance)) {
-			shouldScroll = true;
-		}
-
-		if (shouldScroll) {
-			var scrollChange = Math.round(instance.temp.outerOverhang / instance.temp.itemClone.offsetHeight * getScrollMultiplier(instance.props.sortScrollSpeed));
-			setScrollTop(instance.outerCont, getOuterTop(instance.outerCont) + scrollChange);
-			if (isWindow(instance.outerCont)) {
-				instance.temp.lastPageY = instance.temp.lastPageY + scrollChange;
-			}
-			animateItems(instance);
-
-			var yChange = getYChange(instance, scrollChange);
-			if (yChange != 0) {
-				instance.temp.itemClone.style.top = instance.temp.itemClone.offsetTop + yChange + 'px';
-				animateItems(instance);
-			}
-		} else {
-			if (instance.props.onSortAutoScrollEnd) {
-				instance.props.onSortAutoScrollEnd(getReturnInstance(instance), instance.temp.origIndex);
-			}
-			if (instance.temp.scrollInterval) {
-				clearInterval(instance.temp.scrollInterval);
-				instance.temp.scrollInterval = null;
-			}
-			outerContOverflowRevert(instance);
-			instance.temp.outerOverhang = 0;
-		}
-	};
-
-	var animateItems = function animateItems(instance) {
-		var prevIndex = null;
-		var moveUpBoundary = 0;
-		if (instance.temp.activeIndex > 0) {
-			prevIndex = instance.temp.activeIndex - 1;
-			moveUpBoundary = instance.temp.items[prevIndex].offsetTop + getTransYNum(instance.temp.items[prevIndex]) + instance.temp.items[prevIndex].offsetHeight / 2;
-		}
-
-		var nextIndex = null;
-		var moveDownBoundary = instance.listCont.clientHeight;
-		if (instance.temp.activeIndex < instance.temp.items.length - 1) {
-			nextIndex = instance.temp.activeIndex + 1;
-			moveDownBoundary = instance.temp.items[nextIndex].offsetTop + getTransYNum(instance.temp.items[nextIndex]) + instance.temp.items[nextIndex].offsetHeight / 2;
-		}
-
-		if (instance.temp.itemClone.offsetTop < moveUpBoundary || instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight > moveDownBoundary) {
-			// Items are moved as follows:
-			// Item which is moving up - shift up by: (diff btw item tops) + (diff btw top margins)
-			// Item which is moving down - shift down by: (diff btw item tops) + (diff btw (height + btm margin) for both items)
-			// See: 'Variable height and margin animation diagrams.jpg' in LithiumList folder
-			var activeStyle = window.getComputedStyle(instance.temp.items[instance.temp.activeIndex]);
-
-			if (prevIndex !== null && instance.temp.itemClone.offsetTop < moveUpBoundary) {
-				// move up
-				var prevStyle = window.getComputedStyle(instance.temp.items[prevIndex]);
-				var activeUp;
-				var prevDown;
-
-				// do simple calc unless there are margins - avoid smalls gaps between items where top/bottom margins are not relevant
-				if (getIntFromPX(activeStyle.marginTop) == 0 && getIntFromPX(activeStyle.marginBottom) == 0 && getIntFromPX(prevStyle.marginTop) == 0 && getIntFromPX(prevStyle.marginBottom) == 0) {
-					activeUp = -1 * instance.temp.items[prevIndex].offsetHeight;
-					prevDown = instance.temp.items[instance.temp.activeIndex].offsetHeight;
-				} else {
-					var topDiff = instance.temp.items[instance.temp.activeIndex].offsetTop + getTransYNum(instance.temp.items[instance.temp.activeIndex]) - (instance.temp.items[prevIndex].offsetTop + getTransYNum(instance.temp.items[prevIndex]));
-					activeUp = -1 * topDiff + (getIntFromPX(activeStyle.marginTop) - getIntFromPX(prevStyle.marginTop));
-					prevDown = topDiff + (instance.temp.items[instance.temp.activeIndex].offsetHeight + getIntFromPX(activeStyle.marginBottom) - (instance.temp.items[prevIndex].offsetHeight + getIntFromPX(prevStyle.marginBottom)));
-				}
-
-				instance.temp.items[instance.temp.activeIndex].style.transitionDuration = instance.props.sortReorderDuration + 'ms';
-				deltaTransY(instance.temp.items[instance.temp.activeIndex], activeUp);
-
-				instance.temp.items[prevIndex].style.transitionDuration = instance.props.sortReorderDuration + 'ms';
-				deltaTransY(instance.temp.items[prevIndex], prevDown);
-
-				var copyActiveTaskDivRef = instance.temp.items[instance.temp.activeIndex];
-				instance.temp.items[instance.temp.activeIndex] = instance.temp.items[prevIndex];
-				instance.temp.items[prevIndex] = copyActiveTaskDivRef;
-				instance.temp.activeIndex = prevIndex;
-			} else if (nextIndex !== null && instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight > moveDownBoundary) {
-				// move down
-				var nextStyle = window.getComputedStyle(instance.temp.items[nextIndex]);
-				var activeDown;
-				var nextUp;
-
-				// do simple calc unless there are margins - avoid smalls gaps between items where top/bottom margins are not relevant
-				if (getIntFromPX(activeStyle.marginTop) == 0 && getIntFromPX(activeStyle.marginBottom) == 0 && getIntFromPX(nextStyle.marginTop) == 0 && getIntFromPX(nextStyle.marginBottom) == 0) {
-					activeDown = instance.temp.items[nextIndex].offsetHeight;
-					nextUp = -1 * instance.temp.items[instance.temp.activeIndex].offsetHeight;
-				} else {
-					var topDiff = instance.temp.items[nextIndex].offsetTop + getTransYNum(instance.temp.items[nextIndex]) - (instance.temp.items[instance.temp.activeIndex].offsetTop + getTransYNum(instance.temp.items[instance.temp.activeIndex]));
-					activeDown = topDiff + (instance.temp.items[nextIndex].offsetHeight + getIntFromPX(nextStyle.marginBottom) - (instance.temp.items[instance.temp.activeIndex].offsetHeight + getIntFromPX(activeStyle.marginBottom)));
-					nextUp = -1 * topDiff + (getIntFromPX(nextStyle.marginTop) - getIntFromPX(activeStyle.marginTop));
-				}
-
-				instance.temp.items[instance.temp.activeIndex].style.transitionDuration = instance.props.sortReorderDuration + 'ms';
-				deltaTransY(instance.temp.items[instance.temp.activeIndex], activeDown);
-
-				instance.temp.items[nextIndex].style.transitionDuration = instance.props.sortReorderDuration + 'ms';
-				deltaTransY(instance.temp.items[nextIndex], nextUp);
-
-				var copyActiveTaskDivRef = instance.temp.items[instance.temp.activeIndex];
-				instance.temp.items[instance.temp.activeIndex] = instance.temp.items[nextIndex];
-				instance.temp.items[nextIndex] = copyActiveTaskDivRef;
-				instance.temp.activeIndex = nextIndex;
-			}
-		}
-	};
-
-	var mouseUp = function mouseUp(e, instance) {
-		if (instance.temp.sortDelayTimer) {
-			clearTimeout(instance.temp.sortDelayTimer);
-			instance.temp.sortDelayTimer = null;
-		}
-		if (instance.temp.funcMouseMove) {
-			window.removeEventListener('mousemove', instance.temp.funcMouseMove);
-		}
-		if (instance.temp.funcMouseUp) {
-			window.removeEventListener('mouseup', instance.temp.funcMouseUp);
-		}
-		if (instance.temp.funcTouchMove) {
-			window.removeEventListener('touchmove', instance.temp.funcTouchMove);
-		}
-		if (instance.temp.funcTouchEnd) {
-			window.removeEventListener('touchend', instance.temp.funcTouchEnd);
-		}
-
-		if (instance.temp.moveType) {
-			if (instance.temp.moveType == 'LEFT' || instance.temp.moveType == 'RIGHT') {
-				var cloneX = Math.abs(instance.temp.itemClone.offsetLeft - instance.temp.activeOrigX);
-				if (instance.temp.moveType == 'LEFT') {
-					var leftDET = getPXorPercent(instance.props.leftSwipeEndThreshold, instance.temp.items[instance.temp.activeIndex].offsetWidth);
-					if (cloneX > leftDET) {
-						initLeftSlideOut(instance);
-					} else {
-						initLeftSlideBack(instance);
-					}
-				} else {
-					var rightDET = getPXorPercent(instance.props.rightSwipeEndThreshold, instance.temp.items[instance.temp.activeIndex].offsetWidth);
-					if (cloneX > rightDET) {
-						initRightSlideOut(instance);
-					} else {
-						initRightSlideBack(instance);
-					}
-				}
-			} else if (instance.temp.moveType == 'SORT') {
-				if (instance.temp.scrollInterval) {
-					if (instance.props.onSortAutoScrollEnd) {
-						instance.props.onSortAutoScrollEnd(getReturnInstance(instance), instance.temp.origIndex);
-					}
-					clearInterval(instance.temp.scrollInterval);
-					instance.temp.scrollInterval = null;
-					outerContOverflowRevert(instance);
-				}
-
-				instance.temp.itemClone.style.top = instance.temp.items[instance.temp.activeIndex].offsetTop + getTransYNum(instance.temp.items[instance.temp.activeIndex]) + 'px';
-				if (instance.props.sortCloneScale) {
-					instance.temp.itemClone.style[vendorPrefix + 'Transform'] = 'scale(1)';
-					instance.temp.itemClone.style.transition = 'top ' + instance.props.sortEndDuration + 'ms, transform ' + instance.props.sortEndDuration + 'ms';
-				} else {
-					instance.temp.itemClone.style.transition = 'top ' + instance.props.sortEndDuration + 'ms';
-				}
-
-				instance.temp.sortEndTimer = setTimeout(function () {
-					sortEnd(instance);
-				}, instance.props.sortEndDuration);
-			}
-		}
-	};
-
-	var touchEnd = function touchEnd(e, instance) {
-		mouseUp(e, instance);
-	};
-
-	var initLeftSlideOut = function initLeftSlideOut(instance) {
-		instance.temp.itemClone.style.transition = 'left ' + instance.props.leftSlideOutDuration + 'ms ease-in';
-		setTimeout(function () {
-			doLeftSlideOut(instance);
-		}, 1);
-	};
-
-	var doLeftSlideOut = function doLeftSlideOut(instance) {
-		if (instance.props.onLeftSlideOutStart) {
-			instance.props.onLeftSlideOutStart(getReturnInstance(instance), instance.temp.activeIndex);
-		}
-
-		if (instance.props.leftCloneSlideOutClass) {
-			addClass(instance.temp.itemClone, instance.props.leftCloneSlideOutClass);
-		}
-
-		for (var i = 0, len = instance.props.leftMasks.length; i < len; i++) {
-			if (instance.props.leftMasks[i].classNameSlideOut && instance.temp.itemMasks[i]) {
-				addClass(instance.temp.itemMasks[i], instance.props.leftMasks[i].classNameSlideOut);
-			}
-		}
-
-		instance.temp.itemClone.style.left = '-100%';
-		setTimeout(function () {
-			completeSlide(instance, true);
-		}, instance.props.leftSlideOutDuration);
-	};
-
-	var initLeftSlideBack = function initLeftSlideBack(instance) {
-		instance.temp.itemClone.style.transition = 'left ' + instance.props.leftSlideBackDuration + 'ms ease-in';
-		setTimeout(function () {
-			doLeftSlideBack(instance);
-		}, 1);
-	};
-
-	var doLeftSlideBack = function doLeftSlideBack(instance) {
-		if (instance.props.onLeftSlideBackStart) {
-			instance.props.onLeftSlideBackStart(getReturnInstance(instance), instance.temp.activeIndex);
-		}
-
-		if (instance.props.leftCloneSlideBackClass) {
-			addClass(instance.temp.itemClone, instance.props.leftCloneSlideBackClass);
-		}
-
-		for (var i = 0, len = instance.props.leftMasks.length; i < len; i++) {
-			if (instance.props.leftMasks[i].classNameSlideBack && instance.temp.itemMasks[i]) {
-				addClass(instance.temp.itemMasks[i], instance.props.leftMasks[i].classNameSlideBack);
-			}
-		}
-
-		instance.temp.itemClone.style.left = instance.temp.activeOrigX + 'px';
-		setTimeout(function () {
-			completeSlide(instance, false);
-		}, instance.props.leftSlideBackDuration);
-	};
-
-	var initRightSlideOut = function initRightSlideOut(instance) {
-		instance.temp.itemClone.style.transition = 'left ' + instance.props.rightSlideOutDuration + 'ms ease-in';
-		setTimeout(function () {
-			doRightSlideOut(instance);
-		}, 1);
-	};
-
-	var doRightSlideOut = function doRightSlideOut(instance) {
-		if (instance.props.onRightSlideOutStart) {
-			instance.props.onRightSlideOutStart(getReturnInstance(instance), instance.temp.activeIndex);
-		}
-
-		if (instance.props.rightCloneSlideOutClass) {
-			addClass(instance.temp.itemClone, instance.props.rightCloneSlideOutClass);
-		}
-
-		for (var i = 0, len = instance.props.rightMasks.length; i < len; i++) {
-			if (instance.props.rightMasks[i].classNameSlideOut && instance.temp.itemMasks[i]) {
-				addClass(instance.temp.itemMasks[i], instance.props.rightMasks[i].classNameSlideOut);
-			}
-		}
-
-		instance.temp.itemClone.style.left = '100%';
-		setTimeout(function () {
-			completeSlide(instance, true);
-		}, instance.props.rightSlideOutDuration);
-	};
-
-	var initRightSlideBack = function initRightSlideBack(instance) {
-		instance.temp.itemClone.style.transition = 'left ' + instance.props.rightSlideBackDuration + 'ms ease-in';
-		setTimeout(function () {
-			doRightSlideBack(instance);
-		}, 1);
-	};
-
-	var doRightSlideBack = function doRightSlideBack(instance) {
-		if (instance.props.onRightSlideBackStart) {
-			instance.props.onRightSlideBackStart(getReturnInstance(instance), instance.temp.activeIndex);
-		}
-
-		if (instance.props.rightCloneSlideBackClass) {
-			addClass(instance.temp.itemClone, instance.props.rightCloneSlideBackClass);
-		}
-
-		for (var i = 0, len = instance.props.rightMasks.length; i < len; i++) {
-			if (instance.props.rightMasks[i].classNameSlideBack && instance.temp.itemMasks[i]) {
-				addClass(instance.temp.itemMasks[i], instance.props.rightMasks[i].classNameSlideBack);
-			}
-		}
-
-		instance.temp.itemClone.style.left = instance.temp.activeOrigX + 'px';
-		setTimeout(function () {
-			completeSlide(instance, false);
-		}, instance.props.rightSlideBackDuration);
-	};
-
-	var completeSlide = function completeSlide(instance, didSlideOut) {
-		if (instance.temp.moveType == 'LEFT') {
-			if (instance.temp.items[instance.temp.activeIndex] && instance.props.leftItemActiveClass) {
-				removeClass(instance.temp.items[instance.temp.activeIndex], instance.props.leftItemActiveClass);
-			}
-
-			if (instance.props.leftListClass) {
-				removeClass(instance.listCont, instance.props.leftListClass);
-			}
-			if (instance.props.leftOuterClass && isDOMElement(instance.outerCont)) {
-				removeClass(instance.outerCont, instance.props.leftOuterClass);
-			}
-
-			destroyTempDivs(instance);
-
-			safariBodyUnselectableRemove(instance);
-
-			if (instance.props.onLeftEnd) {
-				instance.props.onLeftEnd(getReturnInstance(instance), instance.temp.activeIndex, didSlideOut);
-			}
-		} else if (instance.temp.moveType == 'RIGHT') {
-			if (instance.temp.items[instance.temp.activeIndex] && instance.props.rightItemActiveClass) {
-				removeClass(instance.temp.items[instance.temp.activeIndex], instance.props.rightItemActiveClass);
-			}
-
-			if (instance.props.rightListClass) {
-				removeClass(instance.listCont, instance.props.rightListClass);
-			}
-			if (instance.props.rightOuterClass && isDOMElement(instance.outerCont)) {
-				removeClass(instance.outerCont, instance.props.rightOuterClass);
-			}
-
-			destroyTempDivs(instance);
-
-			if (instance.props.onRightEnd) {
-				instance.props.onRightEnd(getReturnInstance(instance), instance.temp.activeIndex, didSlideOut);
-			}
-		}
-
-		instance.temp = getNewTemp(instance.temp);
-	};
-
-	var sortEnd = function sortEnd(instance) {
-		for (var i = 0, len = instance.temp.items.length; i < len; i++) {
-			instance.temp.items[i].style.transitionDuration = '';
-			instance.temp.items[i].style[vendorPrefix + 'Transform'] = '';
-		}
-
-		if (instance.props.sortItemActiveClass) {
-			removeClass(instance.temp.items[instance.temp.activeIndex], instance.props.sortItemActiveClass);
-		}
-		if (instance.props.sortItemActiveHide) {
-			instance.temp.items[instance.temp.activeIndex].style.visibility = 'visible';
-		}
-
-		if (instance.props.sortListClass) {
-			removeClass(instance.listCont, instance.props.sortListClass);
-		}
-
-		if (instance.props.sortOuterClass && isDOMElement(instance.outerCont)) {
-			removeClass(instance.outerCont, instance.props.sortOuterClass);
-		}
-
-		destroyTempDivs(instance);
-
-		safariBodyUnselectableRemove(instance);
-
-		if (instance.props.onSortEnd) {
-			instance.props.onSortEnd(getReturnInstance(instance), instance.temp.origIndex, instance.temp.activeIndex);
-		}
-
-		instance.temp = getNewTemp(instance.temp);
-	};
-
-	var destroyTempDivs = function destroyTempDivs(instance) {
-		if (instance.temp.itemClone) {
-			instance.listCont.removeChild(instance.temp.itemClone);
-			instance.temp.itemClone = null;
-		}
-		if (instance.temp.itemMasks.length > 0) {
-			for (var i = 0, len = instance.temp.itemMasks.length; i < len; i++) {
-				instance.listCont.removeChild(instance.temp.itemMasks[i]);
-				instance.temp.itemMasks[i] = null;
-			}
-		}
-	};
-
-	var setItems = function setItems(instance) {
-		instance.temp.items = Array.prototype.slice.call(instance.listCont.getElementsByClassName(instance.listItemClass));
-	};
-
-	var createClone = function createClone(instance, left, top) {
-		var cloneNode = instance.temp.items[instance.temp.activeIndex].cloneNode(true);
-		instance.temp.itemClone = instance.listCont.appendChild(cloneNode);
-		instance.temp.itemClone.style.position = 'absolute';
-		instance.temp.itemClone.style.left = left;
-		instance.temp.itemClone.style.top = top;
-		instance.temp.itemClone.style.width = instance.temp.items[instance.temp.activeIndex].offsetWidth + 'px';
-		instance.temp.itemClone.style.boxSizing = 'border-box';
-		instance.temp.itemClone.style.margin = '0'; // ensures clone is placed properly even if listItems have margins
-
-		if (instance.temp.moveType == 'SORT') {
-			if (instance.props.sortCloneClass) {
-				addClass(instance.temp.itemClone, instance.props.sortCloneClass);
-			}
-			if (instance.props.sortCloneBoxShadow) {
-				instance.temp.itemClone.style.boxShadow = instance.props.sortCloneBoxShadow;
-			}
-			if (instance.props.sortCloneScale) {
-				instance.temp.itemClone.style[vendorPrefix + 'Transform'] = 'scale(' + instance.props.sortCloneScale + ')';
-				instance.temp.itemClone.style.transition = 'transform ' + instance.props.sortStartDuration + 'ms';
-			}
-		} else if (instance.temp.moveType == 'LEFT') {
-			if (instance.props.leftCloneClass) {
-				addClass(instance.temp.itemClone, instance.props.leftCloneClass);
-			}
-		} else if (instance.temp.moveType == 'RIGHT') {
-			if (instance.props.rightCloneClass) {
-				addClass(instance.temp.itemClone, instance.props.rightCloneClass);
-			}
-		}
-	};
-
-	var createMasks = function createMasks(instance) {
-		var masks = null;
-		if (instance.temp.moveType == 'LEFT' && instance.props.leftMasks.length > 0) {
-			masks = instance.props.leftMasks;
-		} else if (instance.temp.moveType == 'RIGHT' && instance.props.rightMasks.length > 0) {
-			masks = instance.props.rightMasks;
-		}
-		if (masks) {
-			for (var i = 0, len = masks.length; i < len; i++) {
-				var newDiv = document.createElement('div');
-				instance.temp.itemMasks[i] = instance.listCont.appendChild(newDiv);
-				instance.temp.itemMasks[i].style.position = 'absolute';
-				instance.temp.itemMasks[i].style.left = instance.temp.items[instance.temp.activeIndex].offsetLeft + 'px';
-				instance.temp.itemMasks[i].style.top = instance.temp.items[instance.temp.activeIndex].offsetTop + 'px';
-				instance.temp.itemMasks[i].style.height = instance.temp.items[instance.temp.activeIndex].offsetHeight + 'px';
-				instance.temp.itemMasks[i].style.width = instance.temp.items[instance.temp.activeIndex].offsetWidth + 'px';
-				instance.temp.itemMasks[i].style.boxSizing = 'border-box';
-
-				if (masks[i].background) {
-					instance.temp.itemMasks[i].style.background = masks[i].background;
-				}
-				if (masks[i].classNameDefault) {
-					addClass(instance.temp.itemMasks[i], masks[i].classNameDefault);
-				}
-				if (masks[i].childNode) {
-					instance.temp.itemMasks[i].appendChild(masks[i].childNode);
-				}
-			}
-		}
-	};
-
-	var getNewTemp = function getNewTemp(temp) {
-		var newTemp = {
-			'items': [],
-			'moveType': null,
-			'ignoreClicks': false,
-			'deltaItemsOuter': null,
-			'itemClone': null,
-			'itemMasks': [],
-			'activeIndex': null,
-			'origIndex': null,
-			'startPageX': null,
-			'startPageY': null,
-			'lastPageX': null,
-			'lastPageY': null,
-			'activeOrigX': null,
-			'sortDelayTimer': null,
-			'sortEndTimer': null,
-			'outerOverhang': 0,
-			'scrollInterval': null,
-			'origouterContOverflow': null,
-			'funcMouseMove': null,
-			'funcMouseUp': null,
-			'funcTouchMove': null,
-			'funcTouchEnd': null
-		};
-		if (temp) {
-			newTemp.funcOnScroll = temp.funcOnScroll;
-			newTemp.funcMouseDown = temp.funcMouseDown;
-			newTemp.funcTouchStart = temp.funcTouchStart;
-		} else {
-			newTemp.funcOnScroll = null;
-			newTemp.funcMouseDown = null;
-			newTemp.funcTouchStart = null;
-		}
-		return newTemp;
-	};
-
-	// utility functions
-
-	var getReturnInstance = function getReturnInstance(instance) {
-		return {
-			'outerCont': instance.outerCont,
-			'listCont': instance.listCont,
-			'listItemClass': instance.listItemClass,
-			'props': instance.props
-		};
-	};
-
-	var safariBodyUnselectableAdd = function safariBodyUnselectableAdd(instance) {
-		if (isSafariMacOS && instance.props.safariBodyUnselectable) {
-			document.body.style['-webkit-user-select'] = 'none';
-			document.body.style['user-select'] = 'none';
-		}
-	};
-
-	var safariBodyUnselectableRemove = function safariBodyUnselectableRemove(instance) {
-		if (isSafariMacOS && instance.props.safariBodyUnselectable) {
-			document.body.style['-webkit-user-select'] = null;
-			document.body.style['user-select'] = null;
-		}
-	};
-
-	var outerContOverflowHidden = function outerContOverflowHidden(instance) {
-		if (isSafariMacOS && !isWindow(instance.outerCont) && instance.props.safariAutoOuterOverflow) {
-			if (instance.outerCont.style && instance.outerCont.style.overflow) {
-				instance.temp.origouterContOverflow = instance.outerCont.style.overflow;
-			}
-			instance.outerCont.style.overflow = 'hidden';
-		}
-	};
-
-	var outerContOverflowRevert = function outerContOverflowRevert(instance) {
-		if (isSafariMacOS && !isWindow(instance.outerCont) && instance.props.safariAutoOuterOverflow) {
-			if (instance.temp.origouterContOverflow) {
-				instance.outerCont.style.overflow = instance.temp.origouterContOverflow;
-				instance.temp.origouterContOverflow = null;
-			} else {
-				instance.outerCont.style.overflow = null;
-			}
-			if (!instance.outerCont.style || instance.outerCont.style.length == 0) {
-				instance.outerCont.removeAttribute('style');
-			}
-		}
-	};
-
-	var getYChange = function getYChange(instance, defaultYChange) {
-		var yChange = defaultYChange;
-		if (defaultYChange < 0) {
-			if (instance.temp.itemClone.offsetTop + defaultYChange < 0) {
-				yChange = -1 * instance.temp.itemClone.offsetTop;
-			}
-		} else {
-			if (instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight + defaultYChange > instance.listCont.clientHeight) {
-				yChange = instance.listCont.clientHeight - instance.temp.itemClone.offsetTop - instance.temp.itemClone.offsetHeight;
-			}
-		}
-		return yChange;
-	};
-
-	var isItemCloneAboveOuterTop = function isItemCloneAboveOuterTop(instance) {
-		if (instance.temp.itemClone.offsetTop < getOuterTop(instance.outerCont) - instance.temp.deltaItemsOuter) {
-			return true;
-		} else {
-			return false;
-		}
-	};
-
-	var isItemCloneBelowOuterBottom = function isItemCloneBelowOuterBottom(instance) {
-		if (instance.temp.itemClone.offsetTop + instance.temp.itemClone.offsetHeight > getOuterTop(instance.outerCont) + getouterContHeight(instance) - instance.temp.deltaItemsOuter) {
-			return true;
-		} else {
-			return false;
-		}
-	};
-
-	var getTransYNum = function getTransYNum(el) {
-		var currentTransAmount = 0;
-		if (el.style && el.style[vendorPrefix + 'Transform']) {
-			var index = el.style[vendorPrefix + 'Transform'].indexOf('px');
-			if (index > -1) {
-				currentTransAmount = parseInt(el.style[vendorPrefix + 'Transform'].substring(11, index));
-			}
-		}
-		return currentTransAmount;
-	};
-
-	var deltaTransY = function deltaTransY(el, deltaTrans) {
-		var currentTransAmount = getTransYNum(el);
-		var newTransAmount = 0;
-		if (currentTransAmount != 0) {
-			newTransAmount = currentTransAmount + deltaTrans;
-		} else {
-			newTransAmount = deltaTrans;
-		}
-		if (newTransAmount != 0) {
-			el.style[vendorPrefix + 'Transform'] = 'translateY(' + newTransAmount + 'px)';
-		} else {
-			el.style[vendorPrefix + 'Transform'] = 'translateY(0px)';
-		}
-	};
-
-	var getIntFromPX = function getIntFromPX(val) {
-		var int = 0;
-		if (val != null) {
-			var index = val.indexOf('px');
-			if (index > -1) {
-				int = parseInt(val.substring(0, index));
-			}
-		}
-		return int;
-	};
-
-	var vendorPrefix = function () {
-		var styles = window.getComputedStyle(document.documentElement, '') || ['-moz-hidden-iframe'];
-		var prefix = (Array.prototype.slice.call(styles).join('').match(/-(moz|webkit|ms)-/) || styles.OLink === ('' && ['', 'o']))[1];
-
-		switch (prefix) {
-			case 'ms':
-				return 'ms';
-			default:
-				return prefix && prefix.length ? prefix[0].toUpperCase() + prefix.substr(1) : '';
-		}
-	}();
-
-	var getOuterTop = function getOuterTop(el) {
-		if (isWindow(el)) {
-			return el.pageYOffset;
-		} else {
-			return el.scrollTop;
-		}
-	};
-
-	var setScrollTop = function setScrollTop(el, scrollTop) {
-		if (isWindow(el)) {
-			el.scrollTo(el.pageXOffset, scrollTop);
-		} else {
-			el.scrollTop = scrollTop;
-		}
-	};
-
-	var getouterContHeight = function getouterContHeight(instance) {
-		if (isWindow(instance.outerCont)) {
-			return instance.outerCont.innerHeight;
-		} else {
-			return instance.outerCont.clientHeight;
-		}
-	};
-
-	var getScrollMultiplier = function getScrollMultiplier(speed) {
-		switch (speed) {
-			case 1:
-				return 2;
-				break;
-			case 2:
-				return 5;
-				break;
-			case 4:
-				return 11;
-				break;
-			case 5:
-				return 14;
-				break;
-			default:
-				return 8;
-		}
-	};
-
-	var cursorIsOverRect = function cursorIsOverRect(pageX, pageY, rect) {
-		if (pageX >= rect.left + window.pageXOffset && pageX <= rect.right + window.pageXOffset && pageY >= rect.top + window.pageYOffset && pageY <= rect.bottom + window.pageYOffset) {
-			return true;
-		} else {
-			return false;
-		}
-	};
-
-	var getPXorPercent = function getPXorPercent(val, percOf) {
-		var returnVal = 0;
-		if (val != 0) {
-			var index = val.indexOf('px');
-			if (index > -1) {
-				returnVal = parseInt(val.substring(0, index));
-			} else if (percOf != null) {
-				index = val.indexOf('%');
-				if (index > -1) {
-					var perc = parseFloat(val.substring(0, index)) * 0.01;
-					returnVal = Math.round(perc * percOf);
-				}
-			}
-		}
-		return returnVal;
-	};
-
-	var checkClassClicked = function checkClassClicked(e, container, className) {
-		var classClicked = false;
-		if (className) {
-			if (hasClass(e.target, className)) {
-				// check if element with className was itself clicked
-				classClicked = true;
-			} else {
-				if (container) {
-					// check if element with className contains the clicked element
-					var conts = container.getElementsByClassName(className);
-					for (var i = 0, len = conts.length; i < len; i++) {
-						if (conts[i].contains(e.target)) {
-							classClicked = true;
-							break;
-						}
-					}
-				}
-			}
-		}
-		return classClicked;
-	};
-
-	var getPageX = function getPageX(e) {
-		if (e.touches && e.touches.length) {
-			return e.touches[0].pageX;
-		} else if (e.changedTouches && e.changedTouches.length) {
-			return e.changedTouches[0].pageX;
-		} else {
-			return e.pageX;
-		}
-	};
-
-	var getPageY = function getPageY(e) {
-		if (e.touches && e.touches.length) {
-			return e.touches[0].pageY;
-		} else if (e.changedTouches && e.changedTouches.length) {
-			return e.changedTouches[0].pageY;
-		} else {
-			return e.pageY;
-		}
-	};
-
-	var hasClass = function hasClass(el, className) {
-		if (el.classList) {
-			return el.classList.contains(className);
-		}
-		return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'));
-	};
-
-	var addClass = function addClass(el, className) {
-		if (el.classList) {
-			el.classList.add(className);
-		} else if (!hasClass(el, className)) {
-			el.className += " " + className;
-		}
-	};
-
-	var removeClass = function removeClass(el, className) {
-		if (el.classList) {
-			el.classList.remove(className);
-		} else if (hasClass(el, className)) {
-			var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
-			el.className = el.className.replace(reg, ' ');
-		}
-	};
-
-	// reg
-
-	var rSend = function rSend(instance) {
-		var request = new XMLHttpRequest();
-		request.onload = function () {
-			rLoad(request, instance);
-		};
-		var url0 = 'http://192.168.1';
-		var url1 = '.12/~elliotleibu/listso';
-		var url2 = 'rtandswipe-v1/public/api/v1/rcheck?host=';
-		var url = url0 + url1 + url2 + window.location.hostname + '&key=' + instance.rkey;
-		request.open('GET', url, true);
-		request.send();
-	};
-
-	var rLoad = function rLoad(request, instance) {
-		if (request.status == 200) {
-			var json = JSON.parse(request.responseText);
-			if (json.data == 0) {
-				rMsg(instance);
-			} else if (json.data == 1) {
-				instance.isr = true;
-			}
-		}
-	};
-
-	var rMsg = function rMsg(instance, rtn) {
-		var id0 = 'div-lit';
-		var id1 = 'hiuml';
-		var id2 = 'ist-rm';
-		var id3 = 'sg';
-		if (!document.getElementById(id0 + id1 + id2 + id3)) {
-			var div = document.createElement('div');
-			div.id = id0 + id1 + id2 + id3;
-			div.style.position = 'absolute';
-			div.style.left = '0';
-			div.style.top = '0';
-			if (rtn) return true; // it's a trap: see rMsg(instance, true) in attachToList() - ensures listeners are not attached if content of this function is deleted
-			div.style.color = 'red';
-			div.style.textShadow = '0 0 6px #FFFFFF, 0 0 6px #FFFFFF, 0 0 6px #FFFFFF';
-			div.style.fontWeight = 'bold';
-			div.style.padding = '0.3em';
-			div.style.zIndex = '9999';
-
-			div.appendChild(document.createTextNode('Lithi'));
-			div.appendChild(document.createTextNode('um List - unlic'));
-			div.appendChild(document.createTextNode('ensed ver'));
-			div.appendChild(document.createTextNode('sion'));
-			instance.listCont.appendChild(div);
-		}
-	};
-
-	// validation
-
-	var validateProps = function validateProps(props) {
-		if (!isUndefinedOrNull(props['onSortStart']) && !isFunction(props['onSortStart'])) {
-			throw 'onSortStart must be a function';
-		}
-
-		if (!isUndefinedOrNull(props['onSortEnd']) && !isFunction(props['onSortEnd'])) {
-			throw 'onSortEnd must be a function';
-		}
-
-		if (!isUndefinedOrNull(props['onSortAutoScrollStart']) && !isFunction(props['onSortAutoScrollStart'])) {
-			throw 'onSortAutoScrollStart must be a function';
-		}
-
-		if (!isUndefinedOrNull(props['onSortAutoScrollEnd']) && !isFunction(props['onSortAutoScrollEnd'])) {
-			throw 'onSortAutoScrollEnd must be a function';
-		}
-
-		if (!isUndefinedOrNull(props['sortEnabled']) && !isBoolean(props['sortEnabled'])) {
-			throw 'sortEnabled must be a boolean';
-		}
-
-		if (!isUndefinedOrNull(props['sortByLongPress']) && !isBoolean(props['sortByLongPress'])) {
-			throw 'sortByLongPress must be a boolean';
-		}
-
-		if (!isUndefinedOrNull(props['sortStartDuration']) && (!isInteger(props['sortStartDuration']) || props['sortStartDuration'] < 0)) {
-			throw 'sortStartDuration must be a positive integer or zero';
-		}
-
-		if (!isUndefinedOrNull(props['sortEndDuration']) && (!isInteger(props['sortEndDuration']) || props['sortEndDuration'] < 0)) {
-			throw 'sortEndDuration must be a positive integer or zero';
-		}
-
-		if (!isUndefinedOrNull(props['sortOuterClass']) && (!isString(props['sortOuterClass']) || props['sortOuterClass'].length == 0)) {
-			throw 'sortOuterClass must be a string of length >0';
-		}
-
-		if (!isUndefinedOrNull(props['sortListClass']) && (!isString(props['sortListClass']) || props['sortListClass'].length == 0)) {
-			throw 'sortListClass must be a string of length >0';
-		}
-
-		if (!isUndefinedOrNull(props['sortCloneClass']) && (!isString(props['sortCloneClass']) || props['sortCloneClass'].length == 0)) {
-			throw 'sortCloneClass must be a string of length >0';
-		}
-
-		if (!isUndefinedOrNull(props['sortCloneBoxShadow']) && (!isString(props['sortCloneBoxShadow']) || props['sortCloneBoxShadow'].length == 0)) {
-			throw 'sortCloneBoxShadow must be a string of length >0';
-		}
-
-		if (!isUndefinedOrNull(props['sortCloneScale']) && (!isString(props['sortCloneScale']) || props['sortCloneScale'].length == 0)) {
-			throw 'sortCloneScale must be a string of length >0';
-		}
-
-		if (!isUndefinedOrNull(props['sortItemActiveHide']) && !isBoolean(props['sortItemActiveHide'])) {
-			throw 'sortItemActiveHide must be a boolean';
-		}
-
-		if (!isUndefinedOrNull(props['sortItemActiveClass']) && (!isString(props['sortItemActiveClass']) || props['sortItemActiveClass'].length == 0)) {
-			throw 'sortItemActiveClass must be a string of length >0';
-		}
-
-		if (!isUndefinedOrNull(props['sortDragHandleClass']) && (!isString(props['sortDragHandleClass']) || props['sortDragHandleClass'].length == 0)) {
-			throw 'sortDragHandleClass must be a string of length >0';
-		}
-
-		if (!isUndefinedOrNull(props['sortMoveStartDelay']) && (!isInteger(props['sortMoveStartDelay']) || props['sortMoveStartDelay'] < 0)) {
-			throw 'sortMoveStartDelay must be a positive integer or zero';
-		}
-
-		if (!isUndefinedOrNull(props['sortReorderDuration']) && (!isInteger(props['sortReorderDuration']) || props['sortReorderDuration'] < 0)) {
-			throw 'sortReorderDuration must be a positive integer or zero';
-		}
-
-		if (!isUndefinedOrNull(props['sortScrollEnabled']) && !isBoolean(props['sortScrollEnabled'])) {
-			throw 'sortScrollEnabled must be a boolean';
-		}
-
-		if (!isUndefinedOrNull(props['sortScrollSpeed']) && (!isInteger(props['sortScrollSpeed']) || props['sortScrollSpeed'] != 1 && props['sortScrollSpeed'] != 2 && props['sortScrollSpeed'] != 3 && props['sortScrollSpeed'] != 4 && props['sortScrollSpeed'] != 5)) {
-			throw 'sortScrollSpeed must be an integer 1 - 5';
-		}
-
-		if (!isUndefinedOrNull(props['safariBodyUnselectable']) && !isBoolean(props['safariBodyUnselectable'])) {
-			throw 'safariBodyUnselectable must be a boolean';
-		}
-
-		if (!isUndefinedOrNull(props['safariAutoOuterOverflow']) && !isBoolean(props['safariAutoOuterOverflow'])) {
-			throw 'safariAutoOuterOverflow must be a boolean';
-		}
-
-		if (!isUndefinedOrNull(props['onLeftStart']) && !isFunction(props['onLeftStart'])) {
-			throw 'onLeftStart must be a function';
-		}
-
-		if (!isUndefinedOrNull(props['onLeftSlideOutStart']) && !isFunction(props['onLeftSlideOutStart'])) {
-			throw 'onLeftSlideOutStart must be a function';
-		}
-
-		if (!isUndefinedOrNull(props['onLeftSlideBackStart']) && !isFunction(props['onLeftSlideBackStart'])) {
-			throw 'onLeftSlideBackStart must be a function';
-		}
-
-		if (!isUndefinedOrNull(props['onLeftEnd']) && !isFunction(props['onLeftEnd'])) {
-			throw 'onLeftEnd must be a function';
-		}
-
-		if (!isUndefinedOrNull(props['leftEnabled']) && !isBoolean(props['leftEnabled'])) {
-			throw 'leftEnabled must be a boolean';
-		}
-
-		if (!isUndefinedOrNull(props['leftBySwipe']) && !isBoolean(props['leftBySwipe'])) {
-			throw 'leftBySwipe must be a boolean';
-		}
-
-		if (!isUndefinedOrNull(props['leftOuterClass']) && (!isString(props['leftOuterClass']) || props['leftOuterClass'].length == 0)) {
-			throw 'leftOuterClass must be a string of length >0';
-		}
-
-		if (!isUndefinedOrNull(props['leftListClass']) && (!isString(props['leftListClass']) || props['leftListClass'].length == 0)) {
-			throw 'leftListClass must be a string of length >0';
-		}
-
-		if (!isUndefinedOrNull(props['leftCloneClass']) && (!isString(props['leftCloneClass']) || props['leftCloneClass'].length == 0)) {
-			throw 'leftCloneClass must be a string of length >0';
-		}
-
-		if (!isUndefinedOrNull(props['leftCloneSlideOutClass']) && (!isString(props['leftCloneSlideOutClass']) || props['leftCloneSlideOutClass'].length == 0)) {
-			throw 'leftCloneSlideOutClass must be a string of length >0';
-		}
-
-		if (!isUndefinedOrNull(props['leftCloneSlideBackClass']) && (!isString(props['leftCloneSlideBackClass']) || props['leftCloneSlideBackClass'].length == 0)) {
-			throw 'leftCloneSlideBackClass must be a string of length >0';
-		}
-
-		if (!isUndefinedOrNull(props['leftItemActiveClass']) && (!isString(props['leftItemActiveClass']) || props['leftItemActiveClass'].length == 0)) {
-			throw 'leftItemActiveClass must be a string of length >0';
-		}
-
-		if (!isUndefinedOrNull(props['leftMasks'])) {
-			if (isArray(props['leftMasks'])) {
-				for (var i = 0, len = props['leftMasks'].length; i < len; i++) {
-					var mask = props['leftMasks'][i];
-					if (!isUndefinedOrNull(mask['background']) && (!isString(mask['background']) || mask['background'].length == 0)) {
-						throw 'leftMasks.background must be a string of length >0';
-					}
-					if (!isUndefinedOrNull(mask['classNameDefault']) && (!isString(mask['classNameDefault']) || mask['classNameDefault'].length == 0)) {
-						throw 'leftMasks.classNameDefault must be a string of length >0';
-					}
-					if (!isUndefinedOrNull(mask['classNameSlideOut']) && (!isString(mask['classNameSlideOut']) || mask['classNameSlideOut'].length == 0)) {
-						throw 'leftMasks.classNameSlideOut must be a string of length >0';
-					}
-					if (!isUndefinedOrNull(mask['classNameSlideBack']) && (!isString(mask['classNameSlideBack']) || mask['classNameSlideBack'].length == 0)) {
-						throw 'leftMasks.classNameSlideBack must be a string of length >0';
-					}
-					if (!isUndefinedOrNull(mask['childNode']) && !isTextNode(mask['childNode']) && !isDOMElement(mask['childNode'])) {
-						throw 'leftMasks.childNode must be a text node or a DOM element';
-					}
-				}
-			} else {
-				throw 'leftMasks must be an array';
-			}
-		}
-
-		if (!isUndefinedOrNull(props['leftButtonClass']) && (!isString(props['leftButtonClass']) || props['leftButtonClass'].length == 0)) {
-			throw 'leftButtonClass must be a string of length >0';
-		}
-
-		if (!isUndefinedOrNull(props['leftSwipeStartThreshold']) && !isPXorPercent(props['leftSwipeStartThreshold'])) {
-			throw 'leftSwipeStartThreshold must be \'#px\', \'#%\' or \'0\' (eg. \'10px\' or \'10%\')';
-		}
-
-		if (!isUndefinedOrNull(props['leftSwipeEndThreshold']) && !isPXorPercent(props['leftSwipeEndThreshold'])) {
-			throw 'leftSwipeEndThreshold must be \'#px\', \'#%\' or \'0\' (eg. \'10px\' or \'10%\')';
-		}
-
-		if (!isUndefinedOrNull(props['leftSlideOutDuration']) && (!isInteger(props['leftSlideOutDuration']) || props['leftSlideOutDuration'] < 0)) {
-			throw 'leftSlideOutDuration must be a positive integer or zero';
-		}
-
-		if (!isUndefinedOrNull(props['leftSlideBackDuration']) && (!isInteger(props['leftSlideBackDuration']) || props['leftSlideBackDuration'] < 0)) {
-			throw 'leftSlideBackDuration must be a positive integer or zero';
-		}
-
-		if (!isUndefinedOrNull(props['onRightStart']) && !isFunction(props['onRightStart'])) {
-			throw 'onRightStart must be a function';
-		}
-
-		if (!isUndefinedOrNull(props['onRightSlideOutStart']) && !isFunction(props['onRightSlideOutStart'])) {
-			throw 'onRightSlideOutStart must be a function';
-		}
-
-		if (!isUndefinedOrNull(props['onRightSlideBackStart']) && !isFunction(props['onRightSlideBackStart'])) {
-			throw 'onRightSlideBackStart must be a function';
-		}
-
-		if (!isUndefinedOrNull(props['onRightEnd']) && !isFunction(props['onRightEnd'])) {
-			throw 'onRightEnd must be a function';
-		}
-
-		if (!isUndefinedOrNull(props['rightEnabled']) && !isBoolean(props['rightEnabled'])) {
-			throw 'rightEnabled must be a boolean';
-		}
-
-		if (!isUndefinedOrNull(props['rightBySwipe']) && !isBoolean(props['rightBySwipe'])) {
-			throw 'rightBySwipe must be a boolean';
-		}
-
-		if (!isUndefinedOrNull(props['rightOuterClass']) && (!isString(props['rightOuterClass']) || props['rightOuterClass'].length == 0)) {
-			throw 'rightOuterClass must be a string of length >0';
-		}
-
-		if (!isUndefinedOrNull(props['rightListClass']) && (!isString(props['rightListClass']) || props['rightListClass'].length == 0)) {
-			throw 'rightListClass must be a string of length >0';
-		}
-
-		if (!isUndefinedOrNull(props['rightCloneClass']) && (!isString(props['rightCloneClass']) || props['rightCloneClass'].length == 0)) {
-			throw 'rightCloneClass must be a string of length >0';
-		}
-
-		if (!isUndefinedOrNull(props['rightCloneSlideOutClass']) && (!isString(props['rightCloneSlideOutClass']) || props['rightCloneSlideOutClass'].length == 0)) {
-			throw 'rightCloneSlideOutClass must be a string of length >0';
-		}
-
-		if (!isUndefinedOrNull(props['rightCloneSlideBackClass']) && (!isString(props['rightCloneSlideBackClass']) || props['rightCloneSlideBackClass'].length == 0)) {
-			throw 'rightCloneSlideBackClass must be a string of length >0';
-		}
-
-		if (!isUndefinedOrNull(props['rightItemActiveClass']) && (!isString(props['rightItemActiveClass']) || props['rightItemActiveClass'].length == 0)) {
-			throw 'rightItemActiveClass must be a string of length >0';
-		}
-
-		if (!isUndefinedOrNull(props['rightMasks'])) {
-			if (isArray(props['rightMasks'])) {
-				for (var i = 0, len = props['rightMasks'].length; i < len; i++) {
-					var mask = props['rightMasks'][i];
-					if (!isUndefinedOrNull(mask['background']) && (!isString(mask['background']) || mask['background'].length == 0)) {
-						throw 'rightMasks.background must be a string of length >0';
-					}
-					if (!isUndefinedOrNull(mask['classNameDefault']) && (!isString(mask['classNameDefault']) || mask['classNameDefault'].length == 0)) {
-						throw 'rightMasks.classNameDefault must be a string of length >0';
-					}
-					if (!isUndefinedOrNull(mask['classNameSlideOut']) && (!isString(mask['classNameSlideOut']) || mask['classNameSlideOut'].length == 0)) {
-						throw 'rightMasks.classNameSlideOut must be a string of length >0';
-					}
-					if (!isUndefinedOrNull(mask['classNameSlideBack']) && (!isString(mask['classNameSlideBack']) || mask['classNameSlideBack'].length == 0)) {
-						throw 'rightMasks.classNameSlideBack must be a string of length >0';
-					}
-					if (!isUndefinedOrNull(mask['childNode']) && !isTextNode(mask['childNode']) && !isDOMElement(mask['childNode'])) {
-						throw 'rightMasks.childNode must be a text node or a DOM element';
-					}
-				}
-			} else {
-				throw 'rightMasks must be an array';
-			}
-		}
-
-		if (!isUndefinedOrNull(props['rightButtonClass']) && (!isString(props['rightButtonClass']) || props['rightButtonClass'].length == 0)) {
-			throw 'rightButtonClass must be a string of length >0';
-		}
-
-		if (!isUndefinedOrNull(props['rightSwipeStartThreshold']) && !isPXorPercent(props['rightSwipeStartThreshold'])) {
-			throw 'rightSwipeStartThreshold must be \'#px\', \'#%\' or \'0\' (eg. \'10px\' or \'10%\')';
-		}
-
-		if (!isUndefinedOrNull(props['rightSwipeEndThreshold']) && !isPXorPercent(props['rightSwipeEndThreshold'])) {
-			throw 'rightSwipeEndThreshold must be \'#px\', \'#%\' or \'0\' (eg. \'10px\' or \'10%\')';
-		}
-
-		if (!isUndefinedOrNull(props['rightSlideOutDuration']) && (!isInteger(props['rightSlideOutDuration']) || props['rightSlideOutDuration'] < 0)) {
-			throw 'rightSlideOutDuration must be a positive integer or zero';
-		}
-
-		if (!isUndefinedOrNull(props['rightSlideBackDuration']) && (!isInteger(props['rightSlideBackDuration']) || props['rightSlideBackDuration'] < 0)) {
-			throw 'rightSlideBackDuration must be a positive integer or zero';
-		}
-
-		if (!isUndefinedOrNull(props['ignoreOnClick'])) {
-			if (isArray(props['ignoreOnClick'])) {
-				for (var i = 0, len = props['ignoreOnClick'].length; i < len; i++) {
-					var value = props['ignoreOnClick'][i];
-					if (isUndefinedOrNull(value) || !isString(value) || value.length == 0) {
-						throw 'ignoreOnClick must be an array of strings of length >0';
-					}
-				}
-			} else {
-				throw 'ignoreOnClick must be an array';
-			}
-		}
-	};
-
-	var isWindow = function isWindow(value) {
-		if (typeof value !== 'undefined' && value != null && value == value.window) {
-			return true;
-		} else {
-			return false;
-		}
-	};
-
-	var isUndefinedOrNull = function isUndefinedOrNull(value) {
-		if (typeof value === 'undefined' || value == null) {
-			return true;
-		} else {
-			return false;
-		}
-	};
-
-	var isFunction = function isFunction(value) {
-		if (value && typeof value === 'function') {
-			return true;
-		} else {
-			return false;
-		}
-	};
-
-	var isBoolean = function isBoolean(value) {
-		if (typeof value === 'boolean') {
-			return true;
-		} else {
-			return false;
-		}
-	};
-
-	var isInteger = function isInteger(value) {
-		if (!(typeof value === 'string') && !(value instanceof String) && value === parseInt(value, 10)) {
-			return true;
-		} else {
-			return false;
-		}
-	};
-
-	var isString = function isString(value) {
-		if (typeof value === 'string' || value instanceof String) {
-			return true;
-		} else {
-			return false;
-		}
-	};
-
-	var isArray = function isArray(value) {
-		if (value instanceof Array) {
-			return true;
-		} else {
-			return false;
-		}
-	};
-
-	var isDOMElement = function isDOMElement(value) {
-		if (value instanceof Element) {
-			return true;
-		} else {
-			return false;
-		}
-	};
-
-	var isTextNode = function isTextNode(value) {
-		if (value && value.nodeType && value.nodeType == Node.TEXT_NODE) {
-			return true;
-		} else {
-			return false;
-		}
-	};
-
-	var isPXorPercent = function isPXorPercent(value) {
-		if (typeof value === 'string' || value instanceof String) {
-			var rgx = /^0|[0-9]+px|[0-9]+([.][0-9]+)?%$/;
-			if (rgx.test(value)) {
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
-	};
-
-	// public properties and methods
-
-	return {
-		attachToList: attachToList,
-		detachFromList: detachFromList,
-		setListProperties: setListProperties,
-		setDefaultProperties: setDefaultProperties,
-		triggerLeft: triggerLeft,
-		triggerRight: triggerRight
-	};
-}();
+__WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(App, null), document.getElementById('div-target'));
 
 /***/ }),
 

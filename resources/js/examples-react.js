@@ -81,7 +81,7 @@ class OuterCont extends React.Component {
 			newListItems.unshift({'title' : this.input.value});
 	        this.setState({
 	           listItems: newListItems
-	        });			
+	        });
 			this.input.value = '';
 		}
 	}

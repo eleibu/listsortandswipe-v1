@@ -26,13 +26,7 @@
             </div>
         </div>
         <div id="div-sitecont">
-            <div class="sitecont-outer">
-                <br/>
-                middle
-                <br/>
-                <br/>
-                <br/>
-                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <div id="div-target" class="sitecont-outer">
             </div>
         </div>
         <div id="div-sitefooter">
