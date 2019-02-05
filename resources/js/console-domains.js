@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classNames/dedupe';
+import { CSSTransition } from 'react-transition-group';
 
 export class Domains extends React.Component {
     constructor(props) {
@@ -11,34 +12,29 @@ export class Domains extends React.Component {
     render() {
         const textboxClasses = classNames({
             'textentry-cont' : true,
-            'focus' : this.state.textboxFocus
+            'focus' : this.state.textboxFocus,
         });
-
         return (
             <div className="content-inner">
                 <div className="add-cont">
-                    <div className="message-outer">
-                        <div className="message-inner">
-                            <i className="sld icon-cross-ui"></i>
-                            <span>You have 1 product expiring in 28 days</span>
+                    <CSSTransition in={(this.props.domainsMsgShow)} classNames="message-trans" timeout={{ enter: 0, exit: 200 }} unmountOnExit>
+                        <div className="message-outer">
+                            <div className="message-inner">
+                                <i className="sld icon-cross-ui" onClick={() => {this.props.domainsMsgCloseClick()}}></i>
+                                <span>{this.props.domainsMsgText}</span>
+                            </div>
                         </div>
-                    </div>
+                    </CSSTransition>
                     <div className="add-item-outer">
                         <div className="text-cont">
                             <div className={textboxClasses}>
                                 <div className="input-cont">
                                     <input className="textentry" placeholder="Domain..." />
                                 </div>
-                                <div className="count-cont">
-                                    <div className="count-outer">
-                                        <div className="count-text">
-                                            1 left
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div className="button-row">
+                            <span>What do I enter here?</span>
                             <div className="button-word-cont clear">
                                 ADD DOMAIN
                             </div>

@@ -78,12 +78,12 @@
 
 					div.add-cont {
 						div.message-outer {
-							padding-bottom: 0.6em;
+
 
 							div.message-inner {
 								position: relative;
 								padding: 0.5em 1em;
-								background-color: #FF3333;
+								background-color: #F56E44;
 								color: #FFFFFF;
 								text-align: center;
 
@@ -97,22 +97,26 @@
 									transform: translateY(-50%);
 									right: 4px;
 									font-size: 130%;
+									padding: 0.15em;
+									border-radius: 999px;
+								}
+
+								i:hover, i:active {
+									cursor: pointer;
+									background: rgba(255, 255, 255, 0.1);
 								}
 							}
 						}
 						
 
 						div.add-item-outer {
-							padding: 0 1em;
+							padding: 1em 1em 0 1em;
 
 							div.text-cont {
 								div.textentry-cont {
-									position: relative;
 									border: 1px solid #DDDDDD;
 
 									div.input-cont {
-										margin-right: 6em;
-
 										input.textentry {
 											padding: 0.4em;
 											box-sizing: border-box;
@@ -123,43 +127,39 @@
 											border: none;
 											background: transparent;
 										}
-
 									}
-
-									div.count-cont {
-										position: absolute;
-										top: 4%;
-										right: 0.4em;
-										width: 6em;
-										height: 92%;
-
-										div.count-outer {
-											height: 100%;
-											background-color: green;
-											border-radius: 4px;
-
-											div.count-text {
-												position: relative;
-												top: 50%;
-												transform: translateY(-50%);
-												text-align: center;
-												font-size: 80%;
-											}
-
-										}
-									}
-
-
-
-									// div.textentry-outer {
-									// 	margin: 0.4em;
-
-									// }
 								}
 
 								div.textentry-cont.focus {
 									border: 1px solid #3366CC;
 								}
+							}
+
+							div.button-row {
+								position: relative;
+								margin: 0.4em 0;
+								text-align: right;
+
+								span {
+									position: absolute;
+									top: 50%;
+									transform: translateY(-50%);
+									left: 0;
+									color: #3366CC;
+									cursor: pointer;
+									font-size: 80%;
+								}
+
+								.button-word-cont {
+									font-size: 80%;
+									color: #777777;
+								}
+
+								.button-word-cont:hover {
+									cursor: pointer;
+									background-color: #EEEEEE;
+								}
+
 
 							}
 						}
@@ -172,7 +172,14 @@
 
 
 
+div.message-trans-exit {
+	opacity: 1;
+}
 
+div.message-trans-exit.message-trans-exit-active {
+	opacity: 0;
+	transition: opacity 200ms ease;
+}
 
 
 div.domains-trans-enter {
