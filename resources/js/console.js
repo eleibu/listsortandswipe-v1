@@ -12,10 +12,12 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            domainsLoaded: true,
             tabIndex: 0,
+            domainsLoaded: true,
             domainsMsgShow : false,
-            domainsMsgText : 'You have 1 product expiring in 28 days'
+            domainsMsgText : 'You have 1 product expiring in 28 days',
+            domains: [],
+            maxDomains: 1
         };
         this.tabClick = this.tabClick.bind(this);
         this.domainsMsgCloseClick = this.domainsMsgCloseClick.bind(this);
@@ -69,7 +71,7 @@ class App extends React.Component {
                     {(this.state.domainsLoaded) ? (
                         <div className="content-outer">
                             <CSSTransition in={(this.state.tabIndex == 0)} classNames="domains-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
-                                <Domains domainsMsgShow={this.state.domainsMsgShow} domainsMsgText={this.state.domainsMsgText} domainsMsgCloseClick={this.domainsMsgCloseClick} />
+                                <Domains domains={this.state.domains} maxDomains={this.state.maxDomains} domainsMsgShow={this.state.domainsMsgShow} domainsMsgText={this.state.domainsMsgText} domainsMsgCloseClick={this.domainsMsgCloseClick} />
                             </CSSTransition>
                             <CSSTransition in={(this.state.tabIndex == 1)} classNames="account-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
                                 <Account />

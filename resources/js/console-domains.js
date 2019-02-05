@@ -29,7 +29,7 @@ export class Domains extends React.Component {
                         <div className="text-cont">
                             <div className={textboxClasses}>
                                 <div className="input-cont">
-                                    <input className="textentry" placeholder="Domain..." />
+                                    <input className="textentry" placeholder="Add domain..." />
                                 </div>
                             </div>
                         </div>
@@ -39,6 +39,20 @@ export class Domains extends React.Component {
                                 ADD DOMAIN
                             </div>
                         </div>
+                        <CSSTransition in={(this.props.maxDomains - this.props.domains.length == 0)} classNames="add-item-mask-trans" timeout={{ enter: 200, exit: 0 }} unmountOnExit>
+                            <div className="add-item-mask-cont">
+                                <div className="add-item-mask-outer">
+                                    <div className="add-item-mask-inner">
+                                        <div className="title">
+                                            Need to use Lithium List in more places?
+                                        </div>
+                                        <div className="subtitle">
+                                            <div className="button-word-cont grey">Upgrade or buy more domains</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </CSSTransition>
                     </div>
                 </div>
                 <div className="items-cont">

@@ -110,7 +110,9 @@
 						
 
 						div.add-item-outer {
+							position: relative;
 							padding: 1em 1em 0 1em;
+							border-bottom: 1px solid #DDDDDD;
 
 							div.text-cont {
 								div.textentry-cont {
@@ -159,8 +161,41 @@
 									cursor: pointer;
 									background-color: #EEEEEE;
 								}
+							}
+
+							div.add-item-mask-cont {
+								position: absolute;
+								top: 0;
+								left: 0;
+								height: 100%;
+								width: 100%;
+								background-color: rgba(255,255,255,0.9);
+
+								div.add-item-mask-outer {
+									position: relative;
+									height: 100%;
+
+									div.add-item-mask-inner {
+										position: relative;
+										top: 50%;
+										transform: translateY(-50%);
+										padding: 0 1em;
+
+										div.title {
+											color: #339933;
+											font-size: 90%;
+											line-height: 130%;
+										}
+
+										div.subtitle {
+											margin-top: 0.6em;
+											font-size: 80%;
+										}
+									}
 
 
+
+								}
 							}
 						}
 					}
@@ -172,6 +207,7 @@
 
 
 
+// trans - message
 div.message-trans-exit {
 	opacity: 1;
 }
@@ -182,6 +218,19 @@ div.message-trans-exit.message-trans-exit-active {
 }
 
 
+// trans - add item mask
+div.add-item-mask-trans-enter {
+	display: none;
+	max-height: 0;
+}
+
+div.add-item-mask-trans-enter.add-item-mask-trans-enter-active {
+	max-height: 100000px;
+	transition: max-height 200ms linear 200ms;
+}
+
+
+// trans - domains
 div.domains-trans-enter {
 	display: none;
 	max-height: 0;
@@ -201,6 +250,7 @@ div.domains-trans-exit.domains-trans-exit-active {
 	transition: opacity 200ms ease;
 }
 
+// trans - account
 div.account-trans-enter {
 	display: none;
 	max-height: 0;

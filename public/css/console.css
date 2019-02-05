@@ -317,7 +317,9 @@ a.menubtn:hover {
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.add-cont div.add-item-outer {
+  position: relative;
   padding: 1em 1em 0 1em;
+  border-bottom: 1px solid #DDDDDD;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.add-cont div.add-item-outer div.text-cont div.textentry-cont {
@@ -367,6 +369,39 @@ a.menubtn:hover {
   background-color: #EEEEEE;
 }
 
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.add-cont div.add-item-outer div.add-item-mask-cont {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.add-cont div.add-item-outer div.add-item-mask-cont div.add-item-mask-outer {
+  position: relative;
+  height: 100%;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.add-cont div.add-item-outer div.add-item-mask-cont div.add-item-mask-outer div.add-item-mask-inner {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  padding: 0 1em;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.add-cont div.add-item-outer div.add-item-mask-cont div.add-item-mask-outer div.add-item-mask-inner div.title {
+  color: #339933;
+  font-size: 90%;
+  line-height: 130%;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.add-cont div.add-item-outer div.add-item-mask-cont div.add-item-mask-outer div.add-item-mask-inner div.subtitle {
+  margin-top: 0.6em;
+  font-size: 80%;
+}
+
 div.message-trans-exit {
   opacity: 1;
 }
@@ -375,6 +410,17 @@ div.message-trans-exit.message-trans-exit-active {
   opacity: 0;
   -webkit-transition: opacity 200ms ease;
   transition: opacity 200ms ease;
+}
+
+div.add-item-mask-trans-enter {
+  display: none;
+  max-height: 0;
+}
+
+div.add-item-mask-trans-enter.add-item-mask-trans-enter-active {
+  max-height: 100000px;
+  -webkit-transition: max-height 200ms linear 200ms;
+  transition: max-height 200ms linear 200ms;
 }
 
 div.domains-trans-enter {
