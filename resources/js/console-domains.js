@@ -29,7 +29,7 @@ export class Domains extends React.Component {
                         <div className="text-cont">
                             <div className={textboxClasses}>
                                 <div className="input-cont">
-                                    <input className="textentry" placeholder="Add domain..." />
+                                    <input placeholder="yourdomain.com" />
                                 </div>
                             </div>
                         </div>
@@ -44,7 +44,7 @@ export class Domains extends React.Component {
                                 <div className="add-item-mask-outer">
                                     <div className="add-item-mask-inner">
                                         <div className="title">
-                                            Need to use Lithium List in more places?
+                                            Need to use Lithium List in more websites?
                                         </div>
                                         <div className="subtitle">
                                             <div className="button-word-cont grey">Upgrade or buy more domains</div>
@@ -56,9 +56,44 @@ export class Domains extends React.Component {
                     </div>
                 </div>
                 <div className="items-cont">
-                    Items
+                    {this.props.domains.map((domain, index) => (
+                        <CSSTransition key={domain.id} classNames="domain-trans" timeout={{ enter: 200, exit: 200 }}>
+                            <Domain domain={domain.domain} licencekey={domain.licencekey} />
+                        </CSSTransition>
+                    ))}
                 </div>
             </div>
         );
     }
 }
+
+export class Domain extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        return (
+            <div className="domain-cont">
+                <div className="domain-outer">
+                    <div className="sort-cont">
+                        <i className="oln icon-grab-ui button"></i>
+                    </div>
+                    <div className="middle-cont">
+                        <div className="input-cont">
+                            <input value={this.props.domain} />
+                        </div>
+                        <div className="key-cont">
+                            <span className="label">Licence key:</span> <span className="key">{this.props.licencekey}</span>
+                        </div>
+                    </div>
+                    <div className="delete-cont">
+                        <i className="oln icon-trash button"></i>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+
+
+

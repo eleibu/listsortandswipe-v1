@@ -16,8 +16,14 @@ class App extends React.Component {
             domainsLoaded: true,
             domainsMsgShow : false,
             domainsMsgText : 'You have 1 product expiring in 28 days',
-            domains: [],
-            maxDomains: 1
+            domains: [
+                {
+                    id: '123456789',
+                    domain: 'syndeal.com',
+                    licencekey: '123456789'
+                }
+            ],
+            maxDomains: 2
         };
         this.tabClick = this.tabClick.bind(this);
         this.domainsMsgCloseClick = this.domainsMsgCloseClick.bind(this);

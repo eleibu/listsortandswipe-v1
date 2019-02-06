@@ -326,7 +326,7 @@ a.menubtn:hover {
   border: 1px solid #DDDDDD;
 }
 
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.add-cont div.add-item-outer div.text-cont div.textentry-cont div.input-cont input.textentry {
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.add-cont div.add-item-outer div.text-cont div.textentry-cont div.input-cont input {
   padding: 0.4em;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -375,7 +375,7 @@ a.menubtn:hover {
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: #FFFFFF;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.add-cont div.add-item-outer div.add-item-mask-cont div.add-item-mask-outer {
@@ -392,7 +392,7 @@ a.menubtn:hover {
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.add-cont div.add-item-outer div.add-item-mask-cont div.add-item-mask-outer div.add-item-mask-inner div.title {
-  color: #339933;
+  color: #666666;
   font-size: 90%;
   line-height: 130%;
 }
@@ -400,6 +400,88 @@ a.menubtn:hover {
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.add-cont div.add-item-outer div.add-item-mask-cont div.add-item-mask-outer div.add-item-mask-inner div.subtitle {
   margin-top: 0.6em;
   font-size: 80%;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont {
+  border-bottom: 1px solid #EEEEEE;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer {
+  position: relative;
+  padding: 1.2em 0;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer div.sort-cont {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  left: 0.6em;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer div.middle-cont div.input-cont input {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+  font-size: 120%;
+  -webkit-appearance: none;
+  outline: none;
+  border: none;
+  background: transparent;
+  color: #333333;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer div.middle-cont div.key-cont {
+  margin-top: 0.6em;
+  font-size: 80%;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer div.middle-cont div.key-cont span.label {
+  color: #666666;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer div.middle-cont div.key-cont span.key {
+  color: #339933;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer div.delete-cont {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  right: 0.6em;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont i.button {
+  visibility: hidden;
+  padding: 0.6em;
+  border-radius: 999px;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont:hover i.button {
+  visibility: visible;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont:hover i.button:hover {
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.03);
+  font-weight: bold;
+}
+
+#pageWrapper.xl div.domain-cont div.domain-outer div.middle-cont, #pageWrapper.lg div.domain-cont div.domain-outer div.middle-cont, #pageWrapper.md div.domain-cont div.domain-outer div.middle-cont, #pageWrapper.sm div.domain-cont div.domain-outer div.middle-cont {
+  margin: 0 3em;
+}
+
+#pageWrapper.xs div.domain-cont div.domain-outer div.sort-cont {
+  display: none;
+}
+
+#pageWrapper.xs div.domain-cont div.domain-outer div.middle-cont {
+  margin: 0 1em;
+}
+
+#pageWrapper.xs div.domain-cont div.domain-outer div.delete-cont {
+  display: none;
 }
 
 div.message-trans-exit {
@@ -442,6 +524,26 @@ div.domains-trans-exit.domains-trans-exit-active {
   opacity: 0;
   -webkit-transition: opacity 200ms ease;
   transition: opacity 200ms ease;
+}
+
+div.domain-trans-appear, div.domain-trans-enter {
+  opacity: 0.01;
+}
+
+div.domain-trans-appear.domain-trans-appear-active, div.domain-trans-enter.domain-trans-enter-active {
+  opacity: 1;
+  -webkit-transition: opacity 200ms ease-in;
+  transition: opacity 200ms ease-in;
+}
+
+div.domain-trans-exit {
+  opacity: 1;
+}
+
+div.domain-trans-exit.domain-trans-exit-active {
+  opacity: 0.01;
+  -webkit-transition: opacity 200ms ease-in;
+  transition: opacity 200ms ease-in;
 }
 
 div.account-trans-enter {
