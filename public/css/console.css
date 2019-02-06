@@ -432,16 +432,30 @@ a.menubtn:hover {
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer div.middle-cont div.key-cont {
-  margin-top: 0.6em;
+  margin-top: 0.4em;
   font-size: 80%;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer div.middle-cont div.key-cont span {
+  display: inline-block;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer div.middle-cont div.key-cont span.label {
   color: #666666;
+  padding: 3px 4px 3px 0;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer div.middle-cont div.key-cont span.key {
   color: #339933;
+  padding: 3px 4px;
+  border: 1px solid transparent;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer div.middle-cont div.key-cont span.copy {
+  visibility: hidden;
+  color: #3366CC;
+  padding: 3px 4px;
+  font-size: 90%;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer div.delete-cont {
@@ -456,6 +470,15 @@ a.menubtn:hover {
   visibility: hidden;
   padding: 0.6em;
   border-radius: 999px;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont:hover div.domain-outer div.middle-cont div.key-cont span.copy {
+  visibility: visible;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont:hover div.domain-outer div.middle-cont div.key-cont span.copy:hover, #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont:hover div.domain-outer div.middle-cont div.key-cont span.copy:active {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont:hover i.button {

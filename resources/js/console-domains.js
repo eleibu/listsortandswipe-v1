@@ -83,7 +83,7 @@ export class Domain extends React.Component {
                             <input value={this.props.domain} />
                         </div>
                         <div className="key-cont">
-                            <span className="label">Licence key:</span> <span className="key">{this.props.licencekey}</span>
+                            <span className="label">Licence key:</span><span className="key">{this.props.licencekey}</span><span className="copy">COPY</span>
                         </div>
                     </div>
                     <div className="delete-cont">
