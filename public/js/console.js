@@ -42961,23 +42961,162 @@ var Domains = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (Domains.__proto__ || Object.getPrototypeOf(Domains)).call(this, props));
 
         _this.state = {
-            textboxFocus: false
+            inputFocus: false,
+            inputWarn: false,
+            containerFocus: false
         };
+        _this.handleDocClick = _this.handleDocClick.bind(_this);
+        _this.setOuterRef = _this.setOuterRef.bind(_this);
+        _this.checkValue = _this.checkValue.bind(_this);
         return _this;
     }
 
     _createClass(Domains, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            document.addEventListener('mousedown', this.handleDocClick);
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            document.removeEventListener('mousedown', this.handleDocClick);
+        }
+    }, {
+        key: 'setOuterRef',
+        value: function setOuterRef(node) {
+            this.outerRef = node;
+        }
+    }, {
+        key: 'handleDocClick',
+        value: function handleDocClick(e) {
+            var contClicked = false;
+            if (this.outerRef && (e.target === this.outerRef || this.outerRef.contains(e.target))) {
+                contClicked = true;
+            }
+            var inputClicked = false;
+            if (this.input && (e.target === this.input || this.input.contains(e.target))) {
+                inputClicked = true;
+            }
+            if (inputClicked) {
+                // this.checkValue();
+                this.setState({
+                    inputFocus: true,
+                    containerFocus: true
+                });
+            } else if (contClicked) {
+                // this.checkValue();
+                this.setState({
+                    inputFocus: false
+                });
+            } else {
+                // this.checkValue();
+                this.setState({
+                    inputFocus: false,
+                    containerFocus: false
+                });
+            }
+        }
+    }, {
+        key: 'onInput',
+        value: function onInput(e) {
+            if (this.state.inputWarn) {
+                this.checkValue();
+            }
+        }
+    }, {
+        key: 'checkValue',
+        value: function checkValue() {
+            var valueOk = void 0;
+            var newDomain = this.input.value.replace(/^\s+|\s+$/g, '');
+            if (newDomain.length > 0) {
+                if (/^\S+\.\S+$/.test(newDomain)) {
+                    valueOk = true;
+                    this.setState({
+                        inputWarn: false
+                    });
+                } else {
+                    valueOk = false;
+                    this.setState({
+                        inputWarn: true
+                    });
+                }
+            } else {
+                valueOk = false;
+                this.setState({
+                    inputWarn: false
+                });
+            }
+            return valueOk;
+        }
+    }, {
+        key: 'addDomainClick',
+        value: function addDomainClick() {
+            if (this.checkValue()) {
+                var origValue = this.input.value.replace(/^\s+|\s+$/g, '');
+                this.createItemAndAdd(origValue);
+                this.setState({
+                    inputFocus: false,
+                    containerFocus: false
+                });
+            }
+        }
+    }, {
+        key: 'onKeyDown',
+        value: function onKeyDown(e) {
+            if (e.which && e.which == 13 || e.keyCode && e.keyCode == 13) {
+                // enter key
+                e.preventDefault();
+                if (this.checkValue()) {
+                    var origValue = this.input.value.replace(/^\s+|\s+$/g, '');
+                    this.createItemAndAdd(origValue);
+                }
+                this.setState({
+                    inputFocus: false
+                });
+            } else if (e.which && e.which == 9 || e.keyCode && e.keyCode == 9) {
+                // tab key
+                // this.checkValue();
+                this.setState({
+                    inputFocus: false
+                });
+            }
+        }
+    }, {
+        key: 'createItemAndAdd',
+        value: function createItemAndAdd(domain) {
+            // const newTask = {
+            //     id: uuidv4(),
+            //     description: origText,
+            //     done: false
+            // };
+            // this.props.addTask(newTask);
+            this.input.value = '';
+        }
+    }, {
         key: 'render',
         value: function render() {
             var _this2 = this;
 
+            var addItemOuterClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+                'add-item-outer': true,
+                'focus': this.state.containerFocus
+            });
             var textboxClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
                 'textentry-cont': true,
-                'focus': this.state.textboxFocus
+                'focus': this.state.textboxFocus,
+                'warn': this.state.inputWarn
             });
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.props.domainsMsgShow, classNames: 'message-trans', timeout: { enter: 0, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'message-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'message-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'sld icon-cross-ui', onClick: function onClick() {
                     _this2.props.domainsMsgCloseClick();
-                } }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, this.props.domainsMsgText)))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-item-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: textboxClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'input-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { placeholder: 'yourdomain.com' })))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-row' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'What do I enter here?'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont clear' }, 'ADD DOMAIN')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.props.maxDomains - this.props.domains.length == 0, classNames: 'add-item-mask-trans', timeout: { enter: 200, exit: 0 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-item-mask-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-item-mask-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-item-mask-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title' }, 'Need to use Lithium List in more websites?'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'subtitle' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey' }, 'Upgrade or buy more domains')))))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'items-cont' }, this.props.domains.map(function (domain, index) {
+                } }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, this.props.domainsMsgText)))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: addItemOuterClasses, ref: this.setOuterRef }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: textboxClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'input-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { placeholder: 'yourdomain.com', ref: function ref(input) {
+                    _this2.input = input;
+                }, onKeyDown: function onKeyDown(e) {
+                    return _this2.onKeyDown(e);
+                }, onInput: function onInput(e) {
+                    return _this2.onInput(e);
+                } })))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-row' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'What do I enter here?'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont clear', onClick: function onClick() {
+                    _this2.addDomainClick();
+                } }, 'ADD DOMAIN')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.props.maxDomains - this.props.domains.length == 0, classNames: 'add-item-mask-trans', timeout: { enter: 200, exit: 0 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-item-mask-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-item-mask-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-item-mask-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title' }, 'Need to use Lithium List in more websites?'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'subtitle' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey' }, 'Upgrade or buy more domains')))))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'items-cont' }, this.props.domains.map(function (domain, index) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { key: domain.id, classNames: 'domain-trans', timeout: { enter: 200, exit: 200 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Domain, { domain: domain.domain, licencekey: domain.licencekey }));
             })));
         }
@@ -43085,6 +43224,7 @@ var App = function (_React$Component) {
         };
         _this.tabClick = _this.tabClick.bind(_this);
         _this.domainsMsgCloseClick = _this.domainsMsgCloseClick.bind(_this);
+        _this.addDomain = _this.addDomain.bind(_this);
         return _this;
     }
 
@@ -43104,6 +43244,9 @@ var App = function (_React$Component) {
                 domainsMsgShow: false
             });
         }
+    }, {
+        key: 'addDomain',
+        value: function addDomain() {}
     }, {
         key: 'render',
         value: function render() {
@@ -43135,7 +43278,7 @@ var App = function (_React$Component) {
                     _this2.tabClick(0);
                 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: icon0Classes }), '\xA0Domains'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: tab1Classes, onClick: function onClick() {
                     _this2.tabClick(1);
-                } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: icon1Classes }), '\xA0Account')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-cont' }, this.state.domainsLoaded ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 0, classNames: 'domains-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__console_domains_js__["a" /* Domains */], { domains: this.state.domains, maxDomains: this.state.maxDomains, domainsMsgShow: this.state.domainsMsgShow, domainsMsgText: this.state.domainsMsgText, domainsMsgCloseClick: this.domainsMsgCloseClick })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 1, classNames: 'account-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__console_account_js__["a" /* Account */], null))) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, 'Loading domains...')));
+                } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: icon1Classes }), '\xA0Account')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-cont' }, this.state.domainsLoaded ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 0, classNames: 'domains-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__console_domains_js__["a" /* Domains */], { domains: this.state.domains, maxDomains: this.state.maxDomains, domainsMsgShow: this.state.domainsMsgShow, domainsMsgText: this.state.domainsMsgText, domainsMsgCloseClick: this.domainsMsgCloseClick, addDomain: this.addDomain })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 1, classNames: 'account-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__console_account_js__["a" /* Account */], null))) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, 'Loading domains...')));
         }
     }]);
 

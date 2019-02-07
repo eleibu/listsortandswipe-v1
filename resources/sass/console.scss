@@ -133,6 +133,10 @@
 								div.textentry-cont.focus {
 									border: 1px solid #3366CC;
 								}
+
+								div.textentry-cont.warn {
+									border: 1px solid #FF3B0A;
+								}
 							}
 
 							div.button-row {
@@ -151,13 +155,11 @@
 								}
 
 								.button-word-cont {
+									visibility: hidden;
+									opacity: 0;
+									transition: visibility 0s linear 200ms, opacity 200ms ease;
 									font-size: 80%;
 									color: #777777;
-								}
-
-								.button-word-cont:hover {
-									cursor: pointer;
-									background-color: #EEEEEE;
 								}
 							}
 
@@ -190,6 +192,21 @@
 											font-size: 80%;
 										}
 									}
+								}
+							}
+						}
+
+						div.add-item-outer.focus {
+							div.button-row {
+								.button-word-cont {
+									visibility: visible;
+									opacity: 1;
+									transition: visibility 0s linear, opacity 200ms;
+								}
+
+								.button-word-cont:hover {
+									cursor: pointer;
+									background-color: #EEEEEE;
 								}
 							}
 						}

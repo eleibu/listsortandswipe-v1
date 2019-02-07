@@ -27,6 +27,7 @@ class App extends React.Component {
         };
         this.tabClick = this.tabClick.bind(this);
         this.domainsMsgCloseClick = this.domainsMsgCloseClick.bind(this);
+        this.addDomain = this.addDomain.bind(this);
     }
     tabClick(tabIndex) {
         if (this.state.domainsLoaded) {
@@ -39,6 +40,9 @@ class App extends React.Component {
         this.setState({
            domainsMsgShow: false
         });
+    }
+    addDomain() {
+
     }
     render() {
         const tab0Classes = classNames({
@@ -77,7 +81,7 @@ class App extends React.Component {
                     {(this.state.domainsLoaded) ? (
                         <div className="content-outer">
                             <CSSTransition in={(this.state.tabIndex == 0)} classNames="domains-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
-                                <Domains domains={this.state.domains} maxDomains={this.state.maxDomains} domainsMsgShow={this.state.domainsMsgShow} domainsMsgText={this.state.domainsMsgText} domainsMsgCloseClick={this.domainsMsgCloseClick} />
+                                <Domains domains={this.state.domains} maxDomains={this.state.maxDomains} domainsMsgShow={this.state.domainsMsgShow} domainsMsgText={this.state.domainsMsgText} domainsMsgCloseClick={this.domainsMsgCloseClick} addDomain={this.addDomain} />
                             </CSSTransition>
                             <CSSTransition in={(this.state.tabIndex == 1)} classNames="account-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
                                 <Account />

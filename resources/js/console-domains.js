@@ -6,13 +6,124 @@ export class Domains extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            textboxFocus: false
+            inputFocus: false,
+            inputWarn: false,
+            containerFocus: false
         };
+        this.handleDocClick = this.handleDocClick.bind(this);
+        this.setOuterRef = this.setOuterRef.bind(this);
+        this.checkValue = this.checkValue.bind(this);
+    }
+    componentDidMount() {
+        document.addEventListener('mousedown', this.handleDocClick);
+    }
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleDocClick);
+    }
+    setOuterRef(node) {
+        this.outerRef = node;
+    }
+    handleDocClick(e) {
+        let contClicked = false;
+        if ((this.outerRef) && ((e.target === this.outerRef) || (this.outerRef.contains(e.target)))) {
+            contClicked = true;
+        }
+        let inputClicked = false;
+        if ((this.input) && ((e.target === this.input) || (this.input.contains(e.target)))) {
+            inputClicked = true;
+        }
+        if (inputClicked) {
+            // this.checkValue();
+            this.setState({
+                inputFocus: true,
+                containerFocus: true
+            });
+        } else if (contClicked) {
+            // this.checkValue();
+            this.setState({
+                inputFocus: false
+            });
+        } else {
+            // this.checkValue();
+            this.setState({
+                inputFocus: false,
+                containerFocus: false
+            });
+        }
+    }
+    onInput(e) {
+        if (this.state.inputWarn) {
+            this.checkValue();
+        }
+    }
+    checkValue() {
+        let valueOk;
+        const newDomain = this.input.value.replace(/^\s+|\s+$/g, '');
+        if (newDomain.length > 0) {
+            if (/^\S+\.\S+$/.test(newDomain)) {
+                valueOk = true;
+                this.setState({
+                    inputWarn: false
+                });
+            } else {
+                valueOk = false;
+                this.setState({
+                    inputWarn: true
+                });
+            }
+        } else {
+            valueOk = false;
+            this.setState({
+                inputWarn: false
+            });
+        }
+        return valueOk;
+    }
+    addDomainClick() {
+        if (this.checkValue()) {
+            let origValue = this.input.value.replace(/^\s+|\s+$/g, '');
+            this.createItemAndAdd(origValue);
+            this.setState({
+                inputFocus: false,
+                containerFocus: false
+            });
+        }
+    }
+    onKeyDown(e) {
+        if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {         // enter key
+            e.preventDefault();
+            if (this.checkValue()) {
+                let origValue = this.input.value.replace(/^\s+|\s+$/g, '');
+                this.createItemAndAdd(origValue);
+            }
+            this.setState({
+                inputFocus: false
+            });
+        } else if ((e.which && e.which == 9) || (e.keyCode && e.keyCode == 9)) {    // tab key
+            // this.checkValue();
+            this.setState({
+                inputFocus: false
+            });
+        }
+    }
+    createItemAndAdd(domain) {
+        // const newTask = {
+        //     id: uuidv4(),
+        //     description: origText,
+        //     done: false
+        // };
+        // this.props.addTask(newTask);
+        this.input.value = '';
     }
     render() {
+        const addItemOuterClasses = classNames({
+            'add-item-outer' : true,
+            'focus' : this.state.containerFocus
+        });
         const textboxClasses = classNames({
             'textentry-cont' : true,
             'focus' : this.state.textboxFocus,
+            'warn' : this.state.inputWarn
         });
         return (
             <div className="content-inner">
@@ -25,17 +136,17 @@ export class Domains extends React.Component {
                             </div>
                         </div>
                     </CSSTransition>
-                    <div className="add-item-outer">
+                    <div className={addItemOuterClasses} ref={this.setOuterRef}>
                         <div className="text-cont">
                             <div className={textboxClasses}>
                                 <div className="input-cont">
-                                    <input placeholder="yourdomain.com" />
+                                    <input placeholder="yourdomain.com" ref={(input) => { this.input = input; }} onKeyDown={(e) => this.onKeyDown(e)} onInput={(e) => this.onInput(e)} />
                                 </div>
                             </div>
                         </div>
                         <div className="button-row">
                             <span>What do I enter here?</span>
-                            <div className="button-word-cont clear">
+                            <div className="button-word-cont clear" onClick={() => {this.addDomainClick()}}>
                                 ADD DOMAIN
                             </div>
                         </div>
