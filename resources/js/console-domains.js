@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classNames/dedupe';
 import { CSSTransition } from 'react-transition-group';
+import Tooltip from 'tooltip.js';
 
 export class Domains extends React.Component {
     constructor(props) {
@@ -10,18 +11,57 @@ export class Domains extends React.Component {
             inputWarn: false,
             containerFocus: false
         };
+        this.ttHoverSpanLarge = null;
+        this.ttClickSpanSmall = null;
         this.handleDocClick = this.handleDocClick.bind(this);
         this.setOuterRef = this.setOuterRef.bind(this);
         this.checkValue = this.checkValue.bind(this);
+        this.windowScroll = this.windowScroll.bind(this);
+        this.windowTouchstart = this.windowTouchstart.bind(this);
     }
     componentDidMount() {
         document.addEventListener('mousedown', this.handleDocClick);
+
+        var templateHover = '<div class=\'tooltip-cont hover\'><div class=\'tooltip-outer\'><div class=\'tooltip-inner\'></div><div class=\'tooltip-arrow\'><img src=\'' + urlArrowImg + '\' alt=\'\' width=\'11\' height=\'8\' /></div></div></div>';
+        this.ttHoverSpanLarge = new Tooltip(this.spanLarge, {
+            offset: 'popper:0,10,0,0',
+            title: function() {
+                return this.getAttribute('data-title');
+            },
+            template: templateHover
+        });
+
+        var templateClick = '<div class=\'tooltip-cont click\'><div class=\'tooltip-outer\'><div class=\'tooltip-inner\'></div><div class=\'tooltip-arrow\'><img src=\'' + urlArrowImg + '\' alt=\'\' width=\'11\' height=\'8\' /></div></div></div>';
+        this.ttClickSpanSmall = new Tooltip(this.spanSmall, {
+            offset: 'popper:0,10,0,0',
+            title: function() {
+                return this.getAttribute('data-title');
+            },
+            trigger: 'click',
+            template: templateClick,
+            container: document.getElementById('pageWrapper')
+        });
+
+        window.addEventListener('scroll', this.windowScroll);
+        window.addEventListener('touchstart', this.windowTouchstart);
     }
     componentWillUnmount() {
         document.removeEventListener('mousedown', this.handleDocClick);
+        window.removeEventListener('scroll', this.windowScroll);
+        window.removeEventListener('touchstart', this.windowTouchstart);
     }
     setOuterRef(node) {
         this.outerRef = node;
+    }
+    windowScroll() {
+        if (this.ttClickSpanSmall) {
+            this.ttClickSpanSmall.hide();
+        }
+    }
+    windowTouchstart() {
+        if (this.ttClickSpanSmall) {
+            this.ttClickSpanSmall.hide();
+        }
     }
     handleDocClick(e) {
         let contClicked = false;
@@ -33,18 +73,15 @@ export class Domains extends React.Component {
             inputClicked = true;
         }
         if (inputClicked) {
-            // this.checkValue();
             this.setState({
                 inputFocus: true,
                 containerFocus: true
             });
         } else if (contClicked) {
-            // this.checkValue();
             this.setState({
                 inputFocus: false
             });
         } else {
-            // this.checkValue();
             this.setState({
                 inputFocus: false,
                 containerFocus: false
@@ -100,13 +137,22 @@ export class Domains extends React.Component {
                 inputFocus: false
             });
         } else if ((e.which && e.which == 9) || (e.keyCode && e.keyCode == 9)) {    // tab key
-            // this.checkValue();
             this.setState({
                 inputFocus: false
             });
         }
     }
     createItemAndAdd(domain) {
+        // change pricing page to refer to subdomains!
+
+        // strip:
+        // www.
+        // http://
+        // https:// other?
+        // /
+        // #
+        // ?
+
         // const newTask = {
         //     id: uuidv4(),
         //     description: origText,
@@ -125,6 +171,7 @@ export class Domains extends React.Component {
             'focus' : this.state.textboxFocus,
             'warn' : this.state.inputWarn
         });
+        const ttText = 'Enter the domain or subdomain of the website you will use Lithium List with. For example: \'example.com\' or \'subdomain.example.com\'';
         return (
             <div className="content-inner">
                 <div className="add-cont">
@@ -145,7 +192,8 @@ export class Domains extends React.Component {
                             </div>
                         </div>
                         <div className="button-row">
-                            <span>What do I enter here?</span>
+                            <span className="large" ref={(span) => { this.spanLarge = span; }} data-title={ttText}>What do I enter here?</span>
+                            <span className="small" ref={(span) => { this.spanSmall = span; }} data-title={ttText}>What do I enter here?</span>
                             <div className="button-word-cont clear" onClick={() => {this.addDomainClick()}}>
                                 ADD DOMAIN
                             </div>

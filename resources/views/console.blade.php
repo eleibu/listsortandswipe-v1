@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="{{ url('/css/icons-outline.css') }}">
     <link rel="stylesheet" href="{{ url('/css/icons-solid.css') }}">
     <script defer src="{{ url(mix('/js/console.js')) }}"></script>
+    <script>
+        var urlArrowImg = "{{url('images/tt-arrow.png')}}";
+    </script>
 </head>
 <body>
     <div id="pageWrapper">

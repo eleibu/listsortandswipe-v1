@@ -203,6 +203,49 @@ a.menubtn:hover {
   padding: 20px 16px;
 }
 
+div.tooltip-cont {
+  background-color: rgba(0, 0, 0, 0.9);
+  border-radius: 4px;
+}
+
+div.tooltip-cont div.tooltip-outer {
+  position: relative;
+}
+
+div.tooltip-cont div.tooltip-outer div.tooltip-inner {
+  color: #FFFFFF;
+  line-height: 150%;
+  text-align: center;
+}
+
+div.tooltip-cont div.tooltip-outer div.tooltip-arrow {
+  position: absolute;
+  bottom: 0;
+  width: 11px;
+  height: 8px;
+}
+
+div.tooltip-cont[x-placement='bottom'] div.tooltip-arrow {
+  display: none;
+}
+
+div.tooltip-cont.hover {
+  max-width: 200px;
+}
+
+div.tooltip-cont.hover div.tooltip-outer div.tooltip-inner {
+  padding: 8px;
+  font-size: 80%;
+}
+
+div.tooltip-cont.click {
+  max-width: 200px;
+}
+
+div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
+  padding: 10px;
+}
+
 .button-word-cont.signout {
   color: #003182;
   background-color: #F8F8F8;
@@ -359,7 +402,7 @@ a.menubtn:hover {
           transform: translateY(-50%);
   left: 0;
   color: #3366CC;
-  cursor: pointer;
+  cursor: default;
   font-size: 80%;
 }
 
@@ -506,8 +549,24 @@ a.menubtn:hover {
   font-weight: bold;
 }
 
+#pageWrapper.xl div.add-item-outer div.button-row span.large, #pageWrapper.lg div.add-item-outer div.button-row span.large, #pageWrapper.md div.add-item-outer div.button-row span.large, #pageWrapper.sm div.add-item-outer div.button-row span.large {
+  display: inline;
+}
+
+#pageWrapper.xl div.add-item-outer div.button-row span.small, #pageWrapper.lg div.add-item-outer div.button-row span.small, #pageWrapper.md div.add-item-outer div.button-row span.small, #pageWrapper.sm div.add-item-outer div.button-row span.small {
+  display: none;
+}
+
 #pageWrapper.xl div.domain-cont div.domain-outer div.middle-cont, #pageWrapper.lg div.domain-cont div.domain-outer div.middle-cont, #pageWrapper.md div.domain-cont div.domain-outer div.middle-cont, #pageWrapper.sm div.domain-cont div.domain-outer div.middle-cont {
   margin: 0 3em;
+}
+
+#pageWrapper.xs div.add-item-outer div.button-row span.large {
+  display: none;
+}
+
+#pageWrapper.xs div.add-item-outer div.button-row span.small {
+  display: inline;
 }
 
 #pageWrapper.xs div.domain-cont div.domain-outer div.sort-cont {

@@ -17660,54 +17660,66 @@ var pageMenuShowHide = function () {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__monitor_win_width_js__ = __webpack_require__("./resources/js/monitor-win-width.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__page_menu_show_hide_js__ = __webpack_require__("./resources/js/page-menu-show-hide.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_tooltip_js__ = __webpack_require__("./node_modules/tooltip.js/dist/esm/tooltip.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__tooltip_initialise_js__ = __webpack_require__("./resources/js/tooltip-initialise.js");
 __webpack_require__("./node_modules/bootstrap/dist/js/bootstrap.js");
 
 
 
 
 
-var ttsHover = [];
-var tElemsHover = document.getElementsByClassName('tt-hover');
-var templateHover = '<div class=\'tooltip-cont hover\'><div class=\'tooltip-outer\'><div class=\'tooltip-inner\'></div><div class=\'tooltip-arrow\'><img src=\'' + urlArrowImg + '\' alt=\'\' width=\'11\' height=\'8\' /></div></div></div>';
-for (var i = 0, len = tElemsHover.length; i < len; i++) {
-	var ttHover = new __WEBPACK_IMPORTED_MODULE_2_tooltip_js__["a" /* default */](tElemsHover[i], {
-		offset: 'popper:0,10,0,0',
-		title: function title() {
-			return this.getAttribute('data-title');
-		},
-		template: templateHover
-	});
-	ttsHover.push(ttHover);
-}
+/***/ }),
 
-var ttsClick = [];
-var tElemsClick = document.getElementsByClassName('tt-click');
-var templateClick = '<div class=\'tooltip-cont click\'><div class=\'tooltip-outer\'><div class=\'tooltip-inner\'></div><div class=\'tooltip-arrow\'><img src=\'' + urlArrowImg + '\' alt=\'\' width=\'11\' height=\'8\' /></div></div></div>';
-for (var i = 0, len = tElemsClick.length; i < len; i++) {
-	var ttClick = new __WEBPACK_IMPORTED_MODULE_2_tooltip_js__["a" /* default */](tElemsClick[i], {
-		offset: 'popper:0,10,0,0',
-		title: function title() {
-			return this.getAttribute('data-title');
-		},
-		trigger: 'click',
-		template: templateClick,
-		container: document.getElementById('pageWrapper')
-	});
-	ttsClick.push(ttClick);
-}
+/***/ "./resources/js/tooltip-initialise.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-window.addEventListener('scroll', function () {
-	for (var i = 0, len = ttsClick.length; i < len; i++) {
-		ttsClick[i].hide();
+"use strict";
+/* unused harmony export tooltipInitialise */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tooltip_js__ = __webpack_require__("./node_modules/tooltip.js/dist/esm/tooltip.js");
+
+
+var tooltipInitialise = function () {
+	var ttsHover = [];
+	var tElemsHover = document.getElementsByClassName('tt-hover');
+	var templateHover = '<div class=\'tooltip-cont hover\'><div class=\'tooltip-outer\'><div class=\'tooltip-inner\'></div><div class=\'tooltip-arrow\'><img src=\'' + urlArrowImg + '\' alt=\'\' width=\'11\' height=\'8\' /></div></div></div>';
+	for (var i = 0, len = tElemsHover.length; i < len; i++) {
+		var ttHover = new __WEBPACK_IMPORTED_MODULE_0_tooltip_js__["a" /* default */](tElemsHover[i], {
+			offset: 'popper:0,10,0,0',
+			title: function title() {
+				return this.getAttribute('data-title');
+			},
+			template: templateHover
+		});
+		ttsHover.push(ttHover);
 	}
-});
 
-window.addEventListener('touchstart', function () {
-	for (var i = 0, len = ttsClick.length; i < len; i++) {
-		ttsClick[i].hide();
+	var ttsClick = [];
+	var tElemsClick = document.getElementsByClassName('tt-click');
+	var templateClick = '<div class=\'tooltip-cont click\'><div class=\'tooltip-outer\'><div class=\'tooltip-inner\'></div><div class=\'tooltip-arrow\'><img src=\'' + urlArrowImg + '\' alt=\'\' width=\'11\' height=\'8\' /></div></div></div>';
+	for (var i = 0, len = tElemsClick.length; i < len; i++) {
+		var ttClick = new __WEBPACK_IMPORTED_MODULE_0_tooltip_js__["a" /* default */](tElemsClick[i], {
+			offset: 'popper:0,10,0,0',
+			title: function title() {
+				return this.getAttribute('data-title');
+			},
+			trigger: 'click',
+			template: templateClick,
+			container: document.getElementById('pageWrapper')
+		});
+		ttsClick.push(ttClick);
 	}
-});
+
+	window.addEventListener('scroll', function () {
+		for (var i = 0, len = ttsClick.length; i < len; i++) {
+			ttsClick[i].hide();
+		}
+	});
+
+	window.addEventListener('touchstart', function () {
+		for (var i = 0, len = ttsClick.length; i < len; i++) {
+			ttsClick[i].hide();
+		}
+	});
+}();
 
 /***/ }),
 

@@ -1,0 +1,48 @@
+div.tooltip-cont {
+	background-color: rgba(0, 0, 0, 0.9);
+	border-radius: 4px;
+
+	div.tooltip-outer {
+		position: relative;
+
+		div.tooltip-inner {
+			color: #FFFFFF;
+			line-height: 150%;
+			text-align: center;
+		}
+
+		div.tooltip-arrow {
+			position: absolute;
+			bottom: 0;
+			width: 11px;
+			height: 8px;
+		}
+	}
+}
+
+div.tooltip-cont[x-placement='bottom'] {
+	div.tooltip-arrow {
+		display: none;
+	}
+}
+
+div.tooltip-cont.hover {
+	max-width: 200px;
+
+	div.tooltip-outer {
+		div.tooltip-inner {
+			padding: 8px;
+			font-size: 80%;
+		}
+	}
+}
+
+div.tooltip-cont.click {
+	max-width: 200px;
+
+	div.tooltip-outer {
+		div.tooltip-inner {
+			padding: 10px;
+		}
+	}
+}
