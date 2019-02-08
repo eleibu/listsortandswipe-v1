@@ -231,7 +231,7 @@
 									input {
 										box-sizing: border-box;
 										width: 100%;
-										font-size: 120%;
+										padding: 0.1em 0;
 										-webkit-appearance: none;
 										outline: none;
 										border: none;
@@ -241,29 +241,31 @@
 								}
 
 								div.key-cont {
-									margin-top: 0.4em;
-									font-size: 80%;
-
 									span {
 										display: inline-block;
 									}
 
 									span.label {
 										color: #666666;
-										padding: 3px 4px 3px 0;
 									}
 
 									span.key {
 										color: #339933;
-										padding: 3px 4px;
-										border: 1px solid transparent;
 									}
 
-									span.copy {
-										visibility: hidden;
+									span.key.default {
+										background: rgba(0,0,0,0);
+										transition: background 800ms ease;
+									}
+
+									span.key.copying {
+										background: rgba(0,0,0,0.05);
+									}
+
+									span.copy-outer {
 										color: #3366CC;
-										padding: 3px 4px;
-										font-size: 90%;
+										border-radius: 999px;
+										cursor: pointer;
 									}
 								}
 							}
@@ -274,39 +276,6 @@
 								transform: translateY(-50%);
 								right: 0.6em;
 							}
-						}
-
-						i.button {
-							visibility: hidden;
-							padding: 0.6em;
-							border-radius: 999px;
-						}
-					}
-
-					div.domain-cont:hover {
-						div.domain-outer {
-							div.middle-cont {
-								div.key-cont {
-									span.copy {
-										visibility: visible;
-									}
-
-									span.copy:hover, span.copy:active {
-										cursor: pointer;
-										text-decoration: underline;
-									}
-								}								
-							}							
-						}
-
-						i.button {
-							visibility: visible;
-						}
-
-						i.button:hover {
-							cursor: pointer;
-							background: rgba(0,0,0, 0.03);
-							font-weight: bold;
 						}
 					}
 				}
@@ -333,7 +302,69 @@
 		div.domain-outer {
 			div.middle-cont {
 				margin: 0 3em;
+
+				div.input-cont {
+					input {
+						font-size: 120%;
+					}
+				}
+
+				div.key-cont {
+					margin-top: 0.4em;
+					font-size: 80%;
+
+					span.label {
+						padding: 3px 4px 3px 0;
+					}
+
+					span.key {
+						padding: 3px 4px;
+					}
+
+					span.copy-outer {
+						visibility: hidden;
+						font-size: 90%;
+						padding: 3px 4px;
+					}
+				}
 			}
+		}
+
+		i.button {
+			visibility: hidden;
+			padding: 0.6em;
+			border-radius: 999px;
+		}
+	}
+
+	div.domain-cont:hover {
+		div.domain-outer {
+			div.middle-cont {
+				div.key-cont {
+					span.copy-outer {
+						visibility: visible;
+					}
+
+					span.copy-outer:hover {
+						background: rgba(0,0,0,0.03);
+					}
+
+					span.copy-outer:active {
+						background: rgba(0,0,0,0.03);
+						cursor: pointer;
+					}
+				}								
+			}							
+		}
+
+		i.button {
+			visibility: visible;
+		}
+
+		i.button:hover {
+			cursor: pointer;
+			background: rgba(0,0,0, 0.03);
+			font-weight: bold;
 		}
 	}
 }
@@ -360,6 +391,37 @@
 			div.middle-cont {
 				margin: 0 1em;
 
+				div.input-cont {
+					input {
+						font-size: 140%;
+					}
+				}
+
+				div.key-cont {
+					margin-top: 0.4em;
+
+					span.label {
+						padding: 3px 4px 3px 0;
+					}
+
+					span.key {
+						padding: 3px 4px;
+					}
+
+					span.copy-cont {
+						position: relative;
+						margin-left: 0.4em;
+
+						span.copy-outer {
+							position: absolute;
+							left: 0;
+							top: 50%;
+							transform: translateY(-50%);
+							font-size: 150%;
+							padding: 3px 4px;
+						}
+					}
+				}
 			}
 
 			div.delete-cont {

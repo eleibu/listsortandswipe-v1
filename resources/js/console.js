@@ -52,7 +52,7 @@ class App extends React.Component {
             'loaded' : this.state.domainsLoaded
         });
         const icon0Classes = classNames({
-            'icon-archive' : true,
+            'icon-world-network' : true,
             'sld' : this.state.tabIndex == 0,
             'oln' : this.state.tabIndex != 0
         });

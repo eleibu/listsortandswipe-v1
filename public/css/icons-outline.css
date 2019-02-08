@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icon-font-outline';
-  src:  url('fonts/icon-font-outline.eot?7a11w0');
-  src:  url('fonts/icon-font-outline.eot?7a11w0#iefix') format('embedded-opentype'),
-    url('fonts/icon-font-outline.ttf?7a11w0') format('truetype'),
-    url('fonts/icon-font-outline.woff?7a11w0') format('woff'),
-    url('fonts/icon-font-outline.svg?7a11w0#icon-font-outline') format('svg');
+  src:  url('fonts/icon-font-outline.eot?18bn87');
+  src:  url('fonts/icon-font-outline.eot?18bn87#iefix') format('embedded-opentype'),
+    url('fonts/icon-font-outline.ttf?18bn87') format('truetype'),
+    url('fonts/icon-font-outline.woff?18bn87') format('woff'),
+    url('fonts/icon-font-outline.svg?18bn87#icon-font-outline') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -39,6 +39,9 @@ i.oln.icon-check-ui:before {
 i.oln.icon-circle-info:before {
   content: "\e908";
 }
+i.oln.icon-clipboard:before {
+  content: "\e90b";
+}
 i.oln.icon-cross-ui:before {
   content: "\e909";
 }
@@ -56,4 +59,7 @@ i.oln.icon-profile-picture:before {
 }
 i.oln.icon-trash:before {
   content: "\e906";
+}
+i.oln.icon-world-network:before {
+  content: "\e90c";
 }

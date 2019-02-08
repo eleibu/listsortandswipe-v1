@@ -481,17 +481,12 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   width: 100%;
-  font-size: 120%;
+  padding: 0.1em 0;
   -webkit-appearance: none;
   outline: none;
   border: none;
   background: transparent;
   color: #333333;
-}
-
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer div.middle-cont div.key-cont {
-  margin-top: 0.4em;
-  font-size: 80%;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer div.middle-cont div.key-cont span {
@@ -500,20 +495,26 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer div.middle-cont div.key-cont span.label {
   color: #666666;
-  padding: 3px 4px 3px 0;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer div.middle-cont div.key-cont span.key {
   color: #339933;
-  padding: 3px 4px;
-  border: 1px solid transparent;
 }
 
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer div.middle-cont div.key-cont span.copy {
-  visibility: hidden;
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer div.middle-cont div.key-cont span.key.default {
+  background: rgba(0, 0, 0, 0);
+  -webkit-transition: background 800ms ease;
+  transition: background 800ms ease;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer div.middle-cont div.key-cont span.key.copying {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer div.middle-cont div.key-cont span.copy-outer {
   color: #3366CC;
-  padding: 3px 4px;
-  font-size: 90%;
+  border-radius: 999px;
+  cursor: pointer;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer div.delete-cont {
@@ -522,31 +523,6 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
   right: 0.6em;
-}
-
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont i.button {
-  visibility: hidden;
-  padding: 0.6em;
-  border-radius: 999px;
-}
-
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont:hover div.domain-outer div.middle-cont div.key-cont span.copy {
-  visibility: visible;
-}
-
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont:hover div.domain-outer div.middle-cont div.key-cont span.copy:hover, #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont:hover div.domain-outer div.middle-cont div.key-cont span.copy:active {
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont:hover i.button {
-  visibility: visible;
-}
-
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont:hover i.button:hover {
-  cursor: pointer;
-  background: rgba(0, 0, 0, 0.03);
-  font-weight: bold;
 }
 
 #pageWrapper.xl div.add-item-outer div.button-row span.large, #pageWrapper.lg div.add-item-outer div.button-row span.large, #pageWrapper.md div.add-item-outer div.button-row span.large, #pageWrapper.sm div.add-item-outer div.button-row span.large {
@@ -559,6 +535,58 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
 
 #pageWrapper.xl div.domain-cont div.domain-outer div.middle-cont, #pageWrapper.lg div.domain-cont div.domain-outer div.middle-cont, #pageWrapper.md div.domain-cont div.domain-outer div.middle-cont, #pageWrapper.sm div.domain-cont div.domain-outer div.middle-cont {
   margin: 0 3em;
+}
+
+#pageWrapper.xl div.domain-cont div.domain-outer div.middle-cont div.input-cont input, #pageWrapper.lg div.domain-cont div.domain-outer div.middle-cont div.input-cont input, #pageWrapper.md div.domain-cont div.domain-outer div.middle-cont div.input-cont input, #pageWrapper.sm div.domain-cont div.domain-outer div.middle-cont div.input-cont input {
+  font-size: 120%;
+}
+
+#pageWrapper.xl div.domain-cont div.domain-outer div.middle-cont div.key-cont, #pageWrapper.lg div.domain-cont div.domain-outer div.middle-cont div.key-cont, #pageWrapper.md div.domain-cont div.domain-outer div.middle-cont div.key-cont, #pageWrapper.sm div.domain-cont div.domain-outer div.middle-cont div.key-cont {
+  margin-top: 0.4em;
+  font-size: 80%;
+}
+
+#pageWrapper.xl div.domain-cont div.domain-outer div.middle-cont div.key-cont span.label, #pageWrapper.lg div.domain-cont div.domain-outer div.middle-cont div.key-cont span.label, #pageWrapper.md div.domain-cont div.domain-outer div.middle-cont div.key-cont span.label, #pageWrapper.sm div.domain-cont div.domain-outer div.middle-cont div.key-cont span.label {
+  padding: 3px 4px 3px 0;
+}
+
+#pageWrapper.xl div.domain-cont div.domain-outer div.middle-cont div.key-cont span.key, #pageWrapper.lg div.domain-cont div.domain-outer div.middle-cont div.key-cont span.key, #pageWrapper.md div.domain-cont div.domain-outer div.middle-cont div.key-cont span.key, #pageWrapper.sm div.domain-cont div.domain-outer div.middle-cont div.key-cont span.key {
+  padding: 3px 4px;
+}
+
+#pageWrapper.xl div.domain-cont div.domain-outer div.middle-cont div.key-cont span.copy-outer, #pageWrapper.lg div.domain-cont div.domain-outer div.middle-cont div.key-cont span.copy-outer, #pageWrapper.md div.domain-cont div.domain-outer div.middle-cont div.key-cont span.copy-outer, #pageWrapper.sm div.domain-cont div.domain-outer div.middle-cont div.key-cont span.copy-outer {
+  visibility: hidden;
+  font-size: 90%;
+  padding: 3px 4px;
+}
+
+#pageWrapper.xl div.domain-cont i.button, #pageWrapper.lg div.domain-cont i.button, #pageWrapper.md div.domain-cont i.button, #pageWrapper.sm div.domain-cont i.button {
+  visibility: hidden;
+  padding: 0.6em;
+  border-radius: 999px;
+}
+
+#pageWrapper.xl div.domain-cont:hover div.domain-outer div.middle-cont div.key-cont span.copy-outer, #pageWrapper.lg div.domain-cont:hover div.domain-outer div.middle-cont div.key-cont span.copy-outer, #pageWrapper.md div.domain-cont:hover div.domain-outer div.middle-cont div.key-cont span.copy-outer, #pageWrapper.sm div.domain-cont:hover div.domain-outer div.middle-cont div.key-cont span.copy-outer {
+  visibility: visible;
+}
+
+#pageWrapper.xl div.domain-cont:hover div.domain-outer div.middle-cont div.key-cont span.copy-outer:hover, #pageWrapper.lg div.domain-cont:hover div.domain-outer div.middle-cont div.key-cont span.copy-outer:hover, #pageWrapper.md div.domain-cont:hover div.domain-outer div.middle-cont div.key-cont span.copy-outer:hover, #pageWrapper.sm div.domain-cont:hover div.domain-outer div.middle-cont div.key-cont span.copy-outer:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+#pageWrapper.xl div.domain-cont:hover div.domain-outer div.middle-cont div.key-cont span.copy-outer:active, #pageWrapper.lg div.domain-cont:hover div.domain-outer div.middle-cont div.key-cont span.copy-outer:active, #pageWrapper.md div.domain-cont:hover div.domain-outer div.middle-cont div.key-cont span.copy-outer:active, #pageWrapper.sm div.domain-cont:hover div.domain-outer div.middle-cont div.key-cont span.copy-outer:active {
+  background: rgba(0, 0, 0, 0.03);
+  cursor: pointer;
+}
+
+#pageWrapper.xl div.domain-cont:hover i.button, #pageWrapper.lg div.domain-cont:hover i.button, #pageWrapper.md div.domain-cont:hover i.button, #pageWrapper.sm div.domain-cont:hover i.button {
+  visibility: visible;
+}
+
+#pageWrapper.xl div.domain-cont:hover i.button:hover, #pageWrapper.lg div.domain-cont:hover i.button:hover, #pageWrapper.md div.domain-cont:hover i.button:hover, #pageWrapper.sm div.domain-cont:hover i.button:hover {
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.03);
+  font-weight: bold;
 }
 
 #pageWrapper.xs div.add-item-outer div.button-row span.large {
@@ -575,6 +603,37 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
 
 #pageWrapper.xs div.domain-cont div.domain-outer div.middle-cont {
   margin: 0 1em;
+}
+
+#pageWrapper.xs div.domain-cont div.domain-outer div.middle-cont div.input-cont input {
+  font-size: 140%;
+}
+
+#pageWrapper.xs div.domain-cont div.domain-outer div.middle-cont div.key-cont {
+  margin-top: 0.4em;
+}
+
+#pageWrapper.xs div.domain-cont div.domain-outer div.middle-cont div.key-cont span.label {
+  padding: 3px 4px 3px 0;
+}
+
+#pageWrapper.xs div.domain-cont div.domain-outer div.middle-cont div.key-cont span.key {
+  padding: 3px 4px;
+}
+
+#pageWrapper.xs div.domain-cont div.domain-outer div.middle-cont div.key-cont span.copy-cont {
+  position: relative;
+  margin-left: 0.4em;
+}
+
+#pageWrapper.xs div.domain-cont div.domain-outer div.middle-cont div.key-cont span.copy-cont span.copy-outer {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  font-size: 150%;
+  padding: 3px 4px;
 }
 
 #pageWrapper.xs div.domain-cont div.domain-outer div.delete-cont {

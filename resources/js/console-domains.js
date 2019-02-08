@@ -171,7 +171,7 @@ export class Domains extends React.Component {
             'focus' : this.state.textboxFocus,
             'warn' : this.state.inputWarn
         });
-        const ttText = 'Enter the domain or subdomain of the website you will use Lithium List with. For example: \'example.com\' or \'subdomain.example.com\'';
+        const ttText = 'Enter the domain or subdomain of a website you will use Lithium List with. For example: \'example.com\' or \'subdomain.example.com\'';
         return (
             <div className="content-inner">
                 <div className="add-cont">
@@ -187,7 +187,7 @@ export class Domains extends React.Component {
                         <div className="text-cont">
                             <div className={textboxClasses}>
                                 <div className="input-cont">
-                                    <input placeholder="yourdomain.com" ref={(input) => { this.input = input; }} onKeyDown={(e) => this.onKeyDown(e)} onInput={(e) => this.onInput(e)} />
+                                    <input type="text" placeholder="yourdomain.com" ref={(input) => { this.input = input; }} onKeyDown={(e) => this.onKeyDown(e)} onInput={(e) => this.onInput(e)} />
                                 </div>
                             </div>
                         </div>
@@ -229,8 +229,37 @@ export class Domains extends React.Component {
 export class Domain extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            copying: false
+        };
+        this.copyClick = this.copyClick.bind(this);
+        this.copyingEnd = this.copyingEnd.bind(this);
+    }
+    copyClick() {
+        this.setState({
+            copying: true
+        });
+        this.input.select();
+        document.execCommand("copy");
+        setTimeout(this.copyingEnd, 200);
+    }
+    copyingEnd() {
+        this.setState({
+            copying: false
+        });
     }
     render() {
+        const inputStyle = {
+            fontSize: '20px',
+            position: 'fixed',
+            top: '-100000px',
+            left: 0
+        };
+        const spanClasses = classNames({
+            'key' : true,
+            'default' : !this.state.copying,
+            'copying' : this.state.copying
+        });
         return (
             <div className="domain-cont">
                 <div className="domain-outer">
@@ -239,10 +268,18 @@ export class Domain extends React.Component {
                     </div>
                     <div className="middle-cont">
                         <div className="input-cont">
-                            <input value={this.props.domain} />
+                            <input type="text" value={this.props.domain} />
                         </div>
                         <div className="key-cont">
-                            <span className="label">Licence key:</span><span className="key">{this.props.licencekey}</span><span className="copy">COPY</span>
+                            <input type="text" readOnly={true} ref={(input) => { this.input = input; }} style={inputStyle} value={this.props.licencekey} />
+                            <span className="label">Licence key:</span>
+                            <span className={spanClasses}>{this.props.licencekey}</span>
+                            <span className="copy-cont">
+                                <span className="copy-outer" title="Copy to clipboard" onClick={() => {this.copyClick()}}>
+                                    <i className="oln icon-clipboard"></i>
+                                </span>
+                                &nbsp;
+                            </span>
                         </div>
                     </div>
                     <div className="delete-cont">

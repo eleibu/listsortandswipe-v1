@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icon-font-solid';
-  src:  url('fonts/icon-font-solid.eot?9b9zgo');
-  src:  url('fonts/icon-font-solid.eot?9b9zgo#iefix') format('embedded-opentype'),
-    url('fonts/icon-font-solid.ttf?9b9zgo') format('truetype'),
-    url('fonts/icon-font-solid.woff?9b9zgo') format('woff'),
-    url('fonts/icon-font-solid.svg?9b9zgo#icon-font-solid') format('svg');
+  src:  url('fonts/icon-font-solid.eot?pfpbxm');
+  src:  url('fonts/icon-font-solid.eot?pfpbxm#iefix') format('embedded-opentype'),
+    url('fonts/icon-font-solid.ttf?pfpbxm') format('truetype'),
+    url('fonts/icon-font-solid.woff?pfpbxm') format('woff'),
+    url('fonts/icon-font-solid.svg?pfpbxm#icon-font-solid') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -39,6 +39,9 @@ i.sld.icon-check-ui:before {
 i.sld.icon-circle-info:before {
   content: "\e908";
 }
+i.sld.icon-clipboard:before {
+  content: "\e90b";
+}
 i.sld.icon-cross-ui:before {
   content: "\e909";
 }
@@ -56,4 +59,7 @@ i.sld.icon-profile-picture:before {
 }
 i.sld.icon-trash:before {
   content: "\e906";
+}
+i.sld.icon-world-network:before {
+  content: "\e90c";
 }

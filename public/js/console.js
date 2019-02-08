@@ -43748,10 +43748,10 @@ var Domains = function (_React$Component) {
                 'focus': this.state.textboxFocus,
                 'warn': this.state.inputWarn
             });
-            var ttText = 'Enter the domain or subdomain of the website you will use Lithium List with. For example: \'example.com\' or \'subdomain.example.com\'';
+            var ttText = 'Enter the domain or subdomain of a website you will use Lithium List with. For example: \'example.com\' or \'subdomain.example.com\'';
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.props.domainsMsgShow, classNames: 'message-trans', timeout: { enter: 0, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'message-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'message-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'sld icon-cross-ui', onClick: function onClick() {
                     _this2.props.domainsMsgCloseClick();
-                } }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, this.props.domainsMsgText)))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: addItemOuterClasses, ref: this.setOuterRef }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: textboxClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'input-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { placeholder: 'yourdomain.com', ref: function ref(input) {
+                } }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, this.props.domainsMsgText)))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: addItemOuterClasses, ref: this.setOuterRef }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: textboxClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'input-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', placeholder: 'yourdomain.com', ref: function ref(input) {
                     _this2.input = input;
                 }, onKeyDown: function onKeyDown(e) {
                     return _this2.onKeyDown(e);
@@ -43778,13 +43778,54 @@ var Domain = function (_React$Component2) {
     function Domain(props) {
         _classCallCheck(this, Domain);
 
-        return _possibleConstructorReturn(this, (Domain.__proto__ || Object.getPrototypeOf(Domain)).call(this, props));
+        var _this3 = _possibleConstructorReturn(this, (Domain.__proto__ || Object.getPrototypeOf(Domain)).call(this, props));
+
+        _this3.state = {
+            copying: false
+        };
+        _this3.copyClick = _this3.copyClick.bind(_this3);
+        _this3.copyingEnd = _this3.copyingEnd.bind(_this3);
+        return _this3;
     }
 
     _createClass(Domain, [{
+        key: 'copyClick',
+        value: function copyClick() {
+            this.setState({
+                copying: true
+            });
+            this.input.select();
+            document.execCommand("copy");
+            setTimeout(this.copyingEnd, 200);
+        }
+    }, {
+        key: 'copyingEnd',
+        value: function copyingEnd() {
+            this.setState({
+                copying: false
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'domain-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'domain-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'sort-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-grab-ui button' })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'middle-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'input-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { value: this.props.domain })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'key-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'label' }, 'Licence key:'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'key' }, this.props.licencekey), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy' }, 'COPY'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'delete-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-trash button' }))));
+            var _this4 = this;
+
+            var inputStyle = {
+                fontSize: '20px',
+                position: 'fixed',
+                top: '-100000px',
+                left: 0
+            };
+            var spanClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+                'key': true,
+                'default': !this.state.copying,
+                'copying': this.state.copying
+            });
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'domain-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'domain-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'sort-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-grab-ui button' })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'middle-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'input-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', value: this.props.domain })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'key-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', readOnly: true, ref: function ref(input) {
+                    _this4.input = input;
+                }, style: inputStyle, value: this.props.licencekey }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'label' }, 'Licence key:'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: spanClasses }, this.props.licencekey), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy-outer', title: 'Copy to clipboard', onClick: function onClick() {
+                    _this4.copyClick();
+                } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-clipboard' })), '\xA0'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'delete-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-trash button' }))));
         }
     }]);
 
@@ -43906,7 +43947,7 @@ var App = function (_React$Component) {
                 'loaded': this.state.domainsLoaded
             });
             var icon0Classes = __WEBPACK_IMPORTED_MODULE_3_classNames_dedupe___default()({
-                'icon-archive': true,
+                'icon-world-network': true,
                 'sld': this.state.tabIndex == 0,
                 'oln': this.state.tabIndex != 0
             });
