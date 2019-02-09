@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classNames/dedupe';
 import { CSSTransition } from 'react-transition-group';
 import Tooltip from 'tooltip.js';
+import { hasDomainForm, stripUrl } from './utils.js';
 
 export class Domains extends React.Component {
     constructor(props) {
@@ -97,7 +98,7 @@ export class Domains extends React.Component {
         let valueOk;
         const newDomain = this.input.value.replace(/^\s+|\s+$/g, '');
         if (newDomain.length > 0) {
-            if (/^\S+\.\S+$/.test(newDomain)) {
+            if (hasDomainForm(newDomain)) {
                 valueOk = true;
                 this.setState({
                     inputWarn: false
@@ -143,22 +144,7 @@ export class Domains extends React.Component {
         }
     }
     createItemAndAdd(domain) {
-        // change pricing page to refer to subdomains!
-
-        // strip:
-        // www.
-        // http://
-        // https:// other?
-        // /
-        // #
-        // ?
-
-        // const newTask = {
-        //     id: uuidv4(),
-        //     description: origText,
-        //     done: false
-        // };
-        // this.props.addTask(newTask);
+        this.props.addDomain(stripUrl(domain));
         this.input.value = '';
     }
     render() {
@@ -235,11 +221,14 @@ export class Domain extends React.Component {
         this.copyClick = this.copyClick.bind(this);
         this.copyingEnd = this.copyingEnd.bind(this);
     }
+    componentDidMount() {
+        this.inputEdit.value = this.props.domain;
+    }
     copyClick() {
         this.setState({
             copying: true
         });
-        this.input.select();
+        this.inputCopy.select();
         document.execCommand("copy");
         setTimeout(this.copyingEnd, 200);
     }
@@ -268,10 +257,10 @@ export class Domain extends React.Component {
                     </div>
                     <div className="middle-cont">
                         <div className="input-cont">
-                            <input type="text" value={this.props.domain} />
+                            <input type="text" ref={(input) => { this.inputEdit = input; }} />
                         </div>
                         <div className="key-cont">
-                            <input type="text" readOnly={true} ref={(input) => { this.input = input; }} style={inputStyle} value={this.props.licencekey} />
+                            <input type="text" readOnly={true} ref={(input) => { this.inputCopy = input; }} style={inputStyle} value={this.props.licencekey} />
                             <span className="label">Licence key:</span>
                             <span className={spanClasses}>{this.props.licencekey}</span>
                             <span className="copy-cont">

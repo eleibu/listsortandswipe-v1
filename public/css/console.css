@@ -499,6 +499,7 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer div.middle-cont div.key-cont span.key {
   color: #339933;
+  border-radius: 3px;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer div.middle-cont div.key-cont span.key.default {

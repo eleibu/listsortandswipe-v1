@@ -7,6 +7,7 @@ import classNames from 'classNames/dedupe';
 import { CSSTransition } from 'react-transition-group';
 import { Domains } from './console-domains.js';
 import { Account } from './console-account.js';
+import { uuidv4 } from './utils.js';
 
 class App extends React.Component {
     constructor(props) {
@@ -41,8 +42,16 @@ class App extends React.Component {
            domainsMsgShow: false
         });
     }
-    addDomain() {
-
+    addDomain(domain) {
+        var domainsCopy = this.state.domains.slice();
+        domainsCopy.unshift({
+            id: uuidv4(),
+            domain: domain,
+            licencekey: 'temp'            
+        });
+        this.setState({
+           domains: domainsCopy
+        });
     }
     render() {
         const tab0Classes = classNames({

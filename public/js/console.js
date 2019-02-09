@@ -43510,6 +43510,7 @@ var Account = function (_React$Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_transition_group__ = __webpack_require__("./node_modules/react-transition-group/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_transition_group___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_tooltip_js__ = __webpack_require__("./node_modules/tooltip.js/dist/esm/tooltip.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_js__ = __webpack_require__("./resources/js/utils.js");
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () {
@@ -43539,6 +43540,7 @@ function _inherits(subClass, superClass) {
         throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
     }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 }
+
 
 
 
@@ -43662,7 +43664,7 @@ var Domains = function (_React$Component) {
             var valueOk = void 0;
             var newDomain = this.input.value.replace(/^\s+|\s+$/g, '');
             if (newDomain.length > 0) {
-                if (/^\S+\.\S+$/.test(newDomain)) {
+                if (Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["a" /* hasDomainForm */])(newDomain)) {
                     valueOk = true;
                     this.setState({
                         inputWarn: false
@@ -43716,22 +43718,7 @@ var Domains = function (_React$Component) {
     }, {
         key: 'createItemAndAdd',
         value: function createItemAndAdd(domain) {
-            // change pricing page to refer to subdomains!
-
-            // strip:
-            // www.
-            // http://
-            // https:// other?
-            // /
-            // #
-            // ?
-
-            // const newTask = {
-            //     id: uuidv4(),
-            //     description: origText,
-            //     done: false
-            // };
-            // this.props.addTask(newTask);
+            this.props.addDomain(Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["b" /* stripUrl */])(domain));
             this.input.value = '';
         }
     }, {
@@ -43789,12 +43776,17 @@ var Domain = function (_React$Component2) {
     }
 
     _createClass(Domain, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.inputEdit.value = this.props.domain;
+        }
+    }, {
         key: 'copyClick',
         value: function copyClick() {
             this.setState({
                 copying: true
             });
-            this.input.select();
+            this.inputCopy.select();
             document.execCommand("copy");
             setTimeout(this.copyingEnd, 200);
         }
@@ -43821,8 +43813,10 @@ var Domain = function (_React$Component2) {
                 'default': !this.state.copying,
                 'copying': this.state.copying
             });
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'domain-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'domain-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'sort-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-grab-ui button' })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'middle-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'input-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', value: this.props.domain })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'key-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', readOnly: true, ref: function ref(input) {
-                    _this4.input = input;
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'domain-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'domain-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'sort-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-grab-ui button' })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'middle-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'input-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', ref: function ref(input) {
+                    _this4.inputEdit = input;
+                } })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'key-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', readOnly: true, ref: function ref(input) {
+                    _this4.inputCopy = input;
                 }, style: inputStyle, value: this.props.licencekey }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'label' }, 'Licence key:'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: spanClasses }, this.props.licencekey), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy-outer', title: 'Copy to clipboard', onClick: function onClick() {
                     _this4.copyClick();
                 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-clipboard' })), '\xA0'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'delete-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-trash button' }))));
@@ -43850,6 +43844,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_transition_group___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react_transition_group__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__console_domains_js__ = __webpack_require__("./resources/js/console-domains.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__console_account_js__ = __webpack_require__("./resources/js/console-account.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_js__ = __webpack_require__("./resources/js/utils.js");
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () {
@@ -43881,6 +43876,7 @@ function _inherits(subClass, superClass) {
 }
 
 __webpack_require__("./node_modules/bootstrap/dist/js/bootstrap.js");
+
 
 
 
@@ -43934,7 +43930,17 @@ var App = function (_React$Component) {
         }
     }, {
         key: 'addDomain',
-        value: function addDomain() {}
+        value: function addDomain(domain) {
+            var domainsCopy = this.state.domains.slice();
+            domainsCopy.unshift({
+                id: Object(__WEBPACK_IMPORTED_MODULE_7__utils_js__["c" /* uuidv4 */])(),
+                domain: domain,
+                licencekey: 'temp'
+            });
+            this.setState({
+                domains: domainsCopy
+            });
+        }
     }, {
         key: 'render',
         value: function render() {
@@ -44013,6 +44019,64 @@ var monitorWinWidth = function () {
         winWidthChange();
     });
 }();
+
+/***/ }),
+
+/***/ "./resources/js/utils.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = hasDomainForm;
+/* harmony export (immutable) */ __webpack_exports__["b"] = stripUrl;
+/* harmony export (immutable) */ __webpack_exports__["c"] = uuidv4;
+function hasDomainForm(value) {
+	if (/^\S+\.\S+$/.test(value)) {
+		return true;
+	}
+	return false;
+}
+
+function stripUrl(url) {
+	url = url.toLowerCase();
+
+	url = url.replace(/^http:\/\/|https:\/\/|ftp:\/\/|ftps:\/\//, '');
+	url = url.replace(/^www\./, '');
+
+	var iColon = url.indexOf(':');
+	var iSlash = -1;
+	if (iColon > -1) {
+		url = url.substring(0, iColon);
+	} else {
+		iSlash = url.indexOf('/');
+		if (iSlash > -1) {
+			url = url.substring(0, iSlash);
+		}
+	}
+
+	if (iColon == -1 && iSlash == -1) {
+		var iQuery = url.indexOf('?');
+		if (iQuery > -1) {
+			url = url.substring(0, iQuery);
+		}
+	}
+
+	if (iColon == -1 && iSlash == -1) {
+		var iHash = url.indexOf('#');
+		if (iHash > -1) {
+			url = url.substring(0, iHash);
+		}
+	}
+
+	return url;
+}
+
+function uuidv4() {
+	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+		var r = Math.random() * 16 | 0,
+		    v = c == 'x' ? r : r & 0x3 | 0x8;
+		return v.toString(16).toUpperCase();
+	});
+}
 
 /***/ }),
 
