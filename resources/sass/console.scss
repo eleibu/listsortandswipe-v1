@@ -118,10 +118,10 @@
 
 									div.input-cont {
 										input {
-											padding: 0.4em;
+											padding: 6px;
 											box-sizing: border-box;
 											width: 100%;
-											font-size: 110%;
+											font-size: 120%;
 											-webkit-appearance: none;
 											outline: none;
 											border: none;
@@ -170,6 +170,7 @@
 								height: 100%;
 								width: 100%;
 								background-color: #FFFFFF;
+								transition: opacity 200ms ease;
 
 								div.add-item-mask-outer {
 									position: relative;
@@ -231,16 +232,25 @@
 									input {
 										box-sizing: border-box;
 										width: 100%;
-										padding: 0.1em 0;
+										padding: 6px;
 										-webkit-appearance: none;
 										outline: none;
 										border: none;
 										background: transparent;
 										color: #333333;
+										border: 1px solid transparent;
+									}
+								}
+
+								div.input-cont.warn {
+									input {
+										border: 1px solid #FF3B0A;
 									}
 								}
 
 								div.key-cont {
+									padding: 0 7px;
+
 									span {
 										display: inline-block;
 									}
@@ -302,16 +312,15 @@
 	div.domain-cont {
 		div.domain-outer {
 			div.middle-cont {
-				margin: 0 3em;
+				margin: 0 2.8em;
 
 				div.input-cont {
 					input {
-						font-size: 120%;
+						font-size: 130%;
 					}
 				}
 
 				div.key-cont {
-					margin-top: 0.4em;
 					font-size: 80%;
 
 					span.label {
@@ -399,7 +408,7 @@
 				}
 
 				div.key-cont {
-					margin-top: 0.4em;
+					margin-top: 2px;
 
 					span.label {
 						padding: 3px 4px 3px 0;
@@ -432,6 +441,58 @@
 	}
 }
 
+#div-mainmsg-cont {
+	position: fixed;
+	left: 5%;
+	background-color: #222222;
+	border-radius: 4px;
+	box-shadow: 0 1px 1px 0 #CCCCCC;
+	max-width: 90%;
+	z-index: 4;
+	transition: bottom 300ms ease;
+
+	div.mainmsg-outer {
+		margin: 1.2em 1.4em;
+		position: relative;
+
+		div.mainmsg-inner {
+			position: relative;
+			font-size: 90%;
+			margin-right: 36px;
+
+			td.left {
+				color: #EEEEEE;
+				padding-right: 2em;
+			}
+		}
+
+		div.mainmsg-close-cont {
+			position: absolute;
+			top: 0;
+			right: 0;
+			height: 100%;
+			width: 24px;
+
+			div.errormsg-close-outer {
+				position: relative;
+				top: 50%;
+				transform: translateY(-50%);
+				text-align: center;
+				color: #FFFFFF;
+				font-weight: bold;
+			}
+		}
+	}
+}
+
+#div-mainmsg-cont.isup {
+	bottom: 28px;
+}
+
+#div-mainmsg-cont.isdown {
+	bottom: -120px;
+}
+
 
 // trans - message
 div.message-trans-exit {
@@ -446,15 +507,20 @@ div.message-trans-exit.message-trans-exit-active {
 
 // trans - add item mask
 div.add-item-mask-trans-enter {
-	display: none;
-	max-height: 0;
+	opacity: 0;
 }
 
 div.add-item-mask-trans-enter.add-item-mask-trans-enter-active {
-	max-height: 100000px;
-	transition: max-height 200ms linear 200ms;
+	opacity: 1;
 }
 
+div.add-item-mask-trans-exit {
+	opacity: 1;
+}
+
+div.add-item-mask-trans-exit.add-item-mask-trans-exit-active {
+	opacity: 0;
+}
 
 // trans - domains
 div.domains-trans-enter {

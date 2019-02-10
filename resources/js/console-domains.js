@@ -152,7 +152,7 @@ export class Domains extends React.Component {
             'add-item-outer' : true,
             'focus' : this.state.containerFocus
         });
-        const textboxClasses = classNames({
+        const inputClasses = classNames({
             'textentry-cont' : true,
             'focus' : this.state.textboxFocus,
             'warn' : this.state.inputWarn
@@ -171,7 +171,7 @@ export class Domains extends React.Component {
                     </CSSTransition>
                     <div className={addItemOuterClasses} ref={this.setOuterRef}>
                         <div className="text-cont">
-                            <div className={textboxClasses}>
+                            <div className={inputClasses}>
                                 <div className="input-cont">
                                     <input type="text" placeholder="yourdomain.com" ref={(input) => { this.input = input; }} onKeyDown={(e) => this.onKeyDown(e)} onInput={(e) => this.onInput(e)} />
                                 </div>
@@ -184,7 +184,7 @@ export class Domains extends React.Component {
                                 ADD DOMAIN
                             </div>
                         </div>
-                        <CSSTransition in={(this.props.maxDomains - this.props.domains.length == 0)} classNames="add-item-mask-trans" timeout={{ enter: 200, exit: 0 }} unmountOnExit>
+                        <CSSTransition in={(this.props.maxDomains - this.props.domains.length == 0)} classNames="add-item-mask-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
                             <div className="add-item-mask-cont">
                                 <div className="add-item-mask-outer">
                                     <div className="add-item-mask-inner">
@@ -203,7 +203,7 @@ export class Domains extends React.Component {
                 <div className="items-cont">
                     {this.props.domains.map((domain, index) => (
                         <CSSTransition key={domain.id} classNames="domain-trans" timeout={{ enter: 200, exit: 200 }}>
-                            <Domain domain={domain.domain} licencekey={domain.licencekey} />
+                            <Domain id={domain.id} domain={domain.domain} licencekey={domain.licencekey} editDomain={this.props.editDomain} />
                         </CSSTransition>
                     ))}
                 </div>
@@ -216,13 +216,65 @@ export class Domain extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            inputWarn: false,
             copying: false
         };
+        this.checkValue = this.checkValue.bind(this);
         this.copyClick = this.copyClick.bind(this);
         this.copyingEnd = this.copyingEnd.bind(this);
     }
     componentDidMount() {
         this.inputEdit.value = this.props.domain;
+    }
+    checkValue() {
+        let valueOk;
+        const newDomain = this.inputEdit.value.replace(/^\s+|\s+$/g, '');
+        if (newDomain.length > 0) {
+            if (hasDomainForm(newDomain)) {
+                valueOk = true;
+                this.setState({
+                    inputWarn: false
+                });
+            } else {
+                valueOk = false;
+                this.setState({
+                    inputWarn: true
+                });
+            }
+        } else {
+            valueOk = false;
+            this.setState({
+                inputWarn: true
+            });
+        }
+        return valueOk;
+    }
+    onBlur(e) {
+        if (this.checkValue()) {
+            const strippedUrl = stripUrl(this.inputEdit.value.replace(/^\s+|\s+$/g, ''));
+            this.props.editDomain(this.props.id, strippedUrl);
+            this.inputEdit.value = strippedUrl;
+        } else {
+            e.preventDefault();
+            this.inputEdit.focus();
+        }
+    }
+    onKeyDown(e) {
+        if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {         // enter key
+            e.preventDefault();
+            if (this.checkValue()) {
+                this.inputEdit.blur();
+            }
+        } else if ((e.which && e.which == 9) || (e.keyCode && e.keyCode == 9)) {    // tab key
+            if (!this.checkValue()) {
+                e.preventDefault();
+            }
+        }
+    }
+    onInput(e) {
+        if (this.state.inputWarn) {
+            this.checkValue();
+        }
     }
     copyClick() {
         this.setState({
@@ -244,6 +296,10 @@ export class Domain extends React.Component {
             top: '-100000px',
             left: 0
         };
+        const inputClasses = classNames({
+            'input-cont' : true,
+            'warn' : this.state.inputWarn
+        });
         const spanClasses = classNames({
             'key' : true,
             'default' : !this.state.copying,
@@ -256,8 +312,8 @@ export class Domain extends React.Component {
                         <i className="oln icon-grab-ui button"></i>
                     </div>
                     <div className="middle-cont">
-                        <div className="input-cont">
-                            <input type="text" ref={(input) => { this.inputEdit = input; }} />
+                        <div className={inputClasses}>
+                            <input type="text" ref={(input) => { this.inputEdit = input; }} onBlur={(e) => this.onBlur(e)} onKeyDown={(e) => this.onKeyDown(e)} onInput={(e) => this.onInput(e)} />
                         </div>
                         <div className="key-cont">
                             <input type="text" readOnly={true} ref={(input) => { this.inputCopy = input; }} style={inputStyle} value={this.props.licencekey} />

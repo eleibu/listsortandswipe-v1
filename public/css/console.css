@@ -370,11 +370,11 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.add-cont div.add-item-outer div.text-cont div.textentry-cont div.input-cont input {
-  padding: 0.4em;
+  padding: 6px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   width: 100%;
-  font-size: 110%;
+  font-size: 120%;
   -webkit-appearance: none;
   outline: none;
   border: none;
@@ -422,6 +422,8 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
   height: 100%;
   width: 100%;
   background-color: #FFFFFF;
+  -webkit-transition: opacity 200ms ease;
+  transition: opacity 200ms ease;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.add-cont div.add-item-outer div.add-item-mask-cont div.add-item-mask-outer {
@@ -481,12 +483,21 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   width: 100%;
-  padding: 0.1em 0;
+  padding: 6px;
   -webkit-appearance: none;
   outline: none;
   border: none;
   background: transparent;
   color: #333333;
+  border: 1px solid transparent;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer div.middle-cont div.input-cont.warn input {
+  border: 1px solid #FF3B0A;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer div.middle-cont div.key-cont {
+  padding: 0 7px;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.domain-cont div.domain-outer div.middle-cont div.key-cont span {
@@ -535,15 +546,14 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
 }
 
 #pageWrapper.xl div.domain-cont div.domain-outer div.middle-cont, #pageWrapper.lg div.domain-cont div.domain-outer div.middle-cont, #pageWrapper.md div.domain-cont div.domain-outer div.middle-cont, #pageWrapper.sm div.domain-cont div.domain-outer div.middle-cont {
-  margin: 0 3em;
+  margin: 0 2.8em;
 }
 
 #pageWrapper.xl div.domain-cont div.domain-outer div.middle-cont div.input-cont input, #pageWrapper.lg div.domain-cont div.domain-outer div.middle-cont div.input-cont input, #pageWrapper.md div.domain-cont div.domain-outer div.middle-cont div.input-cont input, #pageWrapper.sm div.domain-cont div.domain-outer div.middle-cont div.input-cont input {
-  font-size: 120%;
+  font-size: 130%;
 }
 
 #pageWrapper.xl div.domain-cont div.domain-outer div.middle-cont div.key-cont, #pageWrapper.lg div.domain-cont div.domain-outer div.middle-cont div.key-cont, #pageWrapper.md div.domain-cont div.domain-outer div.middle-cont div.key-cont, #pageWrapper.sm div.domain-cont div.domain-outer div.middle-cont div.key-cont {
-  margin-top: 0.4em;
   font-size: 80%;
 }
 
@@ -611,7 +621,7 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
 }
 
 #pageWrapper.xs div.domain-cont div.domain-outer div.middle-cont div.key-cont {
-  margin-top: 0.4em;
+  margin-top: 2px;
 }
 
 #pageWrapper.xs div.domain-cont div.domain-outer div.middle-cont div.key-cont span.label {
@@ -641,6 +651,61 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
   display: none;
 }
 
+#div-mainmsg-cont {
+  position: fixed;
+  left: 5%;
+  background-color: #222222;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px 0 #CCCCCC;
+          box-shadow: 0 1px 1px 0 #CCCCCC;
+  max-width: 90%;
+  z-index: 4;
+  -webkit-transition: bottom 300ms ease;
+  transition: bottom 300ms ease;
+}
+
+#div-mainmsg-cont div.mainmsg-outer {
+  margin: 1.2em 1.4em;
+  position: relative;
+}
+
+#div-mainmsg-cont div.mainmsg-outer div.mainmsg-inner {
+  position: relative;
+  font-size: 90%;
+  margin-right: 36px;
+}
+
+#div-mainmsg-cont div.mainmsg-outer div.mainmsg-inner td.left {
+  color: #EEEEEE;
+  padding-right: 2em;
+}
+
+#div-mainmsg-cont div.mainmsg-outer div.mainmsg-close-cont {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 24px;
+}
+
+#div-mainmsg-cont div.mainmsg-outer div.mainmsg-close-cont div.errormsg-close-outer {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  text-align: center;
+  color: #FFFFFF;
+  font-weight: bold;
+}
+
+#div-mainmsg-cont.isup {
+  bottom: 28px;
+}
+
+#div-mainmsg-cont.isdown {
+  bottom: -120px;
+}
+
 div.message-trans-exit {
   opacity: 1;
 }
@@ -652,14 +717,19 @@ div.message-trans-exit.message-trans-exit-active {
 }
 
 div.add-item-mask-trans-enter {
-  display: none;
-  max-height: 0;
+  opacity: 0;
 }
 
 div.add-item-mask-trans-enter.add-item-mask-trans-enter-active {
-  max-height: 100000px;
-  -webkit-transition: max-height 200ms linear 200ms;
-  transition: max-height 200ms linear 200ms;
+  opacity: 1;
+}
+
+div.add-item-mask-trans-exit {
+  opacity: 1;
+}
+
+div.add-item-mask-trans-exit.add-item-mask-trans-exit-active {
+  opacity: 0;
 }
 
 div.domains-trans-enter {

@@ -43730,7 +43730,7 @@ var Domains = function (_React$Component) {
                 'add-item-outer': true,
                 'focus': this.state.containerFocus
             });
-            var textboxClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+            var inputClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
                 'textentry-cont': true,
                 'focus': this.state.textboxFocus,
                 'warn': this.state.inputWarn
@@ -43738,7 +43738,7 @@ var Domains = function (_React$Component) {
             var ttText = 'Enter the domain or subdomain of a website you will use Lithium List with. For example: \'example.com\' or \'subdomain.example.com\'';
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.props.domainsMsgShow, classNames: 'message-trans', timeout: { enter: 0, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'message-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'message-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'sld icon-cross-ui', onClick: function onClick() {
                     _this2.props.domainsMsgCloseClick();
-                } }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, this.props.domainsMsgText)))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: addItemOuterClasses, ref: this.setOuterRef }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: textboxClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'input-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', placeholder: 'yourdomain.com', ref: function ref(input) {
+                } }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, this.props.domainsMsgText)))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: addItemOuterClasses, ref: this.setOuterRef }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: inputClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'input-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', placeholder: 'yourdomain.com', ref: function ref(input) {
                     _this2.input = input;
                 }, onKeyDown: function onKeyDown(e) {
                     return _this2.onKeyDown(e);
@@ -43750,8 +43750,8 @@ var Domains = function (_React$Component) {
                     _this2.spanSmall = span;
                 }, 'data-title': ttText }, 'What do I enter here?'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont clear', onClick: function onClick() {
                     _this2.addDomainClick();
-                } }, 'ADD DOMAIN')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.props.maxDomains - this.props.domains.length == 0, classNames: 'add-item-mask-trans', timeout: { enter: 200, exit: 0 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-item-mask-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-item-mask-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-item-mask-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title' }, 'Need to use Lithium List in more websites?'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'subtitle' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey' }, 'Upgrade or buy more domains')))))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'items-cont' }, this.props.domains.map(function (domain, index) {
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { key: domain.id, classNames: 'domain-trans', timeout: { enter: 200, exit: 200 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Domain, { domain: domain.domain, licencekey: domain.licencekey }));
+                } }, 'ADD DOMAIN')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.props.maxDomains - this.props.domains.length == 0, classNames: 'add-item-mask-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-item-mask-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-item-mask-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-item-mask-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title' }, 'Need to use Lithium List in more websites?'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'subtitle' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey' }, 'Upgrade or buy more domains')))))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'items-cont' }, this.props.domains.map(function (domain, index) {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { key: domain.id, classNames: 'domain-trans', timeout: { enter: 200, exit: 200 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Domain, { id: domain.id, domain: domain.domain, licencekey: domain.licencekey, editDomain: _this2.props.editDomain }));
             })));
         }
     }]);
@@ -43768,8 +43768,10 @@ var Domain = function (_React$Component2) {
         var _this3 = _possibleConstructorReturn(this, (Domain.__proto__ || Object.getPrototypeOf(Domain)).call(this, props));
 
         _this3.state = {
+            inputWarn: false,
             copying: false
         };
+        _this3.checkValue = _this3.checkValue.bind(_this3);
         _this3.copyClick = _this3.copyClick.bind(_this3);
         _this3.copyingEnd = _this3.copyingEnd.bind(_this3);
         return _this3;
@@ -43779,6 +43781,66 @@ var Domain = function (_React$Component2) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             this.inputEdit.value = this.props.domain;
+        }
+    }, {
+        key: 'checkValue',
+        value: function checkValue() {
+            var valueOk = void 0;
+            var newDomain = this.inputEdit.value.replace(/^\s+|\s+$/g, '');
+            if (newDomain.length > 0) {
+                if (Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["a" /* hasDomainForm */])(newDomain)) {
+                    valueOk = true;
+                    this.setState({
+                        inputWarn: false
+                    });
+                } else {
+                    valueOk = false;
+                    this.setState({
+                        inputWarn: true
+                    });
+                }
+            } else {
+                valueOk = false;
+                this.setState({
+                    inputWarn: true
+                });
+            }
+            return valueOk;
+        }
+    }, {
+        key: 'onBlur',
+        value: function onBlur(e) {
+            if (this.checkValue()) {
+                var strippedUrl = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["b" /* stripUrl */])(this.inputEdit.value.replace(/^\s+|\s+$/g, ''));
+                this.props.editDomain(this.props.id, strippedUrl);
+                this.inputEdit.value = strippedUrl;
+            } else {
+                e.preventDefault();
+                this.inputEdit.focus();
+            }
+        }
+    }, {
+        key: 'onKeyDown',
+        value: function onKeyDown(e) {
+            if (e.which && e.which == 13 || e.keyCode && e.keyCode == 13) {
+                // enter key
+                e.preventDefault();
+                if (this.checkValue()) {
+                    this.inputEdit.blur();
+                }
+            } else if (e.which && e.which == 9 || e.keyCode && e.keyCode == 9) {
+                // tab key
+                if (!this.checkValue()) {
+                    e.preventDefault();
+                }
+            }
+        }
+    }, {
+        key: 'onInput',
+        value: function onInput(e) {
+            if (this.state.inputWarn) {
+                this.checkValue();
+            }
         }
     }, {
         key: 'copyClick',
@@ -43808,13 +43870,23 @@ var Domain = function (_React$Component2) {
                 top: '-100000px',
                 left: 0
             };
+            var inputClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+                'input-cont': true,
+                'warn': this.state.inputWarn
+            });
             var spanClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
                 'key': true,
                 'default': !this.state.copying,
                 'copying': this.state.copying
             });
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'domain-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'domain-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'sort-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-grab-ui button' })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'middle-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'input-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', ref: function ref(input) {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'domain-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'domain-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'sort-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-grab-ui button' })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'middle-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: inputClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', ref: function ref(input) {
                     _this4.inputEdit = input;
+                }, onBlur: function onBlur(e) {
+                    return _this4.onBlur(e);
+                }, onKeyDown: function onKeyDown(e) {
+                    return _this4.onKeyDown(e);
+                }, onInput: function onInput(e) {
+                    return _this4.onInput(e);
                 } })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'key-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', readOnly: true, ref: function ref(input) {
                     _this4.inputCopy = input;
                 }, style: inputStyle, value: this.props.licencekey }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'label' }, 'Licence key:'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: spanClasses }, this.props.licencekey), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy-outer', title: 'Copy to clipboard', onClick: function onClick() {
@@ -43824,6 +43896,98 @@ var Domain = function (_React$Component2) {
     }]);
 
     return Domain;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+/***/ }),
+
+/***/ "./resources/js/console-mainmsg.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["c"] = setMainMsgTimeout;
+/* harmony export (immutable) */ __webpack_exports__["b"] = clearMainMsgTimeout;
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MainMsg; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__("./node_modules/react/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__("./node_modules/react-dom/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_classNames_dedupe__ = __webpack_require__("./node_modules/classNames/dedupe.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_classNames_dedupe___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_classNames_dedupe__);
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+}();
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError("Cannot call a class as a function");
+    }
+}
+
+function _possibleConstructorReturn(self, call) {
+    if (!self) {
+        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+
+
+
+
+var mainMsgTimeout = void 0;
+
+function setMainMsgTimeout(callback, delay) {
+    if (mainMsgTimeout) {
+        clearTimeout(mainMsgTimeout);
+    }
+    var millisecs = 8000;
+    if (delay) {
+        millisecs = delay;
+    }
+    mainMsgTimeout = setTimeout(callback, millisecs);
+}
+
+function clearMainMsgTimeout() {
+    if (mainMsgTimeout) {
+        clearTimeout(mainMsgTimeout);
+        mainMsgTimeout = null;
+    }
+}
+
+var MainMsg = function (_React$Component) {
+    _inherits(MainMsg, _React$Component);
+
+    function MainMsg() {
+        _classCallCheck(this, MainMsg);
+
+        return _possibleConstructorReturn(this, (MainMsg.__proto__ || Object.getPrototypeOf(MainMsg)).apply(this, arguments));
+    }
+
+    _createClass(MainMsg, [{
+        key: 'render',
+        value: function render() {
+            var contClasses = __WEBPACK_IMPORTED_MODULE_2_classNames_dedupe___default()({
+                isup: this.props.visible,
+                isdown: !this.props.visible
+            });
+            return __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.createPortal(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: 'div-mainmsg-cont', className: contClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'mainmsg-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'mainmsg-inner' }, this.props.children), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'mainmsg-close-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'mainmsg-close-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-cross-ui', onClick: this.props.closeClick }))))), document.getElementById('pageWrapper'));
+        }
+    }]);
+
+    return MainMsg;
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
 /***/ }),
@@ -43845,6 +44009,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__console_domains_js__ = __webpack_require__("./resources/js/console-domains.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__console_account_js__ = __webpack_require__("./resources/js/console-account.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_js__ = __webpack_require__("./resources/js/utils.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__console_mainmsg_js__ = __webpack_require__("./resources/js/console-mainmsg.js");
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () {
@@ -43886,6 +44051,7 @@ __webpack_require__("./node_modules/bootstrap/dist/js/bootstrap.js");
 
 
 
+
 var App = function (_React$Component) {
     _inherits(App, _React$Component);
 
@@ -43904,11 +44070,16 @@ var App = function (_React$Component) {
                 domain: 'syndeal.com',
                 licencekey: '123456789'
             }],
-            maxDomains: 2
+            maxDomains: 2,
+            mainMsgShow: false,
+            mainMsgChildren: null
         };
         _this.tabClick = _this.tabClick.bind(_this);
         _this.domainsMsgCloseClick = _this.domainsMsgCloseClick.bind(_this);
         _this.addDomain = _this.addDomain.bind(_this);
+        _this.editDomain = _this.editDomain.bind(_this);
+        _this.showMainMsg = _this.showMainMsg.bind(_this);
+        _this.closeMainMsg = _this.closeMainMsg.bind(_this);
         return _this;
     }
 
@@ -43942,9 +44113,45 @@ var App = function (_React$Component) {
             });
         }
     }, {
+        key: 'editDomain',
+        value: function editDomain(id, domain) {
+            var _this2 = this;
+
+            console.log(domain);
+            var children = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'left' }, 'The server could not be reached. Please try again.'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont errormsg', onClick: function onClick() {
+                    _this2.props.hideMainError();_this2.getData();
+                } }, 'RETRY')))));
+            this.showMainMsg(children, 8000);
+        }
+    }, {
+        key: 'showMainMsg',
+        value: function showMainMsg(children, duration) {
+            var _this3 = this;
+
+            var delay = 8000;
+            if (typeof duration !== 'undefined' && duration != null) {
+                delay = duration;
+            }
+            Object(__WEBPACK_IMPORTED_MODULE_8__console_mainmsg_js__["c" /* setMainMsgTimeout */])(function () {
+                _this3.setState({ mainMsgShow: false });
+            }, delay);
+            this.setState({
+                mainMsgChildren: children,
+                mainMsgShow: true
+            });
+        }
+    }, {
+        key: 'closeMainMsg',
+        value: function closeMainMsg() {
+            Object(__WEBPACK_IMPORTED_MODULE_8__console_mainmsg_js__["b" /* clearMainMsgTimeout */])();
+            this.setState({
+                mainMsgShow: false
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
+            var _this4 = this;
 
             var tab0Classes = __WEBPACK_IMPORTED_MODULE_3_classNames_dedupe___default()({
                 'tab-cont': true,
@@ -43969,10 +44176,10 @@ var App = function (_React$Component) {
                 'oln': this.state.tabIndex != 1
             });
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'tabs-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: tab0Classes, onClick: function onClick() {
-                    _this2.tabClick(0);
+                    _this4.tabClick(0);
                 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: icon0Classes }), '\xA0Domains'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: tab1Classes, onClick: function onClick() {
-                    _this2.tabClick(1);
-                } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: icon1Classes }), '\xA0Account')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-cont' }, this.state.domainsLoaded ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 0, classNames: 'domains-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__console_domains_js__["a" /* Domains */], { domains: this.state.domains, maxDomains: this.state.maxDomains, domainsMsgShow: this.state.domainsMsgShow, domainsMsgText: this.state.domainsMsgText, domainsMsgCloseClick: this.domainsMsgCloseClick, addDomain: this.addDomain })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 1, classNames: 'account-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__console_account_js__["a" /* Account */], null))) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, 'Loading domains...')));
+                    _this4.tabClick(1);
+                } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: icon1Classes }), '\xA0Account')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-cont' }, this.state.domainsLoaded ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 0, classNames: 'domains-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__console_domains_js__["a" /* Domains */], { domains: this.state.domains, maxDomains: this.state.maxDomains, domainsMsgShow: this.state.domainsMsgShow, domainsMsgText: this.state.domainsMsgText, domainsMsgCloseClick: this.domainsMsgCloseClick, addDomain: this.addDomain, editDomain: this.editDomain })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 1, classNames: 'account-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__console_account_js__["a" /* Account */], null))) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, 'Loading domains...')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__console_mainmsg_js__["a" /* MainMsg */], { children: this.state.mainMsgChildren, visible: this.state.mainMsgShow, closeClick: this.props.closeMainMsg }));
         }
     }]);
 

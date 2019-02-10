@@ -8,6 +8,7 @@ import { CSSTransition } from 'react-transition-group';
 import { Domains } from './console-domains.js';
 import { Account } from './console-account.js';
 import { uuidv4 } from './utils.js';
+import { setMainMsgTimeout, clearMainMsgTimeout, MainMsg } from './console-mainmsg.js';
 
 class App extends React.Component {
     constructor(props) {
@@ -24,11 +25,16 @@ class App extends React.Component {
                     licencekey: '123456789'
                 }
             ],
-            maxDomains: 2
+            maxDomains: 2,
+            mainMsgShow: false,
+            mainMsgChildren: null
         };
         this.tabClick = this.tabClick.bind(this);
         this.domainsMsgCloseClick = this.domainsMsgCloseClick.bind(this);
         this.addDomain = this.addDomain.bind(this);
+        this.editDomain = this.editDomain.bind(this);
+        this.showMainMsg = this.showMainMsg.bind(this);
+        this.closeMainMsg = this.closeMainMsg.bind(this);
     }
     tabClick(tabIndex) {
         if (this.state.domainsLoaded) {
@@ -51,6 +57,28 @@ class App extends React.Component {
         });
         this.setState({
            domains: domainsCopy
+        });
+    }
+    editDomain(id, domain) {
+        console.log(domain);
+        const children = <table><tbody><tr><td className="left">The server could not be reached. Please try again.</td><td className="right"><div className="button-word-cont errormsg" onClick={() => {this.props.hideMainError(); this.getData();}}>RETRY</div></td></tr></tbody></table>;
+        this.showMainMsg(children, 8000);
+    }
+    showMainMsg(children, duration) {
+        let delay = 8000;
+        if (typeof duration !== 'undefined' && duration != null) {
+            delay = duration;
+        }
+        setMainMsgTimeout(() => {this.setState({ mainMsgShow: false }); }, delay);
+        this.setState({
+           mainMsgChildren: children, 
+           mainMsgShow: true
+        });
+    }
+    closeMainMsg() {
+        clearMainMsgTimeout();
+        this.setState({
+           mainMsgShow: false
         });
     }
     render() {
@@ -90,7 +118,7 @@ class App extends React.Component {
                     {(this.state.domainsLoaded) ? (
                         <div className="content-outer">
                             <CSSTransition in={(this.state.tabIndex == 0)} classNames="domains-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
-                                <Domains domains={this.state.domains} maxDomains={this.state.maxDomains} domainsMsgShow={this.state.domainsMsgShow} domainsMsgText={this.state.domainsMsgText} domainsMsgCloseClick={this.domainsMsgCloseClick} addDomain={this.addDomain} />
+                                <Domains domains={this.state.domains} maxDomains={this.state.maxDomains} domainsMsgShow={this.state.domainsMsgShow} domainsMsgText={this.state.domainsMsgText} domainsMsgCloseClick={this.domainsMsgCloseClick} addDomain={this.addDomain} editDomain={this.editDomain} />
                             </CSSTransition>
                             <CSSTransition in={(this.state.tabIndex == 1)} classNames="account-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
                                 <Account />
@@ -102,6 +130,7 @@ class App extends React.Component {
                         </div>
                     )}
                 </div>
+                <MainMsg children={this.state.mainMsgChildren} visible={this.state.mainMsgShow} closeClick={this.props.closeMainMsg} />
             </React.Fragment>
         );
     }
