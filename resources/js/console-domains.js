@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classNames/dedupe';
-import { CSSTransition } from 'react-transition-group';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import Tooltip from 'tooltip.js';
 import { hasDomainForm, stripUrl } from './utils.js';
 import { lithiumlist } from './lithiumlist-1.0.0.js';
@@ -18,21 +18,23 @@ export class Domains extends React.Component {
         this.handleDocClick = this.handleDocClick.bind(this);
         this.setOuterRef = this.setOuterRef.bind(this);
         this.checkValue = this.checkValue.bind(this);
+        this.checkExists = this.checkExists.bind(this);
         this.windowScroll = this.windowScroll.bind(this);
         this.windowTouchstart = this.windowTouchstart.bind(this);
     }
     componentDidMount() {
         lithiumlist.attachToList(
             '123456789',
-            this.outerCont,
+            document.getElementById('pageWrapper'),
             this.listCont,
             'domain-cont',
             {
                 sortDragHandleClass: 'icon-grab-ui',
                 leftButtonClass: 'icon-trash',
-                rightEnabled: false
-                // onSortEnd: this.onSortEnd,
-                // onLeftEnd: this.onLeftEnd
+                rightEnabled: false,
+                leftMasks: [],
+                onSortEnd: this.props.sortEnd,
+                onLeftEnd: this.props.leftEnd,
             }
         );
 
@@ -114,10 +116,17 @@ export class Domains extends React.Component {
         const newDomain = this.input.value.replace(/^\s+|\s+$/g, '');
         if (newDomain.length > 0) {
             if (hasDomainForm(newDomain)) {
-                valueOk = true;
-                this.setState({
-                    inputWarn: false
-                });
+                if (this.checkExists(newDomain)) {
+                    valueOk = false;
+                    this.setState({
+                        inputWarn: true
+                    });
+                } else {
+                    valueOk = true;
+                    this.setState({
+                        inputWarn: false
+                    });                    
+                }
             } else {
                 valueOk = false;
                 this.setState({
@@ -131,6 +140,17 @@ export class Domains extends React.Component {
             });
         }
         return valueOk;
+    }
+    checkExists(newDomain, skipIndex) {
+        newDomain = newDomain.toLowerCase();
+        for (var i = 0, len = this.props.domains.length; i < len; i++) {
+            if (typeof skipIndex === 'undefined' || skipIndex != i) {
+                if (newDomain == this.props.domains[i].domain) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
     addDomainClick() {
         if (this.checkValue()) {
@@ -204,7 +224,7 @@ export class Domains extends React.Component {
                                 <div className="add-item-mask-outer">
                                     <div className="add-item-mask-inner">
                                         <div className="title">
-                                            Need to use Lithium List in more websites?
+                                            Need to use Lithium List with more websites?
                                         </div>
                                         <div className="subtitle">
                                             <div className="button-word-cont grey">Upgrade or buy more domains</div>
@@ -217,11 +237,13 @@ export class Domains extends React.Component {
                 </div>
                 <div id="outerCont" ref={(div) => { this.outerCont = div; }}>
                     <div id="listCont" ref={(div) => { this.listCont = div; }}>
-                        {this.props.domains.map((domain, index) => (
-                            <CSSTransition key={domain.id} classNames="domain-trans" timeout={{ enter: 200, exit: 200 }}>
-                                <Domain id={domain.id} domain={domain.domain} licencekey={domain.licencekey} editDomain={this.props.editDomain} />
-                            </CSSTransition>
-                        ))}
+                        <TransitionGroup component={null}>
+                            {this.props.domains.map((domain, index) => (
+                                <CSSTransition key={domain.id} classNames="domain-trans" timeout={{ enter: 200, exit: 200 }}>
+                                    <Domain id={domain.id} index={index} domain={domain.domain} licencekey={domain.licencekey} editDomain={this.props.editDomain} checkExists={this.checkExists} />
+                                </CSSTransition>
+                            ))}
+                        </TransitionGroup>
                     </div>
                 </div>
             </div>
@@ -248,10 +270,17 @@ export class Domain extends React.Component {
         const newDomain = this.inputEdit.value.replace(/^\s+|\s+$/g, '');
         if (newDomain.length > 0) {
             if (hasDomainForm(newDomain)) {
-                valueOk = true;
-                this.setState({
-                    inputWarn: false
-                });
+                if (this.props.checkExists(newDomain, this.props.index)) {
+                    valueOk = false;
+                    this.setState({
+                        inputWarn: true
+                    });
+                } else {
+                    valueOk = true;
+                    this.setState({
+                        inputWarn: false
+                    });
+                }
             } else {
                 valueOk = false;
                 this.setState({
@@ -346,6 +375,8 @@ export class Domain extends React.Component {
                     </div>
                     <div className="delete-cont">
                         <i className="oln icon-trash button"></i>
+                    </div>
+                    <div className="mask-cont">
                     </div>
                 </div>
             </div>

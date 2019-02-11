@@ -25,7 +25,7 @@ class App extends React.Component {
                     licencekey: '123456789'
                 }
             ],
-            maxDomains: 2,
+            maxDomains: 10,
             mainMsgShow: false,
             mainMsgChildren: null
         };
@@ -35,6 +35,9 @@ class App extends React.Component {
         this.editDomain = this.editDomain.bind(this);
         this.showMainMsg = this.showMainMsg.bind(this);
         this.closeMainMsg = this.closeMainMsg.bind(this);
+        this.sortEnd = this.sortEnd.bind(this);
+        this.leftEnd = this.leftEnd.bind(this);
+        this.undeleteDomain = this.undeleteDomain.bind(this);
     }
     tabClick(tabIndex) {
         if (this.state.domainsLoaded) {
@@ -60,9 +63,67 @@ class App extends React.Component {
         });
     }
     editDomain(id, domain) {
-        console.log(domain);
-        const children = <table><tbody><tr><td className="left">The server could not be reached. Please try again.</td><td className="right"><div className="button-word-cont mainmsg" onClick={() => {this.props.hideMainError(); this.getData();}}>RETRY</div></td></tr></tbody></table>;
-        this.showMainMsg(children, 12000);
+        const newDomains = [];
+        for (var i = 0, len = this.state.domains.length; i < len; i++) {
+            if (this.state.domains[i].id == id) {
+                newDomains.push({
+                    id: this.state.domains[i].id,
+                    domain: domain,
+                    licencekey: this.state.domains[i].licencekey
+                });                
+            } else {
+                newDomains.push(this.state.domains[i]);
+            }
+        }
+        if (newDomains.length > 0) {
+            this.setState({
+               domains: newDomains
+            });
+        }
+    }
+    sortEnd(instance, oldIndex, newIndex) {
+        if (oldIndex != newIndex) {
+            const newDomains = this.state.domains.slice(0);
+            if (newIndex >= newDomains.length) {
+                let i = newIndex - newDomains.length;
+                while (i-- + 1) {
+                    newDomains.push(undefined);
+                }
+            }
+            newDomains.splice(newIndex, 0, newDomains.splice(oldIndex, 1)[0]);
+            this.setState({
+               domains: newDomains
+            });
+        }
+    }
+    leftEnd(instance, index, didSlideOut) {
+        if (didSlideOut) {
+            let domain = this.state.domains[index].domain;
+            if (domain.length > 30) {
+                domain = domain.substr(0, 27) + '...';
+            }
+            const copyDomain = {
+                id: this.state.domains[index].id,
+                domain: this.state.domains[index].domain,
+                licencekey: this.state.domains[index].licencekey
+            };
+            const children = <table><tbody><tr><td className="left">The domain &#39;{domain}&#39; was deleted.</td><td className="right"><div className="button-word-cont mainmsg" onClick={() => {this.undeleteDomain(copyDomain, index);}}>UNDO</div></td></tr></tbody></table>;
+            this.showMainMsg(children, 12000);
+
+            const newDomains = this.state.domains.slice(0);
+            newDomains.splice(index, 1);
+            this.setState({
+               domains: newDomains
+            });
+        }
+    }
+    undeleteDomain(domain, index) {
+        const newDomains = this.state.domains.slice(0);
+        newDomains.splice(index, 0, domain);
+        this.setState({
+           domains: newDomains
+        });
+        this.closeMainMsg();
     }
     showMainMsg(children, duration) {
         let delay = 8000;
@@ -118,7 +179,7 @@ class App extends React.Component {
                     {(this.state.domainsLoaded) ? (
                         <div className="content-outer">
                             <CSSTransition in={(this.state.tabIndex == 0)} classNames="domains-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
-                                <Domains domains={this.state.domains} maxDomains={this.state.maxDomains} domainsMsgShow={this.state.domainsMsgShow} domainsMsgText={this.state.domainsMsgText} domainsMsgCloseClick={this.domainsMsgCloseClick} addDomain={this.addDomain} editDomain={this.editDomain} />
+                                <Domains domains={this.state.domains} maxDomains={this.state.maxDomains} domainsMsgShow={this.state.domainsMsgShow} domainsMsgText={this.state.domainsMsgText} domainsMsgCloseClick={this.domainsMsgCloseClick} addDomain={this.addDomain} editDomain={this.editDomain} sortEnd={this.sortEnd} leftEnd={this.leftEnd} />
                             </CSSTransition>
                             <CSSTransition in={(this.state.tabIndex == 1)} classNames="account-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
                                 <Account />

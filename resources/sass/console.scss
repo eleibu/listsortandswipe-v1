@@ -109,7 +109,7 @@
 
 						div.add-item-outer {
 							position: relative;
-							padding: 1em 1em 0 1em;
+							padding: 1.4em 1em 0.2em 1em;
 							border-bottom: 1px solid #DDDDDD;
 
 							div.text-cont {
@@ -219,6 +219,7 @@
 						div.domain-cont {
 							background-color: #FFFFFF;
 							border-bottom: 1px solid #EEEEEE;
+							overflow: hidden;
 
 							div.domain-outer {
 								position: relative;
@@ -291,8 +292,35 @@
 									transform: translateY(-50%);
 									right: 0.6em;
 								}
+
+								div.mask-cont {
+									display: none;
+									position: absolute;
+									top: 0;
+									left: 0;
+									height: 100%;
+									width: 100%;
+									background-color: rgba(252, 13, 27, 1);
+								}
 							}
 						}
+
+						div.domain-cont.left-item-active, div.domain-cont.domain-trans-exit {
+							div.domain-outer {
+								div.mask-cont {
+									display: block;
+								}
+							}
+						}
+					}
+
+					#listCont.sort-list {
+						  -webkit-touch-callout: none; /* iOS Safari */
+						    -webkit-user-select: none; /* Safari */
+						     -khtml-user-select: none; /* Konqueror HTML */
+						       -moz-user-select: none; /* Firefox */
+						        -ms-user-select: none; /* Internet Explorer/Edge */
+						            user-select: none;
 					}
 
 					#listCont.left-list {
@@ -570,12 +598,12 @@ div.domain-trans-appear.domain-trans-appear-active, div.domain-trans-enter.domai
 }
 
 div.domain-trans-exit {
- 	opacity: 1;
+	max-height: 5em;
 }
 
 div.domain-trans-exit.domain-trans-exit-active {
-	opacity: 0.01;
-	transition: opacity 200ms ease-in;
+	max-height: 0;
+	transition: max-height 200ms ease-in;
 }
 
 // trans - account

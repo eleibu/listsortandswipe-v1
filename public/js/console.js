@@ -43567,6 +43567,7 @@ var Domains = function (_React$Component) {
         _this.handleDocClick = _this.handleDocClick.bind(_this);
         _this.setOuterRef = _this.setOuterRef.bind(_this);
         _this.checkValue = _this.checkValue.bind(_this);
+        _this.checkExists = _this.checkExists.bind(_this);
         _this.windowScroll = _this.windowScroll.bind(_this);
         _this.windowTouchstart = _this.windowTouchstart.bind(_this);
         return _this;
@@ -43575,12 +43576,13 @@ var Domains = function (_React$Component) {
     _createClass(Domains, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            __WEBPACK_IMPORTED_MODULE_5__lithiumlist_1_0_0_js__["a" /* lithiumlist */].attachToList('123456789', this.outerCont, this.listCont, 'domain-cont', {
+            __WEBPACK_IMPORTED_MODULE_5__lithiumlist_1_0_0_js__["a" /* lithiumlist */].attachToList('123456789', document.getElementById('pageWrapper'), this.listCont, 'domain-cont', {
                 sortDragHandleClass: 'icon-grab-ui',
                 leftButtonClass: 'icon-trash',
-                rightEnabled: false
-                // onSortEnd: this.onSortEnd,
-                // onLeftEnd: this.onLeftEnd
+                rightEnabled: false,
+                leftMasks: [],
+                onSortEnd: this.props.sortEnd,
+                onLeftEnd: this.props.leftEnd
             });
 
             document.addEventListener('mousedown', this.handleDocClick);
@@ -43675,10 +43677,17 @@ var Domains = function (_React$Component) {
             var newDomain = this.input.value.replace(/^\s+|\s+$/g, '');
             if (newDomain.length > 0) {
                 if (Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["a" /* hasDomainForm */])(newDomain)) {
-                    valueOk = true;
-                    this.setState({
-                        inputWarn: false
-                    });
+                    if (this.checkExists(newDomain)) {
+                        valueOk = false;
+                        this.setState({
+                            inputWarn: true
+                        });
+                    } else {
+                        valueOk = true;
+                        this.setState({
+                            inputWarn: false
+                        });
+                    }
                 } else {
                     valueOk = false;
                     this.setState({
@@ -43692,6 +43701,19 @@ var Domains = function (_React$Component) {
                 });
             }
             return valueOk;
+        }
+    }, {
+        key: 'checkExists',
+        value: function checkExists(newDomain, skipIndex) {
+            newDomain = newDomain.toLowerCase();
+            for (var i = 0, len = this.props.domains.length; i < len; i++) {
+                if (typeof skipIndex === 'undefined' || skipIndex != i) {
+                    if (newDomain == this.props.domains[i].domain) {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }, {
         key: 'addDomainClick',
@@ -43760,13 +43782,13 @@ var Domains = function (_React$Component) {
                     _this2.spanSmall = span;
                 }, 'data-title': ttText }, 'What do I enter here?'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont clear', onClick: function onClick() {
                     _this2.addDomainClick();
-                } }, 'ADD DOMAIN')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.props.maxDomains - this.props.domains.length == 0, classNames: 'add-item-mask-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-item-mask-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-item-mask-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-item-mask-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title' }, 'Need to use Lithium List in more websites?'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'subtitle' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey' }, 'Upgrade or buy more domains')))))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: 'outerCont', ref: function ref(div) {
+                } }, 'ADD DOMAIN')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.props.maxDomains - this.props.domains.length == 0, classNames: 'add-item-mask-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-item-mask-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-item-mask-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-item-mask-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title' }, 'Need to use Lithium List with more websites?'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'subtitle' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey' }, 'Upgrade or buy more domains')))))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: 'outerCont', ref: function ref(div) {
                     _this2.outerCont = div;
                 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: 'listCont', ref: function ref(div) {
                     _this2.listCont = div;
-                } }, this.props.domains.map(function (domain, index) {
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { key: domain.id, classNames: 'domain-trans', timeout: { enter: 200, exit: 200 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Domain, { id: domain.id, domain: domain.domain, licencekey: domain.licencekey, editDomain: _this2.props.editDomain }));
-            }))));
+                } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["TransitionGroup"], { component: null }, this.props.domains.map(function (domain, index) {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { key: domain.id, classNames: 'domain-trans', timeout: { enter: 200, exit: 200 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Domain, { id: domain.id, index: index, domain: domain.domain, licencekey: domain.licencekey, editDomain: _this2.props.editDomain, checkExists: _this2.checkExists }));
+            })))));
         }
     }]);
 
@@ -43803,10 +43825,17 @@ var Domain = function (_React$Component2) {
             var newDomain = this.inputEdit.value.replace(/^\s+|\s+$/g, '');
             if (newDomain.length > 0) {
                 if (Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["a" /* hasDomainForm */])(newDomain)) {
-                    valueOk = true;
-                    this.setState({
-                        inputWarn: false
-                    });
+                    if (this.props.checkExists(newDomain, this.props.index)) {
+                        valueOk = false;
+                        this.setState({
+                            inputWarn: true
+                        });
+                    } else {
+                        valueOk = true;
+                        this.setState({
+                            inputWarn: false
+                        });
+                    }
                 } else {
                     valueOk = false;
                     this.setState({
@@ -43905,7 +43934,7 @@ var Domain = function (_React$Component2) {
                     _this4.inputCopy = input;
                 }, style: inputStyle, value: this.props.licencekey }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'label' }, 'Licence key:'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: spanClasses }, this.props.licencekey), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy-outer', title: 'Copy to clipboard', onClick: function onClick() {
                     _this4.copyClick();
-                } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-clipboard' })), '\xA0'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'delete-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-trash button' }))));
+                } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-clipboard' })), '\xA0'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'delete-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-trash button' })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'mask-cont' })));
         }
     }]);
 
@@ -44084,7 +44113,7 @@ var App = function (_React$Component) {
                 domain: 'syndeal.com',
                 licencekey: '123456789'
             }],
-            maxDomains: 2,
+            maxDomains: 10,
             mainMsgShow: false,
             mainMsgChildren: null
         };
@@ -44094,6 +44123,9 @@ var App = function (_React$Component) {
         _this.editDomain = _this.editDomain.bind(_this);
         _this.showMainMsg = _this.showMainMsg.bind(_this);
         _this.closeMainMsg = _this.closeMainMsg.bind(_this);
+        _this.sortEnd = _this.sortEnd.bind(_this);
+        _this.leftEnd = _this.leftEnd.bind(_this);
+        _this.undeleteDomain = _this.undeleteDomain.bind(_this);
         return _this;
     }
 
@@ -44129,13 +44161,77 @@ var App = function (_React$Component) {
     }, {
         key: 'editDomain',
         value: function editDomain(id, domain) {
+            var newDomains = [];
+            for (var i = 0, len = this.state.domains.length; i < len; i++) {
+                if (this.state.domains[i].id == id) {
+                    newDomains.push({
+                        id: this.state.domains[i].id,
+                        domain: domain,
+                        licencekey: this.state.domains[i].licencekey
+                    });
+                } else {
+                    newDomains.push(this.state.domains[i]);
+                }
+            }
+            if (newDomains.length > 0) {
+                this.setState({
+                    domains: newDomains
+                });
+            }
+        }
+    }, {
+        key: 'sortEnd',
+        value: function sortEnd(instance, oldIndex, newIndex) {
+            if (oldIndex != newIndex) {
+                var newDomains = this.state.domains.slice(0);
+                if (newIndex >= newDomains.length) {
+                    var i = newIndex - newDomains.length;
+                    while (i-- + 1) {
+                        newDomains.push(undefined);
+                    }
+                }
+                newDomains.splice(newIndex, 0, newDomains.splice(oldIndex, 1)[0]);
+                this.setState({
+                    domains: newDomains
+                });
+            }
+        }
+    }, {
+        key: 'leftEnd',
+        value: function leftEnd(instance, index, didSlideOut) {
             var _this2 = this;
 
-            console.log(domain);
-            var children = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'left' }, 'The server could not be reached. Please try again.'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont mainmsg', onClick: function onClick() {
-                    _this2.props.hideMainError();_this2.getData();
-                } }, 'RETRY')))));
-            this.showMainMsg(children, 12000);
+            if (didSlideOut) {
+                var domain = this.state.domains[index].domain;
+                if (domain.length > 30) {
+                    domain = domain.substr(0, 27) + '...';
+                }
+                var copyDomain = {
+                    id: this.state.domains[index].id,
+                    domain: this.state.domains[index].domain,
+                    licencekey: this.state.domains[index].licencekey
+                };
+                var children = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'left' }, 'The domain \'', domain, '\' was deleted.'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont mainmsg', onClick: function onClick() {
+                        _this2.undeleteDomain(copyDomain, index);
+                    } }, 'UNDO')))));
+                this.showMainMsg(children, 12000);
+
+                var newDomains = this.state.domains.slice(0);
+                newDomains.splice(index, 1);
+                this.setState({
+                    domains: newDomains
+                });
+            }
+        }
+    }, {
+        key: 'undeleteDomain',
+        value: function undeleteDomain(domain, index) {
+            var newDomains = this.state.domains.slice(0);
+            newDomains.splice(index, 0, domain);
+            this.setState({
+                domains: newDomains
+            });
+            this.closeMainMsg();
         }
     }, {
         key: 'showMainMsg',
@@ -44193,7 +44289,7 @@ var App = function (_React$Component) {
                     _this4.tabClick(0);
                 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: icon0Classes }), '\xA0Domains'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: tab1Classes, onClick: function onClick() {
                     _this4.tabClick(1);
-                } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: icon1Classes }), '\xA0Account')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-cont' }, this.state.domainsLoaded ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 0, classNames: 'domains-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__console_domains_js__["a" /* Domains */], { domains: this.state.domains, maxDomains: this.state.maxDomains, domainsMsgShow: this.state.domainsMsgShow, domainsMsgText: this.state.domainsMsgText, domainsMsgCloseClick: this.domainsMsgCloseClick, addDomain: this.addDomain, editDomain: this.editDomain })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 1, classNames: 'account-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__console_account_js__["a" /* Account */], null))) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, 'Loading domains...')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__console_mainmsg_js__["a" /* MainMsg */], { children: this.state.mainMsgChildren, visible: this.state.mainMsgShow, closeClick: this.closeMainMsg }));
+                } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: icon1Classes }), '\xA0Account')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-cont' }, this.state.domainsLoaded ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 0, classNames: 'domains-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__console_domains_js__["a" /* Domains */], { domains: this.state.domains, maxDomains: this.state.maxDomains, domainsMsgShow: this.state.domainsMsgShow, domainsMsgText: this.state.domainsMsgText, domainsMsgCloseClick: this.domainsMsgCloseClick, addDomain: this.addDomain, editDomain: this.editDomain, sortEnd: this.sortEnd, leftEnd: this.leftEnd })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 1, classNames: 'account-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__console_account_js__["a" /* Account */], null))) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, 'Loading domains...')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__console_mainmsg_js__["a" /* MainMsg */], { children: this.state.mainMsgChildren, visible: this.state.mainMsgShow, closeClick: this.closeMainMsg }));
         }
     }]);
 

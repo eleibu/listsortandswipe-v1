@@ -361,7 +361,7 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.add-cont div.add-item-outer {
   position: relative;
-  padding: 1em 1em 0 1em;
+  padding: 1.4em 1em 0.2em 1em;
   border-bottom: 1px solid #DDDDDD;
 }
 
@@ -469,6 +469,7 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont {
   background-color: #FFFFFF;
   border-bottom: 1px solid #EEEEEE;
+  overflow: hidden;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont div.domain-outer {
@@ -540,6 +541,33 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
   right: 0.6em;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont div.domain-outer div.mask-cont {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #fc0d1b;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont.left-item-active div.domain-outer div.mask-cont, #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont.domain-trans-exit div.domain-outer div.mask-cont {
+  display: block;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont.sort-list {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont.left-list {
@@ -782,13 +810,13 @@ div.domain-trans-appear.domain-trans-appear-active, div.domain-trans-enter.domai
 }
 
 div.domain-trans-exit {
-  opacity: 1;
+  max-height: 5em;
 }
 
 div.domain-trans-exit.domain-trans-exit-active {
-  opacity: 0.01;
-  -webkit-transition: opacity 200ms ease-in;
-  transition: opacity 200ms ease-in;
+  max-height: 0;
+  -webkit-transition: max-height 200ms ease-in;
+  transition: max-height 200ms ease-in;
 }
 
 div.account-trans-enter {
