@@ -35,11 +35,7 @@ export class MainMsg extends React.Component {
                         <div className="mainmsg-inner">
                             {this.props.children}
                         </div>
-                        <div className="mainmsg-close-cont">
-                            <div className="mainmsg-close-outer">
-                                <i className="oln icon-cross-ui" onClick={this.props.closeClick} ></i>
-                            </div>
-                        </div>
+                        <i className="oln icon-cross-ui" onClick={this.props.closeClick} ></i>
                     </div>
                 </div>,
                 document.getElementById('pageWrapper')

@@ -3,6 +3,7 @@ import classNames from 'classNames/dedupe';
 import { CSSTransition } from 'react-transition-group';
 import Tooltip from 'tooltip.js';
 import { hasDomainForm, stripUrl } from './utils.js';
+import { lithiumlist } from './lithiumlist-1.0.0.js';
 
 export class Domains extends React.Component {
     constructor(props) {
@@ -21,6 +22,20 @@ export class Domains extends React.Component {
         this.windowTouchstart = this.windowTouchstart.bind(this);
     }
     componentDidMount() {
+        lithiumlist.attachToList(
+            '123456789',
+            this.outerCont,
+            this.listCont,
+            'domain-cont',
+            {
+                sortDragHandleClass: 'icon-grab-ui',
+                leftButtonClass: 'icon-trash',
+                rightEnabled: false
+                // onSortEnd: this.onSortEnd,
+                // onLeftEnd: this.onLeftEnd
+            }
+        );
+
         document.addEventListener('mousedown', this.handleDocClick);
 
         var templateHover = '<div class=\'tooltip-cont hover\'><div class=\'tooltip-outer\'><div class=\'tooltip-inner\'></div><div class=\'tooltip-arrow\'><img src=\'' + urlArrowImg + '\' alt=\'\' width=\'11\' height=\'8\' /></div></div></div>';
@@ -200,12 +215,14 @@ export class Domains extends React.Component {
                         </CSSTransition>
                     </div>
                 </div>
-                <div className="items-cont">
-                    {this.props.domains.map((domain, index) => (
-                        <CSSTransition key={domain.id} classNames="domain-trans" timeout={{ enter: 200, exit: 200 }}>
-                            <Domain id={domain.id} domain={domain.domain} licencekey={domain.licencekey} editDomain={this.props.editDomain} />
-                        </CSSTransition>
-                    ))}
+                <div id="outerCont" ref={(div) => { this.outerCont = div; }}>
+                    <div id="listCont" ref={(div) => { this.listCont = div; }}>
+                        {this.props.domains.map((domain, index) => (
+                            <CSSTransition key={domain.id} classNames="domain-trans" timeout={{ enter: 200, exit: 200 }}>
+                                <Domain id={domain.id} domain={domain.domain} licencekey={domain.licencekey} editDomain={this.props.editDomain} />
+                            </CSSTransition>
+                        ))}
+                    </div>
                 </div>
             </div>
         );

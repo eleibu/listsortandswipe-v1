@@ -61,8 +61,8 @@ class App extends React.Component {
     }
     editDomain(id, domain) {
         console.log(domain);
-        const children = <table><tbody><tr><td className="left">The server could not be reached. Please try again.</td><td className="right"><div className="button-word-cont errormsg" onClick={() => {this.props.hideMainError(); this.getData();}}>RETRY</div></td></tr></tbody></table>;
-        this.showMainMsg(children, 8000);
+        const children = <table><tbody><tr><td className="left">The server could not be reached. Please try again.</td><td className="right"><div className="button-word-cont mainmsg" onClick={() => {this.props.hideMainError(); this.getData();}}>RETRY</div></td></tr></tbody></table>;
+        this.showMainMsg(children, 12000);
     }
     showMainMsg(children, duration) {
         let delay = 8000;
@@ -130,7 +130,7 @@ class App extends React.Component {
                         </div>
                     )}
                 </div>
-                <MainMsg children={this.state.mainMsgChildren} visible={this.state.mainMsgShow} closeClick={this.props.closeMainMsg} />
+                <MainMsg children={this.state.mainMsgChildren} visible={this.state.mainMsgShow} closeClick={this.closeMainMsg} />
             </React.Fragment>
         );
     }

@@ -213,88 +213,96 @@
 						}
 					}
 
-					div.domain-cont {
-						border-bottom: 1px solid #EEEEEE;
+					#listCont {
+						position: relative;
 
-						div.domain-outer {
-							position: relative;
-							padding: 1.2em 0;
+						div.domain-cont {
+							background-color: #FFFFFF;
+							border-bottom: 1px solid #EEEEEE;
 
-							div.sort-cont {
-								position: absolute;
-								top: 50%;
-								transform: translateY(-50%);
-								left: 0.6em;
-							}
+							div.domain-outer {
+								position: relative;
+								padding: 1.2em 0;
 
-							div.middle-cont {
-								div.input-cont {
-									input {
-										box-sizing: border-box;
-										width: 100%;
-										padding: 6px;
-										-webkit-appearance: none;
-										outline: none;
-										border: none;
-										background: transparent;
-										color: #333333;
-										border: 1px solid transparent;
+								div.sort-cont {
+									position: absolute;
+									top: 50%;
+									transform: translateY(-50%);
+									left: 0.6em;
+								}
+
+								div.middle-cont {
+									div.input-cont {
+										input {
+											box-sizing: border-box;
+											width: 100%;
+											padding: 6px;
+											-webkit-appearance: none;
+											outline: none;
+											border: none;
+											background: transparent;
+											color: #333333;
+											border: 1px solid transparent;
+										}
+									}
+
+									div.input-cont.warn {
+										input {
+											border: 1px solid #FF3B0A;
+										}
+									}
+
+									div.key-cont {
+										padding: 0 7px;
+
+										span {
+											display: inline-block;
+										}
+
+										span.label {
+											color: #666666;
+										}
+
+										span.key {
+											color: #339933;
+											border-radius: 3px;
+										}
+
+										span.key.default {
+											background: rgba(0,0,0,0);
+											transition: background 800ms ease;
+										}
+
+										span.key.copying {
+											background: rgba(0,0,0,0.05);
+										}
+
+										span.copy-outer {
+											color: #3366CC;
+											border-radius: 999px;
+											cursor: pointer;
+										}
 									}
 								}
 
-								div.input-cont.warn {
-									input {
-										border: 1px solid #FF3B0A;
-									}
+								div.delete-cont {
+									position: absolute;
+									top: 50%;
+									transform: translateY(-50%);
+									right: 0.6em;
 								}
-
-								div.key-cont {
-									padding: 0 7px;
-
-									span {
-										display: inline-block;
-									}
-
-									span.label {
-										color: #666666;
-									}
-
-									span.key {
-										color: #339933;
-										border-radius: 3px;
-									}
-
-									span.key.default {
-										background: rgba(0,0,0,0);
-										transition: background 800ms ease;
-									}
-
-									span.key.copying {
-										background: rgba(0,0,0,0.05);
-									}
-
-									span.copy-outer {
-										color: #3366CC;
-										border-radius: 999px;
-										cursor: pointer;
-									}
-								}
-							}
-
-							div.delete-cont {
-								position: absolute;
-								top: 50%;
-								transform: translateY(-50%);
-								right: 0.6em;
 							}
 						}
+					}
+
+					#listCont.left-list {
+						overflow-x: hidden;
 					}
 				}
 			}
 		}		
 	}
 }
-
 
 #pageWrapper.xl, #pageWrapper.lg, #pageWrapper.md, #pageWrapper.sm {
 	div.add-item-outer {
@@ -464,24 +472,33 @@
 				color: #EEEEEE;
 				padding-right: 2em;
 			}
-		}
 
-		div.mainmsg-close-cont {
-			position: absolute;
-			top: 0;
-			right: 0;
-			height: 100%;
-			width: 24px;
+			.button-word-cont.mainmsg {
+				color: #99CCFF;
+				background-color: rgba(255, 255, 255, 0.1);
+			}
 
-			div.errormsg-close-outer {
-				position: relative;
-				top: 50%;
-				transform: translateY(-50%);
-				text-align: center;
-				color: #FFFFFF;
-				font-weight: bold;
+			.button-word-cont.mainmsg:hover {
+				cursor: pointer;
+				background-color: rgba(255, 255, 255, 0.15);
 			}
 		}
+
+		i {
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			right: 0;
+			font-size: 130%;
+			padding: 0.2em;
+			border-radius: 999px;
+			color: #EEEEEE;
+		}
+
+		i:hover, i:active {
+			cursor: pointer;
+			background: rgba(255, 255, 255, 0.1);
+		} 
 	}
 }
 
