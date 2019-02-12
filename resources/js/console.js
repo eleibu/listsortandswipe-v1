@@ -19,11 +19,11 @@ class App extends React.Component {
             domainsMsgShow : false,
             domainsMsgText : 'You have 1 product expiring in 28 days',
             domains: [
-                {
-                    id: '123456789',
-                    domain: 'syndeal.com',
-                    licencekey: '123456789'
-                }
+                // {
+                //     id: '123456789',
+                //     domain: 'syndeal.com',
+                //     licencekey: '123456789'
+                // }
             ],
             maxDomains: 10,
             mainMsgShow: false,

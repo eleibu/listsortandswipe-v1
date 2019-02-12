@@ -246,6 +246,11 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
   padding: 10px;
 }
 
+#pageWrapper {
+  height: 100%;
+  overflow: auto;
+}
+
 .button-word-cont.signout {
   color: #003182;
   background-color: #F8F8F8;
@@ -463,6 +468,7 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   position: relative;
 }
 
@@ -535,6 +541,10 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
   cursor: pointer;
 }
 
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont div.domain-outer div.middle-cont div.key-cont span.copy-outer:hover, #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont div.domain-outer div.middle-cont div.key-cont span.copy-outer:active {
+  background: rgba(0, 0, 0, 0.03);
+}
+
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont div.domain-outer div.delete-cont {
   position: absolute;
   top: 50%;
@@ -553,8 +563,54 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
   background-color: #fc0d1b;
 }
 
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont div.domain-outer div.mask-cont div.mask-outer {
+  position: relative;
+  height: 100%;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont div.domain-outer div.mask-cont div.mask-outer div.label {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  font-size: 95%;
+  color: #FFFFFF;
+}
+
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont.left-item-active div.domain-outer div.mask-cont, #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont.domain-trans-exit div.domain-outer div.mask-cont {
   display: block;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.emptymsg-cont {
+  padding-top: 2.6em;
+  text-align: center;
+  overflow: hidden;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.emptymsg-cont div.icon-cont i {
+  font-size: 500%;
+  color: #EEEEEE;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.emptymsg-cont div.msg-cont {
+  margin: 1.4em 20% 0 20%;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.emptymsg-cont div.msg-cont div.msg-outer {
+  font-size: 120%;
+  line-height: 140%;
+  color: #333333;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.emptymsg-cont div.submsg-cont {
+  margin: 0.6em 20% 0 20%;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.emptymsg-cont div.submsg-cont div.submsg-outer {
+  font-size: 85%;
+  line-height: 140%;
+  color: #AAAAAA;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont.sort-list {
@@ -618,15 +674,6 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
   visibility: visible;
 }
 
-#pageWrapper.xl div.domain-cont:hover div.domain-outer div.middle-cont div.key-cont span.copy-outer:hover, #pageWrapper.lg div.domain-cont:hover div.domain-outer div.middle-cont div.key-cont span.copy-outer:hover, #pageWrapper.md div.domain-cont:hover div.domain-outer div.middle-cont div.key-cont span.copy-outer:hover, #pageWrapper.sm div.domain-cont:hover div.domain-outer div.middle-cont div.key-cont span.copy-outer:hover {
-  background: rgba(0, 0, 0, 0.03);
-}
-
-#pageWrapper.xl div.domain-cont:hover div.domain-outer div.middle-cont div.key-cont span.copy-outer:active, #pageWrapper.lg div.domain-cont:hover div.domain-outer div.middle-cont div.key-cont span.copy-outer:active, #pageWrapper.md div.domain-cont:hover div.domain-outer div.middle-cont div.key-cont span.copy-outer:active, #pageWrapper.sm div.domain-cont:hover div.domain-outer div.middle-cont div.key-cont span.copy-outer:active {
-  background: rgba(0, 0, 0, 0.03);
-  cursor: pointer;
-}
-
 #pageWrapper.xl div.domain-cont:hover i.button, #pageWrapper.lg div.domain-cont:hover i.button, #pageWrapper.md div.domain-cont:hover i.button, #pageWrapper.sm div.domain-cont:hover i.button {
   visibility: visible;
 }
@@ -681,7 +728,7 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
   font-size: 150%;
-  padding: 3px 4px;
+  padding: 8px;
 }
 
 #pageWrapper.xs div.domain-cont div.domain-outer div.delete-cont {

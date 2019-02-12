@@ -42262,6 +42262,14 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 // Make all examples CHANGE the default settings
 // Ensure all links actually link to something (especially in docs.blade.php and demos.blade.php)
 
+
+//budicon-security-guard
+
+
+// TODO: Check that copy button is working on mobile
+// TODO: Include '-webkit-tap-highlight-color: rgba(0,0,0,0);' in documentation, see:
+// https://stackoverflow.com/questions/5106934/prevent-grey-overlay-on-touchstart-in-mobile-safari-webview
+// https://github.com/Polymer/polymer/issues/1970
 // TODO: In the examples, why does the whole list flash when pressed?
 // TODO: Include 'hamburger' and 'cross' in font icons
 // TODO: Test setDefaultProperties

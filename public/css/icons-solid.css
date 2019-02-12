@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icon-font-solid';
-  src:  url('fonts/icon-font-solid.eot?pfpbxm');
-  src:  url('fonts/icon-font-solid.eot?pfpbxm#iefix') format('embedded-opentype'),
-    url('fonts/icon-font-solid.ttf?pfpbxm') format('truetype'),
-    url('fonts/icon-font-solid.woff?pfpbxm') format('woff'),
-    url('fonts/icon-font-solid.svg?pfpbxm#icon-font-solid') format('svg');
+  src:  url('fonts/icon-font-solid.eot?65pzji');
+  src:  url('fonts/icon-font-solid.eot?65pzji#iefix') format('embedded-opentype'),
+    url('fonts/icon-font-solid.ttf?65pzji') format('truetype'),
+    url('fonts/icon-font-solid.woff?65pzji') format('woff'),
+    url('fonts/icon-font-solid.svg?65pzji#icon-font-solid') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,6 +24,9 @@ i.sld {
   -moz-osx-font-smoothing: grayscale;
 }
 
+i.sld.icon-security-guard:before {
+  content: "\e90d";
+}
 i.sld.icon-archive:before {
   content: "\e905";
 }

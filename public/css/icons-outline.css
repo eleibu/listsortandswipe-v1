@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icon-font-outline';
-  src:  url('fonts/icon-font-outline.eot?18bn87');
-  src:  url('fonts/icon-font-outline.eot?18bn87#iefix') format('embedded-opentype'),
-    url('fonts/icon-font-outline.ttf?18bn87') format('truetype'),
-    url('fonts/icon-font-outline.woff?18bn87') format('woff'),
-    url('fonts/icon-font-outline.svg?18bn87#icon-font-outline') format('svg');
+  src:  url('fonts/icon-font-outline.eot?o5wdyx');
+  src:  url('fonts/icon-font-outline.eot?o5wdyx#iefix') format('embedded-opentype'),
+    url('fonts/icon-font-outline.ttf?o5wdyx') format('truetype'),
+    url('fonts/icon-font-outline.woff?o5wdyx') format('woff'),
+    url('fonts/icon-font-outline.svg?o5wdyx#icon-font-outline') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,6 +24,9 @@ i.oln {
   -moz-osx-font-smoothing: grayscale;
 }
 
+i.oln.icon-security-guard:before {
+  content: "\e90d";
+}
 i.oln.icon-archive:before {
   content: "\e905";
 }

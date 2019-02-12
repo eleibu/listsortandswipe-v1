@@ -235,16 +235,31 @@ export class Domains extends React.Component {
                         </CSSTransition>
                     </div>
                 </div>
-                <div id="outerCont" ref={(div) => { this.outerCont = div; }}>
-                    <div id="listCont" ref={(div) => { this.listCont = div; }}>
-                        <TransitionGroup component={null}>
-                            {this.props.domains.map((domain, index) => (
-                                <CSSTransition key={domain.id} classNames="domain-trans" timeout={{ enter: 200, exit: 200 }}>
-                                    <Domain id={domain.id} index={index} domain={domain.domain} licencekey={domain.licencekey} editDomain={this.props.editDomain} checkExists={this.checkExists} />
-                                </CSSTransition>
-                            ))}
-                        </TransitionGroup>
-                    </div>
+                <div id="listCont" ref={(div) => { this.listCont = div; }}>
+                    <TransitionGroup component={null}>
+                        {this.props.domains.map((domain, index) => (
+                            <CSSTransition key={domain.id} classNames="domain-trans" timeout={{ enter: 200, exit: 200 }}>
+                                <Domain id={domain.id} index={index} domain={domain.domain} licencekey={domain.licencekey} editDomain={this.props.editDomain} checkExists={this.checkExists} />
+                            </CSSTransition>
+                        ))}
+                    </TransitionGroup>
+                    <CSSTransition in={(this.props.domains.length == 0)} classNames="message-trans" timeout={{ enter: 0, exit: 200 }} unmountOnExit>
+                        <div className="emptymsg-cont">
+                            <div className="icon-cont">
+                                <i className="sld icon-security-guard" />
+                            </div>
+                            <div className="msg-cont">
+                                <div className="msg-outer">
+                                    Get a licence key
+                                </div>
+                            </div>
+                            <div className="submsg-cont">
+                                <div className="submsg-outer">
+                                    Just enter your domain or subdomain in the textbox above
+                                </div>
+                            </div>
+                        </div>
+                    </CSSTransition>
                 </div>
             </div>
         );
@@ -377,6 +392,11 @@ export class Domain extends React.Component {
                         <i className="oln icon-trash button"></i>
                     </div>
                     <div className="mask-cont">
+                        <div className="mask-outer">
+                            <div className="label">
+                                Delete
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
