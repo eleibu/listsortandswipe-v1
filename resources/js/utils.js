@@ -45,3 +45,7 @@ export function uuidv4() {
         return v.toString(16).toUpperCase();
     });
 }
+
+export function trimString(text) {
+    return text.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+}

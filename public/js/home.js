@@ -17116,6 +17116,7 @@ function sortEnd(instance, origIndex, newIndex) {
 //budicon-security-guard
 
 
+// TODO: Can't get out of edit domain if it is below keyboard
 // TODO: Check that copy button is working on mobile
 // TODO: Include '-webkit-tap-highlight-color: rgba(0,0,0,0);' in documentation, see:
 // https://stackoverflow.com/questions/5106934/prevent-grey-overlay-on-touchstart-in-mobile-safari-webview
@@ -17143,6 +17144,7 @@ function sortEnd(instance, origIndex, newIndex) {
 // TODO: Reset props for already attached list
 // TODO: Change prop combinations
 // TODO: Minify and upload to NPM
+// TODO: In Controller_Auth_LogIn@post, clear accounts that have not activited within 30 days
 
 
 // TODO: Do not attach to window, attach to outer div instead - change validation to check for this
@@ -19106,6 +19108,13 @@ var pageMenuShowHide = function () {
 
 /***/ }),
 
+/***/ "./resources/sass/auth.scss":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./resources/sass/console.scss":
 /***/ (function(module, exports) {
 
@@ -19157,7 +19166,8 @@ __webpack_require__("./resources/sass/documentation.scss");
 __webpack_require__("./resources/sass/examples.scss");
 __webpack_require__("./resources/sass/why-lithium-list.scss");
 __webpack_require__("./resources/sass/pricing.scss");
-module.exports = __webpack_require__("./resources/sass/console.scss");
+__webpack_require__("./resources/sass/console.scss");
+module.exports = __webpack_require__("./resources/sass/auth.scss");
 
 
 /***/ })

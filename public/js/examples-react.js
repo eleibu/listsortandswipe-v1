@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -42266,6 +42266,7 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 //budicon-security-guard
 
 
+// TODO: Can't get out of edit domain if it is below keyboard
 // TODO: Check that copy button is working on mobile
 // TODO: Include '-webkit-tap-highlight-color: rgba(0,0,0,0);' in documentation, see:
 // https://stackoverflow.com/questions/5106934/prevent-grey-overlay-on-touchstart-in-mobile-safari-webview
@@ -42293,6 +42294,7 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 // TODO: Reset props for already attached list
 // TODO: Change prop combinations
 // TODO: Minify and upload to NPM
+// TODO: In Controller_Auth_LogIn@post, clear accounts that have not activited within 30 days
 
 
 // TODO: Do not attach to window, attach to outer div instead - change validation to check for this
@@ -44256,7 +44258,7 @@ var pageMenuShowHide = function () {
 
 /***/ }),
 
-/***/ 5:
+/***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__("./resources/js/examples-react.js");

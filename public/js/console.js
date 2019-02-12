@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -43674,7 +43674,7 @@ var Domains = function (_React$Component) {
         key: 'checkValue',
         value: function checkValue() {
             var valueOk = void 0;
-            var newDomain = this.input.value.replace(/^\s+|\s+$/g, '');
+            var newDomain = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["c" /* trimString */])(this.input.value);
             if (newDomain.length > 0) {
                 if (Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["a" /* hasDomainForm */])(newDomain)) {
                     if (this.checkExists(newDomain)) {
@@ -43719,7 +43719,7 @@ var Domains = function (_React$Component) {
         key: 'addDomainClick',
         value: function addDomainClick() {
             if (this.checkValue()) {
-                var origValue = this.input.value.replace(/^\s+|\s+$/g, '');
+                var origValue = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["c" /* trimString */])(this.input.value);
                 this.createItemAndAdd(origValue);
                 this.setState({
                     inputFocus: false,
@@ -43734,7 +43734,7 @@ var Domains = function (_React$Component) {
                 // enter key
                 e.preventDefault();
                 if (this.checkValue()) {
-                    var origValue = this.input.value.replace(/^\s+|\s+$/g, '');
+                    var origValue = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["c" /* trimString */])(this.input.value);
                     this.createItemAndAdd(origValue);
                 }
                 this.setState({
@@ -43767,7 +43767,7 @@ var Domains = function (_React$Component) {
                 'focus': this.state.textboxFocus,
                 'warn': this.state.inputWarn
             });
-            var ttText = 'Enter the domain or subdomain of a website you will use Lithium List with. For example: \'example.com\' or \'subdomain.example.com\'';
+            var ttText = 'Enter the domain or subdomain of a website you will use with Lithium List. For example: \'example.com\' or \'subdomain.example.com\'';
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.props.domainsMsgShow, classNames: 'message-trans', timeout: { enter: 0, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'message-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'message-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'sld icon-cross-ui', onClick: function onClick() {
                     _this2.props.domainsMsgCloseClick();
                 } }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, this.props.domainsMsgText)))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: addItemOuterClasses, ref: this.setOuterRef }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: inputClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'input-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', placeholder: 'yourdomain.com', ref: function ref(input) {
@@ -43786,7 +43786,7 @@ var Domains = function (_React$Component) {
                     _this2.listCont = div;
                 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["TransitionGroup"], { component: null }, this.props.domains.map(function (domain, index) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { key: domain.id, classNames: 'domain-trans', timeout: { enter: 200, exit: 200 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Domain, { id: domain.id, index: index, domain: domain.domain, licencekey: domain.licencekey, editDomain: _this2.props.editDomain, checkExists: _this2.checkExists }));
-            })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.props.domains.length == 0, classNames: 'message-trans', timeout: { enter: 0, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'emptymsg-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'icon-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'sld icon-security-guard' })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'msg-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'msg-outer' }, 'Get a licence key')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'submsg-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'submsg-outer' }, 'Just enter your domain or subdomain in the textbox above'))))));
+            })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.props.domains.length == 0, classNames: 'emptymsg-trans', timeout: { enter: 600, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'emptymsg-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'icon-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'sld icon-security-guard' })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'msg-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'msg-outer' }, 'Get a licence key')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'submsg-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'submsg-outer' }, 'Enter a domain or subdomain that you will use with Lithium List'))))));
         }
     }]);
 
@@ -43820,7 +43820,7 @@ var Domain = function (_React$Component2) {
         key: 'checkValue',
         value: function checkValue() {
             var valueOk = void 0;
-            var newDomain = this.inputEdit.value.replace(/^\s+|\s+$/g, '');
+            var newDomain = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["c" /* trimString */])(this.inputEdit.value);
             if (newDomain.length > 0) {
                 if (Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["a" /* hasDomainForm */])(newDomain)) {
                     if (this.props.checkExists(newDomain, this.props.index)) {
@@ -43852,7 +43852,7 @@ var Domain = function (_React$Component2) {
         key: 'onBlur',
         value: function onBlur(e) {
             if (this.checkValue()) {
-                var strippedUrl = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["b" /* stripUrl */])(this.inputEdit.value.replace(/^\s+|\s+$/g, ''));
+                var strippedUrl = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["b" /* stripUrl */])(Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["c" /* trimString */])(this.inputEdit.value));
                 this.props.editDomain(this.props.id, strippedUrl);
                 this.inputEdit.value = strippedUrl;
             } else {
@@ -44150,7 +44150,7 @@ var App = function (_React$Component) {
         value: function addDomain(domain) {
             var domainsCopy = this.state.domains.slice();
             domainsCopy.unshift({
-                id: Object(__WEBPACK_IMPORTED_MODULE_7__utils_js__["c" /* uuidv4 */])(),
+                id: Object(__WEBPACK_IMPORTED_MODULE_7__utils_js__["d" /* uuidv4 */])(),
                 domain: domain,
                 licencekey: 'temp'
             });
@@ -44378,6 +44378,7 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 //budicon-security-guard
 
 
+// TODO: Can't get out of edit domain if it is below keyboard
 // TODO: Check that copy button is working on mobile
 // TODO: Include '-webkit-tap-highlight-color: rgba(0,0,0,0);' in documentation, see:
 // https://stackoverflow.com/questions/5106934/prevent-grey-overlay-on-touchstart-in-mobile-safari-webview
@@ -44405,6 +44406,7 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 // TODO: Reset props for already attached list
 // TODO: Change prop combinations
 // TODO: Minify and upload to NPM
+// TODO: In Controller_Auth_LogIn@post, clear accounts that have not activited within 30 days
 
 
 // TODO: Do not attach to window, attach to outer div instead - change validation to check for this
@@ -46311,7 +46313,8 @@ var monitorWinWidth = function () {
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = hasDomainForm;
 /* harmony export (immutable) */ __webpack_exports__["b"] = stripUrl;
-/* harmony export (immutable) */ __webpack_exports__["c"] = uuidv4;
+/* harmony export (immutable) */ __webpack_exports__["d"] = uuidv4;
+/* harmony export (immutable) */ __webpack_exports__["c"] = trimString;
 function hasDomainForm(value) {
 	if (/^\S+\.\S+$/.test(value)) {
 		return true;
@@ -46361,9 +46364,13 @@ function uuidv4() {
 	});
 }
 
+function trimString(text) {
+	return text.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+}
+
 /***/ }),
 
-/***/ 6:
+/***/ 7:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__("./resources/js/console.js");

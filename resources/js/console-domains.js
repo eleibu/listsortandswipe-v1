@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classNames/dedupe';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import Tooltip from 'tooltip.js';
-import { hasDomainForm, stripUrl } from './utils.js';
+import { hasDomainForm, stripUrl, trimString } from './utils.js';
 import { lithiumlist } from './lithiumlist-1.0.0.js';
 
 export class Domains extends React.Component {
@@ -113,7 +113,7 @@ export class Domains extends React.Component {
     }
     checkValue() {
         let valueOk;
-        const newDomain = this.input.value.replace(/^\s+|\s+$/g, '');
+        const newDomain = trimString(this.input.value);
         if (newDomain.length > 0) {
             if (hasDomainForm(newDomain)) {
                 if (this.checkExists(newDomain)) {
@@ -154,7 +154,7 @@ export class Domains extends React.Component {
     }
     addDomainClick() {
         if (this.checkValue()) {
-            let origValue = this.input.value.replace(/^\s+|\s+$/g, '');
+            let origValue = trimString(this.input.value);
             this.createItemAndAdd(origValue);
             this.setState({
                 inputFocus: false,
@@ -166,7 +166,7 @@ export class Domains extends React.Component {
         if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {         // enter key
             e.preventDefault();
             if (this.checkValue()) {
-                let origValue = this.input.value.replace(/^\s+|\s+$/g, '');
+                let origValue = trimString(this.input.value);
                 this.createItemAndAdd(origValue);
             }
             this.setState({
@@ -192,7 +192,7 @@ export class Domains extends React.Component {
             'focus' : this.state.textboxFocus,
             'warn' : this.state.inputWarn
         });
-        const ttText = 'Enter the domain or subdomain of a website you will use Lithium List with. For example: \'example.com\' or \'subdomain.example.com\'';
+        const ttText = 'Enter the domain or subdomain of a website you will use with Lithium List. For example: \'example.com\' or \'subdomain.example.com\'';
         return (
             <div className="content-inner">
                 <div className="add-cont">
@@ -243,7 +243,7 @@ export class Domains extends React.Component {
                             </CSSTransition>
                         ))}
                     </TransitionGroup>
-                    <CSSTransition in={(this.props.domains.length == 0)} classNames="message-trans" timeout={{ enter: 0, exit: 200 }} unmountOnExit>
+                    <CSSTransition in={(this.props.domains.length == 0)} classNames="emptymsg-trans" timeout={{ enter: 600, exit: 200 }} unmountOnExit>
                         <div className="emptymsg-cont">
                             <div className="icon-cont">
                                 <i className="sld icon-security-guard" />
@@ -255,7 +255,7 @@ export class Domains extends React.Component {
                             </div>
                             <div className="submsg-cont">
                                 <div className="submsg-outer">
-                                    Just enter your domain or subdomain in the textbox above
+                                    Enter a domain or subdomain that you will use with Lithium List
                                 </div>
                             </div>
                         </div>
@@ -282,7 +282,7 @@ export class Domain extends React.Component {
     }
     checkValue() {
         let valueOk;
-        const newDomain = this.inputEdit.value.replace(/^\s+|\s+$/g, '');
+        const newDomain = trimString(this.inputEdit.value);
         if (newDomain.length > 0) {
             if (hasDomainForm(newDomain)) {
                 if (this.props.checkExists(newDomain, this.props.index)) {
@@ -312,7 +312,7 @@ export class Domain extends React.Component {
     }
     onBlur(e) {
         if (this.checkValue()) {
-            const strippedUrl = stripUrl(this.inputEdit.value.replace(/^\s+|\s+$/g, ''));
+            const strippedUrl = stripUrl(trimString(this.inputEdit.value));
             this.props.editDomain(this.props.id, strippedUrl);
             this.inputEdit.value = strippedUrl;
         } else {

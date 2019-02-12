@@ -1,11 +1,6 @@
 @import 'shared-all';
 @import 'tooltips';
 
-#pageWrapper {
-	height: 100%;
-	overflow: auto;
-}
-
 .button-word-cont.signout {
 	color: #003182;
 	background-color: #F8F8F8;
@@ -337,38 +332,40 @@
 							}
 						}
 
-div.emptymsg-cont {
-	padding-top: 2.6em;
-	text-align: center;
-	overflow: hidden;
+						div.emptymsg-cont {
+							position: absolute;
+							top: 2.6em;
+							left: 0;
+							width: 100%;
+							text-align: center;
 
-	div.icon-cont {
-		i {
-			font-size: 500%;
-			color: #EEEEEE;			
-		}
-	}
+							div.icon-cont {
+								i {
+									font-size: 500%;
+									color: #EEEEEE;			
+								}
+							}
 
-	div.msg-cont {
-		margin: 1.4em 20% 0 20%;
+							div.msg-cont {
+								margin: 1.4em 22% 0 22%;
 
-		div.msg-outer {
-			font-size: 120%;
-			line-height: 140%;
-			color: #333333;			
-		}
-	}
+								div.msg-outer {
+									font-size: 120%;
+									line-height: 140%;
+									color: #333333;			
+								}
+							}
 
-	div.submsg-cont {
-		margin: 0.6em 20% 0 20%;
+							div.submsg-cont {
+								margin: 0.6em 22% 0 22%;
 
-		div.submsg-outer {
-			font-size: 85%;
-			line-height: 140%;
-			color: #AAAAAA;
-		}
-	}
-}
+								div.submsg-outer {
+									font-size: 85%;
+									line-height: 140%;
+									color: #AAAAAA;
+								}
+							}
+						}
 					}
 
 					#listCont.sort-list {
@@ -672,4 +669,23 @@ div.account-trans-exit {
 div.account-trans-exit.account-trans-exit-active {
 	opacity: 0;
 	transition: opacity 200ms ease;
+}
+
+// trans - emptymsg
+div.emptymsg-trans-enter {
+	opacity: 0;
+	transition: opacity 400ms ease 200ms;
+}
+
+div.emptymsg-trans-enter.emptymsg-trans-enter-active {
+	opacity: 1;
+}
+
+div.emptymsg-trans-exit {
+	opacity: 1;
+	transition: opacity 200ms ease;
+}
+
+div.emptymsg-trans-exit.emptymsg-trans-exit-active {
+	opacity: 0;
 }

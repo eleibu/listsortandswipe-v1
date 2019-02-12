@@ -246,11 +246,6 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
   padding: 10px;
 }
 
-#pageWrapper {
-  height: 100%;
-  overflow: auto;
-}
-
 .button-word-cont.signout {
   color: #003182;
   background-color: #F8F8F8;
@@ -583,9 +578,11 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.emptymsg-cont {
-  padding-top: 2.6em;
+  position: absolute;
+  top: 2.6em;
+  left: 0;
+  width: 100%;
   text-align: center;
-  overflow: hidden;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.emptymsg-cont div.icon-cont i {
@@ -594,7 +591,7 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.emptymsg-cont div.msg-cont {
-  margin: 1.4em 20% 0 20%;
+  margin: 1.4em 22% 0 22%;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.emptymsg-cont div.msg-cont div.msg-outer {
@@ -604,7 +601,7 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.emptymsg-cont div.submsg-cont {
-  margin: 0.6em 20% 0 20%;
+  margin: 0.6em 22% 0 22%;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.emptymsg-cont div.submsg-cont div.submsg-outer {
@@ -885,4 +882,24 @@ div.account-trans-exit.account-trans-exit-active {
   opacity: 0;
   -webkit-transition: opacity 200ms ease;
   transition: opacity 200ms ease;
+}
+
+div.emptymsg-trans-enter {
+  opacity: 0;
+  -webkit-transition: opacity 400ms ease 200ms;
+  transition: opacity 400ms ease 200ms;
+}
+
+div.emptymsg-trans-enter.emptymsg-trans-enter-active {
+  opacity: 1;
+}
+
+div.emptymsg-trans-exit {
+  opacity: 1;
+  -webkit-transition: opacity 200ms ease;
+  transition: opacity 200ms ease;
+}
+
+div.emptymsg-trans-exit.emptymsg-trans-exit-active {
+  opacity: 0;
 }

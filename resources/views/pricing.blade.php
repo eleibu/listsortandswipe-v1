@@ -1,6 +1,6 @@
 @extends('layout-info')
 
-@section('pageTitle', 'Pricing')
+@section('pageTitle', 'Lithium List - pricing')
 
 @section('cssLinks')
     <link rel="stylesheet" href="{{ url(mix('/css/pricing.css')) }}">
