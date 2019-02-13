@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 10);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -44375,9 +44375,12 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 // Ensure all links actually link to something (especially in docs.blade.php and demos.blade.php)
 
 
-//budicon-security-guard
+//icon-email
+//icon-profile-picture
 
 
+// TODO: Finish Controller_Auth_SignUp
+// TODO: Create /terms and /privacy
 // TODO: Can't get out of edit domain if it is below keyboard
 // TODO: Check that copy button is working on mobile
 // TODO: Include '-webkit-tap-highlight-color: rgba(0,0,0,0);' in documentation, see:
@@ -44406,7 +44409,7 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 // TODO: Reset props for already attached list
 // TODO: Change prop combinations
 // TODO: Minify and upload to NPM
-// TODO: In Controller_Auth_LogIn@post, clear accounts that have not activited within 30 days
+// TODO: In Controller_Auth_LogIn@post and Controller_Auth_SignUp@signup, clear accounts that have not activited within 30 days
 
 
 // TODO: Do not attach to window, attach to outer div instead - change validation to check for this
@@ -46370,7 +46373,7 @@ function trimString(text) {
 
 /***/ }),
 
-/***/ 7:
+/***/ 10:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__("./resources/js/console.js");

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Classes\Toolkit;
 
 class Controller_Site extends Controller
 {	
@@ -11,9 +12,12 @@ class Controller_Site extends Controller
 	}
 
 	public function page_console(Request $request) {
-		return view('console');
-	}
+		$pageInfo = Toolkit::pageInfo();
 
+		return view('console')
+            ->with('signoutName', $pageInfo['signout']['name'])
+            ->with('signoutPath', $pageInfo['signout']['path']);
+	}
 
 	public function section_examples(Request $request, $subpage = '') {
 		$subpages = array(

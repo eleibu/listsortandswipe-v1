@@ -24,7 +24,7 @@
             <div class="siteheader-outer">
                 <a id="a-logo" href="{{ url('/') }}" title="Lithium List - home"><img src="{{ url('/images/LithiumListLogo-white.png') }}" alt="Lithium List logo" height="60" width="113" /></a>
                 <div class="signout-cont">
-                    <a class="button-word-cont signout" href="" title="">SIGN OUT</a>
+                    <a class="button-word-cont signout" href="{{ url($signoutPath) }}">{{ strtoupper($signoutName) }}</a>
                 </div>
             </div>
         </div>
@@ -38,6 +38,5 @@
             </div>
         </div>
     </div>
-    @yield('scriptBottom')
 </body>
 </html>

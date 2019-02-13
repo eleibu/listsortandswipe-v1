@@ -1,6 +1,6 @@
 @extends('layout-auth')
 
-@section('pageTitle', 'Lithium List - Log in')
+@section('pageTitle', 'Lithium List - log in')
 
 @section('jsLinks')
     <script defer src="{{ url(mix('/js/login.js')) }}"></script>
@@ -92,7 +92,7 @@
                     </div>
                 </div>
                 <br/><br/>
-                <div className="forgot-cont">
+                <div class="forgot-cont">
                     Forgot your password? <a href="{{ url($resetPath) }}" title="Reset it here">Reset it here</a>.
                 </div>
             </div>
