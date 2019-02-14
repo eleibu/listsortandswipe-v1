@@ -38,5 +38,8 @@
             </div>
         </div>
     </div>
+    <script>
+        var hasDomains = {{$hasDomains == 1 ? 'true' : 'false'}};
+    </script>
 </body>
 </html>

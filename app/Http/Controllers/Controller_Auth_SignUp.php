@@ -5,13 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DB;
-// use App\User;
+use App\User;
 // use App\Context;
 use App\Classes\Toolkit;
 use Validator;
 use Illuminate\Support\Facades\Mail;
 // use App\Mail\SignedUp;
 // use App\Mail\ResendActivationLink;
+
+use DateTime;
+use DateTimeZone;
+use DateInterval;
+
 
 class Controller_Auth_SignUp extends Controller
 {
@@ -80,9 +85,6 @@ class Controller_Auth_SignUp extends Controller
             if ($validator_emailFormat->fails()) {
 				$emailMsg = $this->msgEmailInvalid;
             } else {
-
-            	// FIRST CLEAR USERS WHO HAVE NOT VALIDATED FOR 30 DAYS!!!!
-
                 $validator_emailUnique = Validator::make($tempArray, [
                     'email' => 'unique:users'
                 ]);
@@ -123,46 +125,35 @@ class Controller_Auth_SignUp extends Controller
 		} else {
             $vcode = str_random(30);
 
-			$user = new User;
-			$user->name = $email;
-			$user->email = $email;
-			$user->password = bcrypt($password);
-			$user->verified = 0;
-			$user->verification_code = $vcode;
-			// $user->context_ids = json_encode(array());
-			// $user->prev_context_id = null;
-			// $user->add_context_newline_on_enter = 0;
-			// $user->add_task_newline_on_enter = 0;
-			// $user->add_project_newline_on_enter = 0;
-			// $user->team_member_next_color = 'RED';
-			// $user->datetime_format_moment = 'LL';
-			// $user->auto_clear_prev_at = null;
-			// $user->auto_clear_done_items = 1;
-			// $user->auto_clear_time = '00:00:00:000';
-			// $user->auto_clear_notify = 1;
-			// $user->auto_clear_secs_to_next = 3600;
-			// $user->action_upon_done = 'tobottom';
-			// $user->per_page_todo = 500;
-			// $user->per_page_recyclebin = 100;
+            // NEED TO ENSURE THESE ARE SAVED IN DB AS UTC TIMES - see 'account_expires_at' for my account
 
-			// $context = new Context;
-			// $context->id = Toolkit::getGUID();
-			// $context->description = 'Work';
-			// $context->task_ids = json_encode(array());
-			// $context->project_ids = json_encode(array());
+            $datetimeOneYear = (new DateTime('now', new DateTimeZone('UTC')))->add(new DateInterval('P1Y'))->format('Y-m-d H:i:s');
+            $datetime30Days = (new DateTime('now', new DateTimeZone('UTC')))->add(new DateInterval('P30D'))->format('Y-m-d H:i:s');
+
+            // only require account verification for free account
+
+			// $user = new User;
+			// $user->name = 'Elliot';
+			// $user->surname = 'Leibu';
+			// $user->email = $email;
+
+            // $user->verified = false;
+            // $user->verification_code = $vcode;
+
+			// $user->password = bcrypt($password);
+			// $user->company_name = 'Indysoft Pty Ltd';
+			// $user->country_code = 'AUS';
+			// $user->domain_ids = json_encode(array());
+			// $user->account_type = 2;
+			// $user->account_expires_at = $datetimeOneYear;
+			// $user->domain_count_base = 5;
+			// $user->domain_count_additional = 0;
 
 			$success = false;
 
 			DB::beginTransaction();
 			try {
 				$user->save();
-
-				// $context->user_id = $user->id;
-				// $context->save();
-
-				// $user->context_ids = json_encode(array($context->id));
-				// $user->prev_context_id = $context->id;
-				// $user->save();
 
 				$success = true;
 			} catch(\Exception $e) {

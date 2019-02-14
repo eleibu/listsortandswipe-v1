@@ -15,7 +15,7 @@ class App extends React.Component {
         super(props);
         this.state = {
             tabIndex: 0,
-            domainsLoaded: true,
+            domainsLoaded: false,
             domainsMsgShow : false,
             domainsMsgText : 'You have 1 product expiring in 28 days',
             domains: [
@@ -38,6 +38,15 @@ class App extends React.Component {
         this.sortEnd = this.sortEnd.bind(this);
         this.leftEnd = this.leftEnd.bind(this);
         this.undeleteDomain = this.undeleteDomain.bind(this);
+    }
+    componentDidMount() {
+        if (hasDomains) {
+            // retrieve domains
+        } else {
+            this.setState({
+               domainsLoaded: true
+            });
+        }
     }
     tabClick(tabIndex) {
         if (this.state.domainsLoaded) {

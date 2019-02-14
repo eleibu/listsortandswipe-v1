@@ -44103,7 +44103,7 @@ var App = function (_React$Component) {
 
         _this.state = {
             tabIndex: 0,
-            domainsLoaded: true,
+            domainsLoaded: false,
             domainsMsgShow: false,
             domainsMsgText: 'You have 1 product expiring in 28 days',
             domains: [
@@ -44130,6 +44130,17 @@ var App = function (_React$Component) {
     }
 
     _createClass(App, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            if (hasDomains) {
+                // retrieve domains
+            } else {
+                this.setState({
+                    domainsLoaded: true
+                });
+            }
+        }
+    }, {
         key: 'tabClick',
         value: function tabClick(tabIndex) {
             if (this.state.domainsLoaded) {

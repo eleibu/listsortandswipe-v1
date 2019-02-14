@@ -29,7 +29,7 @@
                         @csrf
                     </form>
                     <div class="buttons-cont">
-                        <div id="div-resend-link" class="button-word-cont lightblue">
+                        <div id="div-resend-link" class="button-word-cont darkblue">
                             <div id="div-spinner-cont" class="spinner-cont">
                                 <div class="text">RESEND ACTIVATION LINK</div>
                                 <div class="spinner-outer">
@@ -55,7 +55,7 @@
                         @csrf
                     </form>
                     <div class="buttons-cont">
-                        <div id="div-resend-link" class="button-word-cont lightblue">
+                        <div id="div-resend-link" class="button-word-cont darkblue">
                             <div id="div-spinner-cont" class="spinner-cont">
                                 <div class="text">SEND AGAIN</div>
                                 <div class="spinner-outer">

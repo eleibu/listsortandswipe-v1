@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Classes\Toolkit;
+use App\Domain;
 
 class Controller_Site extends Controller
 {	
@@ -14,9 +16,17 @@ class Controller_Site extends Controller
 	public function page_console(Request $request) {
 		$pageInfo = Toolkit::pageInfo();
 
+		$user = Auth::user();
+		$domainIds = json_decode($user->domain_ids);
+		$hasDomains = 0;
+		if (isset($domainIds) && (count($domainIds) > 0)) {
+			$hasDomains = 1;
+		}
+
 		return view('console')
             ->with('signoutName', $pageInfo['signout']['name'])
-            ->with('signoutPath', $pageInfo['signout']['path']);
+            ->with('signoutPath', $pageInfo['signout']['path'])
+            ->with('hasDomains', $hasDomains);
 	}
 
 	public function section_examples(Request $request, $subpage = '') {
