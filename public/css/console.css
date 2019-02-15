@@ -259,6 +259,42 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
           box-shadow: 0 1px 4px 0 #333333;
 }
 
+@-webkit-keyframes shimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+.shimmer {
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-name: shimmer;
+          animation-name: shimmer;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+  background: #f6f7f8;
+  background: -webkit-gradient(linear, left top, right top, color-stop(8%, #eeeeee), color-stop(18%, #dddddd), color-stop(33%, #eeeeee));
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background-size: 1000px 104px;
+  position: relative;
+}
+
 #div-siteheader {
   background-color: #003182;
   -webkit-box-shadow: 0 1px 2px 0 #AAAAAA;
@@ -513,6 +549,11 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont div.domain-outer div.middle-cont div.key-cont span.label {
   color: #666666;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont div.domain-outer div.middle-cont div.key-cont span.shimmer {
+  border-radius: 3px;
+  width: 20em;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont div.domain-outer div.middle-cont div.key-cont span.key {

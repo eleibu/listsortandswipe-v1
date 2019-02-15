@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Domain extends Model
 {
-    protected $table = 'tasks';
+    protected $table = 'domains';
     use SoftDeletes;
 
     public $incrementing = false;

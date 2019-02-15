@@ -219,7 +219,7 @@ export class Domains extends React.Component {
                                 ADD DOMAIN
                             </div>
                         </div>
-                        <CSSTransition in={(this.props.maxDomains - this.props.domains.length == 0)} classNames="add-item-mask-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
+                        <CSSTransition in={(accountData.maxDomains - this.props.domains.length == 0)} classNames="add-item-mask-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
                             <div className="add-item-mask-cont">
                                 <div className="add-item-mask-outer">
                                     <div className="add-item-mask-inner">
@@ -377,15 +377,20 @@ export class Domain extends React.Component {
                             <input type="text" ref={(input) => { this.inputEdit = input; }} onBlur={(e) => this.onBlur(e)} onKeyDown={(e) => this.onKeyDown(e)} onInput={(e) => this.onInput(e)} />
                         </div>
                         <div className="key-cont">
-                            <input type="text" readOnly={true} ref={(input) => { this.inputCopy = input; }} style={inputStyle} value={this.props.licencekey} />
                             <span className="label">Licence key:</span>
-                            <span className={spanClasses}>{this.props.licencekey}</span>
-                            <span className="copy-cont">
-                                <span className="copy-outer" title="Copy to clipboard" onClick={() => {this.copyClick()}}>
-                                    <i className="oln icon-clipboard"></i>
-                                </span>
-                                &nbsp;
-                            </span>
+                            {(this.props.licencekey != null) ? (
+                                <React.Fragment>
+                                    <input type="text" readOnly={true} ref={(input) => { this.inputCopy = input; }} style={inputStyle} value={this.props.licencekey} />
+                                    <span className="copy-cont">
+                                        <span className="copy-outer" title="Copy to clipboard" onClick={() => {this.copyClick()}}>
+                                            <i className="oln icon-clipboard"></i>
+                                        </span>
+                                        &nbsp;
+                                    </span>
+                                </React.Fragment>
+                            ) : (
+                                <span className="shimmer">&nbsp;</span>
+                            )}
                         </div>
                     </div>
                     <div className="delete-cont">

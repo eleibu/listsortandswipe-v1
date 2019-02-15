@@ -9,7 +9,7 @@ namespace App\Classes;
 
 class Toolkit {
 	public static function sleep(){
-		// sleep (1);
+		sleep (1);
 	}
 
 	public static function pageInfo() {

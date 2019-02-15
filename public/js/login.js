@@ -17259,6 +17259,7 @@ var monitorWinWidth = function () {
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = hasDomainForm;
 /* harmony export (immutable) */ __webpack_exports__["b"] = stripUrl;
+/* unused harmony export requestObjCreate */
 /* harmony export (immutable) */ __webpack_exports__["d"] = uuidv4;
 /* harmony export (immutable) */ __webpack_exports__["c"] = trimString;
 function hasDomainForm(value) {
@@ -17300,6 +17301,14 @@ function stripUrl(url) {
 	}
 
 	return url;
+}
+
+function requestObjCreate(cancelToken) {
+	var requestObj = {
+		id: uuidv4(),
+		source: cancelToken.source()
+	};
+	return requestObj;
 }
 
 function uuidv4() {

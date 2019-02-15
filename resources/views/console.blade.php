@@ -39,7 +39,11 @@
         </div>
     </div>
     <script>
-        var hasDomains = {{$hasDomains == 1 ? 'true' : 'false'}};
+        var api_url_public = "{{ url('/api/public/v1/') }}/";
+        var accountData = {
+            hasDomains: {{$hasDomains == 1 ? 'true' : 'false'}},
+            maxDomins: {{$maxDomains}}
+        };
     </script>
 </body>
 </html>

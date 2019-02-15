@@ -18,7 +18,7 @@ class Controller_Site extends Controller
 
 		$user = Auth::user();
 		$domainIds = json_decode($user->domain_ids);
-		$hasDomains = 0;
+		$hasDomains = 1;
 		if (isset($domainIds) && (count($domainIds) > 0)) {
 			$hasDomains = 1;
 		}
@@ -26,7 +26,8 @@ class Controller_Site extends Controller
 		return view('console')
             ->with('signoutName', $pageInfo['signout']['name'])
             ->with('signoutPath', $pageInfo['signout']['path'])
-            ->with('hasDomains', $hasDomains);
+            ->with('hasDomains', $hasDomains)
+			->with('maxDomains', $user->domain_count_base + $user->domain_count_additional);
 	}
 
 	public function section_examples(Request $request, $subpage = '') {
