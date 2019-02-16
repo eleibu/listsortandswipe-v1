@@ -239,7 +239,7 @@ export class Domains extends React.Component {
                     <TransitionGroup component={null}>
                         {this.props.domains.map((domain, index) => (
                             <CSSTransition key={domain.id} classNames="domain-trans" timeout={{ enter: 200, exit: 200 }}>
-                                <Domain id={domain.id} index={index} domain={domain.domain} licencekey={domain.licencekey} editDomain={this.props.editDomain} checkExists={this.checkExists} />
+                                <Domain id={domain.id} index={index} domain={domain.domain} licence_key={domain.licence_key} updateDomain={this.props.updateDomain} checkExists={this.checkExists} />
                             </CSSTransition>
                         ))}
                     </TransitionGroup>
@@ -280,6 +280,11 @@ export class Domain extends React.Component {
     componentDidMount() {
         this.inputEdit.value = this.props.domain;
     }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.domain != this.props.domain) {
+            this.inputEdit.value = this.props.domain;
+        }
+    }
     checkValue() {
         let valueOk;
         const newDomain = trimString(this.inputEdit.value);
@@ -313,7 +318,7 @@ export class Domain extends React.Component {
     onBlur(e) {
         if (this.checkValue()) {
             const strippedUrl = stripUrl(trimString(this.inputEdit.value));
-            this.props.editDomain(this.props.id, strippedUrl);
+            this.props.updateDomain(this.props.id, strippedUrl);
             this.inputEdit.value = strippedUrl;
         } else {
             e.preventDefault();
@@ -378,9 +383,10 @@ export class Domain extends React.Component {
                         </div>
                         <div className="key-cont">
                             <span className="label">Licence key:</span>
-                            {(this.props.licencekey != null) ? (
+                            {(this.props.licence_key != null) ? (
                                 <React.Fragment>
-                                    <input type="text" readOnly={true} ref={(input) => { this.inputCopy = input; }} style={inputStyle} value={this.props.licencekey} />
+                                    <input type="text" readOnly={true} ref={(input) => { this.inputCopy = input; }} style={inputStyle} value={this.props.licence_key} />
+                                    <span className={spanClasses}>{this.props.licence_key}</span>
                                     <span className="copy-cont">
                                         <span className="copy-outer" title="Copy to clipboard" onClick={() => {this.copyClick()}}>
                                             <i className="oln icon-clipboard"></i>

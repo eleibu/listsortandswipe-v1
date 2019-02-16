@@ -18688,7 +18688,7 @@ if (outerContSetup && listContSetup) {
 //icon-email
 //icon-profile-picture
 
-
+// TODO: Allo 'ignoreOnClick' to work with id and class selectors, as well as element types
 // TODO: Finish Controller_Auth_SignUp
 // TODO: Create /terms and /privacy
 // TODO: Can't get out of edit domain if it is below keyboard

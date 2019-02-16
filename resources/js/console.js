@@ -8,16 +8,17 @@ import axios from 'axios';
 import { CSSTransition } from 'react-transition-group';
 import { Domains } from './console-domains.js';
 import { Account } from './console-account.js';
-import { requestObjCreate, uuidv4 } from './utils.js';
+import { findIndexById, requestObjCreate, uuidv4 } from './utils.js';
 import { setMainMsgTimeout, clearMainMsgTimeout, MainMsg } from './console-mainmsg.js';
+import update from 'immutability-helper';
 
-// axios.defaults.headers.common = {
-//     'X-CSRF-TOKEN': document.querySelector("meta[name='csrf-token']").getAttribute("content"),
-//     'X-Requested-With': 'XMLHttpRequest'
-// };
+axios.defaults.headers.common = {
+    'X-CSRF-TOKEN': document.querySelector("meta[name='csrf-token']").getAttribute("content"),
+    'X-Requested-With': 'XMLHttpRequest'
+};
 
-axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector("meta[name='csrf-token']").getAttribute("content");
-axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+// axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+// axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 class App extends React.Component {
     constructor(props) {
@@ -27,13 +28,7 @@ class App extends React.Component {
             domainsLoaded: false,
             domainsMsgShow : false,
             domainsMsgText : 'You have 1 product expiring in 28 days',
-            domains: [
-                {
-                    id: '123456789',
-                    domain: 'syndeal.com',
-                    licencekey: '123456789'
-                }
-            ],
+            domains: [],
             mainMsgShow: false,
             mainMsgChildren: null,
             serverRequestObjs: []
@@ -41,7 +36,7 @@ class App extends React.Component {
         this.tabClick = this.tabClick.bind(this);
         this.domainsMsgCloseClick = this.domainsMsgCloseClick.bind(this);
         this.addDomain = this.addDomain.bind(this);
-        this.editDomain = this.editDomain.bind(this);
+        this.updateDomain = this.updateDomain.bind(this);
         this.showMainMsg = this.showMainMsg.bind(this);
         this.closeMainMsg = this.closeMainMsg.bind(this);
         this.sortEnd = this.sortEnd.bind(this);
@@ -84,25 +79,15 @@ class App extends React.Component {
         }
     }
     addServerRequestObj(requestObj) {
-        var serverRequestObjsCopy = this.state.serverRequestObjs.slice();
-        serverRequestObjsCopy.push(requestObj);
         this.setState({
-           serverRequestObjs: serverRequestObjsCopy
+           serverRequestObjs: update(this.state.serverRequestObjs, {$push: [requestObj]})
         });
     }
     deleteServerRequestObj(requestObj) {
-        let index = null;
-        for (var i = 0, len = this.state.serverRequestObjs.length; i < len; i++) {
-            if (this.state.serverRequestObjs[i].id == requestObj.id) {
-                index = i;
-                break;
-            }
-        }
+        const index = findIndexById(this.state.serverRequestObjs, requestObj.id);
         if (index != null) {
-            var serverRequestObjsCopy = this.state.serverRequestObjs.slice();
-            serverRequestObjsCopy.splice(index, 1);
             this.setState({
-               serverRequestObjs: serverRequestObjsCopy
+               serverRequestObjs: update(this.state.serverRequestObjs, {$splice: [[index, 1]] })
             });
         }
     }
@@ -119,15 +104,15 @@ class App extends React.Component {
         });
     }
     addDomain(domain) {
+        this.closeMainMsg();
+
         const newId = uuidv4();
-        var domainsCopy = this.state.domains.slice();
-        domainsCopy.unshift({
+        this.setState({
+           domains: update(this.state.domains, {$unshift: [{
             id: newId,
             domain: domain,
-            licencekey: null
-        });
-        this.setState({
-           domains: domainsCopy
+            licence_key: null
+           }]})
         });
 
         const requestObj = requestObjCreate(axios.CancelToken);
@@ -157,35 +142,63 @@ class App extends React.Component {
             });
         })
         .catch((error)=>{
-            console.log('Error: ' + error);
-            // this.setState({
-            //    domainsLoaded: true
-            // });
-            // const children = <table><tbody><tr><td className="left">The server could not be reached. Please try again.</td><td className="right"></td></tr></tbody></table>;
-            // this.showMainMsg(children);
+            const index = findIndexById(this.state.domains, newId);
+            if (index != null) {
+                this.setState({
+                   domains: update(this.state.domains, {$splice: [[index, 1]] })
+                });
+            }
+            const children = <table><tbody><tr><td className="left">An error occurred. The domain was not added.</td><td className="right"><div className="button-word-cont mainmsg" onClick={() => {this.addDomain(domain);}}>RETRY</div></td></tr></tbody></table>;
+            this.showMainMsg(children);
         })
         .then(()=>{
             this.deleteServerRequestObj(requestObj);
         });
-
-        //@@
     }
-    editDomain(id, domain) {
-        const newDomains = [];
-        for (var i = 0, len = this.state.domains.length; i < len; i++) {
-            if (this.state.domains[i].id == id) {
-                newDomains.push({
-                    id: this.state.domains[i].id,
-                    domain: domain,
-                    licencekey: this.state.domains[i].licencekey
-                });                
-            } else {
-                newDomains.push(this.state.domains[i]);
-            }
+    updateDomain(id, domain) {
+        const index = findIndexById(this.state.domains, id);
+        let origDomain = null;
+        if (index != null) {
+            origDomain = this.state.domains[index].domain;
         }
-        if (newDomains.length > 0) {
+        if (index != null && origDomain != null && origDomain != domain) {
+            this.closeMainMsg();
+
             this.setState({
-               domains: newDomains
+               domains: update(this.state.domains, {[index]: {$set: {
+                id: this.state.domains[index].id,
+                domain: domain,
+                licence_key: this.state.domains[index].licence_key                
+               }}})
+            });
+
+            const requestObj = requestObjCreate(axios.CancelToken);
+            this.addServerRequestObj(requestObj);
+
+            let url = api_url_public + 'domains/' + id;
+            axios({
+                method: 'put',
+                url: url,
+                data: {
+                    'action' : 'update',
+                    'domain' : domain
+                },
+                cancelToken: requestObj.source.token
+            })
+            .catch((error)=>{
+                this.setState({
+                   domains: update(this.state.domains, {[index]: {$set: {
+                    id: this.state.domains[index].id,
+                    domain: origDomain,
+                    licence_key: this.state.domains[index].licence_key
+                   }}})
+                });
+
+                const children = <table><tbody><tr><td className="left">An error occurred. The domain was not updated. Please try again.</td><td className="right"></td></tr></tbody></table>;
+                this.showMainMsg(children);
+            })
+            .then(()=>{
+                this.deleteServerRequestObj(requestObj);
             });
         }
     }
@@ -213,10 +226,13 @@ class App extends React.Component {
             const copyDomain = {
                 id: this.state.domains[index].id,
                 domain: this.state.domains[index].domain,
-                licencekey: this.state.domains[index].licencekey
+                licence_key: this.state.domains[index].licence_key
             };
             const children = <table><tbody><tr><td className="left">The domain &#39;{domain}&#39; was deleted.</td><td className="right"><div className="button-word-cont mainmsg" onClick={() => {this.undeleteDomain(copyDomain, index);}}>UNDO</div></td></tr></tbody></table>;
             this.showMainMsg(children, 12000);
+
+            const listItems = instance.listCont.getElementsByClassName(instance.listItemClass);
+            listItems[index].className = listItems[index].className + ' deleting';
 
             const newDomains = this.state.domains.slice(0);
             newDomains.splice(index, 1);
@@ -226,10 +242,8 @@ class App extends React.Component {
         }
     }
     undeleteDomain(domain, index) {
-        const newDomains = this.state.domains.slice(0);
-        newDomains.splice(index, 0, domain);
         this.setState({
-           domains: newDomains
+           domains: update(this.state.domains, {$splice: [[index, 0, domain]] })
         });
         this.closeMainMsg();
     }
@@ -287,7 +301,7 @@ class App extends React.Component {
                     {(this.state.domainsLoaded) ? (
                         <div className="content-outer">
                             <CSSTransition in={(this.state.tabIndex == 0)} classNames="domains-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
-                                <Domains domains={this.state.domains} domainsMsgShow={this.state.domainsMsgShow} domainsMsgText={this.state.domainsMsgText} domainsMsgCloseClick={this.domainsMsgCloseClick} addDomain={this.addDomain} editDomain={this.editDomain} sortEnd={this.sortEnd} leftEnd={this.leftEnd} />
+                                <Domains domains={this.state.domains} domainsMsgShow={this.state.domainsMsgShow} domainsMsgText={this.state.domainsMsgText} domainsMsgCloseClick={this.domainsMsgCloseClick} addDomain={this.addDomain} updateDomain={this.updateDomain} sortEnd={this.sortEnd} leftEnd={this.leftEnd} />
                             </CSSTransition>
                             <CSSTransition in={(this.state.tabIndex == 1)} classNames="account-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
                                 <Account />

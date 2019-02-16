@@ -12,6 +12,52 @@ class Toolkit {
 		sleep (1);
 	}
 
+	public static function hasDomainForm($value) {
+		// note: changes should also be reflected in the equivalent js function
+
+		$regex = '/^\S+\.\S+$/';
+		if (preg_match($regex, trim($value))) {
+			return true;
+		}
+		return false;
+	}
+
+	public static function stripUrl($url) {
+		// note: changes should also be reflected in the equivalent js function
+
+		$url = strtolower(trim($url));
+
+		$url = preg_replace('/^http:\/\/|https:\/\/|ftp:\/\/|ftps:\/\//', '', $url);
+		$url = preg_replace('/^www\./', '', $url);
+
+		$iColon = strpos($url, ':');
+		$iSlash = false;
+		if ($iColon != false) {
+			$url = substr($url, 0, $iColon);
+		} else {
+			$iSlash = strpos($url, '/');
+			if ($iSlash != false) {
+				$url = substr($url, 0, $iSlash);
+			}
+		}
+
+		if (($iColon == false) && ($iSlash == false)) {
+			$iQuery = strpos($url, '?');
+			if ($iQuery != false) {
+				$url = substr($url, 0, $iQuery);
+			}
+		}
+
+		if (($iColon == false) && ($iSlash == false)) {
+			$iHash = strpos($url, '#');
+			if ($iHash != false) {
+				$url = substr($url, 0, $iHash);
+			}
+		}
+
+		return $url;
+	}
+
 	public static function pageInfo() {
 		$pageInfo = array(
 			'home' => array(

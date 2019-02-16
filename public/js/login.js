@@ -17165,7 +17165,7 @@ function validateAndSubmit() {
 	divMainmsg.innerHTML = "";
 
 	var emailOk = false;
-	var email = Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["c" /* trimString */])(inputEmail.value);
+	var email = Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["e" /* trimString */])(inputEmail.value);
 
 	if (email.length > 0) {
 		emailOk = true;
@@ -17257,12 +17257,25 @@ var monitorWinWidth = function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = hasDomainForm;
-/* harmony export (immutable) */ __webpack_exports__["b"] = stripUrl;
-/* unused harmony export requestObjCreate */
-/* harmony export (immutable) */ __webpack_exports__["d"] = uuidv4;
-/* harmony export (immutable) */ __webpack_exports__["c"] = trimString;
+/* harmony export (immutable) */ __webpack_exports__["a"] = findIndexById;
+/* harmony export (immutable) */ __webpack_exports__["b"] = hasDomainForm;
+/* harmony export (immutable) */ __webpack_exports__["d"] = stripUrl;
+/* harmony export (immutable) */ __webpack_exports__["c"] = requestObjCreate;
+/* harmony export (immutable) */ __webpack_exports__["f"] = uuidv4;
+/* harmony export (immutable) */ __webpack_exports__["e"] = trimString;
+
+function findIndexById(array, id) {
+	for (var i = 0, len = array.length; i < len; i++) {
+		if (array[i].id == id) {
+			return i;
+		}
+	}
+	return null;
+}
+
 function hasDomainForm(value) {
+	// note: changes should also be reflected in the equivalent php function
+
 	if (/^\S+\.\S+$/.test(value)) {
 		return true;
 	}
@@ -17270,6 +17283,8 @@ function hasDomainForm(value) {
 }
 
 function stripUrl(url) {
+	// note: changes should also be reflected in the equivalent php function
+
 	url = url.toLowerCase();
 
 	url = url.replace(/^http:\/\/|https:\/\/|ftp:\/\/|ftps:\/\//, '');

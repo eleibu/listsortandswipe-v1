@@ -1,4 +1,16 @@
+
+export function findIndexById(array, id) {
+    for (var i = 0, len = array.length; i < len; i++) {
+        if (array[i].id == id) {
+        	return i;
+        }
+    }
+    return null;
+}
+
 export function hasDomainForm(value) {
+	// note: changes should also be reflected in the equivalent php function
+	
 	if (/^\S+\.\S+$/.test(value)) {
 		return true;
 	}
@@ -6,6 +18,8 @@ export function hasDomainForm(value) {
 }
 
 export function stripUrl(url) {
+	// note: changes should also be reflected in the equivalent php function
+
 	url = url.toLowerCase();
 
 	url = url.replace(/^http:\/\/|https:\/\/|ftp:\/\/|ftps:\/\//, '');

@@ -17141,7 +17141,7 @@ var divEmailRequestSubmsg = document.getElementById('div-emailrequest-submsg');
 var submitRequestButton = document.getElementById('div-submit-request');
 
 if (divMainmsg && divEmailRequestCont && inputEmailRequest && divEmailRequestSubmsg && submitRequestButton && spinnerCont && maskCont) {
-	if (Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["c" /* trimString */])(divEmailRequestSubmsg.innerHTML).length == 0) {
+	if (Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["e" /* trimString */])(divEmailRequestSubmsg.innerHTML).length == 0) {
 		divEmailRequestSubmsg.innerHTML = msgEmailRequestDefault;
 	}
 
@@ -17180,7 +17180,7 @@ function validateAndSubmitRequest() {
 	divMainmsg.innerHTML = "";
 
 	var emailOk = false;
-	var email = Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["c" /* trimString */])(inputEmailRequest.value);
+	var email = Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["e" /* trimString */])(inputEmailRequest.value);
 
 	if (email.length > 0) {
 		var regex = /^[^@]+@[^@]+\.[^@]+$/;
@@ -17227,7 +17227,7 @@ var divPasswordSubmsg = document.getElementById('div-password-submsg');
 var submitDoresetButton = document.getElementById('div-submit-doreset');
 
 if (divMainmsg && divEmailDoresetCont && divPasswordCont && inputEmailDoreset && inputPassword && divEmailDoresetSubmsg && divPasswordSubmsg && submitDoresetButton && spinnerCont && maskCont) {
-	if (Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["c" /* trimString */])(divPasswordSubmsg.innerHTML).length == 0) {
+	if (Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["e" /* trimString */])(divPasswordSubmsg.innerHTML).length == 0) {
 		divPasswordSubmsg.innerHTML = msgPasswordDefault;
 	}
 
@@ -17290,7 +17290,7 @@ function validateAndSubmitDoreset() {
 	divMainmsg.innerHTML = "";
 
 	var emailOk = false;
-	var email = Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["c" /* trimString */])(inputEmailDoreset.value);
+	var email = Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["e" /* trimString */])(inputEmailDoreset.value);
 
 	if (email.length > 0) {
 		var regex = /^[^@]+@[^@]+\.[^@]+$/;
@@ -17360,12 +17360,25 @@ function validateAndSubmitDoreset() {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = hasDomainForm;
-/* harmony export (immutable) */ __webpack_exports__["b"] = stripUrl;
-/* unused harmony export requestObjCreate */
-/* harmony export (immutable) */ __webpack_exports__["d"] = uuidv4;
-/* harmony export (immutable) */ __webpack_exports__["c"] = trimString;
+/* harmony export (immutable) */ __webpack_exports__["a"] = findIndexById;
+/* harmony export (immutable) */ __webpack_exports__["b"] = hasDomainForm;
+/* harmony export (immutable) */ __webpack_exports__["d"] = stripUrl;
+/* harmony export (immutable) */ __webpack_exports__["c"] = requestObjCreate;
+/* harmony export (immutable) */ __webpack_exports__["f"] = uuidv4;
+/* harmony export (immutable) */ __webpack_exports__["e"] = trimString;
+
+function findIndexById(array, id) {
+	for (var i = 0, len = array.length; i < len; i++) {
+		if (array[i].id == id) {
+			return i;
+		}
+	}
+	return null;
+}
+
 function hasDomainForm(value) {
+	// note: changes should also be reflected in the equivalent php function
+
 	if (/^\S+\.\S+$/.test(value)) {
 		return true;
 	}
@@ -17373,6 +17386,8 @@ function hasDomainForm(value) {
 }
 
 function stripUrl(url) {
+	// note: changes should also be reflected in the equivalent php function
+
 	url = url.toLowerCase();
 
 	url = url.replace(/^http:\/\/|https:\/\/|ftp:\/\/|ftps:\/\//, '');

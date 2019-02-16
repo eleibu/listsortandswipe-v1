@@ -283,6 +283,7 @@
 										}
 
 										span.label {
+											padding: 3px 4px 3px 0;
 											color: #666666;
 										}
 
@@ -292,8 +293,10 @@
 										}
 
 										span.key {
+											padding: 3px 4px;
 											color: #339933;
 											border-radius: 3px;
+											//@@
 										}
 
 										span.key.default {
@@ -350,7 +353,7 @@
 							}
 						}
 
-						div.domain-cont.left-item-active, div.domain-cont.domain-trans-exit {
+						div.domain-cont.left-item-active, div.domain-cont.deleting {
 							div.domain-outer {
 								div.mask-cont {
 									display: block;
@@ -440,11 +443,11 @@
 					font-size: 80%;
 
 					span.label {
-						padding: 3px 4px 3px 0;
+						// padding: 3px 4px 3px 0;
 					}
 
 					span.key {
-						padding: 3px 4px;
+						// padding: 3px 4px;
 					}
 
 					span.copy-outer {
@@ -518,11 +521,15 @@
 					margin-top: 2px;
 
 					span.label {
-						padding: 3px 4px 3px 0;
+						// padding: 3px 4px 3px 0;
 					}
 
 					span.key {
-						padding: 3px 4px;
+						// padding: 3px 4px;
+						max-width: 9em;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
 					}
 
 					span.copy-cont {

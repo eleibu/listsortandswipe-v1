@@ -548,6 +548,7 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont div.domain-outer div.middle-cont div.key-cont span.label {
+  padding: 3px 4px 3px 0;
   color: #666666;
 }
 
@@ -557,6 +558,7 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont div.domain-outer div.middle-cont div.key-cont span.key {
+  padding: 3px 4px;
   color: #339933;
   border-radius: 3px;
 }
@@ -614,7 +616,7 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
   color: #FFFFFF;
 }
 
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont.left-item-active div.domain-outer div.mask-cont, #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont.domain-trans-exit div.domain-outer div.mask-cont {
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont.left-item-active div.domain-outer div.mask-cont, #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont.deleting div.domain-outer div.mask-cont {
   display: block;
 }
 
@@ -688,14 +690,6 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
   font-size: 80%;
 }
 
-#pageWrapper.xl div.domain-cont div.domain-outer div.middle-cont div.key-cont span.label, #pageWrapper.lg div.domain-cont div.domain-outer div.middle-cont div.key-cont span.label, #pageWrapper.md div.domain-cont div.domain-outer div.middle-cont div.key-cont span.label, #pageWrapper.sm div.domain-cont div.domain-outer div.middle-cont div.key-cont span.label {
-  padding: 3px 4px 3px 0;
-}
-
-#pageWrapper.xl div.domain-cont div.domain-outer div.middle-cont div.key-cont span.key, #pageWrapper.lg div.domain-cont div.domain-outer div.middle-cont div.key-cont span.key, #pageWrapper.md div.domain-cont div.domain-outer div.middle-cont div.key-cont span.key, #pageWrapper.sm div.domain-cont div.domain-outer div.middle-cont div.key-cont span.key {
-  padding: 3px 4px;
-}
-
 #pageWrapper.xl div.domain-cont div.domain-outer div.middle-cont div.key-cont span.copy-outer, #pageWrapper.lg div.domain-cont div.domain-outer div.middle-cont div.key-cont span.copy-outer, #pageWrapper.md div.domain-cont div.domain-outer div.middle-cont div.key-cont span.copy-outer, #pageWrapper.sm div.domain-cont div.domain-outer div.middle-cont div.key-cont span.copy-outer {
   visibility: hidden;
   font-size: 90%;
@@ -746,12 +740,11 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
   margin-top: 2px;
 }
 
-#pageWrapper.xs div.domain-cont div.domain-outer div.middle-cont div.key-cont span.label {
-  padding: 3px 4px 3px 0;
-}
-
 #pageWrapper.xs div.domain-cont div.domain-outer div.middle-cont div.key-cont span.key {
-  padding: 3px 4px;
+  max-width: 9em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #pageWrapper.xs div.domain-cont div.domain-outer div.middle-cont div.key-cont span.copy-cont {

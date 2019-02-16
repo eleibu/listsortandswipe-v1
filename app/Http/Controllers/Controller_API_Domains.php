@@ -35,53 +35,61 @@ class Controller_API_Domains extends Controller
 		Toolkit::sleep();
 
 		if ($request->filled('id', 'domain')) {
-			$user = Auth::guard('api')->user();
-			$domainId = $request->input('id');
+			if (Toolkit::hasDomainForm($request->input('domain'))) {
+				$user = Auth::guard('api')->user();
+				$domainId = $request->input('id');
 
-			$domainIds = json_decode($user->domain_ids);
-			if (!isset($domainIds)) {
-				$domainIds = array();
-			}
-
-			array_unshift($domainIds, $domainId);
-
-			$domain = new Domain;
-			$domain->id = $domainId;
-			$domain->domain = $request->input('domain');
-
-			if (($user->account_type == 3) && isset($user->account_licence_key)) {
-				$domain->licence_key = $user->account_licence_key;
-			} else {
-				$domain->licence_key = str_random(30);
-			}
-
-			DB::beginTransaction();
-			try {
-				$affected = DB::table('users')
-					->where('id', $user->id)
-					->where('updated_at', '=', $user->updated_at)
-					->update([
-						'updated_at' => Carbon::now('UTC'),
-						'domain_ids' => json_encode($domainIds)
-					]);
-				if ($affected == 1) {
-					$domain->save();
-				} else {
-					DB::rollback();
-					return response()->json([
-						'id' => 'B36AFFA2-39B0-4FE4-BCE7-645B1A14A494',
-						'message' => 'Database conflict.'
-					], 409);
+				$domainIds = json_decode($user->domain_ids);
+				if (!isset($domainIds)) {
+					$domainIds = array();
 				}
-			} catch(\Exception $e) {
-			   DB::rollback();
-			   throw $e;
-			}
-			DB::commit();
 
-			return response()->json([
-				'domain' => $domain
-			], 201);
+				array_unshift($domainIds, $domainId);
+
+				$domain = new Domain;
+				$domain->id = $domainId;
+				$domain->user_id = $user->id;
+				$domain->domain = Toolkit::stripUrl($request->input('domain'));
+
+				if (($user->account_type == 3) && isset($user->account_licence_key)) {
+					$domain->licence_key = $user->account_licence_key;
+				} else {
+					$domain->licence_key = str_random(30);
+				}
+
+				DB::beginTransaction();
+				try {
+					$affected = DB::table('users')
+						->where('id', $user->id)
+						->where('updated_at', '=', $user->updated_at)
+						->update([
+							'updated_at' => Carbon::now('UTC'),
+							'domain_ids' => json_encode($domainIds)
+						]);
+					if ($affected == 1) {
+						$domain->save();
+					} else {
+						DB::rollback();
+						return response()->json([
+							'id' => 'B36AFFA2-39B0-4FE4-BCE7-645B1A14A494',
+							'message' => 'Database conflict.'
+						], 409);
+					}
+				} catch(\Exception $e) {
+				   DB::rollback();
+				   throw $e;
+				}
+				DB::commit();
+
+				return response()->json([
+					'domain' => $domain
+				], 201);
+			} else {
+				return response()->json([
+					'id' => '551EC8EC-59E0-451B-ADC5-491BB827EAC5',
+					'message' => 'Domain is not in the correct form.'
+				], 400);
+			}
 		} else {
 			return response()->json([
 				'id' => 'AB5941F3-7F2F-43C3-8486-652F81CED28A',
@@ -93,5 +101,51 @@ class Controller_API_Domains extends Controller
 	public function put(Request $request, $id) {
 		Toolkit::sleep();
 
+		if ($request->filled('action')) {
+			switch ($request->input('action')) {
+			    case 'update':
+			    	return $this->updateDomain($request, $id);
+			        break;
+			    case 'reorder':
+			    	// return $this->reorderContext($request, $id);
+			        break;
+			    case 'delete':
+			    	// return $this->deleteContext($request, $id);
+			        break;
+			    case 'undelete':
+			    	// return $this->undeleteContext($request, $id);
+			        break;
+			    default:
+					return response()->json([
+						'id' => '3868D890-4050-4C52-BA42-3DE717A0CDFD',
+						'message' => 'Invalid action.'
+					], 400);
+			}
+		} else {
+			return response()->json([
+				'id' => '0D916ABC-24B5-45A4-8FC7-92CE01A5255C',
+				'message' => 'Missing parameters.'
+			], 400);
+		}
+	}
+
+	protected function updateDomain($request, $id) {
+		$domain = Domain::where('id', $id)
+					->first();
+
+		if (($request->filled('domain')) && (Toolkit::hasDomainForm($request->input('domain')))) {
+			$domain->domain = Toolkit::stripUrl($request->input('domain'));
+		} else {
+			return response()->json([
+				'id' => '4A0513CF-A144-4F0E-B763-572F80C5AE04',
+				'message' => 'Domain is not in the correct form.'
+			], 400);
+		}
+
+		$domain->save();
+
+		return response()->json([
+			'domain' => $domain
+		], 200);
 	}
 }

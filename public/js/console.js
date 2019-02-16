@@ -5769,6 +5769,304 @@ module.exports = function removeClass(element, className) {
 
 /***/ }),
 
+/***/ "./node_modules/immutability-helper/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var invariant = __webpack_require__("./node_modules/invariant/browser.js");
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+var splice = Array.prototype.splice;
+var toString = Object.prototype.toString;
+function type(obj) {
+    return toString.call(obj).slice(8, -1);
+}
+var assign = Object.assign || /* istanbul ignore next */ (function (target, source) {
+    getAllKeys(source).forEach(function (key) {
+        if (hasOwnProperty.call(source, key)) {
+            target[key] = source[key];
+        }
+    });
+    return target;
+});
+var getAllKeys = typeof Object.getOwnPropertySymbols === 'function'
+    ? function (obj) { return Object.keys(obj).concat(Object.getOwnPropertySymbols(obj)); }
+    /* istanbul ignore next */
+    : function (obj) { return Object.keys(obj); };
+function copy(object) {
+    return Array.isArray(object)
+        ? assign(object.constructor(object.length), object)
+        : (type(object) === 'Map')
+            ? new Map(object)
+            : (type(object) === 'Set')
+                ? new Set(object)
+                : (object && typeof object === 'object')
+                    ? assign(Object.create(Object.getPrototypeOf(object)), object)
+                    /* istanbul ignore next */
+                    : object;
+}
+var Context = /** @class */ (function () {
+    function Context() {
+        this.commands = assign({}, defaultCommands);
+        this.update = this.update.bind(this);
+        // Deprecated: update.extend, update.isEquals and update.newContext
+        this.update.extend = this.extend = this.extend.bind(this);
+        this.update.isEquals = function (x, y) { return x === y; };
+        this.update.newContext = function () { return new Context().update; };
+    }
+    Object.defineProperty(Context.prototype, "isEquals", {
+        get: function () {
+            return this.update.isEquals;
+        },
+        set: function (value) {
+            this.update.isEquals = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Context.prototype.extend = function (directive, fn) {
+        this.commands[directive] = fn;
+    };
+    Context.prototype.update = function (object, $spec) {
+        var _this = this;
+        var spec = (typeof $spec === 'function') ? { $apply: $spec } : $spec;
+        if (!(Array.isArray(object) && Array.isArray(spec))) {
+            invariant(!Array.isArray(spec), 'update(): You provided an invalid spec to update(). The spec may ' +
+                'not contain an array except as the value of $set, $push, $unshift, ' +
+                '$splice or any custom command allowing an array value.');
+        }
+        invariant(typeof spec === 'object' && spec !== null, 'update(): You provided an invalid spec to update(). The spec and ' +
+            'every included key path must be plain objects containing one of the ' +
+            'following commands: %s.', Object.keys(this.commands).join(', '));
+        var nextObject = object;
+        getAllKeys(spec).forEach(function (key) {
+            if (hasOwnProperty.call(_this.commands, key)) {
+                var objectWasNextObject = object === nextObject;
+                nextObject = _this.commands[key](spec[key], nextObject, spec, object);
+                if (objectWasNextObject && _this.isEquals(nextObject, object)) {
+                    nextObject = object;
+                }
+            }
+            else {
+                var nextValueForKey = type(object) === 'Map'
+                    ? _this.update(object.get(key), spec[key])
+                    : _this.update(object[key], spec[key]);
+                var nextObjectValue = type(nextObject) === 'Map'
+                    ? nextObject.get(key)
+                    : nextObject[key];
+                if (!_this.isEquals(nextValueForKey, nextObjectValue)
+                    || typeof nextValueForKey === 'undefined'
+                        && !hasOwnProperty.call(object, key)) {
+                    if (nextObject === object) {
+                        nextObject = copy(object);
+                    }
+                    if (type(nextObject) === 'Map') {
+                        nextObject.set(key, nextValueForKey);
+                    }
+                    else {
+                        nextObject[key] = nextValueForKey;
+                    }
+                }
+            }
+        });
+        return nextObject;
+    };
+    return Context;
+}());
+exports.Context = Context;
+var defaultCommands = {
+    $push: function (value, nextObject, spec) {
+        invariantPushAndUnshift(nextObject, spec, '$push');
+        return value.length ? nextObject.concat(value) : nextObject;
+    },
+    $unshift: function (value, nextObject, spec) {
+        invariantPushAndUnshift(nextObject, spec, '$unshift');
+        return value.length ? value.concat(nextObject) : nextObject;
+    },
+    $splice: function (value, nextObject, spec, originalObject) {
+        invariantSplices(nextObject, spec);
+        value.forEach(function (args) {
+            invariantSplice(args);
+            if (nextObject === originalObject && args.length) {
+                nextObject = copy(originalObject);
+            }
+            splice.apply(nextObject, args);
+        });
+        return nextObject;
+    },
+    $set: function (value, _nextObject, spec) {
+        invariantSet(spec);
+        return value;
+    },
+    $toggle: function (targets, nextObject) {
+        invariantSpecArray(targets, '$toggle');
+        var nextObjectCopy = targets.length ? copy(nextObject) : nextObject;
+        targets.forEach(function (target) {
+            nextObjectCopy[target] = !nextObject[target];
+        });
+        return nextObjectCopy;
+    },
+    $unset: function (value, nextObject, _spec, originalObject) {
+        invariantSpecArray(value, '$unset');
+        value.forEach(function (key) {
+            if (Object.hasOwnProperty.call(nextObject, key)) {
+                if (nextObject === originalObject) {
+                    nextObject = copy(originalObject);
+                }
+                delete nextObject[key];
+            }
+        });
+        return nextObject;
+    },
+    $add: function (values, nextObject, _spec, originalObject) {
+        invariantMapOrSet(nextObject, '$add');
+        invariantSpecArray(values, '$add');
+        if (type(nextObject) === 'Map') {
+            values.forEach(function (_a) {
+                var key = _a[0], value = _a[1];
+                if (nextObject === originalObject && nextObject.get(key) !== value) {
+                    nextObject = copy(originalObject);
+                }
+                nextObject.set(key, value);
+            });
+        }
+        else {
+            values.forEach(function (value) {
+                if (nextObject === originalObject && !nextObject.has(value)) {
+                    nextObject = copy(originalObject);
+                }
+                nextObject.add(value);
+            });
+        }
+        return nextObject;
+    },
+    $remove: function (value, nextObject, _spec, originalObject) {
+        invariantMapOrSet(nextObject, '$remove');
+        invariantSpecArray(value, '$remove');
+        value.forEach(function (key) {
+            if (nextObject === originalObject && nextObject.has(key)) {
+                nextObject = copy(originalObject);
+            }
+            nextObject.delete(key);
+        });
+        return nextObject;
+    },
+    $merge: function (value, nextObject, _spec, originalObject) {
+        invariantMerge(nextObject, value);
+        getAllKeys(value).forEach(function (key) {
+            if (value[key] !== nextObject[key]) {
+                if (nextObject === originalObject) {
+                    nextObject = copy(originalObject);
+                }
+                nextObject[key] = value[key];
+            }
+        });
+        return nextObject;
+    },
+    $apply: function (value, original) {
+        invariantApply(value);
+        return value(original);
+    },
+};
+var defaultContext = new Context();
+exports.isEquals = defaultContext.update.isEquals;
+exports.extend = defaultContext.extend;
+exports.default = defaultContext.update;
+// @ts-ignore
+exports.default.default = module.exports = assign(exports.default, exports);
+// invariants
+function invariantPushAndUnshift(value, spec, command) {
+    invariant(Array.isArray(value), 'update(): expected target of %s to be an array; got %s.', command, value);
+    invariantSpecArray(spec[command], command);
+}
+function invariantSpecArray(spec, command) {
+    invariant(Array.isArray(spec), 'update(): expected spec of %s to be an array; got %s. ' +
+        'Did you forget to wrap your parameter in an array?', command, spec);
+}
+function invariantSplices(value, spec) {
+    invariant(Array.isArray(value), 'Expected $splice target to be an array; got %s', value);
+    invariantSplice(spec.$splice);
+}
+function invariantSplice(value) {
+    invariant(Array.isArray(value), 'update(): expected spec of $splice to be an array of arrays; got %s. ' +
+        'Did you forget to wrap your parameters in an array?', value);
+}
+function invariantApply(fn) {
+    invariant(typeof fn === 'function', 'update(): expected spec of $apply to be a function; got %s.', fn);
+}
+function invariantSet(spec) {
+    invariant(Object.keys(spec).length === 1, 'Cannot have more than one key in an object with $set');
+}
+function invariantMerge(target, specValue) {
+    invariant(specValue && typeof specValue === 'object', 'update(): $merge expects a spec of type \'object\'; got %s', specValue);
+    invariant(target && typeof target === 'object', 'update(): $merge expects a target of type \'object\'; got %s', target);
+}
+function invariantMapOrSet(target, command) {
+    var typeOfTarget = type(target);
+    invariant(typeOfTarget === 'Map' || typeOfTarget === 'Set', 'update(): %s expects a target of type Set or Map; got %s', command, typeOfTarget);
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/invariant/browser.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+/**
+ * Use invariant() to assert state which your program assumes to be true.
+ *
+ * Provide sprintf-style format (only %s is supported) and arguments
+ * to provide information about what broke and what you were
+ * expecting.
+ *
+ * The invariant message will be stripped in production, but the invariant
+ * will remain to ensure logic does not differ in production.
+ */
+
+var invariant = function(condition, format, a, b, c, d, e, f) {
+  if (true) {
+    if (format === undefined) {
+      throw new Error('invariant requires an error message argument');
+    }
+  }
+
+  if (!condition) {
+    var error;
+    if (format === undefined) {
+      error = new Error(
+        'Minified exception occurred; use the non-minified dev environment ' +
+        'for the full error message and additional helpful warnings.'
+      );
+    } else {
+      var args = [a, b, c, d, e, f];
+      var argIndex = 0;
+      error = new Error(
+        format.replace(/%s/g, function() { return args[argIndex++]; })
+      );
+      error.name = 'Invariant Violation';
+    }
+
+    error.framesToPop = 1; // we don't care about invariant's own frame
+    throw error;
+  }
+};
+
+module.exports = invariant;
+
+
+/***/ }),
+
 /***/ "./node_modules/is-buffer/index.js":
 /***/ (function(module, exports) {
 
@@ -45461,9 +45759,9 @@ var Domains = function (_React$Component) {
         key: 'checkValue',
         value: function checkValue() {
             var valueOk = void 0;
-            var newDomain = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["d" /* trimString */])(this.input.value);
+            var newDomain = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["e" /* trimString */])(this.input.value);
             if (newDomain.length > 0) {
-                if (Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["a" /* hasDomainForm */])(newDomain)) {
+                if (Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["b" /* hasDomainForm */])(newDomain)) {
                     if (this.checkExists(newDomain)) {
                         valueOk = false;
                         this.setState({
@@ -45506,7 +45804,7 @@ var Domains = function (_React$Component) {
         key: 'addDomainClick',
         value: function addDomainClick() {
             if (this.checkValue()) {
-                var origValue = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["d" /* trimString */])(this.input.value);
+                var origValue = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["e" /* trimString */])(this.input.value);
                 this.createItemAndAdd(origValue);
                 this.setState({
                     inputFocus: false,
@@ -45521,7 +45819,7 @@ var Domains = function (_React$Component) {
                 // enter key
                 e.preventDefault();
                 if (this.checkValue()) {
-                    var origValue = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["d" /* trimString */])(this.input.value);
+                    var origValue = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["e" /* trimString */])(this.input.value);
                     this.createItemAndAdd(origValue);
                 }
                 this.setState({
@@ -45537,7 +45835,7 @@ var Domains = function (_React$Component) {
     }, {
         key: 'createItemAndAdd',
         value: function createItemAndAdd(domain) {
-            this.props.addDomain(Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["c" /* stripUrl */])(domain));
+            this.props.addDomain(Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["d" /* stripUrl */])(domain));
             this.input.value = '';
         }
     }, {
@@ -45572,7 +45870,7 @@ var Domains = function (_React$Component) {
                 } }, 'ADD DOMAIN')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': accountData.maxDomains - this.props.domains.length == 0, classNames: 'add-item-mask-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-item-mask-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-item-mask-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-item-mask-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title' }, 'Need to use Lithium List with more websites?'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'subtitle' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey' }, 'Upgrade or buy more domains')))))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: 'listCont', ref: function ref(div) {
                     _this2.listCont = div;
                 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["TransitionGroup"], { component: null }, this.props.domains.map(function (domain, index) {
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { key: domain.id, classNames: 'domain-trans', timeout: { enter: 200, exit: 200 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Domain, { id: domain.id, index: index, domain: domain.domain, licencekey: domain.licencekey, editDomain: _this2.props.editDomain, checkExists: _this2.checkExists }));
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { key: domain.id, classNames: 'domain-trans', timeout: { enter: 200, exit: 200 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Domain, { id: domain.id, index: index, domain: domain.domain, licence_key: domain.licence_key, updateDomain: _this2.props.updateDomain, checkExists: _this2.checkExists }));
             })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.props.domains.length == 0, classNames: 'emptymsg-trans', timeout: { enter: 600, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'emptymsg-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'icon-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'sld icon-security-guard' })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'msg-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'msg-outer' }, 'Get a licence key')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'submsg-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'submsg-outer' }, 'Enter a domain or subdomain that you will use with Lithium List'))))));
         }
     }]);
@@ -45604,12 +45902,19 @@ var Domain = function (_React$Component2) {
             this.inputEdit.value = this.props.domain;
         }
     }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps, prevState, snapshot) {
+            if (prevProps.domain != this.props.domain) {
+                this.inputEdit.value = this.props.domain;
+            }
+        }
+    }, {
         key: 'checkValue',
         value: function checkValue() {
             var valueOk = void 0;
-            var newDomain = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["d" /* trimString */])(this.inputEdit.value);
+            var newDomain = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["e" /* trimString */])(this.inputEdit.value);
             if (newDomain.length > 0) {
-                if (Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["a" /* hasDomainForm */])(newDomain)) {
+                if (Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["b" /* hasDomainForm */])(newDomain)) {
                     if (this.props.checkExists(newDomain, this.props.index)) {
                         valueOk = false;
                         this.setState({
@@ -45639,8 +45944,8 @@ var Domain = function (_React$Component2) {
         key: 'onBlur',
         value: function onBlur(e) {
             if (this.checkValue()) {
-                var strippedUrl = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["c" /* stripUrl */])(Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["d" /* trimString */])(this.inputEdit.value));
-                this.props.editDomain(this.props.id, strippedUrl);
+                var strippedUrl = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["d" /* stripUrl */])(Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["e" /* trimString */])(this.inputEdit.value));
+                this.props.updateDomain(this.props.id, strippedUrl);
                 this.inputEdit.value = strippedUrl;
             } else {
                 e.preventDefault();
@@ -45715,9 +46020,9 @@ var Domain = function (_React$Component2) {
                     return _this4.onKeyDown(e);
                 }, onInput: function onInput(e) {
                     return _this4.onInput(e);
-                } })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'key-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'label' }, 'Licence key:'), this.props.licencekey != null ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', readOnly: true, ref: function ref(input) {
+                } })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'key-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'label' }, 'Licence key:'), this.props.licence_key != null ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', readOnly: true, ref: function ref(input) {
                     _this4.inputCopy = input;
-                }, style: inputStyle, value: this.props.licencekey }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy-outer', title: 'Copy to clipboard', onClick: function onClick() {
+                }, style: inputStyle, value: this.props.licence_key }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: spanClasses }, this.props.licence_key), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy-outer', title: 'Copy to clipboard', onClick: function onClick() {
                     _this4.copyClick();
                 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-clipboard' })), '\xA0')) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'shimmer' }, '\xA0'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'delete-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-trash button' })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'mask-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'mask-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'label' }, 'Delete')))));
         }
@@ -45840,6 +46145,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__console_account_js__ = __webpack_require__("./resources/js/console-account.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_js__ = __webpack_require__("./resources/js/utils.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__console_mainmsg_js__ = __webpack_require__("./resources/js/console-mainmsg.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_immutability_helper__ = __webpack_require__("./node_modules/immutability-helper/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_immutability_helper___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_immutability_helper__);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () {
@@ -45851,6 +46158,14 @@ var _createClass = function () {
         if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
     };
 }();
+
+function _defineProperty(obj, key, value) {
+    if (key in obj) {
+        Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });
+    } else {
+        obj[key] = value;
+    }return obj;
+}
 
 function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -45883,13 +46198,14 @@ __webpack_require__("./node_modules/bootstrap/dist/js/bootstrap.js");
 
 
 
-// axios.defaults.headers.common = {
-//     'X-CSRF-TOKEN': document.querySelector("meta[name='csrf-token']").getAttribute("content"),
-//     'X-Requested-With': 'XMLHttpRequest'
-// };
 
-__WEBPACK_IMPORTED_MODULE_4_axios___default.a.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector("meta[name='csrf-token']").getAttribute("content");
-__WEBPACK_IMPORTED_MODULE_4_axios___default.a.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+__WEBPACK_IMPORTED_MODULE_4_axios___default.a.defaults.headers.common = {
+    'X-CSRF-TOKEN': document.querySelector("meta[name='csrf-token']").getAttribute("content"),
+    'X-Requested-With': 'XMLHttpRequest'
+};
+
+// axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+// axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 var App = function (_React$Component) {
     _inherits(App, _React$Component);
@@ -45904,11 +46220,7 @@ var App = function (_React$Component) {
             domainsLoaded: false,
             domainsMsgShow: false,
             domainsMsgText: 'You have 1 product expiring in 28 days',
-            domains: [{
-                id: '123456789',
-                domain: 'syndeal.com',
-                licencekey: '123456789'
-            }],
+            domains: [],
             mainMsgShow: false,
             mainMsgChildren: null,
             serverRequestObjs: []
@@ -45916,7 +46228,7 @@ var App = function (_React$Component) {
         _this.tabClick = _this.tabClick.bind(_this);
         _this.domainsMsgCloseClick = _this.domainsMsgCloseClick.bind(_this);
         _this.addDomain = _this.addDomain.bind(_this);
-        _this.editDomain = _this.editDomain.bind(_this);
+        _this.updateDomain = _this.updateDomain.bind(_this);
         _this.showMainMsg = _this.showMainMsg.bind(_this);
         _this.closeMainMsg = _this.closeMainMsg.bind(_this);
         _this.sortEnd = _this.sortEnd.bind(_this);
@@ -45933,7 +46245,7 @@ var App = function (_React$Component) {
             var _this2 = this;
 
             if (accountData.hasDomains) {
-                var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["b" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
+                var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["c" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
                 this.addServerRequestObj(requestObj);
 
                 var url = api_url_public + 'domains';
@@ -45964,27 +46276,17 @@ var App = function (_React$Component) {
     }, {
         key: 'addServerRequestObj',
         value: function addServerRequestObj(requestObj) {
-            var serverRequestObjsCopy = this.state.serverRequestObjs.slice();
-            serverRequestObjsCopy.push(requestObj);
             this.setState({
-                serverRequestObjs: serverRequestObjsCopy
+                serverRequestObjs: __WEBPACK_IMPORTED_MODULE_10_immutability_helper___default()(this.state.serverRequestObjs, { $push: [requestObj] })
             });
         }
     }, {
         key: 'deleteServerRequestObj',
         value: function deleteServerRequestObj(requestObj) {
-            var index = null;
-            for (var i = 0, len = this.state.serverRequestObjs.length; i < len; i++) {
-                if (this.state.serverRequestObjs[i].id == requestObj.id) {
-                    index = i;
-                    break;
-                }
-            }
+            var index = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["a" /* findIndexById */])(this.state.serverRequestObjs, requestObj.id);
             if (index != null) {
-                var serverRequestObjsCopy = this.state.serverRequestObjs.slice();
-                serverRequestObjsCopy.splice(index, 1);
                 this.setState({
-                    serverRequestObjs: serverRequestObjsCopy
+                    serverRequestObjs: __WEBPACK_IMPORTED_MODULE_10_immutability_helper___default()(this.state.serverRequestObjs, { $splice: [[index, 1]] })
                 });
             }
         }
@@ -46009,18 +46311,18 @@ var App = function (_React$Component) {
         value: function addDomain(domain) {
             var _this3 = this;
 
-            var newId = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["e" /* uuidv4 */])();
-            var domainsCopy = this.state.domains.slice();
-            domainsCopy.unshift({
-                id: newId,
-                domain: domain,
-                licencekey: null
-            });
+            this.closeMainMsg();
+
+            var newId = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["f" /* uuidv4 */])();
             this.setState({
-                domains: domainsCopy
+                domains: __WEBPACK_IMPORTED_MODULE_10_immutability_helper___default()(this.state.domains, { $unshift: [{
+                        id: newId,
+                        domain: domain,
+                        licence_key: null
+                    }] })
             });
 
-            var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["b" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
+            var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["c" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
             this.addServerRequestObj(requestObj);
 
             var url = api_url_public + 'domains';
@@ -46045,36 +46347,66 @@ var App = function (_React$Component) {
                     domains: newDomains
                 });
             }).catch(function (error) {
-                console.log('Error: ' + error);
-                // this.setState({
-                //    domainsLoaded: true
-                // });
-                // const children = <table><tbody><tr><td className="left">The server could not be reached. Please try again.</td><td className="right"></td></tr></tbody></table>;
-                // this.showMainMsg(children);
+                var index = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["a" /* findIndexById */])(_this3.state.domains, newId);
+                if (index != null) {
+                    _this3.setState({
+                        domains: __WEBPACK_IMPORTED_MODULE_10_immutability_helper___default()(_this3.state.domains, { $splice: [[index, 1]] })
+                    });
+                }
+                var children = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'left' }, 'An error occurred. The domain was not added.'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont mainmsg', onClick: function onClick() {
+                        _this3.addDomain(domain);
+                    } }, 'RETRY')))));
+                _this3.showMainMsg(children);
             }).then(function () {
                 _this3.deleteServerRequestObj(requestObj);
             });
-
-            //@@
         }
     }, {
-        key: 'editDomain',
-        value: function editDomain(id, domain) {
-            var newDomains = [];
-            for (var i = 0, len = this.state.domains.length; i < len; i++) {
-                if (this.state.domains[i].id == id) {
-                    newDomains.push({
-                        id: this.state.domains[i].id,
-                        domain: domain,
-                        licencekey: this.state.domains[i].licencekey
-                    });
-                } else {
-                    newDomains.push(this.state.domains[i]);
-                }
+        key: 'updateDomain',
+        value: function updateDomain(id, domain) {
+            var _this4 = this;
+
+            var index = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["a" /* findIndexById */])(this.state.domains, id);
+            var origDomain = null;
+            if (index != null) {
+                origDomain = this.state.domains[index].domain;
             }
-            if (newDomains.length > 0) {
+            if (index != null && origDomain != null && origDomain != domain) {
+                this.closeMainMsg();
+
                 this.setState({
-                    domains: newDomains
+                    domains: __WEBPACK_IMPORTED_MODULE_10_immutability_helper___default()(this.state.domains, _defineProperty({}, index, { $set: {
+                            id: this.state.domains[index].id,
+                            domain: domain,
+                            licence_key: this.state.domains[index].licence_key
+                        } }))
+                });
+
+                var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["c" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
+                this.addServerRequestObj(requestObj);
+
+                var url = api_url_public + 'domains/' + id;
+                __WEBPACK_IMPORTED_MODULE_4_axios___default()({
+                    method: 'put',
+                    url: url,
+                    data: {
+                        'action': 'update',
+                        'domain': domain
+                    },
+                    cancelToken: requestObj.source.token
+                }).catch(function (error) {
+                    _this4.setState({
+                        domains: __WEBPACK_IMPORTED_MODULE_10_immutability_helper___default()(_this4.state.domains, _defineProperty({}, index, { $set: {
+                                id: _this4.state.domains[index].id,
+                                domain: origDomain,
+                                licence_key: _this4.state.domains[index].licence_key
+                            } }))
+                    });
+
+                    var children = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'left' }, 'An error occurred. The domain was not updated. Please try again.'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'right' }))));
+                    _this4.showMainMsg(children);
+                }).then(function () {
+                    _this4.deleteServerRequestObj(requestObj);
                 });
             }
         }
@@ -46098,7 +46430,7 @@ var App = function (_React$Component) {
     }, {
         key: 'leftEnd',
         value: function leftEnd(instance, index, didSlideOut) {
-            var _this4 = this;
+            var _this5 = this;
 
             if (didSlideOut) {
                 var domain = this.state.domains[index].domain;
@@ -46108,12 +46440,15 @@ var App = function (_React$Component) {
                 var copyDomain = {
                     id: this.state.domains[index].id,
                     domain: this.state.domains[index].domain,
-                    licencekey: this.state.domains[index].licencekey
+                    licence_key: this.state.domains[index].licence_key
                 };
                 var children = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'left' }, 'The domain \'', domain, '\' was deleted.'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont mainmsg', onClick: function onClick() {
-                        _this4.undeleteDomain(copyDomain, index);
+                        _this5.undeleteDomain(copyDomain, index);
                     } }, 'UNDO')))));
                 this.showMainMsg(children, 12000);
+
+                var listItems = instance.listCont.getElementsByClassName(instance.listItemClass);
+                listItems[index].className = listItems[index].className + ' deleting';
 
                 var newDomains = this.state.domains.slice(0);
                 newDomains.splice(index, 1);
@@ -46125,24 +46460,22 @@ var App = function (_React$Component) {
     }, {
         key: 'undeleteDomain',
         value: function undeleteDomain(domain, index) {
-            var newDomains = this.state.domains.slice(0);
-            newDomains.splice(index, 0, domain);
             this.setState({
-                domains: newDomains
+                domains: __WEBPACK_IMPORTED_MODULE_10_immutability_helper___default()(this.state.domains, { $splice: [[index, 0, domain]] })
             });
             this.closeMainMsg();
         }
     }, {
         key: 'showMainMsg',
         value: function showMainMsg(children, duration) {
-            var _this5 = this;
+            var _this6 = this;
 
             var delay = 8000;
             if (typeof duration !== 'undefined' && duration != null) {
                 delay = duration;
             }
             Object(__WEBPACK_IMPORTED_MODULE_9__console_mainmsg_js__["c" /* setMainMsgTimeout */])(function () {
-                _this5.setState({ mainMsgShow: false });
+                _this6.setState({ mainMsgShow: false });
             }, delay);
             this.setState({
                 mainMsgChildren: children,
@@ -46160,7 +46493,7 @@ var App = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this6 = this;
+            var _this7 = this;
 
             var tab0Classes = __WEBPACK_IMPORTED_MODULE_3_classNames_dedupe___default()({
                 'tab-cont': true,
@@ -46185,10 +46518,10 @@ var App = function (_React$Component) {
                 'oln': this.state.tabIndex != 1
             });
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'tabs-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: tab0Classes, onClick: function onClick() {
-                    _this6.tabClick(0);
+                    _this7.tabClick(0);
                 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: icon0Classes }), '\xA0Domains'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: tab1Classes, onClick: function onClick() {
-                    _this6.tabClick(1);
-                } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: icon1Classes }), '\xA0Account')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-cont' }, this.state.domainsLoaded ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 0, classNames: 'domains-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__console_domains_js__["a" /* Domains */], { domains: this.state.domains, domainsMsgShow: this.state.domainsMsgShow, domainsMsgText: this.state.domainsMsgText, domainsMsgCloseClick: this.domainsMsgCloseClick, addDomain: this.addDomain, editDomain: this.editDomain, sortEnd: this.sortEnd, leftEnd: this.leftEnd })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 1, classNames: 'account-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__console_account_js__["a" /* Account */], null))) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, 'Loading domains...')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__console_mainmsg_js__["a" /* MainMsg */], { children: this.state.mainMsgChildren, visible: this.state.mainMsgShow, closeClick: this.closeMainMsg }));
+                    _this7.tabClick(1);
+                } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: icon1Classes }), '\xA0Account')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-cont' }, this.state.domainsLoaded ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 0, classNames: 'domains-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__console_domains_js__["a" /* Domains */], { domains: this.state.domains, domainsMsgShow: this.state.domainsMsgShow, domainsMsgText: this.state.domainsMsgText, domainsMsgCloseClick: this.domainsMsgCloseClick, addDomain: this.addDomain, updateDomain: this.updateDomain, sortEnd: this.sortEnd, leftEnd: this.leftEnd })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 1, classNames: 'account-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__console_account_js__["a" /* Account */], null))) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, 'Loading domains...')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__console_mainmsg_js__["a" /* MainMsg */], { children: this.state.mainMsgChildren, visible: this.state.mainMsgShow, closeClick: this.closeMainMsg }));
         }
     }]);
 
@@ -46277,7 +46610,7 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 //icon-email
 //icon-profile-picture
 
-
+// TODO: Allo 'ignoreOnClick' to work with id and class selectors, as well as element types
 // TODO: Finish Controller_Auth_SignUp
 // TODO: Create /terms and /privacy
 // TODO: Can't get out of edit domain if it is below keyboard
@@ -48213,12 +48546,25 @@ var monitorWinWidth = function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = hasDomainForm;
-/* harmony export (immutable) */ __webpack_exports__["c"] = stripUrl;
-/* harmony export (immutable) */ __webpack_exports__["b"] = requestObjCreate;
-/* harmony export (immutable) */ __webpack_exports__["e"] = uuidv4;
-/* harmony export (immutable) */ __webpack_exports__["d"] = trimString;
+/* harmony export (immutable) */ __webpack_exports__["a"] = findIndexById;
+/* harmony export (immutable) */ __webpack_exports__["b"] = hasDomainForm;
+/* harmony export (immutable) */ __webpack_exports__["d"] = stripUrl;
+/* harmony export (immutable) */ __webpack_exports__["c"] = requestObjCreate;
+/* harmony export (immutable) */ __webpack_exports__["f"] = uuidv4;
+/* harmony export (immutable) */ __webpack_exports__["e"] = trimString;
+
+function findIndexById(array, id) {
+	for (var i = 0, len = array.length; i < len; i++) {
+		if (array[i].id == id) {
+			return i;
+		}
+	}
+	return null;
+}
+
 function hasDomainForm(value) {
+	// note: changes should also be reflected in the equivalent php function
+
 	if (/^\S+\.\S+$/.test(value)) {
 		return true;
 	}
@@ -48226,6 +48572,8 @@ function hasDomainForm(value) {
 }
 
 function stripUrl(url) {
+	// note: changes should also be reflected in the equivalent php function
+
 	url = url.toLowerCase();
 
 	url = url.replace(/^http:\/\/|https:\/\/|ftp:\/\/|ftps:\/\//, '');
