@@ -46204,9 +46204,6 @@ __WEBPACK_IMPORTED_MODULE_4_axios___default.a.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest'
 };
 
-// axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector("meta[name='csrf-token']").getAttribute("content");
-// axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
 var App = function (_React$Component) {
     _inherits(App, _React$Component);
 
@@ -46229,11 +46226,12 @@ var App = function (_React$Component) {
         _this.domainsMsgCloseClick = _this.domainsMsgCloseClick.bind(_this);
         _this.addDomain = _this.addDomain.bind(_this);
         _this.updateDomain = _this.updateDomain.bind(_this);
+        _this.deleteDomain = _this.deleteDomain.bind(_this);
+        _this.undeleteDomain = _this.undeleteDomain.bind(_this);
         _this.showMainMsg = _this.showMainMsg.bind(_this);
         _this.closeMainMsg = _this.closeMainMsg.bind(_this);
         _this.sortEnd = _this.sortEnd.bind(_this);
         _this.leftEnd = _this.leftEnd.bind(_this);
-        _this.undeleteDomain = _this.undeleteDomain.bind(_this);
         _this.addServerRequestObj = _this.addServerRequestObj.bind(_this);
         _this.deleteServerRequestObj = _this.deleteServerRequestObj.bind(_this);
         return _this;
@@ -46427,55 +46425,151 @@ var App = function (_React$Component) {
                 });
             }
         }
+        // deleteTask(index) {
+        //     this.props.hideMainError();
+
+        //     const task = this.props.tasks[index];
+        //     this.props.deleteTask(this.props.currentContextId, index, task);
+
+        //     const requestObj = requestObjCreate(axios.CancelToken);
+        //     this.props.addServerRequestObj(requestObj);
+
+        //     const url = API_URL_Public + 'tasks/' + task.id;
+        //     axios({
+        //         method: 'put',
+        //         url: url,
+        //         data: {
+        //             'action': 'delete',
+        //             'context-id': this.props.currentContextId
+        //         },
+        //         cancelToken: requestObj.source.token
+        //     })
+        //     .catch((error)=>{
+        //         if (requestObjExists(this.props.serverRequestObjs, requestObj)) {
+        //             let children = <table><tbody><tr><td className="left">Oops, your task could not be deleted.</td><td className="right"><div className="button-word-cont errormsg invisible">&nbsp;</div></td></tr></tbody></table>;
+        //             if ((error.response) && (error.response.status) && (error.response.status == 409)) {
+        //                 const errorId = error.response.data.id;
+        //                 if ((errorId) && (errorId == '7CF9234F-36ED-4EA8-976C-E77BFAB27DF7')) {
+        //                     children = <table><tbody><tr><td className="left">Oops, your task could not be deleted. Please try again.</td><td className="right"><div className="button-word-cont errormsg" onClick={() => this.deleteTask(index)}>RETRY</div></td></tr></tbody></table>;
+        //                 }
+        //             }
+        //             this.props.showMainError(children);
+        //         }
+        //     })
+        //     .then(()=>{
+        //         this.props.deleteServerRequestObj(requestObj);
+        //     });
+        // }
+
     }, {
         key: 'leftEnd',
         value: function leftEnd(instance, index, didSlideOut) {
+            if (didSlideOut) {
+                this.deleteDomain(instance, index);
+            }
+        }
+    }, {
+        key: 'deleteDomain',
+        value: function deleteDomain(instance, index) {
             var _this5 = this;
 
-            if (didSlideOut) {
-                var domain = this.state.domains[index].domain;
-                if (domain.length > 30) {
-                    domain = domain.substr(0, 27) + '...';
-                }
-                var copyDomain = {
-                    id: this.state.domains[index].id,
-                    domain: this.state.domains[index].domain,
-                    licence_key: this.state.domains[index].licence_key
-                };
+            this.closeMainMsg();
+
+            var domain = this.state.domains[index].domain;
+            if (domain.length > 30) {
+                domain = domain.substr(0, 27) + '...';
+            }
+            var copyDomain = {
+                id: this.state.domains[index].id,
+                domain: this.state.domains[index].domain,
+                licence_key: this.state.domains[index].licence_key
+            };
+
+            var listItems = instance.listCont.getElementsByClassName(instance.listItemClass);
+            listItems[index].className = listItems[index].className + ' deleting';
+
+            var newDomains = this.state.domains.slice(0);
+            newDomains.splice(index, 1);
+            this.setState({
+                domains: newDomains
+            });
+
+            var children = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'left' }, 'Deleting domain...'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont mainmsg dummy' }, '\xA0')))));
+            this.showMainMsg(children, 86400000);
+
+            var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["c" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
+            this.addServerRequestObj(requestObj);
+
+            var url = api_url_public + 'domains/' + copyDomain.id;
+            __WEBPACK_IMPORTED_MODULE_4_axios___default()({
+                method: 'put',
+                url: url,
+                data: {
+                    'action': 'delete'
+                },
+                cancelToken: requestObj.source.token
+            }).then(function (response) {
                 var children = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'left' }, 'The domain \'', domain, '\' was deleted.'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont mainmsg', onClick: function onClick() {
                         _this5.undeleteDomain(copyDomain, index);
                     } }, 'UNDO')))));
-                this.showMainMsg(children, 12000);
-
-                var listItems = instance.listCont.getElementsByClassName(instance.listItemClass);
-                listItems[index].className = listItems[index].className + ' deleting';
-
-                var newDomains = this.state.domains.slice(0);
-                newDomains.splice(index, 1);
-                this.setState({
-                    domains: newDomains
+                _this5.showMainMsg(children, 12000);
+            }).catch(function (error) {
+                _this5.setState({
+                    domains: __WEBPACK_IMPORTED_MODULE_10_immutability_helper___default()(_this5.state.domains, { $splice: [[index, 0, copyDomain]] })
                 });
-            }
+                var children = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'left' }, 'An error occurred. The domain was not deleted. Please try again.'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont mainmsg', onClick: function onClick() {
+                        return _this5.deleteDomain(instance, index);
+                    } }, 'RETRY')))));
+                _this5.showMainMsg(children);
+            }).then(function () {
+                _this5.deleteServerRequestObj(requestObj);
+            });
         }
     }, {
         key: 'undeleteDomain',
         value: function undeleteDomain(domain, index) {
-            this.setState({
-                domains: __WEBPACK_IMPORTED_MODULE_10_immutability_helper___default()(this.state.domains, { $splice: [[index, 0, domain]] })
+            var _this6 = this;
+
+            var children = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'left' }, 'Restoring domain...'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont mainmsg dummy' }, '\xA0')))));
+            this.showMainMsg(children, 86400000);
+
+            var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["c" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
+            this.addServerRequestObj(requestObj);
+
+            var url = api_url_public + 'domains/' + domain.id;
+            __WEBPACK_IMPORTED_MODULE_4_axios___default()({
+                method: 'put',
+                url: url,
+                data: {
+                    'action': 'undelete',
+                    'index': index
+                },
+                cancelToken: requestObj.source.token
+            }).then(function (response) {
+                _this6.closeMainMsg();
+                _this6.setState({
+                    domains: __WEBPACK_IMPORTED_MODULE_10_immutability_helper___default()(_this6.state.domains, { $splice: [[index, 0, domain]] })
+                });
+            }).catch(function (error) {
+                var children = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'left' }, 'An error occurred. The domain could not be restored.'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont mainmsg', onClick: function onClick() {
+                        return _this6.undeleteDomain(domain, index);
+                    } }, 'RETRY')))));
+                _this6.showMainMsg(children);
+            }).then(function () {
+                _this6.deleteServerRequestObj(requestObj);
             });
-            this.closeMainMsg();
         }
     }, {
         key: 'showMainMsg',
         value: function showMainMsg(children, duration) {
-            var _this6 = this;
+            var _this7 = this;
 
             var delay = 8000;
             if (typeof duration !== 'undefined' && duration != null) {
                 delay = duration;
             }
             Object(__WEBPACK_IMPORTED_MODULE_9__console_mainmsg_js__["c" /* setMainMsgTimeout */])(function () {
-                _this6.setState({ mainMsgShow: false });
+                _this7.setState({ mainMsgShow: false });
             }, delay);
             this.setState({
                 mainMsgChildren: children,
@@ -46493,7 +46587,7 @@ var App = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this7 = this;
+            var _this8 = this;
 
             var tab0Classes = __WEBPACK_IMPORTED_MODULE_3_classNames_dedupe___default()({
                 'tab-cont': true,
@@ -46518,9 +46612,9 @@ var App = function (_React$Component) {
                 'oln': this.state.tabIndex != 1
             });
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'tabs-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: tab0Classes, onClick: function onClick() {
-                    _this7.tabClick(0);
+                    _this8.tabClick(0);
                 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: icon0Classes }), '\xA0Domains'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: tab1Classes, onClick: function onClick() {
-                    _this7.tabClick(1);
+                    _this8.tabClick(1);
                 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: icon1Classes }), '\xA0Account')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-cont' }, this.state.domainsLoaded ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 0, classNames: 'domains-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__console_domains_js__["a" /* Domains */], { domains: this.state.domains, domainsMsgShow: this.state.domainsMsgShow, domainsMsgText: this.state.domainsMsgText, domainsMsgCloseClick: this.domainsMsgCloseClick, addDomain: this.addDomain, updateDomain: this.updateDomain, sortEnd: this.sortEnd, leftEnd: this.leftEnd })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 1, classNames: 'account-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__console_account_js__["a" /* Account */], null))) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, 'Loading domains...')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__console_mainmsg_js__["a" /* MainMsg */], { children: this.state.mainMsgChildren, visible: this.state.mainMsgShow, closeClick: this.closeMainMsg }));
         }
     }]);
@@ -46609,6 +46703,10 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 
 //icon-email
 //icon-profile-picture
+
+// delete
+// undelete
+// reorder
 
 // TODO: Allo 'ignoreOnClick' to work with id and class selectors, as well as element types
 // TODO: Finish Controller_Auth_SignUp
@@ -48626,6 +48724,30 @@ function uuidv4() {
 function trimString(text) {
 	return text.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
 }
+
+// export function hasClass(el, className) {
+//  	if (el.classList) {
+// 		return el.classList.contains(className);
+//  	}
+//  	return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'));	
+// }
+
+// export function addClass(el, className) {
+// 	if (el.classList) {
+// 		el.classList.add(className);
+// 	} else if (!hasClass(el, className)) {
+// 		el.className += " " + className;
+// 	}
+// }
+
+// export function removeClass(el, className) {
+// 	if (el.classList) {
+// 		el.classList.remove(className);
+// 	} else if (hasClass(el, className)) {
+//         var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+//         el.className = el.className.replace(reg, ' ');
+// 	}
+// }
 
 /***/ }),
 

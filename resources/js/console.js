@@ -17,9 +17,6 @@ axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest'
 };
 
-// axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector("meta[name='csrf-token']").getAttribute("content");
-// axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -37,11 +34,12 @@ class App extends React.Component {
         this.domainsMsgCloseClick = this.domainsMsgCloseClick.bind(this);
         this.addDomain = this.addDomain.bind(this);
         this.updateDomain = this.updateDomain.bind(this);
+        this.deleteDomain = this.deleteDomain.bind(this);
+        this.undeleteDomain = this.undeleteDomain.bind(this);
         this.showMainMsg = this.showMainMsg.bind(this);
         this.closeMainMsg = this.closeMainMsg.bind(this);
         this.sortEnd = this.sortEnd.bind(this);
         this.leftEnd = this.leftEnd.bind(this);
-        this.undeleteDomain = this.undeleteDomain.bind(this);
         this.addServerRequestObj = this.addServerRequestObj.bind(this);
         this.deleteServerRequestObj = this.deleteServerRequestObj.bind(this);
     }
@@ -217,35 +215,129 @@ class App extends React.Component {
             });
         }
     }
+    // deleteTask(index) {
+    //     this.props.hideMainError();
+
+    //     const task = this.props.tasks[index];
+    //     this.props.deleteTask(this.props.currentContextId, index, task);
+
+    //     const requestObj = requestObjCreate(axios.CancelToken);
+    //     this.props.addServerRequestObj(requestObj);
+
+    //     const url = API_URL_Public + 'tasks/' + task.id;
+    //     axios({
+    //         method: 'put',
+    //         url: url,
+    //         data: {
+    //             'action': 'delete',
+    //             'context-id': this.props.currentContextId
+    //         },
+    //         cancelToken: requestObj.source.token
+    //     })
+    //     .catch((error)=>{
+    //         if (requestObjExists(this.props.serverRequestObjs, requestObj)) {
+    //             let children = <table><tbody><tr><td className="left">Oops, your task could not be deleted.</td><td className="right"><div className="button-word-cont errormsg invisible">&nbsp;</div></td></tr></tbody></table>;
+    //             if ((error.response) && (error.response.status) && (error.response.status == 409)) {
+    //                 const errorId = error.response.data.id;
+    //                 if ((errorId) && (errorId == '7CF9234F-36ED-4EA8-976C-E77BFAB27DF7')) {
+    //                     children = <table><tbody><tr><td className="left">Oops, your task could not be deleted. Please try again.</td><td className="right"><div className="button-word-cont errormsg" onClick={() => this.deleteTask(index)}>RETRY</div></td></tr></tbody></table>;
+    //                 }
+    //             }
+    //             this.props.showMainError(children);
+    //         }
+    //     })
+    //     .then(()=>{
+    //         this.props.deleteServerRequestObj(requestObj);
+    //     });
+    // }
     leftEnd(instance, index, didSlideOut) {
         if (didSlideOut) {
-            let domain = this.state.domains[index].domain;
-            if (domain.length > 30) {
-                domain = domain.substr(0, 27) + '...';
-            }
-            const copyDomain = {
-                id: this.state.domains[index].id,
-                domain: this.state.domains[index].domain,
-                licence_key: this.state.domains[index].licence_key
-            };
-            const children = <table><tbody><tr><td className="left">The domain &#39;{domain}&#39; was deleted.</td><td className="right"><div className="button-word-cont mainmsg" onClick={() => {this.undeleteDomain(copyDomain, index);}}>UNDO</div></td></tr></tbody></table>;
-            this.showMainMsg(children, 12000);
-
-            const listItems = instance.listCont.getElementsByClassName(instance.listItemClass);
-            listItems[index].className = listItems[index].className + ' deleting';
-
-            const newDomains = this.state.domains.slice(0);
-            newDomains.splice(index, 1);
-            this.setState({
-               domains: newDomains
-            });
+            this.deleteDomain(instance, index);
         }
     }
-    undeleteDomain(domain, index) {
-        this.setState({
-           domains: update(this.state.domains, {$splice: [[index, 0, domain]] })
-        });
+
+    deleteDomain(instance, index) {
         this.closeMainMsg();
+
+        let domain = this.state.domains[index].domain;
+        if (domain.length > 30) {
+            domain = domain.substr(0, 27) + '...';
+        }
+        const copyDomain = {
+            id: this.state.domains[index].id,
+            domain: this.state.domains[index].domain,
+            licence_key: this.state.domains[index].licence_key
+        };
+
+        const listItems = instance.listCont.getElementsByClassName(instance.listItemClass);
+        listItems[index].className = listItems[index].className + ' deleting';
+
+        const newDomains = this.state.domains.slice(0);
+        newDomains.splice(index, 1);
+        this.setState({
+           domains: newDomains
+        });
+
+        const children = <table><tbody><tr><td className="left">Deleting domain...</td><td className="right"><div className="button-word-cont mainmsg dummy">&nbsp;</div></td></tr></tbody></table>;
+        this.showMainMsg(children, 86400000);
+
+        const requestObj = requestObjCreate(axios.CancelToken);
+        this.addServerRequestObj(requestObj);
+
+        let url = api_url_public + 'domains/' + copyDomain.id;
+        axios({
+            method: 'put',
+            url: url,
+            data: {
+                'action' : 'delete'
+            },
+            cancelToken: requestObj.source.token
+        })
+        .then((response)=>{
+            const children = <table><tbody><tr><td className="left">The domain &#39;{domain}&#39; was deleted.</td><td className="right"><div className="button-word-cont mainmsg" onClick={() => {this.undeleteDomain(copyDomain, index);}}>UNDO</div></td></tr></tbody></table>;
+            this.showMainMsg(children, 12000);
+        })
+        .catch((error)=>{
+            this.setState({
+               domains: update(this.state.domains, {$splice: [[index, 0, copyDomain]] })
+            });
+            const children = <table><tbody><tr><td className="left">An error occurred. The domain was not deleted. Please try again.</td><td className="right"><div className="button-word-cont mainmsg" onClick={() => this.deleteDomain(instance, index)}>RETRY</div></td></tr></tbody></table>;
+            this.showMainMsg(children);
+        })
+        .then(()=>{
+            this.deleteServerRequestObj(requestObj);
+        });
+    }
+    undeleteDomain(domain, index) {
+        const children = <table><tbody><tr><td className="left">Restoring domain...</td><td className="right"><div className="button-word-cont mainmsg dummy">&nbsp;</div></td></tr></tbody></table>;
+        this.showMainMsg(children, 86400000);
+
+        const requestObj = requestObjCreate(axios.CancelToken);
+        this.addServerRequestObj(requestObj);
+
+        let url = api_url_public + 'domains/' + domain.id;
+        axios({
+            method: 'put',
+            url: url,
+            data: {
+                'action' : 'undelete',
+                'index' : index
+            },
+            cancelToken: requestObj.source.token
+        })
+        .then((response)=>{
+            this.closeMainMsg();
+            this.setState({
+               domains: update(this.state.domains, {$splice: [[index, 0, domain]] })
+            });
+        })
+        .catch((error)=>{
+            const children = <table><tbody><tr><td className="left">An error occurred. The domain could not be restored.</td><td className="right"><div className="button-word-cont mainmsg" onClick={() => this.undeleteDomain(domain, index)}>RETRY</div></td></tr></tbody></table>;
+            this.showMainMsg(children);
+        })
+        .then(()=>{
+            this.deleteServerRequestObj(requestObj);
+        });
     }
     showMainMsg(children, duration) {
         let delay = 8000;

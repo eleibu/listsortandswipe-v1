@@ -107,13 +107,13 @@ class Controller_API_Domains extends Controller
 			    	return $this->updateDomain($request, $id);
 			        break;
 			    case 'reorder':
-			    	// return $this->reorderContext($request, $id);
+			    	// return $this->reorderDomain($request, $id);
 			        break;
 			    case 'delete':
-			    	// return $this->deleteContext($request, $id);
+			    	return $this->deleteDomain($request, $id);
 			        break;
 			    case 'undelete':
-			    	// return $this->undeleteContext($request, $id);
+			    	return $this->undeleteDomain($request, $id);
 			        break;
 			    default:
 					return response()->json([
@@ -124,6 +124,124 @@ class Controller_API_Domains extends Controller
 		} else {
 			return response()->json([
 				'id' => '0D916ABC-24B5-45A4-8FC7-92CE01A5255C',
+				'message' => 'Missing parameters.'
+			], 400);
+		}
+	}
+
+	protected function deleteDomain(Request $request, $id) {
+		$user = Auth::guard('api')->user();
+		$domainIds = json_decode($user->domain_ids);
+
+		if (isset($domainIds) && (count($domainIds) > 0)) {
+			$domain = Domain::where('id', $id)
+						->first();
+
+			if (isset($domain)) {
+				$newDomainIds = array();
+				for ($i = 0; $i < count($domainIds); $i++) {
+					if ($domainIds[$i] != $id) {
+						array_push($newDomainIds, $domainIds[$i]);
+					}
+				}			
+
+				DB::beginTransaction();
+				try {
+					$affected = DB::table('users')
+						->where('id', $user->id)
+						->where('updated_at', '=', $user->updated_at)
+						->update([
+							'updated_at' => Carbon::now('UTC'),
+							'domain_ids' => json_encode($newDomainIds)
+						]);
+					if ($affected == 1) {
+						$domain->delete();
+					} else {
+						DB::rollback();
+						return response()->json([
+							'id' => '2D918067-745E-445B-819C-9194D2531885',
+							'message' => 'Database conflict.'
+						], 409);
+					}
+				} catch(\Exception $e) {
+				   DB::rollback();
+				   throw $e;
+				}
+				DB::commit();
+
+				return response()->json([
+					'domainIds' => $newDomainIds
+				], 200);
+			} else {
+				return response()->json([
+					'id' => '7732905A-551D-4F83-A92E-205640AE5FEE',
+					'message' => 'Domain not found.'
+				], 409);
+			}
+		} else {
+			return response()->json([
+				'domainIds' => $domainIds
+			], 200);
+		}
+	}
+
+	protected function undeleteDomain(Request $request, $id) {
+		if ($request->filled('index')) {
+			$domain = Domain::where('id', $id)
+						->withTrashed()
+						->first();
+
+			if (isset($domain)) {
+				$user = Auth::guard('api')->user();
+				$domainIds = json_decode($user->domain_ids);
+				if (!isset($domainIds)) {
+					$domainIds = array();
+				}
+
+				if (!in_array($id, $domainIds)) {
+					array_splice($domainIds, $request->input('index'), 0, $id);
+
+					DB::beginTransaction();
+					try {
+						$affected = DB::table('users')
+							->where('id', $user->id)
+							->where('updated_at', '=', $user->updated_at)
+							->update([
+								'updated_at' => Carbon::now('UTC'),
+								'domain_ids' => json_encode($domainIds)
+							]);
+						if ($affected == 1) {
+							$domain->restore();
+						} else {
+							DB::rollback();
+							return response()->json([
+								'id' => 'C0063608-9CF0-417D-9036-C9AF68AA2034',
+								'message' => 'Database conflict.'
+							], 409);
+						}
+					} catch(\Exception $e) {
+					   DB::rollback();
+					   throw $e;
+					}
+					DB::commit();
+
+					return response()->json([
+						'domainIds' => $domainIds
+					], 200);
+				} else {
+					return response()->json([
+						'domainIds' => $domainIds
+					], 200);
+				}
+			} else {
+				return response()->json([
+					'id' => '810F9E2C-08F7-4C64-95FC-B54708038098',
+					'message' => 'Domain not found.'
+				], 404);
+			}
+		} else {
+			return response()->json([
+				'id' => '9498E297-E169-4999-BE3F-0686214D3A8A',
 				'message' => 'Missing parameters.'
 			], 400);
 		}

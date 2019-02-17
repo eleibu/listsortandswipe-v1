@@ -18688,6 +18688,10 @@ if (outerContSetup && listContSetup) {
 //icon-email
 //icon-profile-picture
 
+// delete
+// undelete
+// reorder
+
 // TODO: Allo 'ignoreOnClick' to work with id and class selectors, as well as element types
 // TODO: Finish Controller_Auth_SignUp
 // TODO: Create /terms and /privacy

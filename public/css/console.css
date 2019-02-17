@@ -805,6 +805,10 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
   background-color: rgba(255, 255, 255, 0.15);
 }
 
+#div-mainmsg-cont div.mainmsg-outer div.mainmsg-inner .button-word-cont.mainmsg.dummy {
+  visibility: hidden;
+}
+
 #div-mainmsg-cont div.mainmsg-outer i {
   position: absolute;
   top: 50%;
