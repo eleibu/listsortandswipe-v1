@@ -106,8 +106,8 @@ class Controller_API_Domains extends Controller
 			    case 'update':
 			    	return $this->updateDomain($request, $id);
 			        break;
-			    case 'reorder':
-			    	// return $this->reorderDomain($request, $id);
+			    case 'sort':
+			    	return $this->sortDomain($request, $id);
 			        break;
 			    case 'delete':
 			    	return $this->deleteDomain($request, $id);
@@ -124,6 +124,66 @@ class Controller_API_Domains extends Controller
 		} else {
 			return response()->json([
 				'id' => '0D916ABC-24B5-45A4-8FC7-92CE01A5255C',
+				'message' => 'Missing parameters.'
+			], 400);
+		}
+	}
+
+	protected function sortDomain($request, $id) {
+		if ($request->filled('new-index')) {
+			$user = Auth::guard('api')->user();
+			$domainIds = json_decode($user->domain_ids);
+
+			if (isset($domainIds) && (count($domainIds) > 1)) {
+				$oldIndex = null;
+				for ($i = 0; $i < count($domainIds); $i++) {
+					if ($domainIds[$i] == $id) {
+						$oldIndex = $i;
+						break;
+					}
+				}
+				if (isset($oldIndex)) {
+					$newIndex = $request->input('new-index');
+
+					if ($newIndex > (count($domainIds) - 1)) {
+						array_push($domainIds, $id);
+					} else {
+						$domainIds = Toolkit::moveElement($domainIds, $oldIndex, $newIndex);
+					}
+
+					$affected = DB::table('users')
+						->where('id', $user->id)
+						->where('updated_at', '=', $user->updated_at)
+						->update([
+							'updated_at' => Carbon::now('UTC'),
+							'domain_ids' => json_encode($domainIds)
+						]);
+					if ($affected == 1) {
+						return response()->json([
+							'domainIds' => $domainIds
+						], 200);
+					} else {
+						DB::rollback();
+						return response()->json([
+							'id' => '9E4B2533-CC49-4234-9916-667A4561FD93',
+							'message' => 'Database conflict.'
+						], 409);
+					}
+				} else {
+					return response()->json([
+						'id' => '46BC692F-02D1-4E52-9A02-DA7DE69937A8',
+						'message' => 'Domain not found.'
+					], 409);
+				}
+			} else {
+				return response()->json([
+					'id' => '5B0294D8-B4B4-46EB-8DC2-3F3B190B4CA5',
+					'message' => 'Too few domains to reorder.'
+				], 409);
+			}
+		} else {
+			return response()->json([
+				'id' => '26155E93-BAC2-485A-8E49-F19CA62CC6FD',
 				'message' => 'Missing parameters.'
 			], 400);
 		}

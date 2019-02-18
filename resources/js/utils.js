@@ -72,6 +72,18 @@ export function trimString(text) {
     return text.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
 }
 
+export function arrayMove(arr, previousIndex, newIndex) {
+    const array = arr.slice(0);
+    if (newIndex >= array.length) {
+        let k = newIndex - array.length;
+        while (k-- + 1) {
+            array.push(undefined);
+        }
+    }
+    array.splice(newIndex, 0, array.splice(previousIndex, 1)[0]);
+    return array;
+}
+
 // export function hasClass(el, className) {
 //  	if (el.classList) {
 // 		return el.classList.contains(className);

@@ -1,15 +1,16 @@
 <?php
 
 namespace App\Classes;
-// use App\Context;
-// use App\Task;
-// use App\Project;
-// use DB;
-// use \Carbon\Carbon;
 
 class Toolkit {
 	public static function sleep(){
 		sleep (1);
+	}
+
+	public static function moveElement($arr, $previousIndex, $newIndex) {
+	    $removedArr = array_splice($arr, $previousIndex, 1);
+	    array_splice($arr, $newIndex, 0, $removedArr);
+		return $arr;
 	}
 
 	public static function hasDomainForm($value) {
@@ -106,11 +107,5 @@ class Toolkit {
 	            .substr($charid,20,12);
 	        return $uuid;
 	    }
-	}
-
-	public static function moveElement($arr, $previousIndex, $newIndex) {
-	    $removedArr = array_splice($arr, $previousIndex, 1);
-	    array_splice($arr, $newIndex, 0, $removedArr);
-		return $arr;
 	}
 }

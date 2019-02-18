@@ -8,7 +8,7 @@ import axios from 'axios';
 import { CSSTransition } from 'react-transition-group';
 import { Domains } from './console-domains.js';
 import { Account } from './console-account.js';
-import { findIndexById, requestObjCreate, uuidv4 } from './utils.js';
+import { findIndexById, requestObjCreate, uuidv4, arrayMove } from './utils.js';
 import { setMainMsgTimeout, clearMainMsgTimeout, MainMsg } from './console-mainmsg.js';
 import update from 'immutability-helper';
 
@@ -64,7 +64,7 @@ class App extends React.Component {
                 this.setState({
                    domainsLoaded: true
                 });
-                const children = <table><tbody><tr><td className="left">The server could not be reached. Please try again.</td><td className="right"></td></tr></tbody></table>;
+                const children = <table><tbody><tr><td className="left">The server could not be reached. Please try again.</td><td className="right"><div className="button-word-cont mainmsg dummy">&nbsp;</div></td></tr></tbody></table>;
                 this.showMainMsg(children);
             })
             .then(()=>{
@@ -192,7 +192,7 @@ class App extends React.Component {
                    }}})
                 });
 
-                const children = <table><tbody><tr><td className="left">An error occurred. The domain was not updated. Please try again.</td><td className="right"></td></tr></tbody></table>;
+                const children = <table><tbody><tr><td className="left">An error occurred. The domain was not updated. Please try again.</td><td className="right"><div className="button-word-cont mainmsg dummy">&nbsp;</div></td></tr></tbody></table>;
                 this.showMainMsg(children);
             })
             .then(()=>{
@@ -202,60 +202,49 @@ class App extends React.Component {
     }
     sortEnd(instance, oldIndex, newIndex) {
         if (oldIndex != newIndex) {
-            const newDomains = this.state.domains.slice(0);
-            if (newIndex >= newDomains.length) {
-                let i = newIndex - newDomains.length;
-                while (i-- + 1) {
-                    newDomains.push(undefined);
-                }
-            }
-            newDomains.splice(newIndex, 0, newDomains.splice(oldIndex, 1)[0]);
+            this.closeMainMsg();
+            const id = this.state.domains[oldIndex].id;
+
             this.setState({
-               domains: newDomains
+               domains: arrayMove(this.state.domains, oldIndex, newIndex)
+            });
+
+            const requestObj = requestObjCreate(axios.CancelToken);
+            this.addServerRequestObj(requestObj);
+
+            let url = api_url_public + 'domains/' + id;
+            axios({
+                method: 'put',
+                url: url,
+                data: {
+                    'action' : 'sort',
+                    'new-index' : newIndex
+                },
+                cancelToken: requestObj.source.token
+            })
+            .catch((error)=>{
+                this.setState({
+                   domains: arrayMove(this.state.domains, newIndex, oldIndex)
+                });
+                let children = <table><tbody><tr><td className="left">An error occurred. The domain was not sorted. Please try again.</td><td className="right"><div className="button-word-cont mainmsg dummy">&nbsp;</div></td></tr></tbody></table>;
+                if ((error.response) && (error.response.status) && (error.response.status == 409)) {
+                    const errorId = error.response.data.id;
+                    if ((errorId) && ((errorId == '46BC692F-02D1-4E52-9A02-DA7DE69937A8') || (errorId == '5B0294D8-B4B4-46EB-8DC2-3F3B190B4CA5'))) {
+                        children = <table><tbody><tr><td className="left">The domain could not be sorted because the page is out of date.</td><td className="right"><div className="button-word-cont mainmsg" onClick={() => { window.location.reload(true); }}>REFRESH</div></td></tr></tbody></table>;
+                    }
+                }
+                this.showMainMsg(children);
+            })
+            .then(()=>{
+                this.deleteServerRequestObj(requestObj);
             });
         }
     }
-    // deleteTask(index) {
-    //     this.props.hideMainError();
-
-    //     const task = this.props.tasks[index];
-    //     this.props.deleteTask(this.props.currentContextId, index, task);
-
-    //     const requestObj = requestObjCreate(axios.CancelToken);
-    //     this.props.addServerRequestObj(requestObj);
-
-    //     const url = API_URL_Public + 'tasks/' + task.id;
-    //     axios({
-    //         method: 'put',
-    //         url: url,
-    //         data: {
-    //             'action': 'delete',
-    //             'context-id': this.props.currentContextId
-    //         },
-    //         cancelToken: requestObj.source.token
-    //     })
-    //     .catch((error)=>{
-    //         if (requestObjExists(this.props.serverRequestObjs, requestObj)) {
-    //             let children = <table><tbody><tr><td className="left">Oops, your task could not be deleted.</td><td className="right"><div className="button-word-cont errormsg invisible">&nbsp;</div></td></tr></tbody></table>;
-    //             if ((error.response) && (error.response.status) && (error.response.status == 409)) {
-    //                 const errorId = error.response.data.id;
-    //                 if ((errorId) && (errorId == '7CF9234F-36ED-4EA8-976C-E77BFAB27DF7')) {
-    //                     children = <table><tbody><tr><td className="left">Oops, your task could not be deleted. Please try again.</td><td className="right"><div className="button-word-cont errormsg" onClick={() => this.deleteTask(index)}>RETRY</div></td></tr></tbody></table>;
-    //                 }
-    //             }
-    //             this.props.showMainError(children);
-    //         }
-    //     })
-    //     .then(()=>{
-    //         this.props.deleteServerRequestObj(requestObj);
-    //     });
-    // }
     leftEnd(instance, index, didSlideOut) {
         if (didSlideOut) {
             this.deleteDomain(instance, index);
         }
     }
-
     deleteDomain(instance, index) {
         this.closeMainMsg();
 
@@ -278,11 +267,11 @@ class App extends React.Component {
            domains: newDomains
         });
 
-        const children = <table><tbody><tr><td className="left">Deleting domain...</td><td className="right"><div className="button-word-cont mainmsg dummy">&nbsp;</div></td></tr></tbody></table>;
-        this.showMainMsg(children, 86400000);
-
         const requestObj = requestObjCreate(axios.CancelToken);
         this.addServerRequestObj(requestObj);
+
+        const children = <table><tbody><tr><td className="left">Deleting domain...</td><td className="right"><div className="button-word-cont mainmsg dummy">&nbsp;</div></td></tr></tbody></table>;
+        this.showMainMsg(children, 86400000);
 
         let url = api_url_public + 'domains/' + copyDomain.id;
         axios({
@@ -294,7 +283,7 @@ class App extends React.Component {
             cancelToken: requestObj.source.token
         })
         .then((response)=>{
-            const children = <table><tbody><tr><td className="left">The domain &#39;{domain}&#39; was deleted.</td><td className="right"><div className="button-word-cont mainmsg" onClick={() => {this.undeleteDomain(copyDomain, index);}}>UNDO</div></td></tr></tbody></table>;
+            const children = <table><tbody><tr><td className="left">The domain &#39;{domain}&#39; was deleted.</td><td className="right"><div className="button-word-cont mainmsg" onClick={() => this.undeleteDomain(copyDomain, index)}>UNDO</div></td></tr></tbody></table>;
             this.showMainMsg(children, 12000);
         })
         .catch((error)=>{

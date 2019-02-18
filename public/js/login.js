@@ -17263,6 +17263,7 @@ var monitorWinWidth = function () {
 /* harmony export (immutable) */ __webpack_exports__["c"] = requestObjCreate;
 /* harmony export (immutable) */ __webpack_exports__["f"] = uuidv4;
 /* harmony export (immutable) */ __webpack_exports__["e"] = trimString;
+/* unused harmony export arrayMove */
 
 function findIndexById(array, id) {
 	for (var i = 0, len = array.length; i < len; i++) {
@@ -17336,6 +17337,18 @@ function uuidv4() {
 
 function trimString(text) {
 	return text.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+}
+
+function arrayMove(arr, previousIndex, newIndex) {
+	var array = arr.slice(0);
+	if (newIndex >= array.length) {
+		var k = newIndex - array.length;
+		while (k-- + 1) {
+			array.push(undefined);
+		}
+	}
+	array.splice(newIndex, 0, array.splice(previousIndex, 1)[0]);
+	return array;
 }
 
 // export function hasClass(el, className) {
