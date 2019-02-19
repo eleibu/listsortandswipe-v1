@@ -45557,7 +45557,6 @@ function _inherits(subClass, superClass) {
 }
 
 
-// import { lithiumlist } from './lithiumlist-1.0.0.js';
 
 
 
@@ -45573,7 +45572,7 @@ var Account = function (_React$Component) {
     _createClass(Account, [{
         key: 'render',
         value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, 'Account', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null)));
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'contact-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'contact-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', null, accountData.name, ' ', accountData.surname), accountData.companyName && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', null, accountData.companyName), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', null, accountData.email)))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-mask' }, 'Mask'));
         }
     }]);
 
@@ -48728,30 +48727,6 @@ function arrayMove(arr, previousIndex, newIndex) {
 	array.splice(newIndex, 0, array.splice(previousIndex, 1)[0]);
 	return array;
 }
-
-// export function hasClass(el, className) {
-//  	if (el.classList) {
-// 		return el.classList.contains(className);
-//  	}
-//  	return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'));	
-// }
-
-// export function addClass(el, className) {
-// 	if (el.classList) {
-// 		el.classList.add(className);
-// 	} else if (!hasClass(el, className)) {
-// 		el.className += " " + className;
-// 	}
-// }
-
-// export function removeClass(el, className) {
-// 	if (el.classList) {
-// 		el.classList.remove(className);
-// 	} else if (hasClass(el, className)) {
-//         var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
-//         el.className = el.className.replace(reg, ' ');
-// 	}
-// }
 
 /***/ }),
 

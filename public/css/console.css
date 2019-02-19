@@ -361,6 +361,7 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer {
+  position: relative;
   min-height: 380px;
   background-color: #FFFFFF;
   -webkit-box-shadow: 0 1px 2px 0 #AAAAAA;
@@ -668,6 +669,18 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont.left-list {
   overflow-x: hidden;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.contact-cont p {
+  margin: 0;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.content-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
 }
 
 #pageWrapper.xl div.add-item-outer div.button-row span.large, #pageWrapper.lg div.add-item-outer div.button-row span.large, #pageWrapper.md div.add-item-outer div.button-row span.large, #pageWrapper.sm div.add-item-outer div.button-row span.large {

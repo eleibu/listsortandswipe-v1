@@ -41,6 +41,15 @@
     <script>
         var api_url_public = "{{ url('/api/public/v1/') }}/";
         var accountData = {
+            name: "{{$name}}",
+            surname: "{{$surname}}",
+            email: "{{$email}}",
+            @if(isset($companyName))
+                companyName: "{{$companyName}}",
+            @else
+                companyName: null,
+            @endif
+            accountExpiresAt: "{{$accountExpiresAt}}",
             hasDomains: {{$hasDomains == 1 ? 'true' : 'false'}},
             maxDomins: {{$maxDomains}}
         };

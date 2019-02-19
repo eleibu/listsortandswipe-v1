@@ -17145,7 +17145,7 @@ var divPasswordSubmsg = document.getElementById('div-password-submsg');
 var submitButton = document.getElementById('div-submit');
 
 if (divMainmsg && divEmailCont && divPasswordCont && inputEmail && inputPassword && divEmailSubmsg && divPasswordSubmsg && submitButton && spinnerCont && maskCont) {
-	if (Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["e" /* trimString */])(divPasswordSubmsg.innerHTML).length == 0) {
+	if (Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["f" /* trimString */])(divPasswordSubmsg.innerHTML).length == 0) {
 		divPasswordSubmsg.innerHTML = msgPasswordDefault;
 	}
 
@@ -17223,7 +17223,7 @@ function validateAndSubmit() {
 	divMainmsg.innerHTML = "";
 
 	var emailOk = false;
-	var email = Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["e" /* trimString */])(inputEmail.value);
+	var email = Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["f" /* trimString */])(inputEmail.value);
 
 	if (email.length > 0) {
 		var regex = /^[^@]+@[^@]+\.[^@]+$/;
@@ -17293,13 +17293,13 @@ function validateAndSubmit() {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = findIndexById;
-/* harmony export (immutable) */ __webpack_exports__["b"] = hasDomainForm;
-/* harmony export (immutable) */ __webpack_exports__["d"] = stripUrl;
-/* harmony export (immutable) */ __webpack_exports__["c"] = requestObjCreate;
-/* harmony export (immutable) */ __webpack_exports__["f"] = uuidv4;
-/* harmony export (immutable) */ __webpack_exports__["e"] = trimString;
-/* unused harmony export arrayMove */
+/* harmony export (immutable) */ __webpack_exports__["b"] = findIndexById;
+/* harmony export (immutable) */ __webpack_exports__["c"] = hasDomainForm;
+/* harmony export (immutable) */ __webpack_exports__["e"] = stripUrl;
+/* harmony export (immutable) */ __webpack_exports__["d"] = requestObjCreate;
+/* harmony export (immutable) */ __webpack_exports__["g"] = uuidv4;
+/* harmony export (immutable) */ __webpack_exports__["f"] = trimString;
+/* harmony export (immutable) */ __webpack_exports__["a"] = arrayMove;
 
 function findIndexById(array, id) {
 	for (var i = 0, len = array.length; i < len; i++) {
@@ -17386,30 +17386,6 @@ function arrayMove(arr, previousIndex, newIndex) {
 	array.splice(newIndex, 0, array.splice(previousIndex, 1)[0]);
 	return array;
 }
-
-// export function hasClass(el, className) {
-//  	if (el.classList) {
-// 		return el.classList.contains(className);
-//  	}
-//  	return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'));	
-// }
-
-// export function addClass(el, className) {
-// 	if (el.classList) {
-// 		el.classList.add(className);
-// 	} else if (!hasClass(el, className)) {
-// 		el.className += " " + className;
-// 	}
-// }
-
-// export function removeClass(el, className) {
-// 	if (el.classList) {
-// 		el.classList.remove(className);
-// 	} else if (hasClass(el, className)) {
-//         var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
-//         el.className = el.className.replace(reg, ' ');
-// 	}
-// }
 
 /***/ }),
 

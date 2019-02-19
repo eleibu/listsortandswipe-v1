@@ -26,6 +26,11 @@ class Controller_Site extends Controller
 		return view('console')
             ->with('signoutName', $pageInfo['signout']['name'])
             ->with('signoutPath', $pageInfo['signout']['path'])
+            ->with('name', $user->name)
+            ->with('surname', $user->surname)
+            ->with('email', $user->email)
+            ->with('companyName', $user->company_name)
+            ->with('accountExpiresAt', $user->account_expires_at)
             ->with('hasDomains', $hasDomains)
 			->with('maxDomains', $user->domain_count_base + $user->domain_count_additional);
 	}
