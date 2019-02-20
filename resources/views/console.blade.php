@@ -49,9 +49,11 @@
             @else
                 companyName: null,
             @endif
+            accountType: {{$accountType}},
             accountExpiresAt: "{{$accountExpiresAt}}",
             hasDomains: {{$hasDomains == 1 ? 'true' : 'false'}},
-            maxDomins: {{$maxDomains}}
+            domainCountBase: {{$domainCountBase}},
+            domainCountAdditional: {{$domainCountAdditional}}
         };
     </script>
 </body>

@@ -297,7 +297,6 @@
 											padding: 3px 4px;
 											color: #339933;
 											border-radius: 3px;
-											//@@
 										}
 
 										span.key.default {
@@ -412,12 +411,139 @@
 					}
 
 					div.contact-cont {
+						padding: 1em;
+						border-bottom: 1px solid #DDDDDD;
+
 						p {
 							margin: 0;
+						}
+
+						p.name {
+							font-size: 150%;
+							font-weight: bold;
+							color: #333333;
+							margin-bottom: 0.25em;
+						}
+
+						p.coname {
+							font-size: 90%;
+							color: #888888;
+							margin-bottom: 0.2em;
+						}
+
+						p.email {
+							font-size: 90%;
+							color: #555555;
+						}
+
+						div.buttons-cont {
+							font-size: 80%;
+							padding: 1em 0;
+						}
+					}
+
+					div.avail-cont {
+						padding: 2em 1em 1em 1em;
+
+						div.plan {
+							font-size: 150%;
+
+							strong {
+								color: #333333;
+							}
+
+							span {
+								color: #666666;	
+							}
+						}
+
+						div.expires {
+							color: #999999;
+						}
+
+						div.chart-cont {
+							margin: 1em 0;
+
+							div.chart-outer {
+								position: relative;
+
+								div.bar-cont {
+									position: absolute;
+									bottom: 0;
+									left: 0;
+									width: 60px;
+
+									div.bar-outer {
+										position: relative;
+										height: 100%;
+										width: 100%;
+
+										div.label {
+											position: absolute;
+											right: -60px;
+											top: 0;
+										}
+									}						
+								}
+
+								div.bar-cont.total {
+									// position: absolute;
+									// bottom: 0;
+									// left: 0;
+									// width: 60px;
+									background-color: #AAAAAA;
+									box-shadow: 1px 1px 2px 0 #444444;
+								}
+
+								div.bar-cont.used {
+									// position: absolute;
+									// bottom: 0;
+									// left: 0;
+									// width: 60px;
+									background-color: #3366CC;
+									// box-shadow: 0 1px 14px rgba(0,0,0,0.15), 0 6px 6px rgba(0,0,0,0.12)
+									box-shadow: 1px 1px 2px 0 #444444;
+								}
+
+							}
+						}
+
+
+						// table {
+						// 	margin-bottom: 1em;
+
+						// 	td.label {  
+						// 		font-weight: bold;
+						// 		padding: 0.3em 0.8em 0.3em 0;
+						// 		color: #333333;
+						// 	}
+
+						// 	td.type {
+						// 		font-size: 120%;
+						// 	}
+
+						// 	td.expires {
+						// 		font-size: 110%;
+						// 	}
+
+						// 	td.info {
+						// 		padding: 0.2em 0;
+						// 		color: #555555;
+						// 	}
+
+						// 	td.empty {
+						// 		font-size: 80%;
+						// 	}
+						// }
+
+						div.buttons-cont {
+							font-size: 80%;
+							padding: 1em 0;
 						}
 					}
 
 					div.content-mask {
+						display: none;
 						position: absolute;
 						top: 0;
 						left: 0;
@@ -456,14 +582,6 @@
 
 				div.key-cont {
 					font-size: 80%;
-
-					span.label {
-						// padding: 3px 4px 3px 0;
-					}
-
-					span.key {
-						// padding: 3px 4px;
-					}
 
 					span.copy-outer {
 						visibility: hidden;

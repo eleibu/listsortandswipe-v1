@@ -21,7 +21,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            tabIndex: 0,
+            tabIndex: 1,
             domainsLoaded: false,
             domainsMsgShow : false,
             domainsMsgText : 'You have 1 product expiring in 28 days',
@@ -385,7 +385,7 @@ class App extends React.Component {
                                 <Domains domains={this.state.domains} domainsMsgShow={this.state.domainsMsgShow} domainsMsgText={this.state.domainsMsgText} domainsMsgCloseClick={this.domainsMsgCloseClick} addDomain={this.addDomain} updateDomain={this.updateDomain} sortEnd={this.sortEnd} leftEnd={this.leftEnd} />
                             </CSSTransition>
                             <CSSTransition in={(this.state.tabIndex == 1)} classNames="account-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
-                                <Account />
+                                <Account domainsUsed={this.state.domains.length} />
                             </CSSTransition>
                         </div>
                     ) : (

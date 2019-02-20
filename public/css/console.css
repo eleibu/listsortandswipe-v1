@@ -671,11 +671,104 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
   overflow-x: hidden;
 }
 
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.contact-cont {
+  padding: 1em;
+  border-bottom: 1px solid #DDDDDD;
+}
+
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.contact-cont p {
   margin: 0;
 }
 
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.contact-cont p.name {
+  font-size: 150%;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 0.25em;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.contact-cont p.coname {
+  font-size: 90%;
+  color: #888888;
+  margin-bottom: 0.2em;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.contact-cont p.email {
+  font-size: 90%;
+  color: #555555;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.contact-cont div.buttons-cont {
+  font-size: 80%;
+  padding: 1em 0;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont {
+  padding: 2em 1em 1em 1em;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.plan {
+  font-size: 150%;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.plan strong {
+  color: #333333;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.plan span {
+  color: #666666;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.expires {
+  color: #999999;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.chart-cont {
+  margin: 1em 0;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.chart-cont div.chart-outer {
+  position: relative;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.chart-cont div.chart-outer div.bar-cont {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.chart-cont div.chart-outer div.bar-cont div.bar-outer {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.chart-cont div.chart-outer div.bar-cont div.bar-outer div.label {
+  position: absolute;
+  right: -60px;
+  top: 0;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.chart-cont div.chart-outer div.bar-cont.total {
+  background-color: #AAAAAA;
+  -webkit-box-shadow: 1px 1px 2px 0 #444444;
+          box-shadow: 1px 1px 2px 0 #444444;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.chart-cont div.chart-outer div.bar-cont.used {
+  background-color: #3366CC;
+  -webkit-box-shadow: 1px 1px 2px 0 #444444;
+          box-shadow: 1px 1px 2px 0 #444444;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.buttons-cont {
+  font-size: 80%;
+  padding: 1em 0;
+}
+
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.content-mask {
+  display: none;
   position: absolute;
   top: 0;
   left: 0;

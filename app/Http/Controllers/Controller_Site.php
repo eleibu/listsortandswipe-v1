@@ -18,6 +18,7 @@ class Controller_Site extends Controller
 
 		$user = Auth::user();
 		$domainIds = json_decode($user->domain_ids);
+
 		$hasDomains = 1;
 		if (isset($domainIds) && (count($domainIds) > 0)) {
 			$hasDomains = 1;
@@ -30,9 +31,11 @@ class Controller_Site extends Controller
             ->with('surname', $user->surname)
             ->with('email', $user->email)
             ->with('companyName', $user->company_name)
+            ->with('accountType', $user->account_type)
             ->with('accountExpiresAt', $user->account_expires_at)
             ->with('hasDomains', $hasDomains)
-			->with('maxDomains', $user->domain_count_base + $user->domain_count_additional);
+            ->with('domainCountBase', $user->domain_count_base)
+			->with('domainCountAdditional', $user->domain_count_additional);
 	}
 
 	public function section_examples(Request $request, $subpage = '') {
