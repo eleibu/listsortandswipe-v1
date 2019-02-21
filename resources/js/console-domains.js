@@ -266,7 +266,7 @@ export class Domains extends React.Component {
     }
 }
 
-export class Domain extends React.Component {
+class Domain extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

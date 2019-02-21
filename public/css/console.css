@@ -709,6 +709,7 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.plan {
   font-size: 150%;
+  margin-bottom: 0.2em;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.plan strong {
@@ -724,21 +725,21 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.chart-cont {
-  margin: 2em 0;
+  margin: 2em 0 1.4em 0;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.chart-cont div.chart-outer {
   position: relative;
   margin-left: 50px;
-  width: 90px;
-  border-bottom: 3px solid #888888;
+  width: 120px;
+  border-bottom: 3px solid #333333;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.chart-cont div.chart-outer div.bar-cont {
   position: absolute;
   bottom: 0;
   left: 0;
-  margin: 0 20px;
+  margin: 0 30px;
   width: 50px;
 }
 
@@ -783,8 +784,13 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.chart-cont div.chart-outer div.bar-cont.used {
   background-color: #3366CC;
-  -webkit-box-shadow: 1px 1px 2px 0 #444444;
-          box-shadow: 1px 1px 2px 0 #444444;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.avail-text {
+  font-size: 90%;
+  line-height: 130%;
+  color: #333333;
+  margin-bottom: 1.4em;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.buttons-cont {
@@ -792,13 +798,34 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
   padding: 1em 0;
 }
 
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.content-mask {
-  display: none;
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.content-mask-cont {
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
+  background-color: #FFFFFF;
+  -webkit-transition: opacity 200ms ease;
+  transition: opacity 200ms ease;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.content-mask-cont div.content-mask-outer {
+  position: relative;
+  margin: 1em;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.content-mask-cont div.content-mask-outer i.icon-cross-ui {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 130%;
+  padding: 0.3em;
+  border-radius: 999px;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.content-mask-cont div.content-mask-outer i.icon-cross-ui:hover, #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.content-mask-cont div.content-mask-outer i.icon-cross-ui:active {
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 #pageWrapper.xl div.add-item-outer div.button-row span.large, #pageWrapper.lg div.add-item-outer div.button-row span.large, #pageWrapper.md div.add-item-outer div.button-row span.large, #pageWrapper.sm div.add-item-outer div.button-row span.large {
@@ -1070,5 +1097,21 @@ div.emptymsg-trans-exit {
 }
 
 div.emptymsg-trans-exit.emptymsg-trans-exit-active {
+  opacity: 0;
+}
+
+div.content-mask-trans-enter {
+  opacity: 0;
+}
+
+div.content-mask-enter.content-mask-enter-active {
+  opacity: 1;
+}
+
+div.content-mask-trans-exit {
+  opacity: 1;
+}
+
+div.content-mask-trans-exit.content-mask-trans-exit-active {
   opacity: 0;
 }

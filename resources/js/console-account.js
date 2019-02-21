@@ -1,16 +1,24 @@
 import React from 'react';
 import classNames from 'classNames/dedupe';
 import { CSSTransition } from 'react-transition-group';
+import moment from 'moment';
 
 export class Account extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showEditContacts: false,
-            showChangePwd: false,
-            showUpgrade: false,
-            showBuyMore: false
+            contentMask: null
         };
+    }
+    editDetailsClick() {
+        this.setState({
+            contentMask: <EditContacts />
+        });
+    }
+    contentMaskCloseClick() {
+        this.setState({
+            contentMask: null
+        });        
     }
     render() {
         let accountTypeText;
@@ -31,8 +39,8 @@ export class Account extends React.Component {
         if (accountData.domainCountBase + accountData.domainCountAdditional == 1) {
             totalDomainsText = 'domain maximum';
         }
-        const totalHeightPX = 200;
-        const usedHeightPX = Math.round((this.props.domainsUsed / accountData.domainCountBase + accountData.domainCountAdditional) * totalHeightPX);
+        const totalHeightPX = 160;
+        const usedHeightPX = Math.round((this.props.domainsUsed / (accountData.domainCountBase + accountData.domainCountAdditional)) * totalHeightPX);
         const styleChartOuter = {
             height: totalHeightPX + 'px'
         };
@@ -43,11 +51,12 @@ export class Account extends React.Component {
             height: usedHeightPX + 'px'
         };
         let styleLabelRight;
+
         if (usedHeightPX == 0) {
             styleLabelRight = {
                 transform: 'translate(100%, -120%)'
             };
-        } else if (usedHeightPX < 20) {
+        } else if (usedHeightPX < 24) {
             styleLabelRight = {
                 transform: 'translate(100%, -100%)'
             };
@@ -55,6 +64,18 @@ export class Account extends React.Component {
             styleLabelRight = {
                 transform: 'translateX(100%)'
             };
+        }
+        const domainsAvailable = accountData.domainCountBase + accountData.domainCountAdditional - this.props.domainsUsed;
+        let domainsAvailableText;
+        switch (domainsAvailable) {
+            case 0:
+                domainsAvailableText = 'You have no domains available. Consider upgrading your account or buying more.';
+            break;
+            case 1:
+                domainsAvailableText = 'You have <strong>1 domain</strong> still available.';
+            break;
+            default:
+                domainsAvailableText = 'You have <strong>' + domainsAvailable + ' domains</strong> still available.';
         }
         return (
             <React.Fragment>
@@ -66,7 +87,7 @@ export class Account extends React.Component {
                         }
                         <p className="email">{accountData.email}</p>
                         <div className="buttons-cont">
-                            <div className="button-word-cont grey">
+                            <div className="button-word-cont grey" onClick={() => {this.editDetailsClick() }}>
                                 EDIT DETAILS
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;
                             <div className="button-word-cont grey">
@@ -79,7 +100,7 @@ export class Account extends React.Component {
                             <strong>{accountTypeText}</strong> <span>plan</span>
                         </div>
                         <div className="expires">
-                            Expires {accountData.accountExpiresAt}
+                            Expires {moment(accountData.accountExpiresAt).format('LL')}
                         </div>
                         <div className="chart-cont">
                             <div style={styleChartOuter} className="chart-outer">
@@ -100,9 +121,7 @@ export class Account extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="">
-                            {accountData.domainCountBase + accountData.domainCountAdditional - this.props.domainsUsed}&nbsp;available
-                        </div>
+                        <div className="avail-text" dangerouslySetInnerHTML={{__html: domainsAvailableText}} />
                         <div className="buttons-cont">
                             <div className="button-word-cont darkblue">
                                 UPGRADE
@@ -113,12 +132,67 @@ export class Account extends React.Component {
                         </div>
                     </div>
                 </div>
-                <CSSTransition in={(this.state.showEditContacts || this.state.showChangePwd || this.state.showUpgrade || this.state.showBuyMore)} classNames="content-mask-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
-                    <div className="content-mask">
-                        Mask
+                <CSSTransition in={(this.state.contentMask != null)} classNames="content-mask-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
+                    <div className="content-mask-cont">
+                        <div className="content-mask-outer">
+                            {this.state.contentMask}
+                            <i className="sld icon-cross-ui" onClick={() => {this.contentMaskCloseClick()}}></i>
+                        </div>
                     </div>
                 </CSSTransition>
             </React.Fragment>
+        );
+    }
+}
+
+class EditContacts extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        return (
+            <div>
+                EDIT DETAILS
+            </div>
+        );
+    }
+}
+
+class ChangePwd extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        return (
+            <div>
+                Change password
+            </div>
+        );
+    }
+}
+
+class Upgrade extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        return (
+            <div>
+                Upgrade
+            </div>
+        );
+    }
+}
+
+class BuyMore extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        return (
+            <div>
+                Buy more
+            </div>
         );
     }
 }
