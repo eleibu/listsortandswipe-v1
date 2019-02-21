@@ -27,20 +27,35 @@ export class Account extends React.Component {
             default:
                 accountTypeText = "Free trial";
         }
-        let totalDomainsText = accountData.domainCountBase;
-        if (accountData.domainCountAdditional > 0) {
-            totalDomainsText = ' (+' + accountData.domainCountAdditional + ' purchased)';
+        let totalDomainsText = 'domains maximum';
+        if (accountData.domainCountBase + accountData.domainCountAdditional == 1) {
+            totalDomainsText = 'domain maximum';
         }
+        const totalHeightPX = 200;
+        const usedHeightPX = Math.round((this.props.domainsUsed / accountData.domainCountBase + accountData.domainCountAdditional) * totalHeightPX);
         const styleChartOuter = {
-            height: '200px'
+            height: totalHeightPX + 'px'
         };
         const styleTotalCont = {
-            height: '200px'
+            height: totalHeightPX + 'px'
         };
         const styleUsedCont = {
-            height: '100px'
+            height: usedHeightPX + 'px'
         };
-
+        let styleLabelRight;
+        if (usedHeightPX == 0) {
+            styleLabelRight = {
+                transform: 'translate(100%, -120%)'
+            };
+        } else if (usedHeightPX < 20) {
+            styleLabelRight = {
+                transform: 'translate(100%, -100%)'
+            };
+        } else {
+            styleLabelRight = {
+                transform: 'translateX(100%)'
+            };
+        }
         return (
             <React.Fragment>
                 <div className="content-inner">
@@ -70,21 +85,24 @@ export class Account extends React.Component {
                             <div style={styleChartOuter} className="chart-outer">
                                 <div style={styleTotalCont} className="bar-cont total">
                                     <div className="bar-outer">
-                                        <div className="label">
-                                            20 total
+                                        <div className="label left">
+                                            <div className="count">{accountData.domainCountBase + accountData.domainCountAdditional}</div>
+                                            <div className="text">{totalDomainsText}</div>
                                         </div>
                                     </div>
                                 </div>
                                 <div style={styleUsedCont} className="bar-cont used">
                                     <div className="bar-outer">
-                                        <div className="label">
-                                            10 used
+                                        <div style={styleLabelRight} className="label right">
+                                            {this.props.domainsUsed}&nbsp;used
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
+                        <div className="">
+                            {accountData.domainCountBase + accountData.domainCountAdditional - this.props.domainsUsed}&nbsp;available
+                        </div>
                         <div className="buttons-cont">
                             <div className="button-word-cont darkblue">
                                 UPGRADE

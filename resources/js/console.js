@@ -385,7 +385,7 @@ class App extends React.Component {
                                 <Domains domains={this.state.domains} domainsMsgShow={this.state.domainsMsgShow} domainsMsgText={this.state.domainsMsgText} domainsMsgCloseClick={this.domainsMsgCloseClick} addDomain={this.addDomain} updateDomain={this.updateDomain} sortEnd={this.sortEnd} leftEnd={this.leftEnd} />
                             </CSSTransition>
                             <CSSTransition in={(this.state.tabIndex == 1)} classNames="account-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
-                                <Account domainsUsed={this.state.domains.length} />
+                                <Account domainsUsed={0} />
                             </CSSTransition>
                         </div>
                     ) : (

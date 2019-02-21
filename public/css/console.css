@@ -724,18 +724,22 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.chart-cont {
-  margin: 1em 0;
+  margin: 2em 0;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.chart-cont div.chart-outer {
   position: relative;
+  margin-left: 50px;
+  width: 90px;
+  border-bottom: 3px solid #888888;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.chart-cont div.chart-outer div.bar-cont {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 60px;
+  margin: 0 20px;
+  width: 50px;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.chart-cont div.chart-outer div.bar-cont div.bar-outer {
@@ -746,12 +750,33 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.chart-cont div.chart-outer div.bar-cont div.bar-outer div.label {
   position: absolute;
-  right: -60px;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.chart-cont div.chart-outer div.bar-cont div.bar-outer div.label.left {
+  left: -12px;
+  -webkit-transform: translateX(-100%);
+          transform: translateX(-100%);
+  top: 0;
+  text-align: right;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.chart-cont div.chart-outer div.bar-cont div.bar-outer div.label.left div.count {
+  color: #333333;
+  font-size: 200%;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.chart-cont div.chart-outer div.bar-cont div.bar-outer div.label.left div.text {
+  font-size: 80%;
+  color: #666666;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.chart-cont div.chart-outer div.bar-cont div.bar-outer div.label.right {
+  right: -12px;
   top: 0;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.chart-cont div.chart-outer div.bar-cont.total {
-  background-color: #AAAAAA;
+  background-color: #DDDDDD;
   -webkit-box-shadow: 1px 1px 2px 0 #444444;
           box-shadow: 1px 1px 2px 0 #444444;
 }
