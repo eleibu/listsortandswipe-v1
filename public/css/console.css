@@ -277,6 +277,26 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
   }
 }
 
+@-webkit-keyframes sk-stretchdelay {
+  0%, 40%, 100% {
+    -webkit-transform: scaleY(0.4);
+  }
+  20% {
+    -webkit-transform: scaleY(1);
+  }
+}
+
+@keyframes sk-stretchdelay {
+  0%, 40%, 100% {
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }
+  20% {
+    transform: scaleY(1);
+    -webkit-transform: scaleY(1);
+  }
+}
+
 .shimmer {
   -webkit-animation-duration: 1s;
           animation-duration: 1s;
@@ -672,7 +692,7 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.contact-cont {
-  padding: 1em;
+  padding: 1.4em 1em 1em 1em;
   border-bottom: 1px solid #DDDDDD;
 }
 
@@ -798,34 +818,175 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
   padding: 1em 0;
 }
 
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.content-mask-cont {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-color: #FFFFFF;
-  -webkit-transition: opacity 200ms ease;
-  transition: opacity 200ms ease;
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont {
+  padding: 1.8em 1em;
 }
 
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.content-mask-cont div.content-mask-outer {
-  position: relative;
-  margin: 1em;
-}
-
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.content-mask-cont div.content-mask-outer i.icon-cross-ui {
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont i.account-close {
   cursor: pointer;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 0.6em;
+  right: 0.6em;
   font-size: 130%;
   padding: 0.3em;
   border-radius: 999px;
 }
 
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.content-mask-cont div.content-mask-outer i.icon-cross-ui:hover, #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.content-mask-cont div.content-mask-outer i.icon-cross-ui:active {
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont i.icon-cross-ui:hover, #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont i.icon-cross-ui:active {
   background-color: rgba(0, 0, 0, 0.05);
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont .button-word-cont div.spinner-cont {
+  position: relative;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont .button-word-cont div.spinner-cont div.spinner-outer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  visibility: hidden;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont .button-word-cont div.spinner-cont div.spinner-outer div.spinner-inner {
+  max-width: 40px;
+  margin: 0 auto;
+  height: 100%;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont .button-word-cont div.spinner-cont div.spinner-outer div.spinner-inner div.rect {
+  display: inline-block;
+  height: 100%;
+  width: 12%;
+  margin-right: 10%;
+  background-color: #EEEEEE;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 2px;
+  -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+  animation: sk-stretchdelay 1.2s infinite ease-in-out;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont .button-word-cont div.spinner-cont div.spinner-outer div.spinner-inner div.rect1 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont .button-word-cont div.spinner-cont div.spinner-outer div.spinner-inner div.rect2 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont .button-word-cont div.spinner-cont div.spinner-outer div.spinner-inner div.rect3 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont .button-word-cont div.spinner-cont div.spinner-outer div.spinner-inner div.rect4 {
+  margin-right: 0;
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont .button-word-cont div.spinner-cont.spinning div.text {
+  visibility: hidden;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont .button-word-cont div.spinner-cont.spinning div.spinner-outer {
+  visibility: visible;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont div.title-main span {
+  font-size: 110%;
+  font-weight: bold;
+  color: #333333;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont div.subtitle-main {
+  margin: 0.8em 0 0.4em 0;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont div.subtitle-main span {
+  font-size: 90%;
+  color: #444444;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont div.mainmsg-cont {
+  height: 3em;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont div.mainmsg-cont span {
+  font-size: 85%;
+  line-height: 130%;
+  color: #FF3B0A;
+  font-weight: bold;
+  overflow: hidden;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont div.bigmsg-cont span {
+  font-size: 120%;
+  line-height: 130%;
+  color: #222222;
+  font-weight: bold;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont div.smallmsg-cont {
+  margin: 0.8em 0 1.2em 0;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont div.smallmsg-cont span {
+  font-size: 90%;
+  line-height: 130%;
+  color: #777777;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont div.text-cont div.textentry-cont {
+  position: relative;
+  border: 1px solid #DDDDDD;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont div.text-cont div.textentry-cont div.textentry-outer {
+  margin: 0.6em 0.4em 0.6em 2em;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont div.text-cont div.textentry-cont div.textentry-outer input.textentry {
+  font-family: 'Roboto';
+  -webkit-appearance: none;
+  outline: none;
+  border: none;
+  background: transparent;
+  font-size: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont div.text-cont div.textentry-cont i {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  left: 8px;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont div.text-cont div.submsg-cont {
+  margin: 0.3em 0;
+  font-size: 75%;
+  line-height: 130%;
+  height: 3em;
+  overflow: hidden;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont div.text-cont div.submsg-cont.default {
+  color: #777777;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont div.buttons-cont {
+  margin-top: 1em;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont div.buttons-cont div.buttons-outer {
+  font-size: 90%;
 }
 
 #pageWrapper.xl div.add-item-outer div.button-row span.large, #pageWrapper.lg div.add-item-outer div.button-row span.large, #pageWrapper.md div.add-item-outer div.button-row span.large, #pageWrapper.sm div.add-item-outer div.button-row span.large {
@@ -1080,6 +1241,27 @@ div.account-trans-exit.account-trans-exit-active {
   transition: opacity 200ms ease;
 }
 
+div.accountcontent-trans-enter {
+  display: none;
+  max-height: 0;
+}
+
+div.accountcontent-enter.accountcontent-enter-active {
+  max-height: 100000px;
+  -webkit-transition: max-height 200ms linear 200ms;
+  transition: max-height 200ms linear 200ms;
+}
+
+div.accountcontent-trans-exit {
+  opacity: 1;
+}
+
+div.accountcontent-trans-exit.accountcontent-trans-exit-active {
+  opacity: 0;
+  -webkit-transition: opacity 200ms ease;
+  transition: opacity 200ms ease;
+}
+
 div.emptymsg-trans-enter {
   opacity: 0;
   -webkit-transition: opacity 400ms ease 200ms;
@@ -1097,21 +1279,5 @@ div.emptymsg-trans-exit {
 }
 
 div.emptymsg-trans-exit.emptymsg-trans-exit-active {
-  opacity: 0;
-}
-
-div.content-mask-trans-enter {
-  opacity: 0;
-}
-
-div.content-mask-enter.content-mask-enter-active {
-  opacity: 1;
-}
-
-div.content-mask-trans-exit {
-  opacity: 1;
-}
-
-div.content-mask-trans-exit.content-mask-trans-exit-active {
   opacity: 0;
 }

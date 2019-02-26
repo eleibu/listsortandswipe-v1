@@ -21,6 +21,21 @@
     }
 }
 
+@-webkit-keyframes sk-stretchdelay {
+	0%, 40%, 100% { -webkit-transform: scaleY(0.4) }  
+	20% { -webkit-transform: scaleY(1.0) }
+}
+
+@keyframes sk-stretchdelay {
+	0%, 40%, 100% { 
+		transform: scaleY(0.4);
+		-webkit-transform: scaleY(0.4);
+	}  20% { 
+		transform: scaleY(1.0);
+		-webkit-transform: scaleY(1.0);
+	}
+}
+
 .shimmer {
     animation-duration: 1s;
     animation-fill-mode: forwards;
@@ -411,7 +426,7 @@
 					}
 
 					div.contact-cont {
-						padding: 1em;
+						padding: 1.4em 1em 1em 1em;
 						border-bottom: 1px solid #DDDDDD;
 
 						p {
@@ -535,31 +550,180 @@
 						}
 					}
 
-					div.content-mask-cont {
-						position: absolute;
-						top: 0;
-						left: 0;
-						height: 100%;
-						width: 100%;
-						background-color: #FFFFFF;
-						transition: opacity 200ms ease;
+					div.account-cont {
+						padding: 1.8em 1em;
 
-						div.content-mask-outer {
-							position: relative;
-							margin: 1em;
+						i.account-close {
+							cursor: pointer;
+							position: absolute;
+							top: 0.6em;
+							right: 0.6em;
+							font-size: 130%;
+							padding: 0.3em;
+							border-radius: 999px;
+						}
 
-							i.icon-cross-ui {
-								cursor: pointer;
-								position: absolute;
-								top: 0;
-								right: 0;
-								font-size: 130%;
-								padding: 0.3em;								
-								border-radius: 999px;
+						i.icon-cross-ui:hover, i.icon-cross-ui:active {
+							background-color: rgba(0,0,0,0.05);
+						}
+
+						.button-word-cont {
+							div.spinner-cont {
+						 		position: relative;
+
+						 		div.spinner-outer {
+						 			position: absolute;
+						 			top: 0;
+						 			left: 0;
+						 			height: 100%;
+						 			width: 100%;
+						 			visibility: hidden;
+
+									div.spinner-inner {
+										max-width: 40px;
+										margin: 0 auto;
+							 			height: 100%;
+
+							 			div.rect {
+							 				display: inline-block;
+							 				height: 100%;
+							 				width: 12%;
+							 				margin-right: 10%;
+							 				background-color: #EEEEEE;
+							 				background-color: rgba(255, 255, 255, 0.9);
+							 				border-radius: 2px;
+											-webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+											animation: sk-stretchdelay 1.2s infinite ease-in-out;
+							 			}
+
+							 			div.rect1 {
+											-webkit-animation-delay: -1.1s;
+											animation-delay: -1.1s;
+							 			}
+
+							 			div.rect2 {
+											-webkit-animation-delay: -1.0s;
+											animation-delay: -1.0s;
+							 			}
+							 			div.rect3 {
+											-webkit-animation-delay: -0.9s;
+											animation-delay: -0.9s;
+							 			}
+
+							 			div.rect4 {
+							 				margin-right: 0;
+											-webkit-animation-delay: -0.8s;
+											animation-delay: -0.8s;
+							 			}
+									}
+						 		}
 							}
 
-							i.icon-cross-ui:hover, i.icon-cross-ui:active {
-								background-color: rgba(0,0,0,0.05);
+							div.spinner-cont.spinning {
+								div.text {
+									visibility: hidden;
+								}
+
+								div.spinner-outer {
+									visibility: visible;
+								}
+							}
+						}
+
+						div.title-main {
+							span {
+								font-size: 110%;
+								font-weight: bold;
+								color: #333333;
+							}
+						}
+
+						div.subtitle-main {
+							margin: 0.8em 0 0.4em 0;
+
+							span {
+								font-size: 90%;
+								color: #444444;
+							}
+						}
+
+						div.mainmsg-cont {
+							height: 3em;
+
+							span {
+								font-size: 85%;
+								line-height: 130%;
+								color: #FF3B0A;
+								font-weight: bold;
+								overflow: hidden;
+							}
+						}
+
+						div.bigmsg-cont {
+							span {
+								font-size: 120%;
+								line-height: 130%;
+								color: #222222;
+								font-weight: bold;
+							}
+						}
+
+						div.smallmsg-cont {
+							margin: 0.8em 0 1.2em 0;
+
+							span {
+								font-size: 90%;
+								line-height: 130%;
+								color: #777777;								
+							}
+						}
+
+						div.text-cont {
+							div.textentry-cont {
+								position: relative;
+								border: 1px solid #DDDDDD;
+
+								div.textentry-outer {
+									margin: 0.6em 0.4em 0.6em 2em;
+
+									input.textentry {
+										font-family: 'Roboto';
+										-webkit-appearance: none;
+										outline: none;
+										border: none;
+										background: transparent;
+										font-size: 100%;
+										box-sizing: border-box;
+										width: 100%;
+									}
+								}
+
+								i {
+									position: absolute;
+									top: 50%;
+									transform: translateY(-50%);
+									left: 8px;
+								}
+							}
+
+							div.submsg-cont {
+								margin: 0.3em 0;
+								font-size: 75%;
+								line-height: 130%;
+								height: 3em;
+								overflow: hidden;
+							}
+
+							div.submsg-cont.default {
+								color: #777777;
+							}
+						}
+
+						div.buttons-cont {
+							margin-top: 1em;
+
+							div.buttons-outer {
+								font-size: 90%;
 							}
 						}
 					}
@@ -766,7 +930,6 @@
 	bottom: -120px;
 }
 
-
 // trans - message
 div.message-trans-exit {
 	opacity: 1;
@@ -854,6 +1017,26 @@ div.account-trans-exit.account-trans-exit-active {
 	transition: opacity 200ms ease;
 }
 
+// trans - account content
+div.accountcontent-trans-enter {
+	display: none;
+	max-height: 0;
+}
+
+div.accountcontent-enter.accountcontent-enter-active {
+	max-height: 100000px;
+	transition: max-height 200ms linear 200ms;
+}
+
+div.accountcontent-trans-exit {
+	opacity: 1;
+}
+
+div.accountcontent-trans-exit.accountcontent-trans-exit-active {
+	opacity: 0;
+	transition: opacity 200ms ease;
+}
+
 // trans - emptymsg
 div.emptymsg-trans-enter {
 	opacity: 0;
@@ -874,18 +1057,18 @@ div.emptymsg-trans-exit.emptymsg-trans-exit-active {
 }
 
 // trans - content mask
-div.content-mask-trans-enter {
-	opacity: 0;
-}
+// div.content-mask-trans-enter {
+// 	opacity: 0;
+// }
 
-div.content-mask-enter.content-mask-enter-active {
-	opacity: 1;
-}
+// div.content-mask-enter.content-mask-enter-active {
+// 	opacity: 1;
+// }
 
-div.content-mask-trans-exit {
-	opacity: 1;
-}
+// div.content-mask-trans-exit {
+// 	opacity: 1;
+// }
 
-div.content-mask-trans-exit.content-mask-trans-exit-active {
-	opacity: 0;
-}
+// div.content-mask-trans-exit.content-mask-trans-exit-active {
+// 	opacity: 0;
+// }
