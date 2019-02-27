@@ -59,6 +59,15 @@ class Toolkit {
 		return $url;
 	}
 
+	public static function authErrorMessages() {
+		$authErrorMessages = array(
+			'msgPasswordDefault' => 'Password must have at least 6 characters. Other than that, make it as simple or complex as you like.',
+			'msgPasswordNoBlank' => 'Password can&#39;t be blank.',
+			'msgPasswordInvalid' => 'Password must have at least 6 characters.'
+		);
+		return $authErrorMessages;
+	}
+
 	public static function pageInfo() {
 		$pageInfo = array(
 			'home' => array(

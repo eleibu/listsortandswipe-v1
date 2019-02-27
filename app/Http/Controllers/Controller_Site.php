@@ -8,7 +8,14 @@ use App\Classes\Toolkit;
 use App\Domain;
 
 class Controller_Site extends Controller
-{	
+{
+    function __construct() {
+    	$authErrorMessages = Toolkit::authErrorMessages();
+		$this->msgPasswordDefault = $authErrorMessages['msgPasswordDefault'];
+		$this->msgPasswordNoBlank = $authErrorMessages['msgPasswordNoBlank'];
+		$this->msgPasswordInvalid = $authErrorMessages['msgPasswordInvalid'];
+    }
+
 	public function page_home(Request $request) {
 		return view('home');
 	}
@@ -35,7 +42,10 @@ class Controller_Site extends Controller
             ->with('accountExpiresAt', $user->account_expires_at)
             ->with('hasDomains', $hasDomains)
             ->with('domainCountBase', $user->domain_count_base)
-			->with('domainCountAdditional', $user->domain_count_additional);
+			->with('domainCountAdditional', $user->domain_count_additional)
+            ->with('msgPasswordDefault', $this->msgPasswordDefault)
+            ->with('msgPasswordNoBlank', $this->msgPasswordNoBlank)
+            ->with('msgPasswordInvalid', $this->msgPasswordInvalid);
 	}
 
 	public function section_examples(Request $request, $subpage = '') {

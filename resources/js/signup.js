@@ -156,5 +156,5 @@ function validateAndSubmit() {
 			'spinning' : true
 		});
 		document.getElementById('form').submit();
-	}	
+	}
 }

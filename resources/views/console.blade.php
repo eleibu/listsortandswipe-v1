@@ -55,6 +55,9 @@
             domainCountBase: {{$domainCountBase}},
             domainCountAdditional: {{$domainCountAdditional}}
         };
+        var msgPasswordDefault = "{!! $msgPasswordDefault !!}";
+        var msgPasswordNoBlank = "{!! $msgPasswordNoBlank !!}";
+        var msgPasswordInvalid = "{!! $msgPasswordInvalid !!}";
     </script>
 </body>
 </html>

@@ -75,7 +75,7 @@
 			margin: 0 auto;
 			text-align: left;
 			min-width: 300px;
-			max-width: 600px;
+			max-width: 500px;
 
 			div.tabs-cont {
 				overflow: hidden;
@@ -546,12 +546,13 @@
 
 						div.buttons-cont {
 							font-size: 80%;
-							padding: 1em 0;
+							padding-bottom: 1em;
 						}
 					}
 
 					div.account-cont {
-						padding: 1.8em 1em;
+						//@@
+						padding: 2em 1em;
 
 						i.account-close {
 							cursor: pointer;
@@ -719,6 +720,22 @@
 							}
 						}
 
+						div.text-cont.error {
+							div.textentry-cont {
+								border: 1px solid #FF3B0A;
+							}
+
+							div.submsg-cont {
+								color: #FF3B0A;
+							}
+						}
+
+						div.text-cont.focus {
+							div.textentry-cont {
+								border: 1px solid #3366CC;
+							}
+						}
+
 						div.buttons-cont {
 							margin-top: 1em;
 
@@ -726,6 +743,14 @@
 								font-size: 90%;
 							}
 						}
+					}
+
+					div.account-mask {
+						position: absolute;
+						top: 0;
+						left: 0;
+						height: 100%;
+						width: 100%;
 					}
 				}
 			}

@@ -20,12 +20,15 @@ use DateInterval;
 
 class Controller_Auth_SignUp extends Controller
 {
-	protected $msgEmailDefault = '';
-	protected $msgEmailNoBlank = 'Email can&#39;t be blank.';
-	protected $msgEmailInvalid = 'That email address appears to be invalid.';
-	protected $msgPasswordDefault = 'Password must have at least 6 characters. Other than that, make it as simple or complex as you like.';
-	protected $msgPasswordNoBlank = 'Password can&#39;t be blank.';
-	protected $msgPasswordInvalid = 'Password must have at least 6 characters.';
+    function __construct() {
+    	$authErrorMessages = Toolkit::authErrorMessages();
+		$this->msgEmailDefault = '';
+		$this->msgEmailNoBlank = 'Email can&#39;t be blank.';
+		$this->msgEmailInvalid = 'That email address appears to be invalid.';
+		$this->msgPasswordDefault = $authErrorMessages['msgPasswordDefault'];
+		$this->msgPasswordNoBlank = $authErrorMessages['msgPasswordNoBlank'];
+		$this->msgPasswordInvalid = $authErrorMessages['msgPasswordInvalid'];
+    }
 
 	public function page(Request $request) {
 		if (Auth::check()) {

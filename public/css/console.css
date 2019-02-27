@@ -344,7 +344,7 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
   margin: 0 auto;
   text-align: left;
   min-width: 300px;
-  max-width: 600px;
+  max-width: 500px;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.tabs-cont {
@@ -815,11 +815,11 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.buttons-cont {
   font-size: 80%;
-  padding: 1em 0;
+  padding-bottom: 1em;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont {
-  padding: 1.8em 1em;
+  padding: 2em 1em;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont i.account-close {
@@ -981,12 +981,32 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
   color: #777777;
 }
 
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont div.text-cont.error div.textentry-cont {
+  border: 1px solid #FF3B0A;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont div.text-cont.error div.submsg-cont {
+  color: #FF3B0A;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont div.text-cont.focus div.textentry-cont {
+  border: 1px solid #3366CC;
+}
+
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont div.buttons-cont {
   margin-top: 1em;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont div.buttons-cont div.buttons-outer {
   font-size: 90%;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
 }
 
 #pageWrapper.xl div.add-item-outer div.button-row span.large, #pageWrapper.lg div.add-item-outer div.button-row span.large, #pageWrapper.md div.add-item-outer div.button-row span.large, #pageWrapper.sm div.add-item-outer div.button-row span.large {
