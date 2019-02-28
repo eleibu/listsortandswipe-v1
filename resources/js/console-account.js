@@ -37,17 +37,8 @@ export class Account extends React.Component {
                 <CSSTransition in={(this.state.subpage == 'AccountLanding')} classNames="accountcontent-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
                     <AccountLanding domainsUsed={this.props.domainsUsed} setSubpage={this.setSubpage} />
                 </CSSTransition>
-                <CSSTransition in={(this.state.subpage == 'EditDetailsLanding')} classNames="accountcontent-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
-                    <EditDetailsLanding setSubpage={this.setSubpage} />
-                </CSSTransition>
                 <CSSTransition in={(this.state.subpage == 'ChangePwdLanding')} classNames="accountcontent-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
                     <ChangePwdLanding setShowMask={this.setShowMask} setSubpage={this.setSubpage} showMainMsg={this.props.showMainMsg} closeMainMsg={this.props.closeMainMsg} addServerRequestObj={this.props.addServerRequestObj} deleteServerRequestObj={this.props.deleteServerRequestObj} />
-                </CSSTransition>
-                <CSSTransition in={(this.state.subpage == 'UpgradeLanding')} classNames="accountcontent-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
-                    <UpgradeLanding setSubpage={this.setSubpage} />
-                </CSSTransition>
-                <CSSTransition in={(this.state.subpage == 'BuyMoreLanding')} classNames="accountcontent-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
-                    <BuyMoreLanding setSubpage={this.setSubpage} />
                 </CSSTransition>
                 <div style={maskStyle} className="account-mask">
                 </div>
@@ -126,9 +117,6 @@ class AccountLanding extends React.Component {
                     }
                     <p className="email">{accountData.email}</p>
                     <div className="buttons-cont">
-                        <div className="button-word-cont grey" onClick={() => {this.props.setSubpage('EditDetailsLanding') }}>
-                            EDIT DETAILS
-                        </div>&nbsp;&nbsp;&nbsp;&nbsp;
                         <div className="button-word-cont grey" onClick={() => {this.props.setSubpage('ChangePwdLanding') }}>
                             CHANGE PASSWORD
                         </div>
@@ -161,31 +149,7 @@ class AccountLanding extends React.Component {
                         </div>
                     </div>
                     <div className="avail-text" dangerouslySetInnerHTML={{__html: domainsAvailableText}} />
-                    <div className="buttons-cont">
-                        <div className="button-word-cont darkblue" onClick={() => {this.props.setSubpage('UpgradeLanding') }}>
-                            UPGRADE
-                        </div>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <div className="button-word-cont grey" onClick={() => {this.props.setSubpage('BuyMoreLanding') }}>
-                            BUY MORE DOMAINS
-                        </div>
-                    </div>
                 </div>
-            </div>
-        );
-    }
-}
-
-class EditDetailsLanding extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-    render() {
-        return (
-            <div className="content-inner account-cont">
-                <div>
-                    EDIT DETAILS
-                </div>
-                <i className="sld icon-cross-ui account-close" onClick={() => {this.props.setSubpage('AccountLanding') }}></i>
             </div>
         );
     }
@@ -423,38 +387,6 @@ class ChangePwdLanding extends React.Component {
                         </div>
                     </div>
                 </div>
-            </div>
-        );
-    }
-}
-
-class UpgradeLanding extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-    render() {
-        return (
-            <div className="content-inner account-cont">
-                <div>
-                    UPGRADE
-                </div>
-                <i className="sld icon-cross-ui account-close" onClick={() => {this.props.setSubpage('AccountLanding') }}></i>
-            </div>
-        );
-    }
-}
-
-class BuyMoreLanding extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-    render() {
-        return (
-            <div className="content-inner account-cont">
-                <div>
-                    BUY MORE
-                </div>
-                <i className="sld icon-cross-ui account-close" onClick={() => {this.props.setSubpage('AccountLanding') }}></i>
             </div>
         );
     }

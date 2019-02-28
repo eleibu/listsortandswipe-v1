@@ -62849,7 +62849,7 @@ var Account = function (_React$Component) {
             } else {
                 maskStyle = { display: 'none' };
             }
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.state.subpage == 'AccountLanding', classNames: 'accountcontent-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(AccountLanding, { domainsUsed: this.props.domainsUsed, setSubpage: this.setSubpage })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.state.subpage == 'EditDetailsLanding', classNames: 'accountcontent-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(EditDetailsLanding, { setSubpage: this.setSubpage })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.state.subpage == 'ChangePwdLanding', classNames: 'accountcontent-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(ChangePwdLanding, { setShowMask: this.setShowMask, setSubpage: this.setSubpage, showMainMsg: this.props.showMainMsg, closeMainMsg: this.props.closeMainMsg, addServerRequestObj: this.props.addServerRequestObj, deleteServerRequestObj: this.props.deleteServerRequestObj })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.state.subpage == 'UpgradeLanding', classNames: 'accountcontent-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(UpgradeLanding, { setSubpage: this.setSubpage })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.state.subpage == 'BuyMoreLanding', classNames: 'accountcontent-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(BuyMoreLanding, { setSubpage: this.setSubpage })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: maskStyle, className: 'account-mask' }));
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.state.subpage == 'AccountLanding', classNames: 'accountcontent-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(AccountLanding, { domainsUsed: this.props.domainsUsed, setSubpage: this.setSubpage })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.state.subpage == 'ChangePwdLanding', classNames: 'accountcontent-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(ChangePwdLanding, { setShowMask: this.setShowMask, setSubpage: this.setSubpage, showMainMsg: this.props.showMainMsg, closeMainMsg: this.props.closeMainMsg, addServerRequestObj: this.props.addServerRequestObj, deleteServerRequestObj: this.props.deleteServerRequestObj })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: maskStyle, className: 'account-mask' }));
         }
     }]);
 
@@ -62927,52 +62927,23 @@ var AccountLanding = function (_React$Component2) {
                     domainsAvailableText = 'You have <strong>' + domainsAvailable + ' domains</strong> still available.';
             }
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'contact-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', { className: 'name' }, accountData.name, ' ', accountData.surname), accountData.companyName && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', { className: 'coname' }, accountData.companyName), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', { className: 'email' }, accountData.email), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey', onClick: function onClick() {
-                    _this3.props.setSubpage('EditDetailsLanding');
-                } }, 'EDIT DETAILS'), '\xA0\xA0\xA0\xA0', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey', onClick: function onClick() {
                     _this3.props.setSubpage('ChangePwdLanding');
-                } }, 'CHANGE PASSWORD'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'avail-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'plan' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('strong', null, accountTypeText), ' ', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'plan')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'expires' }, 'Expires ', __WEBPACK_IMPORTED_MODULE_3_moment___default()(accountData.accountExpiresAt).format('LL')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'chart-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: styleChartOuter, className: 'chart-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: styleTotalCont, className: 'bar-cont total' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'bar-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'label left' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'count' }, accountData.domainCountBase + accountData.domainCountAdditional), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text' }, totalDomainsText)))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: styleUsedCont, className: 'bar-cont used' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'bar-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: styleLabelRight, className: 'label right' }, this.props.domainsUsed, '\xA0used'))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'avail-text', dangerouslySetInnerHTML: { __html: domainsAvailableText } }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont darkblue', onClick: function onClick() {
-                    _this3.props.setSubpage('UpgradeLanding');
-                } }, 'UPGRADE'), '\xA0\xA0\xA0\xA0', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey', onClick: function onClick() {
-                    _this3.props.setSubpage('BuyMoreLanding');
-                } }, 'BUY MORE DOMAINS'))));
+                } }, 'CHANGE PASSWORD'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'avail-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'plan' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('strong', null, accountTypeText), ' ', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'plan')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'expires' }, 'Expires ', __WEBPACK_IMPORTED_MODULE_3_moment___default()(accountData.accountExpiresAt).format('LL')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'chart-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: styleChartOuter, className: 'chart-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: styleTotalCont, className: 'bar-cont total' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'bar-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'label left' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'count' }, accountData.domainCountBase + accountData.domainCountAdditional), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text' }, totalDomainsText)))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: styleUsedCont, className: 'bar-cont used' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'bar-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: styleLabelRight, className: 'label right' }, this.props.domainsUsed, '\xA0used'))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'avail-text', dangerouslySetInnerHTML: { __html: domainsAvailableText } })));
         }
     }]);
 
     return AccountLanding;
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
-var EditDetailsLanding = function (_React$Component3) {
-    _inherits(EditDetailsLanding, _React$Component3);
-
-    function EditDetailsLanding(props) {
-        _classCallCheck(this, EditDetailsLanding);
-
-        return _possibleConstructorReturn(this, (EditDetailsLanding.__proto__ || Object.getPrototypeOf(EditDetailsLanding)).call(this, props));
-    }
-
-    _createClass(EditDetailsLanding, [{
-        key: 'render',
-        value: function render() {
-            var _this5 = this;
-
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner account-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, 'EDIT DETAILS'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'sld icon-cross-ui account-close', onClick: function onClick() {
-                    _this5.props.setSubpage('AccountLanding');
-                } }));
-        }
-    }]);
-
-    return EditDetailsLanding;
-}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
-
-var ChangePwdLanding = function (_React$Component4) {
-    _inherits(ChangePwdLanding, _React$Component4);
+var ChangePwdLanding = function (_React$Component3) {
+    _inherits(ChangePwdLanding, _React$Component3);
 
     function ChangePwdLanding(props) {
         _classCallCheck(this, ChangePwdLanding);
 
-        var _this6 = _possibleConstructorReturn(this, (ChangePwdLanding.__proto__ || Object.getPrototypeOf(ChangePwdLanding)).call(this, props));
+        var _this4 = _possibleConstructorReturn(this, (ChangePwdLanding.__proto__ || Object.getPrototypeOf(ChangePwdLanding)).call(this, props));
 
-        _this6.state = {
+        _this4.state = {
             mainError: null,
             currentPwdFocus: false,
             currentPwdError: false,
@@ -62982,7 +62953,7 @@ var ChangePwdLanding = function (_React$Component4) {
             newPwdSubtext: msgPasswordDefault,
             spinning: false
         };
-        return _this6;
+        return _this4;
     }
 
     _createClass(ChangePwdLanding, [{
@@ -63045,7 +63016,7 @@ var ChangePwdLanding = function (_React$Component4) {
     }, {
         key: 'validateAndSubmit',
         value: function validateAndSubmit() {
-            var _this7 = this;
+            var _this5 = this;
 
             var currentPwdOk = false;
             if (this.inputCurrentPwd.value.length > 0) {
@@ -63108,9 +63079,9 @@ var ChangePwdLanding = function (_React$Component4) {
                     },
                     cancelToken: requestObj.source.token
                 }).then(function (response) {
-                    _this7.props.setSubpage('AccountLanding');
+                    _this5.props.setSubpage('AccountLanding');
                     var children = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'left' }, 'Your password was successfully changed.'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont mainmsg dummy' }, '\xA0')))));
-                    _this7.props.showMainMsg(children);
+                    _this5.props.showMainMsg(children);
                 }).catch(function (error) {
                     var invalidPassword = false;
                     if (error.response && error.response.status && error.response.status == 403) {
@@ -63120,28 +63091,28 @@ var ChangePwdLanding = function (_React$Component4) {
                         }
                     }
                     if (invalidPassword) {
-                        _this7.inputCurrentPwd.focus();
-                        _this7.inputCurrentPwd.select();
-                        _this7.setState({
+                        _this5.inputCurrentPwd.focus();
+                        _this5.inputCurrentPwd.select();
+                        _this5.setState({
                             mainError: 'The current password is not valid. Please try again.'
                         });
                     } else {
                         var children = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'left' }, 'An error occurred. Your password was not changed. Please try again.'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont mainmsg dummy' }, '\xA0')))));
-                        _this7.props.showMainMsg(children);
+                        _this5.props.showMainMsg(children);
                     }
                 }).then(function () {
-                    _this7.props.setShowMask(false);
-                    _this7.setState({
+                    _this5.props.setShowMask(false);
+                    _this5.setState({
                         spinning: false
                     });
-                    _this7.props.deleteServerRequestObj(requestObj);
+                    _this5.props.deleteServerRequestObj(requestObj);
                 });
             }
         }
     }, {
         key: 'render',
         value: function render() {
-            var _this8 = this;
+            var _this6 = this;
 
             var currentPwdClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
                 'text-cont': true,
@@ -63158,76 +63129,30 @@ var ChangePwdLanding = function (_React$Component4) {
                 'spinning': this.state.spinning
             });
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner account-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title-main' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'sld icon-lock' }), '\xA0CHANGE PASSWORD')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'subtitle-main' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'Enter the details below to change your password')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'mainmsg-cont' }, this.state.mainError != null && this.state.mainError.length > 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { dangerouslySetInnerHTML: { __html: this.state.mainError } }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, '\xA0')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: currentPwdClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'textentry-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-lock' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'textentry-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { ref: function ref(input) {
-                    _this8.inputCurrentPwd = input;
+                    _this6.inputCurrentPwd = input;
                 }, name: 'currentpassword', className: 'textentry', type: 'password', placeholder: 'Current password', tabIndex: '1', onFocus: function onFocus() {
-                    _this8.currentPwdOnFocus();
+                    _this6.currentPwdOnFocus();
                 }, onBlur: function onBlur() {
-                    _this8.currentPwdOnBlur();
+                    _this6.currentPwdOnBlur();
                 }, onKeyPress: function onKeyPress(e) {
-                    _this8.currentPwdOnKeyPress(e);
+                    _this6.currentPwdOnKeyPress(e);
                 } }))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: 'div-password-submsg', className: 'submsg-cont' }, this.state.currentPwdSubtext != null && this.state.currentPwdSubtext.length > 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { dangerouslySetInnerHTML: { __html: this.state.currentPwdSubtext } }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, '\xA0'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: newPwdClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'textentry-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-lock' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'textentry-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { ref: function ref(input) {
-                    _this8.inputNewPwd = input;
+                    _this6.inputNewPwd = input;
                 }, name: 'newpassword', className: 'textentry', type: 'password', placeholder: 'New password', tabIndex: '2', onFocus: function onFocus() {
-                    _this8.newPwdOnFocus();
+                    _this6.newPwdOnFocus();
                 }, onBlur: function onBlur() {
-                    _this8.newPwdOnBlur();
+                    _this6.newPwdOnBlur();
                 }, onKeyPress: function onKeyPress(e) {
-                    _this8.newPwdOnKeyPress(e);
+                    _this6.newPwdOnKeyPress(e);
                 } }))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: 'div-password-submsg', className: 'submsg-cont' }, this.state.newPwdSubtext != null && this.state.newPwdSubtext.length > 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { dangerouslySetInnerHTML: { __html: this.state.newPwdSubtext } }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, '\xA0'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont darkblue', onClick: function onClick() {
-                    _this8.validateAndSubmit();
+                    _this6.validateAndSubmit();
                 }, tabIndex: '4' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: spinnerContClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text' }, 'CHANGE PASSWORD'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect0' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect1' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect2' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect3' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect4' }))))), '\xA0\xA0\xA0\xA0', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey', onClick: function onClick() {
-                    _this8.props.setSubpage('AccountLanding');
+                    _this6.props.setSubpage('AccountLanding');
                 }, tabIndex: '5' }, 'CANCEL'))));
         }
     }]);
 
     return ChangePwdLanding;
-}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
-
-var UpgradeLanding = function (_React$Component5) {
-    _inherits(UpgradeLanding, _React$Component5);
-
-    function UpgradeLanding(props) {
-        _classCallCheck(this, UpgradeLanding);
-
-        return _possibleConstructorReturn(this, (UpgradeLanding.__proto__ || Object.getPrototypeOf(UpgradeLanding)).call(this, props));
-    }
-
-    _createClass(UpgradeLanding, [{
-        key: 'render',
-        value: function render() {
-            var _this10 = this;
-
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner account-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, 'UPGRADE'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'sld icon-cross-ui account-close', onClick: function onClick() {
-                    _this10.props.setSubpage('AccountLanding');
-                } }));
-        }
-    }]);
-
-    return UpgradeLanding;
-}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
-
-var BuyMoreLanding = function (_React$Component6) {
-    _inherits(BuyMoreLanding, _React$Component6);
-
-    function BuyMoreLanding(props) {
-        _classCallCheck(this, BuyMoreLanding);
-
-        return _possibleConstructorReturn(this, (BuyMoreLanding.__proto__ || Object.getPrototypeOf(BuyMoreLanding)).call(this, props));
-    }
-
-    _createClass(BuyMoreLanding, [{
-        key: 'render',
-        value: function render() {
-            var _this12 = this;
-
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner account-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, 'BUY MORE'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'sld icon-cross-ui account-close', onClick: function onClick() {
-                    _this12.props.setSubpage('AccountLanding');
-                } }));
-        }
-    }]);
-
-    return BuyMoreLanding;
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
 /***/ }),
@@ -63940,7 +63865,7 @@ var App = function (_React$Component) {
     }, {
         key: 'tabClick',
         value: function tabClick(tabIndex) {
-            if (this.state.domainsLoaded) {
+            if (this.state.domainsLoaded && this.state.serverRequestObjs.length == 0) {
                 this.setState({
                     tabIndex: tabIndex
                 });
@@ -64233,7 +64158,7 @@ var App = function (_React$Component) {
                 'tab-cont': true,
                 'selected': this.state.tabIndex == 0,
                 'unselected': this.state.tabIndex != 0,
-                'loaded': this.state.domainsLoaded
+                'active': this.state.domainsLoaded && this.state.serverRequestObjs.length == 0
             });
             var icon0Classes = __WEBPACK_IMPORTED_MODULE_3_classNames_dedupe___default()({
                 'icon-world-network': true,
@@ -64244,7 +64169,7 @@ var App = function (_React$Component) {
                 'tab-cont': true,
                 'selected': this.state.tabIndex == 1,
                 'unselected': this.state.tabIndex != 1,
-                'loaded': this.state.domainsLoaded
+                'active': this.state.domainsLoaded && this.state.serverRequestObjs.length == 0
             });
             var icon1Classes = __WEBPACK_IMPORTED_MODULE_3_classNames_dedupe___default()({
                 'icon-profile-picture': true,
@@ -64255,12 +64180,20 @@ var App = function (_React$Component) {
                     _this9.tabClick(0);
                 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: icon0Classes }), '\xA0Domains'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: tab1Classes, onClick: function onClick() {
                     _this9.tabClick(1);
-                } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: icon1Classes }), '\xA0Account')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-cont' }, this.state.domainsLoaded ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 0, classNames: 'domains-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__console_domains_js__["a" /* Domains */], { domains: this.state.domains, domainsMsgShow: this.state.domainsMsgShow, domainsMsgText: this.state.domainsMsgText, domainsMsgCloseClick: this.domainsMsgCloseClick, addDomain: this.addDomain, updateDomain: this.updateDomain, sortEnd: this.sortEnd, leftEnd: this.leftEnd })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 1, classNames: 'account-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__console_account_js__["a" /* Account */], { domainsUsed: this.state.domains.length, showMainMsg: this.showMainMsg, closeMainMsg: this.closeMainMsg, addServerRequestObj: this.addServerRequestObj, deleteServerRequestObj: this.deleteServerRequestObj }))) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, 'Loading domains...')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__console_mainmsg_js__["a" /* MainMsg */], { children: this.state.mainMsgChildren, visible: this.state.mainMsgShow, closeClick: this.closeMainMsg }));
+                } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: icon1Classes }), '\xA0Account')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-cont' }, this.state.domainsLoaded ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 0, classNames: 'domains-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__console_domains_js__["a" /* Domains */], { domains: this.state.domains, domainsMsgShow: this.state.domainsMsgShow, domainsMsgText: this.state.domainsMsgText, domainsMsgCloseClick: this.domainsMsgCloseClick, addDomain: this.addDomain, updateDomain: this.updateDomain, sortEnd: this.sortEnd, leftEnd: this.leftEnd })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 1, classNames: 'account-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__console_account_js__["a" /* Account */], { domainsUsed: this.state.domains.length, showMainMsg: this.showMainMsg, closeMainMsg: this.closeMainMsg, addServerRequestObj: this.addServerRequestObj, deleteServerRequestObj: this.deleteServerRequestObj }))) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, 'Loading domains...')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__console_mainmsg_js__["a" /* MainMsg */], { children: this.state.mainMsgChildren, visible: this.state.mainMsgShow, closeClick: this.closeMainMsg }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(UploadingIndicator, { requestCount: this.state.serverRequestObjs.length }));
         }
     }]);
 
     return App;
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+var UploadingIndicator = function UploadingIndicator(props) {
+    var show = false;
+    if (props.requestCount > 0) {
+        show = true;
+    }
+    return __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.createPortal(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, '\xA0', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_transition_group__["CSSTransition"], { 'in': show, classNames: 'upindicator-trans', timeout: { exit: 2000 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'upindicator-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'upindicator-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'cloud oln icon-cloud' }), show ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect0' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect1' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect2' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect3' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect4' }))) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'check sld icon-check-ui' }))))), document.getElementById('div-upindicator-cont'));
+};
 
 __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(App, null), document.getElementById('div-target'));
 
@@ -64345,7 +64278,7 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 //icon-profile-picture
 
 // TODO: PREVENT TAB CLICKS WHILE THERE ARE REQUEST OBJECTS!!!!
-// TODO: Allo 'ignoreOnClick' to work with id and class selectors, as well as element types
+// TODO: Allow 'ignoreOnClick' to work with id and class selectors, as well as element types
 // TODO: Finish Controller_Auth_SignUp
 // TODO: Create /terms and /privacy
 // TODO: Can't get out of edit domain if it is below keyboard

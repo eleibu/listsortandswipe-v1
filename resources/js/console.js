@@ -90,7 +90,7 @@ class App extends React.Component {
         }
     }
     tabClick(tabIndex) {
-        if (this.state.domainsLoaded) {
+        if (this.state.domainsLoaded && this.state.serverRequestObjs.length == 0) {
             this.setState({
                tabIndex: tabIndex
             });
@@ -350,7 +350,7 @@ class App extends React.Component {
             'tab-cont' : true,
             'selected' : this.state.tabIndex == 0,
             'unselected' : this.state.tabIndex != 0,
-            'loaded' : this.state.domainsLoaded
+            'active' : (this.state.domainsLoaded && this.state.serverRequestObjs.length == 0)
         });
         const icon0Classes = classNames({
             'icon-world-network' : true,
@@ -361,7 +361,7 @@ class App extends React.Component {
             'tab-cont' : true,
             'selected' : this.state.tabIndex == 1,
             'unselected' : this.state.tabIndex != 1,
-            'loaded' : this.state.domainsLoaded
+            'active' : (this.state.domainsLoaded && this.state.serverRequestObjs.length == 0)
         });
         const icon1Classes = classNames({
             'icon-profile-picture' : true,
@@ -395,9 +395,41 @@ class App extends React.Component {
                     )}
                 </div>
                 <MainMsg children={this.state.mainMsgChildren} visible={this.state.mainMsgShow} closeClick={this.closeMainMsg} />
+                <UploadingIndicator requestCount={this.state.serverRequestObjs.length} />
             </React.Fragment>
         );
     }
+}
+
+const UploadingIndicator = (props) => {
+    let show = false;
+    if (props.requestCount > 0) {
+        show = true;
+    }
+    return (
+        ReactDOM.createPortal(
+            <React.Fragment>
+                &nbsp;
+                <CSSTransition in={show} classNames="upindicator-trans" timeout={{ exit: 2000 }} unmountOnExit>
+                    <div className="upindicator-outer">
+                        <div className="upindicator-inner">
+                            <i className="cloud oln icon-cloud" />
+                            {(show) ? (
+                                <div className="spinner-outer">
+                                    <div className="spinner-inner">
+                                        <div className="rect rect0"></div><div className="rect rect1"></div><div className="rect rect2"></div><div className="rect rect3"></div><div className="rect rect4"></div>
+                                    </div>
+                                </div>
+                            ) : (
+                                <i className="check sld icon-check-ui" />
+                            )}
+                        </div>
+                    </div>
+                </CSSTransition>
+            </React.Fragment>,
+            document.getElementById('div-upindicator-cont')
+        )
+    );
 }
 
 ReactDOM.render(
