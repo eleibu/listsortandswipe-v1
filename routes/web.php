@@ -37,7 +37,3 @@ Route::post('/activate', 'Controller_Auth_Activate@post');
 Route::get('/reset', 'Controller_Auth_Reset@page')->name('reset');
 Route::post('/reset', 'Controller_Auth_Reset@post');
 Route::get('/signout', 'Controller_Auth_SignOut@page')->name('signout');
-
-Route::get('/test', function () {
-    return view('test');
-});
