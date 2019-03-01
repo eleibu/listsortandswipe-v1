@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 10);
+/******/ 	return __webpack_require__(__webpack_require__.s = 11);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -63241,7 +63241,8 @@ var Domains = function (_React$Component) {
                 rightEnabled: false,
                 leftMasks: [],
                 onSortEnd: this.props.sortEnd,
-                onLeftEnd: this.props.leftEnd
+                onLeftEnd: this.props.leftEnd,
+                ignoreOnClick: ['input', 'textarea', 'select', 'option', 'button', 'span.key', 'span.copy-cont']
             });
 
             document.addEventListener('mousedown', this.handleDocClick);
@@ -64335,11 +64336,6 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 // Ensure all links actually link to something (especially in docs.blade.php and demos.blade.php)
 
 
-//icon-email
-//icon-profile-picture
-
-// TODO: PREVENT TAB CLICKS WHILE THERE ARE REQUEST OBJECTS!!!!
-// TODO: Allow 'ignoreOnClick' to work with id and class selectors, as well as element types
 // TODO: Finish Controller_Auth_SignUp
 // TODO: Create /terms and /privacy
 // TODO: Can't get out of edit domain if it is below keyboard
@@ -64566,70 +64562,6 @@ var lithiumlist = function () {
 		// reg - end
 	};
 
-	//@@
-
-	var getIgnoreObjects = function getIgnoreObjects(ignoreOnClick) {
-		var ignoreObjects = [];
-		if (ignoreOnClick.length > 0) {
-			for (var i = 0, len = ignoreOnClick.length; i < len; i++) {
-				var newIgnoreObject = null;
-				var ignoreText = ignoreOnClick[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-				if (ignoreText.length > 0) {
-					var indexDot = ignoreText.indexOf('.');
-					if (indexDot > -1) {
-						var classNames = extractClassNames(ignoreText.substr(indexDot + 1), []);
-						newIgnoreObject = createIgnoreObject(ignoreText.substring(0, indexDot), classNames);
-					} else {
-						newIgnoreObject = createIgnoreObject(ignoreText, []);
-					}
-				}
-				if (newIgnoreObject != null) {
-					ignoreObjects.push(newIgnoreObject);
-				}
-			}
-		}
-		return ignoreObjects;
-	};
-
-	var extractClassNames = function extractClassNames(text, classNames) {
-		var indexDot = text.indexOf('.');
-		if (indexDot > -1) {
-			if (indexDot < text.length - 1) {
-				classNames = extractClassNames(text.substr(indexDot + 1), classNames);
-			}
-			if (text.substring(0, indexDot).length > 0) {
-				classNames.push(text.substring(0, indexDot));
-			}
-		} else {
-			if (text.length > 0) {
-				classNames.push(text);
-			}
-		}
-		return classNames;
-	};
-
-	var createIgnoreObject = function createIgnoreObject(name, classNames) {
-		if (name.substr(0, 1) != '#' || name.length > 1) {
-			// check that name is not just '#'
-			var isId = false;
-			if (name.substr(0, 1) == '#') {
-				isId = true;
-				name = name.substr(1);
-			} else {
-				name = name.toLowerCase();
-			}
-			if (name.length == 0) {
-				name = null;
-			}
-			return {
-				name: name,
-				isId: isId,
-				classNames: classNames
-			};
-		}
-		return null;
-	};
-
 	var detachFromList = function detachFromList(listCont) {
 		if (listCont) {
 			var index = null;
@@ -64754,6 +64686,7 @@ var lithiumlist = function () {
 							}
 						}
 					}
+					instances[index]['ignoreObjects'] = getIgnoreObjects(listProperties['ignoreOnClick']);
 					tempFunctionRemoveMasks(instances[index]['props']);
 				} else {
 					throw 'listCont does not have lithiumlist attached ';
@@ -64813,98 +64746,8 @@ var lithiumlist = function () {
 				} else if (!shouldIgnoreOnClick(instance, e.target, instance.temp.items[index])) {
 					backgroundClick(e, index, instance);
 				}
-				// } else if (instance.props.ignoreOnClick.indexOf(e.target.tagName.toLowerCase()) == -1) {
-				// 	backgroundClick(e, index, instance);
-				// }
 			}
 		}
-	};
-
-	var shouldIgnoreOnClick = function shouldIgnoreOnClick(instance, target, listItem) {
-		var returnVal = false;
-		for (var i = 0, len = instance.ignoreObjects.length; i < len; i++) {
-			var ignoreObject = instance.ignoreObjects[i];
-			if (ignoreObject.name != null && ignoreObject.name.length > 0) {
-				if (ignoreObject.isId) {
-					if (idIsOrContainsTarget(ignoreObject.name, ignoreObject.classNames, target, listItem)) {
-						returnVal = true;
-					}
-				} else {
-					if (tagIsOrContainsTarget(ignoreObject.name, ignoreObject.classNames, target, listItem)) {
-						returnVal = true;
-					}
-				}
-			} else {
-				if (classIsOrContainsTarget(ignoreObject.classNames, target, listItem)) {
-					returnVal = true;
-				}
-			}
-		}
-		return returnVal;
-	};
-
-	var classIsOrContainsTarget = function classIsOrContainsTarget(classNames, target, listItem) {
-		var returnVal = false;
-		if (hasAllClassNames(target, classNames)) {
-			returnVal = true;
-		} else {
-			if (classNames.length > 0) {
-				var classesString = '';
-				for (var i = 0, len = classNames.length; i < len; i++) {
-					if (i > 0) {
-						classesString = classesString + ' ' + classNames[i];
-					} else {
-						classesString = classesString + classNames[i];
-					}
-				}
-				var elements = listItem.getElementsByClassName(classesString);
-				for (var i = 0, len = elements.length; i < len; i++) {
-					if (elements[i].contains(target)) {
-						returnVal = true;
-						break;
-					}
-				}
-			}
-		}
-		return returnVal;
-	};
-
-	var idIsOrContainsTarget = function idIsOrContainsTarget(id, classNames, target, listItem) {
-		var returnVal = false;
-		if (target.id && target.id == id && hasAllClassNames(target, classNames)) {
-			returnVal = true;
-		} else {
-			var element = listItem.getElementById(id);
-			if (element && hasAllClassNames(element, classNames) && element.contains(target)) {
-				returnVal = true;
-			}
-		}
-		return returnVal;
-	};
-
-	var tagIsOrContainsTarget = function tagIsOrContainsTarget(tagname, classNames, target, listItem) {
-		var returnVal = false;
-		if (target.tagName.toLowerCase() == tagname && hasAllClassNames(target, classNames)) {
-			returnVal = true;
-		} else {
-			var elements = listItem.getElementsByTagName(tagname);
-			for (var i = 0, len = elements.length; i < len; i++) {
-				if (hasAllClassNames(elements[i], classNames) && elements[i].contains(target)) {
-					returnVal = true;
-					break;
-				}
-			}
-		}
-		return returnVal;
-	};
-
-	var hasAllClassNames = function hasAllClassNames(target, classNames) {
-		for (var i = 0, len = classNames.length; i < len; i++) {
-			if (!hasClass(target, classNames[i])) {
-				return false;
-			}
-		}
-		return true;
 	};
 
 	var touchStart = function touchStart(e, instance) {
@@ -65682,6 +65525,163 @@ var lithiumlist = function () {
 			newTemp.funcTouchStart = null;
 		}
 		return newTemp;
+	};
+
+	// ignoreOnClick functions
+
+	var getIgnoreObjects = function getIgnoreObjects(ignoreOnClick) {
+		var ignoreObjects = [];
+		if (ignoreOnClick.length > 0) {
+			for (var i = 0, len = ignoreOnClick.length; i < len; i++) {
+				var newIgnoreObject = null;
+				var ignoreText = ignoreOnClick[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+				if (ignoreText.length > 0) {
+					var indexDot = ignoreText.indexOf('.');
+					if (indexDot > -1) {
+						var classNames = extractClassNames(ignoreText.substr(indexDot + 1), []);
+						newIgnoreObject = createIgnoreObject(ignoreText.substring(0, indexDot), classNames);
+					} else {
+						newIgnoreObject = createIgnoreObject(ignoreText, []);
+					}
+				}
+				if (newIgnoreObject != null) {
+					ignoreObjects.push(newIgnoreObject);
+				}
+			}
+		}
+		return ignoreObjects;
+	};
+
+	var extractClassNames = function extractClassNames(text, classNames) {
+		var indexDot = text.indexOf('.');
+		if (indexDot > -1) {
+			if (indexDot < text.length - 1) {
+				classNames = extractClassNames(text.substr(indexDot + 1), classNames);
+			}
+			if (text.substring(0, indexDot).length > 0) {
+				classNames.push(text.substring(0, indexDot));
+			}
+		} else {
+			if (text.length > 0) {
+				classNames.push(text);
+			}
+		}
+		return classNames;
+	};
+
+	var createIgnoreObject = function createIgnoreObject(name, classNames) {
+		if (name.substr(0, 1) != '#' || name.length > 1) {
+			// check that name is not just '#'
+			var isId = false;
+			if (name.substr(0, 1) == '#') {
+				isId = true;
+				name = name.substr(1);
+			} else {
+				name = name.toLowerCase();
+			}
+			if (name.length == 0) {
+				name = null;
+			}
+			return {
+				name: name,
+				isId: isId,
+				classNames: classNames
+			};
+		}
+		return null;
+	};
+
+	var shouldIgnoreOnClick = function shouldIgnoreOnClick(instance, target, listItem) {
+		var returnVal = false;
+		for (var i = 0, len = instance.ignoreObjects.length; i < len; i++) {
+			var ignoreObject = instance.ignoreObjects[i];
+			if (ignoreObject.name != null && ignoreObject.name.length > 0) {
+				if (ignoreObject.isId) {
+					if (idIsOrContainsTarget(ignoreObject.name, ignoreObject.classNames, target, listItem)) {
+						returnVal = true;
+					}
+				} else {
+					if (tagIsOrContainsTarget(ignoreObject.name, ignoreObject.classNames, target, listItem)) {
+						returnVal = true;
+					}
+				}
+			} else {
+				if (classIsOrContainsTarget(ignoreObject.classNames, target, listItem)) {
+					returnVal = true;
+				}
+			}
+		}
+		return returnVal;
+	};
+
+	var idIsOrContainsTarget = function idIsOrContainsTarget(id, classNames, target, listItem) {
+		var returnVal = false;
+		if (target !== listItem) {
+			if (target.id && target.id == id && hasAllClassNames(target, classNames)) {
+				returnVal = true;
+			} else {
+				var element = document.getElementById(id);
+				if (element && hasAllClassNames(element, classNames) && element.contains(target)) {
+					returnVal = true;
+				}
+			}
+		}
+		return returnVal;
+	};
+
+	var tagIsOrContainsTarget = function tagIsOrContainsTarget(tagname, classNames, target, listItem) {
+		var returnVal = false;
+		if (target !== listItem) {
+			if (target.tagName.toLowerCase() == tagname && hasAllClassNames(target, classNames)) {
+				returnVal = true;
+			} else {
+				var elements = listItem.getElementsByTagName(tagname);
+				for (var i = 0, len = elements.length; i < len; i++) {
+					if (hasAllClassNames(elements[i], classNames) && elements[i].contains(target)) {
+						returnVal = true;
+						break;
+					}
+				}
+			}
+		}
+		return returnVal;
+	};
+
+	var classIsOrContainsTarget = function classIsOrContainsTarget(classNames, target, listItem) {
+		var returnVal = false;
+		if (target !== listItem) {
+			if (hasAllClassNames(target, classNames)) {
+				returnVal = true;
+			} else {
+				if (classNames.length > 0) {
+					var classesString = '';
+					for (var i = 0, len = classNames.length; i < len; i++) {
+						if (i > 0) {
+							classesString = classesString + ' ' + classNames[i];
+						} else {
+							classesString = classesString + classNames[i];
+						}
+					}
+					var elements = listItem.getElementsByClassName(classesString);
+					for (var i = 0, len = elements.length; i < len; i++) {
+						if (elements[i].contains(target)) {
+							returnVal = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+		return returnVal;
+	};
+
+	var hasAllClassNames = function hasAllClassNames(target, classNames) {
+		for (var i = 0, len = classNames.length; i < len; i++) {
+			if (!hasClass(target, classNames[i])) {
+				return false;
+			}
+		}
+		return true;
 	};
 
 	// utility functions
@@ -66526,7 +66526,7 @@ function arrayMove(arr, previousIndex, newIndex) {
 
 /***/ }),
 
-/***/ 10:
+/***/ 11:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__("./resources/js/console.js");

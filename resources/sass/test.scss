@@ -1,0 +1,26 @@
+#outerCont {
+	border: 1px solid #000000;
+	width: 400px;
+	height: 400px;
+	overflow: auto;
+
+	#listCont {
+		position: relative;
+
+		.listItem {
+			border: 1px solid #CCCCCC;
+			background-color: #FFFFFF;
+			padding: 1.5em 1em;
+
+			div.cont {
+				border: 1px solid #000000;
+				padding: 1em;
+
+				div.outer {
+					width: 3em;
+					background-color: #EEEEEE;
+				}
+			}
+		}
+	}
+}

@@ -35,6 +35,7 @@ export class Domains extends React.Component {
                 leftMasks: [],
                 onSortEnd: this.props.sortEnd,
                 onLeftEnd: this.props.leftEnd,
+                ignoreOnClick: ['input', 'textarea', 'select', 'option', 'button', 'span.key', 'span.copy-cont']
             }
         );
 

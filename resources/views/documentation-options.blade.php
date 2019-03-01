@@ -16,13 +16,71 @@
         </div>
     </div>
     <p>
-        The names of DOM elements to ignore when pressed.
+        Selectors of DOM elements to be ignored when pressed. Children of selected elements are also ignored.
     </p>
+    <p>
+        Uses CSS syntax, for example:
+    </p>
+    <div class="params-cont">
+        <div class="param">
+            <strong>&#39;button&#39;</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                All HTML elements with tag name &#39;button&#39; will be ignored.
+            </div>
+        </div>
+        <div class="param">
+            <strong>&#39;#someid&#39;</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                The HTML element with id &#39;someid&#39; will be ignored.
+            </div>
+        </div>
+        <div class="param">
+            <strong>&#39;.someclass&#39;</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                All HTML elements with class &#39;someclass&#39; will be ignored.
+            </div>
+        </div>
+    </div>
+    <p>
+        Selectors may also be combined, for example:
+    </p>
+    <div class="params-cont">
+        <div class="param">
+            <strong>&#39;button.ignore&#39;</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                All HTML elements with tag name &#39;button&#39; and class &#39;ignore&#39; will be ignored.
+            </div>
+        </div>
+        <div class="param">
+            <strong>&#39;#someid.ignore&#39;</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                The HTML element with id &#39;someid&#39; will be ignored if, when pressed, it has the class &#39;ignore&#39;.
+            </div>
+        </div>
+        <div class="param">
+            <strong>&#39;.someclass.ignore&#39;</strong>
+        </div>
+        <div class="sub-params-cont">
+            <div class="sub-param">
+                All HTML elements with classes &#39;someclass&#39; and &#39;ignore&#39; will be ignored.
+            </div>
+        </div>
+    </div>
     <div class="title-codeblock">
         EXAMPLE JS
     </div>
 <pre class="line-numbers"><code class="language-js">var props = {
-    ignoreOnClick: [&#39;input&#39;, &#39;textarea&#39;]
+    ignoreOnClick: [&#39;button.ignore&#39;, &#39;#someid.ignore&#39;, &#39;.someclass.ignore&#39;]
 };
 lithiumlist.attachToList(
     ...,
