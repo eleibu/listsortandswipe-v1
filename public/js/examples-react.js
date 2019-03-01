@@ -42463,6 +42463,7 @@ var lithiumlist = function () {
 			'listCont': listCont,
 			'listItemClass': listItemClass,
 			'props': props,
+			'ignoreObjects': getIgnoreObjects(props.ignoreOnClick),
 			'temp': getNewTemp()
 		};
 
@@ -42491,6 +42492,70 @@ var lithiumlist = function () {
 			rMsg(instance);
 		}
 		// reg - end
+	};
+
+	//@@
+
+	var getIgnoreObjects = function getIgnoreObjects(ignoreOnClick) {
+		var ignoreObjects = [];
+		if (ignoreOnClick.length > 0) {
+			for (var i = 0, len = ignoreOnClick.length; i < len; i++) {
+				var newIgnoreObject = null;
+				var ignoreText = ignoreOnClick[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+				if (ignoreText.length > 0) {
+					var indexDot = ignoreText.indexOf('.');
+					if (indexDot > -1) {
+						var classNames = extractClassNames(ignoreText.substr(indexDot + 1), []);
+						newIgnoreObject = createIgnoreObject(ignoreText.substring(0, indexDot), classNames);
+					} else {
+						newIgnoreObject = createIgnoreObject(ignoreText, []);
+					}
+				}
+				if (newIgnoreObject != null) {
+					ignoreObjects.push(newIgnoreObject);
+				}
+			}
+		}
+		return ignoreObjects;
+	};
+
+	var extractClassNames = function extractClassNames(text, classNames) {
+		var indexDot = text.indexOf('.');
+		if (indexDot > -1) {
+			if (indexDot < text.length - 1) {
+				classNames = extractClassNames(text.substr(indexDot + 1), classNames);
+			}
+			if (text.substring(0, indexDot).length > 0) {
+				classNames.push(text.substring(0, indexDot));
+			}
+		} else {
+			if (text.length > 0) {
+				classNames.push(text);
+			}
+		}
+		return classNames;
+	};
+
+	var createIgnoreObject = function createIgnoreObject(name, classNames) {
+		if (name.substr(0, 1) != '#' || name.length > 1) {
+			// check that name is not just '#'
+			var isId = false;
+			if (name.substr(0, 1) == '#') {
+				isId = true;
+				name = name.substr(1);
+			} else {
+				name = name.toLowerCase();
+			}
+			if (name.length == 0) {
+				name = null;
+			}
+			return {
+				name: name,
+				isId: isId,
+				classNames: classNames
+			};
+		}
+		return null;
 	};
 
 	var detachFromList = function detachFromList(listCont) {
@@ -42673,11 +42738,101 @@ var lithiumlist = function () {
 					instance.temp.activeIndex = index;
 					initMoveRight(instance, 0);
 					initRightSlideOut(instance);
-				} else if (instance.props.ignoreOnClick.indexOf(e.target.tagName.toLowerCase()) == -1) {
+				} else if (!shouldIgnoreOnClick(instance, e.target, instance.temp.items[index])) {
 					backgroundClick(e, index, instance);
+				}
+				// } else if (instance.props.ignoreOnClick.indexOf(e.target.tagName.toLowerCase()) == -1) {
+				// 	backgroundClick(e, index, instance);
+				// }
+			}
+		}
+	};
+
+	var shouldIgnoreOnClick = function shouldIgnoreOnClick(instance, target, listItem) {
+		var returnVal = false;
+		for (var i = 0, len = instance.ignoreObjects.length; i < len; i++) {
+			var ignoreObject = instance.ignoreObjects[i];
+			if (ignoreObject.name != null && ignoreObject.name.length > 0) {
+				if (ignoreObject.isId) {
+					if (idIsOrContainsTarget(ignoreObject.name, ignoreObject.classNames, target, listItem)) {
+						returnVal = true;
+					}
+				} else {
+					if (tagIsOrContainsTarget(ignoreObject.name, ignoreObject.classNames, target, listItem)) {
+						returnVal = true;
+					}
+				}
+			} else {
+				if (classIsOrContainsTarget(ignoreObject.classNames, target, listItem)) {
+					returnVal = true;
 				}
 			}
 		}
+		return returnVal;
+	};
+
+	var classIsOrContainsTarget = function classIsOrContainsTarget(classNames, target, listItem) {
+		var returnVal = false;
+		if (hasAllClassNames(target, classNames)) {
+			returnVal = true;
+		} else {
+			if (classNames.length > 0) {
+				var classesString = '';
+				for (var i = 0, len = classNames.length; i < len; i++) {
+					if (i > 0) {
+						classesString = classesString + ' ' + classNames[i];
+					} else {
+						classesString = classesString + classNames[i];
+					}
+				}
+				var elements = listItem.getElementsByClassName(classesString);
+				for (var i = 0, len = elements.length; i < len; i++) {
+					if (elements[i].contains(target)) {
+						returnVal = true;
+						break;
+					}
+				}
+			}
+		}
+		return returnVal;
+	};
+
+	var idIsOrContainsTarget = function idIsOrContainsTarget(id, classNames, target, listItem) {
+		var returnVal = false;
+		if (target.id && target.id == id && hasAllClassNames(target, classNames)) {
+			returnVal = true;
+		} else {
+			var element = listItem.getElementById(id);
+			if (element && hasAllClassNames(element, classNames) && element.contains(target)) {
+				returnVal = true;
+			}
+		}
+		return returnVal;
+	};
+
+	var tagIsOrContainsTarget = function tagIsOrContainsTarget(tagname, classNames, target, listItem) {
+		var returnVal = false;
+		if (target.tagName.toLowerCase() == tagname && hasAllClassNames(target, classNames)) {
+			returnVal = true;
+		} else {
+			var elements = listItem.getElementsByTagName(tagname);
+			for (var i = 0, len = elements.length; i < len; i++) {
+				if (hasAllClassNames(elements[i], classNames) && elements[i].contains(target)) {
+					returnVal = true;
+					break;
+				}
+			}
+		}
+		return returnVal;
+	};
+
+	var hasAllClassNames = function hasAllClassNames(target, classNames) {
+		for (var i = 0, len = classNames.length; i < len; i++) {
+			if (!hasClass(target, classNames[i])) {
+				return false;
+			}
+		}
+		return true;
 	};
 
 	var touchStart = function touchStart(e, instance) {
