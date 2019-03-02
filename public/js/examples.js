@@ -18887,7 +18887,6 @@ if (outerContTriggerLeftAndRight && listContTriggerLeftAndRight && selectListIte
 // https://stackoverflow.com/questions/5106934/prevent-grey-overlay-on-touchstart-in-mobile-safari-webview
 // https://github.com/Polymer/polymer/issues/1970
 // TODO: In the examples, why does the whole list flash when pressed?
-// TODO: Include 'hamburger' and 'cross' in font icons
 // TODO: Test setDefaultProperties
 // TODO: hasClass, addClass and removeClass should be able to handle 'mask left' (at the moment they can't) - if not, update docs to say this
 // TODO: Can two lists share the same outerCont (especially if outerCont wraps the whole page)?
@@ -18903,7 +18902,6 @@ if (outerContTriggerLeftAndRight && listContTriggerLeftAndRight && selectListIte
 // TODO: Why is 'unlicensed' message not showing in docs/setup?
 // TODO: Test 'supportsPassive' in Edge and IE
 // TODO: Include version number and send it to server
-// TODO: Favicon
 // TODO: Can we improve auto-scrolling when outerCont = window?
 // TODO: Allow '-webkit-overflow-scrolling: touch' by turning it off when sorting starts?
 // TODO: Reset props for already attached list

@@ -50,6 +50,9 @@ export class Account extends React.Component {
 class AccountLanding extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            copying: false
+        };
     }
     render() {
         let accountTypeText;
@@ -108,6 +111,17 @@ class AccountLanding extends React.Component {
             default:
                 domainsAvailableText = 'You have <strong>' + domainsAvailable + ' domains</strong> still available.';
         }
+        const inputStyle = {
+            fontSize: '20px',
+            position: 'fixed',
+            top: '-100000px',
+            left: 0
+        };
+        const spanClasses = classNames({
+            'key' : true,
+            'default' : !this.state.copying,
+            'copying' : this.state.copying
+        });
         return (
             <div className="content-inner">
                 <div className="contact-cont">
@@ -129,6 +143,19 @@ class AccountLanding extends React.Component {
                     <div className="expires">
                         Expires {moment(accountData.accountExpiresAt).format('LL')}
                     </div>
+                    {(accountData.accountType == 3 && accountData.accountLicenceKey != null) &&
+                        <div className="key-cont">
+                            <input type="text" readOnly={true} ref={(input) => { this.inputCopy = input; }} style={inputStyle} value={accountData.accountLicenceKey} />
+                            <span className="label">Account licence key:</span>
+                            <span className={spanClasses}>{accountData.accountLicenceKey}</span>
+                            <span className="copy-cont">
+                                <span className="copy-outer" title="Copy to clipboard" onClick={() => {this.copyClick()}}>
+                                    <i className="oln icon-clipboard"></i>
+                                </span>
+                                &nbsp;
+                            </span>
+                        </div>
+                    }
                     <div className="chart-cont">
                         <div style={styleChartOuter} className="chart-outer">
                             <div style={styleTotalCont} className="bar-cont total">

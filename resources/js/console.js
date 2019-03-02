@@ -17,68 +17,6 @@ axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest'
 };
 
-// var text = 'tagname.classname0.classname1';
-// var regex = /^([^\s]+)(\.[^\s\.]+)/i;
-// var found = text.match(regex);
-// console.log(found);
-
-// let text = '   tagname.classname0.classname1  ';
-let ignoreOnClick = ['   tagname.classname0.classname1  ', '#d.classdfa..', '.dfas-dfs'];
-const ignoreObjects = [];
-
-if (ignoreOnClick.length > 0) {
-    for (var i = 0, len = ignoreOnClick.length; i < len; i++) {
-        const ignoreText = ignoreOnClick[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-        if (ignoreText.length > 0) {
-            const indexDot = ignoreText.indexOf('.');
-            if (indexDot > -1) {
-                const classNames = extractClassNames(ignoreText.substr(indexDot + 1), []);
-                createIgnoreObject(ignoreText.substring(0, indexDot), classNames);
-            } else {
-                createIgnoreObject(ignoreText, []);
-            }
-        }
-    }
-}
-console.log(ignoreObjects);
-
-function extractClassNames(text, classNames) {
-    const indexDot = text.indexOf('.');
-    if (indexDot > -1) {
-        if (indexDot < text.length - 1) {
-            classNames = extractClassNames(text.substr(indexDot + 1), classNames);
-        }
-        if (text.substring(0, indexDot).length > 0) {
-            classNames.push(text.substring(0, indexDot));
-        }
-    } else {
-        if (text.length > 0) {
-            classNames.push(text);
-        }
-    }
-    return classNames;
-}
-
-function createIgnoreObject(name, classNames) {
-    if (name.substr(0, 1) != '#' || name.length > 1) {  // check that name is not just '#'
-        let isId = false;
-        if (name.substr(0, 1) == '#') {
-            isId = true;
-            name = name.substr(1);
-        }
-        if (name.length == 0) {
-            name = null;
-        }
-        ignoreObjects.push({
-            name: name,
-            isId: isId,
-            classNames: classNames
-        });
-    }
-}
-
-
-
 class App extends React.Component {
     constructor(props) {
         super(props);

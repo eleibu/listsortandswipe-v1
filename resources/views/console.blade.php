@@ -51,6 +51,11 @@
                 companyName: null,
             @endif
             accountType: {{$accountType}},
+            @if(isset($accountLicenceKey))
+                accountLicenceKey: "{{$accountLicenceKey}}",
+            @else
+                accountLicenceKey: null,
+            @endif
             accountExpiresAt: "{{$accountExpiresAt}}",
             hasDomains: {{$hasDomains == 1 ? 'true' : 'false'}},
             domainCountBase: {{$domainCountBase}},

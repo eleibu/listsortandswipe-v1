@@ -386,8 +386,17 @@ class Domain extends React.Component {
                             <span className="label">Licence key:</span>
                             {(this.props.licence_key != null) ? (
                                 <React.Fragment>
-                                    <input type="text" readOnly={true} ref={(input) => { this.inputCopy = input; }} style={inputStyle} value={this.props.licence_key} />
-                                    <span className={spanClasses}>{this.props.licence_key}</span>
+                                    {(accountData.accountType == 3 && accountData.accountLicenceKey != null) ? (
+                                        <React.Fragment>
+                                            <input type="text" readOnly={true} ref={(input) => { this.inputCopy = input; }} style={inputStyle} value={accountData.accountLicenceKey} />
+                                            <span className={spanClasses}>{accountData.accountLicenceKey}</span>
+                                        </React.Fragment>
+                                    ) : (
+                                        <React.Fragment>
+                                            <input type="text" readOnly={true} ref={(input) => { this.inputCopy = input; }} style={inputStyle} value={this.props.licence_key} />
+                                            <span className={spanClasses}>{this.props.licence_key}</span>
+                                        </React.Fragment>
+                                    )}
                                     <span className="copy-cont">
                                         <span className="copy-outer" title="Copy to clipboard" onClick={() => {this.copyClick()}}>
                                             <i className="oln icon-clipboard"></i>

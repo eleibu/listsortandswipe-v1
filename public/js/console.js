@@ -62862,7 +62862,12 @@ var AccountLanding = function (_React$Component2) {
     function AccountLanding(props) {
         _classCallCheck(this, AccountLanding);
 
-        return _possibleConstructorReturn(this, (AccountLanding.__proto__ || Object.getPrototypeOf(AccountLanding)).call(this, props));
+        var _this2 = _possibleConstructorReturn(this, (AccountLanding.__proto__ || Object.getPrototypeOf(AccountLanding)).call(this, props));
+
+        _this2.state = {
+            copying: false
+        };
+        return _this2;
     }
 
     _createClass(AccountLanding, [{
@@ -62926,9 +62931,24 @@ var AccountLanding = function (_React$Component2) {
                 default:
                     domainsAvailableText = 'You have <strong>' + domainsAvailable + ' domains</strong> still available.';
             }
+            var inputStyle = {
+                fontSize: '20px',
+                position: 'fixed',
+                top: '-100000px',
+                left: 0
+            };
+            var spanClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+                'key': true,
+                'default': !this.state.copying,
+                'copying': this.state.copying
+            });
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'contact-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', { className: 'name' }, accountData.name, ' ', accountData.surname), accountData.companyName && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', { className: 'coname' }, accountData.companyName), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', { className: 'email' }, accountData.email), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey', onClick: function onClick() {
                     _this3.props.setSubpage('ChangePwdLanding');
-                } }, 'CHANGE PASSWORD'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'avail-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'plan' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('strong', null, accountTypeText), ' ', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'plan')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'expires' }, 'Expires ', __WEBPACK_IMPORTED_MODULE_3_moment___default()(accountData.accountExpiresAt).format('LL')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'chart-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: styleChartOuter, className: 'chart-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: styleTotalCont, className: 'bar-cont total' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'bar-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'label left' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'count' }, accountData.domainCountBase + accountData.domainCountAdditional), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text' }, totalDomainsText)))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: styleUsedCont, className: 'bar-cont used' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'bar-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: styleLabelRight, className: 'label right' }, this.props.domainsUsed, '\xA0used'))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'avail-text', dangerouslySetInnerHTML: { __html: domainsAvailableText } })));
+                } }, 'CHANGE PASSWORD'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'avail-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'plan' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('strong', null, accountTypeText), ' ', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'plan')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'expires' }, 'Expires ', __WEBPACK_IMPORTED_MODULE_3_moment___default()(accountData.accountExpiresAt).format('LL')), accountData.accountType == 3 && accountData.accountLicenceKey != null && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'key-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', readOnly: true, ref: function ref(input) {
+                    _this3.inputCopy = input;
+                }, style: inputStyle, value: accountData.accountLicenceKey }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'label' }, 'Account licence key:'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: spanClasses }, accountData.accountLicenceKey), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy-outer', title: 'Copy to clipboard', onClick: function onClick() {
+                    _this3.copyClick();
+                } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-clipboard' })), '\xA0')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'chart-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: styleChartOuter, className: 'chart-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: styleTotalCont, className: 'bar-cont total' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'bar-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'label left' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'count' }, accountData.domainCountBase + accountData.domainCountAdditional), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text' }, totalDomainsText)))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: styleUsedCont, className: 'bar-cont used' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'bar-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: styleLabelRight, className: 'label right' }, this.props.domainsUsed, '\xA0used'))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'avail-text', dangerouslySetInnerHTML: { __html: domainsAvailableText } })));
         }
     }]);
 
@@ -63595,9 +63615,11 @@ var Domain = function (_React$Component2) {
                     return _this4.onKeyDown(e);
                 }, onInput: function onInput(e) {
                     return _this4.onInput(e);
-                } })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'key-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'label' }, 'Licence key:'), this.props.licence_key != null ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', readOnly: true, ref: function ref(input) {
+                } })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'key-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'label' }, 'Licence key:'), this.props.licence_key != null ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, accountData.accountType == 3 && accountData.accountLicenceKey != null ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', readOnly: true, ref: function ref(input) {
                     _this4.inputCopy = input;
-                }, style: inputStyle, value: this.props.licence_key }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: spanClasses }, this.props.licence_key), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy-outer', title: 'Copy to clipboard', onClick: function onClick() {
+                }, style: inputStyle, value: accountData.accountLicenceKey }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: spanClasses }, accountData.accountLicenceKey)) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', readOnly: true, ref: function ref(input) {
+                    _this4.inputCopy = input;
+                }, style: inputStyle, value: this.props.licence_key }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: spanClasses }, this.props.licence_key)), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy-outer', title: 'Copy to clipboard', onClick: function onClick() {
                     _this4.copyClick();
                 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-clipboard' })), '\xA0')) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'shimmer' }, '\xA0'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'delete-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-trash button' })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'mask-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'mask-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'label' }, 'Delete')))));
         }
@@ -63778,67 +63800,6 @@ __WEBPACK_IMPORTED_MODULE_4_axios___default.a.defaults.headers.common = {
     'X-CSRF-TOKEN': document.querySelector("meta[name='csrf-token']").getAttribute("content"),
     'X-Requested-With': 'XMLHttpRequest'
 };
-
-// var text = 'tagname.classname0.classname1';
-// var regex = /^([^\s]+)(\.[^\s\.]+)/i;
-// var found = text.match(regex);
-// console.log(found);
-
-// let text = '   tagname.classname0.classname1  ';
-var ignoreOnClick = ['   tagname.classname0.classname1  ', '#d.classdfa..', '.dfas-dfs'];
-var ignoreObjects = [];
-
-if (ignoreOnClick.length > 0) {
-    for (var i = 0, len = ignoreOnClick.length; i < len; i++) {
-        var ignoreText = ignoreOnClick[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-        if (ignoreText.length > 0) {
-            var indexDot = ignoreText.indexOf('.');
-            if (indexDot > -1) {
-                var _classNames = extractClassNames(ignoreText.substr(indexDot + 1), []);
-                createIgnoreObject(ignoreText.substring(0, indexDot), _classNames);
-            } else {
-                createIgnoreObject(ignoreText, []);
-            }
-        }
-    }
-}
-console.log(ignoreObjects);
-
-function extractClassNames(text, classNames) {
-    var indexDot = text.indexOf('.');
-    if (indexDot > -1) {
-        if (indexDot < text.length - 1) {
-            classNames = extractClassNames(text.substr(indexDot + 1), classNames);
-        }
-        if (text.substring(0, indexDot).length > 0) {
-            classNames.push(text.substring(0, indexDot));
-        }
-    } else {
-        if (text.length > 0) {
-            classNames.push(text);
-        }
-    }
-    return classNames;
-}
-
-function createIgnoreObject(name, classNames) {
-    if (name.substr(0, 1) != '#' || name.length > 1) {
-        // check that name is not just '#'
-        var isId = false;
-        if (name.substr(0, 1) == '#') {
-            isId = true;
-            name = name.substr(1);
-        }
-        if (name.length == 0) {
-            name = null;
-        }
-        ignoreObjects.push({
-            name: name,
-            isId: isId,
-            classNames: classNames
-        });
-    }
-}
 
 var App = function (_React$Component) {
     _inherits(App, _React$Component);
@@ -64344,7 +64305,6 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 // https://stackoverflow.com/questions/5106934/prevent-grey-overlay-on-touchstart-in-mobile-safari-webview
 // https://github.com/Polymer/polymer/issues/1970
 // TODO: In the examples, why does the whole list flash when pressed?
-// TODO: Include 'hamburger' and 'cross' in font icons
 // TODO: Test setDefaultProperties
 // TODO: hasClass, addClass and removeClass should be able to handle 'mask left' (at the moment they can't) - if not, update docs to say this
 // TODO: Can two lists share the same outerCont (especially if outerCont wraps the whole page)?
@@ -64360,7 +64320,6 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 // TODO: Why is 'unlicensed' message not showing in docs/setup?
 // TODO: Test 'supportsPassive' in Edge and IE
 // TODO: Include version number and send it to server
-// TODO: Favicon
 // TODO: Can we improve auto-scrolling when outerCont = window?
 // TODO: Allow '-webkit-overflow-scrolling: touch' by turning it off when sorting starts?
 // TODO: Reset props for already attached list

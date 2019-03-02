@@ -39,6 +39,7 @@ class Controller_Site extends Controller
             ->with('email', $user->email)
             ->with('companyName', $user->company_name)
             ->with('accountType', $user->account_type)
+            ->with('accountLicenceKey', $user->account_licence_key)
             ->with('accountExpiresAt', $user->account_expires_at)
             ->with('hasDomains', $hasDomains)
             ->with('domainCountBase', $user->domain_count_base)
