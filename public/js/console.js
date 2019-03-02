@@ -62867,10 +62867,29 @@ var AccountLanding = function (_React$Component2) {
         _this2.state = {
             copying: false
         };
+        _this2.copyClick = _this2.copyClick.bind(_this2);
+        _this2.copyingEnd = _this2.copyingEnd.bind(_this2);
         return _this2;
     }
 
     _createClass(AccountLanding, [{
+        key: 'copyClick',
+        value: function copyClick() {
+            this.setState({
+                copying: true
+            });
+            this.inputCopy.select();
+            document.execCommand("copy");
+            setTimeout(this.copyingEnd, 200);
+        }
+    }, {
+        key: 'copyingEnd',
+        value: function copyingEnd() {
+            this.setState({
+                copying: false
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             var _this3 = this;
@@ -62946,7 +62965,7 @@ var AccountLanding = function (_React$Component2) {
                     _this3.props.setSubpage('ChangePwdLanding');
                 } }, 'CHANGE PASSWORD'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'avail-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'plan' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('strong', null, accountTypeText), ' ', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'plan')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'expires' }, 'Expires ', __WEBPACK_IMPORTED_MODULE_3_moment___default()(accountData.accountExpiresAt).format('LL')), accountData.accountType == 3 && accountData.accountLicenceKey != null && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'key-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', readOnly: true, ref: function ref(input) {
                     _this3.inputCopy = input;
-                }, style: inputStyle, value: accountData.accountLicenceKey }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'label' }, 'Account licence key:'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: spanClasses }, accountData.accountLicenceKey), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy-outer', title: 'Copy to clipboard', onClick: function onClick() {
+                }, style: inputStyle, value: accountData.accountLicenceKey }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'label' }, 'Licence key:'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: spanClasses }, accountData.accountLicenceKey), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy-outer', title: 'Copy to clipboard', onClick: function onClick() {
                     _this3.copyClick();
                 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-clipboard' })), '\xA0')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'chart-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: styleChartOuter, className: 'chart-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: styleTotalCont, className: 'bar-cont total' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'bar-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'label left' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'count' }, accountData.domainCountBase + accountData.domainCountAdditional), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text' }, totalDomainsText)))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: styleUsedCont, className: 'bar-cont used' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'bar-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: styleLabelRight, className: 'label right' }, this.props.domainsUsed, '\xA0used'))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'avail-text', dangerouslySetInnerHTML: { __html: domainsAvailableText } })));
         }

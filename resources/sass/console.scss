@@ -216,6 +216,47 @@ div.spinner-outer {
 					background-color: #FFFFFF;
 					box-shadow: 0 1px 2px 0 #AAAAAA;
 
+					div.key-cont {
+						span {
+							display: inline-block;
+						}
+
+						span.label {
+							padding: 3px 4px 3px 0;
+							color: #666666;
+						}
+
+						span.shimmer {
+							border-radius: 3px;
+							width: 20em;
+						}
+
+						span.key {
+							padding: 3px 4px;
+							color: #339933;
+							border-radius: 3px;
+						}
+
+						span.key.default {
+							background: rgba(0,0,0,0);
+							transition: background 800ms ease;
+						}
+
+						span.key.copying {
+							background: rgba(0,0,0,0.05);
+						}
+
+						span.copy-outer {
+							color: #3366CC;
+							border-radius: 999px;
+							cursor: pointer;
+						}
+
+						span.copy-outer:hover, span.copy-outer:active {
+							background: rgba(0,0,0,0.03);
+						}
+					}
+
 					div.add-cont {
 						div.message-outer {
 							div.message-inner {
@@ -395,45 +436,6 @@ div.spinner-outer {
 
 									div.key-cont {
 										padding: 0 7px;
-
-										span {
-											display: inline-block;
-										}
-
-										span.label {
-											padding: 3px 4px 3px 0;
-											color: #666666;
-										}
-
-										span.shimmer {
-											border-radius: 3px;
-											width: 20em;
-										}
-
-										span.key {
-											padding: 3px 4px;
-											color: #339933;
-											border-radius: 3px;
-										}
-
-										span.key.default {
-											background: rgba(0,0,0,0);
-											transition: background 800ms ease;
-										}
-
-										span.key.copying {
-											background: rgba(0,0,0,0.05);
-										}
-
-										span.copy-outer {
-											color: #3366CC;
-											border-radius: 999px;
-											cursor: pointer;
-										}
-
-										span.copy-outer:hover, span.copy-outer:active {
-											background: rgba(0,0,0,0.03);
-										}
 									}
 								}
 
@@ -577,6 +579,10 @@ div.spinner-outer {
 
 						div.expires {
 							color: #999999;
+						}
+
+						div.key-cont {
+							margin-top: 0.2em;
 						}
 
 						div.chart-cont {
@@ -811,6 +817,13 @@ div.spinner-outer {
 }
 
 #pageWrapper.xl, #pageWrapper.lg, #pageWrapper.md, #pageWrapper.sm {
+	div.key-cont {
+		span.copy-outer {
+			font-size: 90%;
+			padding: 3px 4px;
+		}
+	}
+
 	div.add-item-outer {
 		div.button-row {
 			span.large {
@@ -839,8 +852,6 @@ div.spinner-outer {
 
 					span.copy-outer {
 						visibility: hidden;
-						font-size: 90%;
-						padding: 3px 4px;
 					}
 				}
 			}
@@ -874,9 +885,38 @@ div.spinner-outer {
 			font-weight: bold;
 		}
 	}
+
+	div.avail-cont {
+		div.key-cont {
+			font-size: 90%;
+		}
+	}
 }
 
 #pageWrapper.xs {
+	div.key-cont {
+		span.key {
+			max-width: 9em;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		span.copy-cont {
+			position: relative;
+			margin-left: 0.4em;
+
+			span.copy-outer {
+				position: absolute;
+				left: 0;
+				top: 50%;
+				transform: translateY(-50%);
+				font-size: 150%;
+				padding: 8px;
+			}
+		}
+	}
+
 	div.add-item-outer {
 		div.button-row {
 			span.large {
@@ -906,32 +946,6 @@ div.spinner-outer {
 
 				div.key-cont {
 					margin-top: 2px;
-
-					span.label {
-						// padding: 3px 4px 3px 0;
-					}
-
-					span.key {
-						// padding: 3px 4px;
-						max-width: 9em;
-						white-space: nowrap;
-						overflow: hidden;
-						text-overflow: ellipsis;
-					}
-
-					span.copy-cont {
-						position: relative;
-						margin-left: 0.4em;
-
-						span.copy-outer {
-							position: absolute;
-							left: 0;
-							top: 50%;
-							transform: translateY(-50%);
-							font-size: 150%;
-							padding: 8px;
-						}
-					}
 				}
 			}
 

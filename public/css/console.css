@@ -494,6 +494,46 @@ div.spinner-outer div.spinner-inner div.rect4 {
           box-shadow: 0 1px 2px 0 #AAAAAA;
 }
 
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.key-cont span {
+  display: inline-block;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.key-cont span.label {
+  padding: 3px 4px 3px 0;
+  color: #666666;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.key-cont span.shimmer {
+  border-radius: 3px;
+  width: 20em;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.key-cont span.key {
+  padding: 3px 4px;
+  color: #339933;
+  border-radius: 3px;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.key-cont span.key.default {
+  background: rgba(0, 0, 0, 0);
+  -webkit-transition: background 800ms ease;
+  transition: background 800ms ease;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.key-cont span.key.copying {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.key-cont span.copy-outer {
+  color: #3366CC;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.key-cont span.copy-outer:hover, #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.key-cont span.copy-outer:active {
+  background: rgba(0, 0, 0, 0.03);
+}
+
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.add-cont div.message-outer div.message-inner {
   position: relative;
   padding: 0.5em 1em;
@@ -670,46 +710,6 @@ div.spinner-outer div.spinner-inner div.rect4 {
   padding: 0 7px;
 }
 
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont div.domain-outer div.middle-cont div.key-cont span {
-  display: inline-block;
-}
-
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont div.domain-outer div.middle-cont div.key-cont span.label {
-  padding: 3px 4px 3px 0;
-  color: #666666;
-}
-
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont div.domain-outer div.middle-cont div.key-cont span.shimmer {
-  border-radius: 3px;
-  width: 20em;
-}
-
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont div.domain-outer div.middle-cont div.key-cont span.key {
-  padding: 3px 4px;
-  color: #339933;
-  border-radius: 3px;
-}
-
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont div.domain-outer div.middle-cont div.key-cont span.key.default {
-  background: rgba(0, 0, 0, 0);
-  -webkit-transition: background 800ms ease;
-  transition: background 800ms ease;
-}
-
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont div.domain-outer div.middle-cont div.key-cont span.key.copying {
-  background: rgba(0, 0, 0, 0.05);
-}
-
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont div.domain-outer div.middle-cont div.key-cont span.copy-outer {
-  color: #3366CC;
-  border-radius: 999px;
-  cursor: pointer;
-}
-
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont div.domain-outer div.middle-cont div.key-cont span.copy-outer:hover, #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont div.domain-outer div.middle-cont div.key-cont span.copy-outer:active {
-  background: rgba(0, 0, 0, 0.03);
-}
-
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer #listCont div.domain-cont div.domain-outer div.delete-cont {
   position: absolute;
   top: 50%;
@@ -848,6 +848,10 @@ div.spinner-outer div.spinner-inner div.rect4 {
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.expires {
   color: #999999;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.key-cont {
+  margin-top: 0.2em;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.avail-cont div.chart-cont {
@@ -1067,6 +1071,11 @@ div.spinner-outer div.spinner-inner div.rect4 {
   width: 100%;
 }
 
+#pageWrapper.xl div.key-cont span.copy-outer, #pageWrapper.lg div.key-cont span.copy-outer, #pageWrapper.md div.key-cont span.copy-outer, #pageWrapper.sm div.key-cont span.copy-outer {
+  font-size: 90%;
+  padding: 3px 4px;
+}
+
 #pageWrapper.xl div.add-item-outer div.button-row span.large, #pageWrapper.lg div.add-item-outer div.button-row span.large, #pageWrapper.md div.add-item-outer div.button-row span.large, #pageWrapper.sm div.add-item-outer div.button-row span.large {
   display: inline;
 }
@@ -1089,8 +1098,6 @@ div.spinner-outer div.spinner-inner div.rect4 {
 
 #pageWrapper.xl div.domain-cont div.domain-outer div.middle-cont div.key-cont span.copy-outer, #pageWrapper.lg div.domain-cont div.domain-outer div.middle-cont div.key-cont span.copy-outer, #pageWrapper.md div.domain-cont div.domain-outer div.middle-cont div.key-cont span.copy-outer, #pageWrapper.sm div.domain-cont div.domain-outer div.middle-cont div.key-cont span.copy-outer {
   visibility: hidden;
-  font-size: 90%;
-  padding: 3px 4px;
 }
 
 #pageWrapper.xl div.domain-cont i.button, #pageWrapper.lg div.domain-cont i.button, #pageWrapper.md div.domain-cont i.button, #pageWrapper.sm div.domain-cont i.button {
@@ -1111,6 +1118,32 @@ div.spinner-outer div.spinner-inner div.rect4 {
   cursor: pointer;
   background: rgba(0, 0, 0, 0.03);
   font-weight: bold;
+}
+
+#pageWrapper.xl div.avail-cont div.key-cont, #pageWrapper.lg div.avail-cont div.key-cont, #pageWrapper.md div.avail-cont div.key-cont, #pageWrapper.sm div.avail-cont div.key-cont {
+  font-size: 90%;
+}
+
+#pageWrapper.xs div.key-cont span.key {
+  max-width: 9em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#pageWrapper.xs div.key-cont span.copy-cont {
+  position: relative;
+  margin-left: 0.4em;
+}
+
+#pageWrapper.xs div.key-cont span.copy-cont span.copy-outer {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  font-size: 150%;
+  padding: 8px;
 }
 
 #pageWrapper.xs div.add-item-outer div.button-row span.large {
@@ -1135,28 +1168,6 @@ div.spinner-outer div.spinner-inner div.rect4 {
 
 #pageWrapper.xs div.domain-cont div.domain-outer div.middle-cont div.key-cont {
   margin-top: 2px;
-}
-
-#pageWrapper.xs div.domain-cont div.domain-outer div.middle-cont div.key-cont span.key {
-  max-width: 9em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-#pageWrapper.xs div.domain-cont div.domain-outer div.middle-cont div.key-cont span.copy-cont {
-  position: relative;
-  margin-left: 0.4em;
-}
-
-#pageWrapper.xs div.domain-cont div.domain-outer div.middle-cont div.key-cont span.copy-cont span.copy-outer {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-  font-size: 150%;
-  padding: 8px;
 }
 
 #pageWrapper.xs div.domain-cont div.domain-outer div.delete-cont {

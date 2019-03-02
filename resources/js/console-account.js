@@ -53,6 +53,21 @@ class AccountLanding extends React.Component {
         this.state = {
             copying: false
         };
+        this.copyClick = this.copyClick.bind(this);
+        this.copyingEnd = this.copyingEnd.bind(this);
+    }
+    copyClick() {
+        this.setState({
+            copying: true
+        });
+        this.inputCopy.select();
+        document.execCommand("copy");
+        setTimeout(this.copyingEnd, 200);
+    }
+    copyingEnd() {
+        this.setState({
+            copying: false
+        });
     }
     render() {
         let accountTypeText;
@@ -146,7 +161,7 @@ class AccountLanding extends React.Component {
                     {(accountData.accountType == 3 && accountData.accountLicenceKey != null) &&
                         <div className="key-cont">
                             <input type="text" readOnly={true} ref={(input) => { this.inputCopy = input; }} style={inputStyle} value={accountData.accountLicenceKey} />
-                            <span className="label">Account licence key:</span>
+                            <span className="label">Licence key:</span>
                             <span className={spanClasses}>{accountData.accountLicenceKey}</span>
                             <span className="copy-cont">
                                 <span className="copy-outer" title="Copy to clipboard" onClick={() => {this.copyClick()}}>
