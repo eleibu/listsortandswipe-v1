@@ -45,6 +45,7 @@
 
 
 // Pipeline:
+// hasClass, addClass and removeClass should be able to handle 'mask left' (at the moment they can't) - if not, update docs to say this
 // allow trigger left/right on multiple items at the same time
 // confirm left / right
 // left / right buttons and multiple (remember to delete tempFunctionRemoveMasks())
@@ -80,7 +81,7 @@
 	// https://github.com/Polymer/polymer/issues/1970
 // TODO: In the examples, why does the whole list flash when pressed?
 // TODO: Test setDefaultProperties
-// TODO: hasClass, addClass and removeClass should be able to handle 'mask left' (at the moment they can't) - if not, update docs to say this
+
 // TODO: Can two lists share the same outerCont (especially if outerCont wraps the whole page)?
 // TODO: In events, replace 'activeIndex' with 'activeItem'?
 // TODO: Check if clone is in correct place even when it has a margin
@@ -90,7 +91,6 @@
 // TODO: Will it work with 'window' if we fix the issues (see when outerCont = window.document)?
 
 
-// TODO: Change 'lithiumlistPro' to 'lithiumlist'
 // TODO: Why is 'unlicensed' message not showing in docs/setup?
 // TODO: Test 'supportsPassive' in Edge and IE
 // TODO: Include version number and send it to server

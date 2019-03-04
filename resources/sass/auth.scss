@@ -28,8 +28,8 @@ fieldset {
 	 				height: 100%;
 	 				width: 12%;
 	 				margin-right: 10%;
-	 				background-color: #EEEEEE;
-	 				background-color: rgba(255, 255, 255, 0.9);
+	 				// background-color: #EEEEEE;
+	 				// background-color: rgba(255, 255, 255, 0.9);
 	 				border-radius: 2px;
 					-webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
 					animation: sk-stretchdelay 1.2s infinite ease-in-out;
@@ -68,6 +68,21 @@ fieldset {
 		}
 	}
 }
+
+.button-word-cont.darkblue {
+	div.rect {
+		background-color: #EEEEEE;
+		background-color: rgba(255, 255, 255, 0.9);
+	}
+}
+
+.button-word-cont.grey {
+	div.rect {
+		background-color: #444444;
+		background-color: rgba(0, 0, 0, 0.7);
+	}
+}
+
 
 @-webkit-keyframes sk-stretchdelay {
 	0%, 40%, 100% { -webkit-transform: scaleY(0.4) }  
@@ -138,13 +153,17 @@ input.textentry {
 							border: 1px solid #DDDDDD;
 
 							div.textentry-outer {
-								margin: 0.6em 0.4em 0.6em 2em;
+								margin: 0.6em 0.4em;
 
 								input.textentry {
 									font-size: 100%;
 									box-sizing: border-box;
 									width: 100%;
 								}
+							}
+
+							div.textentry-outer.icon {
+								margin: 0.6em 0.4em 0.6em 2em;
 							}
 
 							i {
@@ -184,10 +203,139 @@ input.textentry {
 						}
 					}
 
-					div.terms-cont, div.forgot-cont {
+					div.forgot-cont {
 						font-size: 80%;
 						line-height: 120%;
 						color: #444444;
+					}
+
+					div.terms-cont {
+						font-size: 90%;
+						line-height: 120%;
+						color: #444444;
+
+						#input-terms {
+							transform: scale(1.4);
+						}
+					}
+
+					// #div-firstname-cont {
+					// 	display: inline-block;
+					// 	width: 49%;
+					// }
+
+					// #div-surname-cont {
+					// 	display: inline-block;
+					// 	width: 49%;
+					// }
+
+					div.header-outer.signup {
+						font-size: 120%;
+					}
+
+					div.signup-row {
+						div.signup-dataentry {
+							input.textentry {
+								font-size: 100%;
+								box-sizing: border-box;
+								width: 100%;
+								padding: 0.6em 0.4em;
+								border: 1px solid #DDDDDD;
+							}
+
+							input.textentry.left {
+								float: left;
+								width: 49%;
+							}
+
+							input.textentry.right {
+								float: left;
+								margin-left: 2%;
+								width: 49%;
+							}
+
+							input.textentry.error {
+								border: 1px solid #FF3B0A;
+							}
+
+							input.textentry.focus {
+								border: 1px solid #3366CC;
+							}
+
+							select {
+								font-size: 100%;
+								padding: 0.6em 0.4em;
+								border: 1px solid #DDDDDD;
+							}
+						}
+
+						div.supmsg-cont {
+							margin: 0.4em 0;
+							font-size: 85%;
+							line-height: 130%;
+							color: #555555;
+						}
+
+						div.submsg-cont {
+							margin: 0.3em 0 0.8em 0;
+							font-size: 75%;
+							line-height: 130%;
+							white-space: nowrap;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							color: #777777;
+						}
+
+						div.submsg-cont.error {
+							color: #FF3B0A;
+						}
+
+						div.signup-address {
+							font-size: 90%;
+							padding: 0.6em;
+
+							p {
+								margin: 0;
+								color: #444444;
+							}
+						}
+
+						div.signup-orderdetails {
+							table {
+								width: 100%;
+
+								td {
+									padding: 0.6em;
+									font-size: 90%;
+									color: #444444;
+								}
+
+								td.border-top {
+									border-top: 1px solid #777777;
+								}
+
+								td.border-btm {
+									border-bottom: 1px solid #777777;
+								}
+
+								td.col-mdl {
+									width: 40%;
+								}
+
+								td.col-right {
+									width: 10%;
+									text-align: right;
+								}
+							}
+						}
+
+						div.signup-buttons {
+							margin: 0.4em 0;
+
+							.button-word-cont {
+								font-size: 80%;
+							}
+						}
 					}
 				}
 

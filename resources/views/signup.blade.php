@@ -11,9 +11,158 @@
         <br/>
         <div class="middlebox-outer">
             <div class="middlebox-inner">
-                <div class="header-outer">
-                    <i class="sld icon-profile-picture"></i>&nbsp;SIGN UP
+                <div class="header-outer signup">
+                    <i class="sld icon-profile-picture"></i>&nbsp;CREATE YOUR ACCOUNT
                 </div>
+                <br/>
+                <div class="signup-row">
+                    <div class="signup-dataentry">
+                        <input id="input-email" name="email" class="textentry" type="text" placeholder="Email" value="{{Request::old('email')}}" tabindex="1" />
+                    </div>
+                    <div id="div-companyname-submsg" class="submsg-cont">
+                        &nbsp;
+                    </div>
+                </div>
+                <div class="signup-row">
+                    <div class="signup-dataentry">
+                        <input id="input-password" name="password" class="textentry" type="password" placeholder="Password" value="{{Request::old('password')}}" tabindex="2" />
+                    </div>
+                    <div id="div-companyname-submsg" class="submsg-cont">
+                        Password must have at least 6 characters. Other than that, make it as simple or complex as you like.
+                    </div>
+                </div>
+                <br/><br/>
+                <div class="header-outer signup">
+                    <i class="sld icon-invoice"></i>&nbsp;BILLING INFORMATION
+                </div>
+                <br/>
+                <div class="signup-row">
+                    <div class="signup-dataentry">
+                        <input id="input-firstname" name="firstname" class="textentry left" type="text" placeholder="First name" value="{{Request::old('firstname')}}" tabindex="3" />
+                        <input id="input-surnname" name="surnname" class="textentry right" type="text" placeholder="Surname" value="{{Request::old('surnname')}}" tabindex="4" />
+                        <br clear="all"/>
+                    </div>
+                    <div id="div-name-submsg" class="submsg-cont">
+                        &nbsp;
+                    </div>
+                </div>
+                <div class="signup-row">
+                    <div class="signup-dataentry">
+                        <input id="input-companyname" name="companyname" class="textentry" type="text" placeholder="Company name (if applicable)" value="{{Request::old('companyname')}}" tabindex="5" />
+                    </div>
+                    <div id="div-companyname-submsg" class="submsg-cont">
+                        &nbsp;
+                    </div>
+                </div>
+                <div class="signup-row">
+                    <div class="signup-dataentry">
+                        <select  tabindex="6">
+                            <option value="">Country</option>
+                            <option value="AUS">Austria</option>
+                            <option value="AUT">Australia</option>
+                            <option value="IDN">Indonesia</option>
+                        </select>
+                    </div>
+                    <div id="div-country-submsg" class="submsg-cont">
+                        &nbsp;
+                    </div>
+                </div>
+                <br/><br/>
+                <div class="header-outer signup">
+                    <i class="sld icon-cart"></i>&nbsp;ORDER DETAILS
+                </div>
+                <br/>
+                <div class="signup-row">
+                    <div class="signup-address">
+                        <p>Elliot Leibu</p>
+                        <p>IndySoft Pty Ltd</p>
+                        <p>Australia</p>
+                    </div>
+                    <div class="signup-orderdetails">
+                        <table cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td colspan="2">&nbsp;</td>
+                                    <td class="col-right">USD</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">Lithium List - 1 year licence - Basic</td>
+                                    <td class="col-right">$36.00</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td class="border-top col-mdl">Subtotal</td>
+                                    <td class="border-top col-right">$36.00</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td class="border-btm col-mdl">Taxes</td>
+                                    <td class="border-btm col-right">$0.00</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td class="col-mdl"><strong>Total</strong></td>
+                                    <td class="col-right"><strong>$36.00</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <br/><br/>
+                <div class="header-outer signup">
+                    <i class="sld icon-discount-coupon"></i>&nbsp;DISCOUNT
+                </div>
+                <br/>
+                <div class="signup-row">
+                    <div class="supmsg-cont">
+                        If you have a discount code, enter it here.
+                    </div>
+                    <div class="signup-dataentry">
+                        <input id="input-discountcode" name="discountcode" class="textentry" type="text" placeholder="Discount code" value="{{Request::old('discountcode')}}" tabindex="7" />
+                    </div>
+                    <div class="signup-buttons">
+                        <div id="div-apply-discount" class="button-word-cont grey">
+                            <div id="div-spinner-cont" class="spinner-cont">
+                                <div class="text">APPLY DISCOUNT</div>
+                                <div class="spinner-outer">
+                                    <div class="spinner-inner">
+                                        <div class="rect rect0"></div><div class="rect rect1"></div><div class="rect rect2"></div><div class="rect rect3"></div><div class="rect rect4"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="div-companyname-submsg" class="submsg-cont">
+                        &nbsp;
+                    </div>
+                </div>
+                <br/><br/>
+                <div class="header-outer signup">
+                    <i class="sld icon-credit-card-a"></i>&nbsp;PAYMENT
+                </div>
+                <br/>
+                <div class="signup-row">
+                    PayPal drop in
+                </div>
+                <br/><br/>
+                <div class="signup-row terms-cont">
+                    <input id="input-terms" name="terms" type="checkbox"/>&nbsp;&nbsp;I agree to the <a href="" title="terms and conditions">terms and conditions</a> and <a href="" title="privacy policy">privacy policy</a>
+                </div>
+                <br/><br/>
+                <div class="signup-row">
+                    <div id="div-place-order" class="button-word-cont darkblue">
+                        <div id="div-spinner-cont" class="spinner-cont">
+                            <div class="text">PLACE ORDER</div>
+                            <div class="spinner-outer">
+                                <div class="spinner-inner">
+                                    <div class="rect rect0"></div><div class="rect rect1"></div><div class="rect rect2"></div><div class="rect rect3"></div><div class="rect rect4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--
                 <br/>
                 @if ($view == 'signup')
                     <div class="otherpage-cont">
@@ -155,10 +304,12 @@
                         </div>
                     </div>
                 @endif
+                -->
             </div>
             <div id="div-middlebox-mask">
             </div>
         </div>
+        <br/><br/><br/>
     </div>
 @endsection
 

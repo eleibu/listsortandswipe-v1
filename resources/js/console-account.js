@@ -384,7 +384,7 @@ class ChangePwdLanding extends React.Component {
                 <div className={currentPwdClasses}>
                     <div className="textentry-cont">
                         <i className="oln icon-lock"></i>
-                        <div className="textentry-outer">
+                        <div className="textentry-outer icon">
                             <input ref={(input) => { this.inputCurrentPwd = input; }} name="currentpassword" className="textentry" type="password" placeholder="Current password" tabIndex="1" onFocus={() => {this.currentPwdOnFocus()}} onBlur={() => {this.currentPwdOnBlur()}} onKeyPress={(e) => {this.currentPwdOnKeyPress(e)}} />
                         </div>
                     </div>
@@ -399,7 +399,7 @@ class ChangePwdLanding extends React.Component {
                 <div className={newPwdClasses}>
                     <div className="textentry-cont">
                         <i className="oln icon-lock"></i>
-                        <div className="textentry-outer">
+                        <div className="textentry-outer icon">
                             <input ref={(input) => { this.inputNewPwd = input; }} name="newpassword" className="textentry" type="password" placeholder="New password" tabIndex="2" onFocus={() => {this.newPwdOnFocus()}} onBlur={() => {this.newPwdOnBlur()}} onKeyPress={(e) => {this.newPwdOnKeyPress(e)}} />
                         </div>
                     </div>

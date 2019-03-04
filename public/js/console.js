@@ -63167,7 +63167,7 @@ var ChangePwdLanding = function (_React$Component3) {
                 'spinner-cont': true,
                 'spinning': this.state.spinning
             });
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner account-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title-main' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'sld icon-lock' }), '\xA0CHANGE PASSWORD')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'subtitle-main' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'Enter the details below to change your password')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'mainmsg-cont' }, this.state.mainError != null && this.state.mainError.length > 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { dangerouslySetInnerHTML: { __html: this.state.mainError } }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, '\xA0')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: currentPwdClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'textentry-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-lock' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'textentry-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { ref: function ref(input) {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner account-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title-main' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'sld icon-lock' }), '\xA0CHANGE PASSWORD')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'subtitle-main' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'Enter the details below to change your password')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'mainmsg-cont' }, this.state.mainError != null && this.state.mainError.length > 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { dangerouslySetInnerHTML: { __html: this.state.mainError } }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, '\xA0')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: currentPwdClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'textentry-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-lock' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'textentry-outer icon' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { ref: function ref(input) {
                     _this6.inputCurrentPwd = input;
                 }, name: 'currentpassword', className: 'textentry', type: 'password', placeholder: 'Current password', tabIndex: '1', onFocus: function onFocus() {
                     _this6.currentPwdOnFocus();
@@ -63175,7 +63175,7 @@ var ChangePwdLanding = function (_React$Component3) {
                     _this6.currentPwdOnBlur();
                 }, onKeyPress: function onKeyPress(e) {
                     _this6.currentPwdOnKeyPress(e);
-                } }))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: 'div-password-submsg', className: 'submsg-cont' }, this.state.currentPwdSubtext != null && this.state.currentPwdSubtext.length > 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { dangerouslySetInnerHTML: { __html: this.state.currentPwdSubtext } }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, '\xA0'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: newPwdClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'textentry-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-lock' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'textentry-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { ref: function ref(input) {
+                } }))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: 'div-password-submsg', className: 'submsg-cont' }, this.state.currentPwdSubtext != null && this.state.currentPwdSubtext.length > 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { dangerouslySetInnerHTML: { __html: this.state.currentPwdSubtext } }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, '\xA0'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: newPwdClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'textentry-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-lock' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'textentry-outer icon' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { ref: function ref(input) {
                     _this6.inputNewPwd = input;
                 }, name: 'newpassword', className: 'textentry', type: 'password', placeholder: 'New password', tabIndex: '2', onFocus: function onFocus() {
                     _this6.newPwdOnFocus();
@@ -64290,6 +64290,7 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 
 
 // Pipeline:
+// hasClass, addClass and removeClass should be able to handle 'mask left' (at the moment they can't) - if not, update docs to say this
 // allow trigger left/right on multiple items at the same time
 // confirm left / right
 // left / right buttons and multiple (remember to delete tempFunctionRemoveMasks())
@@ -64325,7 +64326,7 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 // https://github.com/Polymer/polymer/issues/1970
 // TODO: In the examples, why does the whole list flash when pressed?
 // TODO: Test setDefaultProperties
-// TODO: hasClass, addClass and removeClass should be able to handle 'mask left' (at the moment they can't) - if not, update docs to say this
+
 // TODO: Can two lists share the same outerCont (especially if outerCont wraps the whole page)?
 // TODO: In events, replace 'activeIndex' with 'activeItem'?
 // TODO: Check if clone is in correct place even when it has a margin
@@ -64335,7 +64336,6 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 // TODO: Will it work with 'window' if we fix the issues (see when outerCont = window.document)?
 
 
-// TODO: Change 'lithiumlistPro' to 'lithiumlist'
 // TODO: Why is 'unlicensed' message not showing in docs/setup?
 // TODO: Test 'supportsPassive' in Edge and IE
 // TODO: Include version number and send it to server

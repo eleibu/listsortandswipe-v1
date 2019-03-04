@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icon-font-outline';
-  src:  url('fonts/icon-font-outline.eot?yh6dxb');
-  src:  url('fonts/icon-font-outline.eot?yh6dxb#iefix') format('embedded-opentype'),
-    url('fonts/icon-font-outline.ttf?yh6dxb') format('truetype'),
-    url('fonts/icon-font-outline.woff?yh6dxb') format('woff'),
-    url('fonts/icon-font-outline.svg?yh6dxb#icon-font-outline') format('svg');
+  src:  url('fonts/icon-font-outline.eot?cjmccg');
+  src:  url('fonts/icon-font-outline.eot?cjmccg#iefix') format('embedded-opentype'),
+    url('fonts/icon-font-outline.ttf?cjmccg') format('truetype'),
+    url('fonts/icon-font-outline.woff?cjmccg') format('woff'),
+    url('fonts/icon-font-outline.svg?cjmccg#icon-font-outline') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,6 +24,18 @@ i.oln {
   -moz-osx-font-smoothing: grayscale;
 }
 
+i.oln.icon-cart:before {
+  content: "\e910";
+}
+i.oln.icon-credit-card-a:before {
+  content: "\e911";
+}
+i.oln.icon-discount-coupon:before {
+  content: "\e912";
+}
+i.oln.icon-invoice:before {
+  content: "\e913";
+}
 i.oln.icon-archive:before {
   content: "\e905";
 }

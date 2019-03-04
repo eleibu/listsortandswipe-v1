@@ -35,7 +35,7 @@
                                 <div id="div-emailrequest-cont" class="text-cont">
                                     <div class="textentry-cont">
                                         <i class="oln icon-email"></i>
-                                        <div class="textentry-outer">
+                                        <div class="textentry-outer icon">
                                             <input id="input-emailrequest" name="emailrequest" class="textentry" type="text" placeholder="Email" value="{{Request::old('emailrequest')}}" tabindex="1" />
                                         </div>
                                     </div>
@@ -46,7 +46,7 @@
                                 <div id="div-emailrequest-cont" class="text-cont error">
                                     <div class="textentry-cont">
                                         <i class="oln icon-email"></i>
-                                        <div class="textentry-outer">
+                                        <div class="textentry-outer icon">
                                             <input id="input-emailrequest" name="emailrequest" class="textentry" type="text" placeholder="Email" value="{{Request::old('emailrequest')}}" tabindex="1" />
                                         </div>
                                     </div>
@@ -102,7 +102,7 @@
                                 <div id="div-password-cont" class="text-cont">
                                     <div class="textentry-cont">
                                         <i class="oln icon-lock"></i>
-                                        <div class="textentry-outer">
+                                        <div class="textentry-outer icon">
                                             <input id="input-password" name="password" class="textentry" type="password" placeholder="New password" tabindex="2" />
                                         </div>
                                     </div>
@@ -113,7 +113,7 @@
                                 <div id="div-password-cont" class="text-cont error">
                                     <div class="textentry-cont">
                                         <i class="oln icon-lock"></i>
-                                        <div class="textentry-outer">
+                                        <div class="textentry-outer icon">
                                             <input id="input-password" name="password" class="textentry" type="password" placeholder="New password" tabindex="2" />
                                         </div>
                                     </div>
