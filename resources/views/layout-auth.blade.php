@@ -10,7 +10,7 @@
     <title>@yield('pageTitle')</title>
     <link rel="icon" sizes="16x16 32x32 48x48" href="{{url('/favicon.ico?v=0')}}">
     <link rel="apple-touch-icon-precomposed" href="{{url('/favicon-152.png?v=0')}}">
-    <link rel="stylesheet" href="{{ url(mix('/css/auth.css')) }}">
+    @yield('cssLinks')
     <link rel="stylesheet" href="{{ url('/css/icons-outline.css') }}">
     <link rel="stylesheet" href="{{ url('/css/icons-solid.css') }}">
     @yield('jsLinks')

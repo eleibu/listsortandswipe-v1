@@ -2,6 +2,10 @@
 
 @section('pageTitle', 'Lithium List - activate')
 
+@section('cssLinks')
+    <link rel="stylesheet" href="{{ url(mix('/css/auth.css')) }}">
+@endsection
+
 @section('jsLinks')
     <script defer src="{{ url(mix('/js/activate.js')) }}"></script>
 @endsection

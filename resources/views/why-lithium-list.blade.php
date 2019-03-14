@@ -1,6 +1,6 @@
 @extends('layout-info')
 
-@section('pageTitle', 'Why Lithium List?')
+@section('pageTitle', 'Lithium List - why Lithium List?')
 
 @section('cssLinks')
     <link rel="stylesheet" href="{{ url(mix('/css/why-lithium-list.css')) }}">

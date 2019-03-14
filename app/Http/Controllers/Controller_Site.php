@@ -242,4 +242,13 @@ class Controller_Site extends Controller
 	public function page_support(Request $request) {
 		return view('support');
 	}
+
+	public function page_terms(Request $request) {
+		return view('terms');
+	}
+
+	public function page_privacy(Request $request) {
+		return view('privacy');
+	}
+
 }

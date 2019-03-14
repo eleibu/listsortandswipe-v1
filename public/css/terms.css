@@ -263,28 +263,20 @@ div.section-cont div.section-outer {
   min-width: 300px;
 }
 
-div.section-cont div.section-outer div.details div.title {
+div.section-cont div.section-outer div.title {
   line-height: 130%;
   color: #222222;
   font-weight: bold;
 }
 
-div.section-cont div.section-outer div.details div.description {
+div.section-cont div.section-outer div.para {
+  margin: 1em 0;
   line-height: 140%;
-  color: #999999;
+  color: #555555;
 }
 
-div.section-cont div.section-outer div.details div.description a.button-word-cont {
-  font-size: 85%;
-  background-color: #EEEEEE;
-  -webkit-box-shadow: 0 1px 4px 0 #CCCCCC;
-          box-shadow: 0 1px 4px 0 #CCCCCC;
-}
-
-div.section-cont div.section-outer div.details div.description a.button-word-cont:hover {
-  background-color: #F2F2F2;
-  -webkit-box-shadow: 0 1px 4px 0 #BBBBBB;
-          box-shadow: 0 1px 4px 0 #BBBBBB;
+div.section-cont div.section-outer div.para li {
+  margin: 1em 0;
 }
 
 div.section-cont.grey {
@@ -292,77 +284,17 @@ div.section-cont.grey {
 }
 
 #pageWrapper.xl div.section-cont, #pageWrapper.lg div.section-cont, #pageWrapper.md div.section-cont, #pageWrapper.sm div.section-cont {
-  padding: 60px 16px;
+  padding: 30px 16px;
 }
 
-#pageWrapper.xl div.section-cont div.section-outer, #pageWrapper.lg div.section-cont div.section-outer, #pageWrapper.md div.section-cont div.section-outer, #pageWrapper.sm div.section-cont div.section-outer {
-  position: relative;
-}
-
-#pageWrapper.xl div.section-cont div.section-outer div.image, #pageWrapper.lg div.section-cont div.section-outer div.image, #pageWrapper.md div.section-cont div.section-outer div.image, #pageWrapper.sm div.section-cont div.section-outer div.image {
-  position: absolute;
-  top: 0;
-  height: 200px;
-  width: 200px;
-}
-
-#pageWrapper.xl div.section-cont div.section-outer div.image img.large, #pageWrapper.lg div.section-cont div.section-outer div.image img.large, #pageWrapper.md div.section-cont div.section-outer div.image img.large, #pageWrapper.sm div.section-cont div.section-outer div.image img.large {
-  display: inline;
-}
-
-#pageWrapper.xl div.section-cont div.section-outer div.image img.small, #pageWrapper.lg div.section-cont div.section-outer div.image img.small, #pageWrapper.md div.section-cont div.section-outer div.image img.small, #pageWrapper.sm div.section-cont div.section-outer div.image img.small {
-  display: none;
-}
-
-#pageWrapper.xl div.section-cont div.section-outer div.details, #pageWrapper.lg div.section-cont div.section-outer div.details, #pageWrapper.md div.section-cont div.section-outer div.details, #pageWrapper.sm div.section-cont div.section-outer div.details {
-  min-height: 200px;
-}
-
-#pageWrapper.xl div.section-cont div.section-outer div.details div.title, #pageWrapper.lg div.section-cont div.section-outer div.details div.title, #pageWrapper.md div.section-cont div.section-outer div.details div.title, #pageWrapper.sm div.section-cont div.section-outer div.details div.title {
+#pageWrapper.xl div.section-cont div.section-outer div.title, #pageWrapper.lg div.section-cont div.section-outer div.title, #pageWrapper.md div.section-cont div.section-outer div.title, #pageWrapper.sm div.section-cont div.section-outer div.title {
   font-size: 160%;
 }
 
-#pageWrapper.xl div.section-cont div.section-outer div.details div.description, #pageWrapper.lg div.section-cont div.section-outer div.details div.description, #pageWrapper.md div.section-cont div.section-outer div.details div.description, #pageWrapper.sm div.section-cont div.section-outer div.details div.description {
-  font-size: 110%;
-}
-
-#pageWrapper.xl div.section-cont.left div.section-outer div.image, #pageWrapper.lg div.section-cont.left div.section-outer div.image, #pageWrapper.md div.section-cont.left div.section-outer div.image, #pageWrapper.sm div.section-cont.left div.section-outer div.image {
-  left: 0;
-}
-
-#pageWrapper.xl div.section-cont.left div.section-outer div.details, #pageWrapper.lg div.section-cont.left div.section-outer div.details, #pageWrapper.md div.section-cont.left div.section-outer div.details, #pageWrapper.sm div.section-cont.left div.section-outer div.details {
-  margin-left: 220px;
-}
-
-#pageWrapper.xl div.section-cont.right div.section-outer div.image, #pageWrapper.lg div.section-cont.right div.section-outer div.image, #pageWrapper.md div.section-cont.right div.section-outer div.image, #pageWrapper.sm div.section-cont.right div.section-outer div.image {
-  right: 0;
-}
-
-#pageWrapper.xl div.section-cont.right div.section-outer div.details, #pageWrapper.lg div.section-cont.right div.section-outer div.details, #pageWrapper.md div.section-cont.right div.section-outer div.details, #pageWrapper.sm div.section-cont.right div.section-outer div.details {
-  margin-right: 220px;
-}
-
 #pageWrapper.xs div.section-cont {
-  padding: 40px 16px;
+  padding: 20px 16px;
 }
 
-#pageWrapper.xs div.section-cont div.section-outer div.image {
-  height: 150px;
-  margin-bottom: 1.4em;
-}
-
-#pageWrapper.xs div.section-cont div.section-outer div.image img.large {
-  display: none;
-}
-
-#pageWrapper.xs div.section-cont div.section-outer div.image img.small {
-  display: inline;
-}
-
-#pageWrapper.xs div.section-cont div.section-outer div.details div.title {
+#pageWrapper.xs div.section-cont div.section-outer div.title {
   font-size: 140%;
-}
-
-#pageWrapper.xs div.section-cont div.section-outer div.details div.description {
-  font-size: 100%;
 }
