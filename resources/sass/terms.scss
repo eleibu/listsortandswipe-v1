@@ -31,9 +31,39 @@ div.section-cont {
 			line-height: 140%;
 			color: #555555;
 
-			li {
-				margin: 1em 0;
+			ol[type="a"] {
+				padding-left: 1em;
+
+				li {
+					margin: 1em 0;
+				}
 			}
+
+			ol[type="i"] {
+				padding-left: 2em;
+
+				li {
+					margin: 1em 0;
+				}
+			}
+
+			table {
+				margin: 1em 0 1.6em 0;
+
+				td {
+					padding: 0.4em 0.8em;
+					vertical-align: top;
+				}
+
+				td.heading {
+					color: #222222;
+					font-weight: bold;
+				}
+			}
+		}
+
+		div.para.def {
+			margin-left: 2em;
 		}
 	}
 }

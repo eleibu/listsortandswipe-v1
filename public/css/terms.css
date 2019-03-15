@@ -275,8 +275,38 @@ div.section-cont div.section-outer div.para {
   color: #555555;
 }
 
-div.section-cont div.section-outer div.para li {
+div.section-cont div.section-outer div.para ol[type="a"] {
+  padding-left: 1em;
+}
+
+div.section-cont div.section-outer div.para ol[type="a"] li {
   margin: 1em 0;
+}
+
+div.section-cont div.section-outer div.para ol[type="i"] {
+  padding-left: 2em;
+}
+
+div.section-cont div.section-outer div.para ol[type="i"] li {
+  margin: 1em 0;
+}
+
+div.section-cont div.section-outer div.para table {
+  margin: 1em 0 1.6em 0;
+}
+
+div.section-cont div.section-outer div.para table td {
+  padding: 0.4em 0.8em;
+  vertical-align: top;
+}
+
+div.section-cont div.section-outer div.para table td.heading {
+  color: #222222;
+  font-weight: bold;
+}
+
+div.section-cont div.section-outer div.para.def {
+  margin-left: 2em;
 }
 
 div.section-cont.grey {
