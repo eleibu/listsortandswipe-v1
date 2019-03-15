@@ -58,16 +58,16 @@
                 <td class="label">
                 </td>
                 <td class="button">
-                    <a class="button-word-cont green" href="" title="">Try it</a>
+                    <a class="button-word-cont green" href="{{ url('/signup?atype=free') }}" title="">Try it</a>
                 </td>
                 <td class="button">
-                    <a class="button-word-cont grey" href="" title="">Buy now</a>
+                    <a class="button-word-cont grey" href="{{ url('/signup?atype=basic') }}" title="">Buy now</a>
                 </td>
                 <td class="button">
-                    <a class="button-word-cont grey" href="" title="">Buy now</a>
+                    <a class="button-word-cont grey" href="{{ url('/signup?atype=professional') }}" title="">Buy now</a>
                 </td>
                 <td class="button">
-                    <a class="button-word-cont grey" href="" title="">Buy now</a>
+                    <a class="button-word-cont grey" href="{{ url('/signup?atype=enterprise') }}" title="">Buy now</a>
                 </td>
             </tr>
             <tr>

@@ -315,6 +315,18 @@ input.textentry {
   min-width: 300px;
 }
 
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.plan {
+  font-size: 220%;
+}
+
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.plan strong {
+  color: #333333;
+}
+
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.plan span {
+  color: #666666;
+}
+
 #pageWrapper #div-sitecont div.section-cont div.section-outer div.title {
   font-size: 160%;
   line-height: 130%;
@@ -422,20 +434,20 @@ input.textentry {
 }
 
 #pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row div.signup-terms {
-  position: relative;
-  padding: 1em 0;
+  margin-bottom: 1em;
 }
 
-#pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row div.signup-terms input {
-  position: absolute;
-  left: 0;
-  top: 0;
-  -webkit-transform: scale(1.4);
-          transform: scale(1.4);
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row div.signup-terms td {
+  vertical-align: top;
 }
 
-#pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row div.signup-terms div.signup-terms-text {
-  margin-left: 2em;
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row div.signup-terms td.checkbox {
+  padding-right: 0.4em;
+}
+
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row div.signup-terms td.checkbox input {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
 }
 
 #pageWrapper #div-sitecont div.section-cont.grey {

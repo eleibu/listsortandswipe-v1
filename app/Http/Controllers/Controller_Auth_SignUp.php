@@ -35,7 +35,11 @@ class Controller_Auth_SignUp extends Controller
 			$pageInfo = Toolkit::pageInfo();
 			return redirect($pageInfo['console']['path']);
 		} else {
-			return $this->getReturnView('signup');
+			$atype = 'free';
+			if (($request->filled('atype')) && (($request->input('atype') == 'basic') || ($request->input('atype') == 'professional') || ($request->input('atype') == 'enterprise'))) {
+				$atype = $request->input('atype');
+			}
+			return $this->getReturnView('signup', $atype);
 		}
 	}
 
@@ -55,7 +59,7 @@ class Controller_Auth_SignUp extends Controller
 		}
 	}
 
-	protected function getReturnView($viewText) {
+	protected function getReturnView($viewText, $atype) {
 		// views: 'signup', 'accountcreated', 'linksent'
 		$pageInfo = Toolkit::pageInfo();
 
@@ -72,7 +76,8 @@ class Controller_Auth_SignUp extends Controller
             ->with('msgEmailInvalid', $this->msgEmailInvalid)
             ->with('msgPasswordDefault', $this->msgPasswordDefault)
             ->with('msgPasswordNoBlank', $this->msgPasswordNoBlank)
-            ->with('msgPasswordInvalid', $this->msgPasswordInvalid);
+            ->with('msgPasswordInvalid', $this->msgPasswordInvalid)
+            ->with('atype', $atype);
 	}
 
 	protected function signup($request) {

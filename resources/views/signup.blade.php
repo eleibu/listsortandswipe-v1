@@ -1,3 +1,35 @@
+@php
+switch ($atype) {
+    case 'basic':
+        $product_desc = 'Lithium List - 1 year licence - Basic';
+        $product_price = '$36.00';
+        $subtotal = '$36.00';
+        $taxes = '$0.00';
+        $total = '$36.00';
+        break;
+    case 'professioal':
+        $product_desc = 'Lithium List - 1 year licence - Professional';
+        $product_price = '$108.00';
+        $subtotal = '$108.00';
+        $taxes = '$0.00';
+        $total = '$108.00';
+        break;
+    case 'enterprise':
+        $product_desc = 'Lithium List - 1 year licence - Enterprise';
+        $product_price = '$648.00';
+        $subtotal = '$648.00';
+        $taxes = '$0.00';
+        $total = '$648.00';
+        break;
+    default:
+        $product_desc = 'Lithium List - 30 day licence - Free trial';
+        $product_price = '$0.00';
+        $subtotal = '$0.00';
+        $taxes = '$0.00';
+        $total = '$0.00';
+}
+@endphp
+
 @extends('layout-auth')
 
 @section('pageTitle', 'Lithium List - sign up')
@@ -12,6 +44,21 @@
 
 @section('content')
 <div class="section-cont">
+    <div class="section-outer">
+        <div class="plan">
+            @if ($atype == 'basic')
+                <strong>Basic</strong> <span>plan</span>
+            @elseif ($atype == 'professional')
+                <strong>Professional</strong> <span>plan</span>
+            @elseif ($atype == 'enterprise')
+                <strong>Enterprise</strong> <span>plan</span>
+            @else
+                <strong>Free trial</strong> <span>plan</span>
+            @endif
+        </div>
+    </div>
+</div>
+<div class="section-cont grey">
     <div class="section-outer">
         <div class="title">
             Create your account
@@ -34,7 +81,7 @@
         </div>
     </div>
 </div>
-<div class="section-cont grey">
+<div class="section-cont">
     <div class="section-outer">
         <div class="title">
             Contact details
@@ -72,7 +119,7 @@
         </div>
     </div>
 </div>
-<div class="section-cont">
+<div class="section-cont grey">
     <div class="section-outer">
         <div class="title">
             Order summary
@@ -91,23 +138,23 @@
                             <td class="col-right">USD</td>
                         </tr>
                         <tr>
-                            <td colspan="2">Lithium List - 1 year licence - Basic</td>
-                            <td class="col-right">$36.00</td>
+                            <td colspan="2">{{$product_desc}}</td>
+                            <td class="col-right">{{$product_price}}</td>
                         </tr>
                         <tr>
                             <td>&nbsp;</td>
                             <td class="border-top col-mdl">Subtotal</td>
-                            <td class="border-top col-right">$36.00</td>
+                            <td class="border-top col-right">{{$subtotal}}</td>
                         </tr>
                         <tr>
                             <td>&nbsp;</td>
                             <td class="border-btm col-mdl">Taxes</td>
-                            <td class="border-btm col-right">$0.00</td>
+                            <td class="border-btm col-right">{{$taxes}}</td>
                         </tr>
                         <tr>
                             <td>&nbsp;</td>
                             <td class="col-mdl"><strong>Total</strong></td>
-                            <td class="col-right"><strong>$36.00</strong></td>
+                            <td class="col-right"><strong>{{$total}}</strong></td>
                         </tr>
                     </tbody>
                 </table>
@@ -115,51 +162,57 @@
         </div>
     </div>
 </div>
-<div class="section-cont grey">
-    <div class="section-outer">
-        <div class="title">
-            Discount
-        </div>
-        <div class="signup-row">
-            <div class="signup-dataentry">
-                <input id="input-discountcode" name="discountcode" class="textentry" type="text" placeholder="Discount code" value="{{Request::old('discountcode')}}" tabindex="7" />
+@if (($atype == 'basic') || ($atype == 'professional') || ($atype == 'enterprise'))
+    <div class="section-cont">
+        <div class="section-outer">
+            <div class="title">
+                Discount
             </div>
-            <div class="signup-buttons">
-                <div id="div-apply-discount" class="button-word-cont grey">
-                    <div id="div-spinner-cont" class="spinner-cont">
-                        <div class="text">APPLY DISCOUNT</div>
-                        <div class="spinner-outer">
-                            <div class="spinner-inner">
-                                <div class="rect rect0"></div><div class="rect rect1"></div><div class="rect rect2"></div><div class="rect rect3"></div><div class="rect rect4"></div>
+            <div class="signup-row">
+                <div class="signup-dataentry">
+                    <input id="input-discountcode" name="discountcode" class="textentry" type="text" placeholder="Discount code" value="{{Request::old('discountcode')}}" tabindex="7" />
+                </div>
+                <div class="signup-buttons">
+                    <div id="div-apply-discount" class="button-word-cont grey">
+                        <div id="div-spinner-cont" class="spinner-cont">
+                            <div class="text">APPLY DISCOUNT</div>
+                            <div class="spinner-outer">
+                                <div class="spinner-inner">
+                                    <div class="rect rect0"></div><div class="rect rect1"></div><div class="rect rect2"></div><div class="rect rect3"></div><div class="rect rect4"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div id="div-companyname-submsg" class="submsg-cont">
+                    &nbsp;
+                </div>
             </div>
-            <div id="div-companyname-submsg" class="submsg-cont">
-                &nbsp;
-            </div>            
         </div>
     </div>
-</div>
+    <div class="section-cont grey">
+        <div class="section-outer">
+            <div class="title">
+                Payment
+            </div>
+            <div class="signup-row">
+                PayPal drop in<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            </div>
+        </div>
+    </div>
+@endif
 <div class="section-cont">
-    <div class="section-outer">
-        <div class="title">
-            Payment
-        </div>
-        <div class="signup-row">
-            PayPal drop in<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-        </div>
-    </div>
-</div>
-<div class="section-cont grey">
     <div class="section-outer">
         <div class="signup-row">
             <div class="signup-terms">
-                <input id="input-terms" name="terms" type="checkbox"/>
-                <div class="signup-terms-text">
-                    I agree to the <a href="" title="terms and conditions">terms and conditions</a> and <a href="" title="privacy policy">privacy policy</a>
-                </div>
+                <table cellpadding="0" cellspacing="0">
+                    <tbody>
+                        <tr>
+                            <td class="checkbox"><input id="input-terms" name="terms" type="checkbox"/></td>
+                            <td  class="text">I agree to the <a href="{{ url('/terms') }}" title="terms and conditions" target="_blank">terms and conditions</a> and <a href="{{ url('/privacy') }}" title="privacy statement" target="_blank">privacy statement</a></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
         <div class="signup-row">

@@ -13,11 +13,15 @@
 @section('content')
 <div class="title-main-cont">
     <div class="title-main-outer">
-        Lithium List licence agreement
+        Terms and conditions
     </div>
 </div>
 <div class="section-cont">
     <div class="section-outer">
+        <div class="para">
+            Last updated: 15 March 2019
+        </div>
+        <br/>
         <div class="para">
             This agreement is made between Indysoft and the Licensee. By downloading, installing, copying, accessing and/or using Lithium List, the Licensee agrees to be bound by the terms and conditions of this agreement.
         </div>
@@ -372,7 +376,15 @@
             14. Assignment and third parties
         </div>
         <div class="para">
-            The Licensee may not assign its rights, or transfer its obligations, under this agreement without Indysoft’s prior written consent. No third party has any rights under this agreement.
+            <ol type="i">
+                <li>
+                    The Licensee may not assign its rights, or transfer its obligations, under this agreement without Indysoft’s prior written consent. Indysoft may assign or transfer its rights and/or obligations under this agreement without the Licensee&#39;s consent.
+                </li>
+                <li>
+                    No third party has any rights under this agreement.
+                </li>
+            </ol>
+
         </div>
     </div>
 </div>
