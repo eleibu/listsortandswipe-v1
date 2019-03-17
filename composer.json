@@ -10,7 +10,8 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.7.*",
         "laravel/passport": "^7.1",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "pragmarx/countries": "^0.5.9"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

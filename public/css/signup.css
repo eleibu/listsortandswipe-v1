@@ -305,6 +305,10 @@ input.textentry {
   background-color: #FFFFFF;
 }
 
+#pageWrapper #div-sitecont {
+  position: relative;
+}
+
 #pageWrapper #div-sitecont div.section-cont {
   padding: 3em 16px;
 }
@@ -377,12 +381,11 @@ input.textentry {
 }
 
 #pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row div.submsg-cont {
-  margin: 0.3em 0 0.8em 0;
+  margin: 0.3em 0;
   font-size: 75%;
   line-height: 130%;
-  white-space: nowrap;
+  height: 3em;
   overflow: hidden;
-  text-overflow: ellipsis;
   color: #777777;
 }
 
@@ -392,11 +395,24 @@ input.textentry {
 
 #pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row div.signup-address {
   padding: 0.6em;
+  height: 4em;
+  max-width: 300px;
 }
 
 #pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row div.signup-address p {
-  margin: 0;
+  margin: 0.2em 0;
   color: #444444;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row div.signup-address p.empty {
+  background-color: #F4F4F4;
+}
+
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row div.signup-address p.company.empty {
+  display: none;
 }
 
 #pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row div.signup-orderdetails table {
@@ -433,10 +449,6 @@ input.textentry {
   font-size: 80%;
 }
 
-#pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row div.signup-terms {
-  margin-bottom: 1em;
-}
-
 #pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row div.signup-terms td {
   vertical-align: top;
 }
@@ -452,6 +464,19 @@ input.textentry {
 
 #pageWrapper #div-sitecont div.section-cont.grey {
   background-color: #FBFBFB;
+}
+
+#pageWrapper #div-sitecont #div-sitecont-mask {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+#pageWrapper #div-sitecont #div-sitecont-mask.show {
+  display: block;
 }
 
 #pageWrapper #div-sitecont div.middlebox-cont {

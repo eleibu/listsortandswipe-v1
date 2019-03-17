@@ -7,7 +7,7 @@ switch ($atype) {
         $taxes = '$0.00';
         $total = '$36.00';
         break;
-    case 'professioal':
+    case 'professional':
         $product_desc = 'Lithium List - 1 year licence - Professional';
         $product_price = '$108.00';
         $subtotal = '$108.00';
@@ -67,7 +67,7 @@ switch ($atype) {
             <div class="signup-dataentry">
                 <input id="input-email" name="email" class="textentry" type="text" placeholder="Email" value="{{Request::old('email')}}" tabindex="1" />
             </div>
-            <div id="div-companyname-submsg" class="submsg-cont">
+            <div id="div-email-submsg" class="submsg-cont">
                 &nbsp;
             </div>
         </div>
@@ -75,7 +75,7 @@ switch ($atype) {
             <div class="signup-dataentry">
                 <input id="input-password" name="password" class="textentry" type="password" placeholder="Password" value="{{Request::old('password')}}" tabindex="2" />
             </div>
-            <div id="div-companyname-submsg" class="submsg-cont">
+            <div id="div-password-submsg" class="submsg-cont">
                 Password must have at least 6 characters. Other than that, make it as simple or complex as you like.
             </div>
         </div>
@@ -89,7 +89,7 @@ switch ($atype) {
         <div class="signup-row">
             <div class="signup-dataentry">
                 <input id="input-firstname" name="firstname" class="textentry left" type="text" placeholder="First name" value="{{Request::old('firstname')}}" tabindex="3" />
-                <input id="input-surnname" name="surnname" class="textentry right" type="text" placeholder="Surname" value="{{Request::old('surnname')}}" tabindex="4" />
+                <input id="input-surname" name="surnname" class="textentry right" type="text" placeholder="Surname" value="{{Request::old('surnname')}}" tabindex="4" />
                 <br clear="all"/>
             </div>
             <div id="div-name-submsg" class="submsg-cont">
@@ -106,11 +106,11 @@ switch ($atype) {
         </div>
         <div class="signup-row">
             <div class="signup-dataentry">
-                <select  tabindex="6">
+                <select id="select-country" tabindex="6">
                     <option value="">Country</option>
-                    <option value="AUS">Austria</option>
-                    <option value="AUT">Australia</option>
-                    <option value="IDN">Indonesia</option>
+                    @foreach ($countries as $country)
+                        <option value="{{$country['iso']}}">{{$country['name']}}</option>
+                    @endforeach
                 </select>
             </div>
             <div id="div-country-submsg" class="submsg-cont">
@@ -126,9 +126,9 @@ switch ($atype) {
         </div>
         <div class="signup-row">
             <div class="signup-address">
-                <p>Elliot Leibu</p>
-                <p>IndySoft Pty Ltd</p>
-                <p>Australia</p>
+                <p id="p_indiv_name" class="empty">&nbsp;</p>
+                <p id="p_co_name" class="company empty">&nbsp;</p>
+                <p id="p_country" class="empty">&nbsp;</p>
             </div>
             <div class="signup-orderdetails">
                 <table cellpadding="0" cellspacing="0">
@@ -184,7 +184,7 @@ switch ($atype) {
                         </div>
                     </div>
                 </div>
-                <div id="div-companyname-submsg" class="submsg-cont">
+                <div id="div-discount-submsg" class="submsg-cont">
                     &nbsp;
                 </div>
             </div>
@@ -214,6 +214,9 @@ switch ($atype) {
                     </tbody>
                 </table>
             </div>
+            <div id="div-terms-submsg" class="submsg-cont">
+                &nbsp;
+            </div>
         </div>
         <div class="signup-row">
             <div id="div-place-order" class="button-word-cont darkblue">
@@ -228,6 +231,8 @@ switch ($atype) {
             </div>
         </div>
     </div>
+</div>
+<div id="div-sitecont-mask">
 </div>
 
 

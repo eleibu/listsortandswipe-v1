@@ -17132,38 +17132,53 @@ __webpack_require__("./node_modules/bootstrap/dist/js/bootstrap.js");
 
 
 
+var msgFirstSurNameDefault = '';
+var msgCompanyNameDefault = '';
+var msgCountryDefault = '';
+var msgTermsDefault = '';
+
 var spinnerCont = document.getElementById('div-spinner-cont');
-var maskCont = document.getElementById('div-middlebox-mask');
+var maskCont = document.getElementById('div-sitecont-mask');
 
-var divMainmsg = document.getElementById('div-mainmsg');
-var divEmailCont = document.getElementById('div-email-cont');
-var divPasswordCont = document.getElementById('div-password-cont');
 var inputEmail = document.getElementById('input-email');
-var inputPassword = document.getElementById('input-password');
 var divEmailSubmsg = document.getElementById('div-email-submsg');
+var inputPassword = document.getElementById('input-password');
 var divPasswordSubmsg = document.getElementById('div-password-submsg');
-var submitButton = document.getElementById('div-submit');
 
-if (divMainmsg && divEmailCont && divPasswordCont && inputEmail && inputPassword && divEmailSubmsg && divPasswordSubmsg && submitButton && spinnerCont && maskCont) {
-	if (Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["f" /* trimString */])(divPasswordSubmsg.innerHTML).length == 0) {
-		divPasswordSubmsg.innerHTML = msgPasswordDefault;
-	}
+var inputFirstname = document.getElementById('input-firstname');
+var inputSurname = document.getElementById('input-surname');
+var divNameSubmsg = document.getElementById('div-name-submsg');
 
-	inputEmail.focus();
-	inputEmail.select();
+var inputCompanyname = document.getElementById('input-companyname');
+var selectCountry = document.getElementById('select-country');
+var divCountrySubmsg = document.getElementById('div-country-submsg');
+
+var pIndivName = document.getElementById('p_indiv_name');
+var pCoName = document.getElementById('p_co_name');
+var pCountry = document.getElementById('p_country');
+
+var inputDiscountCode = document.getElementById('input-discountcode');
+var divDiscountSubmsg = document.getElementById('div-discount-submsg');
+var divApplyDiscount = document.getElementById('div-apply-discount');
+
+var inputTerms = document.getElementById('input-discountcode');
+var divTermsSubmsg = document.getElementById('div-terms-submsg');
+
+var divPlaceOrder = document.getElementById('div-place-order');
+
+if (spinnerCont && maskCont && inputEmail && divEmailSubmsg && inputPassword && divPasswordSubmsg && inputFirstname && inputSurname && divNameSubmsg && inputCompanyname && selectCountry && divCountrySubmsg && pIndivName && pCoName && pCountry && inputDiscountCode && divDiscountSubmsg && divApplyDiscount && inputTerms && divTermsSubmsg && divPlaceOrder) {
 
 	inputEmail.addEventListener("focus", function (e) {
-		divMainmsg.innerHTML = "";
-		divEmailCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'text-cont': true,
+		inputEmail.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'textentry': true,
 			'focus': true
 		});
 		divEmailSubmsg.innerHTML = msgEmailDefault;
 	});
 
 	inputEmail.addEventListener("blur", function (e) {
-		divEmailCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'text-cont': true
+		inputEmail.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'textentry': true
 		});
 		divEmailSubmsg.innerHTML = msgEmailDefault;
 	});
@@ -17177,17 +17192,16 @@ if (divMainmsg && divEmailCont && divPasswordCont && inputEmail && inputPassword
 	});
 
 	inputPassword.addEventListener("focus", function (e) {
-		divMainmsg.innerHTML = "";
-		divPasswordCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'text-cont': true,
+		inputPassword.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'textentry': true,
 			'focus': focus
 		});
 		divPasswordSubmsg.innerHTML = msgPasswordDefault;
 	});
 
 	inputPassword.addEventListener("blur", function (e) {
-		divPasswordCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'text-cont': true
+		inputPassword.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'textentry': true
 		});
 		divPasswordSubmsg.innerHTML = msgPasswordDefault;
 	});
@@ -17195,33 +17209,134 @@ if (divMainmsg && divEmailCont && divPasswordCont && inputEmail && inputPassword
 	inputPassword.addEventListener("keypress", function (e) {
 		if (e.which && e.which == 13 || e.keyCode && e.keyCode == 13) {
 			e.preventDefault();
-			validateAndSubmit();
+			inputFirstname.focus();
+			inputFirstname.select();
 		}
 	});
 
-	submitButton.addEventListener("click", function () {
+	// first name
+	inputFirstname.addEventListener("focus", function (e) {
+		inputFirstname.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'textentry': true,
+			'left': true,
+			'focus': true
+		});
+		divNameSubmsg.innerHTML = msgFirstSurNameDefault;
+	});
+
+	inputFirstname.addEventListener("blur", function (e) {
+		inputFirstname.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'textentry': true,
+			'left': true
+		});
+		divNameSubmsg.innerHTML = msgFirstSurNameDefault;
+	});
+
+	inputFirstname.addEventListener("input", function (e) {
+		setParaFirstSurName();
+	});
+
+	inputFirstname.addEventListener("keypress", function (e) {
+		if (e.which && e.which == 13 || e.keyCode && e.keyCode == 13) {
+			e.preventDefault();
+			inputSurname.focus();
+			inputSurname.select();
+		}
+	});
+
+	// surname
+	inputSurname.addEventListener("focus", function (e) {
+		inputSurname.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'textentry': true,
+			'right': true,
+			'focus': true
+		});
+		divNameSubmsg.innerHTML = msgFirstSurNameDefault;
+	});
+
+	inputSurname.addEventListener("blur", function (e) {
+		inputSurname.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'textentry': true,
+			'right': true
+		});
+		divNameSubmsg.innerHTML = msgFirstSurNameDefault;
+	});
+
+	inputSurname.addEventListener("input", function (e) {
+		setParaFirstSurName();
+	});
+
+	inputSurname.addEventListener("keypress", function (e) {
+		if (e.which && e.which == 13 || e.keyCode && e.keyCode == 13) {
+			e.preventDefault();
+			inputCompanyname.focus();
+			inputCompanyname.select();
+		}
+	});
+
+	// company name
+	inputCompanyname.addEventListener("focus", function (e) {
+		inputCompanyname.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'textentry': true,
+			'focus': true
+		});
+		divCountrySubmsg.innerHTML = msgCompanyNameDefault;
+	});
+
+	inputCompanyname.addEventListener("blur", function (e) {
+		inputCompanyname.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'textentry': true
+		});
+		divCountrySubmsg.innerHTML = msgCompanyNameDefault;
+	});
+
+	inputCompanyname.addEventListener("input", function (e) {
+		setParaCompanyName();
+	});
+
+	inputCompanyname.addEventListener("keypress", function (e) {
+		if (e.which && e.which == 13 || e.keyCode && e.keyCode == 13) {
+			e.preventDefault();
+			selectCountry.focus();
+		}
+	});
+
+	// country
+	selectCountry.addEventListener('change', function () {
+		setParaCountry();
+		if (selectCountry.options[selectCountry.selectedIndex].value.length > 0) {
+			selectCountry.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({});
+			divCountrySubmsg.innerHTML = msgCountryDefault;
+		}
+	});
+
+	selectCountry.addEventListener("keypress", function (e) {
+		if (e.which && e.which == 13 || e.keyCode && e.keyCode == 13) {
+			inputDiscountCode.focus();
+			inputDiscountCode.select();
+		}
+	});
+
+	// discount
+
+	// var divDiscountSubmsg = document.getElementById('div-discount-submsg');
+	// var divApplyDiscount = document.getElementById('div-apply-discount');
+
+
+	// terms
+	inputTerms.addEventListener('change', function () {
+		if (inputTerms.checked) {
+			divTermsSubmsg.innerHTML = msgTermsDefault;
+		}
+	});
+
+	// place order
+	divPlaceOrder.addEventListener("click", function () {
 		validateAndSubmit();
 	});
 }
 
-var resendButton = document.getElementById('div-resend-link');
-
-if (resendButton && spinnerCont && maskCont) {
-	resendButton.addEventListener("click", function () {
-		maskCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'show': true
-		});
-		spinnerCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'spinner-cont': true,
-			'spinning': true
-		});
-		document.getElementById('form').submit();
-	});
-}
-
 function validateAndSubmit() {
-	divMainmsg.innerHTML = "";
-
 	var emailOk = false;
 	var email = Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["f" /* trimString */])(inputEmail.value);
 
@@ -17230,20 +17345,20 @@ function validateAndSubmit() {
 		if (regex.test(email)) {
 			emailOk = true;
 
-			divEmailCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-				'text-cont': true
+			inputEmail.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+				'textentry': true
 			});
 			divEmailSubmsg.innerHTML = msgEmailDefault;
 		} else {
-			divEmailCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-				'text-cont': true,
+			inputEmail.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+				'textentry': true,
 				'error': true
 			});
 			divEmailSubmsg.innerHTML = msgEmailInvalid;
 		}
 	} else {
-		divEmailCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'text-cont': true,
+		inputEmail.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'textentry': true,
 			'error': true
 		});
 		divEmailSubmsg.innerHTML = msgEmailNoBlank;
@@ -17256,36 +17371,237 @@ function validateAndSubmit() {
 		if (password.length >= 6) {
 			passwordOk = true;
 
-			divPasswordCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-				'text-cont': true
+			inputPassword.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+				'textentry': true
 			});
 			divPasswordSubmsg.innerHTML = msgPasswordDefault;
 		} else {
-			divPasswordCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-				'text-cont': true,
+			inputPassword.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+				'textentry': true,
 				'error': true
 			});
 			divPasswordSubmsg.innerHTML = msgPasswordInvalid;
 		}
 	} else {
-		divPasswordCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'text-cont': true,
+		inputPassword.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'textentry': true,
 			'error': true
 		});
 		divPasswordSubmsg.innerHTML = msgPasswordNoBlank;
 	}
 
 	if (emailOk && passwordOk) {
-		maskCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'show': true
-		});
-		spinnerCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'spinner-cont': true,
-			'spinning': true
-		});
-		document.getElementById('form').submit();
+		// maskCont.className = classNames({
+		// 	'show' : true
+		// });
+		// spinnerCont.className = classNames({
+		// 	'spinner-cont' : true,
+		// 	'spinning' : true
+		// });
+		// document.getElementById('form').submit();
 	}
 }
+
+function setParaFirstSurName() {
+	var firstname = Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["f" /* trimString */])(inputFirstname.value);
+	var surname = Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["f" /* trimString */])(inputSurname.value);
+	var name = firstname;
+	if (surname.length > 0) {
+		if (name.length > 0) {
+			name = name + ' ';
+		}
+		name = name + surname;
+	}
+	if (name.length > 0) {
+		pIndivName.innerHTML = name;
+		pIndivName.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({});
+	} else {
+		pIndivName.innerHTML = '&nbsp;';
+		pIndivName.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'empty': true
+		});
+	}
+}
+
+function setParaCompanyName() {
+	var coname = Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["f" /* trimString */])(inputCompanyname.value);
+	if (coname.length > 0) {
+		pCoName.innerHTML = coname;
+		pCoName.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'company': true
+		});
+	} else {
+		pCoName.innerHTML = '&nbsp;';
+		pCoName.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'company': true,
+			'empty': true
+		});
+	}
+}
+
+function setParaCountry() {
+	if (selectCountry.options[selectCountry.selectedIndex].value.length > 0) {
+		pCountry.innerHTML = selectCountry.options[selectCountry.selectedIndex].innerHTML;
+		pCountry.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({});
+	} else {
+		pCountry.innerHTML = '&nbsp;';
+		pCountry.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'empty': true
+		});
+	}
+}
+
+// var divMainmsg = document.getElementById('div-mainmsg');
+// var divEmailCont = document.getElementById('div-email-cont');
+// var divPasswordCont = document.getElementById('div-password-cont');
+// var inputEmail = document.getElementById('input-email');
+// var inputPassword = document.getElementById('input-password');
+// var divEmailSubmsg = document.getElementById('div-email-submsg');
+// var divPasswordSubmsg = document.getElementById('div-password-submsg');
+// var submitButton = document.getElementById('div-submit');
+
+// if ((divMainmsg) && (divEmailCont) && (divPasswordCont) && (inputEmail) && (inputPassword) && (divEmailSubmsg) && (divPasswordSubmsg) && (submitButton) && (spinnerCont) && (maskCont)) {
+// 	if (trimString(divPasswordSubmsg.innerHTML).length == 0) {
+// 		divPasswordSubmsg.innerHTML = msgPasswordDefault;
+// 	}
+
+// 	inputEmail.focus();
+// 	inputEmail.select();
+
+// 	inputEmail.addEventListener("focus", function(e) {
+// 		divMainmsg.innerHTML = "";
+// 		divEmailCont.className = classNames({
+// 			'text-cont' : true,
+// 			'focus' : true
+// 		});
+// 		divEmailSubmsg.innerHTML = msgEmailDefault;
+// 	});
+
+// 	inputEmail.addEventListener("blur", function(e) {
+// 		divEmailCont.className = classNames({
+// 			'text-cont' : true
+// 		});
+// 		divEmailSubmsg.innerHTML = msgEmailDefault;
+// 	});
+
+// 	inputEmail.addEventListener("keypress", function(e) {
+// 		if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+// 			e.preventDefault();
+// 			inputPassword.focus();
+// 			inputPassword.select();
+// 		}
+// 	});
+
+// 	inputPassword.addEventListener("focus", function(e) {
+// 		divMainmsg.innerHTML = "";
+// 		divPasswordCont.className = classNames({
+// 			'text-cont' : true,
+// 			'focus' : focus
+// 		});
+// 		divPasswordSubmsg.innerHTML = msgPasswordDefault;
+// 	});
+
+// 	inputPassword.addEventListener("blur", function(e) {
+// 		divPasswordCont.className = classNames({
+// 			'text-cont' : true
+// 		});
+// 		divPasswordSubmsg.innerHTML = msgPasswordDefault;
+// 	});
+
+// 	inputPassword.addEventListener("keypress", function(e) {
+// 		if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+// 			e.preventDefault();
+// 			validateAndSubmit();
+// 		}
+// 	});
+
+// 	submitButton.addEventListener("click", function() {
+// 		validateAndSubmit();
+// 	});
+// }
+
+// var resendButton = document.getElementById('div-resend-link');
+
+// if ((resendButton) && (spinnerCont) && (maskCont)) {
+// 	resendButton.addEventListener("click", function() {
+// 		maskCont.className = classNames({
+// 			'show' : true
+// 		});
+// 		spinnerCont.className = classNames({
+// 			'spinner-cont' : true,
+// 			'spinning' : true
+// 		});
+// 		document.getElementById('form').submit();
+// 	});
+// }
+
+// function validateAndSubmit() {
+// 	divMainmsg.innerHTML = "";
+
+// 	var emailOk = false;
+// 	var email = trimString(inputEmail.value);
+
+// 	if (email.length > 0) {
+// 		var regex = /^[^@]+@[^@]+\.[^@]+$/;
+// 		if (regex.test(email)) {
+// 			emailOk = true;
+
+// 			divEmailCont.className = classNames({
+// 				'text-cont' : true
+// 			});
+// 			divEmailSubmsg.innerHTML = msgEmailDefault;
+// 		} else {
+// 			divEmailCont.className = classNames({
+// 				'text-cont' : true,
+// 				'error' : true
+// 			});
+// 			divEmailSubmsg.innerHTML = msgEmailInvalid;
+// 		}
+// 	} else {
+// 		divEmailCont.className = classNames({
+// 			'text-cont' : true,
+// 			'error' : true
+// 		});
+// 		divEmailSubmsg.innerHTML = msgEmailNoBlank;
+// 	}
+
+// 	var passwordOk = false;
+// 	var password = inputPassword.value;
+
+// 	if (password.length > 0) {
+// 		if (password.length >= 6) {
+// 			passwordOk = true;
+
+// 			divPasswordCont.className = classNames({
+// 				'text-cont' : true
+// 			});
+// 			divPasswordSubmsg.innerHTML = msgPasswordDefault;
+// 		} else {
+// 			divPasswordCont.className = classNames({
+// 				'text-cont' : true,
+// 				'error' : true
+// 			});
+// 			divPasswordSubmsg.innerHTML = msgPasswordInvalid;
+// 		}
+// 	} else {
+// 		divPasswordCont.className = classNames({
+// 			'text-cont' : true,
+// 			'error' : true
+// 		});
+// 		divPasswordSubmsg.innerHTML = msgPasswordNoBlank;
+// 	}
+
+// 	if ((emailOk) && (passwordOk)) {
+// 		maskCont.className = classNames({
+// 			'show' : true
+// 		});
+// 		spinnerCont.className = classNames({
+// 			'spinner-cont' : true,
+// 			'spinning' : true
+// 		});
+// 		document.getElementById('form').submit();
+// 	}
+// }
 
 /***/ }),
 

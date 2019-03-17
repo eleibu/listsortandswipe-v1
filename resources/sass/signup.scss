@@ -109,6 +109,8 @@ input.textentry {
 
 #pageWrapper {
 	#div-sitecont {
+		position: relative;
+
 		div.section-cont {
 			padding: 3em 16px;
 
@@ -181,12 +183,11 @@ input.textentry {
 					}
 
 					div.submsg-cont {
-						margin: 0.3em 0 0.8em 0;
+						margin: 0.3em 0;
 						font-size: 75%;
 						line-height: 130%;
-						white-space: nowrap;
+						height: 3em;
 						overflow: hidden;
-						text-overflow: ellipsis;
 						color: #777777;
 					}
 
@@ -196,10 +197,23 @@ input.textentry {
 
 					div.signup-address {
 						padding: 0.6em;
+						height: 4em;
+						max-width: 300px;
 
 						p {
-							margin: 0;
+							margin: 0.2em 0;
 							color: #444444;
+							white-space: nowrap;
+							overflow: hidden;
+							text-overflow: ellipsis;
+						}
+
+						p.empty {
+							background-color: #F4F4F4;
+						}
+
+						p.company.empty {
+							display: none;
 						}
 					}
 
@@ -240,8 +254,6 @@ input.textentry {
 					}
 
 					div.signup-terms {
-						margin-bottom: 1em;
-
 						td {
 							vertical-align: top;
 						}
@@ -262,7 +274,18 @@ input.textentry {
 			background-color: #FBFBFB;
 		}
 
+		#div-sitecont-mask {
+			display: none;
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+		}
 
+		#div-sitecont-mask.show {
+			display: block;
+		}
 
 		div.middlebox-cont {
 			text-align: center;

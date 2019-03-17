@@ -376,7 +376,7 @@
             14. Assignment and third parties
         </div>
         <div class="para">
-            <ol type="i">
+            <ol type="a">
                 <li>
                     The Licensee may not assign its rights, or transfer its obligations, under this agreement without Indysoft’s prior written consent. Indysoft may assign or transfer its rights and/or obligations under this agreement without the Licensee&#39;s consent.
                 </li>

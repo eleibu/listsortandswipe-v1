@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Mail;
 use DateTime;
 use DateTimeZone;
 use DateInterval;
+use PragmaRX\Countries\Package\Countries;
 
 
 class Controller_Auth_SignUp extends Controller
@@ -63,6 +64,20 @@ class Controller_Auth_SignUp extends Controller
 		// views: 'signup', 'accountcreated', 'linksent'
 		$pageInfo = Toolkit::pageInfo();
 
+        $tempCountries = new Countries();
+		$allCountries = $tempCountries->all();
+		$countries = array();
+		foreach ($allCountries as $tempCountry) {
+			if ((strlen($tempCountry['iso_a3']) > 0) && ($tempCountry['iso_a3'] != '-99') && ($tempCountry['iso_a3'] != 'EUR')) {
+				$country = array(
+					'name' => $tempCountry['name']['common'],
+					'iso' => $tempCountry['iso_a3']
+				);
+				array_push($countries, $country);
+			}
+		}
+		usort($countries, array($this, 'compCountries'));
+
 		return view('signup')
 			->with('view', $viewText)
             ->with('homeName', $pageInfo['home']['name'])
@@ -77,7 +92,8 @@ class Controller_Auth_SignUp extends Controller
             ->with('msgPasswordDefault', $this->msgPasswordDefault)
             ->with('msgPasswordNoBlank', $this->msgPasswordNoBlank)
             ->with('msgPasswordInvalid', $this->msgPasswordInvalid)
-            ->with('atype', $atype);
+            ->with('atype', $atype)
+            ->with('countries', $countries);
 	}
 
 	protected function signup($request) {
@@ -189,5 +205,10 @@ class Controller_Auth_SignUp extends Controller
         Mail::to($user->email)->send(new ResendActivationLink($user->verification_code));
 
 		return $this->getReturnView('linksent');
+	}
+
+	protected function compCountries($a, $b)
+	{
+	    return strcmp($a['name'], $b['name']);
 	}
 }
