@@ -184,7 +184,7 @@ input.textentry {
 
 					div.submsg-cont {
 						margin: 0.3em 0;
-						font-size: 75%;
+						font-size: 85%;
 						line-height: 130%;
 						height: 3em;
 						overflow: hidden;
@@ -193,6 +193,10 @@ input.textentry {
 
 					div.submsg-cont.error {
 						color: #FF3B0A;
+					}
+
+					div.submsg-cont.error.right {
+						text-align: right;
 					}
 
 					div.signup-address {
@@ -287,250 +291,254 @@ input.textentry {
 			display: block;
 		}
 
-		div.middlebox-cont {
-			text-align: center;
+		// div.middlebox-cont {
+		// 	text-align: center;
 
-			div.middlebox-outer {
-				position: relative;
-				text-align: left;
+		// 	div.middlebox-outer {
+		// 		position: relative;
+		// 		text-align: left;
 
-				div.middlebox-inner {
-					// div.otherpage-cont {
-					// 	font-size: 90%;
-					// 	color: #444444;
-					// }
+		// 		div.middlebox-inner {
+		// 			// div.otherpage-cont {
+		// 			// 	font-size: 90%;
+		// 			// 	color: #444444;
+		// 			// }
 
-					// div.mainmsg-cont {
-					// 	margin-bottom: 0.3em;
-					// 	font-size: 85%;
-					// 	line-height: 130%;
-					// 	color: #FF3B0A;
-					// 	font-weight: bold;
-					// 	height: 3em;
-					// 	overflow: hidden;
-					// }
+		// 			// div.mainmsg-cont {
+		// 			// 	margin-bottom: 0.3em;
+		// 			// 	font-size: 85%;
+		// 			// 	line-height: 130%;
+		// 			// 	color: #FF3B0A;
+		// 			// 	font-weight: bold;
+		// 			// 	height: 3em;
+		// 			// 	overflow: hidden;
+		// 			// }
 
-					// div.bigmsg-cont {
-					// 	font-size: 120%;
-					// 	line-height: 130%;
-					// 	color: #222222;
-					// 	font-weight: bold;
-					// }
+		// 			// div.bigmsg-cont {
+		// 			// 	font-size: 120%;
+		// 			// 	line-height: 130%;
+		// 			// 	color: #222222;
+		// 			// 	font-weight: bold;
+		// 			// }
 
-					// div.smallmsg-cont {
-					// 	font-size: 90%;
-					// 	line-height: 130%;
-					// 	color: #777777;
-					// }
+		// 			// div.smallmsg-cont {
+		// 			// 	font-size: 90%;
+		// 			// 	line-height: 130%;
+		// 			// 	color: #777777;
+		// 			// }
 
-					// div.text-cont {
-					// 	div.textentry-cont {
-					// 		position: relative;
-					// 		border: 1px solid #DDDDDD;
+		// 			// div.text-cont {
+		// 			// 	div.textentry-cont {
+		// 			// 		position: relative;
+		// 			// 		border: 1px solid #DDDDDD;
 
-					// 		div.textentry-outer {
-					// 			margin: 0.6em 0.4em;
+		// 			// 		div.textentry-outer {
+		// 			// 			margin: 0.6em 0.4em;
 
-					// 			input.textentry {
-					// 				font-size: 100%;
-					// 				box-sizing: border-box;
-					// 				width: 100%;
-					// 			}
-					// 		}
+		// 			// 			input.textentry {
+		// 			// 				font-size: 100%;
+		// 			// 				box-sizing: border-box;
+		// 			// 				width: 100%;
+		// 			// 			}
+		// 			// 		}
 
-					// 		div.textentry-outer.icon {
-					// 			margin: 0.6em 0.4em 0.6em 2em;
-					// 		}
+		// 			// 		div.textentry-outer.icon {
+		// 			// 			margin: 0.6em 0.4em 0.6em 2em;
+		// 			// 		}
 
-					// 		i {
-					// 			position: absolute;
-					// 			top: 50%;
-					// 			transform: translateY(-50%);
-					// 			left: 8px;
-					// 		}
-					// 	}
+		// 			// 		i {
+		// 			// 			position: absolute;
+		// 			// 			top: 50%;
+		// 			// 			transform: translateY(-50%);
+		// 			// 			left: 8px;
+		// 			// 		}
+		// 			// 	}
 
-					// 	div.submsg-cont {
-					// 		margin: 0.3em 0;
-					// 		font-size: 75%;
-					// 		line-height: 130%;
-					// 		height: 3em;
-					// 		overflow: hidden;
-					// 	}
+		// 			// 	div.submsg-cont {
+		// 			// 		margin: 0.3em 0;
+		// 			// 		font-size: 75%;
+		// 			// 		line-height: 130%;
+		// 			// 		height: 3em;
+		// 			// 		overflow: hidden;
+		// 			// 	}
 
-					// 	div.submsg-cont.default {
-					// 		color: #777777;
-					// 	}
-					// }
+		// 			// 	div.submsg-cont.default {
+		// 			// 		color: #777777;
+		// 			// 	}
+		// 			// }
 
-					// div.text-cont.error {
-					// 	div.textentry-cont {
-					// 		border: 1px solid #FF3B0A;
-					// 	}
+		// 			// div.text-cont.error {
+		// 			// 	div.textentry-cont {
+		// 			// 		border: 1px solid #FF3B0A;
+		// 			// 	}
 
-					// 	div.submsg-cont {
-					// 		color: #FF3B0A;
-					// 	}
-					// }
+		// 			// 	div.submsg-cont {
+		// 			// 		color: #FF3B0A;
+		// 			// 	}
+		// 			// }
 
-					// div.text-cont.focus {
-					// 	div.textentry-cont {
-					// 		border: 1px solid #3366CC;
-					// 	}
-					// }
+		// 			// div.text-cont.focus {
+		// 			// 	div.textentry-cont {
+		// 			// 		border: 1px solid #3366CC;
+		// 			// 	}
+		// 			// }
 
-					// div.forgot-cont {
-					// 	font-size: 80%;
-					// 	line-height: 120%;
-					// 	color: #444444;
-					// }
+		// 			// div.forgot-cont {
+		// 			// 	font-size: 80%;
+		// 			// 	line-height: 120%;
+		// 			// 	color: #444444;
+		// 			// }
 
-					div.terms-cont {
-						font-size: 90%;
-						line-height: 120%;
-						color: #444444;
+		// 			div.terms-cont {
+		// 				font-size: 90%;
+		// 				line-height: 120%;
+		// 				color: #444444;
 
-						#input-terms {
-							transform: scale(1.4);
-						}
-					}
+		// 				#input-terms {
+		// 					transform: scale(1.4);
+		// 				}
+		// 			}
 
-					// #div-firstname-cont {
-					// 	display: inline-block;
-					// 	width: 49%;
-					// }
+		// 			// #div-firstname-cont {
+		// 			// 	display: inline-block;
+		// 			// 	width: 49%;
+		// 			// }
 
-					// #div-surname-cont {
-					// 	display: inline-block;
-					// 	width: 49%;
-					// }
+		// 			// #div-surname-cont {
+		// 			// 	display: inline-block;
+		// 			// 	width: 49%;
+		// 			// }
 
-					div.header-outer.signup {
-						font-size: 140%;
-						font-weight: bold;
-						color: #222222;
-					}
+		// 			div.header-outer.signup {
+		// 				font-size: 140%;
+		// 				font-weight: bold;
+		// 				color: #222222;
+		// 			}
 
-					div.signup-row {
-						div.signup-dataentry {
-							input.textentry {
-								font-size: 100%;
-								box-sizing: border-box;
-								width: 100%;
-								padding: 0.6em 0.4em;
-								border: 1px solid #DDDDDD;
-							}
+		// 			div.signup-row {
+		// 				div.signup-dataentry {
+		// 					input.textentry {
+		// 						font-size: 100%;
+		// 						box-sizing: border-box;
+		// 						width: 100%;
+		// 						padding: 0.6em 0.4em;
+		// 						border: 1px solid #DDDDDD;
+		// 					}
 
-							input.textentry.left {
-								float: left;
-								width: 49%;
-							}
+		// 					input.textentry.left {
+		// 						float: left;
+		// 						width: 49%;
+		// 					}
 
-							input.textentry.right {
-								float: left;
-								margin-left: 2%;
-								width: 49%;
-							}
+		// 					input.textentry.right {
+		// 						float: left;
+		// 						margin-left: 2%;
+		// 						width: 49%;
+		// 					}
 
-							input.textentry.error {
-								border: 1px solid #FF3B0A;
-							}
+		// 					input.textentry.error {
+		// 						border: 1px solid #FF3B0A;
+		// 					}
 
-							input.textentry.focus {
-								border: 1px solid #3366CC;
-							}
+		// 					input.textentry.focus {
+		// 						border: 1px solid #3366CC;
+		// 					}
 
-							select {
-								font-size: 100%;
-								padding: 0.6em 0.4em;
-								border: 1px solid #DDDDDD;
-							}
-						}
+		// 					select {
+		// 						font-size: 100%;
+		// 						padding: 0.6em 0.4em;
+		// 						border: 1px solid #DDDDDD;
+		// 					}
+		// 				}
 
-						div.supmsg-cont {
-							margin: 0.4em 0;
-							font-size: 85%;
-							line-height: 130%;
-							color: #555555;
-						}
+		// 				div.supmsg-cont {
+		// 					margin: 0.4em 0;
+		// 					font-size: 85%;
+		// 					line-height: 130%;
+		// 					color: #555555;
+		// 				}
 
-						div.submsg-cont {
-							margin: 0.3em 0 0.8em 0;
-							font-size: 75%;
-							line-height: 130%;
-							white-space: nowrap;
-							overflow: hidden;
-							text-overflow: ellipsis;
-							color: #777777;
-						}
+		// 				div.submsg-cont {
+		// 					margin: 0.3em 0 0.8em 0;
+		// 					font-size: 75%;
+		// 					line-height: 130%;
+		// 					white-space: nowrap;
+		// 					overflow: hidden;
+		// 					text-overflow: ellipsis;
+		// 					color: #777777;
+		// 				}
 
-						div.submsg-cont.error {
-							color: #FF3B0A;
-						}
+		// 				div.submsg-cont.error {
+		// 					color: #FF3B0A;
+		// 				}
 
-						div.signup-address {
-							font-size: 90%;
-							padding: 0.6em;
+		// 				div.submsg-cont.error.right {
+		// 					text-align: right;
+		// 				}
 
-							p {
-								margin: 0;
-								color: #444444;
-							}
-						}
+		// 				div.signup-address {
+		// 					font-size: 90%;
+		// 					padding: 0.6em;
 
-						div.signup-orderdetails {
-							table {
-								width: 100%;
+		// 					p {
+		// 						margin: 0;
+		// 						color: #444444;
+		// 					}
+		// 				}
 
-								td {
-									padding: 0.6em;
-									font-size: 90%;
-									color: #444444;
-								}
+		// 				div.signup-orderdetails {
+		// 					table {
+		// 						width: 100%;
 
-								td.border-top {
-									border-top: 1px solid #777777;
-								}
+		// 						td {
+		// 							padding: 0.6em;
+		// 							font-size: 90%;
+		// 							color: #444444;
+		// 						}
 
-								td.border-btm {
-									border-bottom: 1px solid #777777;
-								}
+		// 						td.border-top {
+		// 							border-top: 1px solid #777777;
+		// 						}
 
-								td.col-mdl {
-									width: 40%;
-								}
+		// 						td.border-btm {
+		// 							border-bottom: 1px solid #777777;
+		// 						}
 
-								td.col-right {
-									width: 10%;
-									text-align: right;
-								}
-							}
-						}
+		// 						td.col-mdl {
+		// 							width: 40%;
+		// 						}
 
-						div.signup-buttons {
-							margin: 0.4em 0;
+		// 						td.col-right {
+		// 							width: 10%;
+		// 							text-align: right;
+		// 						}
+		// 					}
+		// 				}
 
-							.button-word-cont {
-								font-size: 80%;
-							}
-						}
-					}
-				}
+		// 				div.signup-buttons {
+		// 					margin: 0.4em 0;
 
-				#div-middlebox-mask {
-					display: none;
-					position: absolute;
-					top: 0;
-					left: 0;
-					height: 100%;
-					width: 100%;
-				}
+		// 					.button-word-cont {
+		// 						font-size: 80%;
+		// 					}
+		// 				}
+		// 			}
+		// 		}
 
-				#div-middlebox-mask.show {
-					display: block;
-				}
-			}
-		}
+		// 		#div-middlebox-mask {
+		// 			display: none;
+		// 			position: absolute;
+		// 			top: 0;
+		// 			left: 0;
+		// 			height: 100%;
+		// 			width: 100%;
+		// 		}
+
+		// 		#div-middlebox-mask.show {
+		// 			display: block;
+		// 		}
+		// 	}
+		// }
 	}
 }
 

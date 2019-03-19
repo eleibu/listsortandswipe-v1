@@ -43,423 +43,259 @@ switch ($atype) {
 @endsection
 
 @section('content')
-<div class="section-cont">
-    <div class="section-outer">
-        <div class="plan">
-            @if ($atype == 'basic')
-                <strong>Basic</strong> <span>plan</span>
-            @elseif ($atype == 'professional')
-                <strong>Professional</strong> <span>plan</span>
-            @elseif ($atype == 'enterprise')
-                <strong>Enterprise</strong> <span>plan</span>
-            @else
-                <strong>Free trial</strong> <span>plan</span>
-            @endif
-        </div>
-    </div>
-</div>
-<div class="section-cont grey">
-    <div class="section-outer">
-        <div class="title">
-            Create your account
-        </div>
-        <div class="signup-row">
-            <div class="signup-dataentry">
-                <input id="input-email" name="email" class="textentry" type="text" placeholder="Email" value="{{Request::old('email')}}" tabindex="1" />
-            </div>
-            <div id="div-email-submsg" class="submsg-cont">
-                &nbsp;
-            </div>
-        </div>
-        <div class="signup-row">
-            <div class="signup-dataentry">
-                <input id="input-password" name="password" class="textentry" type="password" placeholder="Password" value="{{Request::old('password')}}" tabindex="2" />
-            </div>
-            <div id="div-password-submsg" class="submsg-cont">
-                Password must have at least 6 characters. Other than that, make it as simple or complex as you like.
-            </div>
-        </div>
-    </div>
-</div>
-<div class="section-cont">
-    <div class="section-outer">
-        <div class="title">
-            Contact details
-        </div>
-        <div class="signup-row">
-            <div class="signup-dataentry">
-                <input id="input-firstname" name="firstname" class="textentry left" type="text" placeholder="First name" value="{{Request::old('firstname')}}" tabindex="3" />
-                <input id="input-surname" name="surnname" class="textentry right" type="text" placeholder="Surname" value="{{Request::old('surnname')}}" tabindex="4" />
-                <br clear="all"/>
-            </div>
-            <div id="div-name-submsg" class="submsg-cont">
-                &nbsp;
-            </div>
-        </div>
-        <div class="signup-row">
-            <div class="signup-dataentry">
-                <input id="input-companyname" name="companyname" class="textentry" type="text" placeholder="Company name (if applicable)" value="{{Request::old('companyname')}}" tabindex="5" />
-            </div>
-            <div id="div-companyname-submsg" class="submsg-cont">
-                &nbsp;
-            </div>
-        </div>
-        <div class="signup-row">
-            <div class="signup-dataentry">
-                <select id="select-country" tabindex="6">
-                    <option value="">Country</option>
-                    @foreach ($countries as $country)
-                        <option value="{{$country['iso']}}">{{$country['name']}}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div id="div-country-submsg" class="submsg-cont">
-                &nbsp;
-            </div>
-        </div>
-    </div>
-</div>
-<div class="section-cont grey">
-    <div class="section-outer">
-        <div class="title">
-            Order summary
-        </div>
-        <div class="signup-row">
-            <div class="signup-address">
-                <p id="p_indiv_name" class="empty">&nbsp;</p>
-                <p id="p_co_name" class="company empty">&nbsp;</p>
-                <p id="p_country" class="empty">&nbsp;</p>
-            </div>
-            <div class="signup-orderdetails">
-                <table cellpadding="0" cellspacing="0">
-                    <tbody>
-                        <tr>
-                            <td colspan="2">&nbsp;</td>
-                            <td class="col-right">USD</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">{{$product_desc}}</td>
-                            <td class="col-right">{{$product_price}}</td>
-                        </tr>
-                        <tr>
-                            <td>&nbsp;</td>
-                            <td class="border-top col-mdl">Subtotal</td>
-                            <td class="border-top col-right">{{$subtotal}}</td>
-                        </tr>
-                        <tr>
-                            <td>&nbsp;</td>
-                            <td class="border-btm col-mdl">Taxes</td>
-                            <td class="border-btm col-right">{{$taxes}}</td>
-                        </tr>
-                        <tr>
-                            <td>&nbsp;</td>
-                            <td class="col-mdl"><strong>Total</strong></td>
-                            <td class="col-right"><strong>{{$total}}</strong></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-@if (($atype == 'basic') || ($atype == 'professional') || ($atype == 'enterprise'))
+@if ($view == 'signup')
     <div class="section-cont">
         <div class="section-outer">
-            <div class="title">
-                Discount
-            </div>
-            <div class="signup-row">
-                <div class="signup-dataentry">
-                    <input id="input-discountcode" name="discountcode" class="textentry" type="text" placeholder="Discount code" value="{{Request::old('discountcode')}}" tabindex="7" />
-                </div>
-                <div class="signup-buttons">
-                    <div id="div-apply-discount" class="button-word-cont grey">
-                        <div id="div-spinner-cont" class="spinner-cont">
-                            <div class="text">APPLY DISCOUNT</div>
-                            <div class="spinner-outer">
-                                <div class="spinner-inner">
-                                    <div class="rect rect0"></div><div class="rect rect1"></div><div class="rect rect2"></div><div class="rect rect3"></div><div class="rect rect4"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="div-discount-submsg" class="submsg-cont">
-                    &nbsp;
-                </div>
+            <div class="plan">
+                @if ($atype == 'basic')
+                    <strong>Basic</strong> <span>plan</span>
+                @elseif ($atype == 'professional')
+                    <strong>Professional</strong> <span>plan</span>
+                @elseif ($atype == 'enterprise')
+                    <strong>Enterprise</strong> <span>plan</span>
+                @else
+                    <strong>Free trial</strong> <span>plan</span>
+                @endif
             </div>
         </div>
     </div>
-    <div class="section-cont grey">
-        <div class="section-outer">
-            <div class="title">
-                Payment
-            </div>
-            <div class="signup-row">
-                PayPal drop in<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-            </div>
-        </div>
-    </div>
-@endif
-<div class="section-cont">
-    <div class="section-outer">
-        <div class="signup-row">
-            <div class="signup-terms">
-                <table cellpadding="0" cellspacing="0">
-                    <tbody>
-                        <tr>
-                            <td class="checkbox"><input id="input-terms" name="terms" type="checkbox"/></td>
-                            <td  class="text">I agree to the <a href="{{ url('/terms') }}" title="terms and conditions" target="_blank">terms and conditions</a> and <a href="{{ url('/privacy') }}" title="privacy statement" target="_blank">privacy statement</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div id="div-terms-submsg" class="submsg-cont">
-                &nbsp;
-            </div>
-        </div>
-        <div class="signup-row">
-            <div id="div-place-order" class="button-word-cont darkblue">
-                <div id="div-spinner-cont" class="spinner-cont">
-                    <div class="text">PLACE ORDER</div>
-                    <div class="spinner-outer">
-                        <div class="spinner-inner">
-                            <div class="rect rect0"></div><div class="rect rect1"></div><div class="rect rect2"></div><div class="rect rect3"></div><div class="rect rect4"></div>
-                        </div>
+    <form id="form" method="POST" action="{{url('/signup')}}">
+        @csrf
+        <fieldset>
+            <div class="section-cont grey">
+                <div class="section-outer">
+                    <div class="title">
+                        Create your account
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="div-sitecont-mask">
-</div>
-
-
-    <!--
-    <div class="middlebox-cont">
-        <div class="middlebox-outer">
-            <div class="middlebox-inner">
-                <div class="header-outer signup">
-                    <i class="sld icon-profile-picture"></i>&nbsp;Create your account
-                </div>
-                <br/>
-                <div class="signup-row">
-                    <div class="signup-dataentry">
-                        <input id="input-email" name="email" class="textentry" type="text" placeholder="Email" value="{{Request::old('email')}}" tabindex="1" />
-                    </div>
-                    <div id="div-companyname-submsg" class="submsg-cont">
-                        &nbsp;
-                    </div>
-                </div>
-                <div class="signup-row">
-                    <div class="signup-dataentry">
-                        <input id="input-password" name="password" class="textentry" type="password" placeholder="Password" value="{{Request::old('password')}}" tabindex="2" />
-                    </div>
-                    <div id="div-companyname-submsg" class="submsg-cont">
-                        Password must have at least 6 characters. Other than that, make it as simple or complex as you like.
-                    </div>
-                </div>
-                <br/><br/>
-                <div class="header-outer signup">
-                    <i class="sld icon-invoice"></i>&nbsp;Contact details
-                </div>
-                <br/>
-                <div class="signup-row">
-                    <div class="signup-dataentry">
-                        <input id="input-firstname" name="firstname" class="textentry left" type="text" placeholder="First name" value="{{Request::old('firstname')}}" tabindex="3" />
-                        <input id="input-surnname" name="surnname" class="textentry right" type="text" placeholder="Surname" value="{{Request::old('surnname')}}" tabindex="4" />
-                        <br clear="all"/>
-                    </div>
-                    <div id="div-name-submsg" class="submsg-cont">
-                        &nbsp;
-                    </div>
-                </div>
-                <div class="signup-row">
-                    <div class="signup-dataentry">
-                        <input id="input-companyname" name="companyname" class="textentry" type="text" placeholder="Company name (if applicable)" value="{{Request::old('companyname')}}" tabindex="5" />
-                    </div>
-                    <div id="div-companyname-submsg" class="submsg-cont">
-                        &nbsp;
-                    </div>
-                </div>
-                <div class="signup-row">
-                    <div class="signup-dataentry">
-                        <select  tabindex="6">
-                            <option value="">Country</option>
-                            <option value="AUS">Austria</option>
-                            <option value="AUT">Australia</option>
-                            <option value="IDN">Indonesia</option>
-                        </select>
-                    </div>
-                    <div id="div-country-submsg" class="submsg-cont">
-                        &nbsp;
-                    </div>
-                </div>
-                <br/><br/>
-                <div class="header-outer signup">
-                    <i class="sld icon-cart"></i>&nbsp;Order summary
-                </div>
-                <br/>
-                <div class="signup-row">
-                    <div class="signup-address">
-                        <p>Elliot Leibu</p>
-                        <p>IndySoft Pty Ltd</p>
-                        <p>Australia</p>
-                    </div>
-                    <div class="signup-orderdetails">
-                        <table cellpadding="0" cellspacing="0">
-                            <tbody>
-                                <tr>
-                                    <td colspan="2">&nbsp;</td>
-                                    <td class="col-right">USD</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">Lithium List - 1 year licence - Basic</td>
-                                    <td class="col-right">$36.00</td>
-                                </tr>
-                                <tr>
-                                    <td>&nbsp;</td>
-                                    <td class="border-top col-mdl">Subtotal</td>
-                                    <td class="border-top col-right">$36.00</td>
-                                </tr>
-                                <tr>
-                                    <td>&nbsp;</td>
-                                    <td class="border-btm col-mdl">Taxes</td>
-                                    <td class="border-btm col-right">$0.00</td>
-                                </tr>
-                                <tr>
-                                    <td>&nbsp;</td>
-                                    <td class="col-mdl"><strong>Total</strong></td>
-                                    <td class="col-right"><strong>$36.00</strong></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <br/><br/>
-                <div class="header-outer signup">
-                    <i class="sld icon-discount-coupon"></i>&nbsp;Discount
-                </div>
-                <br/>
-                <div class="signup-row">
-                    <div class="supmsg-cont">
-                        If you have a discount code, enter it here.
-                    </div>
-                    <div class="signup-dataentry">
-                        <input id="input-discountcode" name="discountcode" class="textentry" type="text" placeholder="Discount code" value="{{Request::old('discountcode')}}" tabindex="7" />
-                    </div>
-                    <div class="signup-buttons">
-                        <div id="div-apply-discount" class="button-word-cont grey">
-                            <div id="div-spinner-cont" class="spinner-cont">
-                                <div class="text">APPLY DISCOUNT</div>
-                                <div class="spinner-outer">
-                                    <div class="spinner-inner">
-                                        <div class="rect rect0"></div><div class="rect rect1"></div><div class="rect rect2"></div><div class="rect rect3"></div><div class="rect rect4"></div>
-                                    </div>
-                                </div>
+                    <div class="signup-row">
+                        @if ($errors->email->isEmpty())
+                            <div class="signup-dataentry">
+                                <input id="input-email" name="email" class="textentry" type="text" placeholder="Email" value="{{Request::old('email')}}" tabindex="1" />
                             </div>
-                        </div>
-                    </div>
-                    <div id="div-companyname-submsg" class="submsg-cont">
-                        &nbsp;
-                    </div>
-                </div>
-                <br/><br/>
-                <div class="header-outer signup">
-                    <i class="sld icon-credit-card-a"></i>&nbsp;Payment
-                </div>
-                <br/>
-                <div class="signup-row">
-                    PayPal drop in
-                </div>
-                <br/><br/>
-                <div class="signup-row terms-cont">
-                    <input id="input-terms" name="terms" type="checkbox"/>&nbsp;&nbsp;I agree to the <a href="" title="terms and conditions">terms and conditions</a> and <a href="" title="privacy policy">privacy policy</a>
-                </div>
-                <br/><br/>
-                <div class="signup-row">
-                    <div id="div-place-order" class="button-word-cont darkblue">
-                        <div id="div-spinner-cont" class="spinner-cont">
-                            <div class="text">PLACE ORDER</div>
-                            <div class="spinner-outer">
-                                <div class="spinner-inner">
-                                    <div class="rect rect0"></div><div class="rect rect1"></div><div class="rect rect2"></div><div class="rect rect3"></div><div class="rect rect4"></div>
-                                </div>
+                            <div id="div-email-submsg" class="submsg-cont">
+                                {!! $msgEmailDefault !!}
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <br/>
-                @if ($view == 'signup')
-                    <div class="otherpage-cont">
-                        or <a href="{{ url($loginPath) }}" title="log in to your account">log in to your account</a>
-                    </div>
-                    <br/>
-                    <div id="div-mainmsg" class="mainmsg-cont">
-                        @if (!$errors->main->isEmpty())
-                            {!! $errors->main->first('message') !!}
+                        @else
+                            <div class="signup-dataentry">
+                                <input id="input-email" name="email" class="textentry error" type="text" placeholder="Email" value="{{Request::old('email')}}" tabindex="1" />
+                            </div>
+                            <div id="div-email-submsg" class="submsg-cont error">
+                                {!! $errors->email->first('message') !!}
+                            </div>
                         @endif
                     </div>
-                    <form id="form" method="POST" action="{{url('/signup')}}">
-                        @csrf
-                        <fieldset>
-                            <input type="hidden" name="action" value="signup" />
-                            @if ($errors->email->isEmpty())
-                                <div id="div-email-cont" class="text-cont">
-                                    <div class="textentry-cont">
-                                        <i class="oln icon-email"></i>
-                                        <div class="textentry-outer">
-                                            <input id="input-email" name="email" class="textentry" type="text" placeholder="Email" value="{{Request::old('email')}}" tabindex="1" />
-                                        </div>
-                                    </div>
-                                    <div id="div-email-submsg" class="submsg-cont">
-                                    </div>
+                    <div class="signup-row">
+                        @if ($errors->password->isEmpty())
+                            <div class="signup-dataentry">
+                                <input id="input-password" name="password" class="textentry" type="password" placeholder="Password" value="{{Request::old('password')}}" tabindex="2" />
+                            </div>
+                            <div id="div-password-submsg" class="submsg-cont">
+                                {!! $msgPasswordDefault !!}
+                            </div>
+                        @else
+                            <div class="signup-dataentry">
+                                <input id="input-password" name="password error" class="textentry" type="password" placeholder="Password" value="{{Request::old('password')}}" tabindex="2" />
+                            </div>
+                            <div id="div-password-submsg" class="submsg-cont error">
+                                {!! $errors->password->first('message') !!}
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="section-cont">
+                <div class="section-outer">
+                    <div class="title">
+                        Contact details
+                    </div>
+                    <div class="signup-row">
+                        @if (($errors->firstname->isEmpty()) && ($errors->surname->isEmpty()))
+                            <div class="signup-dataentry">
+                                <input id="input-firstname" name="firstname" class="textentry left" type="text" placeholder="First name" value="{{Request::old('firstname')}}" tabindex="3" />
+                                <input id="input-surname" name="surnname" class="textentry right" type="text" placeholder="Surname" value="{{Request::old('surnname')}}" tabindex="4" />
+                                <br clear="all"/>
+                            </div>
+                            <div id="div-name-submsg" class="submsg-cont">
+                                {!! $msgNameDefault !!}
+                            </div>
+                        @else
+                            @if ((!$errors->firstname->isEmpty()) && (!$errors->surname->isEmpty()))
+                                <div class="signup-dataentry">
+                                    <input id="input-firstname" name="firstname" class="textentry left error" type="text" placeholder="First name" value="{{Request::old('firstname')}}" tabindex="3" />
+                                    <input id="input-surname" name="surnname" class="textentry right error" type="text" placeholder="Surname" value="{{Request::old('surnname')}}" tabindex="4" />
+                                    <br clear="all"/>
+                                </div>
+                                <div id="div-name-submsg" class="submsg-cont error">
+                                    {!! $errors->firstname->first('message') !!}
+                                </div>
+                            @elseif (!$errors->firstname->isEmpty())
+                                <div class="signup-dataentry">
+                                    <input id="input-firstname" name="firstname" class="textentry left error" type="text" placeholder="First name" value="{{Request::old('firstname')}}" tabindex="3" />
+                                    <input id="input-surname" name="surnname" class="textentry right" type="text" placeholder="Surname" value="{{Request::old('surnname')}}" tabindex="4" />
+                                    <br clear="all"/>
+                                </div>
+                                <div id="div-name-submsg" class="submsg-cont error">
+                                    {!! $errors->firstname->first('message') !!}
                                 </div>
                             @else
-                                <div id="div-email-cont" class="text-cont error">
-                                    <div class="textentry-cont">
-                                        <i class="oln icon-email"></i>
-                                        <div class="textentry-outer">
-                                            <input id="input-email" name="email" class="textentry" type="text" placeholder="Email" value="{{Request::old('email')}}" tabindex="1" />
-                                        </div>
-                                    </div>
-                                    <div id="div-email-submsg" class="submsg-cont">
-                                        {!! $errors->email->first('message') !!}
-                                    </div>
+                                <div class="signup-dataentry">
+                                    <input id="input-firstname" name="firstname" class="textentry left" type="text" placeholder="First name" value="{{Request::old('firstname')}}" tabindex="3" />
+                                    <input id="input-surname" name="surnname" class="textentry right error" type="text" placeholder="Surname" value="{{Request::old('surnname')}}" tabindex="4" />
+                                    <br clear="all"/>
+                                </div>
+                                <div id="div-name-submsg" class="submsg-cont error right">
+                                    {!! $errors->surname->first('message') !!}
                                 </div>
                             @endif
-                            @if ($errors->password->isEmpty())
-                                <div id="div-password-cont" class="text-cont">
-                                    <div class="textentry-cont">
-                                        <i class="oln icon-lock"></i>
-                                        <div class="textentry-outer">
-                                            <input id="input-password" name="password" class="textentry" type="password" placeholder="Password" tabindex="2" />
+                        @endif
+                    </div>
+                    <div class="signup-row">
+                        <div class="signup-dataentry">
+                            <input id="input-companyname" name="companyname" class="textentry" type="text" placeholder="Company name (if applicable)" value="{{Request::old('companyname')}}" tabindex="5" />
+                        </div>
+                        <div id="div-companyname-submsg" class="submsg-cont">
+                        </div>
+                    </div>
+                    <div class="signup-row">
+                        <div class="signup-dataentry">
+                            <select id="select-country" name="country" tabindex="6">
+                                <option value="">Country</option>
+                                @foreach ($countries as $country)
+                                    @if (Request::old('country') == $country['iso'])
+                                          <option value="{{$country['iso']}}" selected>{{$country['name']}}</option>
+                                    @else
+                                          <option value="{{$country['iso']}}">{{$country['name']}}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+                        @if ($errors->country->isEmpty())
+                            <div id="div-country-submsg" class="submsg-cont">
+                                {!! $msgCountryDefault !!}
+                            </div>
+                        @else
+                            <div id="div-country-submsg" class="submsg-cont error">
+                                {!! $errors->country->first('message') !!}
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="section-cont grey">
+                <div class="section-outer">
+                    <div class="title">
+                        Order summary
+                    </div>
+                    <div class="signup-row">
+                        <div class="signup-address">
+                            <p id="p_indiv_name" class="empty">&nbsp;</p>
+                            <p id="p_co_name" class="company empty">&nbsp;</p>
+                            <p id="p_country" class="empty">&nbsp;</p>
+                        </div>
+                        <div class="signup-orderdetails">
+                            <table cellpadding="0" cellspacing="0">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="2">&nbsp;</td>
+                                        <td class="col-right">USD</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">{{$product_desc}}</td>
+                                        <td class="col-right">{{$product_price}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td class="border-top col-mdl">Subtotal</td>
+                                        <td class="border-top col-right">{{$subtotal}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td class="border-btm col-mdl">Taxes</td>
+                                        <td class="border-btm col-right">{{$taxes}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td class="col-mdl"><strong>Total</strong></td>
+                                        <td class="col-right"><strong>{{$total}}</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @if (($atype == 'basic') || ($atype == 'professional') || ($atype == 'enterprise'))
+                <div class="section-cont">
+                    <div class="section-outer">
+                        <div class="title">
+                            Discount
+                        </div>
+                        <div class="signup-row">
+                            <div class="signup-dataentry">
+                                <input id="input-discountcode" name="discountcode" class="textentry" type="text" placeholder="Discount code" value="{{Request::old('discountcode')}}" tabindex="7" />
+                            </div>
+                            <div class="signup-buttons">
+                                <div id="div-apply-discount" class="button-word-cont grey">
+                                    <div id="div-spinner-cont" class="spinner-cont">
+                                        <div class="text">APPLY DISCOUNT</div>
+                                        <div class="spinner-outer">
+                                            <div class="spinner-inner">
+                                                <div class="rect rect0"></div><div class="rect rect1"></div><div class="rect rect2"></div><div class="rect rect3"></div><div class="rect rect4"></div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div id="div-password-submsg" class="submsg-cont">
-                                    </div>
                                 </div>
-                            @else
-                                <div id="div-password-cont" class="text-cont error">
-                                    <div class="textentry-cont">
-                                        <i class="oln icon-lock"></i>
-                                        <div class="textentry-outer">
-                                            <input id="input-password" name="password" class="textentry" type="password" placeholder="Password" tabindex="2" />
-                                        </div>
-                                    </div>
-                                    <div id="div-password-submsg" class="submsg-cont">
-                                        {!! $errors->password->first('message') !!}
-                                    </div>
-                                </div>
-                            @endif
-                        </fieldset>
-                    </form>
-                    <br/><br/>
-                    <div class="buttons-cont">
-                        <div id="div-submit" class="button-word-cont darkblue" tabindex="3">
+                            </div>
+                            <div id="div-discount-submsg" class="submsg-cont">
+                                &nbsp;
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-cont grey">
+                    <div class="section-outer">
+                        <div class="title">
+                            Payment
+                        </div>
+                        <div class="signup-row">
+                            PayPal drop in<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                        </div>
+                    </div>
+                </div>
+            @endif
+            <div class="section-cont">
+                <div class="section-outer">
+                    <div class="signup-row">
+                        <div class="signup-terms">
+                            <table cellpadding="0" cellspacing="0">
+                                <tbody>
+                                    <tr>
+                                        <td class="checkbox">
+                                            @if (Request::old('terms'))
+                                                <input id="input-terms" name="terms" type="checkbox" checked/>  
+                                            @else
+                                                <input id="input-terms" name="terms" type="checkbox"/>
+                                            @endif
+                                        </td>
+                                        <td  class="text">I agree to the <a href="{{ url('/terms') }}" title="terms and conditions" target="_blank">terms and conditions</a> and <a href="{{ url('/privacy') }}" title="privacy statement" target="_blank">privacy statement</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        @if ($errors->terms->isEmpty())
+                            <div id="div-terms-submsg" class="submsg-cont">
+                                {!! $msgTermsDefault !!}
+                            </div>
+                        @else
+                            <div id="div-terms-submsg" class="submsg-cont error">
+                                {!! $errors->terms->first('message') !!}
+                            </div>
+                        @endif
+                    </div>
+                    <div class="signup-row">
+                        <div id="div-place-order" class="button-word-cont darkblue">
                             <div id="div-spinner-cont" class="spinner-cont">
-                                <div class="text">{{strtoupper($signupName)}}</div>
+                                <div class="text">PLACE ORDER</div>
                                 <div class="spinner-outer">
                                     <div class="spinner-inner">
                                         <div class="rect rect0"></div><div class="rect rect1"></div><div class="rect rect2"></div><div class="rect rect3"></div><div class="rect rect4"></div>
@@ -467,76 +303,33 @@ switch ($atype) {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <br/><br/>
-                    <div class="terms-cont">
-                        By signing up you agree to the <a target='_blank' href="{{ url('/terms') }}" title="Lithium List - terms and conditions">terms and conditions</a> and <a target='_blank' href="{{ url('/privacy') }}" title="Lithium List - privacy policy">privacy policy</a>.
-                    </div>
-                @endif
-                @if ($view == 'accountcreated')
-                    <br/>
-                    <div class="bigmsg-cont">
-                        Congratulations, your account has been created.
-                    </div>
-                    <br/>
-                    <div class="smallmsg-cont">
-                        We&#39;ve sent an activation link to you. Click it and you&#39;re all set to go!
-                    </div>
-                    <br/><br/><br/>
-                    <form id="form" method="POST" action="{{url('/signup')}}">
-                        @csrf
-                        <fieldset>
-                            <input type="hidden" name="action" value="resendlink" />
-                        </fieldset>
-                    </form>
-                    <div class="buttons-cont">
-                        <div id="div-resend-link" class="button-word-cont darkblue">
-                            <div id="div-spinner-cont" class="spinner-cont">
-                                <div class="text">RESEND ACTIVATION LINK</div>
-                                <div class="spinner-outer">
-                                    <div class="spinner-inner">
-                                        <div class="rect rect0"></div><div class="rect rect1"></div><div class="rect rect2"></div><div class="rect rect3"></div><div class="rect rect4"></div>
-                                    </div>
-                                </div>
+                        @if ($errors->placeorder->isEmpty())
+                            <div id="div-place-order-submsg" class="submsg-cont">
+                                {!! $msgPlaceOrderDefault !!}
                             </div>
-                        </div>
-                    </div>
-                @endif
-                @if ($view == 'linksent')
-                    <br/>
-                    <div class="bigmsg-cont">
-                        We&#39;ve resent the activation link.
-                    </div>
-                    <br/>
-                    <div class="smallmsg-cont">
-                        Click it and you&#39;re all set to go!
-                    </div>
-                    <br/><br/><br/>
-                    <form id="form" method="POST" action="{{url('/signup')}}">
-                        @csrf
-                        <fieldset>
-                            <input type="hidden" name="action" value="resendlink" />
-                        </fieldset>
-                    </form>
-                    <div class="buttons-cont">
-                        <div id="div-resend-link" class="button-word-cont darkblue">
-                            <div id="div-spinner-cont" class="spinner-cont">
-                                <div class="text">SEND AGAIN</div>
-                                <div class="spinner-outer">
-                                    <div class="spinner-inner">
-                                        <div class="rect rect0"></div><div class="rect rect1"></div><div class="rect rect2"></div><div class="rect rect3"></div><div class="rect rect4"></div>
-                                    </div>
-                                </div>
+                        @else
+                            <div id="div-place-order-submsg" class="submsg-cont error">
+                                {!! $errors->placeorder->first('message') !!}
                             </div>
-                        </div>
+                        @endif
                     </div>
-                @endif
+                </div>
             </div>
-            <div id="div-middlebox-mask">
-            </div>
-        </div>
-    </div>
-    -->
+        </fieldset>
+    </form>
+@endif
+@if ($view == 'accountcreated')
+
+
+@endif
+@if ($view == 'linksent')
+
+
+@endif
+
+    
+<div id="div-sitecont-mask">
+</div>
 @endsection
 
 @section('scriptBottom')
@@ -547,5 +340,15 @@ switch ($atype) {
         var msgPasswordDefault = "{!! $msgPasswordDefault !!}";
         var msgPasswordNoBlank = "{!! $msgPasswordNoBlank !!}";
         var msgPasswordInvalid = "{!! $msgPasswordInvalid !!}";
+        var msgNameDefault = "{!! $msgNameDefault !!}";
+        var msgNameNoBlankBoth = "{!! $msgNameNoBlankBoth !!}";
+        var msgNameNoBlankFirstname = "{!! $msgNameNoBlankFirstname !!}";
+        var msgNameNoBlankSurname = "{!! $msgNameNoBlankSurname !!}";
+        var msgCountryDefault = "{!! $msgCountryDefault !!}";
+        var msgCountryNoBlank = "{!! $msgCountryNoBlank !!}";
+        var msgTermsDefault = "{!! $msgTermsDefault !!}";
+        var msgTermsNoBlank = "{!! $msgTermsNoBlank !!}";
+        var msgPlaceOrderDefault = "{!! $msgPlaceOrderDefault !!}";
+        var msgPlaceOrderErrors = "{!! $msgPlaceOrderErrors !!}";
     </script>
 @endsection

@@ -29,6 +29,16 @@ class Controller_Auth_SignUp extends Controller
 		$this->msgPasswordDefault = $authErrorMessages['msgPasswordDefault'];
 		$this->msgPasswordNoBlank = $authErrorMessages['msgPasswordNoBlank'];
 		$this->msgPasswordInvalid = $authErrorMessages['msgPasswordInvalid'];
+		$this->msgNameDefault = '';
+		$this->msgNameNoBlankBoth = 'First name and surname can&#39;t be blank.';
+		$this->msgNameNoBlankFirstname = 'First name can&#39;t be blank.';
+		$this->msgNameNoBlankSurname = 'Surname can&#39;t be blank.';
+		$this->msgCountryDefault = '';
+		$this->msgCountryNoBlank = 'Please select a country.';
+		$this->msgTermsDefault = '';
+		$this->msgTermsNoBlank = 'If agreed, please accept the terms and conditions and privacy statement.';
+		$this->msgPlaceOrderDefault = '';
+		$this->msgPlaceOrderErrors = 'There is missing or invalid information. See above.';
     }
 
 	public function page(Request $request) {
@@ -80,6 +90,8 @@ class Controller_Auth_SignUp extends Controller
 
 		return view('signup')
 			->with('view', $viewText)
+            ->with('atype', $atype)
+            ->with('countries', $countries)
             ->with('homeName', $pageInfo['home']['name'])
             ->with('homePath', $pageInfo['home']['path'])
             ->with('loginName', $pageInfo['login']['name'])
@@ -92,8 +104,17 @@ class Controller_Auth_SignUp extends Controller
             ->with('msgPasswordDefault', $this->msgPasswordDefault)
             ->with('msgPasswordNoBlank', $this->msgPasswordNoBlank)
             ->with('msgPasswordInvalid', $this->msgPasswordInvalid)
-            ->with('atype', $atype)
-            ->with('countries', $countries);
+            ->with('msgNameDefault', $this->msgNameDefault)
+            ->with('msgNameNoBlankBoth', $this->msgNameNoBlankBoth)
+            ->with('msgNameNoBlankFirstname', $this->msgNameNoBlankFirstname)
+            ->with('msgNameNoBlankSurname', $this->msgNameNoBlankSurname)
+            ->with('msgCountryDefault', $this->msgCountryDefault)
+            ->with('msgCountryNoBlank', $this->msgCountryNoBlank)
+            ->with('msgTermsDefault', $this->msgTermsDefault)
+            ->with('msgTermsNoBlank', $this->msgTermsNoBlank)
+            ->with('msgPlaceOrderDefault', $this->msgPlaceOrderDefault)
+            ->with('msgPasswordInvalid', $this->msgPasswordInvalid)
+            ->with('msgPlaceOrderErrors', $this->msgPlaceOrderErrors);
 	}
 
 	protected function signup($request) {

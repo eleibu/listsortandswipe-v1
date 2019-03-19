@@ -66408,6 +66408,7 @@ var monitorWinWidth = function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export encodeHTML */
 /* harmony export (immutable) */ __webpack_exports__["b"] = findIndexById;
 /* harmony export (immutable) */ __webpack_exports__["c"] = hasDomainForm;
 /* harmony export (immutable) */ __webpack_exports__["e"] = stripUrl;
@@ -66415,91 +66416,94 @@ var monitorWinWidth = function () {
 /* harmony export (immutable) */ __webpack_exports__["g"] = uuidv4;
 /* harmony export (immutable) */ __webpack_exports__["f"] = trimString;
 /* harmony export (immutable) */ __webpack_exports__["a"] = arrayMove;
+function encodeHTML(value) {
+				return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
 
 function findIndexById(array, id) {
-	for (var i = 0, len = array.length; i < len; i++) {
-		if (array[i].id == id) {
-			return i;
-		}
-	}
-	return null;
+				for (var i = 0, len = array.length; i < len; i++) {
+								if (array[i].id == id) {
+												return i;
+								}
+				}
+				return null;
 }
 
 function hasDomainForm(value) {
-	// note: changes should also be reflected in the equivalent php function
+				// note: changes should also be reflected in the equivalent php function
 
-	if (/^\S+\.\S+$/.test(value)) {
-		return true;
-	}
-	return false;
+				if (/^\S+\.\S+$/.test(value)) {
+								return true;
+				}
+				return false;
 }
 
 function stripUrl(url) {
-	// note: changes should also be reflected in the equivalent php function
+				// note: changes should also be reflected in the equivalent php function
 
-	url = url.toLowerCase();
+				url = url.toLowerCase();
 
-	url = url.replace(/^http:\/\/|https:\/\/|ftp:\/\/|ftps:\/\//, '');
-	url = url.replace(/^www\./, '');
+				url = url.replace(/^http:\/\/|https:\/\/|ftp:\/\/|ftps:\/\//, '');
+				url = url.replace(/^www\./, '');
 
-	var iColon = url.indexOf(':');
-	var iSlash = -1;
-	if (iColon > -1) {
-		url = url.substring(0, iColon);
-	} else {
-		iSlash = url.indexOf('/');
-		if (iSlash > -1) {
-			url = url.substring(0, iSlash);
-		}
-	}
+				var iColon = url.indexOf(':');
+				var iSlash = -1;
+				if (iColon > -1) {
+								url = url.substring(0, iColon);
+				} else {
+								iSlash = url.indexOf('/');
+								if (iSlash > -1) {
+												url = url.substring(0, iSlash);
+								}
+				}
 
-	if (iColon == -1 && iSlash == -1) {
-		var iQuery = url.indexOf('?');
-		if (iQuery > -1) {
-			url = url.substring(0, iQuery);
-		}
-	}
+				if (iColon == -1 && iSlash == -1) {
+								var iQuery = url.indexOf('?');
+								if (iQuery > -1) {
+												url = url.substring(0, iQuery);
+								}
+				}
 
-	if (iColon == -1 && iSlash == -1) {
-		var iHash = url.indexOf('#');
-		if (iHash > -1) {
-			url = url.substring(0, iHash);
-		}
-	}
+				if (iColon == -1 && iSlash == -1) {
+								var iHash = url.indexOf('#');
+								if (iHash > -1) {
+												url = url.substring(0, iHash);
+								}
+				}
 
-	return url;
+				return url;
 }
 
 function requestObjCreate(cancelToken) {
-	var requestObj = {
-		id: uuidv4(),
-		source: cancelToken.source()
-	};
-	return requestObj;
+				var requestObj = {
+								id: uuidv4(),
+								source: cancelToken.source()
+				};
+				return requestObj;
 }
 
 function uuidv4() {
-	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-		var r = Math.random() * 16 | 0,
-		    v = c == 'x' ? r : r & 0x3 | 0x8;
-		return v.toString(16).toUpperCase();
-	});
+				return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+								var r = Math.random() * 16 | 0,
+								    v = c == 'x' ? r : r & 0x3 | 0x8;
+								return v.toString(16).toUpperCase();
+				});
 }
 
 function trimString(text) {
-	return text.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+				return text.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
 }
 
 function arrayMove(arr, previousIndex, newIndex) {
-	var array = arr.slice(0);
-	if (newIndex >= array.length) {
-		var k = newIndex - array.length;
-		while (k-- + 1) {
-			array.push(undefined);
-		}
-	}
-	array.splice(newIndex, 0, array.splice(previousIndex, 1)[0]);
-	return array;
+				var array = arr.slice(0);
+				if (newIndex >= array.length) {
+								var k = newIndex - array.length;
+								while (k-- + 1) {
+												array.push(undefined);
+								}
+				}
+				array.splice(newIndex, 0, array.splice(previousIndex, 1)[0]);
+				return array;
 }
 
 /***/ }),
