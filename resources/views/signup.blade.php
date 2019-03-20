@@ -94,7 +94,7 @@ switch ($atype) {
                             </div>
                         @else
                             <div class="signup-dataentry">
-                                <input id="input-password" name="password error" class="textentry" type="password" placeholder="Password" value="{{Request::old('password')}}" tabindex="2" />
+                                <input id="input-password" name="password error" class="textentry error" type="password" placeholder="Password" value="{{Request::old('password')}}" tabindex="2" />
                             </div>
                             <div id="div-password-submsg" class="submsg-cont error">
                                 {!! $errors->password->first('message') !!}
@@ -158,7 +158,11 @@ switch ($atype) {
                     </div>
                     <div class="signup-row">
                         <div class="signup-dataentry">
-                            <select id="select-country" name="country" tabindex="6">
+                            @if ($errors->country->isEmpty())
+                                <select id="select-country" name="country" tabindex="6">
+                            @else
+                                <select id="select-country" name="country" class="error" tabindex="6">
+                            @endif
                                 <option value="">Country</option>
                                 @foreach ($countries as $country)
                                     @if (Request::old('country') == $country['iso'])
@@ -236,7 +240,7 @@ switch ($atype) {
                             </div>
                             <div class="signup-buttons">
                                 <div id="div-apply-discount" class="button-word-cont grey">
-                                    <div id="div-spinner-cont" class="spinner-cont">
+                                    <div id="div-spinner-cont-discount" class="spinner-cont">
                                         <div class="text">APPLY DISCOUNT</div>
                                         <div class="spinner-outer">
                                             <div class="spinner-inner">
@@ -267,7 +271,11 @@ switch ($atype) {
                 <div class="section-outer">
                     <div class="signup-row">
                         <div class="signup-terms">
-                            <table cellpadding="0" cellspacing="0">
+                            @if ($errors->terms->isEmpty())
+                                <table id="div-table-terms" cellpadding="0" cellspacing="0">
+                            @else
+                                <table id="div-table-terms" cellpadding="0" cellspacing="0" class="error">
+                            @endif
                                 <tbody>
                                     <tr>
                                         <td class="checkbox">
@@ -294,7 +302,7 @@ switch ($atype) {
                     </div>
                     <div class="signup-row">
                         <div id="div-place-order" class="button-word-cont darkblue">
-                            <div id="div-spinner-cont" class="spinner-cont">
+                            <div id="div-spinner-cont-placeorder" class="spinner-cont">
                                 <div class="text">PLACE ORDER</div>
                                 <div class="spinner-outer">
                                     <div class="spinner-inner">
@@ -334,6 +342,7 @@ switch ($atype) {
 
 @section('scriptBottom')
     <script>
+        var api_url_web = "{{ url('/api/web/v1/') }}/";
         var msgEmailDefault = "{!! $msgEmailDefault !!}";
         var msgEmailNoBlank = "{!! $msgEmailNoBlank !!}";
         var msgEmailInvalid = "{!! $msgEmailInvalid !!}";
@@ -346,6 +355,8 @@ switch ($atype) {
         var msgNameNoBlankSurname = "{!! $msgNameNoBlankSurname !!}";
         var msgCountryDefault = "{!! $msgCountryDefault !!}";
         var msgCountryNoBlank = "{!! $msgCountryNoBlank !!}";
+        var msgDiscountDefault = "{!! $msgDiscountDefault !!}";
+        var msgDiscountInvalid = "{!! $msgDiscountInvalid !!}";
         var msgTermsDefault = "{!! $msgTermsDefault !!}";
         var msgTermsNoBlank = "{!! $msgTermsNoBlank !!}";
         var msgPlaceOrderDefault = "{!! $msgPlaceOrderDefault !!}";

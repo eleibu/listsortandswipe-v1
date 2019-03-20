@@ -37,6 +37,8 @@ class Controller_Auth_SignUp extends Controller
 		$this->msgCountryNoBlank = 'Please select a country.';
 		$this->msgTermsDefault = '';
 		$this->msgTermsNoBlank = 'If agreed, please accept the terms and conditions and privacy statement.';
+		$this->msgDiscountDefault = '';
+		$this->msgDiscountInvalid = 'Sorry, that discount code is not valid.';
 		$this->msgPlaceOrderDefault = '';
 		$this->msgPlaceOrderErrors = 'There is missing or invalid information. See above.';
     }
@@ -77,16 +79,18 @@ class Controller_Auth_SignUp extends Controller
         $tempCountries = new Countries();
 		$allCountries = $tempCountries->all();
 		$countries = array();
-		foreach ($allCountries as $tempCountry) {
-			if ((strlen($tempCountry['iso_a3']) > 0) && ($tempCountry['iso_a3'] != '-99') && ($tempCountry['iso_a3'] != 'EUR')) {
-				$country = array(
-					'name' => $tempCountry['name']['common'],
-					'iso' => $tempCountry['iso_a3']
-				);
-				array_push($countries, $country);
+		if ($viewText == 'signup') {
+			foreach ($allCountries as $tempCountry) {
+				if ((strlen($tempCountry['iso_a3']) > 0) && ($tempCountry['iso_a3'] != '-99') && ($tempCountry['iso_a3'] != 'EUR')) {
+					$country = array(
+						'name' => $tempCountry['name']['common'],
+						'iso' => $tempCountry['iso_a3']
+					);
+					array_push($countries, $country);
+				}
 			}
+			usort($countries, array($this, 'compCountries'));			
 		}
-		usort($countries, array($this, 'compCountries'));
 
 		return view('signup')
 			->with('view', $viewText)
@@ -110,6 +114,8 @@ class Controller_Auth_SignUp extends Controller
             ->with('msgNameNoBlankSurname', $this->msgNameNoBlankSurname)
             ->with('msgCountryDefault', $this->msgCountryDefault)
             ->with('msgCountryNoBlank', $this->msgCountryNoBlank)
+            ->with('msgDiscountDefault', $this->msgDiscountDefault)
+            ->with('msgDiscountInvalid', $this->msgDiscountInvalid)
             ->with('msgTermsDefault', $this->msgTermsDefault)
             ->with('msgTermsNoBlank', $this->msgTermsNoBlank)
             ->with('msgPlaceOrderDefault', $this->msgPlaceOrderDefault)
@@ -118,107 +124,116 @@ class Controller_Auth_SignUp extends Controller
 	}
 
 	protected function signup($request) {
-		$emailMsg = null;
-		if ($request->filled('email')) {
-			$email = trim($request->input('email'));
+        return back()
+            ->withInput()
+            ->withErrors(['message' => 'It appears you already have an account.'], 'email')
+            ->withErrors(['message' => $this->msgPasswordInvalid], 'password')
+            ->withErrors(['message' => 'Firstname error'], 'firstname')
+            // ->withErrors(['message' => 'Surname error'], 'surname')
+            ->withErrors(['message' => 'Country error'], 'country')
+            ->withErrors(['message' => 'Terms error'], 'terms');
 
-            $tempArray = array("email" => $email);
-            $validator_emailFormat = Validator::make($tempArray, [
-                'email' => 'email'
-            ]);
+		// $emailMsg = null;
+		// if ($request->filled('email')) {
+		// 	$email = trim($request->input('email'));
 
-            if ($validator_emailFormat->fails()) {
-				$emailMsg = $this->msgEmailInvalid;
-            } else {
-                $validator_emailUnique = Validator::make($tempArray, [
-                    'email' => 'unique:users'
-                ]);
+  //           $tempArray = array("email" => $email);
+  //           $validator_emailFormat = Validator::make($tempArray, [
+  //               'email' => 'email'
+  //           ]);
 
-                if ($validator_emailUnique->fails()) {
-					$emailMsg = 'It appears you already have an account.';
-                }
-            }
-		} else {
-			$emailMsg = $this->msgEmailNoBlank;
-		}
+  //           if ($validator_emailFormat->fails()) {
+		// 		$emailMsg = $this->msgEmailInvalid;
+  //           } else {
+  //               $validator_emailUnique = Validator::make($tempArray, [
+  //                   'email' => 'unique:users'
+  //               ]);
 
-		$passwordMsg = null;
-		if ($request->filled('password')) {
-			$password = $request->input('password');
-			if (strlen($password) < 6) {
-				$passwordMsg = $this->msgPasswordInvalid;
-			}
-		} else {
-			$passwordMsg = $this->msgPasswordNoBlank;
-		}
+  //               if ($validator_emailUnique->fails()) {
+		// 			$emailMsg = 'It appears you already have an account.';
+  //               }
+  //           }
+		// } else {
+		// 	$emailMsg = $this->msgEmailNoBlank;
+		// }
 
-		if (isset($emailMsg) || isset($passwordMsg)) {
-			if (isset($emailMsg) && isset($passwordMsg)) {
-		        return back()
-		            ->withInput()
-		            ->withErrors(['message' => $emailMsg], 'email')
-		            ->withErrors(['message' => $passwordMsg], 'password');
-			} elseif (isset($emailMsg)) {
-		        return back()
-		            ->withInput()
-		            ->withErrors(['message' => $emailMsg], 'email');
-			} else {
-		        return back()
-		            ->withInput()
-		            ->withErrors(['message' => $passwordMsg], 'password');
-			}
-		} else {
-            $vcode = str_random(30);
+		// $passwordMsg = null;
+		// if ($request->filled('password')) {
+		// 	$password = $request->input('password');
+		// 	if (strlen($password) < 6) {
+		// 		$passwordMsg = $this->msgPasswordInvalid;
+		// 	}
+		// } else {
+		// 	$passwordMsg = $this->msgPasswordNoBlank;
+		// }
 
-            // NEED TO ENSURE THESE ARE SAVED IN DB AS UTC TIMES - see 'account_expires_at' for my account
+		// if (isset($emailMsg) || isset($passwordMsg)) {
+		// 	if (isset($emailMsg) && isset($passwordMsg)) {
+		//         return back()
+		//             ->withInput()
+		//             ->withErrors(['message' => $emailMsg], 'email')
+		//             ->withErrors(['message' => $passwordMsg], 'password');
+		// 	} elseif (isset($emailMsg)) {
+		//         return back()
+		//             ->withInput()
+		//             ->withErrors(['message' => $emailMsg], 'email');
+		// 	} else {
+		//         return back()
+		//             ->withInput()
+		//             ->withErrors(['message' => $passwordMsg], 'password');
+		// 	}
+		// } else {
+  //           $vcode = str_random(30);
 
-            $datetimeOneYear = (new DateTime('now', new DateTimeZone('UTC')))->add(new DateInterval('P1Y'))->format('Y-m-d H:i:s');
-            $datetime30Days = (new DateTime('now', new DateTimeZone('UTC')))->add(new DateInterval('P30D'))->format('Y-m-d H:i:s');
+  //           // NEED TO ENSURE THESE ARE SAVED IN DB AS UTC TIMES - see 'account_expires_at' for my account
 
-            // only require account verification for free account
+  //           $datetimeOneYear = (new DateTime('now', new DateTimeZone('UTC')))->add(new DateInterval('P1Y'))->format('Y-m-d H:i:s');
+  //           $datetime30Days = (new DateTime('now', new DateTimeZone('UTC')))->add(new DateInterval('P30D'))->format('Y-m-d H:i:s');
 
-			// $user = new User;
-			// $user->name = 'Elliot';
-			// $user->surname = 'Leibu';
-			// $user->email = $email;
+  //           // only require account verification for free account
 
-            // $user->verified = false;
-            // $user->verification_code = $vcode;
+		// 	// $user = new User;
+		// 	// $user->name = 'Elliot';
+		// 	// $user->surname = 'Leibu';
+		// 	// $user->email = $email;
 
-			// $user->password = bcrypt($password);
-			// $user->company_name = 'Indysoft Pty Ltd';
-			// $user->country_code = 'AUS';
-			// $user->domain_ids = json_encode(array());
-			// $user->account_type = 2;
-			// $user->account_expires_at = $datetimeOneYear;
-			// $user->domain_count_base = 5;
-			// $user->domain_count_additional = 0;
+  //           // $user->verified = false;
+  //           // $user->verification_code = $vcode;
 
-			$success = false;
+		// 	// $user->password = bcrypt($password);
+		// 	// $user->company_name = 'Indysoft Pty Ltd';
+		// 	// $user->country_code = 'AUS';
+		// 	// $user->domain_ids = json_encode(array());
+		// 	// $user->account_type = 2;
+		// 	// $user->account_expires_at = $datetimeOneYear;
+		// 	// $user->domain_count_base = 5;
+		// 	// $user->domain_count_additional = 0;
 
-			DB::beginTransaction();
-			try {
-				$user->save();
+		// 	$success = false;
 
-				$success = true;
-			} catch(\Exception $e) {
-			   DB::rollback();
-			   throw $e;
-			}
-			DB::commit();
+		// 	DB::beginTransaction();
+		// 	try {
+		// 		$user->save();
 
-            if ($success) {
-                // Mail::to($email)->send(new SignedUp($vcode));
+		// 		$success = true;
+		// 	} catch(\Exception $e) {
+		// 	   DB::rollback();
+		// 	   throw $e;
+		// 	}
+		// 	DB::commit();
 
-                Auth::attempt(['email' => $email, 'password' => $password], false);
+  //           if ($success) {
+  //               // Mail::to($email)->send(new SignedUp($vcode));
 
-				return $this->getReturnView('accountcreated');
-            } else {
-		        return back()
-		            ->withInput()
-		            ->withErrors(['message' => 'An error occured. Please try again.'], 'main');
-            }
-		}
+  //               Auth::attempt(['email' => $email, 'password' => $password], false);
+
+		// 		return $this->getReturnView('accountcreated');
+  //           } else {
+		//         return back()
+		//             ->withInput()
+		//             ->withErrors(['message' => 'An error occured. Please try again.'], 'main');
+  //           }
+		// }
 	}
 
 	protected function resendlink($request) {

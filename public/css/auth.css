@@ -386,6 +386,7 @@ input.textentry {
 }
 
 #pageWrapper #div-sitecont div.middlebox-cont div.middlebox-outer div.middlebox-inner div.text-cont.error div.submsg-cont {
+  font-weight: bold;
   color: #FF3B0A;
 }
 

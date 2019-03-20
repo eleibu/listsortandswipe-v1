@@ -11,6 +11,7 @@
         "laravel/framework": "5.7.*",
         "laravel/passport": "^7.1",
         "laravel/tinker": "^1.0",
+        "paypal/rest-api-sdk-php": "^1.14",
         "pragmarx/countries": "^0.5.9"
     },
     "require-dev": {

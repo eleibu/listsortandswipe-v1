@@ -173,6 +173,10 @@ input.textentry {
 							padding: 0.6em 0.4em;
 							border: 1px solid #DDDDDD;
 						}
+
+						select.error {
+							border: 1px solid #FF3B0A;
+						}
 					}
 
 					div.supmsg-cont {
@@ -192,6 +196,7 @@ input.textentry {
 					}
 
 					div.submsg-cont.error {
+						font-weight: bold;
 						color: #FF3B0A;
 					}
 
@@ -258,16 +263,23 @@ input.textentry {
 					}
 
 					div.signup-terms {
-						td {
-							vertical-align: top;
+						table {
+							border: 1px solid transparent;
+
+							td { 
+								vertical-align: top;
+								padding: 0.6em 0.4em 0.6em 0;
+							}
+
+							td.checkbox {
+								input {
+									transform: scale(1.2);
+								}
+							}
 						}
 
-						td.checkbox {
-							padding-right: 0.4em;
-
-							input {
-								transform: scale(1.2);
-							}
+						table.error {
+							border: 1px solid #FF3B0A;
 						}
 					}
 				}

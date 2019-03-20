@@ -17,6 +17,10 @@ Route::middleware(['throttle:60,1', 'cors'])->group(function () {
 	Route::get('/v1/rcheck', 'Controller_API_Registration@check');
 });
 
+Route::middleware(['throttle:60,1'])->group(function () {
+	Route::post('/web/v1/signup-discount', 'Controller_API_SignUp@discount');
+});
+
 // Route::get('/public/v1/domains', 'Controller_API_Domains@get');						// retrieve domains
 // Route::post('/public/v1/domains', 'Controller_API_Domains@post');
 

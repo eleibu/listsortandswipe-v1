@@ -2,9 +2,14 @@ require('bootstrap');
 
 import { monitorWinWidth } from './monitor-win-width.js';
 import classNames from 'classNames/dedupe';
+import axios from 'axios';
 import { encodeHTML, trimString } from './utils.js';
 
-var spinnerCont = document.getElementById('div-spinner-cont');
+axios.defaults.headers.common = {
+    'X-CSRF-TOKEN': document.querySelector("meta[name='csrf-token']").getAttribute("content"),
+    'X-Requested-With': 'XMLHttpRequest'
+};
+
 var maskCont = document.getElementById('div-sitecont-mask');
 var inputEmail = document.getElementById('input-email');
 var divEmailSubmsg = document.getElementById('div-email-submsg');
@@ -21,13 +26,16 @@ var pCoName = document.getElementById('p_co_name');
 var pCountry = document.getElementById('p_country');
 var inputDiscountCode = document.getElementById('input-discountcode');
 var divDiscountSubmsg = document.getElementById('div-discount-submsg');
+var spinnerContDiscount = document.getElementById('div-spinner-cont-discount');
 var divApplyDiscount = document.getElementById('div-apply-discount');
+var divTableTerms = document.getElementById('div-table-terms');
 var inputTerms = document.getElementById('input-terms');
 var divTermsSubmsg = document.getElementById('div-terms-submsg');
 var divPlaceOrder = document.getElementById('div-place-order');
+var spinnerContPlaceOrder = document.getElementById('div-spinner-cont-placeorder');
 var divPlaceOrderSubmsg = document.getElementById('div-place-order-submsg');
 
-if ((spinnerCont) && (maskCont) && (inputEmail) && (divEmailSubmsg) && (inputPassword) && (divPasswordSubmsg) && (inputFirstname) && (inputSurname) && (divNameSubmsg) && (inputCompanyname) && (selectCountry) && (divCountrySubmsg) && (pIndivName) && (pCoName) && (pCountry) && (inputDiscountCode) && (divDiscountSubmsg) && (divApplyDiscount) && (inputTerms) && (divTermsSubmsg) && (divPlaceOrder) && (divPlaceOrderSubmsg)) {
+if ((maskCont) && (inputEmail) && (divEmailSubmsg) && (inputPassword) && (divPasswordSubmsg) && (inputFirstname) && (inputSurname) && (divNameSubmsg) && (inputCompanyname) && (selectCountry) && (divCountrySubmsg) && (pIndivName) && (pCoName) && (pCountry) && (inputDiscountCode) && (divDiscountSubmsg) && (spinnerContDiscount) && (divApplyDiscount) && (divTableTerms) && (inputTerms) && (divTermsSubmsg) && (divPlaceOrder) && (spinnerContPlaceOrder) && (divPlaceOrderSubmsg)) {
 	inputEmail.addEventListener("focus", function(e) {
 		inputEmail.className = classNames({
 			'textentry' : true,
@@ -214,14 +222,68 @@ if ((spinnerCont) && (maskCont) && (inputEmail) && (divEmailSubmsg) && (inputPas
 	});
 
 	// discount
+	inputDiscountCode.addEventListener("focus", function(e) {
+		divDiscountSubmsg.innerHTML = msgDiscountDefault;
+		divDiscountSubmsg.className = classNames({
+			'submsg-cont' : true
+		});
+	});
 
-	// var divDiscountSubmsg = document.getElementById('div-discount-submsg');
-	// var divApplyDiscount = document.getElementById('div-apply-discount');
+	inputDiscountCode.addEventListener("blur", function(e) {
+		divDiscountSubmsg.innerHTML = msgDiscountDefault;
+		divDiscountSubmsg.className = classNames({
+			'submsg-cont' : true
+		});
+	});
 
+	divApplyDiscount.addEventListener("click", function() {
+		divDiscountSubmsg.innerHTML = msgDiscountDefault;
+		divDiscountSubmsg.className = classNames({
+			'submsg-cont' : true
+		});
+
+		var code = inputDiscountCode.value;
+		if (code.length > 0) {
+			maskCont.className = classNames({
+				'show' : true
+			});
+			spinnerContDiscount.className = classNames({
+				'spinner-cont' : true,
+				'spinning' : true
+			});
+
+	        let url = api_url_web + 'signup-discount';
+	        axios({
+	            method: 'post',
+	            url: url,
+	            data: {
+	            	'code' : code
+	            }
+	        })
+	        .then((response)=>{
+	        	// discount code is valid - change order summary
+	        })
+	        .catch((error)=>{
+	        	console.log(error);
+				divDiscountSubmsg.innerHTML = msgDiscountInvalid;
+				divDiscountSubmsg.className = classNames({
+					'submsg-cont' : true,
+					'error' : true
+				});
+	        })
+	        .then(()=>{
+				maskCont.className = classNames({});
+				spinnerContDiscount.className = classNames({
+					'spinner-cont' : true
+				});
+	        });
+		}
+	});
 
 	// terms
 	inputTerms.addEventListener('change', function() {
 		if (inputTerms.checked) {
+			divTableTerms.className = classNames({});
 			divTermsSubmsg.innerHTML = msgTermsDefault;
 			divTermsSubmsg.className = classNames({
 				'submsg-cont' : true
@@ -387,6 +449,9 @@ function validateAndSubmit() {
 			'submsg-cont' : true
 		});
 	} else {
+		selectCountry.className = classNames({
+			'error' : true
+		});
 		divCountrySubmsg.innerHTML = msgCountryNoBlank;
 		divCountrySubmsg.className = classNames({
 			'submsg-cont' : true,
@@ -395,11 +460,15 @@ function validateAndSubmit() {
 	}
 
 	if (termsOk) {
+		divTableTerms.className = classNames({});
 		divTermsSubmsg.innerHTML = msgTermsDefault;
 		divTermsSubmsg.className = classNames({
 			'submsg-cont' : true
 		});
 	} else {
+		divTableTerms.className = classNames({
+			'error' : true
+		});
 		divTermsSubmsg.innerHTML = msgTermsNoBlank;
 		divTermsSubmsg.className = classNames({
 			'submsg-cont' : true,
@@ -409,6 +478,14 @@ function validateAndSubmit() {
 
 	if ((emailOk) && (passwordOk) && (firstnameOk) && (surnameOk) && (countryOk) && (termsOk)) {
 		hidePlaceOrderSubmsg();
+		maskCont.className = classNames({
+			'show' : true
+		});
+		spinnerContPlaceOrder.className = classNames({
+			'spinner-cont' : true,
+			'spinning' : true
+		});
+		document.getElementById('form').submit();
 	} else {
 		divPlaceOrderSubmsg.innerHTML = msgPlaceOrderErrors;
 		divPlaceOrderSubmsg.className = classNames({
