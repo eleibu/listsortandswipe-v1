@@ -23,6 +23,7 @@
         "react-dom": "^16.2.0"
     },
     "dependencies": {
+        "braintree-web": "^3.43.0",
         "classnames": "^2.2.6",
         "immutability-helper": "^3.0.0",
         "moment": "^2.24.0",

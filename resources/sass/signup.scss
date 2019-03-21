@@ -179,6 +179,33 @@ input.textentry {
 						}
 					}
 
+					div.hosted-field {
+						height: 50px;
+						box-sizing: border-box;
+						
+						padding: 0.6em;
+						display: inline-block;
+						box-shadow: none;
+						font-weight: 600;
+						font-size: 14px;
+						border: 1px solid #DDDDDD;
+						line-height: 20px;
+						margin-bottom: 12px;
+						background-color: #FFFFFF;
+					}
+
+					#div-card-number {
+						width: 100%;
+					}
+
+					#div-expiry-date {
+						width: 120px;
+					}
+
+					#div-cvv {
+						width: 90px;
+					}
+
 					div.supmsg-cont {
 						margin: 0.4em 0;
 						font-size: 85%;
@@ -268,18 +295,15 @@ input.textentry {
 
 							td { 
 								vertical-align: top;
-								padding: 0.6em 0.4em 0.6em 0;
 							}
 
 							td.checkbox {
+								padding-right: 0.4em;
+								
 								input {
 									transform: scale(1.2);
 								}
 							}
-						}
-
-						table.error {
-							border: 1px solid #FF3B0A;
 						}
 					}
 				}

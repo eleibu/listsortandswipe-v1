@@ -377,6 +377,34 @@ input.textentry {
   border: 1px solid #FF3B0A;
 }
 
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row div.hosted-field {
+  height: 50px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 0.6em;
+  display: inline-block;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  font-weight: 600;
+  font-size: 14px;
+  border: 1px solid #DDDDDD;
+  line-height: 20px;
+  margin-bottom: 12px;
+  background-color: #FFFFFF;
+}
+
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row #div-card-number {
+  width: 100%;
+}
+
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row #div-expiry-date {
+  width: 120px;
+}
+
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row #div-cvv {
+  width: 90px;
+}
+
 #pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row div.supmsg-cont {
   margin: 0.4em 0;
   font-size: 85%;
@@ -464,16 +492,15 @@ input.textentry {
 
 #pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row div.signup-terms table td {
   vertical-align: top;
-  padding: 0.6em 0.4em 0.6em 0;
+}
+
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row div.signup-terms table td.checkbox {
+  padding-right: 0.4em;
 }
 
 #pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row div.signup-terms table td.checkbox input {
   -webkit-transform: scale(1.2);
           transform: scale(1.2);
-}
-
-#pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row div.signup-terms table.error {
-  border: 1px solid #FF3B0A;
 }
 
 #pageWrapper #div-sitecont div.section-cont.grey {

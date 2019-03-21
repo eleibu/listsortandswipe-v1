@@ -5,6 +5,9 @@ import classNames from 'classNames/dedupe';
 import axios from 'axios';
 import { encodeHTML, trimString } from './utils.js';
 
+var client = require('braintree-web/client');
+var hostedFields = require('braintree-web/hosted-fields');
+
 axios.defaults.headers.common = {
     'X-CSRF-TOKEN': document.querySelector("meta[name='csrf-token']").getAttribute("content"),
     'X-Requested-With': 'XMLHttpRequest'
@@ -36,6 +39,61 @@ var spinnerContPlaceOrder = document.getElementById('div-spinner-cont-placeorder
 var divPlaceOrderSubmsg = document.getElementById('div-place-order-submsg');
 
 if ((maskCont) && (inputEmail) && (divEmailSubmsg) && (inputPassword) && (divPasswordSubmsg) && (inputFirstname) && (inputSurname) && (divNameSubmsg) && (inputCompanyname) && (selectCountry) && (divCountrySubmsg) && (pIndivName) && (pCoName) && (pCountry) && (inputDiscountCode) && (divDiscountSubmsg) && (spinnerContDiscount) && (divApplyDiscount) && (divTableTerms) && (inputTerms) && (divTermsSubmsg) && (divPlaceOrder) && (spinnerContPlaceOrder) && (divPlaceOrderSubmsg)) {
+
+
+
+	client.create({
+		authorization: document.getElementById('input-client-token').value
+	}).then(function (clientInstance) {
+		var options = {
+			client: clientInstance,
+			styles: {
+				'input': {
+					'font-size': '16px',
+					'font-family': 'courier, monospace',
+					'font-weight': 'lighter',
+					'color': '#CCCCCC'
+				},
+				':focus': {
+					'color': '#222222'
+				},
+				'.valid': {
+					'color': '#66CC33'
+				}
+			},
+			fields: {
+				number: {
+					selector: '#div-card-number',
+					placeholder: '4111 1111 1111 1111'
+				},
+				expirationDate: {
+					selector: '#div-expiry-date',
+					placeholder: 'MM/YYYY'
+				},
+				cvv: {
+					selector: '#div-cvv',
+					placeholder: 'CVV'
+				}
+			}
+		};
+
+		return hostedFields.create(options);
+	}).then(function (hostedFieldsInstance) {
+		// console.log('all good');
+	}).catch(function (err) {
+		// console.log(err);
+		// var teardown = function (event) {
+		// 	event.preventDefault();
+		// 	alert('Submit your nonce to your server here!');
+		// 	hostedFieldsInstance.teardown(function () {
+		// 		createHostedFields(clientInstance);
+		// 		form.removeEventListener('submit', teardown, false);
+		// 	});
+		// };
+
+		// form.addEventListener('submit', teardown, false);
+	});
+
 	inputEmail.addEventListener("focus", function(e) {
 		inputEmail.className = classNames({
 			'textentry' : true,
@@ -236,6 +294,24 @@ if ((maskCont) && (inputEmail) && (divEmailSubmsg) && (inputPassword) && (divPas
 		});
 	});
 
+	inputDiscountCode.addEventListener('input', function() {
+		divDiscountSubmsg.innerHTML = msgDiscountDefault;
+		divDiscountSubmsg.className = classNames({
+			'submsg-cont' : true
+		});
+	});
+
+	inputDiscountCode.addEventListener("keypress", function(e) {
+		if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+			e.preventDefault();
+			var code = inputDiscountCode.value;
+			if (code.length > 0) {
+				checkDiscountCode(code);
+			}
+		}
+	});
+
+
 	divApplyDiscount.addEventListener("click", function() {
 		divDiscountSubmsg.innerHTML = msgDiscountDefault;
 		divDiscountSubmsg.className = classNames({
@@ -244,39 +320,7 @@ if ((maskCont) && (inputEmail) && (divEmailSubmsg) && (inputPassword) && (divPas
 
 		var code = inputDiscountCode.value;
 		if (code.length > 0) {
-			maskCont.className = classNames({
-				'show' : true
-			});
-			spinnerContDiscount.className = classNames({
-				'spinner-cont' : true,
-				'spinning' : true
-			});
-
-	        let url = api_url_web + 'signup-discount';
-	        axios({
-	            method: 'post',
-	            url: url,
-	            data: {
-	            	'code' : code
-	            }
-	        })
-	        .then((response)=>{
-	        	// discount code is valid - change order summary
-	        })
-	        .catch((error)=>{
-	        	console.log(error);
-				divDiscountSubmsg.innerHTML = msgDiscountInvalid;
-				divDiscountSubmsg.className = classNames({
-					'submsg-cont' : true,
-					'error' : true
-				});
-	        })
-	        .then(()=>{
-				maskCont.className = classNames({});
-				spinnerContDiscount.className = classNames({
-					'spinner-cont' : true
-				});
-	        });
+			checkDiscountCode(code);
 		}
 	});
 
@@ -296,6 +340,41 @@ if ((maskCont) && (inputEmail) && (divEmailSubmsg) && (inputPassword) && (divPas
 	divPlaceOrder.addEventListener("click", function() {
 		validateAndSubmit();
 	});
+}
+
+function checkDiscountCode(code) {
+	maskCont.className = classNames({
+		'show' : true
+	});
+	spinnerContDiscount.className = classNames({
+		'spinner-cont' : true,
+		'spinning' : true
+	});
+
+    let url = api_url_web + 'signup-discount';
+    axios({
+        method: 'post',
+        url: url,
+        data: {
+        	'code' : code
+        }
+    })
+    .then((response)=>{
+    	// discount code is valid - change order summary
+    })
+    .catch((error)=>{
+		divDiscountSubmsg.innerHTML = msgDiscountInvalid;
+		divDiscountSubmsg.className = classNames({
+			'submsg-cont' : true,
+			'error' : true
+		});
+    })
+    .then(()=>{
+		maskCont.className = classNames({});
+		spinnerContDiscount.className = classNames({
+			'spinner-cont' : true
+		});
+    });
 }
 
 function validateAndSubmit() {

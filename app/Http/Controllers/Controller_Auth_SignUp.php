@@ -22,6 +22,14 @@ use PragmaRX\Countries\Package\Countries;
 class Controller_Auth_SignUp extends Controller
 {
     function __construct() {
+		$gateway = new \Braintree_Gateway([
+		    'environment' => env('BRAINTREE_ENV'),
+		    'merchantId' => env('BRAINTREE_MERCHANT_ID'),
+		    'publicKey' => env('BRAINTREE_PUBLIC_KEY'),
+		    'privateKey' => env('BRAINTREE_PRIVATE_KEY')
+		]);
+		$this->clientToken = $gateway->clientToken()->generate();
+
     	$authErrorMessages = Toolkit::authErrorMessages();
 		$this->msgEmailDefault = '';
 		$this->msgEmailNoBlank = 'Email can&#39;t be blank.';
@@ -40,7 +48,28 @@ class Controller_Auth_SignUp extends Controller
 		$this->msgDiscountDefault = '';
 		$this->msgDiscountInvalid = 'Sorry, that discount code is not valid.';
 		$this->msgPlaceOrderDefault = '';
-		$this->msgPlaceOrderErrors = 'There is missing or invalid information. See above.';
+		$this->msgPlaceOrderErrors = 'There is missing or invalid information, see above.';
+
+
+// BT_ENVIRONMENT=sandbox
+// BT_MERCHANT_ID=43bxz6g7xhysqjcd
+// BT_PUBLIC_KEY=7xcs322zqnrkphkr
+// BT_PRIVATE_KEY=85c20369da13bd818c00ba03e20cfc66
+
+        // $gateway = new \Braintree_Gateway();
+
+
+
+		// $clientToken = $gateway->clientToken()->generate([
+		//     "customerId" => $aCustomerId
+		// ]);
+
+		// $gateway = new Braintree_Gateway([
+		//     'environment' => 'sandbox',
+		//     'merchantId' => 'use_your_merchant_id',
+		//     'publicKey' => 'use_your_public_key',
+		//     'privateKey' => 'use_your_private_key'
+		// ]);
     }
 
 	public function page(Request $request) {
@@ -95,6 +124,7 @@ class Controller_Auth_SignUp extends Controller
 		return view('signup')
 			->with('view', $viewText)
             ->with('atype', $atype)
+            ->with('clientToken', $this->clientToken)
             ->with('countries', $countries)
             ->with('homeName', $pageInfo['home']['name'])
             ->with('homePath', $pageInfo['home']['path'])

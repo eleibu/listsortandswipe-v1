@@ -262,7 +262,10 @@ switch ($atype) {
                             Payment
                         </div>
                         <div class="signup-row">
-                            PayPal drop in<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                            <input id="input-client-token" type="hidden" value="{{$clientToken}}"/>
+                            <div id="div-card-number" class="hosted-field"></div>
+                            <div id="div-expiry-date" class="hosted-field"></div>&nbsp;&nbsp;
+                            <div id="div-cvv" class="hosted-field"></div>
                         </div>
                     </div>
                 </div>
