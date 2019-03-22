@@ -7,6 +7,7 @@ import { encodeHTML, trimString } from './utils.js';
 
 var client = require('braintree-web/client');
 var hostedFields = require('braintree-web/hosted-fields');
+var hostedFieldsInstance = null;
 
 axios.defaults.headers.common = {
     'X-CSRF-TOKEN': document.querySelector("meta[name='csrf-token']").getAttribute("content"),
@@ -78,9 +79,10 @@ if ((maskCont) && (inputEmail) && (divEmailSubmsg) && (inputPassword) && (divPas
 		};
 
 		return hostedFields.create(options);
-	}).then(function (hostedFieldsInstance) {
-		// console.log('all good');
+	}).then(function (instance) {
+		hostedFieldsInstance = instance;
 	}).catch(function (err) {
+		// WHAT SHOULD WE DO IF hostedFields CAN'T BE CREATED?
 		// console.log(err);
 		// var teardown = function (event) {
 		// 	event.preventDefault();
@@ -301,7 +303,22 @@ if ((maskCont) && (inputEmail) && (divEmailSubmsg) && (inputPassword) && (divPas
 		});
 	});
 
+	inputDiscountCode.addEventListener("keydown", function(e) {
+		if ((e.which && e.which == 9) || (e.keyCode && e.keyCode == 9)) {
+			e.preventDefault();
+			if (hostedFields) {
+				hostedFields.focus('#div-card-number', function (focusErr) {
+				  if (focusErr) {
+				    console.error(focusErr);
+				  }
+				});
+			}
+		}
+
+	});
+
 	inputDiscountCode.addEventListener("keypress", function(e) {
+		console.log('tab');
 		if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
 			e.preventDefault();
 			var code = inputDiscountCode.value;
@@ -310,7 +327,6 @@ if ((maskCont) && (inputEmail) && (divEmailSubmsg) && (inputPassword) && (divPas
 			}
 		}
 	});
-
 
 	divApplyDiscount.addEventListener("click", function() {
 		divDiscountSubmsg.innerHTML = msgDiscountDefault;
@@ -557,14 +573,73 @@ function validateAndSubmit() {
 
 	if ((emailOk) && (passwordOk) && (firstnameOk) && (surnameOk) && (countryOk) && (termsOk)) {
 		hidePlaceOrderSubmsg();
-		maskCont.className = classNames({
-			'show' : true
-		});
-		spinnerContPlaceOrder.className = classNames({
-			'spinner-cont' : true,
-			'spinning' : true
-		});
-		document.getElementById('form').submit();
+		if (hostedFieldsInstance != null) {
+			maskCont.className = classNames({
+				'show' : true
+			});
+			spinnerContPlaceOrder.className = classNames({
+				'spinner-cont' : true,
+				'spinning' : true
+			});
+	        hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
+				if (tokenizeErr) {
+					switch (tokenizeErr.code) {
+						case 'HOSTED_FIELDS_FIELDS_EMPTY':
+							// occurs when none of the fields are filled in
+							console.error('All fields are empty! Please fill out the form.');
+							break;
+						case 'HOSTED_FIELDS_FIELDS_INVALID':
+							// occurs when certain fields do not pass client side validation
+							console.error('Some fields are invalid:', tokenizeErr.details.invalidFieldKeys);
+
+							// you can also programtically access the field containers for the invalid fields
+							tokenizeErr.details.invalidFields.forEach(function (fieldContainer) {
+							  fieldContainer.className = 'invalid';
+							});
+							break;
+						case 'HOSTED_FIELDS_TOKENIZATION_FAIL_ON_DUPLICATE':
+							// occurs when:
+							//   * the client token used for client authorization was generated
+							//     with a customer ID and the fail on duplicate payment method
+							//     option is set to true
+							//   * the card being tokenized has previously been vaulted (with any customer)
+							// See: https://developers.braintreepayments.com/reference/request/client-token/generate/#options.fail_on_duplicate_payment_method
+							console.error('This payment method already exists in your vault.');
+							break;
+						case 'HOSTED_FIELDS_TOKENIZATION_CVV_VERIFICATION_FAILED':
+							// occurs when:
+							//   * the client token used for client authorization was generated
+							//     with a customer ID and the verify card option is set to true
+							//     and you have credit card verification turned on in the Braintree
+							//     control panel
+							//   * the cvv does not pass verfication (https://developers.braintreepayments.com/reference/general/testing/#avs-and-cvv/cid-responses)
+							// See: https://developers.braintreepayments.com/reference/request/client-token/generate/#options.verify_card
+							console.error('CVV did not pass verification');
+							break;
+						case 'HOSTED_FIELDS_FAILED_TOKENIZATION':
+							// occurs for any other tokenization error on the server
+							console.error('Tokenization failed server side. Is the card valid?');
+							break;
+						case 'HOSTED_FIELDS_TOKENIZATION_NETWORK_ERROR':
+							// occurs when the Braintree gateway cannot be contacted
+							console.error('Network error occurred when tokenizing.');
+							break;
+						default:
+							console.error('Something bad happened!', tokenizeErr);
+					}
+
+					// HOW DO WE DISPLAY AN ERROR HERE?
+
+					maskCont.className = classNames({});
+					spinnerContPlaceOrder.className = classNames({
+						'spinner-cont' : true
+					});
+					return;
+				}
+				document.getElementById('input-nonce').value = payload.nonce;
+				document.getElementById('form').submit();
+	        });
+		}
 	} else {
 		divPlaceOrderSubmsg.innerHTML = msgPlaceOrderErrors;
 		divPlaceOrderSubmsg.className = classNames({

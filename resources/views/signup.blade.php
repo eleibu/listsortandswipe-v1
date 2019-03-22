@@ -44,6 +44,8 @@ switch ($atype) {
 
 @section('content')
 @if ($view == 'signup')
+    <input type="hidden" name="action" value="signup" />
+    <input type="hidden" name="atype" value="{{$atype}}" />
     <div class="section-cont">
         <div class="section-outer">
             <div class="plan">
@@ -251,7 +253,6 @@ switch ($atype) {
                                 </div>
                             </div>
                             <div id="div-discount-submsg" class="submsg-cont">
-                                &nbsp;
                             </div>
                         </div>
                     </div>
@@ -262,10 +263,13 @@ switch ($atype) {
                             Payment
                         </div>
                         <div class="signup-row">
-                            <input id="input-client-token" type="hidden" value="{{$clientToken}}"/>
+                            <input id="input-client-token" type="hidden" name="client-token" value="{{$clientToken}}"/>
+                            <input id="input-nonce" type="hidden" name="nonce" value=""/>
                             <div id="div-card-number" class="hosted-field"></div>
                             <div id="div-expiry-date" class="hosted-field"></div>&nbsp;&nbsp;
                             <div id="div-cvv" class="hosted-field"></div>
+                            <div id="div-payment-submsg" class="submsg-cont">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -330,10 +334,12 @@ switch ($atype) {
     </form>
 @endif
 @if ($view == 'accountcreated')
+    <input type="hidden" name="action" value="resendlink" />
 
 
 @endif
 @if ($view == 'linksent')
+    <input type="hidden" name="action" value="resendlink" />
 
 
 @endif

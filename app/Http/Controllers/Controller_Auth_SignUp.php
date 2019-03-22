@@ -22,13 +22,12 @@ use PragmaRX\Countries\Package\Countries;
 class Controller_Auth_SignUp extends Controller
 {
     function __construct() {
-		$gateway = new \Braintree_Gateway([
+		$this->gateway = new \Braintree_Gateway([
 		    'environment' => env('BRAINTREE_ENV'),
 		    'merchantId' => env('BRAINTREE_MERCHANT_ID'),
 		    'publicKey' => env('BRAINTREE_PUBLIC_KEY'),
 		    'privateKey' => env('BRAINTREE_PRIVATE_KEY')
 		]);
-		$this->clientToken = $gateway->clientToken()->generate();
 
     	$authErrorMessages = Toolkit::authErrorMessages();
 		$this->msgEmailDefault = '';
@@ -49,27 +48,6 @@ class Controller_Auth_SignUp extends Controller
 		$this->msgDiscountInvalid = 'Sorry, that discount code is not valid.';
 		$this->msgPlaceOrderDefault = '';
 		$this->msgPlaceOrderErrors = 'There is missing or invalid information, see above.';
-
-
-// BT_ENVIRONMENT=sandbox
-// BT_MERCHANT_ID=43bxz6g7xhysqjcd
-// BT_PUBLIC_KEY=7xcs322zqnrkphkr
-// BT_PRIVATE_KEY=85c20369da13bd818c00ba03e20cfc66
-
-        // $gateway = new \Braintree_Gateway();
-
-
-
-		// $clientToken = $gateway->clientToken()->generate([
-		//     "customerId" => $aCustomerId
-		// ]);
-
-		// $gateway = new Braintree_Gateway([
-		//     'environment' => 'sandbox',
-		//     'merchantId' => 'use_your_merchant_id',
-		//     'publicKey' => 'use_your_public_key',
-		//     'privateKey' => 'use_your_private_key'
-		// ]);
     }
 
 	public function page(Request $request) {
@@ -124,7 +102,7 @@ class Controller_Auth_SignUp extends Controller
 		return view('signup')
 			->with('view', $viewText)
             ->with('atype', $atype)
-            ->with('clientToken', $this->clientToken)
+            ->with('clientToken', $this->gateway->clientToken()->generate())
             ->with('countries', $countries)
             ->with('homeName', $pageInfo['home']['name'])
             ->with('homePath', $pageInfo['home']['path'])
@@ -154,14 +132,26 @@ class Controller_Auth_SignUp extends Controller
 	}
 
 	protected function signup($request) {
+		// RECORD SALES IN DB?
+		// ADD FIELDS TO USER FOR MARKETING?
+			// SALES
+			// PRODUCT UPDATES, LATEST FEATURES, NEW VERSIONS
+			// OTHER COMMUNICATIONS - WHAT ELSE IS THERE?
+		$result = $this->gateway->transaction()->sale([
+			'amount' => '10.00',
+			'paymentMethodNonce' => $request->input('nonce'),
+			'options' => [
+				'submitForSettlement' => true
+			]
+		]);
         return back()
-            ->withInput()
-            ->withErrors(['message' => 'It appears you already have an account.'], 'email')
-            ->withErrors(['message' => $this->msgPasswordInvalid], 'password')
-            ->withErrors(['message' => 'Firstname error'], 'firstname')
-            // ->withErrors(['message' => 'Surname error'], 'surname')
-            ->withErrors(['message' => 'Country error'], 'country')
-            ->withErrors(['message' => 'Terms error'], 'terms');
+            ->withInput();
+            // ->withErrors(['message' => 'It appears you already have an account.'], 'email')
+            // ->withErrors(['message' => $this->msgPasswordInvalid], 'password')
+            // ->withErrors(['message' => 'Firstname error'], 'firstname')
+            // // ->withErrors(['message' => 'Surname error'], 'surname')
+            // ->withErrors(['message' => 'Country error'], 'country')
+            // ->withErrors(['message' => 'Terms error'], 'terms');
 
 		// $emailMsg = null;
 		// if ($request->filled('email')) {
