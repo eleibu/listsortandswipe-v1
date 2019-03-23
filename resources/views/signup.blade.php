@@ -260,14 +260,14 @@ switch ($atype) {
                 <div class="section-cont grey">
                     <div class="section-outer">
                         <div class="title">
-                            Payment
+                            Payment details
                         </div>
                         <div class="signup-row">
                             <input id="input-client-token" type="hidden" name="client-token" value="{{$clientToken}}"/>
                             <input id="input-nonce" type="hidden" name="nonce" value=""/>
-                            <div id="div-card-number" class="hosted-field"></div>
-                            <div id="div-expiry-date" class="hosted-field"></div>&nbsp;&nbsp;
-                            <div id="div-cvv" class="hosted-field"></div>
+                            <div id="div-payment-number" class="hosted-field"></div>
+                            <div id="div-payment-expirationDate" class="hosted-field"></div>&nbsp;&nbsp;
+                            <div id="div-payment-cvv" class="hosted-field"></div>
                             <div id="div-payment-submsg" class="submsg-cont">
                             </div>
                         </div>

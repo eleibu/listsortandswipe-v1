@@ -26483,6 +26483,10 @@ var inputDiscountCode = document.getElementById('input-discountcode');
 var divDiscountSubmsg = document.getElementById('div-discount-submsg');
 var spinnerContDiscount = document.getElementById('div-spinner-cont-discount');
 var divApplyDiscount = document.getElementById('div-apply-discount');
+var divPaymentNumber = document.getElementById('div-payment-number');
+var divPaymentExpirationDate = document.getElementById('div-payment-expirationDate');
+var divPaymentCVV = document.getElementById('div-payment-cvv');
+var divPaymentSubmsg = document.getElementById('div-payment-submsg');
 var divTableTerms = document.getElementById('div-table-terms');
 var inputTerms = document.getElementById('input-terms');
 var divTermsSubmsg = document.getElementById('div-terms-submsg');
@@ -26490,7 +26494,7 @@ var divPlaceOrder = document.getElementById('div-place-order');
 var spinnerContPlaceOrder = document.getElementById('div-spinner-cont-placeorder');
 var divPlaceOrderSubmsg = document.getElementById('div-place-order-submsg');
 
-if (maskCont && inputEmail && divEmailSubmsg && inputPassword && divPasswordSubmsg && inputFirstname && inputSurname && divNameSubmsg && inputCompanyname && selectCountry && divCountrySubmsg && pIndivName && pCoName && pCountry && inputDiscountCode && divDiscountSubmsg && spinnerContDiscount && divApplyDiscount && divTableTerms && inputTerms && divTermsSubmsg && divPlaceOrder && spinnerContPlaceOrder && divPlaceOrderSubmsg) {
+if (maskCont && inputEmail && divEmailSubmsg && inputPassword && divPasswordSubmsg && inputFirstname && inputSurname && divNameSubmsg && inputCompanyname && selectCountry && divCountrySubmsg && pIndivName && pCoName && pCountry && inputDiscountCode && divDiscountSubmsg && spinnerContDiscount && divApplyDiscount && divPaymentNumber && divPaymentExpirationDate && divPaymentCVV && divPaymentSubmsg && divTableTerms && inputTerms && divTermsSubmsg && divPlaceOrder && spinnerContPlaceOrder && divPlaceOrderSubmsg) {
 
 	client.create({
 		authorization: document.getElementById('input-client-token').value
@@ -26513,15 +26517,15 @@ if (maskCont && inputEmail && divEmailSubmsg && inputPassword && divPasswordSubm
 			},
 			fields: {
 				number: {
-					selector: '#div-card-number',
+					selector: '#' + divPaymentNumber.id,
 					placeholder: '4111 1111 1111 1111'
 				},
 				expirationDate: {
-					selector: '#div-expiry-date',
+					selector: '#' + divPaymentExpirationDate.id,
 					placeholder: 'MM/YYYY'
 				},
 				cvv: {
-					selector: '#div-cvv',
+					selector: '#' + divPaymentCVV.id,
 					placeholder: 'CVV'
 				}
 			}
@@ -26530,6 +26534,36 @@ if (maskCont && inputEmail && divEmailSubmsg && inputPassword && divPasswordSubm
 		return hostedFields.create(options);
 	}).then(function (instance) {
 		hostedFieldsInstance = instance;
+
+		hostedFieldsInstance.on('focus', function (event) {
+
+			// CHANGE THE FOLLOWING TO USE divPaymentNumber, ETC
+			// SEE ALSO '//@@' BELOW
+
+
+			var div = document.getElementById('div-payment-' + event.emittedBy);
+			if (div) {
+				div.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+					'hosted-field': true,
+					'focus': true
+				});
+			}
+			hidePlaceOrderSubmsg();
+		});
+
+		hostedFieldsInstance.on('blur', function (event) {
+
+			// CHANGE THE FOLLOWING TO USE divPaymentNumber, ETC
+
+
+			var div = document.getElementById('div-payment-' + event.emittedBy);
+			if (div) {
+				div.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+					'hosted-field': true
+				});
+			}
+			hidePlaceOrderSubmsg();
+		});
 	}).catch(function (err) {
 		// WHAT SHOULD WE DO IF hostedFields CAN'T BE CREATED?
 		// console.log(err);
@@ -26732,6 +26766,10 @@ if (maskCont && inputEmail && divEmailSubmsg && inputPassword && divPasswordSubm
 
 	// discount
 	inputDiscountCode.addEventListener("focus", function (e) {
+		inputDiscountCode.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'textentry': true,
+			'focus': true
+		});
 		divDiscountSubmsg.innerHTML = msgDiscountDefault;
 		divDiscountSubmsg.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
 			'submsg-cont': true
@@ -26739,6 +26777,9 @@ if (maskCont && inputEmail && divEmailSubmsg && inputPassword && divPasswordSubm
 	});
 
 	inputDiscountCode.addEventListener("blur", function (e) {
+		inputDiscountCode.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'textentry': true
+		});
 		divDiscountSubmsg.innerHTML = msgDiscountDefault;
 		divDiscountSubmsg.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
 			'submsg-cont': true
@@ -26755,12 +26796,8 @@ if (maskCont && inputEmail && divEmailSubmsg && inputPassword && divPasswordSubm
 	inputDiscountCode.addEventListener("keydown", function (e) {
 		if (e.which && e.which == 9 || e.keyCode && e.keyCode == 9) {
 			e.preventDefault();
-			if (hostedFields) {
-				hostedFields.focus('#div-card-number', function (focusErr) {
-					if (focusErr) {
-						console.error(focusErr);
-					}
-				});
+			if (hostedFieldsInstance) {
+				hostedFieldsInstance.focus('number', function (focusErr) {});
 			}
 		}
 	});
@@ -27030,6 +27067,7 @@ function validateAndSubmit() {
 				if (tokenizeErr) {
 					switch (tokenizeErr.code) {
 						case 'HOSTED_FIELDS_FIELDS_EMPTY':
+							document.getElementById('div-payment-number').className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({});
 							// occurs when none of the fields are filled in
 							console.error('All fields are empty! Please fill out the form.');
 							break;
@@ -27079,8 +27117,23 @@ function validateAndSubmit() {
 					spinnerContPlaceOrder.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
 						'spinner-cont': true
 					});
+
+					//@@
+					divPaymentSubmsg.innerHTML = ''; // MOVE THIS TO ABOVE
+					divPaymentSubmsg.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+						'submsg-cont': true,
+						'error': true
+					});
+
+					divPlaceOrderSubmsg.innerHTML = msgPlaceOrderErrors;
+					divPlaceOrderSubmsg.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+						'submsg-cont': true,
+						'error': true
+					});
+
 					return;
 				}
+
 				document.getElementById('input-nonce').value = payload.nonce;
 				document.getElementById('form').submit();
 			});
@@ -27093,6 +27146,9 @@ function validateAndSubmit() {
 		});
 	}
 }
+
+var msgPaymentDefault = '';
+var msgPaymentNoBlank = 'Payment details can&#39;t be blank';
 
 function hidePlaceOrderSubmsg() {
 	divPlaceOrderSubmsg.innerHTML = msgPlaceOrderDefault;
