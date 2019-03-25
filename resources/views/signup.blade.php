@@ -70,36 +70,36 @@ switch ($atype) {
                         Create your account
                     </div>
                     <div class="signup-row">
-                        @if ($errors->email->isEmpty())
+                        @if ((!$errors->signup->isEmpty()) && (strlen($errors->signup->first('email')) > 0))
+                            <div class="signup-dataentry">
+                                <input id="input-email" name="email" class="textentry error" type="text" placeholder="Email" value="{{Request::old('email')}}" tabindex="1" />
+                            </div>
+                            <div id="div-email-submsg" class="submsg-cont error">
+                                {!! $errors->signup->first('email') !!}
+                            </div>
+                        @else
                             <div class="signup-dataentry">
                                 <input id="input-email" name="email" class="textentry" type="text" placeholder="Email" value="{{Request::old('email')}}" tabindex="1" />
                             </div>
                             <div id="div-email-submsg" class="submsg-cont">
                                 {!! $msgEmailDefault !!}
                             </div>
-                        @else
-                            <div class="signup-dataentry">
-                                <input id="input-email" name="email" class="textentry error" type="text" placeholder="Email" value="{{Request::old('email')}}" tabindex="1" />
-                            </div>
-                            <div id="div-email-submsg" class="submsg-cont error">
-                                {!! $errors->email->first('message') !!}
-                            </div>
                         @endif
                     </div>
                     <div class="signup-row">
-                        @if ($errors->password->isEmpty())
+                        @if ((!$errors->signup->isEmpty()) && (strlen($errors->signup->first('password')) > 0))
+                            <div class="signup-dataentry">
+                                <input id="input-password" name="password" class="textentry error" type="password" placeholder="Password" value="{{Request::old('password')}}" tabindex="2" />
+                            </div>
+                            <div id="div-password-submsg" class="submsg-cont error">
+                                {!! $errors->signup->first('password') !!}
+                            </div>
+                        @else
                             <div class="signup-dataentry">
                                 <input id="input-password" name="password" class="textentry" type="password" placeholder="Password" value="{{Request::old('password')}}" tabindex="2" />
                             </div>
                             <div id="div-password-submsg" class="submsg-cont">
                                 {!! $msgPasswordDefault !!}
-                            </div>
-                        @else
-                            <div class="signup-dataentry">
-                                <input id="input-password" name="password error" class="textentry error" type="password" placeholder="Password" value="{{Request::old('password')}}" tabindex="2" />
-                            </div>
-                            <div id="div-password-submsg" class="submsg-cont error">
-                                {!! $errors->password->first('message') !!}
                             </div>
                         @endif
                     </div>
@@ -111,44 +111,44 @@ switch ($atype) {
                         Contact details
                     </div>
                     <div class="signup-row">
-                        @if (($errors->firstname->isEmpty()) && ($errors->surname->isEmpty()))
+                        @if ((!$errors->signup->isEmpty()) && ((strlen($errors->signup->first('firstname')) > 0) || (strlen($errors->signup->first('surname')) > 0)))
+                            @if ((strlen($errors->signup->first('firstname')) > 0) && (strlen($errors->signup->first('surname')) > 0))
+                                <div class="signup-dataentry">
+                                    <input id="input-firstname" name="firstname" class="textentry left error" type="text" placeholder="First name" value="{{Request::old('firstname')}}" tabindex="3" />
+                                    <input id="input-surname" name="surname" class="textentry right error" type="text" placeholder="Surname" value="{{Request::old('surname')}}" tabindex="4" />
+                                    <br clear="all"/>
+                                </div>
+                                <div id="div-name-submsg" class="submsg-cont error">
+                                    {!! $errors->signup->first('firstname') !!}
+                                </div>
+                            @elseif (strlen($errors->signup->first('firstname')) > 0)
+                                <div class="signup-dataentry">
+                                    <input id="input-firstname" name="firstname" class="textentry left error" type="text" placeholder="First name" value="{{Request::old('firstname')}}" tabindex="3" />
+                                    <input id="input-surname" name="surname" class="textentry right" type="text" placeholder="Surname" value="{{Request::old('surname')}}" tabindex="4" />
+                                    <br clear="all"/>
+                                </div>
+                                <div id="div-name-submsg" class="submsg-cont error">
+                                    {!! $errors->signup->first('firstname') !!}
+                                </div>
+                            @else
+                                <div class="signup-dataentry">
+                                    <input id="input-firstname" name="firstname" class="textentry left" type="text" placeholder="First name" value="{{Request::old('firstname')}}" tabindex="3" />
+                                    <input id="input-surname" name="surname" class="textentry right error" type="text" placeholder="Surname" value="{{Request::old('surname')}}" tabindex="4" />
+                                    <br clear="all"/>
+                                </div>
+                                <div id="div-name-submsg" class="submsg-cont error right">
+                                    {!! $errors->signup->first('surname') !!}
+                                </div>
+                            @endif
+                        @else
                             <div class="signup-dataentry">
                                 <input id="input-firstname" name="firstname" class="textentry left" type="text" placeholder="First name" value="{{Request::old('firstname')}}" tabindex="3" />
-                                <input id="input-surname" name="surnname" class="textentry right" type="text" placeholder="Surname" value="{{Request::old('surnname')}}" tabindex="4" />
+                                <input id="input-surname" name="surname" class="textentry right" type="text" placeholder="Surname" value="{{Request::old('surname')}}" tabindex="4" />
                                 <br clear="all"/>
                             </div>
                             <div id="div-name-submsg" class="submsg-cont">
                                 {!! $msgNameDefault !!}
                             </div>
-                        @else
-                            @if ((!$errors->firstname->isEmpty()) && (!$errors->surname->isEmpty()))
-                                <div class="signup-dataentry">
-                                    <input id="input-firstname" name="firstname" class="textentry left error" type="text" placeholder="First name" value="{{Request::old('firstname')}}" tabindex="3" />
-                                    <input id="input-surname" name="surnname" class="textentry right error" type="text" placeholder="Surname" value="{{Request::old('surnname')}}" tabindex="4" />
-                                    <br clear="all"/>
-                                </div>
-                                <div id="div-name-submsg" class="submsg-cont error">
-                                    {!! $errors->firstname->first('message') !!}
-                                </div>
-                            @elseif (!$errors->firstname->isEmpty())
-                                <div class="signup-dataentry">
-                                    <input id="input-firstname" name="firstname" class="textentry left error" type="text" placeholder="First name" value="{{Request::old('firstname')}}" tabindex="3" />
-                                    <input id="input-surname" name="surnname" class="textentry right" type="text" placeholder="Surname" value="{{Request::old('surnname')}}" tabindex="4" />
-                                    <br clear="all"/>
-                                </div>
-                                <div id="div-name-submsg" class="submsg-cont error">
-                                    {!! $errors->firstname->first('message') !!}
-                                </div>
-                            @else
-                                <div class="signup-dataentry">
-                                    <input id="input-firstname" name="firstname" class="textentry left" type="text" placeholder="First name" value="{{Request::old('firstname')}}" tabindex="3" />
-                                    <input id="input-surname" name="surnname" class="textentry right error" type="text" placeholder="Surname" value="{{Request::old('surnname')}}" tabindex="4" />
-                                    <br clear="all"/>
-                                </div>
-                                <div id="div-name-submsg" class="submsg-cont error right">
-                                    {!! $errors->surname->first('message') !!}
-                                </div>
-                            @endif
                         @endif
                     </div>
                     <div class="signup-row">
@@ -160,10 +160,10 @@ switch ($atype) {
                     </div>
                     <div class="signup-row">
                         <div class="signup-dataentry">
-                            @if ($errors->country->isEmpty())
-                                <select id="select-country" name="country" tabindex="6">
-                            @else
+                            @if ((!$errors->signup->isEmpty()) && (strlen($errors->signup->first('country')) > 0))
                                 <select id="select-country" name="country" class="error" tabindex="6">
+                            @else
+                                <select id="select-country" name="country" tabindex="6">
                             @endif
                                 <option value="">Country</option>
                                 @foreach ($countries as $country)
@@ -175,13 +175,13 @@ switch ($atype) {
                                 @endforeach
                             </select>
                         </div>
-                        @if ($errors->country->isEmpty())
-                            <div id="div-country-submsg" class="submsg-cont">
-                                {!! $msgCountryDefault !!}
+                        @if ((!$errors->signup->isEmpty()) && (strlen($errors->signup->first('country')) > 0))
+                            <div id="div-country-submsg" class="submsg-cont error">
+                                {!! $errors->signup->first('country') !!}
                             </div>
                         @else
-                            <div id="div-country-submsg" class="submsg-cont error">
-                                {!! $errors->country->first('message') !!}
+                            <div id="div-country-submsg" class="submsg-cont">
+                                {!! $msgCountryDefault !!}
                             </div>
                         @endif
                     </div>
@@ -194,9 +194,32 @@ switch ($atype) {
                     </div>
                     <div class="signup-row">
                         <div class="signup-address">
-                            <p id="p_indiv_name" class="empty">&nbsp;</p>
-                            <p id="p_co_name" class="company empty">&nbsp;</p>
-                            <p id="p_country" class="empty">&nbsp;</p>
+                            @if ((strlen(Request::old('firstname')) > 0) || (strlen(Request::old('surname')) > 0))
+                                @if ((strlen(Request::old('firstname')) > 0) && (strlen(Request::old('surname')) > 0))
+                                    <p id="p_indiv_name">{{Request::old('firstname')}} {{Request::old('surname')}}</p>
+                                @elseif (strlen(Request::old('firstname')) > 0)
+                                    <p id="p_indiv_name">{{Request::old('firstname')}}</p>
+                                @else
+                                    <p id="p_indiv_name">{{Request::old('surname')}}</p>
+                                @endif
+                            @else
+                                <p id="p_indiv_name" class="empty">&nbsp;</p>
+                            @endif
+                            @if (strlen(Request::old('companyname')) > 0)
+                                <p id="p_co_name" class="company">{{Request::old('companyname')}}</p>
+                            @else
+                                <p id="p_co_name" class="company empty">&nbsp;</p>
+                            @endif
+                            @if (strlen(Request::old('country')) > 0)
+                                @foreach ($countries as $country)
+                                    @if (Request::old('country') == $country['iso'])
+                                        <p id="p_country">{{$country['name']}}</p>
+                                        @break
+                                    @endif
+                                @endforeach
+                            @else
+                                <p id="p_country" class="empty">&nbsp;</p>
+                            @endif
                         </div>
                         <div class="signup-orderdetails">
                             <table cellpadding="0" cellspacing="0">
@@ -273,8 +296,14 @@ switch ($atype) {
                                 <div id="div-payment-expirationDate" class="hosted-field"></div>&nbsp;&nbsp;
                                 <div id="div-payment-cvv" class="hosted-field"></div>                                
                             </div>
-                            <div id="div-payment-submsg" class="submsg-cont">
-                            </div>
+                            @if ((!$errors->signup->isEmpty()) && (strlen($errors->signup->first('creditcard')) > 0))
+                                <div id="div-payment-submsg" class="submsg-cont error">
+                                    {!! $errors->signup->first('creditcard') !!}
+                                </div>
+                            @else
+                                <div id="div-payment-submsg" class="submsg-cont">
+                                </div>
+                            @endif
                             <div class="signup-dataentry">
                                 <img width="32" class="payment" src="{{url('images/payment-paypal.png')}}" title="PayPal" alt="Paypal">
                                 <img width="32" class="payment" src="{{url('images/payment-visa.png')}}" title="Visa" alt="Visa">
@@ -294,10 +323,10 @@ switch ($atype) {
                 <div class="section-outer">
                     <div class="signup-row">
                         <div class="signup-terms">
-                            @if ($errors->terms->isEmpty())
-                                <table id="div-table-terms" cellpadding="0" cellspacing="0">
-                            @else
+                            @if ((!$errors->signup->isEmpty()) && (strlen($errors->signup->first('terms')) > 0))
                                 <table id="div-table-terms" cellpadding="0" cellspacing="0" class="error">
+                            @else
+                                <table id="div-table-terms" cellpadding="0" cellspacing="0">
                             @endif
                                 <tbody>
                                     <tr>
@@ -313,13 +342,13 @@ switch ($atype) {
                                 </tbody>
                             </table>
                         </div>
-                        @if ($errors->terms->isEmpty())
-                            <div id="div-terms-submsg" class="submsg-cont">
-                                {!! $msgTermsDefault !!}
+                        @if ((!$errors->signup->isEmpty()) && (strlen($errors->signup->first('terms')) > 0))
+                            <div id="div-terms-submsg" class="submsg-cont error">
+                                {!! $errors->signup->first('terms') !!}
                             </div>
                         @else
-                            <div id="div-terms-submsg" class="submsg-cont error">
-                                {!! $errors->terms->first('message') !!}
+                            <div id="div-terms-submsg" class="submsg-cont">
+                                {!! $msgTermsDefault !!}
                             </div>
                         @endif
                     </div>
@@ -334,13 +363,13 @@ switch ($atype) {
                                 </div>
                             </div>
                         </div>
-                        @if ($errors->placeorder->isEmpty())
+                        @if ($errors->signup->isEmpty())
                             <div id="div-place-order-submsg" class="submsg-cont">
                                 {!! $msgPlaceOrderDefault !!}
                             </div>
                         @else
                             <div id="div-place-order-submsg" class="submsg-cont error">
-                                {!! $errors->placeorder->first('message') !!}
+                                {!! $msgPlaceOrderErrors !!}
                             </div>
                         @endif
                     </div>

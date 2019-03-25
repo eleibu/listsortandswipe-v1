@@ -132,26 +132,6 @@ class Controller_Auth_SignUp extends Controller
 	}
 
 	protected function signup($request) {
-		// RECORD SALES IN DB?
-		// ADD FIELDS TO USER FOR MARKETING?
-			// SALES
-			// PRODUCT UPDATES, LATEST FEATURES, NEW VERSIONS
-			// OTHER COMMUNICATIONS - WHAT ELSE IS THERE?
-		// $result = $this->gateway->transaction()->sale([
-		// 	'amount' => '10.00',
-		// 	'paymentMethodNonce' => $request->input('nonce'),
-		// 	'options' => [
-		// 		'submitForSettlement' => true
-		// 	]
-		// ]);
-  //       return back()
-  //           ->withInput();
-            // ->withErrors(['message' => 'It appears you already have an account.'], 'email')
-            // ->withErrors(['message' => $this->msgPasswordInvalid], 'password')
-            // ->withErrors(['message' => 'Firstname error'], 'firstname')
-            // // ->withErrors(['message' => 'Surname error'], 'surname')
-            // ->withErrors(['message' => 'Country error'], 'country')
-            // ->withErrors(['message' => 'Terms error'], 'terms');
 
 
         if ($request->filled('atype')) {
@@ -160,7 +140,9 @@ class Controller_Auth_SignUp extends Controller
 				$requirePayment = false;
         	}
 
-			$emailMsg = null;
+        	$errors = array();
+
+        	// email
 			if ($request->filled('email')) {
 				$email = trim($request->input('email'));
 
@@ -170,48 +152,137 @@ class Controller_Auth_SignUp extends Controller
 	            ]);
 
 	            if ($validator_emailFormat->fails()) {
-					$emailMsg = $this->msgEmailInvalid;
+					$errors['email'] = $this->msgEmailInvalid;
 	            } else {
 	                $validator_emailUnique = Validator::make($tempArray, [
 	                    'email' => 'unique:users'
 	                ]);
-
 	                if ($validator_emailUnique->fails()) {
-						$emailMsg = 'It appears you already have an account.';
+						$errors['email'] = 'It appears you already have an account.';
 	                }
 	            }
 			} else {
-				$emailMsg = $this->msgEmailNoBlank;
+				$errors['email'] = $this->msgEmailNoBlank;
 			}
 
-			$passwordMsg = null;
+			// password
 			if ($request->filled('password')) {
-				$password = $request->input('password');
-				if (strlen($password) < 6) {
-					$passwordMsg = $this->msgPasswordInvalid;
+				if (strlen($request->input('password')) < 6) {
+					$errors['password'] = $this->msgPasswordInvalid;
 				}
 			} else {
-				$passwordMsg = $this->msgPasswordNoBlank;
+				$errors['password'] = $this->msgPasswordNoBlank;
 			}
 
-			$firstnameMsg = null;
+			// firstname and surname
 			if ($request->filled('firstname')) {
 				$firstname = $request->input('firstname');
 			}
-			$surnameMsg = null;
 			if ($request->filled('surname')) {
 				$surname = $request->input('surname');
 			}
-			if (!isset($firstnameMsg) && !isset($surnameMsg)) {
-				$firstnameMsg = $this->msgNameNoBlankBoth;
-				$surnameMsg = 'dummy';
+			if (!isset($firstname) && !isset($surname)) {
+				$errors['firstname'] = $this->msgNameNoBlankBoth;
+				$errors['surname'] = 'dummy';
 			} else {
-				if (!isset($firstnameMsg)) {
-					$firstnameMsg = $this->msgNameNoBlankFirstname;
-				} else {
-					$surnameMsg = $this->msgNameNoBlankSurname;
+				if (!isset($firstname)) {
+					$errors['firstname'] = $this->msgNameNoBlankFirstname;
+				} else if (!isset($surname)) {
+					$errors['surname'] = $this->msgNameNoBlankSurname;
 				}
 			}
+
+			// country
+			if (!$request->filled('country')) {
+				$errors['country'] = $this->msgCountryNoBlank;
+			}
+
+			// credit card
+			if (!$request->filled('nonce')) {
+				$errors['creditcard'] = 'The credit card could not be processed, please try again.';
+			}
+
+			// terms
+			if (!$request->input('terms')) {
+				$errors['terms'] = $this->msgTermsNoBlank;
+			}
+
+			if (count($errors) > 0) {
+		        return back()
+		            ->withInput()
+		            ->withErrors($errors, 'signup');
+			} else {
+				// RECORD SALES IN DB?
+				// ADD FIELDS TO USER FOR MARKETING?
+				// 	SALES
+				// 	PRODUCT UPDATES, LATEST FEATURES, NEW VERSIONS
+				// 	OTHER COMMUNICATIONS - WHAT ELSE IS THERE?
+				// $result = $this->gateway->transaction()->sale([
+				// 	'amount' => '10.00',
+				// 	'paymentMethodNonce' => $request->input('nonce'),
+				// 	'options' => [
+				// 		'submitForSettlement' => true
+				// 	]
+				// ]);
+		  //       return back()
+		  //           ->withInput();
+
+
+	            $vcode = str_random(30);
+
+	            // NEED TO ENSURE THESE ARE SAVED IN DB AS UTC TIMES - see 'account_expires_at' for my account
+
+	            $datetimeOneYear = (new DateTime('now', new DateTimeZone('UTC')))->add(new DateInterval('P1Y'))->format('Y-m-d H:i:s');
+	            $datetime30Days = (new DateTime('now', new DateTimeZone('UTC')))->add(new DateInterval('P30D'))->format('Y-m-d H:i:s');
+
+	            // only require account verification for free account
+
+				// $user = new User;
+				// $user->name = 'Elliot';
+				// $user->surname = 'Leibu';
+				// $user->email = $email;
+
+	            // $user->verified = false;
+	            // $user->verification_code = $vcode;
+
+				// $user->password = bcrypt($password);
+				// $user->company_name = 'Indysoft Pty Ltd';
+				// $user->country_code = 'AUS';
+				// $user->domain_ids = json_encode(array());
+				// $user->account_type = 2;
+				// $user->account_expires_at = $datetimeOneYear;
+				// $user->domain_count_base = 5;
+				// $user->domain_count_additional = 0;
+
+				// $success = false;
+
+				// DB::beginTransaction();
+				// try {
+				// 	$user->save();
+
+				// 	$success = true;
+				// } catch(\Exception $e) {
+				//    DB::rollback();
+				//    throw $e;
+				// }
+				// DB::commit();
+
+	   //          if ($success) {
+	   //              // Mail::to($email)->send(new SignedUp($vcode));
+
+	   //              Auth::attempt(['email' => $email, 'password' => $password], false);
+
+				// 	return $this->getReturnView('accountcreated');
+	   //          } else {
+			 //        return back()
+			 //            ->withInput()
+			 //            ->withErrors(['message' => 'An error occured. Please try again.'], 'main');
+	   //          }
+
+
+				return $this->getReturnView('accountcreated', null);
+			}
+
 
 
 
@@ -241,57 +312,7 @@ class Controller_Auth_SignUp extends Controller
 		//             ->withErrors(['message' => $passwordMsg], 'password');
 		// 	}
 		// } else {
-  //           $vcode = str_random(30);
 
-  //           // NEED TO ENSURE THESE ARE SAVED IN DB AS UTC TIMES - see 'account_expires_at' for my account
-
-  //           $datetimeOneYear = (new DateTime('now', new DateTimeZone('UTC')))->add(new DateInterval('P1Y'))->format('Y-m-d H:i:s');
-  //           $datetime30Days = (new DateTime('now', new DateTimeZone('UTC')))->add(new DateInterval('P30D'))->format('Y-m-d H:i:s');
-
-  //           // only require account verification for free account
-
-		// 	// $user = new User;
-		// 	// $user->name = 'Elliot';
-		// 	// $user->surname = 'Leibu';
-		// 	// $user->email = $email;
-
-  //           // $user->verified = false;
-  //           // $user->verification_code = $vcode;
-
-		// 	// $user->password = bcrypt($password);
-		// 	// $user->company_name = 'Indysoft Pty Ltd';
-		// 	// $user->country_code = 'AUS';
-		// 	// $user->domain_ids = json_encode(array());
-		// 	// $user->account_type = 2;
-		// 	// $user->account_expires_at = $datetimeOneYear;
-		// 	// $user->domain_count_base = 5;
-		// 	// $user->domain_count_additional = 0;
-
-		// 	$success = false;
-
-		// 	DB::beginTransaction();
-		// 	try {
-		// 		$user->save();
-
-		// 		$success = true;
-		// 	} catch(\Exception $e) {
-		// 	   DB::rollback();
-		// 	   throw $e;
-		// 	}
-		// 	DB::commit();
-
-  //           if ($success) {
-  //               // Mail::to($email)->send(new SignedUp($vcode));
-
-  //               Auth::attempt(['email' => $email, 'password' => $password], false);
-
-		// 		return $this->getReturnView('accountcreated');
-  //           } else {
-		//         return back()
-		//             ->withInput()
-		//             ->withErrors(['message' => 'An error occured. Please try again.'], 'main');
-  //           }
-		// }
 	}
 
 	protected function resendlink($request) {

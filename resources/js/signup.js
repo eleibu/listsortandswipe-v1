@@ -702,7 +702,7 @@ function validateAndSubmit() {
 					}
 
 					inputNonce.value = payload.nonce;
-
+					document.getElementById('form').submit();
 		        });
 			} else {
 
