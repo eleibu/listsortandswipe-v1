@@ -177,6 +177,10 @@ input.textentry {
 						select.error {
 							border: 1px solid #FF3B0A;
 						}
+
+						img.payment {
+							margin-right: 4px;
+						}
 					}
 
 					div.hosted-field {
@@ -188,7 +192,7 @@ input.textentry {
 						font-weight: 600;
 						font-size: 14px;
 						line-height: 20px;
-						margin-bottom: 12px;
+						// margin-bottom: 12px;
 						background-color: #FFFFFF;
 						border: 1px solid #DDDDDD;
 					}

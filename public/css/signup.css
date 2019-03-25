@@ -377,6 +377,10 @@ input.textentry {
   border: 1px solid #FF3B0A;
 }
 
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row div.signup-dataentry img.payment {
+  margin-right: 4px;
+}
+
 #pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row div.hosted-field {
   height: 50px;
   -webkit-box-sizing: border-box;
@@ -388,7 +392,6 @@ input.textentry {
   font-weight: 600;
   font-size: 14px;
   line-height: 20px;
-  margin-bottom: 12px;
   background-color: #FFFFFF;
   border: 1px solid #DDDDDD;
 }

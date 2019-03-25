@@ -137,15 +137,15 @@ class Controller_Auth_SignUp extends Controller
 			// SALES
 			// PRODUCT UPDATES, LATEST FEATURES, NEW VERSIONS
 			// OTHER COMMUNICATIONS - WHAT ELSE IS THERE?
-		$result = $this->gateway->transaction()->sale([
-			'amount' => '10.00',
-			'paymentMethodNonce' => $request->input('nonce'),
-			'options' => [
-				'submitForSettlement' => true
-			]
-		]);
-        return back()
-            ->withInput();
+		// $result = $this->gateway->transaction()->sale([
+		// 	'amount' => '10.00',
+		// 	'paymentMethodNonce' => $request->input('nonce'),
+		// 	'options' => [
+		// 		'submitForSettlement' => true
+		// 	]
+		// ]);
+  //       return back()
+  //           ->withInput();
             // ->withErrors(['message' => 'It appears you already have an account.'], 'email')
             // ->withErrors(['message' => $this->msgPasswordInvalid], 'password')
             // ->withErrors(['message' => 'Firstname error'], 'firstname')
@@ -153,39 +153,77 @@ class Controller_Auth_SignUp extends Controller
             // ->withErrors(['message' => 'Country error'], 'country')
             // ->withErrors(['message' => 'Terms error'], 'terms');
 
-		// $emailMsg = null;
-		// if ($request->filled('email')) {
-		// 	$email = trim($request->input('email'));
 
-  //           $tempArray = array("email" => $email);
-  //           $validator_emailFormat = Validator::make($tempArray, [
-  //               'email' => 'email'
-  //           ]);
+        if ($request->filled('atype')) {
+        	$requirePayment = true;
+        	if ($requirePayment == 'free') {
+				$requirePayment = false;
+        	}
 
-  //           if ($validator_emailFormat->fails()) {
-		// 		$emailMsg = $this->msgEmailInvalid;
-  //           } else {
-  //               $validator_emailUnique = Validator::make($tempArray, [
-  //                   'email' => 'unique:users'
-  //               ]);
+			$emailMsg = null;
+			if ($request->filled('email')) {
+				$email = trim($request->input('email'));
 
-  //               if ($validator_emailUnique->fails()) {
-		// 			$emailMsg = 'It appears you already have an account.';
-  //               }
-  //           }
-		// } else {
-		// 	$emailMsg = $this->msgEmailNoBlank;
-		// }
+	            $tempArray = array("email" => $email);
+	            $validator_emailFormat = Validator::make($tempArray, [
+	                'email' => 'email'
+	            ]);
 
-		// $passwordMsg = null;
-		// if ($request->filled('password')) {
-		// 	$password = $request->input('password');
-		// 	if (strlen($password) < 6) {
-		// 		$passwordMsg = $this->msgPasswordInvalid;
-		// 	}
-		// } else {
-		// 	$passwordMsg = $this->msgPasswordNoBlank;
-		// }
+	            if ($validator_emailFormat->fails()) {
+					$emailMsg = $this->msgEmailInvalid;
+	            } else {
+	                $validator_emailUnique = Validator::make($tempArray, [
+	                    'email' => 'unique:users'
+	                ]);
+
+	                if ($validator_emailUnique->fails()) {
+						$emailMsg = 'It appears you already have an account.';
+	                }
+	            }
+			} else {
+				$emailMsg = $this->msgEmailNoBlank;
+			}
+
+			$passwordMsg = null;
+			if ($request->filled('password')) {
+				$password = $request->input('password');
+				if (strlen($password) < 6) {
+					$passwordMsg = $this->msgPasswordInvalid;
+				}
+			} else {
+				$passwordMsg = $this->msgPasswordNoBlank;
+			}
+
+			$firstnameMsg = null;
+			if ($request->filled('firstname')) {
+				$firstname = $request->input('firstname');
+			}
+			$surnameMsg = null;
+			if ($request->filled('surname')) {
+				$surname = $request->input('surname');
+			}
+			if (!isset($firstnameMsg) && !isset($surnameMsg)) {
+				$firstnameMsg = $this->msgNameNoBlankBoth;
+				$surnameMsg = 'dummy';
+			} else {
+				if (!isset($firstnameMsg)) {
+					$firstnameMsg = $this->msgNameNoBlankFirstname;
+				} else {
+					$surnameMsg = $this->msgNameNoBlankSurname;
+				}
+			}
+
+
+
+
+
+        } else {
+
+        	// NO atype - WHAT TO DO HERE?
+
+        }
+
+
 
 		// if (isset($emailMsg) || isset($passwordMsg)) {
 		// 	if (isset($emailMsg) && isset($passwordMsg)) {

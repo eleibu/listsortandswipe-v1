@@ -28,14 +28,6 @@ var divCountrySubmsg = document.getElementById('div-country-submsg');
 var pIndivName = document.getElementById('p_indiv_name');
 var pCoName = document.getElementById('p_co_name');
 var pCountry = document.getElementById('p_country');
-var inputDiscountCode = document.getElementById('input-discountcode');
-var divDiscountSubmsg = document.getElementById('div-discount-submsg');
-var spinnerContDiscount = document.getElementById('div-spinner-cont-discount');
-var divApplyDiscount = document.getElementById('div-apply-discount');
-var divPaymentNumber = document.getElementById('div-payment-number');
-var divPaymentExpirationDate = document.getElementById('div-payment-expirationDate');
-var divPaymentCVV = document.getElementById('div-payment-cvv');
-var divPaymentSubmsg = document.getElementById('div-payment-submsg');
 var divTableTerms = document.getElementById('div-table-terms');
 var inputTerms = document.getElementById('input-terms');
 var divTermsSubmsg = document.getElementById('div-terms-submsg');
@@ -43,99 +35,41 @@ var divPlaceOrder = document.getElementById('div-place-order');
 var spinnerContPlaceOrder = document.getElementById('div-spinner-cont-placeorder');
 var divPlaceOrderSubmsg = document.getElementById('div-place-order-submsg');
 
+var requirePayment = true;
+var inputAtype = document.getElementById('input-atype');
+if (inputAtype && inputAtype.value == 'free') {
+	requirePayment = false;
+}
+
+if (requirePayment) {
+	var inputClientToken = document.getElementById('input-client-token');
+	var inputNonce = document.getElementById('input-nonce');
+	var inputDiscountCode = document.getElementById('input-discountcode');
+	var divDiscountSubmsg = document.getElementById('div-discount-submsg');
+	var spinnerContDiscount = document.getElementById('div-spinner-cont-discount');
+	var divApplyDiscount = document.getElementById('div-apply-discount');
+	var divPaymentNumber = document.getElementById('div-payment-number');
+	var divPaymentExpirationDate = document.getElementById('div-payment-expirationDate');
+	var divPaymentCVV = document.getElementById('div-payment-cvv');
+	var divPaymentSubmsg = document.getElementById('div-payment-submsg');
+}
 
 
 
-
-if ((maskCont) && (inputEmail) && (divEmailSubmsg) && (inputPassword) && (divPasswordSubmsg) && (inputFirstname) && (inputSurname) && (divNameSubmsg) && (inputCompanyname) && (selectCountry) && (divCountrySubmsg) && (pIndivName) && (pCoName) && (pCountry) && (inputDiscountCode) && (divDiscountSubmsg) && (spinnerContDiscount) && (divApplyDiscount) && (divPaymentNumber) && (divPaymentExpirationDate) && (divPaymentCVV) && (divPaymentSubmsg) && (divTableTerms) && (inputTerms) && (divTermsSubmsg) && (divPlaceOrder) && (spinnerContPlaceOrder) && (divPlaceOrderSubmsg)) {
-
+//  NEED TO TEST THIS PAGE WIHTOUT INTERNET CONNECTION?
 
 
-	client.create({
-		authorization: document.getElementById('input-client-token').value
-	}).then(function (clientInstance) {
-		var options = {
-			client: clientInstance,
-			styles: {
-				'input': {
-					'font-size': '16px',
-					'font-family': 'courier, monospace',
-					'font-weight': 'lighter',
-					'color': '#CCCCCC'
-				},
-				':focus': {
-					'color': '#222222'
-				},
-				'.valid': {
-					'color': '#66CC33'
-				}
-			},
-			fields: {
-				number: {
-					selector: '#' + divPaymentNumber.id,
-					placeholder: '4111 1111 1111 1111'
-				},
-				expirationDate: {
-					selector: '#' + divPaymentExpirationDate.id,
-					placeholder: 'MM/YYYY'
-				},
-				cvv: {
-					selector: '#' + divPaymentCVV.id,
-					placeholder: 'CVV'
-				}
-			}
-		};
 
-		return hostedFields.create(options);
-	}).then(function (instance) {
-		hostedFieldsInstance = instance;
+if ((maskCont) && (inputEmail) && (divEmailSubmsg) && (inputPassword) && (divPasswordSubmsg) && (inputFirstname) && (inputSurname) && (divNameSubmsg) && (inputCompanyname) && (selectCountry) && (divCountrySubmsg) && (pIndivName) && (pCoName) && (pCountry) && (divTableTerms) && (inputTerms) && (divTermsSubmsg) && (divPlaceOrder) && (spinnerContPlaceOrder) && (divPlaceOrderSubmsg)) {
+	setupNonPayment();
 
-		hostedFieldsInstance.on('focus', function (event) {
+	if ((inputClientToken) && (inputDiscountCode) && (divDiscountSubmsg) && (spinnerContDiscount) && (divApplyDiscount) && (divPaymentNumber) && (divPaymentExpirationDate) && (divPaymentCVV) && (divPaymentSubmsg)) {
+		setupPayment();
+	}
+}
 
-
-			// CHANGE THE FOLLOWING TO USE divPaymentNumber, ETC
-			// SEE ALSO '//@@' BELOW
-
-
-			var div = document.getElementById('div-payment-' + event.emittedBy);
-			if (div) {
-				div.className = classNames({
-					'hosted-field' : true,
-					'focus' : true
-				});
-			}
-			hidePlaceOrderSubmsg();
-		});
-
-		hostedFieldsInstance.on('blur', function (event) {
-
-
-			// CHANGE THE FOLLOWING TO USE divPaymentNumber, ETC
-
-
-			var div = document.getElementById('div-payment-' + event.emittedBy);
-			if (div) {
-				div.className = classNames({
-					'hosted-field' : true
-				});
-			}
-			hidePlaceOrderSubmsg();
-		});
-	}).catch(function (err) {
-		// WHAT SHOULD WE DO IF hostedFields CAN'T BE CREATED?
-		// console.log(err);
-		// var teardown = function (event) {
-		// 	event.preventDefault();
-		// 	alert('Submit your nonce to your server here!');
-		// 	hostedFieldsInstance.teardown(function () {
-		// 		createHostedFields(clientInstance);
-		// 		form.removeEventListener('submit', teardown, false);
-		// 	});
-		// };
-
-		// form.addEventListener('submit', teardown, false);
-	});
-
+function setupNonPayment() {
+	// email
 	inputEmail.addEventListener("focus", function(e) {
 		inputEmail.className = classNames({
 			'textentry' : true,
@@ -167,6 +101,7 @@ if ((maskCont) && (inputEmail) && (divEmailSubmsg) && (inputPassword) && (divPas
 		}
 	});
 
+	// password
 	inputPassword.addEventListener("focus", function(e) {
 		inputPassword.className = classNames({
 			'textentry' : true,
@@ -321,6 +256,25 @@ if ((maskCont) && (inputEmail) && (divEmailSubmsg) && (inputPassword) && (divPas
 		}
 	});
 
+	// terms
+	inputTerms.addEventListener('change', function() {
+		if (inputTerms.checked) {
+			divTableTerms.className = classNames({});
+			divTermsSubmsg.innerHTML = msgTermsDefault;
+			divTermsSubmsg.className = classNames({
+				'submsg-cont' : true
+			});
+			hidePlaceOrderSubmsg();
+		}
+	});
+
+	// place order
+	divPlaceOrder.addEventListener("click", function() {
+		validateAndSubmit();
+	});
+}
+
+function setupPayment() {
 	// discount
 	inputDiscountCode.addEventListener("focus", function(e) {
 		inputDiscountCode.className = classNames({
@@ -382,21 +336,75 @@ if ((maskCont) && (inputEmail) && (divEmailSubmsg) && (inputPassword) && (divPas
 		}
 	});
 
-	// terms
-	inputTerms.addEventListener('change', function() {
-		if (inputTerms.checked) {
-			divTableTerms.className = classNames({});
-			divTermsSubmsg.innerHTML = msgTermsDefault;
-			divTermsSubmsg.className = classNames({
+	// payment
+	client.create({
+		authorization: inputClientToken.value
+	}).then(function (clientInstance) {
+		var options = {
+			client: clientInstance,
+			styles: {
+				'input': {
+					'font-size': '16px',
+					'font-family': 'courier, monospace',
+					'font-weight': 'lighter',
+					'color': '#CCCCCC'
+				},
+				':focus': {
+					'color': '#222222'
+				},
+				'.valid': {
+					'color': '#222222'
+				}
+			},
+			fields: {
+				number: {
+					selector: '#' + divPaymentNumber.id,
+					placeholder: '4111 1111 1111 1111'
+				},
+				expirationDate: {
+					selector: '#' + divPaymentExpirationDate.id,
+					placeholder: 'MM/YYYY'
+				},
+				cvv: {
+					selector: '#' + divPaymentCVV.id,
+					placeholder: 'CVV'
+				}
+			}
+		};
+		return hostedFields.create(options);
+	}).then(function (instance) {
+		hostedFieldsInstance = instance;
+
+		hostedFieldsInstance.on('focus', function (event) {
+			setClassesOnHostedFieldFocus(event.emittedBy);
+			divPaymentSubmsg.innerHTML = '';
+			divPaymentSubmsg.className = classNames({
 				'submsg-cont' : true
 			});
 			hidePlaceOrderSubmsg();
-		}
-	});
+		});
 
-	// place order
-	divPlaceOrder.addEventListener("click", function() {
-		validateAndSubmit();
+		hostedFieldsInstance.on('blur', function (event) {
+			setClassesOnHostedFieldBlur();
+			divPaymentSubmsg.innerHTML = '';
+			divPaymentSubmsg.className = classNames({
+				'submsg-cont' : true
+			});
+			hidePlaceOrderSubmsg();
+		});
+	}).catch(function (err) {
+		// WHAT SHOULD WE DO IF hostedFields CAN'T BE CREATED?
+		// console.log(err);
+		// var teardown = function (event) {
+		// 	event.preventDefault();
+		// 	alert('Submit your nonce to your server here!');
+		// 	hostedFieldsInstance.teardown(function () {
+		// 		createHostedFields(clientInstance);
+		// 		form.removeEventListener('submit', teardown, false);
+		// 	});
+		// };
+
+		// form.addEventListener('submit', teardown, false);
 	});
 }
 
@@ -613,9 +621,97 @@ function validateAndSubmit() {
 		});
 	}
 
-	if ((emailOk) && (passwordOk) && (firstnameOk) && (surnameOk) && (countryOk) && (termsOk)) {
+	// if ((emailOk) && (passwordOk) && (firstnameOk) && (surnameOk) && (countryOk) && (termsOk)) {
+	if (true) {
 		hidePlaceOrderSubmsg();
-		if (hostedFieldsInstance != null) {
+
+		if (requirePayment) {
+			if (hostedFieldsInstance != null) {
+				maskCont.className = classNames({
+					'show' : true
+				});
+				spinnerContPlaceOrder.className = classNames({
+					'spinner-cont' : true,
+					'spinning' : true
+				});
+		        hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
+					if (tokenizeErr) {
+						maskCont.className = classNames({});
+						spinnerContPlaceOrder.className = classNames({
+							'spinner-cont' : true
+						});
+
+						switch (tokenizeErr.code) {
+							case 'HOSTED_FIELDS_FIELDS_EMPTY':
+								divPaymentNumber.className = classNames({
+									'hosted-field' : true,
+									'error' : true
+								});
+								divPaymentExpirationDate.className = classNames({
+									'hosted-field' : true,
+									'error' : true
+								});
+								divPaymentCVV.className = classNames({
+									'hosted-field' : true,
+									'error' : true
+								});
+								divPaymentSubmsg.innerHTML = 'Payment details can&#39;t be blank.';
+								break;
+							case 'HOSTED_FIELDS_FIELDS_INVALID':
+								if (tokenizeErr.details.invalidFieldKeys.includes('number')) {
+									divPaymentNumber.className = classNames({
+										'hosted-field' : true,
+										'error' : true
+									});
+								}
+								if (tokenizeErr.details.invalidFieldKeys.includes('expirationDate')) {
+									divPaymentExpirationDate.className = classNames({
+										'hosted-field' : true,
+										'error' : true
+									});
+								}
+								if (tokenizeErr.details.invalidFieldKeys.includes('cvv')) {
+									divPaymentCVV.className = classNames({
+										'hosted-field' : true,
+										'error' : true
+									});
+								}
+								divPaymentSubmsg.innerHTML = 'The supplied credit card details are invalid.';
+								break;
+							case 'HOSTED_FIELDS_TOKENIZATION_CVV_VERIFICATION_FAILED':
+								divPaymentCVV.className = classNames({
+									'hosted-field' : true,
+									'error' : true
+								});
+								divPaymentSubmsg.innerHTML = 'The credit card CVV is invalid.';
+								break;
+							case 'HOSTED_FIELDS_TOKENIZATION_NETWORK_ERROR':
+								divPaymentSubmsg.innerHTML = 'Can&#39;t connect to payment server, please try again.';
+								break;
+							default:
+								divPaymentSubmsg.innerHTML = 'A payment error occurred, please try again.';
+						}
+
+						divPaymentSubmsg.className = classNames({
+							'submsg-cont' : true,
+							'error' : true
+						});
+
+						showPlaceOrderSubmsg();
+						return;
+					}
+
+					inputNonce.value = payload.nonce;
+
+		        });
+			} else {
+
+
+				// WHAT SHOULD WE DO HERE?
+
+
+			}
+		} else {
 			maskCont.className = classNames({
 				'show' : true
 			});
@@ -623,101 +719,66 @@ function validateAndSubmit() {
 				'spinner-cont' : true,
 				'spinning' : true
 			});
-	        hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
-				if (tokenizeErr) {
-					switch (tokenizeErr.code) {
-						case 'HOSTED_FIELDS_FIELDS_EMPTY':
-							document.getElementById('div-payment-number').className = classNames({
-
-							});
-							// occurs when none of the fields are filled in
-							console.error('All fields are empty! Please fill out the form.');
-							break;
-						case 'HOSTED_FIELDS_FIELDS_INVALID':
-							// occurs when certain fields do not pass client side validation
-							console.error('Some fields are invalid:', tokenizeErr.details.invalidFieldKeys);
-
-							// you can also programtically access the field containers for the invalid fields
-							tokenizeErr.details.invalidFields.forEach(function (fieldContainer) {
-							  fieldContainer.className = 'invalid';
-							});
-							break;
-						case 'HOSTED_FIELDS_TOKENIZATION_FAIL_ON_DUPLICATE':
-							// occurs when:
-							//   * the client token used for client authorization was generated
-							//     with a customer ID and the fail on duplicate payment method
-							//     option is set to true
-							//   * the card being tokenized has previously been vaulted (with any customer)
-							// See: https://developers.braintreepayments.com/reference/request/client-token/generate/#options.fail_on_duplicate_payment_method
-							console.error('This payment method already exists in your vault.');
-							break;
-						case 'HOSTED_FIELDS_TOKENIZATION_CVV_VERIFICATION_FAILED':
-							// occurs when:
-							//   * the client token used for client authorization was generated
-							//     with a customer ID and the verify card option is set to true
-							//     and you have credit card verification turned on in the Braintree
-							//     control panel
-							//   * the cvv does not pass verfication (https://developers.braintreepayments.com/reference/general/testing/#avs-and-cvv/cid-responses)
-							// See: https://developers.braintreepayments.com/reference/request/client-token/generate/#options.verify_card
-							console.error('CVV did not pass verification');
-							break;
-						case 'HOSTED_FIELDS_FAILED_TOKENIZATION':
-							// occurs for any other tokenization error on the server
-							console.error('Tokenization failed server side. Is the card valid?');
-							break;
-						case 'HOSTED_FIELDS_TOKENIZATION_NETWORK_ERROR':
-							// occurs when the Braintree gateway cannot be contacted
-							console.error('Network error occurred when tokenizing.');
-							break;
-						default:
-							console.error('Something bad happened!', tokenizeErr);
-					}
-
-					// HOW DO WE DISPLAY AN ERROR HERE?
-
-					maskCont.className = classNames({});
-					spinnerContPlaceOrder.className = classNames({
-						'spinner-cont' : true
-					});
-
-
-					//@@
-					divPaymentSubmsg.innerHTML = '';	// MOVE THIS TO ABOVE
-					divPaymentSubmsg.className = classNames({			
-						'submsg-cont' : true,
-						'error' : true
-					});
-
-
-
-					divPlaceOrderSubmsg.innerHTML = msgPlaceOrderErrors;
-					divPlaceOrderSubmsg.className = classNames({
-						'submsg-cont' : true,
-						'error' : true
-					});
-
-					return;
-				}
-
-
-
-				document.getElementById('input-nonce').value = payload.nonce;
-				document.getElementById('form').submit();
-	        });
+			document.getElementById('form').submit();
 		}
 	} else {
 		divPlaceOrderSubmsg.innerHTML = msgPlaceOrderErrors;
-		divPlaceOrderSubmsg.className = classNames({
-			'submsg-cont' : true,
-			'error' : true
+		showPlaceOrderSubmsg();
+	}
+}
+
+function setClassesOnHostedFieldFocus(emittedBy) {
+	if (emittedBy == 'number') {
+		divPaymentNumber.className = classNames({
+			'hosted-field' : true,
+			'focus' : true
+		});
+	} else {
+		divPaymentNumber.className = classNames({
+			'hosted-field' : true
+		});
+	}
+	if (emittedBy == 'expirationDate') {
+		divPaymentExpirationDate.className = classNames({
+			'hosted-field' : true,
+			'focus' : true
+		});
+	} else {
+		divPaymentExpirationDate.className = classNames({
+			'hosted-field' : true
+		});
+	}
+	if (emittedBy == 'cvv') {
+		divPaymentCVV.className = classNames({
+			'hosted-field' : true,
+			'focus' : true
+		});
+	} else {
+		divPaymentCVV.className = classNames({
+			'hosted-field' : true
 		});
 	}
 }
 
-var msgPaymentDefault = '';
-var msgPaymentNoBlank = 'Payment details can&#39;t be blank';
+function setClassesOnHostedFieldBlur() {
+	divPaymentNumber.className = classNames({
+		'hosted-field' : true
+	});
+	divPaymentExpirationDate.className = classNames({
+		'hosted-field' : true
+	});
+	divPaymentCVV.className = classNames({
+		'hosted-field' : true
+	});
+}
 
-
+function showPlaceOrderSubmsg() {
+	divPlaceOrderSubmsg.innerHTML = msgPlaceOrderDefault;
+	divPlaceOrderSubmsg.className = classNames({
+		'submsg-cont' : true,
+		'error' : true
+	});
+}
 
 function hidePlaceOrderSubmsg() {
 	divPlaceOrderSubmsg.innerHTML = msgPlaceOrderDefault;

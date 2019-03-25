@@ -44,8 +44,6 @@ switch ($atype) {
 
 @section('content')
 @if ($view == 'signup')
-    <input type="hidden" name="action" value="signup" />
-    <input type="hidden" name="atype" value="{{$atype}}" />
     <div class="section-cont">
         <div class="section-outer">
             <div class="plan">
@@ -64,6 +62,8 @@ switch ($atype) {
     <form id="form" method="POST" action="{{url('/signup')}}">
         @csrf
         <fieldset>
+            <input type="hidden" name="action" value="signup" />
+            <input type="hidden" id="input-atype" name="atype" value="{{$atype}}" />
             <div class="section-cont grey">
                 <div class="section-outer">
                     <div class="title">
@@ -265,10 +265,26 @@ switch ($atype) {
                         <div class="signup-row">
                             <input id="input-client-token" type="hidden" name="client-token" value="{{$clientToken}}"/>
                             <input id="input-nonce" type="hidden" name="nonce" value=""/>
-                            <div id="div-payment-number" class="hosted-field"></div>
-                            <div id="div-payment-expirationDate" class="hosted-field"></div>&nbsp;&nbsp;
-                            <div id="div-payment-cvv" class="hosted-field"></div>
+                            <div class="signup-dataentry">
+                                <div id="div-payment-number" class="hosted-field"></div>                                
+                            </div>
+                            <br/>
+                            <div class="signup-dataentry">
+                                <div id="div-payment-expirationDate" class="hosted-field"></div>&nbsp;&nbsp;
+                                <div id="div-payment-cvv" class="hosted-field"></div>                                
+                            </div>
                             <div id="div-payment-submsg" class="submsg-cont">
+                            </div>
+                            <div class="signup-dataentry">
+                                <img width="32" class="payment" src="{{url('images/payment-paypal.png')}}" title="PayPal" alt="Paypal">
+                                <img width="32" class="payment" src="{{url('images/payment-visa.png')}}" title="Visa" alt="Visa">
+                                <img width="32" class="payment" src="{{url('images/payment-mastercard.png')}}" title="Mastercard" alt="Mastercard">
+                                <img width="32" class="payment" src="{{url('images/payment-amex.png')}}" title="American Express" alt="Amex">
+                                <img width="32" class="payment" src="{{url('images/payment-discover.png')}}" title="Discover" alt="Discover">
+                                <img width="32" class="payment" src="{{url('images/payment-dinersclub.png')}}" title="Diner's club" alt="Diners">
+                                <img width="32" class="payment" src="{{url('images/payment-jcb.png')}}" title="JCB" alt="JCB">
+                                <img width="32" class="payment" src="{{url('images/payment-maestro.png')}}" title="Maestro" alt="Maestro">
+                                <img width="32" class="payment" src="{{url('images/payment-maestrouk.png')}}" title="Maestro UK" alt="Maestro UK">
                             </div>
                         </div>
                     </div>
