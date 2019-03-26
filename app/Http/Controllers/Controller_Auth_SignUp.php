@@ -12,6 +12,8 @@ use Validator;
 use Illuminate\Support\Facades\Mail;
 // use App\Mail\SignedUp;
 // use App\Mail\ResendActivationLink;
+use App\Product;
+use App\Sale;
 
 use DateTime;
 use DateTimeZone;
@@ -132,8 +134,6 @@ class Controller_Auth_SignUp extends Controller
 	}
 
 	protected function signup($request) {
-
-
         if ($request->filled('atype')) {
         	$requirePayment = true;
         	if ($requirePayment == 'free') {
@@ -198,7 +198,7 @@ class Controller_Auth_SignUp extends Controller
 			}
 
 			// credit card
-			if (!$request->filled('nonce')) {
+			if (($requirePayment) && (!$request->filled('nonce'))) {
 				$errors['creditcard'] = 'The credit card could not be processed, please try again.';
 			}
 
@@ -212,11 +212,21 @@ class Controller_Auth_SignUp extends Controller
 		            ->withInput()
 		            ->withErrors($errors, 'signup');
 			} else {
-				// RECORD SALES IN DB?
-				// ADD FIELDS TO USER FOR MARKETING?
-				// 	SALES
-				// 	PRODUCT UPDATES, LATEST FEATURES, NEW VERSIONS
-				// 	OTHER COMMUNICATIONS - WHAT ELSE IS THERE?
+				// PRODUCTS
+					// id, description, currency, price
+						// Free trial - 30 day licence ($0)
+						// Basic - 12 month licence ($36)
+						// Professional - 12 month licence ($108)
+						// Enterprise - 12 month licence ($648)
+						// Additional domain - basic ($36)
+						// Additional domain - professional ($21.60)
+						// Additional domain - enterprise ($18.50)
+
+				// SALES
+					// id, date, user_id, product_id, country, currency, discount, price_orig, price_after_discount
+
+
+
 				// $result = $this->gateway->transaction()->sale([
 				// 	'amount' => '10.00',
 				// 	'paymentMethodNonce' => $request->input('nonce'),
