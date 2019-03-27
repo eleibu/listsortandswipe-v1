@@ -58,16 +58,16 @@
                 <td class="label">
                 </td>
                 <td class="button">
-                    <a class="button-word-cont green" href="{{ url('/signup?atype=free') }}" title="">Try it</a>
+                    <a class="button-word-cont green" href="{{ url('/signup?pid=BBCE2AC1-35DA-4D86-8B20-1411A5C553E2') }}" title="">Try it</a>
                 </td>
                 <td class="button">
-                    <a class="button-word-cont grey" href="{{ url('/signup?atype=basic') }}" title="">Buy now</a>
+                    <a class="button-word-cont grey" href="{{ url('/signup?pid=8126D38E-F031-4956-B6C6-DD040E1D2776') }}" title="">Buy now</a>
                 </td>
                 <td class="button">
-                    <a class="button-word-cont grey" href="{{ url('/signup?atype=professional') }}" title="">Buy now</a>
+                    <a class="button-word-cont grey" href="{{ url('/signup?pid=27349E50-2E5D-4290-A6C1-17587BEA5E35') }}" title="">Buy now</a>
                 </td>
                 <td class="button">
-                    <a class="button-word-cont grey" href="{{ url('/signup?atype=enterprise') }}" title="">Buy now</a>
+                    <a class="button-word-cont grey" href="{{ url('/signup?pid=E2866B2E-BB05-41B7-B001-C3AEEC6E51FB') }}" title="">Buy now</a>
                 </td>
             </tr>
             <tr>
@@ -207,7 +207,7 @@
             </tr>
             <tr>
                 <td class="button" colspan="2">
-                    <a class="button-word-cont green" href="" title="">Try it</a>
+                    <a class="button-word-cont green" href="{{ url('/signup?pid=BBCE2AC1-35DA-4D86-8B20-1411A5C553E2') }}" title="">Try it</a>
                 </td>
             </tr>
             <tr>
@@ -284,7 +284,7 @@
             </tr>
             <tr>
                 <td class="button" colspan="2">
-                    <a class="button-word-cont grey" href="" title="">Buy now</a>
+                    <a class="button-word-cont grey" href="{{ url('/signup?pid=8126D38E-F031-4956-B6C6-DD040E1D2776') }}" title="">Buy now</a>
                 </td>
             </tr>
             <tr>
@@ -361,7 +361,7 @@
             </tr>
             <tr>
                 <td class="button" colspan="2">
-                    <a class="button-word-cont grey" href="" title="">Buy now</a>
+                    <a class="button-word-cont grey" href="{{ url('/signup?pid=27349E50-2E5D-4290-A6C1-17587BEA5E35') }}" title="">Buy now</a>
                 </td>
             </tr>
             <tr>
@@ -438,7 +438,7 @@
             </tr>
             <tr>
                 <td class="button" colspan="2">
-                    <a class="button-word-cont grey" href="" title="">Buy now</a>
+                    <a class="button-word-cont grey" href="{{ url('/signup?pid=E2866B2E-BB05-41B7-B001-C3AEEC6E51FB') }}" title="">Buy now</a>
                 </td>
             </tr>
             <tr>

@@ -36,8 +36,8 @@ var spinnerContPlaceOrder = document.getElementById('div-spinner-cont-placeorder
 var divPlaceOrderSubmsg = document.getElementById('div-place-order-submsg');
 
 var requirePayment = true;
-var inputAtype = document.getElementById('input-atype');
-if (inputAtype && inputAtype.value == 'free') {
+var inputPID = document.getElementById('input-pid');
+if (inputPID && inputPID.value == 'BBCE2AC1-35DA-4D86-8B20-1411A5C553E2') {
 	requirePayment = false;
 }
 
@@ -314,7 +314,6 @@ function setupPayment() {
 	});
 
 	inputDiscountCode.addEventListener("keypress", function(e) {
-		console.log('tab');
 		if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
 			e.preventDefault();
 			var code = inputDiscountCode.value;
@@ -621,8 +620,7 @@ function validateAndSubmit() {
 		});
 	}
 
-	// if ((emailOk) && (passwordOk) && (firstnameOk) && (surnameOk) && (countryOk) && (termsOk)) {
-	if (true) {
+	if ((emailOk) && (passwordOk) && (firstnameOk) && (surnameOk) && (countryOk) && (termsOk)) {
 		hidePlaceOrderSubmsg();
 
 		if (requirePayment) {
@@ -773,7 +771,6 @@ function setClassesOnHostedFieldBlur() {
 }
 
 function showPlaceOrderSubmsg() {
-	divPlaceOrderSubmsg.innerHTML = msgPlaceOrderDefault;
 	divPlaceOrderSubmsg.className = classNames({
 		'submsg-cont' : true,
 		'error' : true
@@ -781,7 +778,7 @@ function showPlaceOrderSubmsg() {
 }
 
 function hidePlaceOrderSubmsg() {
-	divPlaceOrderSubmsg.innerHTML = msgPlaceOrderDefault;
+	divPlaceOrderSubmsg.innerHTML = '';
 	divPlaceOrderSubmsg.className = classNames({
 		'submsg-cont' : true
 	});

@@ -456,6 +456,7 @@ input.textentry {
 }
 
 #pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row div.signup-address p.empty {
+  border-radius: 4px;
   background-color: #F4F4F4;
 }
 

@@ -45,11 +45,11 @@ class Controller_Auth_SignUp extends Controller
 		$this->msgCountryDefault = '';
 		$this->msgCountryNoBlank = 'Please select a country.';
 		$this->msgTermsDefault = '';
-		$this->msgTermsNoBlank = 'If agreed, please accept the terms and conditions and privacy statement.';
+		$this->msgTermsNoBlank = 'Please accept the terms and conditions and privacy statement.';
 		$this->msgDiscountDefault = '';
 		$this->msgDiscountInvalid = 'Sorry, that discount code is not valid.';
 		$this->msgPlaceOrderDefault = '';
-		$this->msgPlaceOrderErrors = 'There is missing or invalid information, see above.';
+		$this->msgPlaceOrderErrors = 'Please review the above errors and correct any missing or invalid information.';
     }
 
 	public function page(Request $request) {
@@ -57,11 +57,84 @@ class Controller_Auth_SignUp extends Controller
 			$pageInfo = Toolkit::pageInfo();
 			return redirect($pageInfo['console']['path']);
 		} else {
-			$atype = 'free';
-			if (($request->filled('atype')) && (($request->input('atype') == 'basic') || ($request->input('atype') == 'professional') || ($request->input('atype') == 'enterprise'))) {
-				$atype = $request->input('atype');
+
+			// ALLOW PRICE TO BE NEGATIVE IN DB
+
+
+			switch ($request->input('pid')) {
+				case '8126D38E-F031-4956-B6C6-DD040E1D2776':
+					$pageTitle = 'Basic';
+					$dbProduct = Product::where('id', $request->input('pid'))
+						->first();
+					break;
+				case '27349E50-2E5D-4290-A6C1-17587BEA5E35':
+					$pageTitle = 'Professional';
+					$dbProduct = Product::where('id', $request->input('pid'))
+						->first();
+					break;
+				case 'E2866B2E-BB05-41B7-B001-C3AEEC6E51FB':
+					$pageTitle = 'Enterprise';
+					$dbProduct = Product::where('id', $request->input('pid'))
+						->first();
+					break;
+				default:
+					$pageTitle = 'Free trial';
+					$dbProduct = Product::where('id', 'BBCE2AC1-35DA-4D86-8B20-1411A5C553E2')
+						->first();
 			}
-			return $this->getReturnView('signup', $atype);
+
+			$productDetails = array(
+				'id' => $dbProduct->id,
+				'pageTitle' => $pageTitle,
+				'name' => 'Lithium List - ' . $dbProduct->description,
+				'priceCents' => $dbProduct->price_cents
+			);
+
+	        $tempCountries = new Countries();
+			$allCountries = $tempCountries->all();
+			$countries = array();
+			foreach ($allCountries as $tempCountry) {
+				if ((strlen($tempCountry['iso_a3']) > 0) && ($tempCountry['iso_a3'] != '-99') && ($tempCountry['iso_a3'] != 'EUR')) {
+					$country = array(
+						'name' => $tempCountry['name']['common'],
+						'iso' => $tempCountry['iso_a3']
+					);
+					array_push($countries, $country);
+				}
+			}
+			usort($countries, array($this, 'compCountries'));
+
+			$pageInfo = Toolkit::pageInfo();
+
+			return view('signup')
+				->with('view', 'signup')
+	            ->with('productDetails', $productDetails)
+	            ->with('clientToken', $this->gateway->clientToken()->generate())
+	            ->with('countries', $countries)
+	            ->with('homeName', $pageInfo['home']['name'])
+	            ->with('homePath', $pageInfo['home']['path'])
+	            ->with('loginName', $pageInfo['login']['name'])
+	            ->with('loginPath', $pageInfo['login']['path'])
+	            ->with('signupName', $pageInfo['signup']['name'])
+	            ->with('signupPath', $pageInfo['signup']['path'])
+	            ->with('msgEmailDefault', $this->msgEmailDefault)
+	            ->with('msgEmailNoBlank', $this->msgEmailNoBlank)
+	            ->with('msgEmailInvalid', $this->msgEmailInvalid)
+	            ->with('msgPasswordDefault', $this->msgPasswordDefault)
+	            ->with('msgPasswordNoBlank', $this->msgPasswordNoBlank)
+	            ->with('msgPasswordInvalid', $this->msgPasswordInvalid)
+	            ->with('msgNameDefault', $this->msgNameDefault)
+	            ->with('msgNameNoBlankBoth', $this->msgNameNoBlankBoth)
+	            ->with('msgNameNoBlankFirstname', $this->msgNameNoBlankFirstname)
+	            ->with('msgNameNoBlankSurname', $this->msgNameNoBlankSurname)
+	            ->with('msgCountryDefault', $this->msgCountryDefault)
+	            ->with('msgCountryNoBlank', $this->msgCountryNoBlank)
+	            ->with('msgDiscountDefault', $this->msgDiscountDefault)
+	            ->with('msgDiscountInvalid', $this->msgDiscountInvalid)
+	            ->with('msgTermsDefault', $this->msgTermsDefault)
+	            ->with('msgTermsNoBlank', $this->msgTermsNoBlank)
+	            ->with('msgPlaceOrderDefault', $this->msgPlaceOrderDefault)
+	            ->with('msgPlaceOrderErrors', $this->msgPlaceOrderErrors);
 		}
 	}
 
@@ -81,68 +154,34 @@ class Controller_Auth_SignUp extends Controller
 		}
 	}
 
-	protected function getReturnView($viewText, $atype) {
-		// views: 'signup', 'accountcreated', 'linksent'
+	protected function getReturnView($viewText) {
+		// views: 'accountcreated', 'linksent'
 		$pageInfo = Toolkit::pageInfo();
-
-        $tempCountries = new Countries();
-		$allCountries = $tempCountries->all();
-		$countries = array();
-		if ($viewText == 'signup') {
-			foreach ($allCountries as $tempCountry) {
-				if ((strlen($tempCountry['iso_a3']) > 0) && ($tempCountry['iso_a3'] != '-99') && ($tempCountry['iso_a3'] != 'EUR')) {
-					$country = array(
-						'name' => $tempCountry['name']['common'],
-						'iso' => $tempCountry['iso_a3']
-					);
-					array_push($countries, $country);
-				}
-			}
-			usort($countries, array($this, 'compCountries'));			
-		}
 
 		return view('signup')
 			->with('view', $viewText)
-            ->with('atype', $atype)
-            ->with('clientToken', $this->gateway->clientToken()->generate())
-            ->with('countries', $countries)
             ->with('homeName', $pageInfo['home']['name'])
             ->with('homePath', $pageInfo['home']['path'])
             ->with('loginName', $pageInfo['login']['name'])
             ->with('loginPath', $pageInfo['login']['path'])
             ->with('signupName', $pageInfo['signup']['name'])
-            ->with('signupPath', $pageInfo['signup']['path'])
-            ->with('msgEmailDefault', $this->msgEmailDefault)
-            ->with('msgEmailNoBlank', $this->msgEmailNoBlank)
-            ->with('msgEmailInvalid', $this->msgEmailInvalid)
-            ->with('msgPasswordDefault', $this->msgPasswordDefault)
-            ->with('msgPasswordNoBlank', $this->msgPasswordNoBlank)
-            ->with('msgPasswordInvalid', $this->msgPasswordInvalid)
-            ->with('msgNameDefault', $this->msgNameDefault)
-            ->with('msgNameNoBlankBoth', $this->msgNameNoBlankBoth)
-            ->with('msgNameNoBlankFirstname', $this->msgNameNoBlankFirstname)
-            ->with('msgNameNoBlankSurname', $this->msgNameNoBlankSurname)
-            ->with('msgCountryDefault', $this->msgCountryDefault)
-            ->with('msgCountryNoBlank', $this->msgCountryNoBlank)
-            ->with('msgDiscountDefault', $this->msgDiscountDefault)
-            ->with('msgDiscountInvalid', $this->msgDiscountInvalid)
-            ->with('msgTermsDefault', $this->msgTermsDefault)
-            ->with('msgTermsNoBlank', $this->msgTermsNoBlank)
-            ->with('msgPlaceOrderDefault', $this->msgPlaceOrderDefault)
-            ->with('msgPasswordInvalid', $this->msgPasswordInvalid)
-            ->with('msgPlaceOrderErrors', $this->msgPlaceOrderErrors);
+            ->with('signupPath', $pageInfo['signup']['path']);
 	}
 
 	protected function signup($request) {
-        if ($request->filled('atype')) {
-        	$requirePayment = true;
-        	if ($requirePayment == 'free') {
+		if (($request->filled('pid')) && (($request->input('pid') == 'BBCE2AC1-35DA-4D86-8B20-1411A5C553E2') || ($request->input('pid') == '8126D38E-F031-4956-B6C6-DD040E1D2776') || ($request->input('pid') == '27349E50-2E5D-4290-A6C1-17587BEA5E35') || ($request->input('pid') == 'E2866B2E-BB05-41B7-B001-C3AEEC6E51FB'))) {
+
+			$pid = $request->input('pid');
+			if ($pid == 'BBCE2AC1-35DA-4D86-8B20-1411A5C553E2') {
 				$requirePayment = false;
-        	}
+			} else {
+				$requirePayment = true;
+			}
 
-        	$errors = array();
+    		$errors = array();
+    		$cardErrorMsg = 'Your card could not be processed. Please check the details and try again.';
 
-        	// email
+	    	// email
 			if ($request->filled('email')) {
 				$email = trim($request->input('email'));
 
@@ -199,7 +238,7 @@ class Controller_Auth_SignUp extends Controller
 
 			// credit card
 			if (($requirePayment) && (!$request->filled('nonce'))) {
-				$errors['creditcard'] = 'The credit card could not be processed, please try again.';
+				$errors['creditcard'] = $cardErrorMsg;
 			}
 
 			// terms
@@ -212,122 +251,43 @@ class Controller_Auth_SignUp extends Controller
 		            ->withInput()
 		            ->withErrors($errors, 'signup');
 			} else {
-				// PRODUCTS
-					// id, description, currency, price
-						// Free trial - 30 day licence ($0)
-						// Basic - 12 month licence ($36)
-						// Professional - 12 month licence ($108)
-						// Enterprise - 12 month licence ($648)
-						// Additional domain - basic ($36)
-						// Additional domain - professional ($21.60)
-						// Additional domain - enterprise ($18.50)
+				$dbProduct = Product::where('id', $pid)
+					->first();
 
-				// SALES
-					// id, date, user_id, product_id, country, currency, discount, price_orig, price_after_discount
+				if ($requirePayment) {
+					$amount = round(($dbProduct->price_cents / 100), 2);
+					$result = $this->gateway->transaction()->sale([
+						'amount' => $amount,
+						'paymentMethodNonce' => $request->input('nonce'),
+						'options' => [
+							'submitForSettlement' => true
+						]
+					]);
 
-
-
-				// $result = $this->gateway->transaction()->sale([
-				// 	'amount' => '10.00',
-				// 	'paymentMethodNonce' => $request->input('nonce'),
-				// 	'options' => [
-				// 		'submitForSettlement' => true
-				// 	]
-				// ]);
-		  //       return back()
-		  //           ->withInput();
-
-
-	            $vcode = str_random(30);
-
-	            // NEED TO ENSURE THESE ARE SAVED IN DB AS UTC TIMES - see 'account_expires_at' for my account
-
-	            $datetimeOneYear = (new DateTime('now', new DateTimeZone('UTC')))->add(new DateInterval('P1Y'))->format('Y-m-d H:i:s');
-	            $datetime30Days = (new DateTime('now', new DateTimeZone('UTC')))->add(new DateInterval('P30D'))->format('Y-m-d H:i:s');
-
-	            // only require account verification for free account
-
-				// $user = new User;
-				// $user->name = 'Elliot';
-				// $user->surname = 'Leibu';
-				// $user->email = $email;
-
-	            // $user->verified = false;
-	            // $user->verification_code = $vcode;
-
-				// $user->password = bcrypt($password);
-				// $user->company_name = 'Indysoft Pty Ltd';
-				// $user->country_code = 'AUS';
-				// $user->domain_ids = json_encode(array());
-				// $user->account_type = 2;
-				// $user->account_expires_at = $datetimeOneYear;
-				// $user->domain_count_base = 5;
-				// $user->domain_count_additional = 0;
-
-				// $success = false;
-
-				// DB::beginTransaction();
-				// try {
-				// 	$user->save();
-
-				// 	$success = true;
-				// } catch(\Exception $e) {
-				//    DB::rollback();
-				//    throw $e;
-				// }
-				// DB::commit();
-
-	   //          if ($success) {
-	   //              // Mail::to($email)->send(new SignedUp($vcode));
-
-	   //              Auth::attempt(['email' => $email, 'password' => $password], false);
-
-				// 	return $this->getReturnView('accountcreated');
-	   //          } else {
-			 //        return back()
-			 //            ->withInput()
-			 //            ->withErrors(['message' => 'An error occured. Please try again.'], 'main');
-	   //          }
-
-
-				return $this->getReturnView('accountcreated', null);
+					if ($result->success) {
+						return $this->createAccount($dbProduct);
+					} else {
+						// billing failed
+				        return back()
+				            ->withInput()
+				        	->withErrors(['creditcard' => $cardErrorMsg], 'signup');
+					}
+				} else {
+					return $this->createAccount($dbProduct);
+				}
 			}
+		} else {
+			abort(400);
+		}
+	}
 
-
-
-
-
-
-        } else {
-
-        	// NO atype - WHAT TO DO HERE?
-
-        }
-
-
-
-		// if (isset($emailMsg) || isset($passwordMsg)) {
-		// 	if (isset($emailMsg) && isset($passwordMsg)) {
-		//         return back()
-		//             ->withInput()
-		//             ->withErrors(['message' => $emailMsg], 'email')
-		//             ->withErrors(['message' => $passwordMsg], 'password');
-		// 	} elseif (isset($emailMsg)) {
-		//         return back()
-		//             ->withInput()
-		//             ->withErrors(['message' => $emailMsg], 'email');
-		// 	} else {
-		//         return back()
-		//             ->withInput()
-		//             ->withErrors(['message' => $passwordMsg], 'password');
-		// 	}
-		// } else {
-
+	protected function createAccount($dbProduct) {
+		return $this->getReturnView('accountcreated');
 	}
 
 	protected function resendlink($request) {
-        $user = Auth::guard('api')->user();
-        Mail::to($user->email)->send(new ResendActivationLink($user->verification_code));
+        // $user = Auth::guard('api')->user();
+        // Mail::to($user->email)->send(new ResendActivationLink($user->verification_code));
 
 		return $this->getReturnView('linksent');
 	}

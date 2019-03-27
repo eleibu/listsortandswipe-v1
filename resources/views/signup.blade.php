@@ -1,33 +1,17 @@
 @php
-switch ($atype) {
-    case 'basic':
-        $product_desc = 'Lithium List - 1 year licence - Basic';
-        $product_price = '$36.00';
-        $subtotal = '$36.00';
-        $taxes = '$0.00';
-        $total = '$36.00';
-        break;
-    case 'professional':
-        $product_desc = 'Lithium List - 1 year licence - Professional';
-        $product_price = '$108.00';
-        $subtotal = '$108.00';
-        $taxes = '$0.00';
-        $total = '$108.00';
-        break;
-    case 'enterprise':
-        $product_desc = 'Lithium List - 1 year licence - Enterprise';
-        $product_price = '$648.00';
-        $subtotal = '$648.00';
-        $taxes = '$0.00';
-        $total = '$648.00';
-        break;
-    default:
-        $product_desc = 'Lithium List - 30 day licence - Free trial';
-        $product_price = '$0.00';
-        $subtotal = '$0.00';
-        $taxes = '$0.00';
-        $total = '$0.00';
+
+if (isset($productDetails)) {
+    $product_price = '$' . ($productDetails['priceCents'] / 100) . '.00';
+    $subtotal = $product_price;
+    $taxes = '$0.00';
+    $total = $product_price;    
+} else {
+    $product_price = '$0';
+    $subtotal = $product_price;
+    $taxes = '$0.00';
+    $total = $product_price;
 }
+
 @endphp
 
 @extends('layout-auth')
@@ -47,15 +31,7 @@ switch ($atype) {
     <div class="section-cont">
         <div class="section-outer">
             <div class="plan">
-                @if ($atype == 'basic')
-                    <strong>Basic</strong> <span>plan</span>
-                @elseif ($atype == 'professional')
-                    <strong>Professional</strong> <span>plan</span>
-                @elseif ($atype == 'enterprise')
-                    <strong>Enterprise</strong> <span>plan</span>
-                @else
-                    <strong>Free trial</strong> <span>plan</span>
-                @endif
+                <strong>{{$productDetails['pageTitle']}}</strong> <span>plan</span>
             </div>
         </div>
     </div>
@@ -63,7 +39,7 @@ switch ($atype) {
         @csrf
         <fieldset>
             <input type="hidden" name="action" value="signup" />
-            <input type="hidden" id="input-atype" name="atype" value="{{$atype}}" />
+            <input type="hidden" id="input-pid" name="pid" value="{{$productDetails['id']}}" />
             <div class="section-cont grey">
                 <div class="section-outer">
                     <div class="title">
@@ -229,7 +205,7 @@ switch ($atype) {
                                         <td class="col-right">USD</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2">{{$product_desc}}</td>
+                                        <td colspan="2">{{$productDetails['name']}}</td>
                                         <td class="col-right">{{$product_price}}</td>
                                     </tr>
                                     <tr>
@@ -253,7 +229,7 @@ switch ($atype) {
                     </div>
                 </div>
             </div>
-            @if (($atype == 'basic') || ($atype == 'professional') || ($atype == 'enterprise'))
+            @if ($productDetails['priceCents'] != 0)
                 <div class="section-cont">
                     <div class="section-outer">
                         <div class="title">
@@ -380,7 +356,7 @@ switch ($atype) {
 @endif
 @if ($view == 'accountcreated')
     <input type="hidden" name="action" value="resendlink" />
-
+    Account created, yay!
 
 @endif
 @if ($view == 'linksent')
@@ -394,26 +370,28 @@ switch ($atype) {
 </div>
 @endsection
 
-@section('scriptBottom')
-    <script>
-        var api_url_web = "{{ url('/api/web/v1/') }}/";
-        var msgEmailDefault = "{!! $msgEmailDefault !!}";
-        var msgEmailNoBlank = "{!! $msgEmailNoBlank !!}";
-        var msgEmailInvalid = "{!! $msgEmailInvalid !!}";
-        var msgPasswordDefault = "{!! $msgPasswordDefault !!}";
-        var msgPasswordNoBlank = "{!! $msgPasswordNoBlank !!}";
-        var msgPasswordInvalid = "{!! $msgPasswordInvalid !!}";
-        var msgNameDefault = "{!! $msgNameDefault !!}";
-        var msgNameNoBlankBoth = "{!! $msgNameNoBlankBoth !!}";
-        var msgNameNoBlankFirstname = "{!! $msgNameNoBlankFirstname !!}";
-        var msgNameNoBlankSurname = "{!! $msgNameNoBlankSurname !!}";
-        var msgCountryDefault = "{!! $msgCountryDefault !!}";
-        var msgCountryNoBlank = "{!! $msgCountryNoBlank !!}";
-        var msgDiscountDefault = "{!! $msgDiscountDefault !!}";
-        var msgDiscountInvalid = "{!! $msgDiscountInvalid !!}";
-        var msgTermsDefault = "{!! $msgTermsDefault !!}";
-        var msgTermsNoBlank = "{!! $msgTermsNoBlank !!}";
-        var msgPlaceOrderDefault = "{!! $msgPlaceOrderDefault !!}";
-        var msgPlaceOrderErrors = "{!! $msgPlaceOrderErrors !!}";
-    </script>
-@endsection
+@if ($view == 'signup')
+    @section('scriptBottom')
+        <script>
+            var api_url_web = "{{ url('/api/web/v1/') }}/";
+            var msgEmailDefault = "{!! $msgEmailDefault !!}";
+            var msgEmailNoBlank = "{!! $msgEmailNoBlank !!}";
+            var msgEmailInvalid = "{!! $msgEmailInvalid !!}";
+            var msgPasswordDefault = "{!! $msgPasswordDefault !!}";
+            var msgPasswordNoBlank = "{!! $msgPasswordNoBlank !!}";
+            var msgPasswordInvalid = "{!! $msgPasswordInvalid !!}";
+            var msgNameDefault = "{!! $msgNameDefault !!}";
+            var msgNameNoBlankBoth = "{!! $msgNameNoBlankBoth !!}";
+            var msgNameNoBlankFirstname = "{!! $msgNameNoBlankFirstname !!}";
+            var msgNameNoBlankSurname = "{!! $msgNameNoBlankSurname !!}";
+            var msgCountryDefault = "{!! $msgCountryDefault !!}";
+            var msgCountryNoBlank = "{!! $msgCountryNoBlank !!}";
+            var msgDiscountDefault = "{!! $msgDiscountDefault !!}";
+            var msgDiscountInvalid = "{!! $msgDiscountInvalid !!}";
+            var msgTermsDefault = "{!! $msgTermsDefault !!}";
+            var msgTermsNoBlank = "{!! $msgTermsNoBlank !!}";
+            var msgPlaceOrderDefault = "{!! $msgPlaceOrderDefault !!}";
+            var msgPlaceOrderErrors = "{!! $msgPlaceOrderErrors !!}";
+        </script>
+    @endsection
+@endif
