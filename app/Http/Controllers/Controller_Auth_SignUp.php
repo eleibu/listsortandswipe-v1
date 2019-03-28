@@ -34,7 +34,7 @@ class Controller_Auth_SignUp extends Controller
     	$authErrorMessages = Toolkit::authErrorMessages();
 		$this->msgEmailDefault = '';
 		$this->msgEmailNoBlank = 'Email can&#39;t be blank.';
-		$this->msgEmailInvalid = 'That email address appears to be invalid.';
+		$this->msgEmailInvalid = 'The email address appears to be invalid.';
 		$this->msgPasswordDefault = $authErrorMessages['msgPasswordDefault'];
 		$this->msgPasswordNoBlank = $authErrorMessages['msgPasswordNoBlank'];
 		$this->msgPasswordInvalid = $authErrorMessages['msgPasswordInvalid'];
@@ -60,26 +60,26 @@ class Controller_Auth_SignUp extends Controller
 
 			// ALLOW PRICE TO BE NEGATIVE IN DB
 
-
+			$productIDs = Toolkit::productIDs();
 			switch ($request->input('pid')) {
-				case '8126D38E-F031-4956-B6C6-DD040E1D2776':
+				case $productIDs['accountTypeBasic']:
 					$pageTitle = 'Basic';
 					$dbProduct = Product::where('id', $request->input('pid'))
 						->first();
 					break;
-				case '27349E50-2E5D-4290-A6C1-17587BEA5E35':
+				case $productIDs['accountTypeProfessional']:
 					$pageTitle = 'Professional';
 					$dbProduct = Product::where('id', $request->input('pid'))
 						->first();
 					break;
-				case 'E2866B2E-BB05-41B7-B001-C3AEEC6E51FB':
+				case $productIDs['accountTypeEnterprise']:
 					$pageTitle = 'Enterprise';
 					$dbProduct = Product::where('id', $request->input('pid'))
 						->first();
 					break;
 				default:
 					$pageTitle = 'Free trial';
-					$dbProduct = Product::where('id', 'BBCE2AC1-35DA-4D86-8B20-1411A5C553E2')
+					$dbProduct = Product::where('id', $productIDs['accountTypeFree'])
 						->first();
 			}
 
@@ -154,25 +154,12 @@ class Controller_Auth_SignUp extends Controller
 		}
 	}
 
-	protected function getReturnView($viewText) {
-		// views: 'accountcreated', 'linksent'
-		$pageInfo = Toolkit::pageInfo();
-
-		return view('signup')
-			->with('view', $viewText)
-            ->with('homeName', $pageInfo['home']['name'])
-            ->with('homePath', $pageInfo['home']['path'])
-            ->with('loginName', $pageInfo['login']['name'])
-            ->with('loginPath', $pageInfo['login']['path'])
-            ->with('signupName', $pageInfo['signup']['name'])
-            ->with('signupPath', $pageInfo['signup']['path']);
-	}
-
 	protected function signup($request) {
-		if (($request->filled('pid')) && (($request->input('pid') == 'BBCE2AC1-35DA-4D86-8B20-1411A5C553E2') || ($request->input('pid') == '8126D38E-F031-4956-B6C6-DD040E1D2776') || ($request->input('pid') == '27349E50-2E5D-4290-A6C1-17587BEA5E35') || ($request->input('pid') == 'E2866B2E-BB05-41B7-B001-C3AEEC6E51FB'))) {
+		$productIDs = Toolkit::productIDs();
+		if (($request->filled('pid')) && (($request->input('pid') == $productIDs['accountTypeFree']) || ($request->input('pid') == $productIDs['accountTypeBasic']) || ($request->input('pid') == $productIDs['accountTypeProfessional']) || ($request->input('pid') == $productIDs['accountTypeEnterprise']))) {
 
 			$pid = $request->input('pid');
-			if ($pid == 'BBCE2AC1-35DA-4D86-8B20-1411A5C553E2') {
+			if ($pid == $productIDs['accountTypeFree']) {
 				$requirePayment = false;
 			} else {
 				$requirePayment = true;
@@ -215,10 +202,10 @@ class Controller_Auth_SignUp extends Controller
 
 			// firstname and surname
 			if ($request->filled('firstname')) {
-				$firstname = $request->input('firstname');
+				$firstname = trim($request->input('firstname'));
 			}
 			if ($request->filled('surname')) {
-				$surname = $request->input('surname');
+				$surname = trim($request->input('surname'));
 			}
 			if (!isset($firstname) && !isset($surname)) {
 				$errors['firstname'] = $this->msgNameNoBlankBoth;
@@ -265,7 +252,7 @@ class Controller_Auth_SignUp extends Controller
 					]);
 
 					if ($result->success) {
-						return $this->createAccount($dbProduct);
+						return $this->createAccount($request, $dbProduct);
 					} else {
 						// billing failed
 				        return back()
@@ -273,7 +260,7 @@ class Controller_Auth_SignUp extends Controller
 				        	->withErrors(['creditcard' => $cardErrorMsg], 'signup');
 					}
 				} else {
-					return $this->createAccount($dbProduct);
+					return $this->createAccount($request, $dbProduct);
 				}
 			}
 		} else {
@@ -281,15 +268,151 @@ class Controller_Auth_SignUp extends Controller
 		}
 	}
 
-	protected function createAccount($dbProduct) {
-		return $this->getReturnView('accountcreated');
+	protected function createAccount($request, $dbProduct) {
+			Auth::attempt(['email' => $email, 'password' => $password], false);
+
+			$pageInfo = Toolkit::pageInfo();
+			return view('signup')
+				->with('view', 'accountcreated')
+	            ->with('homeName', $pageInfo['home']['name'])
+	            ->with('homePath', $pageInfo['home']['path'])
+	            ->with('loginName', $pageInfo['login']['name'])
+	            ->with('loginPath', $pageInfo['login']['path'])
+	            ->with('signupName', $pageInfo['signup']['name'])
+	            ->with('signupPath', $pageInfo['signup']['path']);
+
+
+
+
+		$productIDs = Toolkit::productIDs();
+
+		// user
+		$user = new User;
+
+		$firstname = trim($request->input('firstname'));
+		if (strlen($firstname) > 255) {
+			$firstname = substr($firstname, 0, 255);
+		}
+		$user->name = $firstname;
+
+		$surname = trim($request->input('surname'));
+		if (strlen($surname) > 255) {
+			$surname = substr($surname, 0, 255);
+		}
+		$user->surname = $surname;
+
+		$email = trim($request->input('email'));
+		if (strlen($email) > 255) {
+			$email = substr($email, 0, 255);
+		}
+		$user->email = $email;
+
+		$user->password = bcrypt($request->input('password'));
+
+		if ($dbProduct->id == $productIDs['accountTypeFree']) {
+	        $user->verified = false;
+	        $user->verification_code = str_random(30);
+		} else {
+			$user->verified = true;
+		}
+
+		if (($request->filled('companyname')) && (strlen(trim($request->input('companyname'))) > 0)) {
+			$user->company_name = trim($request->input('companyname'));
+		}
+
+		$user->country_code = $request->input('country');
+
+		$user->domain_ids = json_encode(array());
+
+		// FIX THESE DATES!!!
+
+        $datetimeOneYear = (new DateTime('now', new DateTimeZone('UTC')))->add(new DateInterval('P1Y'))->format('Y-m-d H:i:s');
+        $datetime30Days = (new DateTime('now', new DateTimeZone('UTC')))->add(new DateInterval('P30D'))->format('Y-m-d H:i:s');
+		switch ($dbProduct->id) {
+			case $productIDs['accountTypeBasic']:
+				$user->account_type = 1;
+				$user->account_expires_at = $datetimeOneYear;
+				$user->domain_count_base = 1;
+				break;
+			case $productIDs['accountTypeProfessional']:
+				$user->account_type = 2;
+				$user->account_expires_at = $datetimeOneYear;
+				$user->domain_count_base = 5;
+				break;
+			case $productIDs['accountTypeEnterprise']:
+				$user->account_type = 3;
+				$user->account_expires_at = $datetimeOneYear;
+				$user->domain_count_base = 35;
+				break;
+			default:
+				$user->account_type = 0;
+				$user->account_expires_at = $datetime30Days;
+				$user->domain_count_base = 1;
+		}
+
+		$user->domain_count_additional = 0;
+
+		$user->comms_sales = true;
+
+		$user->comms_updates = true;
+
+		// sale
+		$sale = new Sale;
+		$sale->product_id = $dbProduct->id;
+		$sale->country_code = $request->input('country');
+		$sale->currency = $dbProduct->currency;
+		$sale->discount_percent = 0;
+		$sale->price_cents_orig = $dbProduct->price_cents;
+		$sale->price_cents_after_discount = $dbProduct->price_cents;
+
+		// save
+		$success = false;
+		DB::beginTransaction();
+		try {
+			$user->save();
+			
+			$sale->user_id = $user->id;
+			$sale->save();
+			
+			$success = true;
+		} catch(\Exception $e) {
+		   DB::rollback();
+		   throw $e;
+		}
+		DB::commit();
+
+		if ($success) {
+			// Mail::to($email)->send(new SignedUp($vcode));
+
+			Auth::attempt(['email' => $email, 'password' => $password], false);
+
+			$pageInfo = Toolkit::pageInfo();
+			return view('signup')
+				->with('view', 'accountcreated')
+	            ->with('homeName', $pageInfo['home']['name'])
+	            ->with('homePath', $pageInfo['home']['path'])
+	            ->with('loginName', $pageInfo['login']['name'])
+	            ->with('loginPath', $pageInfo['login']['path'])
+	            ->with('signupName', $pageInfo['signup']['name'])
+	            ->with('signupPath', $pageInfo['signup']['path']);
+		} else {
+			abort(500);
+		}
 	}
 
 	protected function resendlink($request) {
         // $user = Auth::guard('api')->user();
         // Mail::to($user->email)->send(new ResendActivationLink($user->verification_code));
 
-		return $this->getReturnView('linksent');
+		$pageInfo = Toolkit::pageInfo();
+		return view('signup')
+			->with('view', 'linksent')
+            ->with('homeName', $pageInfo['home']['name'])
+            ->with('homePath', $pageInfo['home']['path'])
+            ->with('loginName', $pageInfo['login']['name'])
+            ->with('loginPath', $pageInfo['login']['path'])
+            ->with('signupName', $pageInfo['signup']['name'])
+            ->with('signupPath', $pageInfo['signup']['path']);
 	}
 
 	protected function compCountries($a, $b)

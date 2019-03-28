@@ -31,7 +31,7 @@ if (isset($productDetails)) {
     <div class="section-cont">
         <div class="section-outer">
             <div class="plan">
-                <strong>{{$productDetails['pageTitle']}}</strong> <span>plan</span>
+                <i class="oln icon-user-plus"></i><strong>{{$productDetails['pageTitle']}}</strong> <span>plan</span>
             </div>
         </div>
     </div>

@@ -68,6 +68,19 @@ class Toolkit {
 		return $authErrorMessages;
 	}
 
+	public static function productIDs() {
+		$productIDs = array(
+			'accountTypeFree' => 'BBCE2AC1-35DA-4D86-8B20-1411A5C553E2',
+			'accountTypeBasic' => '8126D38E-F031-4956-B6C6-DD040E1D2776',
+			'accountTypeProfessional' => '27349E50-2E5D-4290-A6C1-17587BEA5E35',
+			'accountTypeEnterprise' => 'E2866B2E-BB05-41B7-B001-C3AEEC6E51FB',
+			'additionalDomainBasic' => '2E68FB1C-C6A6-4947-961F-9EB94ECC0406',
+			'additionalDomainProfessional' => 'DD264AB7-6E4E-4F33-8BC8-E73138D6F520',
+			'additionalDomainEnterprise' => '1F9E09C7-2F10-400D-A595-4482D72F4F80'
+		);
+		return $productIDs;
+	}
+
 	public static function pageInfo() {
 		$pageInfo = array(
 			'home' => array(

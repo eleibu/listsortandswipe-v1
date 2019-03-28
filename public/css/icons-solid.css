@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icon-font-solid';
-  src:  url('fonts/icon-font-solid.eot?7j3fdj');
-  src:  url('fonts/icon-font-solid.eot?7j3fdj#iefix') format('embedded-opentype'),
-    url('fonts/icon-font-solid.ttf?7j3fdj') format('truetype'),
-    url('fonts/icon-font-solid.woff?7j3fdj') format('woff'),
-    url('fonts/icon-font-solid.svg?7j3fdj#icon-font-solid') format('svg');
+  src:  url('fonts/icon-font-solid.eot?4dckg5');
+  src:  url('fonts/icon-font-solid.eot?4dckg5#iefix') format('embedded-opentype'),
+    url('fonts/icon-font-solid.ttf?4dckg5') format('truetype'),
+    url('fonts/icon-font-solid.woff?4dckg5') format('woff'),
+    url('fonts/icon-font-solid.svg?4dckg5#icon-font-solid') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,17 +24,23 @@ i.sld {
   -moz-osx-font-smoothing: grayscale;
 }
 
-i.sld.icon-cart:before {
+i.sld.icon-user-cross:before {
   content: "\e910";
 }
-i.sld.icon-credit-card-a:before {
+i.sld.icon-user-tick:before {
   content: "\e911";
 }
-i.sld.icon-discount-coupon:before {
+i.sld.icon-user-plus:before {
   content: "\e912";
 }
-i.sld.icon-invoice:before {
+i.sld.icon-user:before {
   content: "\e913";
+}
+i.sld.icon-cog:before {
+  content: "\e914";
+}
+i.sld.icon-file-download:before {
+  content: "\e915";
 }
 i.sld.icon-archive:before {
   content: "\e905";

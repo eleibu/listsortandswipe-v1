@@ -236,7 +236,9 @@ class Controller_Site extends Controller
 	}
 
 	public function page_pricing(Request $request) {
-		return view('pricing');
+		$productIDs = Toolkit::productIDs();
+		return view('pricing')
+			->with('productIDs', $productIDs);
 	}
 
 	public function page_support(Request $request) {

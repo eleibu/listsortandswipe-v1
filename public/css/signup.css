@@ -320,15 +320,23 @@ input.textentry {
 }
 
 #pageWrapper #div-sitecont div.section-cont div.section-outer div.plan {
+  position: relative;
   font-size: 220%;
+  color: #666666;
+  padding-left: 2.2em;
+}
+
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.plan i {
+  font-size: 180%;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
 }
 
 #pageWrapper #div-sitecont div.section-cont div.section-outer div.plan strong {
   color: #333333;
-}
-
-#pageWrapper #div-sitecont div.section-cont div.section-outer div.plan span {
-  color: #666666;
 }
 
 #pageWrapper #div-sitecont div.section-cont div.section-outer div.title {

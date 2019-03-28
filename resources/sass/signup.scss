@@ -120,14 +120,21 @@ input.textentry {
 				min-width: 300px;
 
 				div.plan {
+					position: relative;
 					font-size: 220%;
+					color: #666666;
+					padding-left: 2.2em;
+
+					i {
+						font-size: 180%;
+						position: absolute;
+						left: 0;
+						top: 50%;
+						transform: translateY(-50%);
+					}
 
 					strong {
 						color: #333333;
-					}
-
-					span {
-						color: #666666;	
 					}
 				}
 
