@@ -30,7 +30,7 @@ if (isset($productDetails)) {
 @if ($view == 'signup')
     <div class="section-cont">
         <div class="section-outer">
-            <div class="plan">
+            <div class="page-title default">
                 <i class="oln icon-user-plus"></i><strong>{{$productDetails['pageTitle']}}</strong> <span>plan</span>
             </div>
         </div>
@@ -354,12 +354,56 @@ if (isset($productDetails)) {
         </fieldset>
     </form>
 @endif
-@if ($view == 'accountcreated')
+@if ($view == 'account-created-and-activated')
+    @php
+        if (($accountType == 0) || ($accountType == 1)) {
+            $logInText = 'a domain';
+        } else {
+            $logInText = 'some domains';
+        }
+    @endphp
+
+    <div class="section-cont">
+        <div class="section-outer">
+            <div class="page-title success">
+                <i class="oln icon-user-tick"></i><strong>Account</strong> <span>created</span>
+            </div>
+        </div>
+    </div>
+    <div class="section-cont grey">
+        <div class="section-outer">
+            <div class="subtitle">
+                Congratulations, your account has been created. Thanks for supporting Lithium List.
+            </div>
+        </div>
+    </div>
+    <div class="section-cont">
+        <div class="section-outer">
+            <div class="nextsteps-cont">
+                <div class="heading">
+                    NEXT STEPS...
+                </div>
+                <a class="link-outer btmborder" href="" title="Download and/or install">
+                    <i class="sld icon-file-download red"></i>Download and/or install Lithium List
+                </a>
+                <a class="link-outer btmborder" href="" title="Set up">
+                    <i class="sld icon-cog orange"></i>Set up
+                </a>
+                <a class="link-outer" href="" title="Log in">
+                    <i class="sld icon-lock yellow"></i>Log in to your console and add {{$logInText}}
+                </a>
+            </div>
+        </div>
+    </div>
+
+@endif
+@if ($view == 'account-created-requires-activation')
     <input type="hidden" name="action" value="resendlink" />
     Account created, yay!
 
 @endif
-@if ($view == 'linksent')
+
+@if ($view == 'link-sent')
     <input type="hidden" name="action" value="resendlink" />
 
 

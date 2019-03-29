@@ -319,14 +319,13 @@ input.textentry {
   min-width: 300px;
 }
 
-#pageWrapper #div-sitecont div.section-cont div.section-outer div.plan {
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.page-title {
   position: relative;
   font-size: 220%;
-  color: #666666;
   padding-left: 2.2em;
 }
 
-#pageWrapper #div-sitecont div.section-cont div.section-outer div.plan i {
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.page-title i {
   font-size: 180%;
   position: absolute;
   left: 0;
@@ -335,8 +334,20 @@ input.textentry {
           transform: translateY(-50%);
 }
 
-#pageWrapper #div-sitecont div.section-cont div.section-outer div.plan strong {
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.page-title.default {
+  color: #666666;
+}
+
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.page-title.default strong {
   color: #333333;
+}
+
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.page-title.success {
+  color: #339900;
+}
+
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.page-title.success strong {
+  color: #336600;
 }
 
 #pageWrapper #div-sitecont div.section-cont div.section-outer div.title {
@@ -345,6 +356,12 @@ input.textentry {
   color: #222222;
   font-weight: bold;
   margin-bottom: 1em;
+}
+
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.subtitle {
+  font-size: 140%;
+  line-height: 130%;
+  color: #444444;
 }
 
 #pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row div.signup-dataentry input.textentry {
@@ -521,6 +538,42 @@ input.textentry {
 #pageWrapper #div-sitecont div.section-cont div.section-outer div.signup-row div.signup-terms table td.checkbox input {
   -webkit-transform: scale(1.2);
           transform: scale(1.2);
+}
+
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.nextsteps-cont div.heading {
+  color: #666666;
+  font-size: 120%;
+  margin-bottom: 1em;
+}
+
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.nextsteps-cont a.link-outer {
+  display: block;
+  position: relative;
+  font-size: 110%;
+  padding: 1.4em 1em 1.4em 4em;
+  color: #3366CC;
+  border-top: 1px solid #EEEEEE;
+}
+
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.nextsteps-cont a.link-outer i {
+  position: absolute;
+  left: 1em;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  font-size: 170%;
+}
+
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.nextsteps-cont a.link-outer i.red {
+  color: #F56E44;
+}
+
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.nextsteps-cont a.link-outer i.orange {
+  color: #F8951D;
+}
+
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.nextsteps-cont a.link-outer i.yellow {
+  color: #F2DF29;
 }
 
 #pageWrapper #div-sitecont div.section-cont.grey {

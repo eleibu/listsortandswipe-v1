@@ -119,10 +119,9 @@ input.textentry {
 				max-width: 800px;
 				min-width: 300px;
 
-				div.plan {
+				div.page-title {
 					position: relative;
 					font-size: 220%;
-					color: #666666;
 					padding-left: 2.2em;
 
 					i {
@@ -132,9 +131,21 @@ input.textentry {
 						top: 50%;
 						transform: translateY(-50%);
 					}
+				}
+
+				div.page-title.default {
+					color: #666666;
 
 					strong {
 						color: #333333;
+					}
+				}
+
+				div.page-title.success {
+					color: #339900;
+
+					strong {
+						color: #336600;
 					}
 				}
 
@@ -144,6 +155,12 @@ input.textentry {
 					color: #222222;
 					font-weight: bold;
 					margin-bottom: 1em;
+				}
+
+				div.subtitle {
+					font-size: 140%;
+					line-height: 130%;
+					color: #444444;
 				}
 
 				div.signup-row {
@@ -199,7 +216,6 @@ input.textentry {
 						font-weight: 600;
 						font-size: 14px;
 						line-height: 20px;
-						// margin-bottom: 12px;
 						background-color: #FFFFFF;
 						border: 1px solid #DDDDDD;
 					}
@@ -323,6 +339,43 @@ input.textentry {
 									transform: scale(1.2);
 								}
 							}
+						}
+					}
+				}
+
+				div.nextsteps-cont {
+					div.heading {
+						color: #666666;
+						font-size: 120%;
+						margin-bottom: 1em;
+					}
+
+					a.link-outer {
+						display: block;
+						position: relative;
+						font-size: 110%;
+						padding: 1.4em 1em 1.4em 4em;
+						color: #3366CC;
+						border-top: 1px solid #EEEEEE;
+
+						i {
+							position: absolute;
+							left: 1em;
+							top: 50%;
+							transform: translateY(-50%);
+							font-size: 170%;
+						}
+
+						i.red {
+							color: #F56E44;
+						}
+
+						i.orange {
+							color: #F8951D;
+						}
+
+						i.yellow {
+							color: #F2DF29;
 						}
 					}
 				}

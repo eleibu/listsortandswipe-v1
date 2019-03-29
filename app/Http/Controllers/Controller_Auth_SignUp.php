@@ -53,6 +53,19 @@ class Controller_Auth_SignUp extends Controller
     }
 
 	public function page(Request $request) {
+			
+			$user = Auth::user();
+			$pageInfo = Toolkit::pageInfo();
+			return view('signup')
+				->with('view', 'account-created-and-activated')
+				->with('accountType', $user->account_type)
+	            ->with('homeName', $pageInfo['home']['name'])
+	            ->with('homePath', $pageInfo['home']['path'])
+	            ->with('loginName', $pageInfo['login']['name'])
+	            ->with('loginPath', $pageInfo['login']['path'])
+	            ->with('signupName', $pageInfo['signup']['name'])
+	            ->with('signupPath', $pageInfo['signup']['path']);
+
 		if (Auth::check()) {
 			$pageInfo = Toolkit::pageInfo();
 			return redirect($pageInfo['console']['path']);
@@ -309,11 +322,14 @@ class Controller_Auth_SignUp extends Controller
 
 		$user->password = bcrypt($request->input('password'));
 
+
 		if ($dbProduct->id == $productIDs['accountTypeFree']) {
 	        $user->verified = false;
 	        $user->verification_code = str_random(30);
+	        $accountCreatedView = 'account-created-requires-activation';
 		} else {
 			$user->verified = true;
+			$accountCreatedView = 'account-created-and-activated';
 		}
 
 		if (($request->filled('companyname')) && (strlen(trim($request->input('companyname'))) > 0)) {
@@ -325,6 +341,7 @@ class Controller_Auth_SignUp extends Controller
 		$user->domain_ids = json_encode(array());
 
 		// FIX THESE DATES!!!
+		// LOADING ANIMATION IN CONSOLE
 
         $datetimeOneYear = (new DateTime('now', new DateTimeZone('UTC')))->add(new DateInterval('P1Y'))->format('Y-m-d H:i:s');
         $datetime30Days = (new DateTime('now', new DateTimeZone('UTC')))->add(new DateInterval('P30D'))->format('Y-m-d H:i:s');
@@ -388,7 +405,8 @@ class Controller_Auth_SignUp extends Controller
 
 			$pageInfo = Toolkit::pageInfo();
 			return view('signup')
-				->with('view', 'accountcreated')
+				->with('view', $accountCreatedView)
+				->with('accountType', $user->account_type)
 	            ->with('homeName', $pageInfo['home']['name'])
 	            ->with('homePath', $pageInfo['home']['path'])
 	            ->with('loginName', $pageInfo['login']['name'])
@@ -404,9 +422,12 @@ class Controller_Auth_SignUp extends Controller
         // $user = Auth::guard('api')->user();
         // Mail::to($user->email)->send(new ResendActivationLink($user->verification_code));
 
+		$user = Auth::user();
+		
 		$pageInfo = Toolkit::pageInfo();
 		return view('signup')
-			->with('view', 'linksent')
+			->with('view', 'link-sent')
+			->with('accountType', $user->account_type)
             ->with('homeName', $pageInfo['home']['name'])
             ->with('homePath', $pageInfo['home']['path'])
             ->with('loginName', $pageInfo['login']['name'])
