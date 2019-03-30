@@ -26505,8 +26505,7 @@ if (requirePayment) {
 	var divPaymentSubmsg = document.getElementById('div-payment-submsg');
 }
 
-//  NEED TO TEST THIS PAGE WIHTOUT INTERNET CONNECTION?
-
+// SIGNUP
 
 if (maskCont && inputEmail && divEmailSubmsg && inputPassword && divPasswordSubmsg && inputFirstname && inputSurname && divNameSubmsg && inputCompanyname && selectCountry && divCountrySubmsg && pIndivName && pCoName && pCountry && divTableTerms && inputTerms && divTermsSubmsg && divPlaceOrder && spinnerContPlaceOrder && divPlaceOrderSubmsg) {
 	setupNonPayment();
@@ -26839,20 +26838,7 @@ function setupPayment() {
 			});
 			hidePlaceOrderSubmsg();
 		});
-	}).catch(function (err) {
-		// WHAT SHOULD WE DO IF hostedFields CAN'T BE CREATED?
-		// console.log(err);
-		// var teardown = function (event) {
-		// 	event.preventDefault();
-		// 	alert('Submit your nonce to your server here!');
-		// 	hostedFieldsInstance.teardown(function () {
-		// 		createHostedFields(clientInstance);
-		// 		form.removeEventListener('submit', teardown, false);
-		// 	});
-		// };
-
-		// form.addEventListener('submit', teardown, false);
-	});
+	}).catch(function (err) {});
 }
 
 function checkDiscountCode(code) {
@@ -26872,7 +26858,7 @@ function checkDiscountCode(code) {
 			'code': code
 		}
 	}).then(function (response) {
-		// discount code is valid - change order summary
+		// discount code is valid - change order summary to include discount
 	}).catch(function (error) {
 		divDiscountSubmsg.innerHTML = msgDiscountInvalid;
 		divDiscountSubmsg.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
@@ -27147,11 +27133,6 @@ function validateAndSubmit() {
 					inputNonce.value = payload.nonce;
 					document.getElementById('form').submit();
 				});
-			} else {
-
-				// WHAT SHOULD WE DO HERE?
-
-
 			}
 		} else {
 			maskCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
@@ -27276,6 +27257,25 @@ function setParaCountry() {
 			'empty': true
 		});
 	}
+}
+
+// ACCOUNT CREATED REQUIRES ACTIVATION
+// LINK SENT
+
+var divResenDLink = document.getElementById('div-resendlink');
+var spinnerContResendLink = document.getElementById('div-spinner-cont-resendlink');
+
+if (maskCont && divResenDLink && spinnerContResendLink) {
+	divResenDLink.addEventListener("click", function () {
+		maskCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'show': true
+		});
+		spinnerContResendLink.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'spinner-cont': true,
+			'spinning': true
+		});
+		document.getElementById('form').submit();
+	});
 }
 
 /***/ }),

@@ -19,7 +19,7 @@ class AddToUsersTable20190213 extends Migration
             $table->char('country_code', 3);
             $table->json('domain_ids');
             $table->integer('account_type');
-            $table->dateTime('account_expires_at');
+            $table->timestamp('account_expires_at')->useCurrent();
             $table->char('account_licence_key', 30)->nullable();
             $table->integer('domain_count_base');
             $table->integer('domain_count_additional');

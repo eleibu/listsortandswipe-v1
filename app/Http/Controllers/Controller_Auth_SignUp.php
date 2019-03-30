@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DB;
 use App\User;
-// use App\Context;
 use App\Classes\Toolkit;
 use Validator;
 use Illuminate\Support\Facades\Mail;
@@ -14,12 +13,8 @@ use Illuminate\Support\Facades\Mail;
 // use App\Mail\ResendActivationLink;
 use App\Product;
 use App\Sale;
-
-use DateTime;
-use DateTimeZone;
-use DateInterval;
+use \Carbon\Carbon;
 use PragmaRX\Countries\Package\Countries;
-
 
 class Controller_Auth_SignUp extends Controller
 {
@@ -53,12 +48,12 @@ class Controller_Auth_SignUp extends Controller
     }
 
 	public function page(Request $request) {
-			
-			$user = Auth::user();
+
+
 			$pageInfo = Toolkit::pageInfo();
 			return view('signup')
-				->with('view', 'account-created-and-activated')
-				->with('accountType', $user->account_type)
+				->with('view', 'account-created-requires-activation')
+				// ->with('accountType', $user->account_type)
 	            ->with('homeName', $pageInfo['home']['name'])
 	            ->with('homePath', $pageInfo['home']['path'])
 	            ->with('loginName', $pageInfo['login']['name'])
@@ -340,30 +335,25 @@ class Controller_Auth_SignUp extends Controller
 
 		$user->domain_ids = json_encode(array());
 
-		// FIX THESE DATES!!!
-		// LOADING ANIMATION IN CONSOLE
-
-        $datetimeOneYear = (new DateTime('now', new DateTimeZone('UTC')))->add(new DateInterval('P1Y'))->format('Y-m-d H:i:s');
-        $datetime30Days = (new DateTime('now', new DateTimeZone('UTC')))->add(new DateInterval('P30D'))->format('Y-m-d H:i:s');
 		switch ($dbProduct->id) {
 			case $productIDs['accountTypeBasic']:
 				$user->account_type = 1;
-				$user->account_expires_at = $datetimeOneYear;
+				$user->account_expires_at = Carbon::now('UTC')->addYear();
 				$user->domain_count_base = 1;
 				break;
 			case $productIDs['accountTypeProfessional']:
 				$user->account_type = 2;
-				$user->account_expires_at = $datetimeOneYear;
+				$user->account_expires_at = Carbon::now('UTC')->addYear();
 				$user->domain_count_base = 5;
 				break;
 			case $productIDs['accountTypeEnterprise']:
 				$user->account_type = 3;
-				$user->account_expires_at = $datetimeOneYear;
+				$user->account_expires_at = Carbon::now('UTC')->addYear();
 				$user->domain_count_base = 35;
 				break;
 			default:
 				$user->account_type = 0;
-				$user->account_expires_at = $datetime30Days;
+				$user->account_expires_at = Carbon::now('UTC')->addDays(30);
 				$user->domain_count_base = 1;
 		}
 
@@ -421,13 +411,10 @@ class Controller_Auth_SignUp extends Controller
 	protected function resendlink($request) {
         // $user = Auth::guard('api')->user();
         // Mail::to($user->email)->send(new ResendActivationLink($user->verification_code));
-
-		$user = Auth::user();
 		
 		$pageInfo = Toolkit::pageInfo();
 		return view('signup')
 			->with('view', 'link-sent')
-			->with('accountType', $user->account_type)
             ->with('homeName', $pageInfo['home']['name'])
             ->with('homePath', $pageInfo['home']['path'])
             ->with('loginName', $pageInfo['login']['name'])

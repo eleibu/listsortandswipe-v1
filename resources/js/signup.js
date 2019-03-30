@@ -54,11 +54,7 @@ if (requirePayment) {
 	var divPaymentSubmsg = document.getElementById('div-payment-submsg');
 }
 
-
-
-//  NEED TO TEST THIS PAGE WIHTOUT INTERNET CONNECTION?
-
-
+// SIGNUP
 
 if ((maskCont) && (inputEmail) && (divEmailSubmsg) && (inputPassword) && (divPasswordSubmsg) && (inputFirstname) && (inputSurname) && (divNameSubmsg) && (inputCompanyname) && (selectCountry) && (divCountrySubmsg) && (pIndivName) && (pCoName) && (pCountry) && (divTableTerms) && (inputTerms) && (divTermsSubmsg) && (divPlaceOrder) && (spinnerContPlaceOrder) && (divPlaceOrderSubmsg)) {
 	setupNonPayment();
@@ -392,18 +388,6 @@ function setupPayment() {
 			hidePlaceOrderSubmsg();
 		});
 	}).catch(function (err) {
-		// WHAT SHOULD WE DO IF hostedFields CAN'T BE CREATED?
-		// console.log(err);
-		// var teardown = function (event) {
-		// 	event.preventDefault();
-		// 	alert('Submit your nonce to your server here!');
-		// 	hostedFieldsInstance.teardown(function () {
-		// 		createHostedFields(clientInstance);
-		// 		form.removeEventListener('submit', teardown, false);
-		// 	});
-		// };
-
-		// form.addEventListener('submit', teardown, false);
 	});
 }
 
@@ -425,7 +409,7 @@ function checkDiscountCode(code) {
         }
     })
     .then((response)=>{
-    	// discount code is valid - change order summary
+    	// discount code is valid - change order summary to include discount
     })
     .catch((error)=>{
 		divDiscountSubmsg.innerHTML = msgDiscountInvalid;
@@ -702,12 +686,6 @@ function validateAndSubmit() {
 					inputNonce.value = payload.nonce;
 					document.getElementById('form').submit();
 		        });
-			} else {
-
-
-				// WHAT SHOULD WE DO HERE?
-
-
 			}
 		} else {
 			maskCont.className = classNames({
@@ -832,4 +810,23 @@ function setParaCountry() {
 			'empty' : true
 		});
 	}
+}
+
+// ACCOUNT CREATED REQUIRES ACTIVATION
+// LINK SENT
+
+var divResenDLink = document.getElementById('div-resendlink');
+var spinnerContResendLink = document.getElementById('div-spinner-cont-resendlink');
+
+if ((maskCont) && (divResenDLink) && (spinnerContResendLink)) {
+	divResenDLink.addEventListener("click", function() {
+		maskCont.className = classNames({
+			'show' : true
+		});
+		spinnerContResendLink.className = classNames({
+			'spinner-cont' : true,
+			'spinning' : true
+		});
+		document.getElementById('form').submit();
+	});
 }
