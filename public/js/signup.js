@@ -27262,11 +27262,11 @@ function setParaCountry() {
 // ACCOUNT CREATED REQUIRES ACTIVATION
 // LINK SENT
 
-var divResenDLink = document.getElementById('div-resendlink');
+var divResendLink = document.getElementById('div-resendlink');
 var spinnerContResendLink = document.getElementById('div-spinner-cont-resendlink');
 
-if (maskCont && divResenDLink && spinnerContResendLink) {
-	divResenDLink.addEventListener("click", function () {
+if (maskCont && divResendLink && spinnerContResendLink) {
+	divResendLink.addEventListener("click", function () {
 		maskCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
 			'show': true
 		});

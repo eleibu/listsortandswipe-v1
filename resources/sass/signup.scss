@@ -1,689 +1,174 @@
 @import 'shared-all';
-// @import 'sales-all';
-
-fieldset {
-	margin: 0;
-	padding: 0;
-	border: none;
-}
-
-.button-word-cont {
-	div.spinner-cont {
- 		position: relative;
-
- 		div.spinner-outer {
- 			position: absolute;
- 			top: 0;
- 			left: 0;
- 			height: 100%;
- 			width: 100%;
- 			visibility: hidden;
-
-			div.spinner-inner {
-				max-width: 40px;
-				margin: 0 auto;
-	 			height: 100%;
-
-	 			div.rect {
-	 				display: inline-block;
-	 				height: 100%;
-	 				width: 12%;
-	 				margin-right: 10%;
-	 				// background-color: #EEEEEE;
-	 				// background-color: rgba(255, 255, 255, 0.9);
-	 				border-radius: 2px;
-					-webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
-					animation: sk-stretchdelay 1.2s infinite ease-in-out;
-	 			}
-
-	 			div.rect1 {
-					-webkit-animation-delay: -1.1s;
-					animation-delay: -1.1s;
-	 			}
-
-	 			div.rect2 {
-					-webkit-animation-delay: -1.0s;
-					animation-delay: -1.0s;
-	 			}
-	 			div.rect3 {
-					-webkit-animation-delay: -0.9s;
-					animation-delay: -0.9s;
-	 			}
-
-	 			div.rect4 {
-	 				margin-right: 0;
-					-webkit-animation-delay: -0.8s;
-					animation-delay: -0.8s;
-	 			}
-			}
- 		}
-	}
-
-	div.spinner-cont.spinning {
-		div.text {
-			visibility: hidden;
-		}
-
-		div.spinner-outer {
-			visibility: visible;
-		}
-	}
-}
-
-.button-word-cont.darkblue {
-	div.rect {
-		background-color: #EEEEEE;
-		background-color: rgba(255, 255, 255, 0.9);
-	}
-}
-
-.button-word-cont.grey {
-	div.rect {
-		background-color: #444444;
-		background-color: rgba(0, 0, 0, 0.7);
-	}
-}
-
-@-webkit-keyframes sk-stretchdelay {
-	0%, 40%, 100% { -webkit-transform: scaleY(0.4) }  
-	20% { -webkit-transform: scaleY(1.0) }
-}
-
-@keyframes sk-stretchdelay {
-	0%, 40%, 100% { 
-		transform: scaleY(0.4);
-		-webkit-transform: scaleY(0.4);
-	}  20% { 
-		transform: scaleY(1.0);
-		-webkit-transform: scaleY(1.0);
-	}
-}
-
-input.textentry {
-	font-family: 'Roboto';
-	-webkit-appearance: none;
-	outline: none;
-	border: none;
-	background-color: #FFFFFF;
-}
-
-#pageWrapper {
-	#div-sitecont {
-		position: relative;
-
-		div.section-cont {
-			padding: 3em 16px;
-
-			div.section-outer {
-				margin: 0 auto;
-				max-width: 800px;
-				min-width: 300px;
-
-				div.page-title {
-					position: relative;
-					font-size: 220%;
-					padding-left: 2.2em;
-
-					i {
-						font-size: 180%;
-						position: absolute;
-						left: 0;
-						top: 50%;
-						transform: translateY(-50%);
-					}
-				}
-
-				div.page-title.default {
-					color: #666666;
-
-					strong {
-						color: #333333;
-					}
-				}
-
-				div.page-title.success {
-					color: #339900;
-
-					strong {
-						color: #336600;
-					}
-				}
-
-				div.title {
-					font-size: 160%;
-					line-height: 130%;
-					color: #222222;
-					font-weight: bold;
-					margin-bottom: 1em;
-				}
-
-				div.subtitle {
-					font-size: 140%;
-					line-height: 130%;
-					color: #444444;
-				}
-
-				div.signup-row {
-					div.signup-dataentry {
-						input.textentry {
-							font-size: 100%;
-							box-sizing: border-box;
-							width: 100%;
-							padding: 0.6em 0.4em;
-							border: 1px solid #DDDDDD;
-						}
-
-						input.textentry.left {
-							float: left;
-							width: 49%;
-						}
-
-						input.textentry.right {
-							float: left;
-							margin-left: 2%;
-							width: 49%;
-						}
-
-						input.textentry.error {
-							border: 1px solid #FF3B0A;
-						}
-
-						input.textentry.focus {
-							border: 1px solid #3366CC;
-						}
-
-						select {
-							font-size: 100%;
-							padding: 0.6em 0.4em;
-							border: 1px solid #DDDDDD;
-						}
-
-						select.error {
-							border: 1px solid #FF3B0A;
-						}
-
-						img.payment {
-							margin-right: 4px;
-						}
-					}
-
-					div.hosted-field {
-						height: 50px;
-						box-sizing: border-box;
-						padding: 0.2em 0.6em;
-						display: inline-block;
-						box-shadow: none;
-						font-weight: 600;
-						font-size: 14px;
-						line-height: 20px;
-						background-color: #FFFFFF;
-						border: 1px solid #DDDDDD;
-					}
-
-					div.hosted-field.error {
-						border: 1px solid #FF3B0A;
-					}
-
-					div.hosted-field.focus {
-						border: 1px solid #3366CC;
-					}
-
-					#div-payment-number {
-						width: 100%;
-					}
-
-					#div-payment-expirationDate {
-						width: 120px;
-					}
-
-					#div-payment-cvv {
-						width: 90px;
-					}
-
-					div.supmsg-cont {
-						margin: 0.4em 0;
-						font-size: 85%;
-						line-height: 130%;
-						color: #555555;
-					}
-
-					div.submsg-cont {
-						margin: 0.3em 0;
-						font-size: 85%;
-						line-height: 130%;
-						height: 3em;
-						overflow: hidden;
-						color: #777777;
-					}
-
-					div.submsg-cont.error {
-						font-weight: bold;
-						color: #FF3B0A;
-					}
-
-					div.submsg-cont.error.right {
-						text-align: right;
-					}
-
-					div.signup-address {
-						padding: 0.6em;
-						height: 4em;
-						max-width: 300px;
-
-						p {
-							margin: 0.2em 0;
-							color: #444444;
-							white-space: nowrap;
-							overflow: hidden;
-							text-overflow: ellipsis;
-						}
-
-						p.empty {
-							border-radius: 4px;
-							background-color: #F4F4F4;
-						}
-
-						p.company.empty {
-							display: none;
-						}
-					}
-
-					div.signup-orderdetails {
-						table {
-							width: 100%;
-
-							td {
-								padding: 0.6em;
-								color: #444444;
-							}
-
-							td.border-top {
-								border-top: 1px solid #777777;
-							}
-
-							td.border-btm {
-								border-bottom: 1px solid #777777;
-							}
-
-							td.col-mdl {
-								width: 40%;
-							}
-
-							td.col-right {
-								width: 10%;
-								text-align: right;
-							}
-						}
-					}
-
-					div.signup-buttons {
-						margin: 0.4em 0;
-
-						.button-word-cont {
-							font-size: 80%;
-						}
-					}
-
-					div.signup-terms {
-						table {
-							border: 1px solid transparent;
-
-							td { 
-								vertical-align: top;
-							}
-
-							td.checkbox {
-								padding-right: 0.4em;
-
-								input {
-									transform: scale(1.2);
-								}
-							}
-						}
-					}
-				}
-
-				div.nextsteps-cont {
-					div.heading {
-						color: #666666;
-						font-size: 120%;
-						margin-bottom: 1em;
-					}
-
-					a.link-outer {
-						display: block;
-						position: relative;
-						font-size: 110%;
-						padding: 1.4em 1em 1.4em 4em;
-						color: #3366CC;
-						border-top: 1px solid #EEEEEE;
-
-						i {
-							position: absolute;
-							left: 1em;
-							top: 50%;
-							transform: translateY(-50%);
-							font-size: 170%;
-						}
-
-						i.red {
-							color: #F56E44;
-						}
-
-						i.orange {
-							color: #F8951D;
-						}
-
-						i.yellow {
-							color: #F2DF29;
-						}
-					}
-				}
-			}
-		}
-
-		div.section-cont.grey {
-			background-color: #FBFBFB;
-		}
-
-		#div-sitecont-mask {
-			display: none;
-			position: absolute;
-			top: 0;
-			left: 0;
-			height: 100%;
+@import 'auth';
+
+div.signup-row {
+	div.signup-dataentry {
+		input.textentry {
+			font-size: 100%;
+			box-sizing: border-box;
 			width: 100%;
+			padding: 0.6em 0.4em;
+			border: 1px solid #DDDDDD;
 		}
 
-		#div-sitecont-mask.show {
-			display: block;
+		input.textentry.left {
+			float: left;
+			width: 49%;
 		}
 
-		// div.middlebox-cont {
-		// 	text-align: center;
+		input.textentry.right {
+			float: left;
+			margin-left: 2%;
+			width: 49%;
+		}
 
-		// 	div.middlebox-outer {
-		// 		position: relative;
-		// 		text-align: left;
+		input.textentry.error {
+			border: 1px solid #FF3B0A;
+		}
 
-		// 		div.middlebox-inner {
-		// 			// div.otherpage-cont {
-		// 			// 	font-size: 90%;
-		// 			// 	color: #444444;
-		// 			// }
+		input.textentry.focus {
+			border: 1px solid #3366CC;
+		}
 
-		// 			// div.mainmsg-cont {
-		// 			// 	margin-bottom: 0.3em;
-		// 			// 	font-size: 85%;
-		// 			// 	line-height: 130%;
-		// 			// 	color: #FF3B0A;
-		// 			// 	font-weight: bold;
-		// 			// 	height: 3em;
-		// 			// 	overflow: hidden;
-		// 			// }
+		select {
+			font-size: 100%;
+			padding: 0.6em 0.4em;
+			border: 1px solid #DDDDDD;
+			max-width: 300px;
+		}
 
-		// 			// div.bigmsg-cont {
-		// 			// 	font-size: 120%;
-		// 			// 	line-height: 130%;
-		// 			// 	color: #222222;
-		// 			// 	font-weight: bold;
-		// 			// }
+		select.error {
+			border: 1px solid #FF3B0A;
+		}
 
-		// 			// div.smallmsg-cont {
-		// 			// 	font-size: 90%;
-		// 			// 	line-height: 130%;
-		// 			// 	color: #777777;
-		// 			// }
-
-		// 			// div.text-cont {
-		// 			// 	div.textentry-cont {
-		// 			// 		position: relative;
-		// 			// 		border: 1px solid #DDDDDD;
-
-		// 			// 		div.textentry-outer {
-		// 			// 			margin: 0.6em 0.4em;
-
-		// 			// 			input.textentry {
-		// 			// 				font-size: 100%;
-		// 			// 				box-sizing: border-box;
-		// 			// 				width: 100%;
-		// 			// 			}
-		// 			// 		}
-
-		// 			// 		div.textentry-outer.icon {
-		// 			// 			margin: 0.6em 0.4em 0.6em 2em;
-		// 			// 		}
-
-		// 			// 		i {
-		// 			// 			position: absolute;
-		// 			// 			top: 50%;
-		// 			// 			transform: translateY(-50%);
-		// 			// 			left: 8px;
-		// 			// 		}
-		// 			// 	}
-
-		// 			// 	div.submsg-cont {
-		// 			// 		margin: 0.3em 0;
-		// 			// 		font-size: 75%;
-		// 			// 		line-height: 130%;
-		// 			// 		height: 3em;
-		// 			// 		overflow: hidden;
-		// 			// 	}
-
-		// 			// 	div.submsg-cont.default {
-		// 			// 		color: #777777;
-		// 			// 	}
-		// 			// }
-
-		// 			// div.text-cont.error {
-		// 			// 	div.textentry-cont {
-		// 			// 		border: 1px solid #FF3B0A;
-		// 			// 	}
-
-		// 			// 	div.submsg-cont {
-		// 			// 		color: #FF3B0A;
-		// 			// 	}
-		// 			// }
-
-		// 			// div.text-cont.focus {
-		// 			// 	div.textentry-cont {
-		// 			// 		border: 1px solid #3366CC;
-		// 			// 	}
-		// 			// }
-
-		// 			// div.forgot-cont {
-		// 			// 	font-size: 80%;
-		// 			// 	line-height: 120%;
-		// 			// 	color: #444444;
-		// 			// }
-
-		// 			div.terms-cont {
-		// 				font-size: 90%;
-		// 				line-height: 120%;
-		// 				color: #444444;
-
-		// 				#input-terms {
-		// 					transform: scale(1.4);
-		// 				}
-		// 			}
-
-		// 			// #div-firstname-cont {
-		// 			// 	display: inline-block;
-		// 			// 	width: 49%;
-		// 			// }
-
-		// 			// #div-surname-cont {
-		// 			// 	display: inline-block;
-		// 			// 	width: 49%;
-		// 			// }
-
-		// 			div.header-outer.signup {
-		// 				font-size: 140%;
-		// 				font-weight: bold;
-		// 				color: #222222;
-		// 			}
-
-		// 			div.signup-row {
-		// 				div.signup-dataentry {
-		// 					input.textentry {
-		// 						font-size: 100%;
-		// 						box-sizing: border-box;
-		// 						width: 100%;
-		// 						padding: 0.6em 0.4em;
-		// 						border: 1px solid #DDDDDD;
-		// 					}
-
-		// 					input.textentry.left {
-		// 						float: left;
-		// 						width: 49%;
-		// 					}
-
-		// 					input.textentry.right {
-		// 						float: left;
-		// 						margin-left: 2%;
-		// 						width: 49%;
-		// 					}
-
-		// 					input.textentry.error {
-		// 						border: 1px solid #FF3B0A;
-		// 					}
-
-		// 					input.textentry.focus {
-		// 						border: 1px solid #3366CC;
-		// 					}
-
-		// 					select {
-		// 						font-size: 100%;
-		// 						padding: 0.6em 0.4em;
-		// 						border: 1px solid #DDDDDD;
-		// 					}
-		// 				}
-
-		// 				div.supmsg-cont {
-		// 					margin: 0.4em 0;
-		// 					font-size: 85%;
-		// 					line-height: 130%;
-		// 					color: #555555;
-		// 				}
-
-		// 				div.submsg-cont {
-		// 					margin: 0.3em 0 0.8em 0;
-		// 					font-size: 75%;
-		// 					line-height: 130%;
-		// 					white-space: nowrap;
-		// 					overflow: hidden;
-		// 					text-overflow: ellipsis;
-		// 					color: #777777;
-		// 				}
-
-		// 				div.submsg-cont.error {
-		// 					color: #FF3B0A;
-		// 				}
-
-		// 				div.submsg-cont.error.right {
-		// 					text-align: right;
-		// 				}
-
-		// 				div.signup-address {
-		// 					font-size: 90%;
-		// 					padding: 0.6em;
-
-		// 					p {
-		// 						margin: 0;
-		// 						color: #444444;
-		// 					}
-		// 				}
-
-		// 				div.signup-orderdetails {
-		// 					table {
-		// 						width: 100%;
-
-		// 						td {
-		// 							padding: 0.6em;
-		// 							font-size: 90%;
-		// 							color: #444444;
-		// 						}
-
-		// 						td.border-top {
-		// 							border-top: 1px solid #777777;
-		// 						}
-
-		// 						td.border-btm {
-		// 							border-bottom: 1px solid #777777;
-		// 						}
-
-		// 						td.col-mdl {
-		// 							width: 40%;
-		// 						}
-
-		// 						td.col-right {
-		// 							width: 10%;
-		// 							text-align: right;
-		// 						}
-		// 					}
-		// 				}
-
-		// 				div.signup-buttons {
-		// 					margin: 0.4em 0;
-
-		// 					.button-word-cont {
-		// 						font-size: 80%;
-		// 					}
-		// 				}
-		// 			}
-		// 		}
-
-		// 		#div-middlebox-mask {
-		// 			display: none;
-		// 			position: absolute;
-		// 			top: 0;
-		// 			left: 0;
-		// 			height: 100%;
-		// 			width: 100%;
-		// 		}
-
-		// 		#div-middlebox-mask.show {
-		// 			display: block;
-		// 		}
-		// 	}
-		// }
+		img.payment {
+			margin-right: 4px;
+		}
 	}
-}
 
-#pageWrapper.xl, #pageWrapper.lg, #pageWrapper.md, #pageWrapper.sm {
-	height: 100%;
-	overflow: auto;
-	// background-color: #FAFAFA;
-	min-width: 300px;
-
-	div.middlebox-outer {
+	div.hosted-field {
+		height: 50px;
+		box-sizing: border-box;
+		padding: 0.2em 0.6em;
 		display: inline-block;
-		max-width: 800px;
-		// background-color: #FFFFFF;
-		// box-shadow: 0 10px 12px 4px #CCCCCC;
+		box-shadow: none;
+		font-weight: 600;
+		font-size: 14px;
+		line-height: 20px;
+		background-color: #FFFFFF;
+		border: 1px solid #DDDDDD;
+	}
 
-		div.middlebox-inner {
-			margin: 2em;
+	div.hosted-field.error {
+		border: 1px solid #FF3B0A;
+	}
 
-			div.text-cont {
-				div.textentry-cont {
-					i {
-						font-size: 110%;
-					}
-				}
+	div.hosted-field.focus {
+		border: 1px solid #3366CC;
+	}
+
+	#div-payment-number {
+		width: 100%;
+	}
+
+	#div-payment-expirationDate {
+		width: 120px;
+	}
+
+	#div-payment-cvv {
+		width: 90px;
+	}
+
+	div.submsg-cont {
+		margin: 0.3em 0;
+		font-size: 85%;
+		line-height: 130%;
+		height: 3em;
+		overflow: hidden;
+		color: #777777;
+	}
+
+	div.submsg-cont.error {
+		font-weight: bold;
+		color: #FF3B0A;
+	}
+
+	div.submsg-cont.error.right {
+		text-align: right;
+	}
+
+	div.signup-address {
+		padding: 0.6em;
+		height: 4em;
+		max-width: 300px;
+
+		p {
+			margin: 0.2em 0;
+			color: #444444;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		p.empty {
+			border-radius: 4px;
+			background-color: #F4F4F4;
+		}
+
+		p.company.empty {
+			display: none;
+		}
+	}
+
+	div.signup-orderdetails {
+		table {
+			width: 100%;
+
+			td {
+				padding: 0.6em;
+				color: #444444;
+			}
+
+			td.border-top {
+				border-top: 1px solid #777777;
+			}
+
+			td.border-btm {
+				border-bottom: 1px solid #777777;
+			}
+
+			td.col-mdl {
+				width: 40%;
+			}
+
+			td.col-right {
+				width: 10%;
+				text-align: right;
 			}
 		}
 	}
-}
 
-#pageWrapper.xs {
-	div.middlebox-outer {
-		div.middlebox-inner {
-			div.text-cont {
-				div.textentry-cont {
-					i {
-						font-size: 140%;
-					}
+	div.signup-buttons {
+		margin: 0.4em 0;
+
+		.button-word-cont {
+			font-size: 80%;
+		}
+	}
+
+	div.signup-terms {
+		table {
+			border: 1px solid transparent;
+
+			td { 
+				vertical-align: top;
+			}
+
+			td.checkbox {
+				padding-right: 0.4em;
+
+				input {
+					transform: scale(1.2);
 				}
 			}
 		}

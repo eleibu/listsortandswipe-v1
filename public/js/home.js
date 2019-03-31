@@ -19264,6 +19264,13 @@ var pageMenuShowHide = function () {
 
 /***/ }),
 
+/***/ "./resources/sass/activate.scss":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./resources/sass/auth.scss":
 /***/ (function(module, exports) {
 
@@ -19293,6 +19300,13 @@ var pageMenuShowHide = function () {
 /***/ }),
 
 /***/ "./resources/sass/home.scss":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ "./resources/sass/login.scss":
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
@@ -19339,6 +19353,8 @@ __webpack_require__("./resources/sass/pricing.scss");
 __webpack_require__("./resources/sass/console.scss");
 __webpack_require__("./resources/sass/auth.scss");
 __webpack_require__("./resources/sass/signup.scss");
+__webpack_require__("./resources/sass/activate.scss");
+__webpack_require__("./resources/sass/login.scss");
 module.exports = __webpack_require__("./resources/sass/terms.scss");
 
 

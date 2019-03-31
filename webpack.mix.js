@@ -31,5 +31,7 @@ mix.js('resources/js/home.js', 'public/js/home.js')
 	.sass('resources/sass/console.scss', 'public/css/console.css').options({processCssUrls: false})
 	.sass('resources/sass/auth.scss', 'public/css/auth.css').options({processCssUrls: false})
 	.sass('resources/sass/signup.scss', 'public/css/signup.css').options({processCssUrls: false})
+	.sass('resources/sass/activate.scss', 'public/css/activate.css').options({processCssUrls: false})
+	.sass('resources/sass/login.scss', 'public/css/login.css').options({processCssUrls: false})
 	.sass('resources/sass/terms.scss', 'public/css/terms.css').options({processCssUrls: false})
 	.version();

@@ -85,7 +85,7 @@ class Controller_Auth_LogIn extends Controller
 	            } else {
 			        return back()
 			            ->withInput()
-			            ->withErrors(['message' => 'The credentials are not valid. Please try again.'], 'main');
+			            ->withErrors(['message' => 'The credentials are not valid.'], 'main');
 	            }
 			}
 		}

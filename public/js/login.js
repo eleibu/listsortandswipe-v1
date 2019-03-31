@@ -17093,36 +17093,40 @@ __webpack_require__("./node_modules/bootstrap/dist/js/bootstrap.js");
 
 
 
-var spinnerCont = document.getElementById('div-spinner-cont');
-var maskCont = document.getElementById('div-middlebox-mask');
-
-var divMainmsg = document.getElementById('div-mainmsg');
-var divEmailCont = document.getElementById('div-email-cont');
-var divPasswordCont = document.getElementById('div-password-cont');
+var maskCont = document.getElementById('div-sitecont-mask');
 var inputEmail = document.getElementById('input-email');
-var inputPassword = document.getElementById('input-password');
 var divEmailSubmsg = document.getElementById('div-email-submsg');
+var inputPassword = document.getElementById('input-password');
 var divPasswordSubmsg = document.getElementById('div-password-submsg');
 var submitButton = document.getElementById('div-submit');
+var spinnerCont = document.getElementById('div-spinner-cont');
+var divSubmitSubmsg = document.getElementById('div-submit-submsg');
 
-if (divMainmsg && divEmailCont && divPasswordCont && inputEmail && inputPassword && divEmailSubmsg && divPasswordSubmsg && submitButton && spinnerCont && maskCont) {
+if (maskCont && inputEmail && divEmailSubmsg && inputPassword && divPasswordSubmsg && submitButton && spinnerCont && divSubmitSubmsg) {
 	inputEmail.focus();
 	inputEmail.select();
 
 	inputEmail.addEventListener("focus", function (e) {
-		divMainmsg.innerHTML = "";
-		divEmailCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'text-cont': true,
+		inputEmail.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'textentry': true,
 			'focus': true
 		});
 		divEmailSubmsg.innerHTML = msgEmailDefault;
+		divEmailSubmsg.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'submsg-cont': true
+		});
+		hideSubmitSubmsg();
 	});
 
 	inputEmail.addEventListener("blur", function (e) {
-		divEmailCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'text-cont': true
+		inputEmail.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'textentry': true
 		});
 		divEmailSubmsg.innerHTML = msgEmailDefault;
+		divEmailSubmsg.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'submsg-cont': true
+		});
+		hideSubmitSubmsg();
 	});
 
 	inputEmail.addEventListener("keypress", function (e) {
@@ -17133,20 +17137,28 @@ if (divMainmsg && divEmailCont && divPasswordCont && inputEmail && inputPassword
 		}
 	});
 
+	// password
 	inputPassword.addEventListener("focus", function (e) {
-		divMainmsg.innerHTML = "";
-		divPasswordCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'text-cont': true,
+		inputPassword.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'textentry': true,
 			'focus': focus
 		});
 		divPasswordSubmsg.innerHTML = msgPasswordDefault;
+		divPasswordSubmsg.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'submsg-cont': true
+		});
+		hideSubmitSubmsg();
 	});
 
 	inputPassword.addEventListener("blur", function (e) {
-		divPasswordCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'text-cont': true
+		inputPassword.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'textentry': true
 		});
 		divPasswordSubmsg.innerHTML = msgPasswordDefault;
+		divPasswordSubmsg.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'submsg-cont': true
+		});
+		hideSubmitSubmsg();
 	});
 
 	inputPassword.addEventListener("keypress", function (e) {
@@ -17156,51 +17168,66 @@ if (divMainmsg && divEmailCont && divPasswordCont && inputEmail && inputPassword
 		}
 	});
 
+	// submit
 	submitButton.addEventListener("click", function () {
 		validateAndSubmit();
 	});
 }
 
 function validateAndSubmit() {
-	divMainmsg.innerHTML = "";
-
 	var emailOk = false;
-	var email = Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["f" /* trimString */])(inputEmail.value);
+	var passwordOk = false;
+
+	var email = Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["g" /* trimString */])(inputEmail.value);
+	var password = inputPassword.value;
 
 	if (email.length > 0) {
 		emailOk = true;
 
-		divEmailCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'text-cont': true
+		inputEmail.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'textentry': true
 		});
 		divEmailSubmsg.innerHTML = msgEmailDefault;
+		divEmailSubmsg.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'submsg-cont': true
+		});
 	} else {
-		divEmailCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'text-cont': true,
+		inputEmail.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'textentry': true,
 			'error': true
 		});
 		divEmailSubmsg.innerHTML = msgEmailNoBlank;
+		divEmailSubmsg.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'submsg-cont': true,
+			'error': true
+		});
 	}
-
-	var passwordOk = false;
-	var password = inputPassword.value;
 
 	if (password.length > 0) {
 		passwordOk = true;
 
-		divPasswordCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'text-cont': true
+		inputPassword.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'textentry': true
 		});
 		divPasswordSubmsg.innerHTML = msgPasswordDefault;
+		divPasswordSubmsg.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'submsg-cont': true
+		});
 	} else {
-		divPasswordCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'text-cont': true,
+		inputPassword.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'textentry': true,
 			'error': true
 		});
 		divPasswordSubmsg.innerHTML = msgPasswordNoBlank;
+		divPasswordSubmsg.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'submsg-cont': true,
+			'error': true
+		});
 	}
 
 	if (emailOk && passwordOk) {
+		hideSubmitSubmsg();
+
 		maskCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
 			'show': true
 		});
@@ -17210,6 +17237,13 @@ function validateAndSubmit() {
 		});
 		document.getElementById('form').submit();
 	}
+}
+
+function hideSubmitSubmsg() {
+	divSubmitSubmsg.innerHTML = '';
+	divSubmitSubmsg.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+		'submsg-cont': true
+	});
 }
 
 /***/ }),
@@ -17257,13 +17291,13 @@ var monitorWinWidth = function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export encodeHTML */
-/* harmony export (immutable) */ __webpack_exports__["b"] = findIndexById;
-/* harmony export (immutable) */ __webpack_exports__["c"] = hasDomainForm;
-/* harmony export (immutable) */ __webpack_exports__["e"] = stripUrl;
-/* harmony export (immutable) */ __webpack_exports__["d"] = requestObjCreate;
-/* harmony export (immutable) */ __webpack_exports__["g"] = uuidv4;
-/* harmony export (immutable) */ __webpack_exports__["f"] = trimString;
+/* harmony export (immutable) */ __webpack_exports__["b"] = encodeHTML;
+/* harmony export (immutable) */ __webpack_exports__["c"] = findIndexById;
+/* harmony export (immutable) */ __webpack_exports__["d"] = hasDomainForm;
+/* harmony export (immutable) */ __webpack_exports__["f"] = stripUrl;
+/* harmony export (immutable) */ __webpack_exports__["e"] = requestObjCreate;
+/* harmony export (immutable) */ __webpack_exports__["h"] = uuidv4;
+/* harmony export (immutable) */ __webpack_exports__["g"] = trimString;
 /* harmony export (immutable) */ __webpack_exports__["a"] = arrayMove;
 function encodeHTML(value) {
 				return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');

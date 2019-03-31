@@ -2,16 +2,16 @@ require('bootstrap');
 import { monitorWinWidth } from './monitor-win-width.js';
 import classNames from 'classNames/dedupe';
 
-var resendButton = document.getElementById('div-resend-link');
-var spinnerCont = document.getElementById('div-spinner-cont');
-var maskCont = document.getElementById('div-middlebox-mask');
+var maskCont = document.getElementById('div-sitecont-mask');
+var divResendLink = document.getElementById('div-resendlink');
+var spinnerContResendLink = document.getElementById('div-spinner-cont-resendlink');
 
-if ((resendButton) && (spinnerCont) && (maskCont)) {
-    resendButton.addEventListener("click", function() {
+if ((maskCont) && (divResendLink) && (spinnerContResendLink)) {
+    divResendLink.addEventListener("click", function() {
         maskCont.className = classNames({
             'show' : true
         });
-        spinnerCont.className = classNames({
+        spinnerContResendLink.className = classNames({
             'spinner-cont' : true,
             'spinning' : true
         });

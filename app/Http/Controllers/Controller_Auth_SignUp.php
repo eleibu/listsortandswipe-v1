@@ -48,18 +48,18 @@ class Controller_Auth_SignUp extends Controller
     }
 
 	public function page(Request $request) {
+			// $user = Auth::user();
 
-
-			$pageInfo = Toolkit::pageInfo();
-			return view('signup')
-				->with('view', 'account-created-requires-activation')
-				// ->with('accountType', $user->account_type)
-	            ->with('homeName', $pageInfo['home']['name'])
-	            ->with('homePath', $pageInfo['home']['path'])
-	            ->with('loginName', $pageInfo['login']['name'])
-	            ->with('loginPath', $pageInfo['login']['path'])
-	            ->with('signupName', $pageInfo['signup']['name'])
-	            ->with('signupPath', $pageInfo['signup']['path']);
+			// $pageInfo = Toolkit::pageInfo();
+			// return view('signup')
+			// 	->with('view', 'account-created-requires-activation')
+			// 	// ->with('accountType', $user->account_type)
+	  //           ->with('homeName', $pageInfo['home']['name'])
+	  //           ->with('homePath', $pageInfo['home']['path'])
+	  //           ->with('loginName', $pageInfo['login']['name'])
+	  //           ->with('loginPath', $pageInfo['login']['path'])
+	  //           ->with('signupName', $pageInfo['signup']['name'])
+	  //           ->with('signupPath', $pageInfo['signup']['path']);
 
 		if (Auth::check()) {
 			$pageInfo = Toolkit::pageInfo();
@@ -277,17 +277,17 @@ class Controller_Auth_SignUp extends Controller
 	}
 
 	protected function createAccount($request, $dbProduct) {
-			Auth::attempt(['email' => $email, 'password' => $password], false);
+			// Auth::attempt(['email' => $email, 'password' => $password], false);
 
-			$pageInfo = Toolkit::pageInfo();
-			return view('signup')
-				->with('view', 'accountcreated')
-	            ->with('homeName', $pageInfo['home']['name'])
-	            ->with('homePath', $pageInfo['home']['path'])
-	            ->with('loginName', $pageInfo['login']['name'])
-	            ->with('loginPath', $pageInfo['login']['path'])
-	            ->with('signupName', $pageInfo['signup']['name'])
-	            ->with('signupPath', $pageInfo['signup']['path']);
+			// $pageInfo = Toolkit::pageInfo();
+			// return view('signup')
+			// 	->with('view', 'accountcreated')
+	  //           ->with('homeName', $pageInfo['home']['name'])
+	  //           ->with('homePath', $pageInfo['home']['path'])
+	  //           ->with('loginName', $pageInfo['login']['name'])
+	  //           ->with('loginPath', $pageInfo['login']['path'])
+	  //           ->with('signupName', $pageInfo['signup']['name'])
+	  //           ->with('signupPath', $pageInfo['signup']['path']);
 
 
 
@@ -316,7 +316,6 @@ class Controller_Auth_SignUp extends Controller
 		$user->email = $email;
 
 		$user->password = bcrypt($request->input('password'));
-
 
 		if ($dbProduct->id == $productIDs['accountTypeFree']) {
 	        $user->verified = false;

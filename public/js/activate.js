@@ -17090,16 +17090,16 @@ __webpack_require__("./node_modules/bootstrap/dist/js/bootstrap.js");
 
 
 
-var resendButton = document.getElementById('div-resend-link');
-var spinnerCont = document.getElementById('div-spinner-cont');
-var maskCont = document.getElementById('div-middlebox-mask');
+var maskCont = document.getElementById('div-sitecont-mask');
+var divResendLink = document.getElementById('div-resendlink');
+var spinnerContResendLink = document.getElementById('div-spinner-cont-resendlink');
 
-if (resendButton && spinnerCont && maskCont) {
-    resendButton.addEventListener("click", function () {
+if (maskCont && divResendLink && spinnerContResendLink) {
+    divResendLink.addEventListener("click", function () {
         maskCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
             'show': true
         });
-        spinnerCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+        spinnerContResendLink.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
             'spinner-cont': true,
             'spinning': true
         });

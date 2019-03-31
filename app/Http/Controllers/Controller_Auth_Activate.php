@@ -29,22 +29,11 @@ class Controller_Auth_Activate extends Controller
                         ->where('verification_code', $code)
                         ->update(['verified' => 1, 'verification_code' => null]);
 
-                if (Auth::check()) {
-					return view('activate')
-						->with('view', 'activated')
-						->with('userEmail', $user->email)
-			            ->with('homeName', $pageInfo['home']['name'])
-			            ->with('homePath', $pageInfo['home']['path'])
-			            ->with('appName', $pageInfo['console']['name'])
-			            ->with('appPath', $pageInfo['console']['path']);
-                } else {
-					return view('activate')
-						->with('view', 'activated')
-			            ->with('homeName', $pageInfo['home']['name'])
-			            ->with('homePath', $pageInfo['home']['path'])
-			            ->with('loginName', $pageInfo['login']['name'])
-			            ->with('loginPath', $pageInfo['login']['path']);
-                }
+				return view('activate')
+					->with('view', 'activated')
+					->with('accountType', $user->account_type)
+		            ->with('homeName', $pageInfo['home']['name'])
+		            ->with('homePath', $pageInfo['home']['path']);
             } else {
             	// not valid
 				return view('activate')

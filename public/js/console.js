@@ -63104,7 +63104,7 @@ var ChangePwdLanding = function (_React$Component3) {
 
                 this.props.closeMainMsg();
 
-                var requestObj = Object(__WEBPACK_IMPORTED_MODULE_5__utils_js__["d" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
+                var requestObj = Object(__WEBPACK_IMPORTED_MODULE_5__utils_js__["e" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
                 this.props.addServerRequestObj(requestObj);
 
                 var url = api_url_public + 'users/' + accountData.email;
@@ -63373,9 +63373,9 @@ var Domains = function (_React$Component) {
         key: 'checkValue',
         value: function checkValue() {
             var valueOk = void 0;
-            var newDomain = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["f" /* trimString */])(this.input.value);
+            var newDomain = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["g" /* trimString */])(this.input.value);
             if (newDomain.length > 0) {
-                if (Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["c" /* hasDomainForm */])(newDomain)) {
+                if (Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["d" /* hasDomainForm */])(newDomain)) {
                     if (this.checkExists(newDomain)) {
                         valueOk = false;
                         this.setState({
@@ -63418,7 +63418,7 @@ var Domains = function (_React$Component) {
         key: 'addDomainClick',
         value: function addDomainClick() {
             if (this.checkValue()) {
-                var origValue = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["f" /* trimString */])(this.input.value);
+                var origValue = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["g" /* trimString */])(this.input.value);
                 this.createItemAndAdd(origValue);
                 this.setState({
                     inputFocus: false,
@@ -63433,7 +63433,7 @@ var Domains = function (_React$Component) {
                 // enter key
                 e.preventDefault();
                 if (this.checkValue()) {
-                    var origValue = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["f" /* trimString */])(this.input.value);
+                    var origValue = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["g" /* trimString */])(this.input.value);
                     this.createItemAndAdd(origValue);
                 }
                 this.setState({
@@ -63449,7 +63449,7 @@ var Domains = function (_React$Component) {
     }, {
         key: 'createItemAndAdd',
         value: function createItemAndAdd(domain) {
-            this.props.addDomain(Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["e" /* stripUrl */])(domain));
+            this.props.addDomain(Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["f" /* stripUrl */])(domain));
             this.input.value = '';
         }
     }, {
@@ -63526,9 +63526,9 @@ var Domain = function (_React$Component2) {
         key: 'checkValue',
         value: function checkValue() {
             var valueOk = void 0;
-            var newDomain = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["f" /* trimString */])(this.inputEdit.value);
+            var newDomain = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["g" /* trimString */])(this.inputEdit.value);
             if (newDomain.length > 0) {
-                if (Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["c" /* hasDomainForm */])(newDomain)) {
+                if (Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["d" /* hasDomainForm */])(newDomain)) {
                     if (this.props.checkExists(newDomain, this.props.index)) {
                         valueOk = false;
                         this.setState({
@@ -63558,7 +63558,7 @@ var Domain = function (_React$Component2) {
         key: 'onBlur',
         value: function onBlur(e) {
             if (this.checkValue()) {
-                var strippedUrl = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["e" /* stripUrl */])(Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["f" /* trimString */])(this.inputEdit.value));
+                var strippedUrl = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["f" /* stripUrl */])(Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["g" /* trimString */])(this.inputEdit.value));
                 this.props.updateDomain(this.props.id, strippedUrl);
                 this.inputEdit.value = strippedUrl;
             } else {
@@ -63859,7 +63859,7 @@ var App = function (_React$Component) {
             var _this2 = this;
 
             if (accountData.hasDomains) {
-                var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["d" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
+                var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["e" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
                 this.addServerRequestObj(requestObj);
 
                 var url = api_url_public + 'domains';
@@ -63897,7 +63897,7 @@ var App = function (_React$Component) {
     }, {
         key: 'deleteServerRequestObj',
         value: function deleteServerRequestObj(requestObj) {
-            var index = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["b" /* findIndexById */])(this.state.serverRequestObjs, requestObj.id);
+            var index = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["c" /* findIndexById */])(this.state.serverRequestObjs, requestObj.id);
             if (index != null) {
                 this.setState({
                     serverRequestObjs: __WEBPACK_IMPORTED_MODULE_10_immutability_helper___default()(this.state.serverRequestObjs, { $splice: [[index, 1]] })
@@ -63927,7 +63927,7 @@ var App = function (_React$Component) {
 
             this.closeMainMsg();
 
-            var newId = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["g" /* uuidv4 */])();
+            var newId = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["h" /* uuidv4 */])();
             this.setState({
                 domains: __WEBPACK_IMPORTED_MODULE_10_immutability_helper___default()(this.state.domains, { $unshift: [{
                         id: newId,
@@ -63936,7 +63936,7 @@ var App = function (_React$Component) {
                     }] })
             });
 
-            var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["d" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
+            var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["e" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
             this.addServerRequestObj(requestObj);
 
             var url = api_url_public + 'domains';
@@ -63961,7 +63961,7 @@ var App = function (_React$Component) {
                     domains: newDomains
                 });
             }).catch(function (error) {
-                var index = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["b" /* findIndexById */])(_this3.state.domains, newId);
+                var index = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["c" /* findIndexById */])(_this3.state.domains, newId);
                 if (index != null) {
                     _this3.setState({
                         domains: __WEBPACK_IMPORTED_MODULE_10_immutability_helper___default()(_this3.state.domains, { $splice: [[index, 1]] })
@@ -63980,7 +63980,7 @@ var App = function (_React$Component) {
         value: function updateDomain(id, domain) {
             var _this4 = this;
 
-            var index = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["b" /* findIndexById */])(this.state.domains, id);
+            var index = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["c" /* findIndexById */])(this.state.domains, id);
             var origDomain = null;
             if (index != null) {
                 origDomain = this.state.domains[index].domain;
@@ -63996,7 +63996,7 @@ var App = function (_React$Component) {
                         } }))
                 });
 
-                var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["d" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
+                var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["e" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
                 this.addServerRequestObj(requestObj);
 
                 var url = api_url_public + 'domains/' + id;
@@ -64037,7 +64037,7 @@ var App = function (_React$Component) {
                     domains: Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["a" /* arrayMove */])(this.state.domains, oldIndex, newIndex)
                 });
 
-                var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["d" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
+                var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["e" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
                 this.addServerRequestObj(requestObj);
 
                 var url = api_url_public + 'domains/' + id;
@@ -64101,7 +64101,7 @@ var App = function (_React$Component) {
                 domains: newDomains
             });
 
-            var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["d" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
+            var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["e" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
             this.addServerRequestObj(requestObj);
 
             var children = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'left' }, 'Deleting domain...'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont mainmsg dummy' }, '\xA0')))));
@@ -64140,7 +64140,7 @@ var App = function (_React$Component) {
             var children = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'left' }, 'Restoring domain...'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont mainmsg dummy' }, '\xA0')))));
             this.showMainMsg(children, 86400000);
 
-            var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["d" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
+            var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["e" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
             this.addServerRequestObj(requestObj);
 
             var url = api_url_public + 'domains/' + domain.id;
@@ -66408,13 +66408,13 @@ var monitorWinWidth = function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export encodeHTML */
-/* harmony export (immutable) */ __webpack_exports__["b"] = findIndexById;
-/* harmony export (immutable) */ __webpack_exports__["c"] = hasDomainForm;
-/* harmony export (immutable) */ __webpack_exports__["e"] = stripUrl;
-/* harmony export (immutable) */ __webpack_exports__["d"] = requestObjCreate;
-/* harmony export (immutable) */ __webpack_exports__["g"] = uuidv4;
-/* harmony export (immutable) */ __webpack_exports__["f"] = trimString;
+/* harmony export (immutable) */ __webpack_exports__["b"] = encodeHTML;
+/* harmony export (immutable) */ __webpack_exports__["c"] = findIndexById;
+/* harmony export (immutable) */ __webpack_exports__["d"] = hasDomainForm;
+/* harmony export (immutable) */ __webpack_exports__["f"] = stripUrl;
+/* harmony export (immutable) */ __webpack_exports__["e"] = requestObjCreate;
+/* harmony export (immutable) */ __webpack_exports__["h"] = uuidv4;
+/* harmony export (immutable) */ __webpack_exports__["g"] = trimString;
 /* harmony export (immutable) */ __webpack_exports__["a"] = arrayMove;
 function encodeHTML(value) {
 				return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');

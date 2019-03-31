@@ -417,7 +417,22 @@ input.textentry {
   display: block;
 }
 
-div.signup-row div.signup-dataentry input.textentry {
+#pageWrapper #div-sitecont div.section-cont {
+  padding-top: 2.4em;
+  padding-bottom: 2.4em;
+}
+
+#pageWrapper #div-sitecont div.section-cont div.section-outer {
+  max-width: 500px;
+}
+
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.page-subtitle {
+  margin-top: 2em;
+  font-size: 90%;
+  color: #444444;
+}
+
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.login-row div.login-dataentry input.textentry {
   font-size: 100%;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -426,76 +441,15 @@ div.signup-row div.signup-dataentry input.textentry {
   border: 1px solid #DDDDDD;
 }
 
-div.signup-row div.signup-dataentry input.textentry.left {
-  float: left;
-  width: 49%;
-}
-
-div.signup-row div.signup-dataentry input.textentry.right {
-  float: left;
-  margin-left: 2%;
-  width: 49%;
-}
-
-div.signup-row div.signup-dataentry input.textentry.error {
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.login-row div.login-dataentry input.textentry.error {
   border: 1px solid #FF3B0A;
 }
 
-div.signup-row div.signup-dataentry input.textentry.focus {
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.login-row div.login-dataentry input.textentry.focus {
   border: 1px solid #3366CC;
 }
 
-div.signup-row div.signup-dataentry select {
-  font-size: 100%;
-  padding: 0.6em 0.4em;
-  border: 1px solid #DDDDDD;
-  max-width: 300px;
-}
-
-div.signup-row div.signup-dataentry select.error {
-  border: 1px solid #FF3B0A;
-}
-
-div.signup-row div.signup-dataentry img.payment {
-  margin-right: 4px;
-}
-
-div.signup-row div.hosted-field {
-  height: 50px;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  padding: 0.2em 0.6em;
-  display: inline-block;
-  -webkit-box-shadow: none;
-          box-shadow: none;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 20px;
-  background-color: #FFFFFF;
-  border: 1px solid #DDDDDD;
-}
-
-div.signup-row div.hosted-field.error {
-  border: 1px solid #FF3B0A;
-}
-
-div.signup-row div.hosted-field.focus {
-  border: 1px solid #3366CC;
-}
-
-div.signup-row #div-payment-number {
-  width: 100%;
-}
-
-div.signup-row #div-payment-expirationDate {
-  width: 120px;
-}
-
-div.signup-row #div-payment-cvv {
-  width: 90px;
-}
-
-div.signup-row div.submsg-cont {
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.login-row div.submsg-cont {
   margin: 0.3em 0;
   font-size: 85%;
   line-height: 130%;
@@ -504,85 +458,18 @@ div.signup-row div.submsg-cont {
   color: #777777;
 }
 
-div.signup-row div.submsg-cont.error {
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.login-row div.submsg-cont.error {
   font-weight: bold;
   color: #FF3B0A;
 }
 
-div.signup-row div.submsg-cont.error.right {
-  text-align: right;
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.login-row.submit {
+  position: relative;
 }
 
-div.signup-row div.signup-address {
-  padding: 0.6em;
-  height: 4em;
-  max-width: 300px;
-}
-
-div.signup-row div.signup-address p {
-  margin: 0.2em 0;
-  color: #444444;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-div.signup-row div.signup-address p.empty {
-  border-radius: 4px;
-  background-color: #F4F4F4;
-}
-
-div.signup-row div.signup-address p.company.empty {
-  display: none;
-}
-
-div.signup-row div.signup-orderdetails table {
-  width: 100%;
-}
-
-div.signup-row div.signup-orderdetails table td {
-  padding: 0.6em;
-  color: #444444;
-}
-
-div.signup-row div.signup-orderdetails table td.border-top {
-  border-top: 1px solid #777777;
-}
-
-div.signup-row div.signup-orderdetails table td.border-btm {
-  border-bottom: 1px solid #777777;
-}
-
-div.signup-row div.signup-orderdetails table td.col-mdl {
-  width: 40%;
-}
-
-div.signup-row div.signup-orderdetails table td.col-right {
-  width: 10%;
-  text-align: right;
-}
-
-div.signup-row div.signup-buttons {
-  margin: 0.4em 0;
-}
-
-div.signup-row div.signup-buttons .button-word-cont {
-  font-size: 80%;
-}
-
-div.signup-row div.signup-terms table {
-  border: 1px solid transparent;
-}
-
-div.signup-row div.signup-terms table td {
-  vertical-align: top;
-}
-
-div.signup-row div.signup-terms table td.checkbox {
-  padding-right: 0.4em;
-}
-
-div.signup-row div.signup-terms table td.checkbox input {
-  -webkit-transform: scale(1.2);
-          transform: scale(1.2);
+#pageWrapper #div-sitecont div.section-cont div.section-outer div.login-row.submit a.forgot-pwd {
+  position: absolute;
+  right: 0;
+  top: 0.6em;
+  font-size: 90%;
 }

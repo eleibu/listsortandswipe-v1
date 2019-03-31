@@ -17141,7 +17141,7 @@ var divEmailRequestSubmsg = document.getElementById('div-emailrequest-submsg');
 var submitRequestButton = document.getElementById('div-submit-request');
 
 if (divMainmsg && divEmailRequestCont && inputEmailRequest && divEmailRequestSubmsg && submitRequestButton && spinnerCont && maskCont) {
-	if (Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["f" /* trimString */])(divEmailRequestSubmsg.innerHTML).length == 0) {
+	if (Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["g" /* trimString */])(divEmailRequestSubmsg.innerHTML).length == 0) {
 		divEmailRequestSubmsg.innerHTML = msgEmailRequestDefault;
 	}
 
@@ -17180,7 +17180,7 @@ function validateAndSubmitRequest() {
 	divMainmsg.innerHTML = "";
 
 	var emailOk = false;
-	var email = Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["f" /* trimString */])(inputEmailRequest.value);
+	var email = Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["g" /* trimString */])(inputEmailRequest.value);
 
 	if (email.length > 0) {
 		var regex = /^[^@]+@[^@]+\.[^@]+$/;
@@ -17227,7 +17227,7 @@ var divPasswordSubmsg = document.getElementById('div-password-submsg');
 var submitDoresetButton = document.getElementById('div-submit-doreset');
 
 if (divMainmsg && divEmailDoresetCont && divPasswordCont && inputEmailDoreset && inputPassword && divEmailDoresetSubmsg && divPasswordSubmsg && submitDoresetButton && spinnerCont && maskCont) {
-	if (Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["f" /* trimString */])(divPasswordSubmsg.innerHTML).length == 0) {
+	if (Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["g" /* trimString */])(divPasswordSubmsg.innerHTML).length == 0) {
 		divPasswordSubmsg.innerHTML = msgPasswordDefault;
 	}
 
@@ -17290,7 +17290,7 @@ function validateAndSubmitDoreset() {
 	divMainmsg.innerHTML = "";
 
 	var emailOk = false;
-	var email = Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["f" /* trimString */])(inputEmailDoreset.value);
+	var email = Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["g" /* trimString */])(inputEmailDoreset.value);
 
 	if (email.length > 0) {
 		var regex = /^[^@]+@[^@]+\.[^@]+$/;
@@ -17360,13 +17360,13 @@ function validateAndSubmitDoreset() {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export encodeHTML */
-/* harmony export (immutable) */ __webpack_exports__["b"] = findIndexById;
-/* harmony export (immutable) */ __webpack_exports__["c"] = hasDomainForm;
-/* harmony export (immutable) */ __webpack_exports__["e"] = stripUrl;
-/* harmony export (immutable) */ __webpack_exports__["d"] = requestObjCreate;
-/* harmony export (immutable) */ __webpack_exports__["g"] = uuidv4;
-/* harmony export (immutable) */ __webpack_exports__["f"] = trimString;
+/* harmony export (immutable) */ __webpack_exports__["b"] = encodeHTML;
+/* harmony export (immutable) */ __webpack_exports__["c"] = findIndexById;
+/* harmony export (immutable) */ __webpack_exports__["d"] = hasDomainForm;
+/* harmony export (immutable) */ __webpack_exports__["f"] = stripUrl;
+/* harmony export (immutable) */ __webpack_exports__["e"] = requestObjCreate;
+/* harmony export (immutable) */ __webpack_exports__["h"] = uuidv4;
+/* harmony export (immutable) */ __webpack_exports__["g"] = trimString;
 /* harmony export (immutable) */ __webpack_exports__["a"] = arrayMove;
 function encodeHTML(value) {
 				return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
