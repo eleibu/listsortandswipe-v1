@@ -19320,6 +19320,13 @@ var pageMenuShowHide = function () {
 
 /***/ }),
 
+/***/ "./resources/sass/reset.scss":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./resources/sass/signup.scss":
 /***/ (function(module, exports) {
 
@@ -19355,6 +19362,7 @@ __webpack_require__("./resources/sass/auth.scss");
 __webpack_require__("./resources/sass/signup.scss");
 __webpack_require__("./resources/sass/activate.scss");
 __webpack_require__("./resources/sass/login.scss");
+__webpack_require__("./resources/sass/reset.scss");
 module.exports = __webpack_require__("./resources/sass/terms.scss");
 
 

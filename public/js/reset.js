@@ -17131,37 +17131,50 @@ __webpack_require__("./node_modules/bootstrap/dist/js/bootstrap.js");
 
 
 
-var divMainmsg = document.getElementById('div-mainmsg');
-var spinnerCont = document.getElementById('div-spinner-cont');
-var maskCont = document.getElementById('div-middlebox-mask');
+// var divMainmsg = document.getElementById('div-mainmsg');
+// var spinnerCont = document.getElementById('div-spinner-cont');
+// var maskCont = document.getElementById('div-middlebox-mask');
 
-var divEmailRequestCont = document.getElementById('div-emailrequest-cont');
+// var divEmailRequestCont = document.getElementById('div-emailrequest-cont');
+// var inputEmailRequest = document.getElementById('input-emailrequest');
+// var divEmailRequestSubmsg = document.getElementById('div-emailrequest-submsg');
+// var submitButton = document.getElementById('div-submit');
+
+
+var maskCont = document.getElementById('div-sitecont-mask');
+var spinnerCont = document.getElementById('div-spinner-cont');
+var divSubmitSubmsg = document.getElementById('div-submit-submsg');
+
 var inputEmailRequest = document.getElementById('input-emailrequest');
 var divEmailRequestSubmsg = document.getElementById('div-emailrequest-submsg');
-var submitRequestButton = document.getElementById('div-submit-request');
+var submitButton = document.getElementById('div-submit');
 
-if (divMainmsg && divEmailRequestCont && inputEmailRequest && divEmailRequestSubmsg && submitRequestButton && spinnerCont && maskCont) {
+if (maskCont && spinnerCont && divSubmitSubmsg && inputEmailRequest && divEmailRequestSubmsg && submitButton) {
 	if (Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["g" /* trimString */])(divEmailRequestSubmsg.innerHTML).length == 0) {
 		divEmailRequestSubmsg.innerHTML = msgEmailRequestDefault;
 	}
 
-	inputEmailRequest.focus();
-	inputEmailRequest.select();
-
 	inputEmailRequest.addEventListener("focus", function (e) {
-		divMainmsg.innerHTML = "";
-		divEmailRequestCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'text-cont': true,
+		inputEmailRequest.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'textentry': true,
 			'focus': true
 		});
 		divEmailRequestSubmsg.innerHTML = msgEmailRequestDefault;
+		divEmailRequestSubmsg.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'submsg-cont': true
+		});
+		hideSubmitSubmsg();
 	});
 
 	inputEmailRequest.addEventListener("blur", function (e) {
-		divEmailRequestCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'text-cont': true
+		inputEmailRequest.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'textentry': true
 		});
 		divEmailRequestSubmsg.innerHTML = msgEmailRequestDefault;
+		divEmailRequestSubmsg.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'submsg-cont': true
+		});
+		hideSubmitSubmsg();
 	});
 
 	inputEmailRequest.addEventListener("keypress", function (e) {
@@ -17171,14 +17184,15 @@ if (divMainmsg && divEmailRequestCont && inputEmailRequest && divEmailRequestSub
 		}
 	});
 
-	submitRequestButton.addEventListener("click", function () {
+	submitButton.addEventListener("click", function () {
 		validateAndSubmitRequest();
 	});
+
+	inputEmailRequest.focus();
+	inputEmailRequest.select();
 }
 
 function validateAndSubmitRequest() {
-	divMainmsg.innerHTML = "";
-
 	var emailOk = false;
 	var email = Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["g" /* trimString */])(inputEmailRequest.value);
 
@@ -17187,26 +17201,39 @@ function validateAndSubmitRequest() {
 		if (regex.test(email)) {
 			emailOk = true;
 
-			divEmailRequestCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-				'text-cont': true
+			inputEmailRequest.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+				'textentry': true
 			});
 			divEmailRequestSubmsg.innerHTML = msgEmailRequestDefault;
+			divEmailRequestSubmsg.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+				'submsg-cont': true
+			});
 		} else {
-			divEmailRequestCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-				'text-cont': true,
+			inputEmailRequest.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+				'textentry': true,
 				'error': true
 			});
 			divEmailRequestSubmsg.innerHTML = msgEmailRequestInvalid;
+			divEmailRequestSubmsg.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+				'submsg-cont': true,
+				'error': true
+			});
 		}
 	} else {
-		divEmailRequestCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'text-cont': true,
+		inputEmailRequest.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'textentry': true,
 			'error': true
 		});
 		divEmailRequestSubmsg.innerHTML = msgEmailRequestNoBlank;
+		divEmailRequestSubmsg.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'submsg-cont': true,
+			'error': true
+		});
 	}
 
 	if (emailOk) {
+		hideSubmitSubmsg();
+
 		maskCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
 			'show': true
 		});
@@ -17218,141 +17245,226 @@ function validateAndSubmitRequest() {
 	}
 }
 
-var divEmailDoresetCont = document.getElementById('div-emaildoreset-cont');
-var divPasswordCont = document.getElementById('div-password-cont');
-var inputEmailDoreset = document.getElementById('input-emaildoreset');
-var inputPassword = document.getElementById('input-password');
-var divEmailDoresetSubmsg = document.getElementById('div-emaildoreset-submsg');
-var divPasswordSubmsg = document.getElementById('div-password-submsg');
-var submitDoresetButton = document.getElementById('div-submit-doreset');
-
-if (divMainmsg && divEmailDoresetCont && divPasswordCont && inputEmailDoreset && inputPassword && divEmailDoresetSubmsg && divPasswordSubmsg && submitDoresetButton && spinnerCont && maskCont) {
-	if (Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["g" /* trimString */])(divPasswordSubmsg.innerHTML).length == 0) {
-		divPasswordSubmsg.innerHTML = msgPasswordDefault;
-	}
-
-	inputEmailDoreset.focus();
-	inputEmailDoreset.select();
-
-	inputEmailDoreset.addEventListener("focus", function (e) {
-		divMainmsg.innerHTML = "";
-		divEmailDoresetCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'text-cont': true,
-			'focus': true
-		});
-		divEmailDoresetSubmsg.innerHTML = msgEmailDoresetDefault;
-	});
-
-	inputEmailDoreset.addEventListener("blur", function (e) {
-		divEmailDoresetCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'text-cont': true
-		});
-		divEmailDoresetSubmsg.innerHTML = msgEmailDoresetDefault;
-	});
-
-	inputEmailDoreset.addEventListener("keypress", function (e) {
-		if (e.which && e.which == 13 || e.keyCode && e.keyCode == 13) {
-			e.preventDefault();
-			inputPassword.focus();
-			inputPassword.select();
-		}
-	});
-
-	inputPassword.addEventListener("focus", function (e) {
-		divMainmsg.innerHTML = "";
-		divPasswordCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'text-cont': true,
-			'focus': focus
-		});
-		divPasswordSubmsg.innerHTML = msgPasswordDefault;
-	});
-
-	inputPassword.addEventListener("blur", function (e) {
-		divPasswordCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'text-cont': true
-		});
-		divPasswordSubmsg.innerHTML = msgPasswordDefault;
-	});
-
-	inputPassword.addEventListener("keypress", function (e) {
-		if (e.which && e.which == 13 || e.keyCode && e.keyCode == 13) {
-			e.preventDefault();
-			validateAndSubmitDoreset();
-		}
-	});
-
-	submitDoresetButton.addEventListener("click", function () {
-		validateAndSubmitDoreset();
+function hideSubmitSubmsg() {
+	divSubmitSubmsg.innerHTML = '';
+	divSubmitSubmsg.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+		'submsg-cont': true
 	});
 }
 
-function validateAndSubmitDoreset() {
-	divMainmsg.innerHTML = "";
+// if ((divMainmsg) && (divEmailRequestCont) && (inputEmailRequest) && (divEmailRequestSubmsg) && (submitButton) && (spinnerCont) && (maskCont)) {
+// 	if (trimString(divEmailRequestSubmsg.innerHTML).length == 0) {
+// 		divEmailRequestSubmsg.innerHTML = msgEmailRequestDefault;
+// 	}
 
-	var emailOk = false;
-	var email = Object(__WEBPACK_IMPORTED_MODULE_2__utils_js__["g" /* trimString */])(inputEmailDoreset.value);
+// 	inputEmailRequest.focus();
+// 	inputEmailRequest.select();
 
-	if (email.length > 0) {
-		var regex = /^[^@]+@[^@]+\.[^@]+$/;
-		if (regex.test(email)) {
-			emailOk = true;
+// 	inputEmailRequest.addEventListener("focus", function(e) {
+// 		divMainmsg.innerHTML = "";
+// 		divEmailRequestCont.className = classNames({
+// 			'text-cont' : true,
+// 			'focus' : true
+// 		});
+// 		divEmailRequestSubmsg.innerHTML = msgEmailRequestDefault;
+// 	});
 
-			divEmailDoresetCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-				'text-cont': true
-			});
-			divEmailDoresetSubmsg.innerHTML = msgEmailDoresetDefault;
-		} else {
-			divEmailDoresetCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-				'text-cont': true,
-				'error': true
-			});
-			divEmailDoresetSubmsg.innerHTML = msgEmailDoresetInvalid;
-		}
-	} else {
-		divEmailDoresetCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'text-cont': true,
-			'error': true
-		});
-		divEmailDoresetSubmsg.innerHTML = msgEmailDoresetNoBlank;
-	}
+// 	inputEmailRequest.addEventListener("blur", function(e) {
+// 		divEmailRequestCont.className = classNames({
+// 			'text-cont' : true
+// 		});
+// 		divEmailRequestSubmsg.innerHTML = msgEmailRequestDefault;
+// 	});
 
-	var passwordOk = false;
-	var password = inputPassword.value;
+// 	inputEmailRequest.addEventListener("keypress", function(e) {
+// 		if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+// 			e.preventDefault();
+// 			validateAndSubmitRequest();
+// 		}
+// 	});
 
-	if (password.length > 0) {
-		if (password.length >= 6) {
-			passwordOk = true;
+// 	submitButton.addEventListener("click", function() {
+// 		validateAndSubmitRequest();
+// 	});
+// }
 
-			divPasswordCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-				'text-cont': true
-			});
-			divPasswordSubmsg.innerHTML = msgPasswordDefault;
-		} else {
-			divPasswordCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-				'text-cont': true,
-				'error': true
-			});
-			divPasswordSubmsg.innerHTML = msgPasswordInvalid;
-		}
-	} else {
-		divPasswordCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'text-cont': true,
-			'error': true
-		});
-		divPasswordSubmsg.innerHTML = msgPasswordNoBlank;
-	}
+// function validateAndSubmitRequest() {
+// 	divMainmsg.innerHTML = "";
 
-	if (emailOk && passwordOk) {
-		maskCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'show': true
-		});
-		spinnerCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-			'spinner-cont': true,
-			'spinning': true
-		});
-		document.getElementById('form').submit();
-	}
-}
+// 	var emailOk = false;
+// 	var email = trimString(inputEmailRequest.value);
+
+// 	if (email.length > 0) {
+// 		var regex = /^[^@]+@[^@]+\.[^@]+$/;
+// 		if (regex.test(email)) {
+// 			emailOk = true;
+
+// 			divEmailRequestCont.className = classNames({
+// 				'text-cont' : true
+// 			});
+// 			divEmailRequestSubmsg.innerHTML = msgEmailRequestDefault;
+// 		} else {
+// 			divEmailRequestCont.className = classNames({
+// 				'text-cont' : true,
+// 				'error' : true
+// 			});
+// 			divEmailRequestSubmsg.innerHTML = msgEmailRequestInvalid;
+// 		}
+// 	} else {
+// 		divEmailRequestCont.className = classNames({
+// 			'text-cont' : true,
+// 			'error' : true
+// 		});
+// 		divEmailRequestSubmsg.innerHTML = msgEmailRequestNoBlank;
+// 	}
+
+// 	if (emailOk) {
+// 		maskCont.className = classNames({
+// 			'show' : true
+// 		});
+// 		spinnerCont.className = classNames({
+// 			'spinner-cont' : true,
+// 			'spinning' : true
+// 		});
+// 		document.getElementById('form').submit();
+// 	}	
+// }
+
+// var divEmailDoresetCont = document.getElementById('div-emaildoreset-cont');
+// var divPasswordCont = document.getElementById('div-password-cont');
+// var inputEmailDoreset = document.getElementById('input-emaildoreset');
+// var inputPassword = document.getElementById('input-password');
+// var divEmailDoresetSubmsg = document.getElementById('div-emaildoreset-submsg');
+// var divPasswordSubmsg = document.getElementById('div-password-submsg');
+// var submitDoresetButton = document.getElementById('div-submit-doreset');
+
+// if ((divMainmsg) && (divEmailDoresetCont) && (divPasswordCont) && (inputEmailDoreset) && (inputPassword) && (divEmailDoresetSubmsg) && (divPasswordSubmsg) && (submitDoresetButton) && (spinnerCont) && (maskCont)) {
+// 	if (trimString(divPasswordSubmsg.innerHTML).length == 0) {
+// 		divPasswordSubmsg.innerHTML = msgPasswordDefault;
+// 	}
+
+// 	inputEmailDoreset.focus();
+// 	inputEmailDoreset.select();
+
+// 	inputEmailDoreset.addEventListener("focus", function(e) {
+// 		divMainmsg.innerHTML = "";
+// 		divEmailDoresetCont.className = classNames({
+// 			'text-cont' : true,
+// 			'focus' : true
+// 		});
+// 		divEmailDoresetSubmsg.innerHTML = msgEmailDoresetDefault;
+// 	});
+
+// 	inputEmailDoreset.addEventListener("blur", function(e) {
+// 		divEmailDoresetCont.className = classNames({
+// 			'text-cont' : true
+// 		});
+// 		divEmailDoresetSubmsg.innerHTML = msgEmailDoresetDefault;
+// 	});
+
+// 	inputEmailDoreset.addEventListener("keypress", function(e) {
+// 		if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+// 			e.preventDefault();
+// 			inputPassword.focus();
+// 			inputPassword.select();
+// 		}
+// 	});
+
+// 	inputPassword.addEventListener("focus", function(e) {
+// 		divMainmsg.innerHTML = "";
+// 		divPasswordCont.className = classNames({
+// 			'text-cont' : true,
+// 			'focus' : focus
+// 		});
+// 		divPasswordSubmsg.innerHTML = msgPasswordDefault;
+// 	});
+
+// 	inputPassword.addEventListener("blur", function(e) {
+// 		divPasswordCont.className = classNames({
+// 			'text-cont' : true
+// 		});
+// 		divPasswordSubmsg.innerHTML = msgPasswordDefault;
+// 	});
+
+// 	inputPassword.addEventListener("keypress", function(e) {
+// 		if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+// 			e.preventDefault();
+// 			validateAndSubmitDoreset();
+// 		}
+// 	});
+
+// 	submitDoresetButton.addEventListener("click", function() {
+// 		validateAndSubmitDoreset();
+// 	});
+// }
+
+// function validateAndSubmitDoreset() {
+// 	divMainmsg.innerHTML = "";
+
+// 	var emailOk = false;
+// 	var email = trimString(inputEmailDoreset.value);
+
+// 	if (email.length > 0) {
+// 		var regex = /^[^@]+@[^@]+\.[^@]+$/;
+// 		if (regex.test(email)) {
+// 			emailOk = true;
+
+// 			divEmailDoresetCont.className = classNames({
+// 				'text-cont' : true
+// 			});
+// 			divEmailDoresetSubmsg.innerHTML = msgEmailDoresetDefault;
+// 		} else {
+// 			divEmailDoresetCont.className = classNames({
+// 				'text-cont' : true,
+// 				'error' : true
+// 			});
+// 			divEmailDoresetSubmsg.innerHTML = msgEmailDoresetInvalid;
+// 		}
+// 	} else {
+// 		divEmailDoresetCont.className = classNames({
+// 			'text-cont' : true,
+// 			'error' : true
+// 		});
+// 		divEmailDoresetSubmsg.innerHTML = msgEmailDoresetNoBlank;
+// 	}
+
+// 	var passwordOk = false;
+// 	var password = inputPassword.value;
+
+// 	if (password.length > 0) {
+// 		if (password.length >= 6) {
+// 			passwordOk = true;
+
+// 			divPasswordCont.className = classNames({
+// 				'text-cont' : true
+// 			});
+// 			divPasswordSubmsg.innerHTML = msgPasswordDefault;
+// 		} else {
+// 			divPasswordCont.className = classNames({
+// 				'text-cont' : true,
+// 				'error' : true
+// 			});
+// 			divPasswordSubmsg.innerHTML = msgPasswordInvalid;
+// 		}
+// 	} else {
+// 		divPasswordCont.className = classNames({
+// 			'text-cont' : true,
+// 			'error' : true
+// 		});
+// 		divPasswordSubmsg.innerHTML = msgPasswordNoBlank;
+// 	}
+
+// 	if ((emailOk) && (passwordOk)) {
+// 		maskCont.className = classNames({
+// 			'show' : true
+// 		});
+// 		spinnerCont.className = classNames({
+// 			'spinner-cont' : true,
+// 			'spinning' : true
+// 		});
+// 		document.getElementById('form').submit();
+// 	}	
+// }
 
 /***/ }),
 
