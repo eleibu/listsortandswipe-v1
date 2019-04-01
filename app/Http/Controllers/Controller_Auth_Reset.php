@@ -8,9 +8,8 @@ use App\Classes\Toolkit;
 use App\User;
 use DB;
 use Illuminate\Support\Facades\Password;
-// use Illuminate\Mail\Message;
-// use Mail;
-// use App\Mail\ResetPasswordLink;
+use Mail;
+use App\Mail\ResetPasswordLink;
 use Illuminate\Contracts\Hashing\Hasher as HasherContract;
 
 class Controller_Auth_Reset extends Controller
@@ -136,7 +135,7 @@ class Controller_Auth_Reset extends Controller
 		    
 		    if (isset($user)) {
 				$token = Password::getRepository()->create($user);
-				// Mail::to($email)->send(new ResetPasswordLink($email, $token));
+				Mail::to($email)->send(new ResetPasswordLink($email, $token));
 
             	$pageInfo = Toolkit::pageInfo();
 				return view('reset')

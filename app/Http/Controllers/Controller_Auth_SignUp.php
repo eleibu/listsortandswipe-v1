@@ -10,7 +10,7 @@ use App\Classes\Toolkit;
 use Validator;
 use Illuminate\Support\Facades\Mail;
 // use App\Mail\SignedUp;
-// use App\Mail\ResendActivationLink;
+use App\Mail\ResendActivationLink;
 use App\Product;
 use App\Sale;
 use \Carbon\Carbon;
