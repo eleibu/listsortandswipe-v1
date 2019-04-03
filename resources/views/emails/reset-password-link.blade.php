@@ -2,7 +2,7 @@
 
 @section('content')
     <div style="margin: 0.8em 0; color: #222222; line-height: 130%;">
-        Hi there
+        Hi {{$firstname}}
     </div>
     <div style="margin: 0.8em 0; color: #222222; line-height: 130%; ">
         As requested, here is a password reset link for your Lithium List account:

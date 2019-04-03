@@ -64664,7 +64664,7 @@ var lithiumlist = function () {
 							}
 						}
 					}
-					instances[index]['ignoreObjects'] = getIgnoreObjects(listProperties['ignoreOnClick']);
+					instances[index]['ignoreObjects'] = getIgnoreObjects(instances[index]['props']['ignoreOnClick']);
 					tempFunctionRemoveMasks(instances[index]['props']);
 				} else {
 					throw 'listCont does not have lithiumlist attached ';

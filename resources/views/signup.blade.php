@@ -3,7 +3,7 @@ if (isset($productDetails)) {
     $product_price = '$' . ($productDetails['priceCents'] / 100) . '.00';
     $subtotal = $product_price;
     $taxes = '$0.00';
-    $total = $product_price;    
+    $total = $product_price;
 } else {
     $product_price = '$0';
     $subtotal = $product_price;

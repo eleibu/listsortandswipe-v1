@@ -8,7 +8,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Classes\Toolkit;
 
-class ResetPasswordLink extends Mailable
+class SendActivationLink extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -19,15 +19,13 @@ class ResetPasswordLink extends Mailable
      */
 
     public $firstname;
-    public $resetLink;
-    public $pagePath;
+    public $activateLink;
 
-    public function __construct($email, $firstname, $token)
+    public function __construct($firstname, $vcode)
     {
         $pageInfo = Toolkit::pageInfo();
         $this->firstname = $firstname;
-        $this->resetLink = url($pageInfo['reset']['path'] . '?email=' . $email . '&token=' . $token);
-        $this->pagePath = url($pageInfo['reset']['path']);
+        $this->activateLink = url($pageInfo['activate']['path'] . '/' . $vcode);
     }
 
     /**
@@ -37,6 +35,6 @@ class ResetPasswordLink extends Mailable
      */
     public function build()
     {
-        return $this->subject('Lithiumn List - reset password')->view('emails.reset-password-link');
+        return $this->subject('Lithiumn List - activate account')->view('emails.send-activation-link');
     }
 }

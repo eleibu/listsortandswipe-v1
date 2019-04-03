@@ -5,7 +5,7 @@
         Hi {{$firstname}}
     </div>
     <div style="margin: 0.8em 0; color: #222222; line-height: 130%; ">
-        As requested, we&#39;re resending your Lithium List account activation link:
+        Welcome to Lithium List! Please click this link to activate your account.
     </div>
     <div style="padding-bottom: 1em; margin: 0.8em 0; color: #222222; line-height: 130%;">
         <a href="{{$activateLink}}" title="Activate account" style="display: inline-block; text-decoration: none; padding: 0.6em 1em; border-radius: 4px; text-align: center; font-weight: bold; color: #666666; background-color: #EEEEEE; box-shadow: 0 1px 4px 0 #CCCCCC;">
@@ -13,7 +13,7 @@
         </a>
     </div>
     <div style="margin: 0.8em 0; color: #222222; line-height: 130%;">
-        Thanks again for supporting Lithium List.
+        Thank you for supporting Lithium List.
     </div>
     <div style="margin: 0.8em 0; color: #222222; line-height: 130%;">
         <div><strong>Elliot</strong></div>

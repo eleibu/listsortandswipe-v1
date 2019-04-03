@@ -135,7 +135,8 @@ class Controller_Auth_Reset extends Controller
 		    
 		    if (isset($user)) {
 				$token = Password::getRepository()->create($user);
-				Mail::to($email)->send(new ResetPasswordLink($email, $token));
+				Mail::to($email)
+					->send(new ResetPasswordLink($email, $user->name , $token));
 
             	$pageInfo = Toolkit::pageInfo();
 				return view('reset')

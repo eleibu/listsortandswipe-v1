@@ -11,6 +11,8 @@ use Validator;
 use Illuminate\Support\Facades\Mail;
 // use App\Mail\SignedUp;
 use App\Mail\ResendActivationLink;
+use App\Mail\SendActivationLink;
+use App\Mail\SendReceipt;
 use App\Product;
 use App\Sale;
 use \Carbon\Carbon;
@@ -48,6 +50,9 @@ class Controller_Auth_SignUp extends Controller
     }
 
 	public function page(Request $request) {
+        // Mail::to('elliot.leibu@gmail.com')
+        // 	->send(new ResendActivationLink('Elliot', '123'));
+
 			// $user = Auth::user();
 
 			// $pageInfo = Toolkit::pageInfo();
@@ -65,9 +70,6 @@ class Controller_Auth_SignUp extends Controller
 			$pageInfo = Toolkit::pageInfo();
 			return redirect($pageInfo['console']['path']);
 		} else {
-
-			// ALLOW PRICE TO BE NEGATIVE IN DB
-
 			$productIDs = Toolkit::productIDs();
 			switch ($request->input('pid')) {
 				case $productIDs['accountTypeBasic']:
@@ -249,18 +251,24 @@ class Controller_Auth_SignUp extends Controller
 				$dbProduct = Product::where('id', $pid)
 					->first();
 
+				$invoice = array(
+					'price' => $dbProduct->price_cents,
+					'taxes' => 0,
+					'discount' => 0,
+					'total' => $dbProduct->price_cents
+				);
+
 				if ($requirePayment) {
-					$amount = round(($dbProduct->price_cents / 100), 2);
+					$transAmount = round(($invoice['total'] / 100), 2);
 					$result = $this->gateway->transaction()->sale([
-						'amount' => $amount,
+						'amount' => $transAmount,
 						'paymentMethodNonce' => $request->input('nonce'),
 						'options' => [
 							'submitForSettlement' => true
 						]
 					]);
-
 					if ($result->success) {
-						return $this->createAccount($request, $dbProduct);
+						return $this->createAccount($request, $dbProduct, $invoice);
 					} else {
 						// billing failed
 				        return back()
@@ -268,7 +276,7 @@ class Controller_Auth_SignUp extends Controller
 				        	->withErrors(['creditcard' => $cardErrorMsg], 'signup');
 					}
 				} else {
-					return $this->createAccount($request, $dbProduct);
+					return $this->createAccount($request, $dbProduct, $invoice);
 				}
 			}
 		} else {
@@ -276,7 +284,7 @@ class Controller_Auth_SignUp extends Controller
 		}
 	}
 
-	protected function createAccount($request, $dbProduct) {
+	protected function createAccount($request, $dbProduct, $invoice) {
 			// Auth::attempt(['email' => $email, 'password' => $password], false);
 
 			// $pageInfo = Toolkit::pageInfo();
@@ -288,9 +296,6 @@ class Controller_Auth_SignUp extends Controller
 	  //           ->with('loginPath', $pageInfo['login']['path'])
 	  //           ->with('signupName', $pageInfo['signup']['name'])
 	  //           ->with('signupPath', $pageInfo['signup']['path']);
-
-
-
 
 		$productIDs = Toolkit::productIDs();
 
@@ -317,9 +322,10 @@ class Controller_Auth_SignUp extends Controller
 
 		$user->password = bcrypt($request->input('password'));
 
+		$vcode = str_random(30);
 		if ($dbProduct->id == $productIDs['accountTypeFree']) {
 	        $user->verified = false;
-	        $user->verification_code = str_random(30);
+	        $user->verification_code = $vcode;
 	        $accountCreatedView = 'account-created-requires-activation';
 		} else {
 			$user->verified = true;
@@ -388,9 +394,15 @@ class Controller_Auth_SignUp extends Controller
 		DB::commit();
 
 		if ($success) {
-			// Mail::to($email)->send(new SignedUp($vcode));
-
 			Auth::attempt(['email' => $email, 'password' => $password], false);
+
+			if ($dbProduct->id == $productIDs['accountTypeFree']) {
+				Mail::to($email)
+					->send(new SendActivationLink($firstname, $vcode));
+			}
+
+			Mail::to($email)
+				->send(new SendInvoice($firstname, $invoice));
 
 			$pageInfo = Toolkit::pageInfo();
 			return view('signup')
@@ -408,8 +420,9 @@ class Controller_Auth_SignUp extends Controller
 	}
 
 	protected function resendlink($request) {
-        // $user = Auth::guard('api')->user();
-        // Mail::to($user->email)->send(new ResendActivationLink($user->verification_code));
+        $user = Auth::user();
+        Mail::to($user->email)
+        	->send(new ResendActivationLink($user->name, $user->verification_code));
 		
 		$pageInfo = Toolkit::pageInfo();
 		return view('signup')

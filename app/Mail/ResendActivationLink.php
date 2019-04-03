@@ -18,11 +18,13 @@ class ResendActivationLink extends Mailable
      * @return void
      */
 
+    public $firstname;
     public $activateLink;
 
-    public function __construct($vcode)
+    public function __construct($firstname, $vcode)
     {
         $pageInfo = Toolkit::pageInfo();
+        $this->firstname = $firstname;
         $this->activateLink = url($pageInfo['activate']['path'] . '/' . $vcode);
     }
 
@@ -33,6 +35,6 @@ class ResendActivationLink extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.resend-activation-link');
+        return $this->subject('Lithiumn List - activate account')->view('emails.resend-activation-link');
     }
 }

@@ -249,7 +249,6 @@ if (outerContSetListProperties && listContSetListProperties && spanEnabled && sp
 	});
 }
 
-
 // trigger left and right
 var outerContTriggerLeftAndRight = document.getElementById('outerCont-trigger-leftandright');
 var listContTriggerLeftAndRight = document.getElementById('listCont-trigger-leftandright');

@@ -6,9 +6,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Classes\Toolkit;
 
-class ResetPasswordLink extends Mailable
+class SendReceipt extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -19,15 +18,12 @@ class ResetPasswordLink extends Mailable
      */
 
     public $firstname;
-    public $resetLink;
-    public $pagePath;
+    public $invoice;
 
-    public function __construct($email, $firstname, $token)
+    public function __construct($firstname, $invoice)
     {
-        $pageInfo = Toolkit::pageInfo();
         $this->firstname = $firstname;
-        $this->resetLink = url($pageInfo['reset']['path'] . '?email=' . $email . '&token=' . $token);
-        $this->pagePath = url($pageInfo['reset']['path']);
+        $this->invoice = $invoice;
     }
 
     /**
@@ -37,6 +33,6 @@ class ResetPasswordLink extends Mailable
      */
     public function build()
     {
-        return $this->subject('Lithiumn List - reset password')->view('emails.reset-password-link');
+        return $this->subject('Lithiumn List - receipt')->view('emails.send-invoice');
     }
 }
