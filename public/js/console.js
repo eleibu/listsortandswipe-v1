@@ -63746,6 +63746,8 @@ var MainMsg = function (_React$Component) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DomainMasksCont", function() { return DomainMasksCont; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DomainMask", function() { return DomainMask; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__("./node_modules/react/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__("./node_modules/react-dom/index.js");
@@ -63774,6 +63776,10 @@ var _createClass = function () {
         if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
     };
 }();
+
+function _objectDestructuringEmpty(obj) {
+    if (obj == null) throw new TypeError("Cannot destructure undefined");
+}
 
 function _defineProperty(obj, key, value) {
     if (key in obj) {
@@ -63829,7 +63835,7 @@ var App = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
         _this.state = {
-            tabIndex: 1,
+            tabIndex: 0,
             domainsLoaded: false,
             domainsMsgShow: false,
             domainsMsgText: 'You have 1 product expiring in 28 days',
@@ -64222,12 +64228,26 @@ var App = function (_React$Component) {
                     _this9.tabClick(0);
                 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: icon0Classes }), '\xA0Domains'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: tab1Classes, onClick: function onClick() {
                     _this9.tabClick(1);
-                } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: icon1Classes }), '\xA0Account')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-cont' }, this.state.domainsLoaded ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 0, classNames: 'domains-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__console_domains_js__["a" /* Domains */], { domains: this.state.domains, domainsMsgShow: this.state.domainsMsgShow, domainsMsgText: this.state.domainsMsgText, domainsMsgCloseClick: this.domainsMsgCloseClick, addDomain: this.addDomain, updateDomain: this.updateDomain, sortEnd: this.sortEnd, leftEnd: this.leftEnd })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 1, classNames: 'account-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__console_account_js__["a" /* Account */], { domainsUsed: this.state.domains.length, showMainMsg: this.showMainMsg, closeMainMsg: this.closeMainMsg, addServerRequestObj: this.addServerRequestObj, deleteServerRequestObj: this.deleteServerRequestObj }))) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, 'Loading domains...')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__console_mainmsg_js__["a" /* MainMsg */], { children: this.state.mainMsgChildren, visible: this.state.mainMsgShow, closeClick: this.closeMainMsg }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(UploadingIndicator, { requestCount: this.state.serverRequestObjs.length }));
+                } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: icon1Classes }), '\xA0Account')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-cont' }, this.state.domainsLoaded ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 0, classNames: 'domains-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__console_domains_js__["a" /* Domains */], { domains: this.state.domains, domainsMsgShow: this.state.domainsMsgShow, domainsMsgText: this.state.domainsMsgText, domainsMsgCloseClick: this.domainsMsgCloseClick, addDomain: this.addDomain, updateDomain: this.updateDomain, sortEnd: this.sortEnd, leftEnd: this.leftEnd })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 1, classNames: 'account-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__console_account_js__["a" /* Account */], { domainsUsed: this.state.domains.length, showMainMsg: this.showMainMsg, closeMainMsg: this.closeMainMsg, addServerRequestObj: this.addServerRequestObj, deleteServerRequestObj: this.deleteServerRequestObj }))) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(DomainMasksCont, null)), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__console_mainmsg_js__["a" /* MainMsg */], { children: this.state.mainMsgChildren, visible: this.state.mainMsgShow, closeClick: this.closeMainMsg }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(UploadingIndicator, { requestCount: this.state.serverRequestObjs.length }));
         }
     }]);
 
     return App;
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+var DomainMasksCont = function DomainMasksCont(_ref) {
+    _objectDestructuringEmpty(_ref);
+
+    var addHeight = '7.2em';
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'shimmer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: { position: 'relative' } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: { position: 'absolute', left: '0', top: '0', width: '1.4em', height: addHeight, backgroundColor: '#FFFFFF' } }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: { position: 'relative', height: addHeight, margin: '0 1.4em 0 1.4em' } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: { height: '2.4em', backgroundColor: '#FFFFFF' } }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: { height: '2.4em' } }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: { height: '2.4em', backgroundColor: '#FFFFFF' } })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: { position: 'absolute', right: '0', top: '0', width: '1.4em', height: addHeight, backgroundColor: '#FFFFFF' } })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(DomainMask, null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(DomainMask, null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(DomainMask, null)));
+};
+
+var DomainMask = function DomainMask(_ref2) {
+    _objectDestructuringEmpty(_ref2);
+
+    var domainHeight = '4.8em';
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: { position: 'relative' } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: { position: 'absolute', left: '0', top: '0', width: '4em', height: domainHeight, backgroundColor: '#FFFFFF' } }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: { position: 'relative', height: domainHeight, margin: '0 1.4em 0 4em' } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: { height: '1.4em', backgroundColor: '#FFFFFF' } }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: { height: '2em' } }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: { height: '1.4em', backgroundColor: '#FFFFFF' } })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: { position: 'absolute', right: '0', top: '0', width: '1.4em', height: domainHeight, backgroundColor: '#FFFFFF' } }));
+};
 
 var UploadingIndicator = function UploadingIndicator(props) {
     var show = false;

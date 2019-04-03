@@ -21,7 +21,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            tabIndex: 1,
+            tabIndex: 0,
             domainsLoaded: false,
             domainsMsgShow : false,
             domainsMsgText : 'You have 1 product expiring in 28 days',
@@ -389,9 +389,7 @@ class App extends React.Component {
                             </CSSTransition>
                         </div>
                     ) : (
-                        <div className="content-outer">
-                            Loading domains...
-                        </div>
+                        <DomainMasksCont />
                     )}
                 </div>
                 <MainMsg children={this.state.mainMsgChildren} visible={this.state.mainMsgShow} closeClick={this.closeMainMsg} />
@@ -399,6 +397,53 @@ class App extends React.Component {
             </React.Fragment>
         );
     }
+}
+
+export const DomainMasksCont = ({}) => {
+    const addHeight = '7.2em';
+    return (
+        <div className="content-outer">
+            <div className="shimmer">
+                <div style={{position: 'relative'}}>
+                    <div style={{position: 'absolute', left: '0', top: '0', width: '1.4em', height: addHeight, backgroundColor: '#FFFFFF'}}>
+                    </div>
+                    <div style={{position: 'relative', height: addHeight, margin: '0 1.4em 0 1.4em'}}>
+                        <div style={{height: '2.4em', backgroundColor: '#FFFFFF'}}>
+                        </div>
+                        <div style={{height: '2.4em'}}>
+                        </div>
+                        <div style={{height: '2.4em', backgroundColor: '#FFFFFF'}}>
+                        </div>
+                    </div>
+                    <div style={{position: 'absolute', right: '0', top: '0', width: '1.4em', height: addHeight, backgroundColor: '#FFFFFF'}}>
+                    </div>
+                </div>
+                <DomainMask />
+                <DomainMask />
+                <DomainMask />
+            </div>
+        </div>
+    );
+}
+
+export const DomainMask = ({}) => {
+    const domainHeight = '4.8em';
+    return (
+        <div style={{position: 'relative'}}>
+            <div style={{position: 'absolute', left: '0', top: '0', width: '4em', height: domainHeight, backgroundColor: '#FFFFFF'}}>
+            </div>
+            <div style={{position: 'relative', height: domainHeight, margin: '0 1.4em 0 4em'}}>
+                <div style={{height: '1.4em', backgroundColor: '#FFFFFF'}}>
+                </div>
+                <div style={{height: '2em'}}>
+                </div>
+                <div style={{height: '1.4em', backgroundColor: '#FFFFFF'}}>
+                </div>
+            </div>
+            <div style={{position: 'absolute', right: '0', top: '0', width: '1.4em', height: domainHeight, backgroundColor: '#FFFFFF'}}>
+            </div>
+        </div>
+    );
 }
 
 const UploadingIndicator = (props) => {
