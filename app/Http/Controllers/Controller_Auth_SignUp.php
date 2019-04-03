@@ -27,7 +27,6 @@ class Controller_Auth_SignUp extends Controller
 		    'publicKey' => env('BRAINTREE_PUBLIC_KEY'),
 		    'privateKey' => env('BRAINTREE_PRIVATE_KEY')
 		]);
-
     	$authErrorMessages = Toolkit::authErrorMessages();
 		$this->msgEmailDefault = '';
 		$this->msgEmailNoBlank = 'Email can&#39;t be blank.';
@@ -50,6 +49,21 @@ class Controller_Auth_SignUp extends Controller
     }
 
 	public function page(Request $request) {
+		// $invoice = array(
+		// 	'date' => gmdate('Y-m-d'),
+		// 	'customerName' => 'Elliot Leibu',
+		// 	'companyName' => 'Indysoft Pty Ltd',
+		// 	'countryName' => 'Australia',
+		// 	'productName' => 'Lithium List - Basic - 12 months licence',
+		// 	'price' => 3600,
+		// 	'taxes' => 0,
+		// 	'discount' => 0,
+		// 	'total' => 3600
+		// );		
+		// $invoice['refnumber'] = Toolkit::getFullReceiptNumber(1);
+		// return new SendReceipt('Elliot', $invoice);
+
+
         // Mail::to('elliot.leibu@gmail.com')
         // 	->send(new ResendActivationLink('Elliot', '123'));
 
@@ -96,7 +110,7 @@ class Controller_Auth_SignUp extends Controller
 			$productDetails = array(
 				'id' => $dbProduct->id,
 				'pageTitle' => $pageTitle,
-				'name' => 'Lithium List - ' . $dbProduct->description,
+				'name' => $this->getProductName($dbProduct->description),
 				'priceCents' => $dbProduct->price_cents
 			);
 
@@ -251,7 +265,25 @@ class Controller_Auth_SignUp extends Controller
 				$dbProduct = Product::where('id', $pid)
 					->first();
 
+				$companyName = '';
+				if (($request->filled('companyname')) && (strlen(trim($request->input('companyname'))) > 0)) {
+					$companyName = trim($request->input('companyname'));
+				}
+				$countryName = '';
+		        $tempCountries = new Countries();
+				$allCountries = $tempCountries->all();
+				foreach ($allCountries as $tempCountry) {
+					if ((strlen($tempCountry['iso_a3']) > 0) && ($tempCountry['iso_a3'] != '-99') && ($tempCountry['iso_a3'] != 'EUR')) {
+						$countryName = $tempCountry['name']['common'];
+						break;
+					}
+				}
 				$invoice = array(
+					'date' => gmdate('Y-m-d'),
+					'customerName' => $firstname . ' ' . $surname,
+					'companyName' => $companyName,
+					'countryName' => $countryName,
+					'productName' => $this->getProductName($dbProduct->description),
 					'price' => $dbProduct->price_cents,
 					'taxes' => 0,
 					'discount' => 0,
@@ -401,6 +433,7 @@ class Controller_Auth_SignUp extends Controller
 					->send(new SendActivationLink($firstname, $vcode));
 			}
 
+			$invoice['refnumber'] = Toolkit::getFullReceiptNumber($sale->id);
 			Mail::to($email)
 				->send(new SendInvoice($firstname, $invoice));
 
@@ -433,6 +466,10 @@ class Controller_Auth_SignUp extends Controller
             ->with('loginPath', $pageInfo['login']['path'])
             ->with('signupName', $pageInfo['signup']['name'])
             ->with('signupPath', $pageInfo['signup']['path']);
+	}
+
+	protected function getProductName($description) {
+		return 'Lithium List - ' . $description;
 	}
 
 	protected function compCountries($a, $b)

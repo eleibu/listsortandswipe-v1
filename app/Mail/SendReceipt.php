@@ -33,6 +33,6 @@ class SendReceipt extends Mailable
      */
     public function build()
     {
-        return $this->subject('Lithiumn List - receipt')->view('emails.send-invoice');
+        return $this->subject('Lithiumn List - receipt')->view('emails.send-receipt');
     }
 }

@@ -7,6 +7,17 @@ class Toolkit {
 		sleep (1);
 	}
 
+	public static function getFullReceiptNumber($num) {
+		$numAsString = strval($num);
+		$addChars = 8 - strlen($numAsString);
+
+		$refnumber = '';
+		for ($i = 0; $i < $addChars; $i++) {
+			$refnumber = $refnumber . '0';
+		}
+		return $refnumber . $numAsString;
+	}
+
 	public static function moveElement($arr, $previousIndex, $newIndex) {
 	    $removedArr = array_splice($arr, $previousIndex, 1);
 	    array_splice($arr, $newIndex, 0, $removedArr);
