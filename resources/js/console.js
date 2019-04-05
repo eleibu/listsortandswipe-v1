@@ -11,11 +11,58 @@ import { Account } from './console-account.js';
 import { findIndexById, requestObjCreate, uuidv4, arrayMove } from './utils.js';
 import { setMainMsgTimeout, clearMainMsgTimeout, MainMsg } from './console-mainmsg.js';
 import update from 'immutability-helper';
+import moment from 'moment';
 
 axios.defaults.headers.common = {
     'X-CSRF-TOKEN': document.querySelector("meta[name='csrf-token']").getAttribute("content"),
     'X-Requested-With': 'XMLHttpRequest'
 };
+
+function getDiffMinutes() {
+    const now = moment.utc();
+    const expiresAt = moment(accountData.accountExpiresAt);
+    return expiresAt.diff(now, 'minutes');
+}
+
+function msgMinutesThreshold() {
+    if (accountData.accountType == 0) {
+        return 15 * 1440;
+    }
+    return 30 * 1440;
+}
+
+function setDomainsMsgShow() {
+    if (getDiffMinutes() <= msgMinutesThreshold()) {
+        return true;
+    }
+    return false;
+}
+
+function setDomainsMsgText() {
+    const diffMinutes = getDiffMinutes();
+    if (diffMinutes <= msgMinutesThreshold()) {
+        if (diffMinutes > 0) {
+            if (diffMinutes > 1440) {
+                const diffDays = Math.floor(diffMinutes / 1440);
+                if (diffDays > 1) {
+                    return 'Your licence expires in ' + diffDays + ' days';
+                } else {
+                    return 'Your licence expires in less than 1 day';
+                }
+            } else {
+                const diffHours = Math.floor(diffMinutes / 60);
+                if (diffHours > 1) {
+                    return 'Your licence expires in ' + diffHours + ' hours';
+                } else {
+                    return 'Your licence expires in less than 1 hour';
+                }
+            }
+        } else {
+            return 'Your licence has expired';
+        }
+    }
+    return '';
+}
 
 class App extends React.Component {
     constructor(props) {
@@ -23,8 +70,8 @@ class App extends React.Component {
         this.state = {
             tabIndex: 0,
             domainsLoaded: false,
-            domainsMsgShow : false,
-            domainsMsgText : 'You have 1 product expiring in 28 days',
+            domainsMsgShow : setDomainsMsgShow(),
+            domainsMsgText : setDomainsMsgText(),
             domains: [],
             mainMsgShow: false,
             mainMsgChildren: null,

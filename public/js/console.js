@@ -63765,6 +63765,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__console_mainmsg_js__ = __webpack_require__("./resources/js/console-mainmsg.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_immutability_helper__ = __webpack_require__("./node_modules/immutability-helper/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_immutability_helper___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_immutability_helper__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_moment__ = __webpack_require__("./node_modules/moment/moment.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_moment__);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () {
@@ -63821,10 +63823,57 @@ __webpack_require__("./node_modules/bootstrap/dist/js/bootstrap.js");
 
 
 
+
 __WEBPACK_IMPORTED_MODULE_4_axios___default.a.defaults.headers.common = {
     'X-CSRF-TOKEN': document.querySelector("meta[name='csrf-token']").getAttribute("content"),
     'X-Requested-With': 'XMLHttpRequest'
 };
+
+function getDiffMinutes() {
+    var now = __WEBPACK_IMPORTED_MODULE_11_moment___default.a.utc();
+    var expiresAt = __WEBPACK_IMPORTED_MODULE_11_moment___default()(accountData.accountExpiresAt);
+    return expiresAt.diff(now, 'minutes');
+}
+
+function msgMinutesThreshold() {
+    if (accountData.accountType == 0) {
+        return 15 * 1440;
+    }
+    return 30 * 1440;
+}
+
+function setDomainsMsgShow() {
+    if (getDiffMinutes() <= msgMinutesThreshold()) {
+        return true;
+    }
+    return false;
+}
+
+function setDomainsMsgText() {
+    var diffMinutes = getDiffMinutes();
+    if (diffMinutes <= msgMinutesThreshold()) {
+        if (diffMinutes > 0) {
+            if (diffMinutes > 1440) {
+                var diffDays = Math.floor(diffMinutes / 1440);
+                if (diffDays > 1) {
+                    return 'Your licence expires in ' + diffDays + ' days';
+                } else {
+                    return 'Your licence expires in less than 1 day';
+                }
+            } else {
+                var diffHours = Math.floor(diffMinutes / 60);
+                if (diffHours > 1) {
+                    return 'Your licence expires in ' + diffHours + ' hours';
+                } else {
+                    return 'Your licence expires in less than 1 hour';
+                }
+            }
+        } else {
+            return 'Your licence has expired';
+        }
+    }
+    return '';
+}
 
 var App = function (_React$Component) {
     _inherits(App, _React$Component);
@@ -63837,8 +63886,8 @@ var App = function (_React$Component) {
         _this.state = {
             tabIndex: 0,
             domainsLoaded: false,
-            domainsMsgShow: false,
-            domainsMsgText: 'You have 1 product expiring in 28 days',
+            domainsMsgShow: setDomainsMsgShow(),
+            domainsMsgText: setDomainsMsgText(),
             domains: [],
             mainMsgShow: false,
             mainMsgChildren: null,
