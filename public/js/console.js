@@ -62756,22 +62756,18 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ "./resources/js/console-account.js":
+/***/ "./resources/js/console-account-changepwd.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Account; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChangePwd; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__("./node_modules/react/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe__ = __webpack_require__("./node_modules/classNames/dedupe.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_classNames_dedupe__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_transition_group__ = __webpack_require__("./node_modules/react-transition-group/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_transition_group___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment__ = __webpack_require__("./node_modules/moment/moment.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios__ = __webpack_require__("./node_modules/axios/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_js__ = __webpack_require__("./resources/js/utils.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__("./node_modules/axios/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_js__ = __webpack_require__("./resources/js/utils.js");
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () {
@@ -62807,72 +62803,290 @@ function _inherits(subClass, superClass) {
 
 
 
+var ChangePwd = function (_React$Component) {
+    _inherits(ChangePwd, _React$Component);
 
+    function ChangePwd(props) {
+        _classCallCheck(this, ChangePwd);
 
-var Account = function (_React$Component) {
-    _inherits(Account, _React$Component);
-
-    function Account(props) {
-        _classCallCheck(this, Account);
-
-        var _this = _possibleConstructorReturn(this, (Account.__proto__ || Object.getPrototypeOf(Account)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (ChangePwd.__proto__ || Object.getPrototypeOf(ChangePwd)).call(this, props));
 
         _this.state = {
-            subpage: 'AccountLanding',
-            showMask: false
+            mainError: null,
+            currentPwdFocus: false,
+            currentPwdError: false,
+            currentPwdSubtext: '',
+            newPwdFocus: false,
+            newPwdError: false,
+            newPwdSubtext: msgPasswordDefault,
+            spinning: false
         };
-        _this.setSubpage = _this.setSubpage.bind(_this);
-        _this.setShowMask = _this.setShowMask.bind(_this);
         return _this;
     }
 
-    _createClass(Account, [{
-        key: 'setSubpage',
-        value: function setSubpage(name) {
+    _createClass(ChangePwd, [{
+        key: 'currentPwdOnFocus',
+        value: function currentPwdOnFocus() {
             this.setState({
-                subpage: name
+                mainError: null,
+                currentPwdFocus: true,
+                currentPwdError: false,
+                currentPwdSubtext: ''
             });
         }
     }, {
-        key: 'setShowMask',
-        value: function setShowMask(show) {
+        key: 'currentPwdOnBlur',
+        value: function currentPwdOnBlur() {
             this.setState({
-                showMask: show
+                mainError: null,
+                currentPwdFocus: false,
+                currentPwdError: false,
+                currentPwdSubtext: ''
             });
+        }
+    }, {
+        key: 'currentPwdOnKeyPress',
+        value: function currentPwdOnKeyPress(e) {
+            if (e.which && e.which == 13 || e.keyCode && e.keyCode == 13) {
+                e.preventDefault();
+                this.inputNewPwd.focus();
+                this.inputNewPwd.select();
+            }
+        }
+    }, {
+        key: 'newPwdOnFocus',
+        value: function newPwdOnFocus() {
+            this.setState({
+                mainError: null,
+                newPwdFocus: true,
+                newPwdError: false,
+                newPwdSubtext: msgPasswordDefault
+            });
+        }
+    }, {
+        key: 'newPwdOnBlur',
+        value: function newPwdOnBlur() {
+            this.setState({
+                mainError: null,
+                newPwdFocus: false,
+                newPwdError: false,
+                newPwdSubtext: msgPasswordDefault
+            });
+        }
+    }, {
+        key: 'newPwdOnKeyPress',
+        value: function newPwdOnKeyPress(e) {
+            if (e.which && e.which == 13 || e.keyCode && e.keyCode == 13) {
+                e.preventDefault();
+                this.validateAndSubmit();
+            }
+        }
+    }, {
+        key: 'validateAndSubmit',
+        value: function validateAndSubmit() {
+            var _this2 = this;
+
+            var currentPwdOk = false;
+            if (this.inputCurrentPwd.value.length > 0) {
+                currentPwdOk = true;
+                this.setState({
+                    mainError: null,
+                    currentPwdError: false,
+                    currentPwdSubtext: ''
+                });
+            } else {
+                this.setState({
+                    mainError: null,
+                    currentPwdError: true,
+                    currentPwdSubtext: msgPasswordNoBlank
+                });
+            }
+
+            var newPwdOk = false;
+            if (this.inputNewPwd.value.length > 0) {
+                if (this.inputNewPwd.value.length >= 6) {
+                    newPwdOk = true;
+                    this.setState({
+                        mainError: null,
+                        newPwdError: false,
+                        newPwdSubtext: msgPasswordDefault
+                    });
+                } else {
+                    this.setState({
+                        mainError: null,
+                        newPwdError: true,
+                        newPwdSubtext: msgPasswordInvalid
+                    });
+                }
+            } else {
+                this.setState({
+                    mainError: null,
+                    newPwdError: true,
+                    newPwdSubtext: msgPasswordNoBlank
+                });
+            }
+            if (currentPwdOk && newPwdOk) {
+                this.props.setShowMask(true);
+                this.setState({
+                    spinning: true
+                });
+
+                this.props.closeMainMsg();
+
+                var requestObj = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["e" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_2_axios___default.a.CancelToken);
+                this.props.addServerRequestObj(requestObj);
+
+                var url = api_url_public + 'users/' + accountData.email;
+                __WEBPACK_IMPORTED_MODULE_2_axios___default()({
+                    method: 'put',
+                    url: url,
+                    data: {
+                        'action': 'change-password',
+                        'currentpassword': this.inputCurrentPwd.value,
+                        'newpassword': this.inputNewPwd.value
+                    },
+                    cancelToken: requestObj.source.token
+                }).then(function (response) {
+                    _this2.props.setAccountSubpage('Landing');
+                    var children = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'left' }, 'Your password was successfully changed.'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont mainmsg dummy' }, '\xA0')))));
+                    _this2.props.showMainMsg(children);
+                }).catch(function (error) {
+                    var invalidPassword = false;
+                    if (error.response && error.response.status && error.response.status == 403) {
+                        var errorId = error.response.data.id;
+                        if (errorId && errorId == '6D487B0F-8C3E-4CF2-8D0B-9223A53C5673') {
+                            invalidPassword = true;
+                        }
+                    }
+                    if (invalidPassword) {
+                        _this2.inputCurrentPwd.focus();
+                        _this2.inputCurrentPwd.select();
+                        _this2.setState({
+                            mainError: 'The current password is not valid. Please try again.'
+                        });
+                    } else {
+                        var children = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'left' }, 'An error occurred. Your password was not changed. Please try again.'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont mainmsg dummy' }, '\xA0')))));
+                        _this2.props.showMainMsg(children);
+                    }
+                }).then(function () {
+                    _this2.props.setShowMask(false);
+                    _this2.setState({
+                        spinning: false
+                    });
+                    _this2.props.deleteServerRequestObj(requestObj);
+                });
+            }
         }
     }, {
         key: 'render',
         value: function render() {
-            var maskStyle = void 0;
-            if (this.state.showMask) {
-                maskStyle = { display: 'block' };
-            } else {
-                maskStyle = { display: 'none' };
-            }
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.state.subpage == 'AccountLanding', classNames: 'accountcontent-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(AccountLanding, { domainsUsed: this.props.domainsUsed, setSubpage: this.setSubpage })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.state.subpage == 'ChangePwdLanding', classNames: 'accountcontent-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(ChangePwdLanding, { setShowMask: this.setShowMask, setSubpage: this.setSubpage, showMainMsg: this.props.showMainMsg, closeMainMsg: this.props.closeMainMsg, addServerRequestObj: this.props.addServerRequestObj, deleteServerRequestObj: this.props.deleteServerRequestObj })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: maskStyle, className: 'account-mask' }));
+            var _this3 = this;
+
+            var currentPwdClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+                'text-cont': true,
+                'error': this.state.currentPwdError,
+                'focus': this.state.currentPwdFocus
+            });
+            var newPwdClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+                'text-cont': true,
+                'error': this.state.newPwdError,
+                'focus': this.state.newPwdFocus
+            });
+            var spinnerContClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+                'spinner-cont': true,
+                'spinning': this.state.spinning
+            });
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner account-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title-main' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'sld icon-lock' }), '\xA0CHANGE PASSWORD')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'subtitle-main' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'Enter the details below to change your password')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'mainmsg-cont' }, this.state.mainError != null && this.state.mainError.length > 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { dangerouslySetInnerHTML: { __html: this.state.mainError } }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, '\xA0')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: currentPwdClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'textentry-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-lock' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'textentry-outer icon' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { ref: function ref(input) {
+                    _this3.inputCurrentPwd = input;
+                }, name: 'currentpassword', className: 'textentry', type: 'password', placeholder: 'Current password', tabIndex: '1', onFocus: function onFocus() {
+                    _this3.currentPwdOnFocus();
+                }, onBlur: function onBlur() {
+                    _this3.currentPwdOnBlur();
+                }, onKeyPress: function onKeyPress(e) {
+                    _this3.currentPwdOnKeyPress(e);
+                } }))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: 'div-password-submsg', className: 'submsg-cont' }, this.state.currentPwdSubtext != null && this.state.currentPwdSubtext.length > 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { dangerouslySetInnerHTML: { __html: this.state.currentPwdSubtext } }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, '\xA0'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: newPwdClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'textentry-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-lock' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'textentry-outer icon' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { ref: function ref(input) {
+                    _this3.inputNewPwd = input;
+                }, name: 'newpassword', className: 'textentry', type: 'password', placeholder: 'New password', tabIndex: '2', onFocus: function onFocus() {
+                    _this3.newPwdOnFocus();
+                }, onBlur: function onBlur() {
+                    _this3.newPwdOnBlur();
+                }, onKeyPress: function onKeyPress(e) {
+                    _this3.newPwdOnKeyPress(e);
+                } }))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: 'div-password-submsg', className: 'submsg-cont' }, this.state.newPwdSubtext != null && this.state.newPwdSubtext.length > 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { dangerouslySetInnerHTML: { __html: this.state.newPwdSubtext } }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, '\xA0'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont darkblue', onClick: function onClick() {
+                    _this3.validateAndSubmit();
+                }, tabIndex: '4' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: spinnerContClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text' }, 'CHANGE PASSWORD'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect0' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect1' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect2' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect3' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect4' }))))), '\xA0\xA0\xA0\xA0', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey', onClick: function onClick() {
+                    _this3.props.setAccountSubpage('Landing');
+                }, tabIndex: '5' }, 'CANCEL'))));
         }
     }]);
 
-    return Account;
+    return ChangePwd;
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
-var AccountLanding = function (_React$Component2) {
-    _inherits(AccountLanding, _React$Component2);
+/***/ }),
 
-    function AccountLanding(props) {
-        _classCallCheck(this, AccountLanding);
+/***/ "./resources/js/console-account-landing.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-        var _this2 = _possibleConstructorReturn(this, (AccountLanding.__proto__ || Object.getPrototypeOf(AccountLanding)).call(this, props));
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Landing; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__("./node_modules/react/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe__ = __webpack_require__("./node_modules/classNames/dedupe.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_classNames_dedupe__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment__ = __webpack_require__("./node_modules/moment/moment.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_moment__);
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-        _this2.state = {
+var _createClass = function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+}();
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError("Cannot call a class as a function");
+    }
+}
+
+function _possibleConstructorReturn(self, call) {
+    if (!self) {
+        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+
+
+
+
+var Landing = function (_React$Component) {
+    _inherits(Landing, _React$Component);
+
+    function Landing(props) {
+        _classCallCheck(this, Landing);
+
+        var _this = _possibleConstructorReturn(this, (Landing.__proto__ || Object.getPrototypeOf(Landing)).call(this, props));
+
+        _this.state = {
             copying: false
         };
-        _this2.copyClick = _this2.copyClick.bind(_this2);
-        _this2.copyingEnd = _this2.copyingEnd.bind(_this2);
-        return _this2;
+        _this.copyClick = _this.copyClick.bind(_this);
+        _this.copyingEnd = _this.copyingEnd.bind(_this);
+        return _this;
     }
 
-    _createClass(AccountLanding, [{
+    _createClass(Landing, [{
         key: 'copyClick',
         value: function copyClick() {
             this.setState({
@@ -62892,7 +63106,7 @@ var AccountLanding = function (_React$Component2) {
     }, {
         key: 'render',
         value: function render() {
-            var _this3 = this;
+            var _this2 = this;
 
             var accountTypeText = void 0;
             switch (accountData.accountType) {
@@ -62962,236 +63176,188 @@ var AccountLanding = function (_React$Component2) {
                 'copying': this.state.copying
             });
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'contact-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', { className: 'name' }, accountData.name, ' ', accountData.surname), accountData.companyName && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', { className: 'coname' }, accountData.companyName), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', { className: 'email' }, accountData.email), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey', onClick: function onClick() {
-                    _this3.props.setSubpage('ChangePwdLanding');
-                } }, 'CHANGE PASSWORD'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'avail-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'plan' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('strong', null, accountTypeText), ' ', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'plan')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'expires' }, 'Expires ', __WEBPACK_IMPORTED_MODULE_3_moment___default()(accountData.accountExpiresAt).format('LL')), accountData.accountType == 3 && accountData.accountLicenceKey != null && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'key-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', readOnly: true, ref: function ref(input) {
-                    _this3.inputCopy = input;
+                    _this2.props.setAccountSubpage('ChangePwd');
+                } }, 'CHANGE PASSWORD'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'avail-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'plan' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('strong', null, accountTypeText), ' ', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'plan')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'expires' }, 'Expires ', __WEBPACK_IMPORTED_MODULE_2_moment___default()(accountData.accountExpiresAt).format('LL')), accountData.accountType == 3 && accountData.accountLicenceKey != null && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'key-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', readOnly: true, ref: function ref(input) {
+                    _this2.inputCopy = input;
                 }, style: inputStyle, value: accountData.accountLicenceKey }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'label' }, 'Licence key:'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: spanClasses }, accountData.accountLicenceKey), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy-outer', title: 'Copy to clipboard', onClick: function onClick() {
-                    _this3.copyClick();
+                    _this2.copyClick();
                 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-clipboard' })), '\xA0')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'chart-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: styleChartOuter, className: 'chart-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: styleTotalCont, className: 'bar-cont total' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'bar-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'label left' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'count' }, accountData.domainCountBase + accountData.domainCountAdditional), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text' }, totalDomainsText)))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: styleUsedCont, className: 'bar-cont used' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'bar-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: styleLabelRight, className: 'label right' }, this.props.domainsUsed, '\xA0used'))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'avail-text', dangerouslySetInnerHTML: { __html: domainsAvailableText } })));
         }
     }]);
 
-    return AccountLanding;
+    return Landing;
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
-var ChangePwdLanding = function (_React$Component3) {
-    _inherits(ChangePwdLanding, _React$Component3);
+/***/ }),
 
-    function ChangePwdLanding(props) {
-        _classCallCheck(this, ChangePwdLanding);
+/***/ "./resources/js/console-account-renewupgrade.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-        var _this4 = _possibleConstructorReturn(this, (ChangePwdLanding.__proto__ || Object.getPrototypeOf(ChangePwdLanding)).call(this, props));
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RenewUpgrade; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__("./node_modules/react/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe__ = __webpack_require__("./node_modules/classNames/dedupe.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_classNames_dedupe__);
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-        _this4.state = {
-            mainError: null,
-            currentPwdFocus: false,
-            currentPwdError: false,
-            currentPwdSubtext: '',
-            newPwdFocus: false,
-            newPwdError: false,
-            newPwdSubtext: msgPasswordDefault,
+var _createClass = function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+}();
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError("Cannot call a class as a function");
+    }
+}
+
+function _possibleConstructorReturn(self, call) {
+    if (!self) {
+        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+
+
+// import moment from 'moment';
+// import axios from 'axios';
+// import { requestObjCreate } from './utils.js';
+
+var RenewUpgrade = function (_React$Component) {
+    _inherits(RenewUpgrade, _React$Component);
+
+    function RenewUpgrade(props) {
+        _classCallCheck(this, RenewUpgrade);
+
+        var _this = _possibleConstructorReturn(this, (RenewUpgrade.__proto__ || Object.getPrototypeOf(RenewUpgrade)).call(this, props));
+
+        _this.state = {
             spinning: false
         };
-        return _this4;
+        return _this;
     }
 
-    _createClass(ChangePwdLanding, [{
-        key: 'currentPwdOnFocus',
-        value: function currentPwdOnFocus() {
-            this.setState({
-                mainError: null,
-                currentPwdFocus: true,
-                currentPwdError: false,
-                currentPwdSubtext: ''
-            });
-        }
-    }, {
-        key: 'currentPwdOnBlur',
-        value: function currentPwdOnBlur() {
-            this.setState({
-                mainError: null,
-                currentPwdFocus: false,
-                currentPwdError: false,
-                currentPwdSubtext: ''
-            });
-        }
-    }, {
-        key: 'currentPwdOnKeyPress',
-        value: function currentPwdOnKeyPress(e) {
-            if (e.which && e.which == 13 || e.keyCode && e.keyCode == 13) {
-                e.preventDefault();
-                this.inputNewPwd.focus();
-                this.inputNewPwd.select();
-            }
-        }
-    }, {
-        key: 'newPwdOnFocus',
-        value: function newPwdOnFocus() {
-            this.setState({
-                mainError: null,
-                newPwdFocus: true,
-                newPwdError: false,
-                newPwdSubtext: msgPasswordDefault
-            });
-        }
-    }, {
-        key: 'newPwdOnBlur',
-        value: function newPwdOnBlur() {
-            this.setState({
-                mainError: null,
-                newPwdFocus: false,
-                newPwdError: false,
-                newPwdSubtext: msgPasswordDefault
-            });
-        }
-    }, {
-        key: 'newPwdOnKeyPress',
-        value: function newPwdOnKeyPress(e) {
-            if (e.which && e.which == 13 || e.keyCode && e.keyCode == 13) {
-                e.preventDefault();
-                this.validateAndSubmit();
-            }
-        }
-    }, {
+    _createClass(RenewUpgrade, [{
         key: 'validateAndSubmit',
-        value: function validateAndSubmit() {
-            var _this5 = this;
-
-            var currentPwdOk = false;
-            if (this.inputCurrentPwd.value.length > 0) {
-                currentPwdOk = true;
-                this.setState({
-                    mainError: null,
-                    currentPwdError: false,
-                    currentPwdSubtext: ''
-                });
-            } else {
-                this.setState({
-                    mainError: null,
-                    currentPwdError: true,
-                    currentPwdSubtext: msgPasswordNoBlank
-                });
-            }
-
-            var newPwdOk = false;
-            if (this.inputNewPwd.value.length > 0) {
-                if (this.inputNewPwd.value.length >= 6) {
-                    newPwdOk = true;
-                    this.setState({
-                        mainError: null,
-                        newPwdError: false,
-                        newPwdSubtext: msgPasswordDefault
-                    });
-                } else {
-                    this.setState({
-                        mainError: null,
-                        newPwdError: true,
-                        newPwdSubtext: msgPasswordInvalid
-                    });
-                }
-            } else {
-                this.setState({
-                    mainError: null,
-                    newPwdError: true,
-                    newPwdSubtext: msgPasswordNoBlank
-                });
-            }
-            if (currentPwdOk && newPwdOk) {
-                this.props.setShowMask(true);
-                this.setState({
-                    spinning: true
-                });
-
-                this.props.closeMainMsg();
-
-                var requestObj = Object(__WEBPACK_IMPORTED_MODULE_5__utils_js__["e" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
-                this.props.addServerRequestObj(requestObj);
-
-                var url = api_url_public + 'users/' + accountData.email;
-                __WEBPACK_IMPORTED_MODULE_4_axios___default()({
-                    method: 'put',
-                    url: url,
-                    data: {
-                        'action': 'change-password',
-                        'currentpassword': this.inputCurrentPwd.value,
-                        'newpassword': this.inputNewPwd.value
-                    },
-                    cancelToken: requestObj.source.token
-                }).then(function (response) {
-                    _this5.props.setSubpage('AccountLanding');
-                    var children = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'left' }, 'Your password was successfully changed.'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont mainmsg dummy' }, '\xA0')))));
-                    _this5.props.showMainMsg(children);
-                }).catch(function (error) {
-                    var invalidPassword = false;
-                    if (error.response && error.response.status && error.response.status == 403) {
-                        var errorId = error.response.data.id;
-                        if (errorId && errorId == '6D487B0F-8C3E-4CF2-8D0B-9223A53C5673') {
-                            invalidPassword = true;
-                        }
-                    }
-                    if (invalidPassword) {
-                        _this5.inputCurrentPwd.focus();
-                        _this5.inputCurrentPwd.select();
-                        _this5.setState({
-                            mainError: 'The current password is not valid. Please try again.'
-                        });
-                    } else {
-                        var children = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'left' }, 'An error occurred. Your password was not changed. Please try again.'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont mainmsg dummy' }, '\xA0')))));
-                        _this5.props.showMainMsg(children);
-                    }
-                }).then(function () {
-                    _this5.props.setShowMask(false);
-                    _this5.setState({
-                        spinning: false
-                    });
-                    _this5.props.deleteServerRequestObj(requestObj);
-                });
-            }
-        }
+        value: function validateAndSubmit() {}
     }, {
         key: 'render',
         value: function render() {
-            var _this6 = this;
+            var _this2 = this;
 
-            var currentPwdClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-                'text-cont': true,
-                'error': this.state.currentPwdError,
-                'focus': this.state.currentPwdFocus
-            });
-            var newPwdClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-                'text-cont': true,
-                'error': this.state.newPwdError,
-                'focus': this.state.newPwdFocus
-            });
             var spinnerContClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
                 'spinner-cont': true,
                 'spinning': this.state.spinning
             });
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner account-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title-main' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'sld icon-lock' }), '\xA0CHANGE PASSWORD')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'subtitle-main' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'Enter the details below to change your password')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'mainmsg-cont' }, this.state.mainError != null && this.state.mainError.length > 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { dangerouslySetInnerHTML: { __html: this.state.mainError } }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, '\xA0')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: currentPwdClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'textentry-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-lock' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'textentry-outer icon' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { ref: function ref(input) {
-                    _this6.inputCurrentPwd = input;
-                }, name: 'currentpassword', className: 'textentry', type: 'password', placeholder: 'Current password', tabIndex: '1', onFocus: function onFocus() {
-                    _this6.currentPwdOnFocus();
-                }, onBlur: function onBlur() {
-                    _this6.currentPwdOnBlur();
-                }, onKeyPress: function onKeyPress(e) {
-                    _this6.currentPwdOnKeyPress(e);
-                } }))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: 'div-password-submsg', className: 'submsg-cont' }, this.state.currentPwdSubtext != null && this.state.currentPwdSubtext.length > 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { dangerouslySetInnerHTML: { __html: this.state.currentPwdSubtext } }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, '\xA0'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: newPwdClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'textentry-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-lock' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'textentry-outer icon' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { ref: function ref(input) {
-                    _this6.inputNewPwd = input;
-                }, name: 'newpassword', className: 'textentry', type: 'password', placeholder: 'New password', tabIndex: '2', onFocus: function onFocus() {
-                    _this6.newPwdOnFocus();
-                }, onBlur: function onBlur() {
-                    _this6.newPwdOnBlur();
-                }, onKeyPress: function onKeyPress(e) {
-                    _this6.newPwdOnKeyPress(e);
-                } }))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: 'div-password-submsg', className: 'submsg-cont' }, this.state.newPwdSubtext != null && this.state.newPwdSubtext.length > 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { dangerouslySetInnerHTML: { __html: this.state.newPwdSubtext } }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, '\xA0'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont darkblue', onClick: function onClick() {
-                    _this6.validateAndSubmit();
-                }, tabIndex: '4' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: spinnerContClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text' }, 'CHANGE PASSWORD'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect0' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect1' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect2' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect3' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect4' }))))), '\xA0\xA0\xA0\xA0', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey', onClick: function onClick() {
-                    _this6.props.setSubpage('AccountLanding');
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner renewupgrade-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title-main' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'sld icon-lock' }), '\xA0RENEW')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'subtitle-main' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'Hahahahaha')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont darkblue', onClick: function onClick() {
+                    _this2.validateAndSubmit();
+                }, tabIndex: '4' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: spinnerContClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text' }, 'PLACE ORDER'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect0' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect1' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect2' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect3' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect4' }))))), '\xA0\xA0\xA0\xA0', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey', onClick: function onClick() {
+                    _this2.props.setAccountSubpage('Landing');
                 }, tabIndex: '5' }, 'CANCEL'))));
         }
     }]);
 
-    return ChangePwdLanding;
+    return RenewUpgrade;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+/***/ }),
+
+/***/ "./resources/js/console-account.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Account; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__("./node_modules/react/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_transition_group__ = __webpack_require__("./node_modules/react-transition-group/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_transition_group___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_transition_group__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__console_account_landing_js__ = __webpack_require__("./resources/js/console-account-landing.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__console_account_changepwd_js__ = __webpack_require__("./resources/js/console-account-changepwd.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__console_account_renewupgrade_js__ = __webpack_require__("./resources/js/console-account-renewupgrade.js");
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+}();
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError("Cannot call a class as a function");
+    }
+}
+
+function _possibleConstructorReturn(self, call) {
+    if (!self) {
+        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+
+
+
+
+
+
+var Account = function (_React$Component) {
+    _inherits(Account, _React$Component);
+
+    function Account(props) {
+        _classCallCheck(this, Account);
+
+        var _this = _possibleConstructorReturn(this, (Account.__proto__ || Object.getPrototypeOf(Account)).call(this, props));
+
+        _this.state = {
+            showMask: false
+        };
+        _this.setShowMask = _this.setShowMask.bind(_this);
+        return _this;
+    }
+
+    _createClass(Account, [{
+        key: 'setShowMask',
+        value: function setShowMask(show) {
+            this.setState({
+                showMask: show
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var maskStyle = void 0;
+            if (this.state.showMask) {
+                maskStyle = { display: 'block' };
+            } else {
+                maskStyle = { display: 'none' };
+            }
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_transition_group__["CSSTransition"], { 'in': this.props.accountSubpage == 'Landing', classNames: 'accountcontent-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__console_account_landing_js__["a" /* Landing */], { domainsUsed: this.props.domainsUsed, setAccountSubpage: this.props.setAccountSubpage })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_transition_group__["CSSTransition"], { 'in': this.props.accountSubpage == 'ChangePwd', classNames: 'accountcontent-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__console_account_changepwd_js__["a" /* ChangePwd */], { setShowMask: this.setShowMask, setAccountSubpage: this.props.setAccountSubpage, showMainMsg: this.props.showMainMsg, closeMainMsg: this.props.closeMainMsg, addServerRequestObj: this.props.addServerRequestObj, deleteServerRequestObj: this.props.deleteServerRequestObj })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_transition_group__["CSSTransition"], { 'in': this.props.accountSubpage == 'RenewUpgrade', classNames: 'accountcontent-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__console_account_renewupgrade_js__["a" /* RenewUpgrade */], { setShowMask: this.setShowMask, setAccountSubpage: this.props.setAccountSubpage, showMainMsg: this.props.showMainMsg, closeMainMsg: this.props.closeMainMsg, addServerRequestObj: this.props.addServerRequestObj, deleteServerRequestObj: this.props.deleteServerRequestObj })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: maskStyle, className: 'account-mask' }));
+        }
+    }]);
+
+    return Account;
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
 /***/ }),
@@ -63469,7 +63635,9 @@ var Domains = function (_React$Component) {
             var ttText = 'Enter the domain or subdomain of a website you will use with Lithium List. For example: \'example.com\' or \'subdomain.example.com\'';
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.props.domainsMsgShow, classNames: 'message-trans', timeout: { enter: 0, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'message-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'message-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'sld icon-cross-ui', onClick: function onClick() {
                     _this2.props.domainsMsgCloseClick();
-                } }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, this.props.domainsMsgText)))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: addItemOuterClasses, ref: this.setOuterRef }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: inputClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'input-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', placeholder: 'yourdomain.com', ref: function ref(input) {
+                } }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'msg' }, this.props.domainsMsgText), ' ', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'link', onClick: function onClick() {
+                    _this2.props.setAccountSubpage('RenewUpgrade');_this2.props.setTab(1);
+                } }, 'RENEW')))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: addItemOuterClasses, ref: this.setOuterRef }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: inputClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'input-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', placeholder: 'yourdomain.com', ref: function ref(input) {
                     _this2.input = input;
                 }, onKeyDown: function onKeyDown(e) {
                     return _this2.onKeyDown(e);
@@ -63885,6 +64053,7 @@ var App = function (_React$Component) {
 
         _this.state = {
             tabIndex: 0,
+            accountSubpage: 'Landing',
             domainsLoaded: false,
             domainsMsgShow: setDomainsMsgShow(),
             domainsMsgText: setDomainsMsgText(),
@@ -63893,7 +64062,9 @@ var App = function (_React$Component) {
             mainMsgChildren: null,
             serverRequestObjs: []
         };
+        _this.setAccountSubpage = _this.setAccountSubpage.bind(_this);
         _this.tabClick = _this.tabClick.bind(_this);
+        _this.setTab = _this.setTab.bind(_this);
         _this.domainsMsgCloseClick = _this.domainsMsgCloseClick.bind(_this);
         _this.addDomain = _this.addDomain.bind(_this);
         _this.updateDomain = _this.updateDomain.bind(_this);
@@ -63943,6 +64114,13 @@ var App = function (_React$Component) {
             }
         }
     }, {
+        key: 'setAccountSubpage',
+        value: function setAccountSubpage(name) {
+            this.setState({
+                accountSubpage: name
+            });
+        }
+    }, {
         key: 'addServerRequestObj',
         value: function addServerRequestObj(requestObj) {
             this.setState({
@@ -63963,10 +64141,18 @@ var App = function (_React$Component) {
         key: 'tabClick',
         value: function tabClick(tabIndex) {
             if (this.state.domainsLoaded && this.state.serverRequestObjs.length == 0) {
-                this.setState({
-                    tabIndex: tabIndex
-                });
+                if (tabIndex == 1 && this.state.tabIndex != 1) {
+                    this.setAccountSubpage('Landing');
+                }
+                this.setTab(tabIndex);
             }
+        }
+    }, {
+        key: 'setTab',
+        value: function setTab(tabIndex) {
+            this.setState({
+                tabIndex: tabIndex
+            });
         }
     }, {
         key: 'domainsMsgCloseClick',
@@ -64277,7 +64463,7 @@ var App = function (_React$Component) {
                     _this9.tabClick(0);
                 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: icon0Classes }), '\xA0Domains'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: tab1Classes, onClick: function onClick() {
                     _this9.tabClick(1);
-                } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: icon1Classes }), '\xA0Account')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-cont' }, this.state.domainsLoaded ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 0, classNames: 'domains-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__console_domains_js__["a" /* Domains */], { domains: this.state.domains, domainsMsgShow: this.state.domainsMsgShow, domainsMsgText: this.state.domainsMsgText, domainsMsgCloseClick: this.domainsMsgCloseClick, addDomain: this.addDomain, updateDomain: this.updateDomain, sortEnd: this.sortEnd, leftEnd: this.leftEnd })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 1, classNames: 'account-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__console_account_js__["a" /* Account */], { domainsUsed: this.state.domains.length, showMainMsg: this.showMainMsg, closeMainMsg: this.closeMainMsg, addServerRequestObj: this.addServerRequestObj, deleteServerRequestObj: this.deleteServerRequestObj }))) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(DomainMasksCont, null)), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__console_mainmsg_js__["a" /* MainMsg */], { children: this.state.mainMsgChildren, visible: this.state.mainMsgShow, closeClick: this.closeMainMsg }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(UploadingIndicator, { requestCount: this.state.serverRequestObjs.length }));
+                } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: icon1Classes }), '\xA0Account')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-cont' }, this.state.domainsLoaded ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 0, classNames: 'domains-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__console_domains_js__["a" /* Domains */], { domains: this.state.domains, setTab: this.setTab, setAccountSubpage: this.setAccountSubpage, domainsMsgShow: this.state.domainsMsgShow, domainsMsgText: this.state.domainsMsgText, domainsMsgCloseClick: this.domainsMsgCloseClick, addDomain: this.addDomain, updateDomain: this.updateDomain, sortEnd: this.sortEnd, leftEnd: this.leftEnd })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_transition_group__["CSSTransition"], { 'in': this.state.tabIndex == 1, classNames: 'account-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__console_account_js__["a" /* Account */], { accountSubpage: this.state.accountSubpage, setAccountSubpage: this.setAccountSubpage, domainsUsed: this.state.domains.length, showMainMsg: this.showMainMsg, closeMainMsg: this.closeMainMsg, addServerRequestObj: this.addServerRequestObj, deleteServerRequestObj: this.deleteServerRequestObj }))) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(DomainMasksCont, null)), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__console_mainmsg_js__["a" /* MainMsg */], { children: this.state.mainMsgChildren, visible: this.state.mainMsgShow, closeClick: this.closeMainMsg }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(UploadingIndicator, { requestCount: this.state.serverRequestObjs.length }));
         }
     }]);
 

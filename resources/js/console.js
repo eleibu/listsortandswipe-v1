@@ -69,6 +69,7 @@ class App extends React.Component {
         super(props);
         this.state = {
             tabIndex: 0,
+            accountSubpage: 'Landing',
             domainsLoaded: false,
             domainsMsgShow : setDomainsMsgShow(),
             domainsMsgText : setDomainsMsgText(),
@@ -77,7 +78,9 @@ class App extends React.Component {
             mainMsgChildren: null,
             serverRequestObjs: []
         };
+        this.setAccountSubpage = this.setAccountSubpage.bind(this);
         this.tabClick = this.tabClick.bind(this);
+        this.setTab = this.setTab.bind(this);
         this.domainsMsgCloseClick = this.domainsMsgCloseClick.bind(this);
         this.addDomain = this.addDomain.bind(this);
         this.updateDomain = this.updateDomain.bind(this);
@@ -123,6 +126,11 @@ class App extends React.Component {
             });
         }
     }
+    setAccountSubpage(name) {
+        this.setState({
+            accountSubpage: name
+        });
+    }
     addServerRequestObj(requestObj) {
         this.setState({
            serverRequestObjs: update(this.state.serverRequestObjs, {$push: [requestObj]})
@@ -138,10 +146,16 @@ class App extends React.Component {
     }
     tabClick(tabIndex) {
         if (this.state.domainsLoaded && this.state.serverRequestObjs.length == 0) {
-            this.setState({
-               tabIndex: tabIndex
-            });
+            if (tabIndex == 1 && this.state.tabIndex != 1) {
+                this.setAccountSubpage('Landing');
+            }
+            this.setTab(tabIndex);
         }
+    }
+    setTab(tabIndex) {
+        this.setState({
+           tabIndex: tabIndex
+        });
     }
     domainsMsgCloseClick() {
         this.setState({
@@ -429,10 +443,10 @@ class App extends React.Component {
                     {(this.state.domainsLoaded) ? (
                         <div className="content-outer">
                             <CSSTransition in={(this.state.tabIndex == 0)} classNames="domains-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
-                                <Domains domains={this.state.domains} domainsMsgShow={this.state.domainsMsgShow} domainsMsgText={this.state.domainsMsgText} domainsMsgCloseClick={this.domainsMsgCloseClick} addDomain={this.addDomain} updateDomain={this.updateDomain} sortEnd={this.sortEnd} leftEnd={this.leftEnd} />
+                                <Domains domains={this.state.domains} setTab={this.setTab}  setAccountSubpage={this.setAccountSubpage} domainsMsgShow={this.state.domainsMsgShow} domainsMsgText={this.state.domainsMsgText} domainsMsgCloseClick={this.domainsMsgCloseClick} addDomain={this.addDomain} updateDomain={this.updateDomain} sortEnd={this.sortEnd} leftEnd={this.leftEnd} />
                             </CSSTransition>
                             <CSSTransition in={(this.state.tabIndex == 1)} classNames="account-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
-                                <Account domainsUsed={this.state.domains.length} showMainMsg={this.showMainMsg} closeMainMsg={this.closeMainMsg} addServerRequestObj={this.addServerRequestObj} deleteServerRequestObj={this.deleteServerRequestObj} />
+                                <Account accountSubpage={this.state.accountSubpage} setAccountSubpage={this.setAccountSubpage} domainsUsed={this.state.domains.length} showMainMsg={this.showMainMsg} closeMainMsg={this.closeMainMsg} addServerRequestObj={this.addServerRequestObj} deleteServerRequestObj={this.deleteServerRequestObj} />
                             </CSSTransition>
                         </div>
                     ) : (

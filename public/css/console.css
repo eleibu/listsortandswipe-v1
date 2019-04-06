@@ -536,14 +536,29 @@ div.spinner-outer div.spinner-inner div.rect4 {
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.add-cont div.message-outer div.message-inner {
   position: relative;
-  padding: 0.5em 1em;
+  padding: 6px 16px;
   background-color: #F56E44;
-  color: #FFFFFF;
   text-align: center;
 }
 
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.add-cont div.message-outer div.message-inner span {
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.add-cont div.message-outer div.message-inner div.msg {
+  display: inline-block;
+  padding: 4px 0;
   font-size: 90%;
+  color: #FFFFFF;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.add-cont div.message-outer div.message-inner div.link {
+  cursor: pointer;
+  display: inline-block;
+  padding: 4px 8px;
+  font-size: 80%;
+  color: #EEEEEE;
+  border-radius: 4px;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.add-cont div.message-outer div.message-inner div.link:hover, #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.add-cont div.message-outer div.message-inner div.link:active {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.add-cont div.message-outer div.message-inner i {
@@ -555,6 +570,7 @@ div.spinner-outer div.spinner-inner div.rect4 {
   font-size: 130%;
   padding: 0.15em;
   border-radius: 999px;
+  color: #FFFFFF;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.add-cont div.message-outer div.message-inner i:hover, #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.add-cont div.message-outer div.message-inner i:active {
