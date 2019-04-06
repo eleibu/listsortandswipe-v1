@@ -1,3 +1,95 @@
+import moment from 'moment';
+
+
+export function getLicenceTypeText(accountType) {
+    switch (accountType) {
+        case 1:
+        	return 'Basic';
+        break;
+        case 2:
+        	return 'Professioal';
+        break;
+        case 3:
+        	return 'Enterprise';
+        break;
+        default:
+        	return 'Free trial';
+    }
+}
+
+export function getDiffMinutes(expiresAt) {
+    const mNow = moment.utc();
+    const mExpiresAt = moment(expiresAt);
+    return mExpiresAt.diff(mNow, 'minutes');
+}
+
+export function expiresMsgThreshold(accountType) {
+    if (accountType == 0) {
+        return 15 * 1440;
+    }
+    return 30 * 1440;
+}
+
+export function domainsMsgShow(expiresAt, accountType) {
+    if (getDiffMinutes(expiresAt) <= expiresMsgThreshold(accountType)) {
+        return true;
+    }
+    return false;
+}
+
+export function domainsMsgText(expiresAt, accountType) {
+    const diffMinutes = getDiffMinutes(expiresAt);
+    if (diffMinutes <= expiresMsgThreshold(accountType)) {
+        if (diffMinutes > 0) {
+            if (diffMinutes > 1440) {
+                const diffDays = Math.floor(diffMinutes / 1440);
+                if (diffDays > 1) {
+                    return 'Your licence expires in ' + diffDays + ' days';
+                } else {
+                    return 'Your licence expires in less than 1 day';
+                }
+            } else {
+                const diffHours = Math.floor(diffMinutes / 60);
+                if (diffHours > 1) {
+                    return 'Your licence expires in ' + diffHours + ' hours';
+                } else {
+                    return 'Your licence expires in less than 1 hour';
+                }
+            }
+        } else {
+            return 'Your licence has expired';
+        }
+    }
+    return '';
+}
+
+export function expiresText(expiresAt, accountType) {
+    const diffMinutes = getDiffMinutes(expiresAt);
+    if (diffMinutes <= 0 || diffMinutes > expiresMsgThreshold(accountType)) {
+		return moment(expiresAt).format('LL');
+    } else {
+        if (diffMinutes > 1440) {
+            const diffDays = Math.floor(diffMinutes / 1440);
+            if (diffDays > 1) {
+            	return moment(expiresAt).format('LL') + ' (' + diffDays + ' days)';
+            } else {
+            	return moment(expiresAt).format('LL') + ' (less than 1 day)';
+            }
+        } else {
+            const diffHours = Math.floor(diffMinutes / 60);
+            if (diffHours > 1) {
+                return diffHours + ' hours';
+            } else {
+                return 'Less than 1 hour';
+            }
+        }
+    }
+}
+
+
+
+
+
 export function encodeHTML(value) {
     return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }

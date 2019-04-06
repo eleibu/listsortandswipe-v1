@@ -62933,7 +62933,7 @@ var ChangePwd = function (_React$Component) {
 
                 this.props.closeMainMsg();
 
-                var requestObj = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["e" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_2_axios___default.a.CancelToken);
+                var requestObj = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["j" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_2_axios___default.a.CancelToken);
                 this.props.addServerRequestObj(requestObj);
 
                 var url = api_url_public + 'users/' + accountData.email;
@@ -63036,6 +63036,7 @@ var ChangePwd = function (_React$Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_classNames_dedupe__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment__ = __webpack_require__("./node_modules/moment/moment.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_moment__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_js__ = __webpack_require__("./resources/js/utils.js");
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () {
@@ -63065,6 +63066,7 @@ function _inherits(subClass, superClass) {
         throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
     }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 }
+
 
 
 
@@ -63108,20 +63110,6 @@ var Landing = function (_React$Component) {
         value: function render() {
             var _this2 = this;
 
-            var accountTypeText = void 0;
-            switch (accountData.accountType) {
-                case 1:
-                    accountTypeText = "Basic";
-                    break;
-                case 2:
-                    accountTypeText = "Professional";
-                    break;
-                case 3:
-                    accountTypeText = "Enterprise";
-                    break;
-                default:
-                    accountTypeText = "Free trial";
-            }
             var totalDomainsText = 'domains maximum';
             if (accountData.domainCountBase + accountData.domainCountAdditional == 1) {
                 totalDomainsText = 'domain maximum';
@@ -63177,7 +63165,7 @@ var Landing = function (_React$Component) {
             });
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'contact-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', { className: 'name' }, accountData.name, ' ', accountData.surname), accountData.companyName && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', { className: 'coname' }, accountData.companyName), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', { className: 'email' }, accountData.email), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey', onClick: function onClick() {
                     _this2.props.setAccountSubpage('ChangePwd');
-                } }, 'CHANGE PASSWORD'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'avail-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'plan' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('strong', null, accountTypeText), ' ', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'plan')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'expires' }, 'Expires ', __WEBPACK_IMPORTED_MODULE_2_moment___default()(accountData.accountExpiresAt).format('LL')), accountData.accountType == 3 && accountData.accountLicenceKey != null && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'key-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', readOnly: true, ref: function ref(input) {
+                } }, 'CHANGE PASSWORD'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'avail-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'plan' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('strong', null, Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["h" /* getLicenceTypeText */])(accountData.accountType)), ' ', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'plan')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'expires' }, 'Expires ', __WEBPACK_IMPORTED_MODULE_2_moment___default()(accountData.accountExpiresAt).format('LL')), accountData.accountType == 3 && accountData.accountLicenceKey != null && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'key-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', readOnly: true, ref: function ref(input) {
                     _this2.inputCopy = input;
                 }, style: inputStyle, value: accountData.accountLicenceKey }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'label' }, 'Licence key:'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: spanClasses }, accountData.accountLicenceKey), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'copy-outer', title: 'Copy to clipboard', onClick: function onClick() {
                     _this2.copyClick();
@@ -63194,11 +63182,17 @@ var Landing = function (_React$Component) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RenewUpgrade; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Renew; });
+/* unused harmony export Upgrade */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__("./node_modules/react/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe__ = __webpack_require__("./node_modules/classNames/dedupe.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_classNames_dedupe__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_transition_group__ = __webpack_require__("./node_modules/react-transition-group/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_transition_group___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_js__ = __webpack_require__("./resources/js/utils.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_moment__ = __webpack_require__("./node_modules/moment/moment.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_moment__);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () {
@@ -63231,46 +63225,89 @@ function _inherits(subClass, superClass) {
 
 
 
-// import moment from 'moment';
+
+
+
 // import axios from 'axios';
 // import { requestObjCreate } from './utils.js';
 
-var RenewUpgrade = function (_React$Component) {
-    _inherits(RenewUpgrade, _React$Component);
+var Renew = function (_React$Component) {
+    _inherits(Renew, _React$Component);
 
-    function RenewUpgrade(props) {
-        _classCallCheck(this, RenewUpgrade);
+    function Renew(props) {
+        _classCallCheck(this, Renew);
 
-        var _this = _possibleConstructorReturn(this, (RenewUpgrade.__proto__ || Object.getPrototypeOf(RenewUpgrade)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Renew.__proto__ || Object.getPrototypeOf(Renew)).call(this, props));
 
         _this.state = {
-            spinning: false
+            spinning: false,
+            changeLicenceType: false
         };
         return _this;
     }
 
-    _createClass(RenewUpgrade, [{
+    _createClass(Renew, [{
         key: 'validateAndSubmit',
         value: function validateAndSubmit() {}
     }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
+            var currentExpired = 'current';
+            if (Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["g" /* getDiffMinutes */])(accountData.accountExpiresAt) <= 0) {
+                currentExpired = 'expired';
+            }
 
             var spinnerContClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
                 'spinner-cont': true,
                 'spinning': this.state.spinning
             });
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner renewupgrade-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title-main' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'sld icon-lock' }), '\xA0RENEW')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'subtitle-main' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'Hahahahaha')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont darkblue', onClick: function onClick() {
-                    _this2.validateAndSubmit();
-                }, tabIndex: '4' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: spinnerContClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text' }, 'PLACE ORDER'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect0' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect1' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect2' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect3' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect4' }))))), '\xA0\xA0\xA0\xA0', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey', onClick: function onClick() {
-                    _this2.props.setAccountSubpage('Landing');
-                }, tabIndex: '5' }, 'CANCEL'))));
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner renewupgrade-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'page-title default' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-lock' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('strong', null, 'Renew'), ' ', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'licence')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(CurrentLicence, null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'section-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title' }, 'Renewal details'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': !this.state.changeLicenceType, classNames: 'renewtype-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, 'Renew your ', currentExpired, ' licence from now until ', __WEBPACK_IMPORTED_MODULE_4_moment___default()().add(12, 'months').format('LL')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, 'Button'))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.state.changeLicenceType, classNames: 'renewtype-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, 'Select the licence type for your renewal from now until ', __WEBPACK_IMPORTED_MODULE_4_moment___default()().add(12, 'months').format('LL')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(LicenceTypes, null))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons-cont' }, 'buttons'));
         }
     }]);
 
-    return RenewUpgrade;
+    return Renew;
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+var Upgrade = function (_React$Component2) {
+    _inherits(Upgrade, _React$Component2);
+
+    function Upgrade(props) {
+        _classCallCheck(this, Upgrade);
+
+        var _this2 = _possibleConstructorReturn(this, (Upgrade.__proto__ || Object.getPrototypeOf(Upgrade)).call(this, props));
+
+        _this2.state = {
+            spinning: false
+        };
+        return _this2;
+    }
+
+    _createClass(Upgrade, [{
+        key: 'validateAndSubmit',
+        value: function validateAndSubmit() {}
+    }, {
+        key: 'render',
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner renewupgrade-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'page-title default' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-lock' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('strong', null, 'Upgrade'), ' ', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'licence')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(CurrentLicence, null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'section-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title' }, 'Upgrade details'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, 'Select the licence type that you would like to upgrade to. The upgrade will be valid for the remainder of the term of your current licence.'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(LicenceTypes, null)))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons-cont' }, 'buttons'));
+        }
+    }]);
+
+    return Upgrade;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+var CurrentLicence = function CurrentLicence(props) {
+    var title = 'Current licence';
+    var label = 'Expires';
+    if (Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["g" /* getDiffMinutes */])(accountData.accountExpiresAt) <= 0) {
+        title = 'Expired licence';
+        label = 'Expired';
+    }
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'section-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title' }, title), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('strong', null, 'Type:'), ' ', Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["h" /* getLicenceTypeText */])(accountData.accountType)), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('strong', null, label, ':'), ' ', Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["e" /* expiresText */])(accountData.accountExpiresAt, accountData.accountType)));
+};
+
+var LicenceTypes = function LicenceTypes(props) {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, 'Licence types');
+};
 
 /***/ }),
 
@@ -63353,7 +63390,7 @@ var Account = function (_React$Component) {
             } else {
                 maskStyle = { display: 'none' };
             }
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_transition_group__["CSSTransition"], { 'in': this.props.accountSubpage == 'Landing', classNames: 'accountcontent-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__console_account_landing_js__["a" /* Landing */], { domainsUsed: this.props.domainsUsed, setAccountSubpage: this.props.setAccountSubpage })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_transition_group__["CSSTransition"], { 'in': this.props.accountSubpage == 'ChangePwd', classNames: 'accountcontent-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__console_account_changepwd_js__["a" /* ChangePwd */], { setShowMask: this.setShowMask, setAccountSubpage: this.props.setAccountSubpage, showMainMsg: this.props.showMainMsg, closeMainMsg: this.props.closeMainMsg, addServerRequestObj: this.props.addServerRequestObj, deleteServerRequestObj: this.props.deleteServerRequestObj })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_transition_group__["CSSTransition"], { 'in': this.props.accountSubpage == 'RenewUpgrade', classNames: 'accountcontent-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__console_account_renewupgrade_js__["a" /* RenewUpgrade */], { setShowMask: this.setShowMask, setAccountSubpage: this.props.setAccountSubpage, showMainMsg: this.props.showMainMsg, closeMainMsg: this.props.closeMainMsg, addServerRequestObj: this.props.addServerRequestObj, deleteServerRequestObj: this.props.deleteServerRequestObj })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: maskStyle, className: 'account-mask' }));
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_transition_group__["CSSTransition"], { 'in': this.props.accountSubpage == 'Landing', classNames: 'accountcontent-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__console_account_landing_js__["a" /* Landing */], { domainsUsed: this.props.domainsUsed, setAccountSubpage: this.props.setAccountSubpage })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_transition_group__["CSSTransition"], { 'in': this.props.accountSubpage == 'ChangePwd', classNames: 'accountcontent-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__console_account_changepwd_js__["a" /* ChangePwd */], { setShowMask: this.setShowMask, setAccountSubpage: this.props.setAccountSubpage, showMainMsg: this.props.showMainMsg, closeMainMsg: this.props.closeMainMsg, addServerRequestObj: this.props.addServerRequestObj, deleteServerRequestObj: this.props.deleteServerRequestObj })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_transition_group__["CSSTransition"], { 'in': this.props.accountSubpage == 'Renew', classNames: 'accountcontent-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__console_account_renewupgrade_js__["a" /* Renew */], { setShowMask: this.setShowMask, setAccountSubpage: this.props.setAccountSubpage, showMainMsg: this.props.showMainMsg, closeMainMsg: this.props.closeMainMsg, addServerRequestObj: this.props.addServerRequestObj, deleteServerRequestObj: this.props.deleteServerRequestObj })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: maskStyle, className: 'account-mask' }));
         }
     }]);
 
@@ -63539,9 +63576,9 @@ var Domains = function (_React$Component) {
         key: 'checkValue',
         value: function checkValue() {
             var valueOk = void 0;
-            var newDomain = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["g" /* trimString */])(this.input.value);
+            var newDomain = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["l" /* trimString */])(this.input.value);
             if (newDomain.length > 0) {
-                if (Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["d" /* hasDomainForm */])(newDomain)) {
+                if (Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["i" /* hasDomainForm */])(newDomain)) {
                     if (this.checkExists(newDomain)) {
                         valueOk = false;
                         this.setState({
@@ -63584,7 +63621,7 @@ var Domains = function (_React$Component) {
         key: 'addDomainClick',
         value: function addDomainClick() {
             if (this.checkValue()) {
-                var origValue = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["g" /* trimString */])(this.input.value);
+                var origValue = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["l" /* trimString */])(this.input.value);
                 this.createItemAndAdd(origValue);
                 this.setState({
                     inputFocus: false,
@@ -63599,7 +63636,7 @@ var Domains = function (_React$Component) {
                 // enter key
                 e.preventDefault();
                 if (this.checkValue()) {
-                    var origValue = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["g" /* trimString */])(this.input.value);
+                    var origValue = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["l" /* trimString */])(this.input.value);
                     this.createItemAndAdd(origValue);
                 }
                 this.setState({
@@ -63615,7 +63652,7 @@ var Domains = function (_React$Component) {
     }, {
         key: 'createItemAndAdd',
         value: function createItemAndAdd(domain) {
-            this.props.addDomain(Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["f" /* stripUrl */])(domain));
+            this.props.addDomain(Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["k" /* stripUrl */])(domain));
             this.input.value = '';
         }
     }, {
@@ -63636,7 +63673,7 @@ var Domains = function (_React$Component) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'add-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.props.domainsMsgShow, classNames: 'message-trans', timeout: { enter: 0, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'message-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'message-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'sld icon-cross-ui', onClick: function onClick() {
                     _this2.props.domainsMsgCloseClick();
                 } }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'msg' }, this.props.domainsMsgText), ' ', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'link', onClick: function onClick() {
-                    _this2.props.setAccountSubpage('RenewUpgrade');_this2.props.setTab(1);
+                    _this2.props.setAccountSubpage('Renew');_this2.props.setTab(1);
                 } }, 'RENEW')))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: addItemOuterClasses, ref: this.setOuterRef }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: inputClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'input-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', placeholder: 'yourdomain.com', ref: function ref(input) {
                     _this2.input = input;
                 }, onKeyDown: function onKeyDown(e) {
@@ -63694,9 +63731,9 @@ var Domain = function (_React$Component2) {
         key: 'checkValue',
         value: function checkValue() {
             var valueOk = void 0;
-            var newDomain = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["g" /* trimString */])(this.inputEdit.value);
+            var newDomain = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["l" /* trimString */])(this.inputEdit.value);
             if (newDomain.length > 0) {
-                if (Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["d" /* hasDomainForm */])(newDomain)) {
+                if (Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["i" /* hasDomainForm */])(newDomain)) {
                     if (this.props.checkExists(newDomain, this.props.index)) {
                         valueOk = false;
                         this.setState({
@@ -63726,7 +63763,7 @@ var Domain = function (_React$Component2) {
         key: 'onBlur',
         value: function onBlur(e) {
             if (this.checkValue()) {
-                var strippedUrl = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["f" /* stripUrl */])(Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["g" /* trimString */])(this.inputEdit.value));
+                var strippedUrl = Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["k" /* stripUrl */])(Object(__WEBPACK_IMPORTED_MODULE_4__utils_js__["l" /* trimString */])(this.inputEdit.value));
                 this.props.updateDomain(this.props.id, strippedUrl);
                 this.inputEdit.value = strippedUrl;
             } else {
@@ -63997,52 +64034,6 @@ __WEBPACK_IMPORTED_MODULE_4_axios___default.a.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest'
 };
 
-function getDiffMinutes() {
-    var now = __WEBPACK_IMPORTED_MODULE_11_moment___default.a.utc();
-    var expiresAt = __WEBPACK_IMPORTED_MODULE_11_moment___default()(accountData.accountExpiresAt);
-    return expiresAt.diff(now, 'minutes');
-}
-
-function msgMinutesThreshold() {
-    if (accountData.accountType == 0) {
-        return 15 * 1440;
-    }
-    return 30 * 1440;
-}
-
-function setDomainsMsgShow() {
-    if (getDiffMinutes() <= msgMinutesThreshold()) {
-        return true;
-    }
-    return false;
-}
-
-function setDomainsMsgText() {
-    var diffMinutes = getDiffMinutes();
-    if (diffMinutes <= msgMinutesThreshold()) {
-        if (diffMinutes > 0) {
-            if (diffMinutes > 1440) {
-                var diffDays = Math.floor(diffMinutes / 1440);
-                if (diffDays > 1) {
-                    return 'Your licence expires in ' + diffDays + ' days';
-                } else {
-                    return 'Your licence expires in less than 1 day';
-                }
-            } else {
-                var diffHours = Math.floor(diffMinutes / 60);
-                if (diffHours > 1) {
-                    return 'Your licence expires in ' + diffHours + ' hours';
-                } else {
-                    return 'Your licence expires in less than 1 hour';
-                }
-            }
-        } else {
-            return 'Your licence has expired';
-        }
-    }
-    return '';
-}
-
 var App = function (_React$Component) {
     _inherits(App, _React$Component);
 
@@ -64052,11 +64043,13 @@ var App = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
         _this.state = {
-            tabIndex: 0,
-            accountSubpage: 'Landing',
+            // tabIndex: 0,
+            // accountSubpage: 'Landing',
+            tabIndex: 1,
+            accountSubpage: 'Renew',
             domainsLoaded: false,
-            domainsMsgShow: setDomainsMsgShow(),
-            domainsMsgText: setDomainsMsgText(),
+            domainsMsgShow: Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["b" /* domainsMsgShow */])(accountData.accountExpiresAt, accountData.accountType),
+            domainsMsgText: Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["c" /* domainsMsgText */])(accountData.accountExpiresAt, accountData.accountType),
             domains: [],
             mainMsgShow: false,
             mainMsgChildren: null,
@@ -64085,7 +64078,7 @@ var App = function (_React$Component) {
             var _this2 = this;
 
             if (accountData.hasDomains) {
-                var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["e" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
+                var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["j" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
                 this.addServerRequestObj(requestObj);
 
                 var url = api_url_public + 'domains';
@@ -64130,7 +64123,7 @@ var App = function (_React$Component) {
     }, {
         key: 'deleteServerRequestObj',
         value: function deleteServerRequestObj(requestObj) {
-            var index = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["c" /* findIndexById */])(this.state.serverRequestObjs, requestObj.id);
+            var index = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["f" /* findIndexById */])(this.state.serverRequestObjs, requestObj.id);
             if (index != null) {
                 this.setState({
                     serverRequestObjs: __WEBPACK_IMPORTED_MODULE_10_immutability_helper___default()(this.state.serverRequestObjs, { $splice: [[index, 1]] })
@@ -64168,7 +64161,7 @@ var App = function (_React$Component) {
 
             this.closeMainMsg();
 
-            var newId = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["h" /* uuidv4 */])();
+            var newId = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["m" /* uuidv4 */])();
             this.setState({
                 domains: __WEBPACK_IMPORTED_MODULE_10_immutability_helper___default()(this.state.domains, { $unshift: [{
                         id: newId,
@@ -64177,7 +64170,7 @@ var App = function (_React$Component) {
                     }] })
             });
 
-            var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["e" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
+            var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["j" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
             this.addServerRequestObj(requestObj);
 
             var url = api_url_public + 'domains';
@@ -64202,7 +64195,7 @@ var App = function (_React$Component) {
                     domains: newDomains
                 });
             }).catch(function (error) {
-                var index = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["c" /* findIndexById */])(_this3.state.domains, newId);
+                var index = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["f" /* findIndexById */])(_this3.state.domains, newId);
                 if (index != null) {
                     _this3.setState({
                         domains: __WEBPACK_IMPORTED_MODULE_10_immutability_helper___default()(_this3.state.domains, { $splice: [[index, 1]] })
@@ -64221,7 +64214,7 @@ var App = function (_React$Component) {
         value: function updateDomain(id, domain) {
             var _this4 = this;
 
-            var index = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["c" /* findIndexById */])(this.state.domains, id);
+            var index = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["f" /* findIndexById */])(this.state.domains, id);
             var origDomain = null;
             if (index != null) {
                 origDomain = this.state.domains[index].domain;
@@ -64237,7 +64230,7 @@ var App = function (_React$Component) {
                         } }))
                 });
 
-                var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["e" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
+                var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["j" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
                 this.addServerRequestObj(requestObj);
 
                 var url = api_url_public + 'domains/' + id;
@@ -64278,7 +64271,7 @@ var App = function (_React$Component) {
                     domains: Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["a" /* arrayMove */])(this.state.domains, oldIndex, newIndex)
                 });
 
-                var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["e" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
+                var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["j" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
                 this.addServerRequestObj(requestObj);
 
                 var url = api_url_public + 'domains/' + id;
@@ -64342,7 +64335,7 @@ var App = function (_React$Component) {
                 domains: newDomains
             });
 
-            var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["e" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
+            var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["j" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
             this.addServerRequestObj(requestObj);
 
             var children = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'left' }, 'Deleting domain...'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont mainmsg dummy' }, '\xA0')))));
@@ -64381,7 +64374,7 @@ var App = function (_React$Component) {
             var children = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'left' }, 'Restoring domain...'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont mainmsg dummy' }, '\xA0')))));
             this.showMainMsg(children, 86400000);
 
-            var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["e" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
+            var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["j" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
             this.addServerRequestObj(requestObj);
 
             var url = api_url_public + 'domains/' + domain.id;
@@ -66663,102 +66656,197 @@ var monitorWinWidth = function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["b"] = encodeHTML;
-/* harmony export (immutable) */ __webpack_exports__["c"] = findIndexById;
-/* harmony export (immutable) */ __webpack_exports__["d"] = hasDomainForm;
-/* harmony export (immutable) */ __webpack_exports__["f"] = stripUrl;
-/* harmony export (immutable) */ __webpack_exports__["e"] = requestObjCreate;
-/* harmony export (immutable) */ __webpack_exports__["h"] = uuidv4;
-/* harmony export (immutable) */ __webpack_exports__["g"] = trimString;
+/* harmony export (immutable) */ __webpack_exports__["h"] = getLicenceTypeText;
+/* harmony export (immutable) */ __webpack_exports__["g"] = getDiffMinutes;
+/* unused harmony export expiresMsgThreshold */
+/* harmony export (immutable) */ __webpack_exports__["b"] = domainsMsgShow;
+/* harmony export (immutable) */ __webpack_exports__["c"] = domainsMsgText;
+/* harmony export (immutable) */ __webpack_exports__["e"] = expiresText;
+/* harmony export (immutable) */ __webpack_exports__["d"] = encodeHTML;
+/* harmony export (immutable) */ __webpack_exports__["f"] = findIndexById;
+/* harmony export (immutable) */ __webpack_exports__["i"] = hasDomainForm;
+/* harmony export (immutable) */ __webpack_exports__["k"] = stripUrl;
+/* harmony export (immutable) */ __webpack_exports__["j"] = requestObjCreate;
+/* harmony export (immutable) */ __webpack_exports__["m"] = uuidv4;
+/* harmony export (immutable) */ __webpack_exports__["l"] = trimString;
 /* harmony export (immutable) */ __webpack_exports__["a"] = arrayMove;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__("./node_modules/moment/moment.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
+
+
+function getLicenceTypeText(accountType) {
+    switch (accountType) {
+        case 1:
+            return 'Basic';
+            break;
+        case 2:
+            return 'Professioal';
+            break;
+        case 3:
+            return 'Enterprise';
+            break;
+        default:
+            return 'Free trial';
+    }
+}
+
+function getDiffMinutes(expiresAt) {
+    var mNow = __WEBPACK_IMPORTED_MODULE_0_moment___default.a.utc();
+    var mExpiresAt = __WEBPACK_IMPORTED_MODULE_0_moment___default()(expiresAt);
+    return mExpiresAt.diff(mNow, 'minutes');
+}
+
+function expiresMsgThreshold(accountType) {
+    if (accountType == 0) {
+        return 15 * 1440;
+    }
+    return 30 * 1440;
+}
+
+function domainsMsgShow(expiresAt, accountType) {
+    if (getDiffMinutes(expiresAt) <= expiresMsgThreshold(accountType)) {
+        return true;
+    }
+    return false;
+}
+
+function domainsMsgText(expiresAt, accountType) {
+    var diffMinutes = getDiffMinutes(expiresAt);
+    if (diffMinutes <= expiresMsgThreshold(accountType)) {
+        if (diffMinutes > 0) {
+            if (diffMinutes > 1440) {
+                var diffDays = Math.floor(diffMinutes / 1440);
+                if (diffDays > 1) {
+                    return 'Your licence expires in ' + diffDays + ' days';
+                } else {
+                    return 'Your licence expires in less than 1 day';
+                }
+            } else {
+                var diffHours = Math.floor(diffMinutes / 60);
+                if (diffHours > 1) {
+                    return 'Your licence expires in ' + diffHours + ' hours';
+                } else {
+                    return 'Your licence expires in less than 1 hour';
+                }
+            }
+        } else {
+            return 'Your licence has expired';
+        }
+    }
+    return '';
+}
+
+function expiresText(expiresAt, accountType) {
+    var diffMinutes = getDiffMinutes(expiresAt);
+    if (diffMinutes <= 0 || diffMinutes > expiresMsgThreshold(accountType)) {
+        return __WEBPACK_IMPORTED_MODULE_0_moment___default()(expiresAt).format('LL');
+    } else {
+        if (diffMinutes > 1440) {
+            var diffDays = Math.floor(diffMinutes / 1440);
+            if (diffDays > 1) {
+                return __WEBPACK_IMPORTED_MODULE_0_moment___default()(expiresAt).format('LL') + ' (' + diffDays + ' days)';
+            } else {
+                return __WEBPACK_IMPORTED_MODULE_0_moment___default()(expiresAt).format('LL') + ' (less than 1 day)';
+            }
+        } else {
+            var diffHours = Math.floor(diffMinutes / 60);
+            if (diffHours > 1) {
+                return diffHours + ' hours';
+            } else {
+                return 'Less than 1 hour';
+            }
+        }
+    }
+}
+
 function encodeHTML(value) {
-				return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 function findIndexById(array, id) {
-				for (var i = 0, len = array.length; i < len; i++) {
-								if (array[i].id == id) {
-												return i;
-								}
-				}
-				return null;
+    for (var i = 0, len = array.length; i < len; i++) {
+        if (array[i].id == id) {
+            return i;
+        }
+    }
+    return null;
 }
 
 function hasDomainForm(value) {
-				// note: changes should also be reflected in the equivalent php function
+    // note: changes should also be reflected in the equivalent php function
 
-				if (/^\S+\.\S+$/.test(value)) {
-								return true;
-				}
-				return false;
+    if (/^\S+\.\S+$/.test(value)) {
+        return true;
+    }
+    return false;
 }
 
 function stripUrl(url) {
-				// note: changes should also be reflected in the equivalent php function
+    // note: changes should also be reflected in the equivalent php function
 
-				url = url.toLowerCase();
+    url = url.toLowerCase();
 
-				url = url.replace(/^http:\/\/|https:\/\/|ftp:\/\/|ftps:\/\//, '');
-				url = url.replace(/^www\./, '');
+    url = url.replace(/^http:\/\/|https:\/\/|ftp:\/\/|ftps:\/\//, '');
+    url = url.replace(/^www\./, '');
 
-				var iColon = url.indexOf(':');
-				var iSlash = -1;
-				if (iColon > -1) {
-								url = url.substring(0, iColon);
-				} else {
-								iSlash = url.indexOf('/');
-								if (iSlash > -1) {
-												url = url.substring(0, iSlash);
-								}
-				}
+    var iColon = url.indexOf(':');
+    var iSlash = -1;
+    if (iColon > -1) {
+        url = url.substring(0, iColon);
+    } else {
+        iSlash = url.indexOf('/');
+        if (iSlash > -1) {
+            url = url.substring(0, iSlash);
+        }
+    }
 
-				if (iColon == -1 && iSlash == -1) {
-								var iQuery = url.indexOf('?');
-								if (iQuery > -1) {
-												url = url.substring(0, iQuery);
-								}
-				}
+    if (iColon == -1 && iSlash == -1) {
+        var iQuery = url.indexOf('?');
+        if (iQuery > -1) {
+            url = url.substring(0, iQuery);
+        }
+    }
 
-				if (iColon == -1 && iSlash == -1) {
-								var iHash = url.indexOf('#');
-								if (iHash > -1) {
-												url = url.substring(0, iHash);
-								}
-				}
+    if (iColon == -1 && iSlash == -1) {
+        var iHash = url.indexOf('#');
+        if (iHash > -1) {
+            url = url.substring(0, iHash);
+        }
+    }
 
-				return url;
+    return url;
 }
 
 function requestObjCreate(cancelToken) {
-				var requestObj = {
-								id: uuidv4(),
-								source: cancelToken.source()
-				};
-				return requestObj;
+    var requestObj = {
+        id: uuidv4(),
+        source: cancelToken.source()
+    };
+    return requestObj;
 }
 
 function uuidv4() {
-				return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-								var r = Math.random() * 16 | 0,
-								    v = c == 'x' ? r : r & 0x3 | 0x8;
-								return v.toString(16).toUpperCase();
-				});
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = Math.random() * 16 | 0,
+            v = c == 'x' ? r : r & 0x3 | 0x8;
+        return v.toString(16).toUpperCase();
+    });
 }
 
 function trimString(text) {
-				return text.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+    return text.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
 }
 
 function arrayMove(arr, previousIndex, newIndex) {
-				var array = arr.slice(0);
-				if (newIndex >= array.length) {
-								var k = newIndex - array.length;
-								while (k-- + 1) {
-												array.push(undefined);
-								}
-				}
-				array.splice(newIndex, 0, array.splice(previousIndex, 1)[0]);
-				return array;
+    var array = arr.slice(0);
+    if (newIndex >= array.length) {
+        var k = newIndex - array.length;
+        while (k-- + 1) {
+            array.push(undefined);
+        }
+    }
+    array.splice(newIndex, 0, array.splice(previousIndex, 1)[0]);
+    return array;
 }
 
 /***/ }),

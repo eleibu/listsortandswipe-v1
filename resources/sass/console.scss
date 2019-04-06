@@ -676,19 +676,19 @@ div.spinner-outer {
 					div.account-cont {
 						padding: 2em 1em;
 
-						i.account-close {
-							cursor: pointer;
-							position: absolute;
-							top: 0.6em;
-							right: 0.6em;
-							font-size: 130%;
-							padding: 0.3em;
-							border-radius: 999px;
-						}
+						// i.account-close {
+						// 	cursor: pointer;
+						// 	position: absolute;
+						// 	top: 0.6em;
+						// 	right: 0.6em;
+						// 	font-size: 130%;
+						// 	padding: 0.3em;
+						// 	border-radius: 999px;
+						// }
 
-						i.icon-cross-ui:hover, i.icon-cross-ui:active {
-							background-color: rgba(0,0,0,0.05);
-						}
+						// i.icon-cross-ui:hover, i.icon-cross-ui:active {
+						// 	background-color: rgba(0,0,0,0.05);
+						// }
 
 						.button-word-cont {
 							div.spinner-cont {
@@ -819,6 +819,59 @@ div.spinner-outer {
 						}
 					}
 
+					div.renewupgrade-cont {
+						padding: 2em 1em;
+
+						div.page-title {
+							position: relative;
+							font-size: 140%;
+							padding-left: 2em;
+							margin-bottom: 1.6em;
+
+							i {
+								font-size: 160%;
+								position: absolute;
+								left: 0;
+								top: 50%;
+								transform: translateY(-50%);
+							}
+						}
+
+						div.page-title.default {
+							color: #666666;
+
+							strong {
+								color: #333333;
+							}
+						}
+
+						div.page-title.success {
+							color: #339900;
+
+							strong {
+								color: #336600;
+							}
+						}
+
+						div.section-cont {
+							div.title {
+								font-size: 120%;
+								line-height: 130%;
+								color: #222222;
+								font-weight: bold;
+								margin-bottom: 0.6em;
+							}
+
+							div.para {
+								line-height: 130%;
+								color: #666666;
+								margin: 0.2em 0;
+							}
+						}
+
+					}
+
+
 					div.account-mask {
 						position: absolute;
 						top: 0;
@@ -826,6 +879,8 @@ div.spinner-outer {
 						height: 100%;
 						width: 100%;
 					}
+
+
 				}
 			}
 		}		

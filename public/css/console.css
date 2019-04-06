@@ -947,20 +947,6 @@ div.spinner-outer div.spinner-inner div.rect4 {
   padding: 2em 1em;
 }
 
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont i.account-close {
-  cursor: pointer;
-  position: absolute;
-  top: 0.6em;
-  right: 0.6em;
-  font-size: 130%;
-  padding: 0.3em;
-  border-radius: 999px;
-}
-
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont i.icon-cross-ui:hover, #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont i.icon-cross-ui:active {
-  background-color: rgba(0, 0, 0, 0.05);
-}
-
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont .button-word-cont div.spinner-cont {
   position: relative;
 }
@@ -1077,6 +1063,56 @@ div.spinner-outer div.spinner-inner div.rect4 {
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont div.buttons-cont div.buttons-outer {
   font-size: 90%;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont {
+  padding: 2em 1em;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.page-title {
+  position: relative;
+  font-size: 140%;
+  padding-left: 2em;
+  margin-bottom: 1.6em;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.page-title i {
+  font-size: 160%;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.page-title.default {
+  color: #666666;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.page-title.default strong {
+  color: #333333;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.page-title.success {
+  color: #339900;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.page-title.success strong {
+  color: #336600;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.title {
+  font-size: 120%;
+  line-height: 130%;
+  color: #222222;
+  font-weight: bold;
+  margin-bottom: 0.6em;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para {
+  line-height: 130%;
+  color: #666666;
+  margin: 0.2em 0;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-mask {

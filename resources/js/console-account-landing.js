@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classNames/dedupe';
 import moment from 'moment';
+import { getLicenceTypeText } from './utils.js';
 
 export class Landing extends React.Component {
     constructor(props) {
@@ -25,20 +26,6 @@ export class Landing extends React.Component {
         });
     }
     render() {
-        let accountTypeText;
-        switch (accountData.accountType) {
-            case 1:
-                accountTypeText = "Basic";
-            break;
-            case 2:
-                accountTypeText = "Professional";
-            break;
-            case 3:
-                accountTypeText = "Enterprise";
-            break;
-            default:
-                accountTypeText = "Free trial";
-        }
         let totalDomainsText = 'domains maximum';
         if (accountData.domainCountBase + accountData.domainCountAdditional == 1) {
             totalDomainsText = 'domain maximum';
@@ -108,7 +95,7 @@ export class Landing extends React.Component {
                 </div>
                 <div className="avail-cont">
                     <div className="plan">
-                        <strong>{accountTypeText}</strong> <span>plan</span>
+                        <strong>{getLicenceTypeText(accountData.accountType)}</strong> <span>plan</span>
                     </div>
                     <div className="expires">
                         Expires {moment(accountData.accountExpiresAt).format('LL')}

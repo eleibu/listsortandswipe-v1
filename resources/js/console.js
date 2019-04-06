@@ -8,7 +8,7 @@ import axios from 'axios';
 import { CSSTransition } from 'react-transition-group';
 import { Domains } from './console-domains.js';
 import { Account } from './console-account.js';
-import { findIndexById, requestObjCreate, uuidv4, arrayMove } from './utils.js';
+import { domainsMsgShow, domainsMsgText, findIndexById, requestObjCreate, uuidv4, arrayMove } from './utils.js';
 import { setMainMsgTimeout, clearMainMsgTimeout, MainMsg } from './console-mainmsg.js';
 import update from 'immutability-helper';
 import moment from 'moment';
@@ -18,61 +18,17 @@ axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest'
 };
 
-function getDiffMinutes() {
-    const now = moment.utc();
-    const expiresAt = moment(accountData.accountExpiresAt);
-    return expiresAt.diff(now, 'minutes');
-}
-
-function msgMinutesThreshold() {
-    if (accountData.accountType == 0) {
-        return 15 * 1440;
-    }
-    return 30 * 1440;
-}
-
-function setDomainsMsgShow() {
-    if (getDiffMinutes() <= msgMinutesThreshold()) {
-        return true;
-    }
-    return false;
-}
-
-function setDomainsMsgText() {
-    const diffMinutes = getDiffMinutes();
-    if (diffMinutes <= msgMinutesThreshold()) {
-        if (diffMinutes > 0) {
-            if (diffMinutes > 1440) {
-                const diffDays = Math.floor(diffMinutes / 1440);
-                if (diffDays > 1) {
-                    return 'Your licence expires in ' + diffDays + ' days';
-                } else {
-                    return 'Your licence expires in less than 1 day';
-                }
-            } else {
-                const diffHours = Math.floor(diffMinutes / 60);
-                if (diffHours > 1) {
-                    return 'Your licence expires in ' + diffHours + ' hours';
-                } else {
-                    return 'Your licence expires in less than 1 hour';
-                }
-            }
-        } else {
-            return 'Your licence has expired';
-        }
-    }
-    return '';
-}
-
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            tabIndex: 0,
-            accountSubpage: 'Landing',
+            // tabIndex: 0,
+            // accountSubpage: 'Landing',
+            tabIndex: 1,
+            accountSubpage: 'Renew',
             domainsLoaded: false,
-            domainsMsgShow : setDomainsMsgShow(),
-            domainsMsgText : setDomainsMsgText(),
+            domainsMsgShow : domainsMsgShow(accountData.accountExpiresAt, accountData.accountType),
+            domainsMsgText : domainsMsgText(accountData.accountExpiresAt, accountData.accountType),
             domains: [],
             mainMsgShow: false,
             mainMsgChildren: null,

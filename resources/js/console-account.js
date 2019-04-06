@@ -2,7 +2,7 @@ import React from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { Landing } from './console-account-landing.js';
 import { ChangePwd } from './console-account-changepwd.js';
-import { RenewUpgrade } from './console-account-renewupgrade.js';
+import { Renew } from './console-account-renewupgrade.js';
 
 export class Account extends React.Component {
     constructor(props) {
@@ -32,8 +32,8 @@ export class Account extends React.Component {
                 <CSSTransition in={(this.props.accountSubpage == 'ChangePwd')} classNames="accountcontent-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
                     <ChangePwd setShowMask={this.setShowMask} setAccountSubpage={this.props.setAccountSubpage} showMainMsg={this.props.showMainMsg} closeMainMsg={this.props.closeMainMsg} addServerRequestObj={this.props.addServerRequestObj} deleteServerRequestObj={this.props.deleteServerRequestObj} />
                 </CSSTransition>
-                <CSSTransition in={(this.props.accountSubpage == 'RenewUpgrade')} classNames="accountcontent-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
-                    <RenewUpgrade setShowMask={this.setShowMask} setAccountSubpage={this.props.setAccountSubpage} showMainMsg={this.props.showMainMsg} closeMainMsg={this.props.closeMainMsg} addServerRequestObj={this.props.addServerRequestObj} deleteServerRequestObj={this.props.deleteServerRequestObj} />
+                <CSSTransition in={(this.props.accountSubpage == 'Renew')} classNames="accountcontent-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
+                    <Renew setShowMask={this.setShowMask} setAccountSubpage={this.props.setAccountSubpage} showMainMsg={this.props.showMainMsg} closeMainMsg={this.props.closeMainMsg} addServerRequestObj={this.props.addServerRequestObj} deleteServerRequestObj={this.props.deleteServerRequestObj} />
                 </CSSTransition>
                 <div style={maskStyle} className="account-mask">
                 </div>

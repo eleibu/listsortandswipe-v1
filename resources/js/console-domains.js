@@ -201,7 +201,7 @@ export class Domains extends React.Component {
                         <div className="message-outer">
                             <div className="message-inner">
                                 <i className="sld icon-cross-ui" onClick={() => {this.props.domainsMsgCloseClick()}}></i>
-                                <div className="msg">{this.props.domainsMsgText}</div> <div className="link" onClick={() => {this.props.setAccountSubpage('RenewUpgrade'); this.props.setTab(1);}}>RENEW</div>
+                                <div className="msg">{this.props.domainsMsgText}</div> <div className="link" onClick={() => {this.props.setAccountSubpage('Renew'); this.props.setTab(1);}}>RENEW</div>
                             </div>
                         </div>
                     </CSSTransition>
