@@ -50,6 +50,7 @@
             @else
                 companyName: null,
             @endif
+            countryName: "{{$countryName}}",
             accountType: {{$accountType}},
             @if(isset($accountLicenceKey))
                 accountLicenceKey: "{{$accountLicenceKey}}",
@@ -61,6 +62,7 @@
             domainCountBase: {{$domainCountBase}},
             domainCountAdditional: {{$domainCountAdditional}}
         };
+        var licenceTypes = {!!$licenceTypes!!};
         var msgPasswordDefault = "{!! $msgPasswordDefault !!}";
         var msgPasswordNoBlank = "{!! $msgPasswordNoBlank !!}";
         var msgPasswordInvalid = "{!! $msgPasswordInvalid !!}";

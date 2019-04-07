@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Classes\Toolkit;
 use App\Domain;
+use App\Product;
 
 class Controller_Site extends Controller
 {
@@ -31,6 +32,28 @@ class Controller_Site extends Controller
 			$hasDomains = 1;
 		}
 
+		$productIDs = Toolkit::productIDs();
+		$dbProductBasic = Product::where('id', $productIDs['accountTypeBasic'])
+			->first();
+		$dbProductProfessional = Product::where('id', $productIDs['accountTypeProfessional'])
+			->first();
+		$dbProductEnterprise = Product::where('id', $productIDs['accountTypeEnterprise'])
+			->first();
+		$licenceTypes = array(
+			1 => array(
+				'name' => $this->getProductName($dbProductBasic->description),
+				'priceCents' => $dbProductBasic->price_cents
+			),
+			2 => array(
+				'name' => $this->getProductName($dbProductProfessional->description),
+				'priceCents' => $dbProductProfessional->price_cents
+			),
+			3 => array(
+				'name' => $this->getProductName($dbProductEnterprise->description),
+				'priceCents' => $dbProductEnterprise->price_cents
+			)
+		);
+
 		return view('console')
             ->with('signoutName', $pageInfo['signout']['name'])
             ->with('signoutPath', $pageInfo['signout']['path'])
@@ -38,12 +61,14 @@ class Controller_Site extends Controller
             ->with('surname', $user->surname)
             ->with('email', $user->email)
             ->with('companyName', $user->company_name)
+            ->with('countryName', Toolkit::getCountryName($user->country_code))
             ->with('accountType', $user->account_type)
             ->with('accountLicenceKey', $user->account_licence_key)
             ->with('accountExpiresAt', $user->account_expires_at)
             ->with('hasDomains', $hasDomains)
             ->with('domainCountBase', $user->domain_count_base)
 			->with('domainCountAdditional', $user->domain_count_additional)
+			->with('licenceTypes', json_encode($licenceTypes))
             ->with('msgPasswordDefault', $this->msgPasswordDefault)
             ->with('msgPasswordNoBlank', $this->msgPasswordNoBlank)
             ->with('msgPasswordInvalid', $this->msgPasswordInvalid);
@@ -251,6 +276,10 @@ class Controller_Site extends Controller
 
 	public function page_privacy(Request $request) {
 		return view('privacy');
+	}
+
+	protected function getProductName($description) {
+		return 'Lithium List - ' . $description;
 	}
 
 }

@@ -44121,10 +44121,10 @@ function validateAndSubmit() {
 	var surnameOk = false;
 	var countryOk = false;
 
-	var email = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["j" /* trimString */])(inputEmail.value);
+	var email = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["l" /* trimString */])(inputEmail.value);
 	var password = inputPassword.value;
-	var firstname = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["j" /* trimString */])(inputFirstname.value);
-	var surname = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["j" /* trimString */])(inputSurname.value);
+	var firstname = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["l" /* trimString */])(inputFirstname.value);
+	var surname = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["l" /* trimString */])(inputSurname.value);
 	var country = selectCountry.options[selectCountry.selectedIndex].value;
 	var termsOk = inputTerms.checked;
 
@@ -44451,8 +44451,8 @@ function hidePlaceOrderSubmsg() {
 }
 
 function setParaFirstSurName() {
-	var firstname = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["j" /* trimString */])(inputFirstname.value);
-	var surname = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["j" /* trimString */])(inputSurname.value);
+	var firstname = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["l" /* trimString */])(inputFirstname.value);
+	var surname = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["l" /* trimString */])(inputSurname.value);
 	var name = firstname;
 	if (surname.length > 0) {
 		if (name.length > 0) {
@@ -44473,7 +44473,7 @@ function setParaFirstSurName() {
 }
 
 function setParaCompanyName() {
-	var coname = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["j" /* trimString */])(inputCompanyname.value);
+	var coname = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["l" /* trimString */])(inputCompanyname.value);
 	if (coname.length > 0) {
 		pCoName.innerHTML = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["d" /* encodeHTML */])(coname);
 		pCoName.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
@@ -44525,19 +44525,19 @@ if (maskCont && divResendLink && spinnerContResendLink) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export getLicenceTypeText */
-/* harmony export (immutable) */ __webpack_exports__["f"] = getDiffMinutes;
+/* harmony export (immutable) */ __webpack_exports__["h"] = getLicenceTypeText;
+/* harmony export (immutable) */ __webpack_exports__["g"] = getDiffMinutes;
 /* unused harmony export expiresMsgThreshold */
 /* harmony export (immutable) */ __webpack_exports__["b"] = domainsMsgShow;
 /* harmony export (immutable) */ __webpack_exports__["c"] = domainsMsgText;
-/* unused harmony export expiresText */
+/* harmony export (immutable) */ __webpack_exports__["e"] = expiresText;
 /* harmony export (immutable) */ __webpack_exports__["d"] = encodeHTML;
-/* harmony export (immutable) */ __webpack_exports__["e"] = findIndexById;
-/* harmony export (immutable) */ __webpack_exports__["g"] = hasDomainForm;
-/* harmony export (immutable) */ __webpack_exports__["i"] = stripUrl;
-/* harmony export (immutable) */ __webpack_exports__["h"] = requestObjCreate;
-/* harmony export (immutable) */ __webpack_exports__["k"] = uuidv4;
-/* harmony export (immutable) */ __webpack_exports__["j"] = trimString;
+/* harmony export (immutable) */ __webpack_exports__["f"] = findIndexById;
+/* harmony export (immutable) */ __webpack_exports__["i"] = hasDomainForm;
+/* harmony export (immutable) */ __webpack_exports__["k"] = stripUrl;
+/* harmony export (immutable) */ __webpack_exports__["j"] = requestObjCreate;
+/* harmony export (immutable) */ __webpack_exports__["m"] = uuidv4;
+/* harmony export (immutable) */ __webpack_exports__["l"] = trimString;
 /* harmony export (immutable) */ __webpack_exports__["a"] = arrayMove;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__("./node_modules/moment/moment.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);

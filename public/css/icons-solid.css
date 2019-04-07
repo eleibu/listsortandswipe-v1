@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icon-font-solid';
-  src:  url('fonts/icon-font-solid.eot?4dckg5');
-  src:  url('fonts/icon-font-solid.eot?4dckg5#iefix') format('embedded-opentype'),
-    url('fonts/icon-font-solid.ttf?4dckg5') format('truetype'),
-    url('fonts/icon-font-solid.woff?4dckg5') format('woff'),
-    url('fonts/icon-font-solid.svg?4dckg5#icon-font-solid') format('svg');
+  src:  url('fonts/icon-font-solid.eot?bavct');
+  src:  url('fonts/icon-font-solid.eot?bavct#iefix') format('embedded-opentype'),
+    url('fonts/icon-font-solid.ttf?bavct') format('truetype'),
+    url('fonts/icon-font-solid.woff?bavct') format('woff'),
+    url('fonts/icon-font-solid.svg?bavct#icon-font-solid') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,6 +24,12 @@ i.sld {
   -moz-osx-font-smoothing: grayscale;
 }
 
+i.sld.icon-reload-ui:before {
+  content: "\e916";
+}
+i.sld.icon-uploading-ui:before {
+  content: "\e917";
+}
 i.sld.icon-user-cross:before {
   content: "\e910";
 }

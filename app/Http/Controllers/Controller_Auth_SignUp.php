@@ -16,7 +16,6 @@ use App\Mail\SendReceipt;
 use App\Product;
 use App\Sale;
 use \Carbon\Carbon;
-use PragmaRX\Countries\Package\Countries;
 
 class Controller_Auth_SignUp extends Controller
 {
@@ -114,19 +113,7 @@ class Controller_Auth_SignUp extends Controller
 				'priceCents' => $dbProduct->price_cents
 			);
 
-	        $tempCountries = new Countries();
-			$allCountries = $tempCountries->all();
-			$countries = array();
-			foreach ($allCountries as $tempCountry) {
-				if ((strlen($tempCountry['iso_a3']) > 0) && ($tempCountry['iso_a3'] != '-99') && ($tempCountry['iso_a3'] != 'EUR')) {
-					$country = array(
-						'name' => $tempCountry['name']['common'],
-						'iso' => $tempCountry['iso_a3']
-					);
-					array_push($countries, $country);
-				}
-			}
-			usort($countries, array($this, 'compCountries'));
+			$countries = Toolkit::getAllCountries();
 
 			$pageInfo = Toolkit::pageInfo();
 
@@ -269,20 +256,12 @@ class Controller_Auth_SignUp extends Controller
 				if (($request->filled('companyname')) && (strlen(trim($request->input('companyname'))) > 0)) {
 					$companyName = trim($request->input('companyname'));
 				}
-				$countryName = '';
-		        $tempCountries = new Countries();
-				$allCountries = $tempCountries->all();
-				foreach ($allCountries as $tempCountry) {
-					if ((strlen($tempCountry['iso_a3']) > 0) && ($tempCountry['iso_a3'] != '-99') && ($tempCountry['iso_a3'] != 'EUR')) {
-						$countryName = $tempCountry['name']['common'];
-						break;
-					}
-				}
+
 				$invoice = array(
 					'date' => gmdate('Y-m-d'),
 					'customerName' => $firstname . ' ' . $surname,
 					'companyName' => $companyName,
-					'countryName' => $countryName,
+					'countryName' => Toolkit::getCountryName($request->input('country')),
 					'productName' => $this->getProductName($dbProduct->description),
 					'price' => $dbProduct->price_cents,
 					'taxes' => 0,
@@ -470,10 +449,5 @@ class Controller_Auth_SignUp extends Controller
 
 	protected function getProductName($description) {
 		return 'Lithium List - ' . $description;
-	}
-
-	protected function compCountries($a, $b)
-	{
-	    return strcmp($a['name'], $b['name']);
 	}
 }

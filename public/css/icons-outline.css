@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icon-font-outline';
-  src:  url('fonts/icon-font-outline.eot?swgbz0');
-  src:  url('fonts/icon-font-outline.eot?swgbz0#iefix') format('embedded-opentype'),
-    url('fonts/icon-font-outline.ttf?swgbz0') format('truetype'),
-    url('fonts/icon-font-outline.woff?swgbz0') format('woff'),
-    url('fonts/icon-font-outline.svg?swgbz0#icon-font-outline') format('svg');
+  src:  url('fonts/icon-font-outline.eot?vahzrh');
+  src:  url('fonts/icon-font-outline.eot?vahzrh#iefix') format('embedded-opentype'),
+    url('fonts/icon-font-outline.ttf?vahzrh') format('truetype'),
+    url('fonts/icon-font-outline.woff?vahzrh') format('woff'),
+    url('fonts/icon-font-outline.svg?vahzrh#icon-font-outline') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,6 +24,12 @@ i.oln {
   -moz-osx-font-smoothing: grayscale;
 }
 
+i.oln.icon-reload-ui:before {
+  content: "\e916";
+}
+i.oln.icon-uploading-ui:before {
+  content: "\e917";
+}
 i.oln.icon-user-cross:before {
   content: "\e910";
 }

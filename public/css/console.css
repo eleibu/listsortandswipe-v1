@@ -56,6 +56,13 @@ a.button-word-cont {
           box-shadow: 0 1px 4px 0 #CCCCCC;
 }
 
+.button-word-cont.grey.active {
+  color: #3366CC;
+  background-color: #EEEEEE;
+  -webkit-box-shadow: 0 1px 4px 0 #CCCCCC;
+          box-shadow: 0 1px 4px 0 #CCCCCC;
+}
+
 .button-word-cont.grey:hover {
   cursor: pointer;
   background-color: #F2F2F2;
@@ -1069,15 +1076,18 @@ div.spinner-outer div.spinner-inner div.rect4 {
   padding: 2em 1em;
 }
 
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.button-word-cont {
+  font-size: 80%;
+}
+
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.page-title {
   position: relative;
   font-size: 140%;
   padding-left: 2em;
-  margin-bottom: 1.6em;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.page-title i {
-  font-size: 160%;
+  font-size: 150%;
   position: absolute;
   left: 0;
   top: 50%;
@@ -1110,9 +1120,43 @@ div.spinner-outer div.spinner-inner div.rect4 {
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para {
+  font-size: 90%;
   line-height: 130%;
   color: #666666;
+  margin: 0.4em 0;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.address p {
   margin: 0.2em 0;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.orderdetails table {
+  width: 100%;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.orderdetails table td {
+  padding: 0.6em 0;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.orderdetails table td.border-top {
+  border-top: 1px solid #777777;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.orderdetails table td.border-btm {
+  border-bottom: 1px solid #777777;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.orderdetails table td.col-mdl {
+  width: 40%;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.orderdetails table td.col-right {
+  width: 10%;
+  text-align: right;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.button {
+  margin: 0.8em 0;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-mask {
@@ -1398,6 +1442,27 @@ div.accountcontent-trans-exit {
 }
 
 div.accountcontent-trans-exit.accountcontent-trans-exit-active {
+  opacity: 0;
+  -webkit-transition: opacity 200ms ease;
+  transition: opacity 200ms ease;
+}
+
+div.renewtype-trans-enter {
+  display: none;
+  max-height: 0;
+}
+
+div.renewtype-enter.renewtype-enter-active {
+  max-height: 100000px;
+  -webkit-transition: max-height 200ms linear 200ms;
+  transition: max-height 200ms linear 200ms;
+}
+
+div.renewtype-trans-exit {
+  opacity: 1;
+}
+
+div.renewtype-trans-exit.renewtype-trans-exit-active {
   opacity: 0;
   -webkit-transition: opacity 200ms ease;
   transition: opacity 200ms ease;

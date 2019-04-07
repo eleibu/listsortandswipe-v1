@@ -56,6 +56,13 @@ a.button-word-cont {
           box-shadow: 0 1px 4px 0 #CCCCCC;
 }
 
+.button-word-cont.grey.active {
+  color: #3366CC;
+  background-color: #EEEEEE;
+  -webkit-box-shadow: 0 1px 4px 0 #CCCCCC;
+          box-shadow: 0 1px 4px 0 #CCCCCC;
+}
+
 .button-word-cont.grey:hover {
   cursor: pointer;
   background-color: #F2F2F2;

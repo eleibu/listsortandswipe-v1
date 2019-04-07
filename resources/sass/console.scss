@@ -822,14 +822,17 @@ div.spinner-outer {
 					div.renewupgrade-cont {
 						padding: 2em 1em;
 
+						div.button-word-cont {
+							font-size: 80%;
+						}
+
 						div.page-title {
 							position: relative;
 							font-size: 140%;
 							padding-left: 2em;
-							margin-bottom: 1.6em;
 
 							i {
-								font-size: 160%;
+								font-size: 150%;
 								position: absolute;
 								left: 0;
 								top: 50%;
@@ -863,12 +866,49 @@ div.spinner-outer {
 							}
 
 							div.para {
+								font-size: 90%;
 								line-height: 130%;
 								color: #666666;
-								margin: 0.2em 0;
+								margin: 0.4em 0;
+							}
+
+							div.address {
+								p {
+									margin: 0.2em 0;
+								}
+							}
+
+							div.orderdetails {
+								table {
+									width: 100%;
+
+									td {
+										padding: 0.6em 0;
+									}
+
+									td.border-top {
+										border-top: 1px solid #777777;
+									}
+
+									td.border-btm {
+										border-bottom: 1px solid #777777;
+									}
+
+									td.col-mdl {
+										width: 40%;
+									}
+
+									td.col-right {
+										width: 10%;
+										text-align: right;
+									}
+								}
+							}
+
+							div.button {
+								margin: 0.8em 0;
 							}
 						}
-
 					}
 
 
@@ -1195,6 +1235,26 @@ div.accountcontent-trans-exit {
 }
 
 div.accountcontent-trans-exit.accountcontent-trans-exit-active {
+	opacity: 0;
+	transition: opacity 200ms ease;
+}
+
+// trans - renew type
+div.renewtype-trans-enter {
+	display: none;
+	max-height: 0;
+}
+
+div.renewtype-enter.renewtype-enter-active {
+	max-height: 100000px;
+	transition: max-height 200ms linear 200ms;
+}
+
+div.renewtype-trans-exit {
+	opacity: 1;
+}
+
+div.renewtype-trans-exit.renewtype-trans-exit-active {
 	opacity: 0;
 	transition: opacity 200ms ease;
 }

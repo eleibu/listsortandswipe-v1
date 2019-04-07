@@ -1,10 +1,45 @@
 <?php
 
 namespace App\Classes;
+use PragmaRX\Countries\Package\Countries;
 
 class Toolkit {
-	public static function sleep(){
+	public static function sleep() {
 		sleep (1);
+	}
+
+	public static function getAllCountries() {
+        $tempCountries = new Countries();
+		$allCountries = $tempCountries->all();
+		$countries = array();
+		foreach ($allCountries as $tempCountry) {
+			if ((strlen($tempCountry['iso_a3']) > 0) && ($tempCountry['iso_a3'] != '-99') && ($tempCountry['iso_a3'] != 'EUR')) {
+				$country = array(
+					'name' => $tempCountry['name']['common'],
+					'iso' => $tempCountry['iso_a3']
+				);
+				array_push($countries, $country);
+			}
+		}
+		usort($countries, array(__CLASS__, 'compCountries'));
+		return $countries;
+	}
+
+	public static function compCountries($a, $b) {
+	    return strcmp($a['name'], $b['name']);
+	}
+
+	public static function getCountryName($iso) {
+		$countryName = null;
+        $tempCountries = new Countries();
+		$allCountries = $tempCountries->all();
+		foreach ($allCountries as $tempCountry) {
+			if ((strlen($tempCountry['iso_a3']) > 0) && ($tempCountry['iso_a3'] != '-99') && ($tempCountry['iso_a3'] != 'EUR') && ($tempCountry['iso_a3'] == $iso)) {
+				$countryName = $tempCountry['name']['common'];
+				break;
+			}
+		}
+		return $countryName;
 	}
 
 	public static function getFullReceiptNumber($num) {
