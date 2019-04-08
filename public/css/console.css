@@ -330,43 +330,72 @@ input.textentry {
   position: relative;
 }
 
-div.spinner-outer {
-  position: absolute;
+.button-word-cont div.spinner-cont {
+  position: relative;
 }
 
-div.spinner-outer div.spinner-inner {
+.button-word-cont div.spinner-cont div.spinner-outer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  visibility: hidden;
+}
+
+.button-word-cont div.spinner-cont div.spinner-outer div.spinner-inner {
+  max-width: 40px;
   margin: 0 auto;
   height: 100%;
 }
 
-div.spinner-outer div.spinner-inner div.rect {
+.button-word-cont div.spinner-cont div.spinner-outer div.spinner-inner div.rect {
   display: inline-block;
   height: 100%;
   width: 12%;
   margin-right: 10%;
+  border-radius: 2px;
   -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
   animation: sk-stretchdelay 1.2s infinite ease-in-out;
 }
 
-div.spinner-outer div.spinner-inner div.rect1 {
+.button-word-cont div.spinner-cont div.spinner-outer div.spinner-inner div.rect1 {
   -webkit-animation-delay: -1.1s;
   animation-delay: -1.1s;
 }
 
-div.spinner-outer div.spinner-inner div.rect2 {
+.button-word-cont div.spinner-cont div.spinner-outer div.spinner-inner div.rect2 {
   -webkit-animation-delay: -1.0s;
   animation-delay: -1.0s;
 }
 
-div.spinner-outer div.spinner-inner div.rect3 {
+.button-word-cont div.spinner-cont div.spinner-outer div.spinner-inner div.rect3 {
   -webkit-animation-delay: -0.9s;
   animation-delay: -0.9s;
 }
 
-div.spinner-outer div.spinner-inner div.rect4 {
+.button-word-cont div.spinner-cont div.spinner-outer div.spinner-inner div.rect4 {
   margin-right: 0;
   -webkit-animation-delay: -0.8s;
   animation-delay: -0.8s;
+}
+
+.button-word-cont div.spinner-cont.spinning div.text {
+  visibility: hidden;
+}
+
+.button-word-cont div.spinner-cont.spinning div.spinner-outer {
+  visibility: visible;
+}
+
+.button-word-cont.darkblue div.rect {
+  background-color: #EEEEEE;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.button-word-cont.grey div.rect {
+  background-color: #444444;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 #div-siteheader {
@@ -966,32 +995,6 @@ div.spinner-outer div.spinner-inner div.rect4 {
   position: relative;
 }
 
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont .button-word-cont div.spinner-cont div.spinner-outer {
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  visibility: hidden;
-}
-
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont .button-word-cont div.spinner-cont div.spinner-outer div.spinner-inner {
-  max-width: 40px;
-}
-
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont .button-word-cont div.spinner-cont div.spinner-outer div.spinner-inner div.rect {
-  background-color: #EEEEEE;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 2px;
-}
-
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont .button-word-cont div.spinner-cont.spinning div.text {
-  visibility: hidden;
-}
-
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont .button-word-cont div.spinner-cont.spinning div.spinner-outer {
-  visibility: visible;
-}
-
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-cont div.title-main span {
   font-size: 110%;
   font-weight: bold;
@@ -1149,6 +1152,20 @@ div.spinner-outer div.spinner-inner div.rect4 {
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para input.textentry.focus {
   border: 1px solid #3366CC;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.submsg-cont {
+  margin: 0.3em 0;
+  font-size: 85%;
+  line-height: 130%;
+  height: 3em;
+  overflow: hidden;
+  color: #777777;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.submsg-cont.error {
+  font-weight: bold;
+  color: #FF3B0A;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.address p {

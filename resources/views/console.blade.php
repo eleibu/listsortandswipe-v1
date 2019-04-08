@@ -41,6 +41,7 @@
     </div>
     <script>
         var api_url_public = "{{ url('/api/public/v1/') }}/";
+        var api_url_web = "{{ url('/api/web/v1/') }}/";
         var accountData = {
             name: "{{$name}}",
             surname: "{{$surname}}",
@@ -66,6 +67,8 @@
         var msgPasswordDefault = "{!! $msgPasswordDefault !!}";
         var msgPasswordNoBlank = "{!! $msgPasswordNoBlank !!}";
         var msgPasswordInvalid = "{!! $msgPasswordInvalid !!}";
+        var msgDiscountDefault = "{!! $msgDiscountDefault !!}";
+        var msgDiscountInvalid = "{!! $msgDiscountInvalid !!}";
     </script>
 </body>
 </html>

@@ -63193,6 +63193,8 @@ var Landing = function (_React$Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_js__ = __webpack_require__("./resources/js/utils.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_moment__ = __webpack_require__("./node_modules/moment/moment.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_moment__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_axios__ = __webpack_require__("./node_modules/axios/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_axios__);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () {
@@ -63228,8 +63230,8 @@ function _inherits(subClass, superClass) {
 
 
 
-// import axios from 'axios';
-// import { requestObjCreate } from './utils.js';
+
+
 
 var Renew = function (_React$Component) {
     _inherits(Renew, _React$Component);
@@ -63244,11 +63246,15 @@ var Renew = function (_React$Component) {
             changeLicenceType: accountData.accountType == 0, // if free trial you must change the licence type, otherwise initial setting is to keep the same licence
             selectedLicenceType: 2,
             inputDiscountError: false,
-            inputDiscountFocus: false
+            inputDiscountFocus: false,
+            isCheckingDiscountCode: false,
+            discountSubmsg: null
         };
         _this.setChangeLicenceType = _this.setChangeLicenceType.bind(_this);
         _this.setSelectedLicenceType = _this.setSelectedLicenceType.bind(_this);
         _this.setInputDiscountFocus = _this.setInputDiscountFocus.bind(_this);
+        _this.setDiscountSubmsg = _this.setDiscountSubmsg.bind(_this);
+        _this.checkDiscountCode = _this.checkDiscountCode.bind(_this);
         return _this;
     }
 
@@ -63277,9 +63283,52 @@ var Renew = function (_React$Component) {
             });
         }
     }, {
+        key: 'setDiscountSubmsg',
+        value: function setDiscountSubmsg(msg) {
+            this.setState({
+                discountSubmsg: msg
+            });
+        }
+    }, {
+        key: 'checkDiscountCode',
+        value: function checkDiscountCode(code) {
+            var _this2 = this;
+
+            this.setDiscountSubmsg(null);
+
+            if (code.length > 0) {
+                this.props.setShowMask(true);
+                this.setState({
+                    isCheckingDiscountCode: true
+                });
+
+                var requestObj = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["j" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_5_axios___default.a.CancelToken);
+                this.props.addServerRequestObj(requestObj);
+
+                var url = api_url_web + 'account-discount';
+                __WEBPACK_IMPORTED_MODULE_5_axios___default()({
+                    method: 'post',
+                    url: url,
+                    data: {
+                        'code': code
+                    }
+                }).then(function (response) {
+                    // discount code is valid - change order summary to include discount
+                }).catch(function (error) {
+                    _this2.setDiscountSubmsg(msgDiscountInvalid);
+                }).then(function () {
+                    _this2.props.setShowMask(false);
+                    _this2.setState({
+                        isCheckingDiscountCode: false
+                    });
+                    _this2.props.deleteServerRequestObj(requestObj);
+                });
+            }
+        }
+    }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
+            var _this3 = this;
 
             var diffMinutes = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["g" /* getDiffMinutes */])(accountData.accountExpiresAt);
             var spinnerContClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
@@ -63287,8 +63336,8 @@ var Renew = function (_React$Component) {
                 'spinning': this.state.spinning
             });
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner renewupgrade-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'page-title default' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-reload-ui' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('strong', null, 'Renew'), ' ', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'licence')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(CurrentLicence, { diffMinutes: diffMinutes }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'section-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title' }, 'Renewal details'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': !this.state.changeLicenceType, classNames: 'renewtype-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, diffMinutes > 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, 'Renew current licence for an additional 1 year') : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, 'Renew expired licence from today for 1 year')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey active', onClick: function onClick() {
-                    _this2.setChangeLicenceType(true);
-                } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text' }, 'CHANGE LICENCE TYPE')))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.state.changeLicenceType, classNames: 'renewtype-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, accountData.accountType == 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, 'Select your licence type:') : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, 'Select new licence type:')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(LicenceTypes, null))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(OrderSummary, { selectedLicenceType: this.state.selectedLicenceType }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Discount, { inputDiscountError: this.state.inputDiscountError, inputDiscountFocus: this.state.inputDiscountFocus, setInputDiscountFocus: this.setInputDiscountFocus }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Payment, { selectedLicenceType: this.state.selectedLicenceType }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons-cont' }, 'buttons'));
+                    _this3.setChangeLicenceType(true);
+                } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text' }, 'CHANGE LICENCE TYPE')))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.state.changeLicenceType, classNames: 'renewtype-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, accountData.accountType == 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, 'Select your licence type:') : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, 'Select new licence type:')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(LicenceTypes, null))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(OrderSummary, { selectedLicenceType: this.state.selectedLicenceType }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Discount, { inputDiscountError: this.state.inputDiscountError, inputDiscountFocus: this.state.inputDiscountFocus, setInputDiscountFocus: this.setInputDiscountFocus, checkDiscountCode: this.checkDiscountCode, isCheckingDiscountCode: this.state.isCheckingDiscountCode, discountSubmsg: this.state.discountSubmsg, setDiscountSubmsg: this.setDiscountSubmsg }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Payment, { selectedLicenceType: this.state.selectedLicenceType }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons-cont' }, 'buttons'));
         }
     }]);
 
@@ -63301,12 +63350,12 @@ var Upgrade = function (_React$Component2) {
     function Upgrade(props) {
         _classCallCheck(this, Upgrade);
 
-        var _this3 = _possibleConstructorReturn(this, (Upgrade.__proto__ || Object.getPrototypeOf(Upgrade)).call(this, props));
+        var _this4 = _possibleConstructorReturn(this, (Upgrade.__proto__ || Object.getPrototypeOf(Upgrade)).call(this, props));
 
-        _this3.state = {
+        _this4.state = {
             spinning: false
         };
-        return _this3;
+        return _this4;
     }
 
     _createClass(Upgrade, [{
@@ -63344,21 +63393,61 @@ var OrderSummary = function OrderSummary(props) {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'section-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title' }, 'Order summary'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: '' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para address' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', null, accountData.name, ' ', accountData.surname), accountData.companyName != null && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', null, accountData.companyName), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', null, accountData.countryName)), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para orderdetails' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', { cellPadding: '0', cellSpacing: '0' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { colSpan: '2' }, '\xA0'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'col-right' }, 'USD')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { colSpan: '2' }, licenceDetails[props.selectedLicenceType].name), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'col-right' }, price)), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', null, '\xA0'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'border-top col-mdl' }, 'Subtotal'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'border-top col-right' }, subtotal)), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', null, '\xA0'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'border-btm col-mdl' }, 'Taxes'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'border-btm col-right' }, taxes)), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', null, '\xA0'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'col-mdl' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('strong', null, 'Total')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'col-right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('strong', null, total))))))));
 };
 
-var Discount = function Discount(props) {
-    var inputClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-        'textentry': true,
-        'error': props.inputDiscountError,
-        'focus': props.inputDiscountFocus
-    });
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'section-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title' }, 'Discount'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'discountcode', className: inputClasses, type: 'text', placeholder: 'Discount code', onFocus: function onFocus() {
-            props.setInputDiscountFocus(true);
-        }, onBlur: function onBlur() {
-            props.setInputDiscountFocus(false);
-        } })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey active' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text' }, 'APPLY DISCOUNT'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect0' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect1' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect2' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect3' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect4' })))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'submsg-cont' }));
-};
+var Discount = function (_React$Component3) {
+    _inherits(Discount, _React$Component3);
+
+    function Discount(props) {
+        _classCallCheck(this, Discount);
+
+        return _possibleConstructorReturn(this, (Discount.__proto__ || Object.getPrototypeOf(Discount)).call(this, props));
+    }
+
+    _createClass(Discount, [{
+        key: 'onKeyDown',
+        value: function onKeyDown(e) {
+            if (e.which && e.which == 13 || e.keyCode && e.keyCode == 13) {
+                // enter key
+                e.preventDefault();
+                this.props.checkDiscountCode(this.input.value);
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this6 = this;
+
+            var inputClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+                'textentry': true,
+                'error': this.props.inputDiscountError,
+                'focus': this.props.inputDiscountFocus
+            });
+            var spinnerContClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+                'spinner-cont': true,
+                'spinning': this.props.isCheckingDiscountCode
+            });
+            var submsgContClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+                'submsg-cont': true,
+                'error': this.props.discountSubmsg != null && this.props.discountSubmsg.length > 0
+            });
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'section-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title' }, 'Discount'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { ref: function ref(input) {
+                    _this6.input = input;
+                }, name: 'discountcode', className: inputClasses, type: 'text', placeholder: 'Discount code', onFocus: function onFocus() {
+                    _this6.props.setDiscountSubmsg(null);_this6.props.setInputDiscountFocus(true);
+                }, onBlur: function onBlur() {
+                    _this6.props.setDiscountSubmsg(null);_this6.props.setInputDiscountFocus(false);
+                }, onKeyDown: function onKeyDown(e) {
+                    return _this6.onKeyDown(e);
+                } })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey active', onClick: function onClick() {
+                    _this6.props.checkDiscountCode(_this6.input.value);
+                } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: spinnerContClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text' }, 'APPLY DISCOUNT'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect0' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect1' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect2' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect3' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect4' })))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: submsgContClasses }, this.props.discountSubmsg));
+        }
+    }]);
+
+    return Discount;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
 var Payment = function Payment(props) {
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, 'Payment');
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'section-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title' }, 'Payment'));
 };
 
 /***/ }),

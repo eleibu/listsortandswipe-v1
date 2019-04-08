@@ -3,8 +3,8 @@ import classNames from 'classNames/dedupe';
 import { CSSTransition } from 'react-transition-group';
 import { getLicenceTypeText, getDiffMinutes, expiresText, licenceTypeText } from './utils.js';
 import moment from 'moment';
-// import axios from 'axios';
-// import { requestObjCreate } from './utils.js';
+import axios from 'axios';
+import { requestObjCreate } from './utils.js';
 
 export class Renew extends React.Component {
     constructor(props) {
@@ -14,11 +14,15 @@ export class Renew extends React.Component {
             changeLicenceType: (accountData.accountType == 0),   // if free trial you must change the licence type, otherwise initial setting is to keep the same licence
             selectedLicenceType: 2,
             inputDiscountError: false,
-            inputDiscountFocus: false
+            inputDiscountFocus: false,
+            isCheckingDiscountCode: false,
+            discountSubmsg: null
         };
         this.setChangeLicenceType = this.setChangeLicenceType.bind(this);
         this.setSelectedLicenceType = this.setSelectedLicenceType.bind(this);
         this.setInputDiscountFocus = this.setInputDiscountFocus.bind(this);
+        this.setDiscountSubmsg = this.setDiscountSubmsg.bind(this);
+        this.checkDiscountCode = this.checkDiscountCode.bind(this);
     }
     validateAndSubmit() {
     }
@@ -36,6 +40,46 @@ export class Renew extends React.Component {
         this.setState({
             inputDiscountFocus: hasFocus
         });
+    }
+    setDiscountSubmsg(msg) {
+        this.setState({
+            discountSubmsg: msg
+        });
+    }
+    checkDiscountCode(code) {
+        this.setDiscountSubmsg(null);
+
+        if (code.length > 0) {
+            this.props.setShowMask(true);
+            this.setState({
+                isCheckingDiscountCode: true
+            });
+
+            const requestObj = requestObjCreate(axios.CancelToken);
+            this.props.addServerRequestObj(requestObj);
+
+            let url = api_url_web + 'account-discount';
+            axios({
+                method: 'post',
+                url: url,
+                data: {
+                    'code' : code
+                }
+            })
+            .then((response)=>{
+                // discount code is valid - change order summary to include discount
+            })
+            .catch((error)=>{
+                this.setDiscountSubmsg(msgDiscountInvalid);
+            })
+            .then(()=>{
+                this.props.setShowMask(false);
+                this.setState({
+                    isCheckingDiscountCode: false
+                });
+                this.props.deleteServerRequestObj(requestObj);
+            });
+        }
     }
     render() {
         const diffMinutes = getDiffMinutes(accountData.accountExpiresAt);
@@ -91,7 +135,7 @@ export class Renew extends React.Component {
                 <br/><br/>
                 <OrderSummary selectedLicenceType={this.state.selectedLicenceType} />
                 <br/><br/>
-                <Discount inputDiscountError={this.state.inputDiscountError} inputDiscountFocus={this.state.inputDiscountFocus} setInputDiscountFocus={this.setInputDiscountFocus} />
+                <Discount inputDiscountError={this.state.inputDiscountError} inputDiscountFocus={this.state.inputDiscountFocus} setInputDiscountFocus={this.setInputDiscountFocus} checkDiscountCode={this.checkDiscountCode} isCheckingDiscountCode={this.state.isCheckingDiscountCode} discountSubmsg={this.state.discountSubmsg} setDiscountSubmsg={this.setDiscountSubmsg} />
                 <br/><br/>
                 <Payment selectedLicenceType={this.state.selectedLicenceType} />
                 <br/><br/>
@@ -223,41 +267,65 @@ const OrderSummary = (props) => {
     );
 }
 
-const Discount = (props) => {
-    const inputClasses = classNames({
-        'textentry' : true,
-        'error' : props.inputDiscountError,
-        'focus' : props.inputDiscountFocus
-    });
-    return (
-        <div className="section-cont">
-            <div className="title">
-                Discount
-            </div>
-            <div className="para">
-                <input name="discountcode" className={inputClasses} type="text" placeholder="Discount code" onFocus={() => {props.setInputDiscountFocus(true)}} onBlur={() => {props.setInputDiscountFocus(false)}} />
-            </div>
-            <div className="buttons">
-                <div className="button-word-cont grey active">
-                    <div className="spinner-cont">
-                        <div className="text">APPLY DISCOUNT</div>
-                        <div className="spinner-outer">
-                            <div className="spinner-inner">
-                                <div className="rect rect0"></div><div className="rect rect1"></div><div className="rect rect2"></div><div className="rect rect3"></div><div className="rect rect4"></div>
+class Discount extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    onKeyDown(e) {
+        if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {         // enter key
+            e.preventDefault();
+            this.props.checkDiscountCode(this.input.value);
+        }
+    }
+    render() {
+        const inputClasses = classNames({
+            'textentry' : true,
+            'error' : this.props.inputDiscountError,
+            'focus' : this.props.inputDiscountFocus
+        });
+        const spinnerContClasses = classNames({
+            'spinner-cont' : true,
+            'spinning' : this.props.isCheckingDiscountCode
+        });
+        const submsgContClasses = classNames({
+            'submsg-cont' : true,
+            'error' : this.props.discountSubmsg != null && this.props.discountSubmsg.length > 0
+        });
+        return (
+            <div className="section-cont">
+                <div className="title">
+                    Discount
+                </div>
+                <div className="para">
+                    <input ref={(input) => { this.input = input; }} name="discountcode" className={inputClasses} type="text" placeholder="Discount code" onFocus={() => {this.props.setDiscountSubmsg(null); this.props.setInputDiscountFocus(true); }} onBlur={() => {this.props.setDiscountSubmsg(null); this.props.setInputDiscountFocus(false); }} onKeyDown={(e) => this.onKeyDown(e)} />
+                </div>
+                <div className="buttons">
+                    <div className="button-word-cont grey active" onClick={() => {this.props.checkDiscountCode(this.input.value); }}>
+                        <div className={spinnerContClasses}>
+                            <div className="text">APPLY DISCOUNT</div>
+                            <div className="spinner-outer">
+                                <div className="spinner-inner">
+                                    <div className="rect rect0"></div><div className="rect rect1"></div><div className="rect rect2"></div><div className="rect rect3"></div><div className="rect rect4"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div className={submsgContClasses}>
+                    {this.props.discountSubmsg}
+                </div>
             </div>
-            <div className="submsg-cont">
-            </div>
-        </div>
-    );
+        );
+    }
 }
 
 const Payment = (props) => {
     return (
-        <div>Payment</div>
+        <div className="section-cont">
+            <div className="title">
+                Payment
+            </div>
+        </div>
     );
 }
 

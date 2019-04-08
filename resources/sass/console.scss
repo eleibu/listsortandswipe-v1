@@ -56,41 +56,116 @@ input.textentry {
     position: relative;
 }
 
-div.spinner-outer {
-	position: absolute;
+// div.spinner-outer {
+// 	position: absolute;
 
-	div.spinner-inner {
-		margin: 0 auto;
-		height: 100%;
+// 	div.spinner-inner {
+// 		margin: 0 auto;
+// 		height: 100%;
 
-		div.rect {
-			display: inline-block;
-			height: 100%;
-			width: 12%;
-			margin-right: 10%;
-			-webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
-			animation: sk-stretchdelay 1.2s infinite ease-in-out;
+// 		div.rect {
+// 			display: inline-block;
+// 			height: 100%;
+// 			width: 12%;
+// 			margin-right: 10%;
+// 			-webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+// 			animation: sk-stretchdelay 1.2s infinite ease-in-out;
+// 		}
+
+// 		div.rect1 {
+// 			-webkit-animation-delay: -1.1s;
+// 			animation-delay: -1.1s;
+// 		}
+
+// 		div.rect2 {
+// 			-webkit-animation-delay: -1.0s;
+// 			animation-delay: -1.0s;
+// 		}
+// 		div.rect3 {
+// 			-webkit-animation-delay: -0.9s;
+// 			animation-delay: -0.9s;
+// 		}
+
+// 		div.rect4 {
+// 			margin-right: 0;
+// 			-webkit-animation-delay: -0.8s;
+// 			animation-delay: -0.8s;
+// 		}
+// 	}
+// }
+
+.button-word-cont {
+	div.spinner-cont {
+ 		position: relative;
+
+ 		div.spinner-outer {
+ 			position: absolute;
+ 			top: 0;
+ 			left: 0;
+ 			height: 100%;
+ 			width: 100%;
+ 			visibility: hidden;
+
+			div.spinner-inner {
+				max-width: 40px;
+				margin: 0 auto;
+	 			height: 100%;
+
+	 			div.rect {
+	 				display: inline-block;
+	 				height: 100%;
+	 				width: 12%;
+	 				margin-right: 10%;
+	 				border-radius: 2px;
+					-webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+					animation: sk-stretchdelay 1.2s infinite ease-in-out;
+	 			}
+
+	 			div.rect1 {
+					-webkit-animation-delay: -1.1s;
+					animation-delay: -1.1s;
+	 			}
+
+	 			div.rect2 {
+					-webkit-animation-delay: -1.0s;
+					animation-delay: -1.0s;
+	 			}
+	 			div.rect3 {
+					-webkit-animation-delay: -0.9s;
+					animation-delay: -0.9s;
+	 			}
+
+	 			div.rect4 {
+	 				margin-right: 0;
+					-webkit-animation-delay: -0.8s;
+					animation-delay: -0.8s;
+	 			}
+			}
+ 		}
+	}
+
+	div.spinner-cont.spinning {
+		div.text {
+			visibility: hidden;
 		}
 
-		div.rect1 {
-			-webkit-animation-delay: -1.1s;
-			animation-delay: -1.1s;
+		div.spinner-outer {
+			visibility: visible;
 		}
+	}
+}
 
-		div.rect2 {
-			-webkit-animation-delay: -1.0s;
-			animation-delay: -1.0s;
-		}
-		div.rect3 {
-			-webkit-animation-delay: -0.9s;
-			animation-delay: -0.9s;
-		}
+.button-word-cont.darkblue {
+	div.rect {
+		background-color: #EEEEEE;
+		background-color: rgba(255, 255, 255, 0.9);
+	}
+}
 
-		div.rect4 {
-			margin-right: 0;
-			-webkit-animation-delay: -0.8s;
-			animation-delay: -0.8s;
-		}
+.button-word-cont.grey {
+	div.rect {
+		background-color: #444444;
+		background-color: rgba(0, 0, 0, 0.7);
 	}
 }
 
@@ -702,34 +777,34 @@ div.spinner-outer {
 							div.spinner-cont {
 						 		position: relative;
 
-						 		div.spinner-outer {
-						 			top: 0;
-						 			left: 0;
-						 			height: 100%;
-						 			width: 100%;
-						 			visibility: hidden;
+						 		// div.spinner-outer {
+						 		// 	top: 0;
+						 		// 	left: 0;
+						 		// 	height: 100%;
+						 		// 	width: 100%;
+						 		// 	visibility: hidden;
 
-									div.spinner-inner {
-										max-width: 40px;
+									// div.spinner-inner {
+									// 	max-width: 40px;
 
-							 			div.rect {
-							 				background-color: #EEEEEE;
-							 				background-color: rgba(255, 255, 255, 0.9);
-							 				border-radius: 2px;
-							 			}
-									}
-						 		}
+							 	// 		div.rect {
+							 	// 			background-color: #EEEEEE;
+							 	// 			background-color: rgba(255, 255, 255, 0.9);
+							 	// 			border-radius: 2px;
+							 	// 		}
+									// }
+						 		// }
 							}
 
-							div.spinner-cont.spinning {
-								div.text {
-									visibility: hidden;
-								}
+							// div.spinner-cont.spinning {
+							// 	div.text {
+							// 		visibility: hidden;
+							// 	}
 
-								div.spinner-outer {
-									visibility: visible;
-								}
-							}
+							// 	div.spinner-outer {
+							// 		visibility: visible;
+							// 	}
+							// }
 						}
 
 						div.title-main {
@@ -894,6 +969,20 @@ div.spinner-outer {
 								input.textentry.focus {
 									border: 1px solid #3366CC;
 								}
+							}
+
+							div.submsg-cont {
+								margin: 0.3em 0;
+								font-size: 85%;
+								line-height: 130%;
+								height: 3em;
+								overflow: hidden;
+								color: #777777;
+							}
+
+							div.submsg-cont.error {
+								font-weight: bold;
+								color: #FF3B0A;
 							}
 
 							div.address {

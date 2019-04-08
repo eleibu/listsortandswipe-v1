@@ -12,9 +12,12 @@ class Controller_Site extends Controller
 {
     function __construct() {
     	$authErrorMessages = Toolkit::authErrorMessages();
+    	$discountErrorMessages = Toolkit::discountErrorMessages();
 		$this->msgPasswordDefault = $authErrorMessages['msgPasswordDefault'];
 		$this->msgPasswordNoBlank = $authErrorMessages['msgPasswordNoBlank'];
 		$this->msgPasswordInvalid = $authErrorMessages['msgPasswordInvalid'];
+		$this->msgDiscountDefault = $discountErrorMessages['msgDiscountDefault'];
+		$this->msgDiscountInvalid = $discountErrorMessages['msgDiscountInvalid'];
     }
 
 	public function page_home(Request $request) {
@@ -71,7 +74,9 @@ class Controller_Site extends Controller
 			->with('licenceDetails', json_encode($licenceDetails))
             ->with('msgPasswordDefault', $this->msgPasswordDefault)
             ->with('msgPasswordNoBlank', $this->msgPasswordNoBlank)
-            ->with('msgPasswordInvalid', $this->msgPasswordInvalid);
+            ->with('msgPasswordInvalid', $this->msgPasswordInvalid)
+            ->with('msgDiscountDefault', $this->msgDiscountDefault)
+            ->with('msgDiscountInvalid', $this->msgDiscountInvalid);
 	}
 
 	public function section_examples(Request $request, $subpage = '') {

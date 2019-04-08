@@ -114,6 +114,14 @@ class Toolkit {
 		return $authErrorMessages;
 	}
 
+	public static function discountErrorMessages() {
+		$discountErrorMessages = array(
+			'msgDiscountDefault' => '',
+			'msgDiscountInvalid' => 'Sorry, that discount code is not valid.'
+		);
+		return $discountErrorMessages;
+	}
+
 	public static function productIDs() {
 		$productIDs = array(
 			'accountTypeFree' => 'BBCE2AC1-35DA-4D86-8B20-1411A5C553E2',

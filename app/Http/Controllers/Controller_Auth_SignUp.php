@@ -27,6 +27,7 @@ class Controller_Auth_SignUp extends Controller
 		    'privateKey' => env('BRAINTREE_PRIVATE_KEY')
 		]);
     	$authErrorMessages = Toolkit::authErrorMessages();
+    	$discountErrorMessages = Toolkit::discountErrorMessages();
 		$this->msgEmailDefault = '';
 		$this->msgEmailNoBlank = 'Email can&#39;t be blank.';
 		$this->msgEmailInvalid = 'The email address appears to be invalid.';
@@ -41,8 +42,8 @@ class Controller_Auth_SignUp extends Controller
 		$this->msgCountryNoBlank = 'Please select a country.';
 		$this->msgTermsDefault = '';
 		$this->msgTermsNoBlank = 'Please accept the terms and conditions and privacy statement.';
-		$this->msgDiscountDefault = '';
-		$this->msgDiscountInvalid = 'Sorry, that discount code is not valid.';
+		$this->msgDiscountDefault = $discountErrorMessages['msgDiscountDefault'];
+		$this->msgDiscountInvalid = $discountErrorMessages['msgDiscountInvalid'];
 		$this->msgPlaceOrderDefault = '';
 		$this->msgPlaceOrderErrors = 'Please review the above errors and correct any missing or invalid information.';
     }
