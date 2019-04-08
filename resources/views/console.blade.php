@@ -62,7 +62,7 @@
             domainCountBase: {{$domainCountBase}},
             domainCountAdditional: {{$domainCountAdditional}}
         };
-        var licenceTypes = {!!$licenceTypes!!};
+        var licenceDetails = {!!$licenceDetails!!};
         var msgPasswordDefault = "{!! $msgPasswordDefault !!}";
         var msgPasswordNoBlank = "{!! $msgPasswordNoBlank !!}";
         var msgPasswordInvalid = "{!! $msgPasswordInvalid !!}";

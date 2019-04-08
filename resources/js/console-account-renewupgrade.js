@@ -12,15 +12,29 @@ export class Renew extends React.Component {
         this.state = {
             spinning: false,
             changeLicenceType: (accountData.accountType == 0),   // if free trial you must change the licence type, otherwise initial setting is to keep the same licence
-            selectedLicenceType: 2
+            selectedLicenceType: 2,
+            inputDiscountError: false,
+            inputDiscountFocus: false
         };
         this.setChangeLicenceType = this.setChangeLicenceType.bind(this);
+        this.setSelectedLicenceType = this.setSelectedLicenceType.bind(this);
+        this.setInputDiscountFocus = this.setInputDiscountFocus.bind(this);
     }
     validateAndSubmit() {
     }
     setChangeLicenceType(change) {
         this.setState({
             changeLicenceType: change
+        });
+    }
+    setSelectedLicenceType(type) {
+        this.setState({
+            selectedLicenceType: type
+        });
+    }
+    setInputDiscountFocus(hasFocus) {
+        this.setState({
+            inputDiscountFocus: hasFocus
         });
     }
     render() {
@@ -50,7 +64,7 @@ export class Renew extends React.Component {
                                     <React.Fragment>Renew expired licence from today for 1 year</React.Fragment>
                                 )}
                             </div>
-                            <div className="button">
+                            <div className="buttons">
                                 <div className="button-word-cont grey active" onClick={() => {this.setChangeLicenceType(true)}}>
                                     <div className="spinner-cont">
                                         <div className="text">CHANGE LICENCE TYPE</div>
@@ -75,7 +89,11 @@ export class Renew extends React.Component {
                     </CSSTransition>
                 </div>
                 <br/><br/>
-                <OrderSummary />
+                <OrderSummary selectedLicenceType={this.state.selectedLicenceType} />
+                <br/><br/>
+                <Discount inputDiscountError={this.state.inputDiscountError} inputDiscountFocus={this.state.inputDiscountFocus} setInputDiscountFocus={this.setInputDiscountFocus} />
+                <br/><br/>
+                <Payment selectedLicenceType={this.state.selectedLicenceType} />
                 <br/><br/>
                 <div className="buttons-cont">
                     buttons
@@ -154,6 +172,10 @@ const LicenceTypes = (props) => {
 }
 
 const OrderSummary = (props) => {
+    const price = '$' + (licenceDetails[props.selectedLicenceType].priceCents / 100).toFixed(2);
+    const subtotal = price;
+    const taxes = '$0.00';
+    const total = price;
     return (
         <div className="section-cont">
             <div className="title">
@@ -175,29 +197,67 @@ const OrderSummary = (props) => {
                                 <td className="col-right">USD</td>
                             </tr>
                             <tr>
-                                <td colSpan="2">Product details</td>
-                                <td className="col-right">$0</td>
+                                <td colSpan="2">{licenceDetails[props.selectedLicenceType].name}</td>
+                                <td className="col-right">{price}</td>
                             </tr>
                             <tr>
                                 <td>&nbsp;</td>
                                 <td className="border-top col-mdl">Subtotal</td>
-                                <td className="border-top col-right">$0</td>
+                                <td className="border-top col-right">{subtotal}</td>
                             </tr>
                             <tr>
                                 <td>&nbsp;</td>
                                 <td className="border-btm col-mdl">Taxes</td>
-                                <td className="border-btm col-right">$0</td>
+                                <td className="border-btm col-right">{taxes}</td>
                             </tr>
                             <tr>
                                 <td>&nbsp;</td>
                                 <td className="col-mdl"><strong>Total</strong></td>
-                                <td className="col-right"><strong>$0</strong></td>
+                                <td className="col-right"><strong>{total}</strong></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
+    );
+}
+
+const Discount = (props) => {
+    const inputClasses = classNames({
+        'textentry' : true,
+        'error' : props.inputDiscountError,
+        'focus' : props.inputDiscountFocus
+    });
+    return (
+        <div className="section-cont">
+            <div className="title">
+                Discount
+            </div>
+            <div className="para">
+                <input name="discountcode" className={inputClasses} type="text" placeholder="Discount code" onFocus={() => {props.setInputDiscountFocus(true)}} onBlur={() => {props.setInputDiscountFocus(false)}} />
+            </div>
+            <div className="buttons">
+                <div className="button-word-cont grey active">
+                    <div className="spinner-cont">
+                        <div className="text">APPLY DISCOUNT</div>
+                        <div className="spinner-outer">
+                            <div className="spinner-inner">
+                                <div className="rect rect0"></div><div className="rect rect1"></div><div className="rect rect2"></div><div className="rect rect3"></div><div className="rect rect4"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="submsg-cont">
+            </div>
+        </div>
+    );
+}
+
+const Payment = (props) => {
+    return (
+        <div>Payment</div>
     );
 }
 

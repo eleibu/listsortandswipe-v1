@@ -266,6 +266,14 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
           box-shadow: 0 1px 4px 0 #333333;
 }
 
+input.textentry {
+  font-family: 'Roboto';
+  -webkit-appearance: none;
+  outline: none;
+  border: none;
+  background-color: #FFFFFF;
+}
+
 @-webkit-keyframes shimmer {
   0% {
     background-position: -468px 0;
@@ -1126,6 +1134,23 @@ div.spinner-outer div.spinner-inner div.rect4 {
   margin: 0.4em 0;
 }
 
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para input.textentry {
+  font-size: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+  padding: 0.6em 0.4em;
+  border: 1px solid #DDDDDD;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para input.textentry.error {
+  border: 1px solid #FF3B0A;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para input.textentry.focus {
+  border: 1px solid #3366CC;
+}
+
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.address p {
   margin: 0.2em 0;
 }
@@ -1155,7 +1180,7 @@ div.spinner-outer div.spinner-inner div.rect4 {
   text-align: right;
 }
 
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.button {
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.buttons {
   margin: 0.8em 0;
 }
 

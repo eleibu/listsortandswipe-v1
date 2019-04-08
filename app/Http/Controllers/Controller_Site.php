@@ -39,7 +39,7 @@ class Controller_Site extends Controller
 			->first();
 		$dbProductEnterprise = Product::where('id', $productIDs['accountTypeEnterprise'])
 			->first();
-		$licenceTypes = array(
+		$licenceDetails = array(
 			1 => array(
 				'name' => $this->getProductName($dbProductBasic->description),
 				'priceCents' => $dbProductBasic->price_cents
@@ -68,7 +68,7 @@ class Controller_Site extends Controller
             ->with('hasDomains', $hasDomains)
             ->with('domainCountBase', $user->domain_count_base)
 			->with('domainCountAdditional', $user->domain_count_additional)
-			->with('licenceTypes', json_encode($licenceTypes))
+			->with('licenceDetails', json_encode($licenceDetails))
             ->with('msgPasswordDefault', $this->msgPasswordDefault)
             ->with('msgPasswordNoBlank', $this->msgPasswordNoBlank)
             ->with('msgPasswordInvalid', $this->msgPasswordInvalid);

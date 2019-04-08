@@ -12,6 +12,14 @@
 	box-shadow: 0 1px 4px 0 #333333;
 }
 
+input.textentry {
+	font-family: 'Roboto';
+	-webkit-appearance: none;
+	outline: none;
+	border: none;
+	background-color: #FFFFFF;
+}
+
 @keyframes shimmer {
     0% {
         background-position: -468px 0
@@ -870,6 +878,22 @@ div.spinner-outer {
 								line-height: 130%;
 								color: #666666;
 								margin: 0.4em 0;
+
+								input.textentry {
+									font-size: 100%;
+									box-sizing: border-box;
+									width: 100%;
+									padding: 0.6em 0.4em;
+									border: 1px solid #DDDDDD;
+								}
+
+								input.textentry.error {
+									border: 1px solid #FF3B0A;
+								}
+
+								input.textentry.focus {
+									border: 1px solid #3366CC;
+								}
 							}
 
 							div.address {
@@ -905,7 +929,7 @@ div.spinner-outer {
 								}
 							}
 
-							div.button {
+							div.buttons {
 								margin: 0.8em 0;
 							}
 						}
