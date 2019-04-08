@@ -30,6 +30,7 @@
             </div>
         </div>
         <div id="div-sitecont">
+            <input id="input-client-token" type="hidden" name="client-token" value="{{$clientToken}}"/>
             <div id="div-target" class="sitecont-outer">
             </div>
         </div>

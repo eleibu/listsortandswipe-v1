@@ -9,7 +9,6 @@ use App\User;
 use App\Classes\Toolkit;
 use Validator;
 use Illuminate\Support\Facades\Mail;
-// use App\Mail\SignedUp;
 use App\Mail\ResendActivationLink;
 use App\Mail\SendActivationLink;
 use App\Mail\SendReceipt;

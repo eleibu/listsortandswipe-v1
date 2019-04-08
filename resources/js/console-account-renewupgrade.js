@@ -6,6 +6,13 @@ import moment from 'moment';
 import axios from 'axios';
 import { requestObjCreate } from './utils.js';
 
+const client = require('braintree-web/client');
+const hostedFields = require('braintree-web/hosted-fields');
+const hostedFieldsInstance = null;
+const idDivPaymentNumber = 'div-payment-number';
+const idDivPaymentExpirationDate = 'div-payment-expirationDate';
+const idDivPaymentCVV = 'div-payment-cvv';
+
 export class Renew extends React.Component {
     constructor(props) {
         super(props);
@@ -23,6 +30,66 @@ export class Renew extends React.Component {
         this.setInputDiscountFocus = this.setInputDiscountFocus.bind(this);
         this.setDiscountSubmsg = this.setDiscountSubmsg.bind(this);
         this.checkDiscountCode = this.checkDiscountCode.bind(this);
+    }
+    componentDidMount() {
+        // payment
+        client.create({
+            authorization: document.getElementById('input-client-token').value
+        }).then(function (clientInstance) {
+            var options = {
+                client: clientInstance,
+                styles: {
+                    'input': {
+                        'font-size': '16px',
+                        'font-family': 'courier, monospace',
+                        'font-weight': 'lighter',
+                        'color': '#CCCCCC'
+                    },
+                    ':focus': {
+                        'color': '#222222'
+                    },
+                    '.valid': {
+                        'color': '#222222'
+                    }
+                },
+                fields: {
+                    number: {
+                        selector: '#' + idDivPaymentNumber,
+                        placeholder: '4111 1111 1111 1111'
+                    },
+                    expirationDate: {
+                        selector: '#' + idDivPaymentExpirationDate,
+                        placeholder: 'MM/YYYY'
+                    },
+                    cvv: {
+                        selector: '#' + idDivPaymentCVV,
+                        placeholder: 'CVV'
+                    }
+                }
+            };
+            return hostedFields.create(options);
+        }).then(function (instance) {
+            // hostedFieldsInstance = instance;
+
+            // hostedFieldsInstance.on('focus', function (event) {
+            //     setClassesOnHostedFieldFocus(event.emittedBy);
+            //     divPaymentSubmsg.innerHTML = '';
+            //     divPaymentSubmsg.className = classNames({
+            //         'submsg-cont' : true
+            //     });
+            //     hidePlaceOrderSubmsg();
+            // });
+
+            // hostedFieldsInstance.on('blur', function (event) {
+            //     setClassesOnHostedFieldBlur();
+            //     divPaymentSubmsg.innerHTML = '';
+            //     divPaymentSubmsg.className = classNames({
+            //         'submsg-cont' : true
+            //     });
+            //     hidePlaceOrderSubmsg();
+            // });
+        }).catch(function (err) {
+        });
     }
     validateAndSubmit() {
     }
@@ -136,7 +203,7 @@ export class Renew extends React.Component {
                 <OrderSummary selectedLicenceType={this.state.selectedLicenceType} />
                 <br/><br/>
                 <Discount inputDiscountError={this.state.inputDiscountError} inputDiscountFocus={this.state.inputDiscountFocus} setInputDiscountFocus={this.setInputDiscountFocus} checkDiscountCode={this.checkDiscountCode} isCheckingDiscountCode={this.state.isCheckingDiscountCode} discountSubmsg={this.state.discountSubmsg} setDiscountSubmsg={this.setDiscountSubmsg} />
-                <br/><br/>
+                <br/>
                 <Payment selectedLicenceType={this.state.selectedLicenceType} />
                 <br/><br/>
                 <div className="buttons-cont">
@@ -324,6 +391,27 @@ const Payment = (props) => {
         <div className="section-cont">
             <div className="title">
                 Payment
+            </div>
+            <div className="para">
+                <div id="div-payment-number" className="hosted-field"></div>                                
+            </div>
+            <br/>
+            <div className="para">
+                <div id="div-payment-expirationDate" className="hosted-field"></div>&nbsp;&nbsp;
+                <div id="div-payment-cvv" className="hosted-field"></div>                                
+            </div>
+            <div className="submsg-cont">
+            </div>
+            <div className="para">
+                <img width="32" className="payment" src="{{url('images/payment-paypal.png')}}" title="PayPal" alt="Paypal"/>
+                <img width="32" className="payment" src="{{url('images/payment-visa.png')}}" title="Visa" alt="Visa"/>
+                <img width="32" className="payment" src="{{url('images/payment-mastercard.png')}}" title="Mastercard" alt="Mastercard"/>
+                <img width="32" className="payment" src="{{url('images/payment-amex.png')}}" title="American Express" alt="Amex"/>
+                <img width="32" className="payment" src="{{url('images/payment-discover.png')}}" title="Discover" alt="Discover"/>
+                <img width="32" className="payment" src="{{url('images/payment-dinersclub.png')}}" title="Diner's club" alt="Diners"/>
+                <img width="32" className="payment" src="{{url('images/payment-jcb.png')}}" title="JCB" alt="JCB"/>
+                <img width="32" className="payment" src="{{url('images/payment-maestro.png')}}" title="Maestro" alt="Maestro"/>
+                <img width="32" className="payment" src="{{url('images/payment-maestrouk.png')}}" title="Maestro UK" alt="Maestro UK"/>
             </div>
         </div>
     );

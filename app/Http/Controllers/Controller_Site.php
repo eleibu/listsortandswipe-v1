@@ -11,6 +11,12 @@ use App\Product;
 class Controller_Site extends Controller
 {
     function __construct() {
+		$this->gateway = new \Braintree_Gateway([
+		    'environment' => env('BRAINTREE_ENV'),
+		    'merchantId' => env('BRAINTREE_MERCHANT_ID'),
+		    'publicKey' => env('BRAINTREE_PUBLIC_KEY'),
+		    'privateKey' => env('BRAINTREE_PRIVATE_KEY')
+		]);
     	$authErrorMessages = Toolkit::authErrorMessages();
     	$discountErrorMessages = Toolkit::discountErrorMessages();
 		$this->msgPasswordDefault = $authErrorMessages['msgPasswordDefault'];
@@ -58,6 +64,7 @@ class Controller_Site extends Controller
 		);
 
 		return view('console')
+			->with('clientToken', $this->gateway->clientToken()->generate())
             ->with('signoutName', $pageInfo['signout']['name'])
             ->with('signoutPath', $pageInfo['signout']['path'])
             ->with('name', $user->name)

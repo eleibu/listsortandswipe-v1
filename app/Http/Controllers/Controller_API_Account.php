@@ -15,5 +15,4 @@ class Controller_API_Account extends Controller
 			'message' => 'Invalid discount code.'
 		], 422);
 	}
-
 }
