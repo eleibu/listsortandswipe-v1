@@ -1006,6 +1006,46 @@ input.textentry {
 								img.payment {
 									margin-right: 4px;
 								}
+
+								div.licence-cont {
+									text-align: center;
+
+									div.labels-cont {
+										text-align: left;
+										margin: 1em 0;
+
+										div.type {
+
+										}
+
+										div.price {
+											
+										}
+
+										div.button {
+											
+										}
+
+										div.dummy {
+											visibility: hidden;
+										}
+									}
+
+									div.details-cont {
+										display: inline-block;
+										margin: 1em 0;
+									}
+
+									div.rowtop {
+										padding: 0.8em;
+									}
+
+									div.row {
+										border-top: 1px solid #EEEEEE;
+										padding: 0.8em;
+									}
+
+								}
 							}
 
 							div.submsg-cont {
@@ -1034,6 +1074,7 @@ input.textentry {
 
 									td {
 										padding: 0.6em 0;
+										vertical-align: bottom;
 									}
 
 									td.border-top {
@@ -1152,6 +1193,26 @@ input.textentry {
 			font-size: 90%;
 		}
 	}
+
+	div.renewupgrade-cont {
+		div.section-cont {
+			div.para {
+				div.licence-cont {
+					br.newline {
+						display: none;
+					}
+
+					div.labels-cont {
+						display: inline-block;
+					}
+
+					div.labels-cont.xsonly {
+						display: none;
+					}
+				}
+			}
+		}
+	}
 }
 
 #pageWrapper.xs {
@@ -1212,6 +1273,18 @@ input.textentry {
 
 			div.delete-cont {
 				display: none;
+			}
+		}
+	}
+
+	div.renewupgrade-cont {
+		div.section-cont {
+			div.para {
+				div.licence-cont {
+					div.labels-cont {
+						display: inline-block;
+					}
+				}
 			}
 		}
 	}

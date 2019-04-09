@@ -335,10 +335,222 @@ const CurrentLicence = (props) => {
     );
 }
 
-const LicenceTypes = (props) => {
-    return (
-        <div>Licence types</div>
-    );
+class LicenceTypes extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        return (
+            <div className="licence-cont">
+                <div className="labels-cont">
+                    <div className="rowtop">
+                        <div className="type dummy">
+                            &nbsp;
+                        </div>
+                        <div className="price dummy">
+                            &nbsp;
+                        </div>
+                        <div className="button dummy">
+                            Button
+                        </div>
+                    </div>
+                    <div className="row">
+                        Licence period
+                    </div>
+                    <div className="row">
+                        All features
+                    </div>
+                    <div className="row">
+                        Number of domains
+                    </div>
+                    <div className="row">
+                        Licence key
+                    </div>
+                    <div className="row">
+                        Tech support
+                    </div>
+                    <div className="row">
+                        Paid web app
+                    </div>
+                    <div className="row">
+                        Reseller
+                    </div>
+                </div>
+                <div className="details-cont">
+                    <div className="rowtop">
+                        <div className="type">
+                            Basic
+                        </div>
+                        <div className="price">
+                            $36
+                        </div>
+                        <div className="button">
+                            Button
+                        </div>
+                    </div>
+                    <div className="row">
+                        1 year
+                    </div>
+                    <div className="row">
+                        <i className="sld icon-check-ui"></i>
+                    </div>
+                    <div className="row">
+                        1
+                    </div>
+                    <div className="row">
+                        Per domain
+                    </div>
+                    <div className="row">
+                        <span className="neg">&#9472;</span>
+                    </div>
+                    <div className="row">
+                        <span className="neg">&#9472;</span>
+                    </div>
+                    <div className="row">
+                        <span className="neg">&#9472;</span>
+                    </div>
+                </div>
+                <br className="newline"/>
+                <div className="labels-cont xsonly">
+                    <div className="rowtop">
+                        <div className="type dummy">
+                            &nbsp;
+                        </div>
+                        <div className="price dummy">
+                            &nbsp;
+                        </div>
+                        <div className="button dummy">
+                            Button
+                        </div>
+                    </div>
+                    <div className="row">
+                        Licence period
+                    </div>
+                    <div className="row">
+                        All features
+                    </div>
+                    <div className="row">
+                        Number of domains
+                    </div>
+                    <div className="row">
+                        Licence key
+                    </div>
+                    <div className="row">
+                        Tech support
+                    </div>
+                    <div className="row">
+                        Paid web app
+                    </div>
+                    <div className="row">
+                        Reseller
+                    </div>
+                </div>
+                <div className="details-cont">
+                    <div className="rowtop">
+                        <div className="type">
+                            Professional
+                        </div>
+                        <div className="price">
+                            $108
+                        </div>
+                        <div className="button">
+                            Button
+                        </div>
+                    </div>
+                    <div className="row">
+                        1 year
+                    </div>
+                    <div className="row">
+                        <i className="sld icon-check-ui"></i>
+                    </div>
+                    <div className="row">
+                        5
+                    </div>
+                    <div className="row">
+                        Per domain
+                    </div>
+                    <div className="row">
+                        Standard
+                    </div>
+                    <div className="row">
+                        <i className="sld icon-check-ui"></i>
+                    </div>
+                    <div className="row">
+                        <span className="neg">&#9472;</span>
+                    </div>
+                </div>
+                <br className="newline"/>
+                <div className="labels-cont xsonly">
+                    <div className="rowtop">
+                        <div className="type dummy">
+                            &nbsp;
+                        </div>
+                        <div className="price dummy">
+                            &nbsp;
+                        </div>
+                        <div className="button dummy">
+                            Button
+                        </div>
+                    </div>
+                    <div className="row">
+                        Licence period
+                    </div>
+                    <div className="row">
+                        All features
+                    </div>
+                    <div className="row">
+                        Number of domains
+                    </div>
+                    <div className="row">
+                        Licence key
+                    </div>
+                    <div className="row">
+                        Tech support
+                    </div>
+                    <div className="row">
+                        Paid web app
+                    </div>
+                    <div className="row">
+                        Reseller
+                    </div>
+                </div>
+                <div className="details-cont">
+                    <div className="rowtop">
+                        <div className="type">
+                            Enterprise
+                        </div>
+                        <div className="price">
+                            $648
+                        </div>
+                        <div className="button">
+                            Button
+                        </div>
+                    </div>
+                    <div className="row">
+                        1 year
+                    </div>
+                    <div className="row">
+                        <i className="sld icon-check-ui"></i>
+                    </div>
+                    <div className="row">
+                        35
+                    </div>
+                    <div className="row">
+                        Per account
+                    </div>
+                    <div className="row">
+                        Premium
+                    </div>
+                    <div className="row">
+                        <i className="sld icon-check-ui"></i>
+                    </div>
+                    <div className="row">
+                        <i className="sld icon-check-ui"></i>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 }
 
 const OrderSummary = (props) => {
@@ -367,7 +579,7 @@ const OrderSummary = (props) => {
                                 <td className="col-right">USD</td>
                             </tr>
                             <tr>
-                                <td colSpan="2">{licenceDetails[props.selectedLicenceType].name}</td>
+                                <td colSpan="2">{licenceDetails[props.selectedLicenceType].name}<br/>Expires: {moment(accountData.accountExpiresAt).add(1, 'years').format('LL')}</td>
                                 <td className="col-right">{price}</td>
                             </tr>
                             <tr>

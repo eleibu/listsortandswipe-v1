@@ -1193,6 +1193,33 @@ input.textentry {
   margin-right: 4px;
 }
 
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont {
+  text-align: center;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont {
+  text-align: left;
+  margin: 1em 0;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont div.dummy {
+  visibility: hidden;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.details-cont {
+  display: inline-block;
+  margin: 1em 0;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.rowtop {
+  padding: 0.8em;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.row {
+  border-top: 1px solid #EEEEEE;
+  padding: 0.8em;
+}
+
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.submsg-cont {
   margin: 0.3em 0;
   font-size: 85%;
@@ -1217,6 +1244,7 @@ input.textentry {
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.orderdetails table td {
   padding: 0.6em 0;
+  vertical-align: bottom;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.orderdetails table td.border-top {
@@ -1301,6 +1329,18 @@ input.textentry {
   font-size: 90%;
 }
 
+#pageWrapper.xl div.renewupgrade-cont div.section-cont div.para div.licence-cont br.newline, #pageWrapper.lg div.renewupgrade-cont div.section-cont div.para div.licence-cont br.newline, #pageWrapper.md div.renewupgrade-cont div.section-cont div.para div.licence-cont br.newline, #pageWrapper.sm div.renewupgrade-cont div.section-cont div.para div.licence-cont br.newline {
+  display: none;
+}
+
+#pageWrapper.xl div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont, #pageWrapper.lg div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont, #pageWrapper.md div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont, #pageWrapper.sm div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont {
+  display: inline-block;
+}
+
+#pageWrapper.xl div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont.xsonly, #pageWrapper.lg div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont.xsonly, #pageWrapper.md div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont.xsonly, #pageWrapper.sm div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont.xsonly {
+  display: none;
+}
+
 #pageWrapper.xs div.key-cont span.key {
   max-width: 9em;
   white-space: nowrap;
@@ -1349,6 +1389,10 @@ input.textentry {
 
 #pageWrapper.xs div.domain-cont div.domain-outer div.delete-cont {
   display: none;
+}
+
+#pageWrapper.xs div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont {
+  display: inline-block;
 }
 
 #div-mainmsg-cont {
