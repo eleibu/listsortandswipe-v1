@@ -43,6 +43,7 @@
     <script>
         var api_url_public = "{{ url('/api/public/v1/') }}/";
         var api_url_web = "{{ url('/api/web/v1/') }}/";
+        var images_url = "{{ url('images') }}/";
         var accountData = {
             name: "{{$name}}",
             surname: "{{$surname}}",

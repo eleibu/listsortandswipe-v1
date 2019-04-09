@@ -969,6 +969,43 @@ input.textentry {
 								input.textentry.focus {
 									border: 1px solid #3366CC;
 								}
+
+								div.hosted-field {
+									height: 50px;
+									box-sizing: border-box;
+									padding: 0.2em 0.6em;
+									display: inline-block;
+									box-shadow: none;
+									font-weight: 600;
+									font-size: 14px;
+									line-height: 20px;
+									background-color: #FFFFFF;
+									border: 1px solid #DDDDDD;
+								}
+
+								div.hosted-field.error {
+									border: 1px solid #FF3B0A;
+								}
+
+								div.hosted-field.focus {
+									border: 1px solid #3366CC;
+								}
+
+								#div-payment-number {
+									width: 100%;
+								}
+
+								#div-payment-expirationDate {
+									width: 120px;
+								}
+
+								#div-payment-cvv {
+									width: 90px;
+								}
+
+								img.payment {
+									margin-right: 4px;
+								}
 							}
 
 							div.submsg-cont {

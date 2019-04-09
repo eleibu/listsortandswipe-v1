@@ -8,7 +8,7 @@ import { requestObjCreate } from './utils.js';
 
 const client = require('braintree-web/client');
 const hostedFields = require('braintree-web/hosted-fields');
-const hostedFieldsInstance = null;
+let hostedFieldsInstance = null;
 const idDivPaymentNumber = 'div-payment-number';
 const idDivPaymentExpirationDate = 'div-payment-expirationDate';
 const idDivPaymentCVV = 'div-payment-cvv';
@@ -20,16 +20,25 @@ export class Renew extends React.Component {
             spinning: false,
             changeLicenceType: (accountData.accountType == 0),   // if free trial you must change the licence type, otherwise initial setting is to keep the same licence
             selectedLicenceType: 2,
-            inputDiscountError: false,
-            inputDiscountFocus: false,
             isCheckingDiscountCode: false,
-            discountSubmsg: null
+            discountError: false,
+            discountFocus: false,
+            discountSubmsg: null,
+            paymentNumberError: false,
+            paymentNumberFocus: false,
+            paymentExpirationDateError: false,
+            paymentExpirationDateFocus: false,
+            paymentCVVError: false,
+            paymentCVVFocus: false,
+            paymentSubmsg: null
         };
         this.setChangeLicenceType = this.setChangeLicenceType.bind(this);
         this.setSelectedLicenceType = this.setSelectedLicenceType.bind(this);
-        this.setInputDiscountFocus = this.setInputDiscountFocus.bind(this);
+        this.setDiscountFocus = this.setDiscountFocus.bind(this);
         this.setDiscountSubmsg = this.setDiscountSubmsg.bind(this);
         this.checkDiscountCode = this.checkDiscountCode.bind(this);
+        this.setPaymentUnerrorUnfocus = this.setPaymentUnerrorUnfocus.bind(this);
+        this.setPaymentSubmsg = this.setPaymentSubmsg.bind(this);
     }
     componentDidMount() {
         // payment
@@ -69,7 +78,7 @@ export class Renew extends React.Component {
             };
             return hostedFields.create(options);
         }).then(function (instance) {
-            // hostedFieldsInstance = instance;
+            hostedFieldsInstance = instance;
 
             // hostedFieldsInstance.on('focus', function (event) {
             //     setClassesOnHostedFieldFocus(event.emittedBy);
@@ -103,14 +112,29 @@ export class Renew extends React.Component {
             selectedLicenceType: type
         });
     }
-    setInputDiscountFocus(hasFocus) {
+    setDiscountFocus(hasFocus) {
         this.setState({
-            inputDiscountFocus: hasFocus
+            discountFocus: hasFocus
         });
     }
     setDiscountSubmsg(msg) {
         this.setState({
             discountSubmsg: msg
+        });
+    }
+    setPaymentUnerrorUnfocus() {
+        this.setState({
+            paymentNumberError: false,
+            paymentNumberFocus: false,
+            paymentExpirationDateError: false,
+            paymentExpirationDateFocus: false,
+            paymentCVVError: false,
+            paymentCVVFocus: false
+        });
+    }
+    setPaymentSubmsg(msg) {
+        this.setState({
+            paymentSubmsg: msg
         });
     }
     checkDiscountCode(code) {
@@ -202,9 +226,20 @@ export class Renew extends React.Component {
                 <br/><br/>
                 <OrderSummary selectedLicenceType={this.state.selectedLicenceType} />
                 <br/><br/>
-                <Discount inputDiscountError={this.state.inputDiscountError} inputDiscountFocus={this.state.inputDiscountFocus} setInputDiscountFocus={this.setInputDiscountFocus} checkDiscountCode={this.checkDiscountCode} isCheckingDiscountCode={this.state.isCheckingDiscountCode} discountSubmsg={this.state.discountSubmsg} setDiscountSubmsg={this.setDiscountSubmsg} />
+                <Discount discountError={this.state.discountError} discountFocus={this.state.discountFocus} setDiscountFocus={this.setDiscountFocus} checkDiscountCode={this.checkDiscountCode} isCheckingDiscountCode={this.state.isCheckingDiscountCode} discountSubmsg={this.state.discountSubmsg} setDiscountSubmsg={this.setDiscountSubmsg} />
                 <br/>
-                <Payment selectedLicenceType={this.state.selectedLicenceType} />
+                <Payment
+                    selectedLicenceType={this.state.selectedLicenceType}
+                    paymentNumberError={this.state.paymentNumberError} 
+                    paymentNumberFocus={this.state.paymentNumberFocus}
+                    paymentExpirationDateError={this.state.paymentExpirationDateError}
+                    paymentExpirationDateFocus={this.state.paymentExpirationDateFocus}
+                    paymentCVVError={this.state.paymentCVVError}
+                    paymentCVVFocus={this.state.paymentCVVFocus}
+                    paymentSubmsg={this.state.paymentSubmsg}
+                    setPaymentUnerrorUnfocus={this.setPaymentUnerrorUnfocus}
+                    setPaymentSubmsg={this.setPaymentSubmsg}
+                />
                 <br/><br/>
                 <div className="buttons-cont">
                     buttons
@@ -347,8 +382,8 @@ class Discount extends React.Component {
     render() {
         const inputClasses = classNames({
             'textentry' : true,
-            'error' : this.props.inputDiscountError,
-            'focus' : this.props.inputDiscountFocus
+            'error' : this.props.discountError,
+            'focus' : this.props.discountFocus
         });
         const spinnerContClasses = classNames({
             'spinner-cont' : true,
@@ -364,7 +399,7 @@ class Discount extends React.Component {
                     Discount
                 </div>
                 <div className="para">
-                    <input ref={(input) => { this.input = input; }} name="discountcode" className={inputClasses} type="text" placeholder="Discount code" onFocus={() => {this.props.setDiscountSubmsg(null); this.props.setInputDiscountFocus(true); }} onBlur={() => {this.props.setDiscountSubmsg(null); this.props.setInputDiscountFocus(false); }} onKeyDown={(e) => this.onKeyDown(e)} />
+                    <input ref={(input) => { this.input = input; }} name="discountcode" className={inputClasses} type="text" placeholder="Discount code" onFocus={() => {this.props.setDiscountSubmsg(null); this.props.setDiscountFocus(true); }} onBlur={() => {this.props.setDiscountSubmsg(null); this.props.setDiscountFocus(false); }} onKeyDown={(e) => this.onKeyDown(e)} />
                 </div>
                 <div className="buttons">
                     <div className="button-word-cont grey active" onClick={() => {this.props.checkDiscountCode(this.input.value); }}>
@@ -387,31 +422,50 @@ class Discount extends React.Component {
 }
 
 const Payment = (props) => {
+    const paymentNumberClasses = classNames({
+        'hosted-field' : true,
+        'error' : this.props.paymentNumberError,
+        'focus' : this.props.paymentNumberFocus
+    });
+    const paymentExpirationDateClasses = classNames({
+        'hosted-field' : true,
+        'error' : this.props.paymentExpirationDateError,
+        'focus' : this.props.paymentExpirationDateFocus
+    });
+    const paymentCVVClasses = classNames({
+        'hosted-field' : true,
+        'error' : this.props.paymentCVVError,
+        'focus' : this.props.paymentCVVFocus
+    });
+    const submsgContClasses = classNames({
+        'submsg-cont' : true,
+        'error' : this.props.paymentSubmsg != null && this.props.paymentSubmsg.length > 0
+    });
     return (
         <div className="section-cont">
             <div className="title">
                 Payment
             </div>
             <div className="para">
-                <div id="div-payment-number" className="hosted-field"></div>                                
-            </div>
-            <br/>
-            <div className="para">
-                <div id="div-payment-expirationDate" className="hosted-field"></div>&nbsp;&nbsp;
-                <div id="div-payment-cvv" className="hosted-field"></div>                                
-            </div>
-            <div className="submsg-cont">
+                <div id={idDivPaymentNumber} className={paymentNumberClasses}></div>
             </div>
             <div className="para">
-                <img width="32" className="payment" src="{{url('images/payment-paypal.png')}}" title="PayPal" alt="Paypal"/>
-                <img width="32" className="payment" src="{{url('images/payment-visa.png')}}" title="Visa" alt="Visa"/>
-                <img width="32" className="payment" src="{{url('images/payment-mastercard.png')}}" title="Mastercard" alt="Mastercard"/>
-                <img width="32" className="payment" src="{{url('images/payment-amex.png')}}" title="American Express" alt="Amex"/>
-                <img width="32" className="payment" src="{{url('images/payment-discover.png')}}" title="Discover" alt="Discover"/>
-                <img width="32" className="payment" src="{{url('images/payment-dinersclub.png')}}" title="Diner's club" alt="Diners"/>
-                <img width="32" className="payment" src="{{url('images/payment-jcb.png')}}" title="JCB" alt="JCB"/>
-                <img width="32" className="payment" src="{{url('images/payment-maestro.png')}}" title="Maestro" alt="Maestro"/>
-                <img width="32" className="payment" src="{{url('images/payment-maestrouk.png')}}" title="Maestro UK" alt="Maestro UK"/>
+                <div id={idDivPaymentExpirationDate} className={paymentExpirationDateClasses}></div>&nbsp;&nbsp;
+                <div id={idDivPaymentCVV} className={paymentCVVClasses}></div>
+            </div>
+            <div className={submsgContClasses}>
+                {this.props.paymentSubmsg}
+            </div>
+            <div className="para">
+                <img width="32" className="payment" src={images_url + 'payment-paypal.png'} title="PayPal" alt="Paypal"/>
+                <img width="32" className="payment" src={images_url + 'payment-visa.png'} title="Visa" alt="Visa"/>
+                <img width="32" className="payment" src={images_url + 'payment-mastercard.png'} title="Mastercard" alt="Mastercard"/>
+                <img width="32" className="payment" src={images_url + 'payment-amex.png'} title="American Express" alt="Amex"/>
+                <img width="32" className="payment" src={images_url + 'payment-discover.png'} title="Discover" alt="Discover"/>
+                <img width="32" className="payment" src={images_url + 'payment-dinersclub.png'} title="Diner's club" alt="Diners"/>
+                <img width="32" className="payment" src={images_url + 'payment-jcb.png'} title="JCB" alt="JCB"/>
+                <img width="32" className="payment" src={images_url + 'payment-maestro.png'} title="Maestro" alt="Maestro"/>
+                <img width="32" className="payment" src={images_url + 'payment-maestrouk.png'} title="Maestro UK" alt="Maestro UK"/>
             </div>
         </div>
     );
