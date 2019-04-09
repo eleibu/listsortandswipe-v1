@@ -70731,8 +70731,6 @@ var Landing = function (_React$Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_axios__);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _this7 = this;
-
 var _createClass = function () {
     function defineProperties(target, props) {
         for (var i = 0; i < props.length; i++) {
@@ -70804,15 +70802,19 @@ var Renew = function (_React$Component) {
         _this.setSelectedLicenceType = _this.setSelectedLicenceType.bind(_this);
         _this.setDiscountFocus = _this.setDiscountFocus.bind(_this);
         _this.setDiscountSubmsg = _this.setDiscountSubmsg.bind(_this);
-        _this.checkDiscountCode = _this.checkDiscountCode.bind(_this);
-        _this.setPaymentUnerrorUnfocus = _this.setPaymentUnerrorUnfocus.bind(_this);
+        _this.setStateOnHostedFieldFocus = _this.setStateOnHostedFieldFocus.bind(_this);
+        _this.setStateOnHostedFieldBlur = _this.setStateOnHostedFieldBlur.bind(_this);
         _this.setPaymentSubmsg = _this.setPaymentSubmsg.bind(_this);
+        _this.checkDiscountCode = _this.checkDiscountCode.bind(_this);
+        _this.validateAndSubmit = _this.validateAndSubmit.bind(_this);
         return _this;
     }
 
     _createClass(Renew, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
+            var _this2 = this;
+
             // payment
             client.create({
                 authorization: document.getElementById('input-client-token').value
@@ -70851,29 +70853,70 @@ var Renew = function (_React$Component) {
                 return hostedFields.create(options);
             }).then(function (instance) {
                 hostedFieldsInstance = instance;
-
-                // hostedFieldsInstance.on('focus', function (event) {
-                //     setClassesOnHostedFieldFocus(event.emittedBy);
-                //     divPaymentSubmsg.innerHTML = '';
-                //     divPaymentSubmsg.className = classNames({
-                //         'submsg-cont' : true
-                //     });
-                //     hidePlaceOrderSubmsg();
-                // });
-
-                // hostedFieldsInstance.on('blur', function (event) {
-                //     setClassesOnHostedFieldBlur();
-                //     divPaymentSubmsg.innerHTML = '';
-                //     divPaymentSubmsg.className = classNames({
-                //         'submsg-cont' : true
-                //     });
-                //     hidePlaceOrderSubmsg();
-                // });
+                hostedFieldsInstance.on('focus', function (event) {
+                    _this2.setStateOnHostedFieldFocus(event.emittedBy);
+                });
+                hostedFieldsInstance.on('blur', function (event) {
+                    _this2.setStateOnHostedFieldBlur();
+                });
             }).catch(function (err) {});
         }
     }, {
-        key: 'validateAndSubmit',
-        value: function validateAndSubmit() {}
+        key: 'setStateOnHostedFieldFocus',
+        value: function setStateOnHostedFieldFocus(emittedBy) {
+            if (emittedBy == 'number') {
+                this.setState({
+                    paymentNumberError: false,
+                    paymentNumberFocus: true,
+                    paymentSubmsg: null
+                });
+            } else {
+                this.setState({
+                    paymentNumberError: false,
+                    paymentNumberFocus: false,
+                    paymentSubmsg: null
+                });
+            }
+            if (emittedBy == 'expirationDate') {
+                this.setState({
+                    paymentExpirationDateError: false,
+                    paymentExpirationDateFocus: true,
+                    paymentSubmsg: null
+                });
+            } else {
+                this.setState({
+                    paymentExpirationDateError: false,
+                    paymentExpirationDateFocus: false,
+                    paymentSubmsg: null
+                });
+            }
+            if (emittedBy == 'cvv') {
+                this.setState({
+                    paymentCVVError: false,
+                    paymentCVVFocus: true,
+                    paymentSubmsg: null
+                });
+            } else {
+                this.setState({
+                    paymentCVVError: false,
+                    paymentCVVFocus: false,
+                    paymentSubmsg: null
+                });
+            }
+        }
+    }, {
+        key: 'setStateOnHostedFieldBlur',
+        value: function setStateOnHostedFieldBlur() {
+            this.setState({
+                paymentNumberError: false,
+                paymentNumberFocus: false,
+                paymentExpirationDateError: false,
+                paymentExpirationDateFocus: false,
+                paymentCVVError: false,
+                paymentCVVFocus: false,
+                paymentSubmsg: null
+            });
+        }
     }, {
         key: 'setChangeLicenceType',
         value: function setChangeLicenceType(change) {
@@ -70903,18 +70946,6 @@ var Renew = function (_React$Component) {
             });
         }
     }, {
-        key: 'setPaymentUnerrorUnfocus',
-        value: function setPaymentUnerrorUnfocus() {
-            this.setState({
-                paymentNumberError: false,
-                paymentNumberFocus: false,
-                paymentExpirationDateError: false,
-                paymentExpirationDateFocus: false,
-                paymentCVVError: false,
-                paymentCVVFocus: false
-            });
-        }
-    }, {
         key: 'setPaymentSubmsg',
         value: function setPaymentSubmsg(msg) {
             this.setState({
@@ -70924,7 +70955,7 @@ var Renew = function (_React$Component) {
     }, {
         key: 'checkDiscountCode',
         value: function checkDiscountCode(code) {
-            var _this2 = this;
+            var _this3 = this;
 
             this.setDiscountSubmsg(null);
 
@@ -70947,28 +70978,27 @@ var Renew = function (_React$Component) {
                 }).then(function (response) {
                     // discount code is valid - change order summary to include discount
                 }).catch(function (error) {
-                    _this2.setDiscountSubmsg(msgDiscountInvalid);
+                    _this3.setDiscountSubmsg(msgDiscountInvalid);
                 }).then(function () {
-                    _this2.props.setShowMask(false);
-                    _this2.setState({
+                    _this3.props.setShowMask(false);
+                    _this3.setState({
                         isCheckingDiscountCode: false
                     });
-                    _this2.props.deleteServerRequestObj(requestObj);
+                    _this3.props.deleteServerRequestObj(requestObj);
                 });
             }
         }
     }, {
+        key: 'validateAndSubmit',
+        value: function validateAndSubmit() {}
+    }, {
         key: 'render',
         value: function render() {
-            var _this3 = this;
+            var _this4 = this;
 
             var diffMinutes = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["g" /* getDiffMinutes */])(accountData.accountExpiresAt);
-            var spinnerContClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-                'spinner-cont': true,
-                'spinning': this.state.spinning
-            });
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner renewupgrade-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'page-title default' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-reload-ui' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('strong', null, 'Renew'), ' ', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'licence')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(CurrentLicence, { diffMinutes: diffMinutes }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'section-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title' }, 'Renewal details'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': !this.state.changeLicenceType, classNames: 'renewtype-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, diffMinutes > 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, 'Renew current licence for an additional 1 year') : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, 'Renew expired licence from today for 1 year')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey active', onClick: function onClick() {
-                    _this3.setChangeLicenceType(true);
+                    _this4.setChangeLicenceType(true);
                 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text' }, 'CHANGE LICENCE TYPE')))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.state.changeLicenceType, classNames: 'renewtype-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, accountData.accountType == 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, 'Select your licence type:') : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, 'Select new licence type:')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(LicenceTypes, null))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(OrderSummary, { selectedLicenceType: this.state.selectedLicenceType }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Discount, { discountError: this.state.discountError, discountFocus: this.state.discountFocus, setDiscountFocus: this.setDiscountFocus, checkDiscountCode: this.checkDiscountCode, isCheckingDiscountCode: this.state.isCheckingDiscountCode, discountSubmsg: this.state.discountSubmsg, setDiscountSubmsg: this.setDiscountSubmsg }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Payment, {
                 selectedLicenceType: this.state.selectedLicenceType,
                 paymentNumberError: this.state.paymentNumberError,
@@ -70978,9 +71008,8 @@ var Renew = function (_React$Component) {
                 paymentCVVError: this.state.paymentCVVError,
                 paymentCVVFocus: this.state.paymentCVVFocus,
                 paymentSubmsg: this.state.paymentSubmsg,
-                setPaymentUnerrorUnfocus: this.setPaymentUnerrorUnfocus,
                 setPaymentSubmsg: this.setPaymentSubmsg
-            }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons-cont' }, 'buttons'));
+            }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Buttons, { spinning: this.state.spinning, validateAndSubmit: this.validateAndSubmit, setAccountSubpage: this.props.setAccountSubpage }));
         }
     }]);
 
@@ -70993,12 +71022,12 @@ var Upgrade = function (_React$Component2) {
     function Upgrade(props) {
         _classCallCheck(this, Upgrade);
 
-        var _this4 = _possibleConstructorReturn(this, (Upgrade.__proto__ || Object.getPrototypeOf(Upgrade)).call(this, props));
+        var _this5 = _possibleConstructorReturn(this, (Upgrade.__proto__ || Object.getPrototypeOf(Upgrade)).call(this, props));
 
-        _this4.state = {
+        _this5.state = {
             spinning: false
         };
-        return _this4;
+        return _this5;
     }
 
     _createClass(Upgrade, [{
@@ -71057,7 +71086,7 @@ var Discount = function (_React$Component3) {
     }, {
         key: 'render',
         value: function render() {
-            var _this6 = this;
+            var _this7 = this;
 
             var inputClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
                 'textentry': true,
@@ -71073,15 +71102,15 @@ var Discount = function (_React$Component3) {
                 'error': this.props.discountSubmsg != null && this.props.discountSubmsg.length > 0
             });
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'section-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title' }, 'Discount'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { ref: function ref(input) {
-                    _this6.input = input;
+                    _this7.input = input;
                 }, name: 'discountcode', className: inputClasses, type: 'text', placeholder: 'Discount code', onFocus: function onFocus() {
-                    _this6.props.setDiscountSubmsg(null);_this6.props.setDiscountFocus(true);
+                    _this7.props.setDiscountSubmsg(null);_this7.props.setDiscountFocus(true);
                 }, onBlur: function onBlur() {
-                    _this6.props.setDiscountSubmsg(null);_this6.props.setDiscountFocus(false);
+                    _this7.props.setDiscountSubmsg(null);_this7.props.setDiscountFocus(false);
                 }, onKeyDown: function onKeyDown(e) {
-                    return _this6.onKeyDown(e);
+                    return _this7.onKeyDown(e);
                 } })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey active', onClick: function onClick() {
-                    _this6.props.checkDiscountCode(_this6.input.value);
+                    _this7.props.checkDiscountCode(_this7.input.value);
                 } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: spinnerContClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text' }, 'APPLY DISCOUNT'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect0' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect1' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect2' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect3' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect4' })))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: submsgContClasses }, this.props.discountSubmsg));
         }
     }]);
@@ -71089,27 +71118,54 @@ var Discount = function (_React$Component3) {
     return Discount;
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
-var Payment = function Payment(props) {
-    var paymentNumberClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-        'hosted-field': true,
-        'error': _this7.props.paymentNumberError,
-        'focus': _this7.props.paymentNumberFocus
+var Payment = function (_React$Component4) {
+    _inherits(Payment, _React$Component4);
+
+    function Payment(props) {
+        _classCallCheck(this, Payment);
+
+        return _possibleConstructorReturn(this, (Payment.__proto__ || Object.getPrototypeOf(Payment)).call(this, props));
+    }
+
+    _createClass(Payment, [{
+        key: 'render',
+        value: function render() {
+            var paymentNumberClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+                'hosted-field': true,
+                'error': this.props.paymentNumberError,
+                'focus': this.props.paymentNumberFocus
+            });
+            var paymentExpirationDateClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+                'hosted-field': true,
+                'error': this.props.paymentExpirationDateError,
+                'focus': this.props.paymentExpirationDateFocus
+            });
+            var paymentCVVClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+                'hosted-field': true,
+                'error': this.props.paymentCVVError,
+                'focus': this.props.paymentCVVFocus
+            });
+            var submsgContClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+                'submsg-cont': true,
+                'error': this.props.paymentSubmsg != null && this.props.paymentSubmsg.length > 0
+            });
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'section-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title' }, 'Payment'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: idDivPaymentNumber, className: paymentNumberClasses })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: idDivPaymentExpirationDate, className: paymentExpirationDateClasses }), '\xA0\xA0', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: idDivPaymentCVV, className: paymentCVVClasses })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: submsgContClasses }, this.props.paymentSubmsg), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: '32', className: 'payment', src: images_url + 'payment-paypal.png', title: 'PayPal', alt: 'Paypal' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: '32', className: 'payment', src: images_url + 'payment-visa.png', title: 'Visa', alt: 'Visa' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: '32', className: 'payment', src: images_url + 'payment-mastercard.png', title: 'Mastercard', alt: 'Mastercard' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: '32', className: 'payment', src: images_url + 'payment-amex.png', title: 'American Express', alt: 'Amex' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: '32', className: 'payment', src: images_url + 'payment-discover.png', title: 'Discover', alt: 'Discover' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: '32', className: 'payment', src: images_url + 'payment-dinersclub.png', title: 'Diner\'s club', alt: 'Diners' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: '32', className: 'payment', src: images_url + 'payment-jcb.png', title: 'JCB', alt: 'JCB' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: '32', className: 'payment', src: images_url + 'payment-maestro.png', title: 'Maestro', alt: 'Maestro' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: '32', className: 'payment', src: images_url + 'payment-maestrouk.png', title: 'Maestro UK', alt: 'Maestro UK' })));
+        }
+    }]);
+
+    return Payment;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+var Buttons = function Buttons(props) {
+    var spinnerContClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+        'spinner-cont': true,
+        'spinning': props.spinning
     });
-    var paymentExpirationDateClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-        'hosted-field': true,
-        'error': _this7.props.paymentExpirationDateError,
-        'focus': _this7.props.paymentExpirationDateFocus
-    });
-    var paymentCVVClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-        'hosted-field': true,
-        'error': _this7.props.paymentCVVError,
-        'focus': _this7.props.paymentCVVFocus
-    });
-    var submsgContClasses = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-        'submsg-cont': true,
-        'error': _this7.props.paymentSubmsg != null && _this7.props.paymentSubmsg.length > 0
-    });
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'section-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title' }, 'Payment'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: idDivPaymentNumber, className: paymentNumberClasses })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: idDivPaymentExpirationDate, className: paymentExpirationDateClasses }), '\xA0\xA0', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: idDivPaymentCVV, className: paymentCVVClasses })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: submsgContClasses }, _this7.props.paymentSubmsg), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: '32', className: 'payment', src: images_url + 'payment-paypal.png', title: 'PayPal', alt: 'Paypal' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: '32', className: 'payment', src: images_url + 'payment-visa.png', title: 'Visa', alt: 'Visa' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: '32', className: 'payment', src: images_url + 'payment-mastercard.png', title: 'Mastercard', alt: 'Mastercard' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: '32', className: 'payment', src: images_url + 'payment-amex.png', title: 'American Express', alt: 'Amex' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: '32', className: 'payment', src: images_url + 'payment-discover.png', title: 'Discover', alt: 'Discover' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: '32', className: 'payment', src: images_url + 'payment-dinersclub.png', title: 'Diner\'s club', alt: 'Diners' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: '32', className: 'payment', src: images_url + 'payment-jcb.png', title: 'JCB', alt: 'JCB' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: '32', className: 'payment', src: images_url + 'payment-maestro.png', title: 'Maestro', alt: 'Maestro' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { width: '32', className: 'payment', src: images_url + 'payment-maestrouk.png', title: 'Maestro UK', alt: 'Maestro UK' })));
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont darkblue', onClick: function onClick() {
+            props.validateAndSubmit();
+        }, tabIndex: '4' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: spinnerContClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text' }, 'PLACE ORDER'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect0' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect1' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect2' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect3' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect4' }))))), '\xA0\xA0\xA0\xA0', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey', onClick: function onClick() {
+            props.setAccountSubpage('Landing');
+        }, tabIndex: '5' }, 'CANCEL'));
 };
 
 /***/ }),

@@ -36,15 +36,18 @@ export class Renew extends React.Component {
         this.setSelectedLicenceType = this.setSelectedLicenceType.bind(this);
         this.setDiscountFocus = this.setDiscountFocus.bind(this);
         this.setDiscountSubmsg = this.setDiscountSubmsg.bind(this);
-        this.checkDiscountCode = this.checkDiscountCode.bind(this);
-        this.setPaymentUnerrorUnfocus = this.setPaymentUnerrorUnfocus.bind(this);
+        this.setStateOnHostedFieldFocus = this.setStateOnHostedFieldFocus.bind(this);
+        this.setStateOnHostedFieldBlur = this.setStateOnHostedFieldBlur.bind(this);
         this.setPaymentSubmsg = this.setPaymentSubmsg.bind(this);
+        this.checkDiscountCode = this.checkDiscountCode.bind(this);
+        this.validateAndSubmit = this.validateAndSubmit.bind(this);
     }
     componentDidMount() {
         // payment
         client.create({
             authorization: document.getElementById('input-client-token').value
-        }).then(function (clientInstance) {
+        })
+        .then((clientInstance)=>{
             var options = {
                 client: clientInstance,
                 styles: {
@@ -77,30 +80,66 @@ export class Renew extends React.Component {
                 }
             };
             return hostedFields.create(options);
-        }).then(function (instance) {
+        })
+        .then((instance)=>{
             hostedFieldsInstance = instance;
-
-            // hostedFieldsInstance.on('focus', function (event) {
-            //     setClassesOnHostedFieldFocus(event.emittedBy);
-            //     divPaymentSubmsg.innerHTML = '';
-            //     divPaymentSubmsg.className = classNames({
-            //         'submsg-cont' : true
-            //     });
-            //     hidePlaceOrderSubmsg();
-            // });
-
-            // hostedFieldsInstance.on('blur', function (event) {
-            //     setClassesOnHostedFieldBlur();
-            //     divPaymentSubmsg.innerHTML = '';
-            //     divPaymentSubmsg.className = classNames({
-            //         'submsg-cont' : true
-            //     });
-            //     hidePlaceOrderSubmsg();
-            // });
-        }).catch(function (err) {
+            hostedFieldsInstance.on('focus', (event)=>{this.setStateOnHostedFieldFocus(event.emittedBy)});
+            hostedFieldsInstance.on('blur', (event)=>{this.setStateOnHostedFieldBlur()});
+        })
+        .catch((err)=>{
         });
     }
-    validateAndSubmit() {
+    setStateOnHostedFieldFocus(emittedBy) {
+        if (emittedBy == 'number') {
+            this.setState({
+                paymentNumberError: false,
+                paymentNumberFocus: true,
+                paymentSubmsg: null
+            });
+        } else {
+            this.setState({
+                paymentNumberError: false,
+                paymentNumberFocus: false,
+                paymentSubmsg: null
+            });
+        }
+        if (emittedBy == 'expirationDate') {
+            this.setState({
+                paymentExpirationDateError: false,
+                paymentExpirationDateFocus: true,
+                paymentSubmsg: null
+            });
+        } else {
+            this.setState({
+                paymentExpirationDateError: false,
+                paymentExpirationDateFocus: false,
+                paymentSubmsg: null
+            });
+        }
+        if (emittedBy == 'cvv') {
+            this.setState({
+                paymentCVVError: false,
+                paymentCVVFocus: true,
+                paymentSubmsg: null
+            });
+        } else {
+            this.setState({
+                paymentCVVError: false,
+                paymentCVVFocus: false,
+                paymentSubmsg: null
+            });
+        }
+    }
+    setStateOnHostedFieldBlur() {
+        this.setState({
+            paymentNumberError: false,
+            paymentNumberFocus: false,
+            paymentExpirationDateError: false,
+            paymentExpirationDateFocus: false,
+            paymentCVVError: false,
+            paymentCVVFocus: false,
+            paymentSubmsg: null
+        });
     }
     setChangeLicenceType(change) {
         this.setState({
@@ -120,16 +159,6 @@ export class Renew extends React.Component {
     setDiscountSubmsg(msg) {
         this.setState({
             discountSubmsg: msg
-        });
-    }
-    setPaymentUnerrorUnfocus() {
-        this.setState({
-            paymentNumberError: false,
-            paymentNumberFocus: false,
-            paymentExpirationDateError: false,
-            paymentExpirationDateFocus: false,
-            paymentCVVError: false,
-            paymentCVVFocus: false
         });
     }
     setPaymentSubmsg(msg) {
@@ -172,12 +201,10 @@ export class Renew extends React.Component {
             });
         }
     }
+    validateAndSubmit() {
+    }
     render() {
         const diffMinutes = getDiffMinutes(accountData.accountExpiresAt);
-        const spinnerContClasses = classNames({
-            'spinner-cont' : true,
-            'spinning' : this.state.spinning
-        });
         return (
             <div className="content-inner renewupgrade-cont">
                 <div className="page-title default">
@@ -237,13 +264,10 @@ export class Renew extends React.Component {
                     paymentCVVError={this.state.paymentCVVError}
                     paymentCVVFocus={this.state.paymentCVVFocus}
                     paymentSubmsg={this.state.paymentSubmsg}
-                    setPaymentUnerrorUnfocus={this.setPaymentUnerrorUnfocus}
                     setPaymentSubmsg={this.setPaymentSubmsg}
                 />
-                <br/><br/>
-                <div className="buttons-cont">
-                    buttons
-                </div>
+                <br/><br/><br/>
+                <Buttons spinning={this.state.spinning} validateAndSubmit={this.validateAndSubmit} setAccountSubpage={this.props.setAccountSubpage} />
             </div>
         );
     }
@@ -421,54 +445,81 @@ class Discount extends React.Component {
     }
 }
 
-const Payment = (props) => {
-    const paymentNumberClasses = classNames({
-        'hosted-field' : true,
-        'error' : this.props.paymentNumberError,
-        'focus' : this.props.paymentNumberFocus
-    });
-    const paymentExpirationDateClasses = classNames({
-        'hosted-field' : true,
-        'error' : this.props.paymentExpirationDateError,
-        'focus' : this.props.paymentExpirationDateFocus
-    });
-    const paymentCVVClasses = classNames({
-        'hosted-field' : true,
-        'error' : this.props.paymentCVVError,
-        'focus' : this.props.paymentCVVFocus
-    });
-    const submsgContClasses = classNames({
-        'submsg-cont' : true,
-        'error' : this.props.paymentSubmsg != null && this.props.paymentSubmsg.length > 0
+class Payment extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        const paymentNumberClasses = classNames({
+            'hosted-field' : true,
+            'error' : this.props.paymentNumberError,
+            'focus' : this.props.paymentNumberFocus
+        });
+        const paymentExpirationDateClasses = classNames({
+            'hosted-field' : true,
+            'error' : this.props.paymentExpirationDateError,
+            'focus' : this.props.paymentExpirationDateFocus
+        });
+        const paymentCVVClasses = classNames({
+            'hosted-field' : true,
+            'error' : this.props.paymentCVVError,
+            'focus' : this.props.paymentCVVFocus
+        });
+        const submsgContClasses = classNames({
+            'submsg-cont' : true,
+            'error' : this.props.paymentSubmsg != null && this.props.paymentSubmsg.length > 0
+        });
+        return (
+            <div className="section-cont">
+                <div className="title">
+                    Payment
+                </div>
+                <div className="para">
+                    <div id={idDivPaymentNumber} className={paymentNumberClasses}></div>
+                </div>
+                <div className="para">
+                    <div id={idDivPaymentExpirationDate} className={paymentExpirationDateClasses}></div>&nbsp;&nbsp;
+                    <div id={idDivPaymentCVV} className={paymentCVVClasses}></div>
+                </div>
+                <div className={submsgContClasses}>
+                    {this.props.paymentSubmsg}
+                </div>
+                <div className="para">
+                    <img width="32" className="payment" src={images_url + 'payment-paypal.png'} title="PayPal" alt="Paypal"/>
+                    <img width="32" className="payment" src={images_url + 'payment-visa.png'} title="Visa" alt="Visa"/>
+                    <img width="32" className="payment" src={images_url + 'payment-mastercard.png'} title="Mastercard" alt="Mastercard"/>
+                    <img width="32" className="payment" src={images_url + 'payment-amex.png'} title="American Express" alt="Amex"/>
+                    <img width="32" className="payment" src={images_url + 'payment-discover.png'} title="Discover" alt="Discover"/>
+                    <img width="32" className="payment" src={images_url + 'payment-dinersclub.png'} title="Diner's club" alt="Diners"/>
+                    <img width="32" className="payment" src={images_url + 'payment-jcb.png'} title="JCB" alt="JCB"/>
+                    <img width="32" className="payment" src={images_url + 'payment-maestro.png'} title="Maestro" alt="Maestro"/>
+                    <img width="32" className="payment" src={images_url + 'payment-maestrouk.png'} title="Maestro UK" alt="Maestro UK"/>
+                </div>
+            </div>
+        );
+    }
+}
+
+const Buttons = (props) => {
+    const spinnerContClasses = classNames({
+        'spinner-cont' : true,
+        'spinning' : props.spinning
     });
     return (
-        <div className="section-cont">
-            <div className="title">
-                Payment
-            </div>
-            <div className="para">
-                <div id={idDivPaymentNumber} className={paymentNumberClasses}></div>
-            </div>
-            <div className="para">
-                <div id={idDivPaymentExpirationDate} className={paymentExpirationDateClasses}></div>&nbsp;&nbsp;
-                <div id={idDivPaymentCVV} className={paymentCVVClasses}></div>
-            </div>
-            <div className={submsgContClasses}>
-                {this.props.paymentSubmsg}
-            </div>
-            <div className="para">
-                <img width="32" className="payment" src={images_url + 'payment-paypal.png'} title="PayPal" alt="Paypal"/>
-                <img width="32" className="payment" src={images_url + 'payment-visa.png'} title="Visa" alt="Visa"/>
-                <img width="32" className="payment" src={images_url + 'payment-mastercard.png'} title="Mastercard" alt="Mastercard"/>
-                <img width="32" className="payment" src={images_url + 'payment-amex.png'} title="American Express" alt="Amex"/>
-                <img width="32" className="payment" src={images_url + 'payment-discover.png'} title="Discover" alt="Discover"/>
-                <img width="32" className="payment" src={images_url + 'payment-dinersclub.png'} title="Diner's club" alt="Diners"/>
-                <img width="32" className="payment" src={images_url + 'payment-jcb.png'} title="JCB" alt="JCB"/>
-                <img width="32" className="payment" src={images_url + 'payment-maestro.png'} title="Maestro" alt="Maestro"/>
-                <img width="32" className="payment" src={images_url + 'payment-maestrouk.png'} title="Maestro UK" alt="Maestro UK"/>
+        <div className="buttons-cont">
+            <div className="button-word-cont darkblue" onClick={() => {props.validateAndSubmit()}} tabIndex="4">
+                <div className={spinnerContClasses}>
+                    <div className="text">PLACE ORDER</div>
+                    <div className="spinner-outer">
+                        <div className="spinner-inner">
+                            <div className="rect rect0"></div><div className="rect rect1"></div><div className="rect rect2"></div><div className="rect rect3"></div><div className="rect rect4"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>&nbsp;&nbsp;&nbsp;&nbsp;
+            <div className="button-word-cont grey" onClick={() => {props.setAccountSubpage('Landing') }} tabIndex="5">
+                CANCEL
             </div>
         </div>
     );
 }
-
-
