@@ -351,7 +351,7 @@ class LicenceTypes extends React.Component {
                             &nbsp;
                         </div>
                         <div className="button dummy">
-                            Button
+                            <div className="button-word-cont grey active">&nbsp;</div>
                         </div>
                     </div>
                     <div className="row">
@@ -385,7 +385,7 @@ class LicenceTypes extends React.Component {
                             $36
                         </div>
                         <div className="button">
-                            Button
+                            <div className="button-word-cont grey active">Select</div>
                         </div>
                     </div>
                     <div className="row">
@@ -420,7 +420,7 @@ class LicenceTypes extends React.Component {
                             &nbsp;
                         </div>
                         <div className="button dummy">
-                            Button
+                            <div className="button-word-cont grey active">&nbsp;</div>
                         </div>
                     </div>
                     <div className="row">
@@ -454,7 +454,7 @@ class LicenceTypes extends React.Component {
                             $108
                         </div>
                         <div className="button">
-                            Button
+                            <div className="button-word-cont grey active">Select</div>
                         </div>
                     </div>
                     <div className="row">
@@ -489,7 +489,7 @@ class LicenceTypes extends React.Component {
                             &nbsp;
                         </div>
                         <div className="button dummy">
-                            Button
+                            <div className="button-word-cont grey active">&nbsp;</div>
                         </div>
                     </div>
                     <div className="row">
@@ -523,7 +523,7 @@ class LicenceTypes extends React.Component {
                             $648
                         </div>
                         <div className="button">
-                            Button
+                            <div className="button-word-cont grey active">Select</div>
                         </div>
                     </div>
                     <div className="row">

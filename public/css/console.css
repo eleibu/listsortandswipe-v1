@@ -1202,10 +1202,6 @@ input.textentry {
   margin: 1em 0;
 }
 
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont div.dummy {
-  visibility: hidden;
-}
-
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.details-cont {
   display: inline-block;
   margin: 1em 0;
@@ -1215,9 +1211,37 @@ input.textentry {
   padding: 0.8em;
 }
 
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.rowtop div.type {
+  font-size: 90%;
+  font-weight: bold;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.rowtop div.price {
+  margin: 1em 0;
+  font-size: 150%;
+  font-weight: bold;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.rowtop div.button {
+  margin-bottom: 0.6em;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.rowtop div.dummy {
+  visibility: hidden;
+}
+
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.row {
   border-top: 1px solid #EEEEEE;
   padding: 0.8em;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.row i.icon-check-ui {
+  font-weight: bold;
+  color: #339933;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.row span.neg {
+  color: #AAAAAA;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.submsg-cont {

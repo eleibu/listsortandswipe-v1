@@ -1013,22 +1013,6 @@ input.textentry {
 									div.labels-cont {
 										text-align: left;
 										margin: 1em 0;
-
-										div.type {
-
-										}
-
-										div.price {
-											
-										}
-
-										div.button {
-											
-										}
-
-										div.dummy {
-											visibility: hidden;
-										}
 									}
 
 									div.details-cont {
@@ -1038,11 +1022,39 @@ input.textentry {
 
 									div.rowtop {
 										padding: 0.8em;
+
+										div.type {
+											font-size: 90%;
+											font-weight: bold;
+										}
+
+										div.price {
+											margin: 1em 0;
+											font-size: 150%;
+											font-weight: bold;
+										}
+
+										div.button {
+											margin-bottom: 0.6em;
+										}
+
+										div.dummy {
+											visibility: hidden;
+										}
 									}
 
 									div.row {
 										border-top: 1px solid #EEEEEE;
 										padding: 0.8em;
+
+										i.icon-check-ui {
+											font-weight: bold;
+											color: #339933;
+										}
+
+										span.neg {
+											color: #AAAAAA;
+										}
 									}
 
 								}
