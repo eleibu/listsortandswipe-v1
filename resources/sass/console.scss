@@ -1009,6 +1009,7 @@ input.textentry {
 
 								div.licence-cont {
 									text-align: center;
+									font-size: 95%;
 
 									div.labels-cont {
 										text-align: left;
@@ -1017,10 +1018,34 @@ input.textentry {
 
 									div.details-cont {
 										display: inline-block;
-										margin: 1em 0;
+										margin: 1em 4px;
 									}
 
-									div.rowtop {
+									div.details-cont.hover {
+										box-shadow: 0 2px 5px rgba(0,0,0,0.05), 0 2px 2px rgba(0,0,0,0.03);
+									}
+
+									div.recommended {
+										position: relative;
+										font-size: 80%;
+										padding: 0.4em 0.6em;
+										text-align: center;
+										margin-bottom: 0.4em;
+									}
+
+									div.recommended.show {
+										color: #FFFFFF;
+										background-color: #33CC66;
+
+										img {
+											position: absolute;
+											bottom: -8px;
+											left: 50%;
+											transform: translateX(-50%);
+										}
+									}
+
+									div.titlerow {
 										padding: 0.8em;
 
 										div.type {

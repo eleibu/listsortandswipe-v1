@@ -338,12 +338,64 @@ const CurrentLicence = (props) => {
 class LicenceTypes extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            basicHover: false,
+            professionalHover: false,
+            enterpriseHover: false
+        };
+        this.mouseEnter = this.mouseEnter.bind(this);
+        this.mouseLeave = this.mouseLeave.bind(this);
+    }
+    mouseEnter(type) {
+        if (type == 'basic') {
+            this.setState({
+                basicHover: true
+            });
+        } else if (type == 'professional') {
+            this.setState({
+                professionalHover: true
+            });
+        } else if (type == 'enterprise') {
+            this.setState({
+                enterpriseHover: true
+            });
+        }
+    }
+    mouseLeave(type) {
+        if (type == 'basic') {
+            this.setState({
+                basicHover: false
+            });
+        } else if (type == 'professional') {
+            this.setState({
+                professionalHover: false
+            });
+        } else if (type == 'enterprise') {
+            this.setState({
+                enterpriseHover: false
+            });
+        }
     }
     render() {
+        const basicDetailsContClasses = classNames({
+            'details-cont' : true,
+            'hover' : this.state.basicHover
+        });
+        const professionalDetailsContClasses = classNames({
+            'details-cont' : true,
+            'hover' : this.state.professionalHover
+        });
+        const enterpriseDetailsContClasses = classNames({
+            'details-cont' : true,
+            'hover' : this.state.enterpriseHover
+        });
         return (
             <div className="licence-cont">
                 <div className="labels-cont">
-                    <div className="rowtop">
+                    <div className="recommended">
+                        &nbsp;
+                    </div>
+                    <div className="titlerow">
                         <div className="type dummy">
                             &nbsp;
                         </div>
@@ -376,8 +428,11 @@ class LicenceTypes extends React.Component {
                         Reseller
                     </div>
                 </div>
-                <div className="details-cont">
-                    <div className="rowtop">
+                <div className={basicDetailsContClasses} onMouseEnter={()=>{this.mouseEnter('basic')}} onMouseLeave={()=>{this.mouseLeave('basic')}}>
+                    <div className="recommended">
+                        &nbsp;
+                    </div>
+                    <div className="titlerow">
                         <div className="type">
                             Basic
                         </div>
@@ -412,7 +467,10 @@ class LicenceTypes extends React.Component {
                 </div>
                 <br className="newline"/>
                 <div className="labels-cont xsonly">
-                    <div className="rowtop">
+                    <div className="recommended">
+                        &nbsp;
+                    </div>
+                    <div className="titlerow">
                         <div className="type dummy">
                             &nbsp;
                         </div>
@@ -445,8 +503,11 @@ class LicenceTypes extends React.Component {
                         Reseller
                     </div>
                 </div>
-                <div className="details-cont">
-                    <div className="rowtop">
+                <div className={professionalDetailsContClasses} onMouseEnter={()=>{this.mouseEnter('professional')}} onMouseLeave={()=>{this.mouseLeave('professional')}}>
+                    <div className="recommended show">
+                        RECOMMENDED<img src={images_url + 'recommended-arrow.png'} alt="" width="40" height="8"/>
+                    </div>
+                    <div className="titlerow">
                         <div className="type">
                             Professional
                         </div>
@@ -481,7 +542,10 @@ class LicenceTypes extends React.Component {
                 </div>
                 <br className="newline"/>
                 <div className="labels-cont xsonly">
-                    <div className="rowtop">
+                    <div className="recommended">
+                        &nbsp;
+                    </div>
+                    <div className="titlerow">
                         <div className="type dummy">
                             &nbsp;
                         </div>
@@ -514,8 +578,11 @@ class LicenceTypes extends React.Component {
                         Reseller
                     </div>
                 </div>
-                <div className="details-cont">
-                    <div className="rowtop">
+                <div className={enterpriseDetailsContClasses} onMouseEnter={()=>{this.mouseEnter('enterprise')}} onMouseLeave={()=>{this.mouseLeave('enterprise')}}>
+                    <div className="recommended">
+                        &nbsp;
+                    </div>
+                    <div className="titlerow">
                         <div className="type">
                             Enterprise
                         </div>

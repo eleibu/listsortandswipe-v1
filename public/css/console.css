@@ -1195,6 +1195,7 @@ input.textentry {
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont {
   text-align: center;
+  font-size: 95%;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont {
@@ -1204,29 +1205,55 @@ input.textentry {
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.details-cont {
   display: inline-block;
-  margin: 1em 0;
+  margin: 1em 4px;
 }
 
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.rowtop {
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.details-cont.hover {
+  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05), 0 2px 2px rgba(0, 0, 0, 0.03);
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05), 0 2px 2px rgba(0, 0, 0, 0.03);
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.recommended {
+  position: relative;
+  font-size: 80%;
+  padding: 0.4em 0.6em;
+  text-align: center;
+  margin-bottom: 0.4em;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.recommended.show {
+  color: #FFFFFF;
+  background-color: #33CC66;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.recommended.show img {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.titlerow {
   padding: 0.8em;
 }
 
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.rowtop div.type {
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.titlerow div.type {
   font-size: 90%;
   font-weight: bold;
 }
 
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.rowtop div.price {
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.titlerow div.price {
   margin: 1em 0;
   font-size: 150%;
   font-weight: bold;
 }
 
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.rowtop div.button {
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.titlerow div.button {
   margin-bottom: 0.6em;
 }
 
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.rowtop div.dummy {
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.titlerow div.dummy {
   visibility: hidden;
 }
 
