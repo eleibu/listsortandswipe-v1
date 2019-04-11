@@ -13,193 +13,243 @@ const idDivPaymentNumber = 'div-payment-number';
 const idDivPaymentExpirationDate = 'div-payment-expirationDate';
 const idDivPaymentCVV = 'div-payment-cvv';
 
+function sharedConstructor(obj, context) {
+    const state = {
+        spinning: false,
+        willChangeLicenceType: (accountData.accountType == 0),   // if free trial you must change the licence type, otherwise initial setting is to keep the same licence
+        selectedLicenceType: ((accountData.accountType == 0) ? 2 : accountData.accountType),
+        isCheckingDiscountCode: false,
+        discountError: false,
+        discountFocus: false,
+        discountSubmsg: null,
+        paymentNumberError: false,
+        paymentNumberFocus: false,
+        paymentExpirationDateError: false,
+        paymentExpirationDateFocus: false,
+        paymentCVVError: false,
+        paymentCVVFocus: false,
+        paymentSubmsg: null        
+    };
+    if (context == 'renew') {
+        if (accountData.accountType == 0) {
+            state.selectedLicenceType = 2;
+        } else {
+            state.selectedLicenceType = accountData.accountType;
+        }
+    } else {
+        state.selectedLicenceType = accountData.accountType + 1;
+    }
+    obj.state = state;
+
+    obj.setWillChangeLicenceType = obj.setWillChangeLicenceType.bind(obj);
+    obj.setSelectedLicenceType = obj.setSelectedLicenceType.bind(obj);
+    obj.setDiscountFocus = obj.setDiscountFocus.bind(obj);
+    obj.setDiscountSubmsg = obj.setDiscountSubmsg.bind(obj);
+    obj.setStateOnHostedFieldFocus = obj.setStateOnHostedFieldFocus.bind(obj);
+    obj.setStateOnHostedFieldBlur = obj.setStateOnHostedFieldBlur.bind(obj);
+    obj.setPaymentSubmsg = obj.setPaymentSubmsg.bind(obj);
+    obj.checkDiscountCode = obj.checkDiscountCode.bind(obj);
+    obj.validateAndSubmit = obj.validateAndSubmit.bind(obj);
+}
+
+function sharedComponentDidMount(obj) {
+    client.create({
+        authorization: document.getElementById('input-client-token').value
+    })
+    .then((clientInstance)=>{
+        var options = {
+            client: clientInstance,
+            styles: {
+                'input': {
+                    'font-size': '16px',
+                    'font-family': 'courier, monospace',
+                    'font-weight': 'lighter',
+                    'color': '#CCCCCC'
+                },
+                ':focus': {
+                    'color': '#222222'
+                },
+                '.valid': {
+                    'color': '#222222'
+                }
+            },
+            fields: {
+                number: {
+                    selector: '#' + idDivPaymentNumber,
+                    placeholder: '4111 1111 1111 1111'
+                },
+                expirationDate: {
+                    selector: '#' + idDivPaymentExpirationDate,
+                    placeholder: 'MM/YYYY'
+                },
+                cvv: {
+                    selector: '#' + idDivPaymentCVV,
+                    placeholder: 'CVV'
+                }
+            }
+        };
+        return hostedFields.create(options);
+    })
+    .then((instance)=>{
+        hostedFieldsInstance = instance;
+        hostedFieldsInstance.on('focus', (event)=>{obj.setStateOnHostedFieldFocus(event.emittedBy)});
+        hostedFieldsInstance.on('blur', (event)=>{obj.setStateOnHostedFieldBlur()});
+    })
+    .catch((err)=>{
+    });
+}
+
+function sharedSetStateOnHostedFieldFocus(obj, emittedBy) {
+    if (emittedBy == 'number') {
+        obj.setState({
+            paymentNumberError: false,
+            paymentNumberFocus: true,
+            paymentSubmsg: null
+        });
+    } else {
+        obj.setState({
+            paymentNumberError: false,
+            paymentNumberFocus: false,
+            paymentSubmsg: null
+        });
+    }
+    if (emittedBy == 'expirationDate') {
+        obj.setState({
+            paymentExpirationDateError: false,
+            paymentExpirationDateFocus: true,
+            paymentSubmsg: null
+        });
+    } else {
+        obj.setState({
+            paymentExpirationDateError: false,
+            paymentExpirationDateFocus: false,
+            paymentSubmsg: null
+        });
+    }
+    if (emittedBy == 'cvv') {
+        obj.setState({
+            paymentCVVError: false,
+            paymentCVVFocus: true,
+            paymentSubmsg: null
+        });
+    } else {
+        obj.setState({
+            paymentCVVError: false,
+            paymentCVVFocus: false,
+            paymentSubmsg: null
+        });
+    }
+}
+
+function sharedSetStateOnHostedFieldBlur(obj) {
+    obj.setState({
+        paymentNumberError: false,
+        paymentNumberFocus: false,
+        paymentExpirationDateError: false,
+        paymentExpirationDateFocus: false,
+        paymentCVVError: false,
+        paymentCVVFocus: false,
+        paymentSubmsg: null
+    });
+}
+
+function sharedSetWillChangeLicenceType(obj, change) {
+    obj.setState({
+        willChangeLicenceType: change
+    });
+}
+
+function sharedSetSelectedLicenceType(obj, type) {
+    obj.setState({
+        selectedLicenceType: type
+    });
+}
+
+function sharedSetDiscountFocus(obj, hasFocus) {
+    obj.setState({
+        discountFocus: hasFocus
+    });
+}
+
+function sharedSetDiscountSubmsg(obj, msg) {
+    obj.setState({
+        discountSubmsg: msg
+    });
+}
+
+function sharedSetPaymentSubmsg(obj, msg) {
+    obj.setState({
+        paymentSubmsg: msg
+    });
+}
+
+function sharedCheckDiscountCode(obj, code) {
+    obj.setDiscountSubmsg(null);
+
+    if (code.length > 0) {
+        obj.props.setShowMask(true);
+        obj.setState({
+            isCheckingDiscountCode: true
+        });
+
+        const requestObj = requestObjCreate(axios.CancelToken);
+        obj.props.addServerRequestObj(requestObj);
+
+        let url = api_url_web + 'account-discount';
+        axios({
+            method: 'post',
+            url: url,
+            data: {
+                'code' : code
+            }
+        })
+        .then((response)=>{
+            // discount code is valid - change order summary to include discount
+        })
+        .catch((error)=>{
+            obj.setDiscountSubmsg(msgDiscountInvalid);
+        })
+        .then(()=>{
+            obj.props.setShowMask(false);
+            obj.setState({
+                isCheckingDiscountCode: false
+            });
+            obj.props.deleteServerRequestObj(requestObj);
+        });
+    }
+}
+
 export class Renew extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            spinning: false,
-            changeLicenceType: (accountData.accountType == 0),   // if free trial you must change the licence type, otherwise initial setting is to keep the same licence
-            selectedLicenceType: 2,
-            isCheckingDiscountCode: false,
-            discountError: false,
-            discountFocus: false,
-            discountSubmsg: null,
-            paymentNumberError: false,
-            paymentNumberFocus: false,
-            paymentExpirationDateError: false,
-            paymentExpirationDateFocus: false,
-            paymentCVVError: false,
-            paymentCVVFocus: false,
-            paymentSubmsg: null
-        };
-        this.setChangeLicenceType = this.setChangeLicenceType.bind(this);
-        this.setSelectedLicenceType = this.setSelectedLicenceType.bind(this);
-        this.setDiscountFocus = this.setDiscountFocus.bind(this);
-        this.setDiscountSubmsg = this.setDiscountSubmsg.bind(this);
-        this.setStateOnHostedFieldFocus = this.setStateOnHostedFieldFocus.bind(this);
-        this.setStateOnHostedFieldBlur = this.setStateOnHostedFieldBlur.bind(this);
-        this.setPaymentSubmsg = this.setPaymentSubmsg.bind(this);
-        this.checkDiscountCode = this.checkDiscountCode.bind(this);
-        this.validateAndSubmit = this.validateAndSubmit.bind(this);
+        sharedConstructor(this, 'renew');
     }
     componentDidMount() {
-        // payment
-        client.create({
-            authorization: document.getElementById('input-client-token').value
-        })
-        .then((clientInstance)=>{
-            var options = {
-                client: clientInstance,
-                styles: {
-                    'input': {
-                        'font-size': '16px',
-                        'font-family': 'courier, monospace',
-                        'font-weight': 'lighter',
-                        'color': '#CCCCCC'
-                    },
-                    ':focus': {
-                        'color': '#222222'
-                    },
-                    '.valid': {
-                        'color': '#222222'
-                    }
-                },
-                fields: {
-                    number: {
-                        selector: '#' + idDivPaymentNumber,
-                        placeholder: '4111 1111 1111 1111'
-                    },
-                    expirationDate: {
-                        selector: '#' + idDivPaymentExpirationDate,
-                        placeholder: 'MM/YYYY'
-                    },
-                    cvv: {
-                        selector: '#' + idDivPaymentCVV,
-                        placeholder: 'CVV'
-                    }
-                }
-            };
-            return hostedFields.create(options);
-        })
-        .then((instance)=>{
-            hostedFieldsInstance = instance;
-            hostedFieldsInstance.on('focus', (event)=>{this.setStateOnHostedFieldFocus(event.emittedBy)});
-            hostedFieldsInstance.on('blur', (event)=>{this.setStateOnHostedFieldBlur()});
-        })
-        .catch((err)=>{
-        });
+        sharedComponentDidMount(this);
     }
     setStateOnHostedFieldFocus(emittedBy) {
-        if (emittedBy == 'number') {
-            this.setState({
-                paymentNumberError: false,
-                paymentNumberFocus: true,
-                paymentSubmsg: null
-            });
-        } else {
-            this.setState({
-                paymentNumberError: false,
-                paymentNumberFocus: false,
-                paymentSubmsg: null
-            });
-        }
-        if (emittedBy == 'expirationDate') {
-            this.setState({
-                paymentExpirationDateError: false,
-                paymentExpirationDateFocus: true,
-                paymentSubmsg: null
-            });
-        } else {
-            this.setState({
-                paymentExpirationDateError: false,
-                paymentExpirationDateFocus: false,
-                paymentSubmsg: null
-            });
-        }
-        if (emittedBy == 'cvv') {
-            this.setState({
-                paymentCVVError: false,
-                paymentCVVFocus: true,
-                paymentSubmsg: null
-            });
-        } else {
-            this.setState({
-                paymentCVVError: false,
-                paymentCVVFocus: false,
-                paymentSubmsg: null
-            });
-        }
+        sharedSetStateOnHostedFieldFocus(this, emittedBy);
     }
     setStateOnHostedFieldBlur() {
-        this.setState({
-            paymentNumberError: false,
-            paymentNumberFocus: false,
-            paymentExpirationDateError: false,
-            paymentExpirationDateFocus: false,
-            paymentCVVError: false,
-            paymentCVVFocus: false,
-            paymentSubmsg: null
-        });
+        sharedSetStateOnHostedFieldBlur(this);
     }
-    setChangeLicenceType(change) {
-        this.setState({
-            changeLicenceType: change
-        });
+    setWillChangeLicenceType(change) {
+        sharedSetWillChangeLicenceType(this, change);
     }
     setSelectedLicenceType(type) {
-        this.setState({
-            selectedLicenceType: type
-        });
+        sharedSetSelectedLicenceType(this, type);
     }
     setDiscountFocus(hasFocus) {
-        this.setState({
-            discountFocus: hasFocus
-        });
+        sharedSetDiscountFocus(this, hasFocus);
     }
     setDiscountSubmsg(msg) {
-        this.setState({
-            discountSubmsg: msg
-        });
+        sharedSetDiscountSubmsg(this, msg);
     }
     setPaymentSubmsg(msg) {
-        this.setState({
-            paymentSubmsg: msg
-        });
+        sharedSetPaymentSubmsg(this, msg);
     }
     checkDiscountCode(code) {
-        this.setDiscountSubmsg(null);
-
-        if (code.length > 0) {
-            this.props.setShowMask(true);
-            this.setState({
-                isCheckingDiscountCode: true
-            });
-
-            const requestObj = requestObjCreate(axios.CancelToken);
-            this.props.addServerRequestObj(requestObj);
-
-            let url = api_url_web + 'account-discount';
-            axios({
-                method: 'post',
-                url: url,
-                data: {
-                    'code' : code
-                }
-            })
-            .then((response)=>{
-                // discount code is valid - change order summary to include discount
-            })
-            .catch((error)=>{
-                this.setDiscountSubmsg(msgDiscountInvalid);
-            })
-            .then(()=>{
-                this.props.setShowMask(false);
-                this.setState({
-                    isCheckingDiscountCode: false
-                });
-                this.props.deleteServerRequestObj(requestObj);
-            });
-        }
+        sharedCheckDiscountCode(this, code);
     }
     validateAndSubmit() {
     }
@@ -217,7 +267,7 @@ export class Renew extends React.Component {
                     <div className="title">
                         Renewal details
                     </div>
-                    <CSSTransition in={(!this.state.changeLicenceType)} classNames="renewtype-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
+                    <CSSTransition in={(!this.state.willChangeLicenceType)} classNames="renewtype-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
                         <div>
                             <div className="para">
                                 {(diffMinutes > 0) ? (
@@ -227,7 +277,7 @@ export class Renew extends React.Component {
                                 )}
                             </div>
                             <div className="buttons">
-                                <div className="button-word-cont grey active" onClick={() => {this.setChangeLicenceType(true)}}>
+                                <div className="button-word-cont grey active" onClick={() => {this.setWillChangeLicenceType(true)}}>
                                     <div className="spinner-cont">
                                         <div className="text">CHANGE LICENCE TYPE</div>
                                     </div>
@@ -235,7 +285,7 @@ export class Renew extends React.Component {
                             </div>
                         </div>
                     </CSSTransition>
-                    <CSSTransition in={(this.state.changeLicenceType)} classNames="renewtype-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
+                    <CSSTransition in={(this.state.willChangeLicenceType)} classNames="renewtype-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
                         <div>
                             <div className="para">
                                 {(accountData.accountType == 0) ? (
@@ -245,7 +295,7 @@ export class Renew extends React.Component {
                                 )}
                             </div>
                             <div className="para">
-                                <LicenceTypes />
+                                <LicenceTypes context={'renew'} selectedLicenceType={this.state.selectedLicenceType} setSelectedLicenceType={this.setSelectedLicenceType} />
                             </div>
                         </div>
                     </CSSTransition>
@@ -266,7 +316,7 @@ export class Renew extends React.Component {
                     paymentSubmsg={this.state.paymentSubmsg}
                     setPaymentSubmsg={this.setPaymentSubmsg}
                 />
-                <br/><br/><br/>
+                <br/><br/>
                 <Buttons spinning={this.state.spinning} validateAndSubmit={this.validateAndSubmit} setAccountSubpage={this.props.setAccountSubpage} />
             </div>
         );
@@ -276,20 +326,46 @@ export class Renew extends React.Component {
 export class Upgrade extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            spinning: false
-        };
+        sharedConstructor(this, 'upgrade');
+    }
+    componentDidMount() {
+        sharedComponentDidMount(this);
+    }
+    setStateOnHostedFieldFocus(emittedBy) {
+        sharedSetStateOnHostedFieldFocus(this, emittedBy);
+    }
+    setStateOnHostedFieldBlur() {
+        sharedSetStateOnHostedFieldBlur(this);
+    }
+    setWillChangeLicenceType(change) {
+        sharedSetWillChangeLicenceType(this, change);
+    }
+    setSelectedLicenceType(type) {
+        sharedSetSelectedLicenceType(this, type);
+    }
+    setDiscountFocus(hasFocus) {
+        sharedSetDiscountFocus(this, hasFocus);
+    }
+    setDiscountSubmsg(msg) {
+        sharedSetDiscountSubmsg(this, msg);
+    }
+    setPaymentSubmsg(msg) {
+        sharedSetPaymentSubmsg(this, msg);
+    }
+    checkDiscountCode(code) {
+        sharedCheckDiscountCode(this, code);
     }
     validateAndSubmit() {
     }
     render() {
+        const diffMinutes = getDiffMinutes(accountData.accountExpiresAt);
         return (
             <div className="content-inner renewupgrade-cont">
                 <div className="page-title default">
                     <i className="oln icon-uploading-ui"></i><strong>Upgrade</strong> <span>licence</span>
                 </div>
                 <br/><br/>
-                <CurrentLicence/>
+                <CurrentLicence diffMinutes={diffMinutes} />
                 <br/><br/>
                 <div className="section-cont">
                     <div className="title">
@@ -297,17 +373,31 @@ export class Upgrade extends React.Component {
                     </div>
                     <div className="para">
                         <div>
-                            Select the licence type that you would like to upgrade to. The upgrade will be valid for the remainder of the term of your current licence.
+                            Select your licence type:
                         </div>
                         <div>
-                            <LicenceTypes />
+                            <LicenceTypes context={'upgrade'} selectedLicenceType={this.state.selectedLicenceType} setSelectedLicenceType={this.setSelectedLicenceType} />
                         </div>
                     </div>
                 </div>
                 <br/><br/>
-                <div className="buttons-cont">
-                    buttons
-                </div>
+                <OrderSummary selectedLicenceType={this.state.selectedLicenceType} />
+                <br/><br/>
+                <Discount discountError={this.state.discountError} discountFocus={this.state.discountFocus} setDiscountFocus={this.setDiscountFocus} checkDiscountCode={this.checkDiscountCode} isCheckingDiscountCode={this.state.isCheckingDiscountCode} discountSubmsg={this.state.discountSubmsg} setDiscountSubmsg={this.setDiscountSubmsg} />
+                <br/>
+                <Payment
+                    selectedLicenceType={this.state.selectedLicenceType}
+                    paymentNumberError={this.state.paymentNumberError} 
+                    paymentNumberFocus={this.state.paymentNumberFocus}
+                    paymentExpirationDateError={this.state.paymentExpirationDateError}
+                    paymentExpirationDateFocus={this.state.paymentExpirationDateFocus}
+                    paymentCVVError={this.state.paymentCVVError}
+                    paymentCVVFocus={this.state.paymentCVVFocus}
+                    paymentSubmsg={this.state.paymentSubmsg}
+                    setPaymentSubmsg={this.setPaymentSubmsg}
+                />
+                <br/><br/>
+                <Buttons spinning={this.state.spinning} validateAndSubmit={this.validateAndSubmit} setAccountSubpage={this.props.setAccountSubpage} />
             </div>
         );
     }
@@ -377,22 +467,85 @@ class LicenceTypes extends React.Component {
         }
     }
     render() {
-        const basicDetailsContClasses = classNames({
-            'details-cont' : true,
-            'hover' : this.state.basicHover
-        });
-        const professionalDetailsContClasses = classNames({
-            'details-cont' : true,
-            'hover' : this.state.professionalHover
-        });
-        const enterpriseDetailsContClasses = classNames({
-            'details-cont' : true,
-            'hover' : this.state.enterpriseHover
-        });
+        let basicLabelsContClasses;
+        let basicDetailsContClasses;
+        let professionalLabelsContClasses;
+        let professionalDetailsContClasses;
+        let enterpriseLabelsContClasses;
+        let enterpriseDetailsContClasses;
+        if (this.props.context == 'renew') {
+            basicLabelsContClasses = classNames({
+                'labels-cont' : true,
+                'xsonly' : true,
+                'active' : true
+            });
+            basicDetailsContClasses = classNames({
+                'details-cont' : true,
+                'active' : true,
+                'selected' : this.props.selectedLicenceType == 1,
+                'hover' : this.state.basicHover
+            });
+            professionalLabelsContClasses = classNames({
+                'labels-cont' : true,
+                'xsonly' : true,
+                'active' : true
+            });
+            professionalDetailsContClasses = classNames({
+                'details-cont' : true,
+                'active' : true,
+                'selected' : this.props.selectedLicenceType == 2,
+                'hover' : this.state.professionalHover
+            });
+            enterpriseLabelsContClasses = classNames({
+                'labels-cont' : true,
+                'xsonly' : true,
+                'active' : true
+            });
+            enterpriseDetailsContClasses = classNames({
+                'details-cont' : true,
+                'active' : true,
+                'selected' : this.props.selectedLicenceType == 3,
+                'hover' : this.state.enterpriseHover
+            });
+        } else {
+            basicLabelsContClasses = classNames({
+                'labels-cont' : true,
+                'xsonly' : true,
+                'active' : accountData.accountType < 1
+            });
+            basicDetailsContClasses = classNames({
+                'details-cont' : true,
+                'active' : accountData.accountType < 1,
+                'selected' : this.props.selectedLicenceType == 1,
+                'hover' : this.state.basicHover
+            });
+            professionalLabelsContClasses = classNames({
+                'labels-cont' : true,
+                'xsonly' : true,
+                'active' : accountData.accountType < 2
+            });
+            professionalDetailsContClasses = classNames({
+                'details-cont' : true,
+                'active' : accountData.accountType < 2,
+                'selected' : this.props.selectedLicenceType == 2,
+                'hover' : this.state.professionalHover
+            });
+            enterpriseLabelsContClasses = classNames({
+                'labels-cont' : true,
+                'xsonly' : true,
+                'active' : true
+            });
+            enterpriseDetailsContClasses = classNames({
+                'details-cont' : true,
+                'active' : true,
+                'selected' : this.props.selectedLicenceType == 3,
+                'hover' : this.state.enterpriseHover
+            });
+        }
         return (
             <div className="licence-cont">
-                <div className="labels-cont">
-                    <div className="recommended">
+                <div className="labels-cont notxs active">
+                    <div className="lbltop">
                         &nbsp;
                     </div>
                     <div className="titlerow">
@@ -428,10 +581,60 @@ class LicenceTypes extends React.Component {
                         Reseller
                     </div>
                 </div>
-                <div className={basicDetailsContClasses} onMouseEnter={()=>{this.mouseEnter('basic')}} onMouseLeave={()=>{this.mouseLeave('basic')}}>
-                    <div className="recommended">
+                <div className={basicLabelsContClasses}>
+                    <div className="lbltop">
                         &nbsp;
                     </div>
+                    <div className="titlerow">
+                        <div className="type dummy">
+                            &nbsp;
+                        </div>
+                        <div className="price dummy">
+                            &nbsp;
+                        </div>
+                        <div className="button dummy">
+                            <div className="button-word-cont grey active">&nbsp;</div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        Licence period
+                    </div>
+                    <div className="row">
+                        All features
+                    </div>
+                    <div className="row">
+                        Number of domains
+                    </div>
+                    <div className="row">
+                        Licence key
+                    </div>
+                    <div className="row">
+                        Tech support
+                    </div>
+                    <div className="row">
+                        Paid web app
+                    </div>
+                    <div className="row">
+                        Reseller
+                    </div>
+                </div>
+                <div className={basicDetailsContClasses} onMouseEnter={()=>{this.mouseEnter('basic')}} onMouseLeave={()=>{this.mouseLeave('basic')}} onClick={()=>{this.props.setSelectedLicenceType(1)}}>
+                    {(this.props.context == 'renew') ? (
+                        (this.props.selectedLicenceType == 1) ? (
+                            <div className="lbltop selected">
+                                SELECTED
+                            </div>
+                        ) : (
+                            <div className="lbltop">
+                                &nbsp;
+                            </div>
+                        )
+                    ) : (
+                        (accountData.accountType == 1) &&
+                            <div className="lbltop current">
+                                CURRENT
+                            </div>
+                    )}
                     <div className="titlerow">
                         <div className="type">
                             Basic
@@ -440,7 +643,7 @@ class LicenceTypes extends React.Component {
                             $36
                         </div>
                         <div className="button">
-                            <div className="button-word-cont grey active">Select</div>
+                            <div className="button-word-cont grey active" onClick={()=>{this.props.setSelectedLicenceType(1)}}>Select</div>
                         </div>
                     </div>
                     <div className="row">
@@ -466,8 +669,8 @@ class LicenceTypes extends React.Component {
                     </div>
                 </div>
                 <br className="newline"/>
-                <div className="labels-cont xsonly">
-                    <div className="recommended">
+                <div className={professionalLabelsContClasses}>
+                    <div className="lbltop">
                         &nbsp;
                     </div>
                     <div className="titlerow">
@@ -503,10 +706,23 @@ class LicenceTypes extends React.Component {
                         Reseller
                     </div>
                 </div>
-                <div className={professionalDetailsContClasses} onMouseEnter={()=>{this.mouseEnter('professional')}} onMouseLeave={()=>{this.mouseLeave('professional')}}>
-                    <div className="recommended show">
-                        RECOMMENDED<img src={images_url + 'recommended-arrow.png'} alt="" width="40" height="8"/>
-                    </div>
+                <div className={professionalDetailsContClasses} onMouseEnter={()=>{this.mouseEnter('professional')}} onMouseLeave={()=>{this.mouseLeave('professional')}} onClick={()=>{this.props.setSelectedLicenceType(2)}}>
+                    {(this.props.context == 'renew') ? (
+                        (this.props.selectedLicenceType == 2) ? (
+                            <div className="lbltop selected">
+                                SELECTED
+                            </div>
+                        ) : (
+                            <div className="lbltop recommended">
+                                RECOMMENDED<img src={images_url + 'recommended-arrow.png'} alt="" width="40" height="8"/>
+                            </div>
+                        )
+                    ) : (
+                        (accountData.accountType == 2) &&
+                            <div className="lbltop current">
+                                CURRENT
+                            </div>
+                    )}
                     <div className="titlerow">
                         <div className="type">
                             Professional
@@ -515,7 +731,7 @@ class LicenceTypes extends React.Component {
                             $108
                         </div>
                         <div className="button">
-                            <div className="button-word-cont grey active">Select</div>
+                            <div className="button-word-cont grey active" onClick={()=>{this.props.setSelectedLicenceType(2)}}>Select</div>
                         </div>
                     </div>
                     <div className="row">
@@ -541,8 +757,8 @@ class LicenceTypes extends React.Component {
                     </div>
                 </div>
                 <br className="newline"/>
-                <div className="labels-cont xsonly">
-                    <div className="recommended">
+                <div className={enterpriseLabelsContClasses}>
+                    <div className="lbltop">
                         &nbsp;
                     </div>
                     <div className="titlerow">
@@ -578,10 +794,16 @@ class LicenceTypes extends React.Component {
                         Reseller
                     </div>
                 </div>
-                <div className={enterpriseDetailsContClasses} onMouseEnter={()=>{this.mouseEnter('enterprise')}} onMouseLeave={()=>{this.mouseLeave('enterprise')}}>
-                    <div className="recommended">
-                        &nbsp;
-                    </div>
+                <div className={enterpriseDetailsContClasses} onMouseEnter={()=>{this.mouseEnter('enterprise')}} onMouseLeave={()=>{this.mouseLeave('enterprise')}} onClick={()=>{this.props.setSelectedLicenceType(3)}}>
+                    {(this.props.selectedLicenceType == 3) ? (
+                        <div className="lbltop selected">
+                            SELECTED
+                        </div>
+                    ) : (
+                        <div className="lbltop">
+                            &nbsp;
+                        </div>
+                    )}
                     <div className="titlerow">
                         <div className="type">
                             Enterprise
@@ -590,7 +812,7 @@ class LicenceTypes extends React.Component {
                             $648
                         </div>
                         <div className="button">
-                            <div className="button-word-cont grey active">Select</div>
+                            <div className="button-word-cont grey active" onClick={()=>{this.props.setSelectedLicenceType(3)}}>Select</div>
                         </div>
                     </div>
                     <div className="row">
@@ -785,19 +1007,21 @@ const Buttons = (props) => {
         'spinning' : props.spinning
     });
     return (
-        <div className="buttons-cont">
-            <div className="button-word-cont darkblue" onClick={() => {props.validateAndSubmit()}} tabIndex="4">
-                <div className={spinnerContClasses}>
-                    <div className="text">PLACE ORDER</div>
-                    <div className="spinner-outer">
-                        <div className="spinner-inner">
-                            <div className="rect rect0"></div><div className="rect rect1"></div><div className="rect rect2"></div><div className="rect rect3"></div><div className="rect rect4"></div>
+        <div className="section-cont">
+            <div className="buttons">
+                <div className="button-word-cont darkblue" onClick={() => {props.validateAndSubmit()}} tabIndex="4">
+                    <div className={spinnerContClasses}>
+                        <div className="text">PLACE ORDER</div>
+                        <div className="spinner-outer">
+                            <div className="spinner-inner">
+                                <div className="rect rect0"></div><div className="rect rect1"></div><div className="rect rect2"></div><div className="rect rect3"></div><div className="rect rect4"></div>
+                            </div>
                         </div>
                     </div>
+                </div>&nbsp;&nbsp;&nbsp;&nbsp;
+                <div className="button-word-cont grey" onClick={() => {props.setAccountSubpage('Landing') }} tabIndex="5">
+                    CANCEL
                 </div>
-            </div>&nbsp;&nbsp;&nbsp;&nbsp;
-            <div className="button-word-cont grey" onClick={() => {props.setAccountSubpage('Landing') }} tabIndex="5">
-                CANCEL
             </div>
         </div>
     );

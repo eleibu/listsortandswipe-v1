@@ -1087,10 +1087,6 @@ input.textentry {
   padding: 2em 1em;
 }
 
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.button-word-cont {
-  font-size: 80%;
-}
-
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.page-title {
   position: relative;
   font-size: 140%;
@@ -1198,22 +1194,7 @@ input.textentry {
   font-size: 95%;
 }
 
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont {
-  text-align: left;
-  margin: 1em 0;
-}
-
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.details-cont {
-  display: inline-block;
-  margin: 1em 4px;
-}
-
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.details-cont.hover {
-  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05), 0 2px 2px rgba(0, 0, 0, 0.03);
-          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05), 0 2px 2px rgba(0, 0, 0, 0.03);
-}
-
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.recommended {
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.lbltop {
   position: relative;
   font-size: 80%;
   padding: 0.4em 0.6em;
@@ -1221,12 +1202,48 @@ input.textentry {
   margin-bottom: 0.4em;
 }
 
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.recommended.show {
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.lbltop.current {
+  background-color: #DDDDDD;
+  color: #FFFFFF;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont {
+  text-align: left;
+  color: #AAAAAA;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont.active {
+  color: #444444;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.details-cont {
+  display: inline-block;
+  margin-left: 4px;
+  margin-right: 4px;
+  background-color: #FFFFFF;
+  -webkit-transition: -webkit-box-shadow 200ms ease, -webkit-transform 200ms ease;
+  transition: -webkit-box-shadow 200ms ease, -webkit-transform 200ms ease;
+  transition: box-shadow 200ms ease, transform 200ms ease;
+  transition: box-shadow 200ms ease, transform 200ms ease, -webkit-box-shadow 200ms ease, -webkit-transform 200ms ease;
+  color: #BBBBBB;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.details-cont.active {
+  color: #444444;
+  cursor: pointer;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.details-cont.active div.lbltop.selected {
+  background-color: #F2DF29;
+  color: #FFFFFF;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.details-cont.active div.lbltop.recommended {
   color: #FFFFFF;
   background-color: #33CC66;
 }
 
-#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.recommended.show img {
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.details-cont.active div.lbltop.recommended img {
   position: absolute;
   bottom: -8px;
   left: 50%;
@@ -1234,12 +1251,23 @@ input.textentry {
           transform: translateX(-50%);
 }
 
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.details-cont.active.hover {
+  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1), 0 2px 2px rgba(0, 0, 0, 0.08);
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1), 0 2px 2px rgba(0, 0, 0, 0.08);
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.details-cont.active.selected {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+  -webkit-box-shadow: 0 5px 14px rgba(0, 0, 0, 0.15), 0 6px 6px rgba(0, 0, 0, 0.12);
+          box-shadow: 0 5px 14px rgba(0, 0, 0, 0.15), 0 6px 6px rgba(0, 0, 0, 0.12);
+}
+
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.titlerow {
   padding: 0.8em;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.titlerow div.type {
-  font-size: 90%;
   font-weight: bold;
 }
 
@@ -1319,6 +1347,10 @@ input.textentry {
   margin: 0.8em 0;
 }
 
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.buttons div.button-word-cont {
+  font-size: 80%;
+}
+
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.account-mask {
   position: absolute;
   top: 0;
@@ -1385,10 +1417,24 @@ input.textentry {
 }
 
 #pageWrapper.xl div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont, #pageWrapper.lg div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont, #pageWrapper.md div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont, #pageWrapper.sm div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+#pageWrapper.xl div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont.notxs, #pageWrapper.lg div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont.notxs, #pageWrapper.md div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont.notxs, #pageWrapper.sm div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont.notxs {
   display: inline-block;
 }
 
 #pageWrapper.xl div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont.xsonly, #pageWrapper.lg div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont.xsonly, #pageWrapper.md div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont.xsonly, #pageWrapper.sm div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont.xsonly {
+  display: none;
+}
+
+#pageWrapper.xl div.renewupgrade-cont div.section-cont div.para div.licence-cont div.details-cont, #pageWrapper.lg div.renewupgrade-cont div.section-cont div.para div.licence-cont div.details-cont, #pageWrapper.md div.renewupgrade-cont div.section-cont div.para div.licence-cont div.details-cont, #pageWrapper.sm div.renewupgrade-cont div.section-cont div.para div.licence-cont div.details-cont {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+#pageWrapper.xl div.renewupgrade-cont div.section-cont div.para div.licence-cont div.titlerow div.button, #pageWrapper.lg div.renewupgrade-cont div.section-cont div.para div.licence-cont div.titlerow div.button, #pageWrapper.md div.renewupgrade-cont div.section-cont div.para div.licence-cont div.titlerow div.button, #pageWrapper.sm div.renewupgrade-cont div.section-cont div.para div.licence-cont div.titlerow div.button {
   display: none;
 }
 
@@ -1443,7 +1489,33 @@ input.textentry {
 }
 
 #pageWrapper.xs div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+#pageWrapper.xs div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont.notxs {
+  display: none;
+}
+
+#pageWrapper.xs div.renewupgrade-cont div.section-cont div.para div.licence-cont div.labels-cont.xsonly {
   display: inline-block;
+}
+
+#pageWrapper.xs div.renewupgrade-cont div.section-cont div.para div.licence-cont div.details-cont {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+#pageWrapper.xs div.renewupgrade-cont div.section-cont div.para div.licence-cont div.details-cont div.button-word-cont {
+  font-size: 110%;
+  color: #3366CC;
+  background-color: #EEEEEE;
+  -webkit-box-shadow: 0 1px 4px 0 #CCCCCC;
+          box-shadow: 0 1px 4px 0 #CCCCCC;
+}
+
+#pageWrapper.xs div.renewupgrade-cont div.section-cont div.para div.licence-cont div.details-cont.selected div.button-word-cont {
+  visibility: hidden;
 }
 
 #div-mainmsg-cont {

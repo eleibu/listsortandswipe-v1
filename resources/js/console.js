@@ -25,7 +25,7 @@ class App extends React.Component {
             // tabIndex: 0,
             // accountSubpage: 'Landing',
             tabIndex: 1,
-            accountSubpage: 'Renew',
+            accountSubpage: 'Upgrade',
             domainsLoaded: false,
             domainsMsgShow : domainsMsgShow(accountData.accountExpiresAt, accountData.accountType),
             domainsMsgText : domainsMsgText(accountData.accountExpiresAt, accountData.accountType),

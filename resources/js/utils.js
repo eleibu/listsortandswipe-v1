@@ -7,7 +7,7 @@ export function getLicenceTypeText(accountType) {
         	return 'Basic';
         break;
         case 2:
-        	return 'Professioal';
+        	return 'Professional';
         break;
         case 3:
         	return 'Enterprise';
