@@ -19,7 +19,7 @@ export function getLicenceTypeText(accountType) {
 
 export function getDiffMinutes(expiresAt) {
     const mNow = moment.utc();
-    const mExpiresAt = moment(expiresAt);
+    const mExpiresAt = moment.utc(expiresAt);
     return mExpiresAt.diff(mNow, 'minutes');
 }
 
@@ -30,7 +30,7 @@ export function expiresMsgThreshold(accountType) {
     return 30 * 1440;
 }
 
-export function domainsMsgShow(expiresAt, accountType) {
+export function isBelowRenewThreshold(expiresAt, accountType) {
     if (getDiffMinutes(expiresAt) <= expiresMsgThreshold(accountType)) {
         return true;
     }

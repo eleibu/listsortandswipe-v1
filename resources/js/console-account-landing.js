@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classNames/dedupe';
 import moment from 'moment';
-import { getLicenceTypeText } from './utils.js';
+import { getLicenceTypeText, getDiffMinutes, isBelowRenewThreshold, expiresText } from './utils.js';
 
 export class Landing extends React.Component {
     constructor(props) {
@@ -88,19 +88,37 @@ export class Landing extends React.Component {
                     }
                     <p className="email">{accountData.email}</p>
                     <div className="buttons-cont">
-                        <div className="button-word-cont grey" onClick={() => {this.props.setAccountSubpage('ChangePwd') }}>
-                            CHANGE PASSWORD
-                        </div>
+                        <span className="textlink" onClick={() => {this.props.setAccountSubpage('ChangePwd') }}>CHANGE PASSWORD</span>
                     </div>
                 </div>
                 <div className="avail-cont">
                     <div className="plan">
-                        <strong>{getLicenceTypeText(accountData.accountType)}</strong> <span>plan</span>
+                        <strong>{getLicenceTypeText(accountData.accountType)}</strong> <span className="plan">plan</span>
+                        {(accountData.accountType < 3) &&
+                            <React.Fragment>
+                                &nbsp;&nbsp;&nbsp;<span className="textlink" onClick={() => {this.props.setAccountSubpage('Upgrade') }}>UPGRADE</span>
+                            </React.Fragment>
+                        }
                     </div>
                     <div className="expires">
-                        Expires {moment(accountData.accountExpiresAt).format('LL')}
+                        {(getDiffMinutes(accountData.accountExpiresAt) > 0) ? (
+                            <React.Fragment>
+                                Expires: {expiresText(accountData.accountExpiresAt, accountData.accountType)}
+                            </React.Fragment>
+                        ) : (
+                            <React.Fragment>
+                                Your licence has expired
+                            </React.Fragment>
+                        )}
                     </div>
-                    {(accountData.accountType == 3 && accountData.accountLicenceKey != null) &&
+                    {(isBelowRenewThreshold(accountData.accountExpiresAt, accountData.accountType)) &&
+                        <div className="buttons-cont">
+                            <div className="button-word-cont renew" onClick={() => {this.props.setAccountSubpage('Renew') }}>
+                                RENEW
+                            </div>
+                        </div>    
+                    }
+                    {(getDiffMinutes(accountData.accountExpiresAt) > 0 && accountData.accountType == 3 && accountData.accountLicenceKey != null) &&
                         <div className="key-cont">
                             <input type="text" readOnly={true} ref={(input) => { this.inputCopy = input; }} style={inputStyle} value={accountData.accountLicenceKey} />
                             <span className="label">Licence key:</span>
@@ -113,26 +131,30 @@ export class Landing extends React.Component {
                             </span>
                         </div>
                     }
-                    <div className="chart-cont">
-                        <div style={styleChartOuter} className="chart-outer">
-                            <div style={styleTotalCont} className="bar-cont total">
-                                <div className="bar-outer">
-                                    <div className="label left">
-                                        <div className="count">{accountData.domainCountBase + accountData.domainCountAdditional}</div>
-                                        <div className="text">{totalDomainsText}</div>
+                    {(getDiffMinutes(accountData.accountExpiresAt) > 0) &&
+                        <React.Fragment>
+                            <div className="chart-cont">
+                                <div style={styleChartOuter} className="chart-outer">
+                                    <div style={styleTotalCont} className="bar-cont total">
+                                        <div className="bar-outer">
+                                            <div className="label left">
+                                                <div className="count">{accountData.domainCountBase + accountData.domainCountAdditional}</div>
+                                                <div className="text">{totalDomainsText}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style={styleUsedCont} className="bar-cont used">
+                                        <div className="bar-outer">
+                                            <div style={styleLabelRight} className="label right">
+                                                {this.props.domainsUsed}&nbsp;used
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div style={styleUsedCont} className="bar-cont used">
-                                <div className="bar-outer">
-                                    <div style={styleLabelRight} className="label right">
-                                        {this.props.domainsUsed}&nbsp;used
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="avail-text" dangerouslySetInnerHTML={{__html: domainsAvailableText}} />
+                            <div className="avail-text" dangerouslySetInnerHTML={{__html: domainsAvailableText}} />
+                        </React.Fragment>
+                    }
                 </div>
             </div>
         );

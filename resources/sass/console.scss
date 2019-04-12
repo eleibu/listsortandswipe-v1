@@ -155,6 +155,16 @@ input.textentry {
 	}
 }
 
+span.textlink {
+	font-weight: bold;
+	color: #3366CC;
+}
+
+span.textlink:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
 .button-word-cont.darkblue {
 	div.rect {
 		background-color: #EEEEEE;
@@ -167,6 +177,18 @@ input.textentry {
 		background-color: #444444;
 		background-color: rgba(0, 0, 0, 0.7);
 	}
+}
+
+.button-word-cont.renew {
+	color: #FFFFFF;
+	background-color: #F56E44;
+	box-shadow: 0 1px 4px 0 #BBBBBB;
+}
+
+.button-word-cont.renew:hover {
+	cursor: pointer;
+	background-color: #fc7a53;
+	box-shadow: 0 1px 4px 0 #AAAAAA;
 }
 
 #div-siteheader {
@@ -664,15 +686,20 @@ input.textentry {
 						padding: 2em 1em;
 
 						div.plan {
-							font-size: 150%;
 							margin-bottom: 0.2em;
 
 							strong {
+								font-size: 150%;
 								color: #333333;
 							}
 
-							span {
+							span.plan {
+								font-size: 150%;
 								color: #666666;	
+							}
+
+							span.textlink {
+								font-size: 80%;
 							}
 						}
 
@@ -752,7 +779,7 @@ input.textentry {
 
 						div.buttons-cont {
 							font-size: 80%;
-							padding-bottom: 1em;
+							padding-top: 0.8em;
 						}
 					}
 

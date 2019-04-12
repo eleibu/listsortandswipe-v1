@@ -1,10 +1,9 @@
 import React from 'react';
 import classNames from 'classNames/dedupe';
 import { CSSTransition } from 'react-transition-group';
-import { getLicenceTypeText, getDiffMinutes, expiresText, licenceTypeText } from './utils.js';
+import { requestObjCreate, getLicenceTypeText, getDiffMinutes, expiresText, licenceTypeText } from './utils.js';
 import moment from 'moment';
 import axios from 'axios';
-import { requestObjCreate } from './utils.js';
 
 const client = require('braintree-web/client');
 const hostedFields = require('braintree-web/hosted-fields');
@@ -160,7 +159,6 @@ function sharedSetWillChangeLicenceType(obj, change) {
 }
 
 function sharedSetSelectedLicenceType(obj, type) {
-    //@@
     if (obj.state.selectedLicenceType != type) {
         obj.setState({
             selectedLicenceType: type
@@ -274,7 +272,7 @@ export class Renew extends React.Component {
                         <div>
                             <div className="para">
                                 {(diffMinutes > 0) ? (
-                                    <React.Fragment>Renew current licence for an additional 1 year</React.Fragment>
+                                    <React.Fragment>Renew current licence for 1 year</React.Fragment>
                                 ) : (
                                     <React.Fragment>Renew expired licence from today for 1 year</React.Fragment>
                                 )}
@@ -376,7 +374,7 @@ export class Upgrade extends React.Component {
                     </div>
                     <div className="para">
                         <div>
-                            Select your licence type:
+                            Select your new licence type:
                         </div>
                         <div>
                             <LicenceTypes context={'upgrade'} selectedLicenceType={this.state.selectedLicenceType} setSelectedLicenceType={this.setSelectedLicenceType} />
@@ -663,7 +661,7 @@ class LicenceTypes extends React.Component {
                             $36
                         </div>
                         <div className="button">
-                            <div className="button-word-cont grey active" onClick={()=>{this.props.setSelectedLicenceType(1)}}>Select</div>
+                            <div className="button-word-cont grey active" onClick={()=>{this.props.setSelectedLicenceType(1)}}>SELECT</div>
                         </div>
                     </div>
                     <div className="row">
@@ -756,7 +754,7 @@ class LicenceTypes extends React.Component {
                             $108
                         </div>
                         <div className="button">
-                            <div className="button-word-cont grey active" onClick={()=>{this.props.setSelectedLicenceType(2)}}>Select</div>
+                            <div className="button-word-cont grey active" onClick={()=>{this.props.setSelectedLicenceType(2)}}>SELECT</div>
                         </div>
                     </div>
                     <div className="row">
@@ -849,7 +847,7 @@ class LicenceTypes extends React.Component {
                             $648
                         </div>
                         <div className="button">
-                            <div className="button-word-cont grey active" onClick={()=>{this.props.setSelectedLicenceType(3)}}>Select</div>
+                            <div className="button-word-cont grey active" onClick={()=>{this.props.setSelectedLicenceType(3)}}>SELECT</div>
                         </div>
                     </div>
                     <div className="row">
@@ -884,6 +882,11 @@ const OrderSummary = (props) => {
     const subtotal = price;
     const taxes = '$0.00';
     const total = price;
+
+    let expiresText = moment(accountData.accountExpiresAt).add(1, 'years').format('LL');
+    if (getDiffMinutes(accountData.accountExpiresAt) <= 0) {
+        expiresText = moment().add(1, 'years').format('LL');
+    }
     return (
         <div className="section-cont">
             <div className="title">
@@ -905,7 +908,7 @@ const OrderSummary = (props) => {
                                 <td className="col-right">USD</td>
                             </tr>
                             <tr>
-                                <td colSpan="2">{licenceDetails[props.selectedLicenceType].name}<br/>Expires: {moment(accountData.accountExpiresAt).add(1, 'years').format('LL')}</td>
+                                <td colSpan="2">{licenceDetails[props.selectedLicenceType].name}<br/>Expires: {expiresText}</td>
                                 <td className="col-right">{price}</td>
                             </tr>
                             <tr>

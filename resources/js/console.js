@@ -8,7 +8,7 @@ import axios from 'axios';
 import { CSSTransition } from 'react-transition-group';
 import { Domains } from './console-domains.js';
 import { Account } from './console-account.js';
-import { domainsMsgShow, domainsMsgText, findIndexById, requestObjCreate, uuidv4, arrayMove } from './utils.js';
+import { isBelowRenewThreshold, domainsMsgText, findIndexById, requestObjCreate, uuidv4, arrayMove } from './utils.js';
 import { setMainMsgTimeout, clearMainMsgTimeout, MainMsg } from './console-mainmsg.js';
 import update from 'immutability-helper';
 import moment from 'moment';
@@ -22,12 +22,12 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            // tabIndex: 0,
-            // accountSubpage: 'Landing',
             tabIndex: 1,
-            accountSubpage: 'Upgrade',
+            accountSubpage: 'Landing',
+            // tabIndex: 1,
+            // accountSubpage: 'Upgrade',
             domainsLoaded: false,
-            domainsMsgShow : domainsMsgShow(accountData.accountExpiresAt, accountData.accountType),
+            domainsMsgShow : isBelowRenewThreshold(accountData.accountExpiresAt, accountData.accountType),
             domainsMsgText : domainsMsgText(accountData.accountExpiresAt, accountData.accountType),
             domains: [],
             mainMsgShow: false,

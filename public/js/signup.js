@@ -44528,7 +44528,7 @@ if (maskCont && divResendLink && spinnerContResendLink) {
 /* harmony export (immutable) */ __webpack_exports__["h"] = getLicenceTypeText;
 /* harmony export (immutable) */ __webpack_exports__["g"] = getDiffMinutes;
 /* unused harmony export expiresMsgThreshold */
-/* harmony export (immutable) */ __webpack_exports__["b"] = domainsMsgShow;
+/* unused harmony export isBelowRenewThreshold */
 /* harmony export (immutable) */ __webpack_exports__["c"] = domainsMsgText;
 /* harmony export (immutable) */ __webpack_exports__["e"] = expiresText;
 /* harmony export (immutable) */ __webpack_exports__["d"] = encodeHTML;
@@ -44561,7 +44561,7 @@ function getLicenceTypeText(accountType) {
 
 function getDiffMinutes(expiresAt) {
     var mNow = __WEBPACK_IMPORTED_MODULE_0_moment___default.a.utc();
-    var mExpiresAt = __WEBPACK_IMPORTED_MODULE_0_moment___default()(expiresAt);
+    var mExpiresAt = __WEBPACK_IMPORTED_MODULE_0_moment___default.a.utc(expiresAt);
     return mExpiresAt.diff(mNow, 'minutes');
 }
 
@@ -44572,7 +44572,7 @@ function expiresMsgThreshold(accountType) {
     return 30 * 1440;
 }
 
-function domainsMsgShow(expiresAt, accountType) {
+function isBelowRenewThreshold(expiresAt, accountType) {
     if (getDiffMinutes(expiresAt) <= expiresMsgThreshold(accountType)) {
         return true;
     }
