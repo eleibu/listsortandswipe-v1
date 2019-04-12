@@ -160,9 +160,12 @@ function sharedSetWillChangeLicenceType(obj, change) {
 }
 
 function sharedSetSelectedLicenceType(obj, type) {
-    obj.setState({
-        selectedLicenceType: type
-    });
+    //@@
+    if (obj.state.selectedLicenceType != type) {
+        obj.setState({
+            selectedLicenceType: type
+        });
+    }
 }
 
 function sharedSetDiscountFocus(obj, hasFocus) {
@@ -433,8 +436,20 @@ class LicenceTypes extends React.Component {
             professionalHover: false,
             enterpriseHover: false
         };
+        this.setSelectedLicenceType = this.setSelectedLicenceType.bind(this);
         this.mouseEnter = this.mouseEnter.bind(this);
         this.mouseLeave = this.mouseLeave.bind(this);
+    }
+    setSelectedLicenceType(type) {
+        if (type != this.props.selectedLicenceType) {
+            if (this.props.context == 'renew') {
+                this.props.setSelectedLicenceType(type);
+            } else {
+                if (type > accountData.accountType) {
+                    this.props.setSelectedLicenceType(type);
+                }
+            }
+        }
     }
     mouseEnter(type) {
         if (type == 'basic') {
@@ -618,22 +633,27 @@ class LicenceTypes extends React.Component {
                         Reseller
                     </div>
                 </div>
-                <div className={basicDetailsContClasses} onMouseEnter={()=>{this.mouseEnter('basic')}} onMouseLeave={()=>{this.mouseLeave('basic')}} onClick={()=>{this.props.setSelectedLicenceType(1)}}>
-                    {(this.props.context == 'renew') ? (
-                        (this.props.selectedLicenceType == 1) ? (
-                            <div className="lbltop selected">
-                                SELECTED
-                            </div>
-                        ) : (
+                <div className={basicDetailsContClasses} onMouseEnter={()=>{this.mouseEnter('basic')}} onMouseLeave={()=>{this.mouseLeave('basic')}} onClick={()=>{this.setSelectedLicenceType(1)}}>
+                    {(this.props.selectedLicenceType == 1) ? (
+                        <div className="lbltop selected">
+                            SELECTED
+                        </div>
+                    ) : (
+                        (this.props.context == 'renew') ? (
                             <div className="lbltop">
                                 &nbsp;
                             </div>
+                        ) : (
+                            (accountData.accountType == 1) ? (
+                                <div className="lbltop current">
+                                    CURRENT
+                                </div>
+                            ) : (
+                                <div className="lbltop">
+                                    &nbsp;
+                                </div>
+                            )
                         )
-                    ) : (
-                        (accountData.accountType == 1) &&
-                            <div className="lbltop current">
-                                CURRENT
-                            </div>
                     )}
                     <div className="titlerow">
                         <div className="type">
@@ -706,22 +726,27 @@ class LicenceTypes extends React.Component {
                         Reseller
                     </div>
                 </div>
-                <div className={professionalDetailsContClasses} onMouseEnter={()=>{this.mouseEnter('professional')}} onMouseLeave={()=>{this.mouseLeave('professional')}} onClick={()=>{this.props.setSelectedLicenceType(2)}}>
-                    {(this.props.context == 'renew') ? (
-                        (this.props.selectedLicenceType == 2) ? (
-                            <div className="lbltop selected">
-                                SELECTED
-                            </div>
-                        ) : (
+                <div className={professionalDetailsContClasses} onMouseEnter={()=>{this.mouseEnter('professional')}} onMouseLeave={()=>{this.mouseLeave('professional')}} onClick={()=>{this.setSelectedLicenceType(2)}}>
+                    {(this.props.selectedLicenceType == 2) ? (
+                        <div className="lbltop selected">
+                            SELECTED
+                        </div>
+                    ) : (
+                        (this.props.context == 'renew') ? (
                             <div className="lbltop recommended">
                                 RECOMMENDED<img src={images_url + 'recommended-arrow.png'} alt="" width="40" height="8"/>
                             </div>
+                        ) : (
+                            (accountData.accountType == 2) ? (
+                                <div className="lbltop current">
+                                    CURRENT
+                                </div>
+                            ) : (
+                                <div className="lbltop">
+                                    &nbsp;
+                                </div>
+                            )
                         )
-                    ) : (
-                        (accountData.accountType == 2) &&
-                            <div className="lbltop current">
-                                CURRENT
-                            </div>
                     )}
                     <div className="titlerow">
                         <div className="type">
@@ -794,15 +819,27 @@ class LicenceTypes extends React.Component {
                         Reseller
                     </div>
                 </div>
-                <div className={enterpriseDetailsContClasses} onMouseEnter={()=>{this.mouseEnter('enterprise')}} onMouseLeave={()=>{this.mouseLeave('enterprise')}} onClick={()=>{this.props.setSelectedLicenceType(3)}}>
+                <div className={enterpriseDetailsContClasses} onMouseEnter={()=>{this.mouseEnter('enterprise')}} onMouseLeave={()=>{this.mouseLeave('enterprise')}} onClick={()=>{this.setSelectedLicenceType(3)}}>
                     {(this.props.selectedLicenceType == 3) ? (
                         <div className="lbltop selected">
                             SELECTED
                         </div>
                     ) : (
-                        <div className="lbltop">
-                            &nbsp;
-                        </div>
+                        (this.props.context == 'renew') ? (
+                            <div className="lbltop">
+                                &nbsp;
+                            </div>
+                        ) : (
+                            (accountData.accountType == 3) ? (
+                                <div className="lbltop current">
+                                    CURRENT
+                                </div>
+                            ) : (
+                                <div className="lbltop">
+                                    &nbsp;
+                                </div>
+                            )
+                        )
                     )}
                     <div className="titlerow">
                         <div className="type">

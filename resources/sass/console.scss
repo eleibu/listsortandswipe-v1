@@ -1383,10 +1383,17 @@ input.textentry {
 						margin-bottom: 2em;
 
 						div.button-word-cont {
+							visibility: hidden;
 							font-size: 110%;
 							color: #3366CC;
 							background-color: #EEEEEE;
 							box-shadow: 0 1px 4px 0 #CCCCCC;
+						}
+					}
+
+					div.details-cont.active {
+						div.button-word-cont {
+							visibility: visible;
 						}
 					}
 
@@ -1395,7 +1402,6 @@ input.textentry {
 							visibility: hidden;
 						}
 					}
-
 				}
 			}
 		}

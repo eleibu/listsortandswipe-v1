@@ -1507,11 +1507,16 @@ input.textentry {
 }
 
 #pageWrapper.xs div.renewupgrade-cont div.section-cont div.para div.licence-cont div.details-cont div.button-word-cont {
+  visibility: hidden;
   font-size: 110%;
   color: #3366CC;
   background-color: #EEEEEE;
   -webkit-box-shadow: 0 1px 4px 0 #CCCCCC;
           box-shadow: 0 1px 4px 0 #CCCCCC;
+}
+
+#pageWrapper.xs div.renewupgrade-cont div.section-cont div.para div.licence-cont div.details-cont.active div.button-word-cont {
+  visibility: visible;
 }
 
 #pageWrapper.xs div.renewupgrade-cont div.section-cont div.para div.licence-cont div.details-cont.selected div.button-word-cont {
