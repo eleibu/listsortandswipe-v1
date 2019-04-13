@@ -1302,8 +1302,16 @@ span.textlink:hover {
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.titlerow div.price {
   margin: 1em 0;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.titlerow div.price div.text {
   font-size: 150%;
   font-weight: bold;
+}
+
+#pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.titlerow div.price div.subtext {
+  margin-top: 0.6em;
+  font-size: 80%;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.titlerow div.button {

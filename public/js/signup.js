@@ -44462,7 +44462,7 @@ function setParaFirstSurName() {
 	}
 	if (name.length > 0) {
 
-		pIndivName.innerHTML = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["d" /* encodeHTML */])(name);
+		pIndivName.innerHTML = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["c" /* encodeHTML */])(name);
 		pIndivName.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({});
 	} else {
 		pIndivName.innerHTML = '&nbsp;';
@@ -44475,7 +44475,7 @@ function setParaFirstSurName() {
 function setParaCompanyName() {
 	var coname = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["l" /* trimString */])(inputCompanyname.value);
 	if (coname.length > 0) {
-		pCoName.innerHTML = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["d" /* encodeHTML */])(coname);
+		pCoName.innerHTML = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["c" /* encodeHTML */])(coname);
 		pCoName.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
 			'company': true
 		});
@@ -44525,15 +44525,15 @@ if (maskCont && divResendLink && spinnerContResendLink) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["h"] = getLicenceTypeText;
-/* harmony export (immutable) */ __webpack_exports__["g"] = getDiffMinutes;
+/* harmony export (immutable) */ __webpack_exports__["g"] = getLicenceTypeText;
+/* harmony export (immutable) */ __webpack_exports__["f"] = getDiffMinutes;
 /* unused harmony export expiresMsgThreshold */
-/* unused harmony export isBelowRenewThreshold */
-/* harmony export (immutable) */ __webpack_exports__["c"] = domainsMsgText;
-/* harmony export (immutable) */ __webpack_exports__["e"] = expiresText;
-/* harmony export (immutable) */ __webpack_exports__["d"] = encodeHTML;
-/* harmony export (immutable) */ __webpack_exports__["f"] = findIndexById;
-/* harmony export (immutable) */ __webpack_exports__["i"] = hasDomainForm;
+/* harmony export (immutable) */ __webpack_exports__["i"] = isBelowRenewThreshold;
+/* harmony export (immutable) */ __webpack_exports__["b"] = domainsMsgText;
+/* harmony export (immutable) */ __webpack_exports__["d"] = expiresText;
+/* harmony export (immutable) */ __webpack_exports__["c"] = encodeHTML;
+/* harmony export (immutable) */ __webpack_exports__["e"] = findIndexById;
+/* harmony export (immutable) */ __webpack_exports__["h"] = hasDomainForm;
 /* harmony export (immutable) */ __webpack_exports__["k"] = stripUrl;
 /* harmony export (immutable) */ __webpack_exports__["j"] = requestObjCreate;
 /* harmony export (immutable) */ __webpack_exports__["m"] = uuidv4;
@@ -44588,14 +44588,14 @@ function domainsMsgText(expiresAt, accountType) {
                 if (diffDays > 1) {
                     return 'Your licence expires in ' + diffDays + ' days';
                 } else {
-                    return 'Your licence expires in less than 1 day';
+                    return 'Your licence expires in 1 day';
                 }
             } else {
                 var diffHours = Math.floor(diffMinutes / 60);
                 if (diffHours > 1) {
                     return 'Your licence expires in ' + diffHours + ' hours';
                 } else {
-                    return 'Your licence expires in less than 1 hour';
+                    return 'Your licence expires in 1 hour';
                 }
             }
         } else {
@@ -44615,14 +44615,14 @@ function expiresText(expiresAt, accountType) {
             if (diffDays > 1) {
                 return __WEBPACK_IMPORTED_MODULE_0_moment___default()(expiresAt).format('LL') + ' (' + diffDays + ' days)';
             } else {
-                return __WEBPACK_IMPORTED_MODULE_0_moment___default()(expiresAt).format('LL') + ' (less than 1 day)';
+                return __WEBPACK_IMPORTED_MODULE_0_moment___default()(expiresAt).format('LL') + ' (1 day)';
             }
         } else {
             var diffHours = Math.floor(diffMinutes / 60);
             if (diffHours > 1) {
                 return diffHours + ' hours';
             } else {
-                return 'Less than 1 hour';
+                return '1 hour';
             }
         }
     }

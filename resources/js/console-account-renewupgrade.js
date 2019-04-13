@@ -17,6 +17,7 @@ function sharedConstructor(obj, context) {
         spinning: false,
         willChangeLicenceType: (accountData.accountType == 0),   // if free trial you must change the licence type, otherwise initial setting is to keep the same licence
         selectedLicenceType: ((accountData.accountType == 0) ? 2 : accountData.accountType),
+        upgradePriceMultiplier: 1,
         isCheckingDiscountCode: false,
         discountError: false,
         discountFocus: false,
@@ -27,7 +28,7 @@ function sharedConstructor(obj, context) {
         paymentExpirationDateFocus: false,
         paymentCVVError: false,
         paymentCVVFocus: false,
-        paymentSubmsg: null        
+        paymentSubmsg: null
     };
     if (context == 'renew') {
         if (accountData.accountType == 0) {
@@ -47,11 +48,19 @@ function sharedConstructor(obj, context) {
     obj.setStateOnHostedFieldFocus = obj.setStateOnHostedFieldFocus.bind(obj);
     obj.setStateOnHostedFieldBlur = obj.setStateOnHostedFieldBlur.bind(obj);
     obj.setPaymentSubmsg = obj.setPaymentSubmsg.bind(obj);
+    obj.getUpgradePrice = obj.getUpgradePrice.bind(obj);
+    obj.getDaysRemainingText = obj.getDaysRemainingText.bind(obj);
     obj.checkDiscountCode = obj.checkDiscountCode.bind(obj);
     obj.validateAndSubmit = obj.validateAndSubmit.bind(obj);
 }
 
 function sharedComponentDidMount(obj) {
+    const secsInYear = 31536000;
+    const secsRemaining = moment.utc(accountData.accountExpiresAt).diff(moment.utc(), 'seconds');
+    obj.setState({
+        upgradePriceMultiplier: secsRemaining / secsInYear
+    });
+
     client.create({
         authorization: document.getElementById('input-client-token').value
     })
@@ -184,6 +193,21 @@ function sharedSetPaymentSubmsg(obj, msg) {
     });
 }
 
+function sharedGetUpgradePrice(obj, type) {
+    const priceDollars = (licenceDetails[type].priceCents * obj.state.upgradePriceMultiplier) / 100;
+    const priceOneSF = Math.round(priceDollars * 10) / 10;
+    const priceTwoSF = priceOneSF.toFixed(2);
+    return priceTwoSF;
+}
+
+function sharedgetDaysRemainingText(obj) {
+    const days = moment.utc(accountData.accountExpiresAt).diff(moment.utc(), 'days');
+    if (days == 1) {
+        return '1 day';
+    }
+    return days + ' days';
+}
+
 function sharedCheckDiscountCode(obj, code) {
     obj.setDiscountSubmsg(null);
 
@@ -220,6 +244,98 @@ function sharedCheckDiscountCode(obj, code) {
     }
 }
 
+function sharedValidateAndSubmit(obj) {
+    if (hostedFieldsInstance != null) {
+        obj.props.setShowMask(true);
+        obj.setState({
+            spinning: true
+        });
+        hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
+            if (tokenizeErr) {
+                obj.props.setShowMask(false);
+                obj.setState({
+                    spinning: false
+                });
+                switch (tokenizeErr.code) {
+                    case 'HOSTED_FIELDS_FIELDS_EMPTY':
+                        obj.setState({
+                            paymentNumberError: true,
+                            paymentExpirationDateError: true,
+                            paymentCVVError: true,
+                            paymentSubmsg: 'Payment details can&#39;t be blank.'
+                        });
+                        break;
+                    case 'HOSTED_FIELDS_FIELDS_INVALID':
+                        if (tokenizeErr.details.invalidFieldKeys.includes('number')) {
+                            obj.setState({
+                                paymentNumberError: true
+                            });
+                        }
+                        if (tokenizeErr.details.invalidFieldKeys.includes('expirationDate')) {
+                            obj.setState({
+                                paymentExpirationDateError: true
+                            });
+                        }
+                        if (tokenizeErr.details.invalidFieldKeys.includes('cvv')) {
+                            obj.setState({
+                                paymentCVVError: true
+                            });
+                        }
+                        obj.setState({
+                            paymentSubmsg: 'The supplied credit card details are invalid.'
+                        });
+                        break;
+                    case 'HOSTED_FIELDS_TOKENIZATION_CVV_VERIFICATION_FAILED':
+                        obj.setState({
+                            paymentCVVError: true,
+                            paymentSubmsg: 'The credit card CVV is invalid.'
+                        });
+                        break;
+                    case 'HOSTED_FIELDS_TOKENIZATION_NETWORK_ERROR':
+                        obj.setState({
+                            paymentSubmsg: 'Can&#39;t connect to payment server, please try again.'
+                        });
+                        break;
+                    default:
+                        obj.setState({
+                            paymentSubmsg: 'A payment error occurred, please try again.'
+                        });
+                }
+                return;
+            }
+
+            // inputNonce.value = payload.nonce;
+            // document.getElementById('form').submit();
+
+            // const requestObj = requestObjCreate(axios.CancelToken);
+            // obj.props.addServerRequestObj(requestObj);
+
+            // let url = api_url_web + 'account-discount';
+            // axios({
+            //     method: 'post',
+            //     url: url,
+            //     data: {
+            //         'code' : code
+            //     }
+            // })
+            // .then((response)=>{
+            //     // discount code is valid - change order summary to include discount
+            // })
+            // .catch((error)=>{
+            //     obj.setDiscountSubmsg(msgDiscountInvalid);
+            // })
+            // .then(()=>{
+            //     obj.props.setShowMask(false);
+            //     obj.setState({
+            //         isCheckingDiscountCode: false
+            //     });
+            //     obj.props.deleteServerRequestObj(requestObj);
+            // });
+
+        });
+    }
+}
+
 export class Renew extends React.Component {
     constructor(props) {
         super(props);
@@ -249,10 +365,17 @@ export class Renew extends React.Component {
     setPaymentSubmsg(msg) {
         sharedSetPaymentSubmsg(this, msg);
     }
+    getUpgradePrice(type) {
+        return sharedGetUpgradePrice(this, type);
+    }
+    getDaysRemainingText() {
+        return sharedgetDaysRemainingText(this);
+    }
     checkDiscountCode(code) {
         sharedCheckDiscountCode(this, code);
     }
     validateAndSubmit() {
+        sharedValidateAndSubmit(this);
     }
     render() {
         const diffMinutes = getDiffMinutes(accountData.accountExpiresAt);
@@ -296,13 +419,13 @@ export class Renew extends React.Component {
                                 )}
                             </div>
                             <div className="para">
-                                <LicenceTypes context={'renew'} selectedLicenceType={this.state.selectedLicenceType} setSelectedLicenceType={this.setSelectedLicenceType} />
+                                <LicenceTypes context={'renew'} selectedLicenceType={this.state.selectedLicenceType} setSelectedLicenceType={this.setSelectedLicenceType} getUpgradePrice={this.getUpgradePrice} getDaysRemainingText={this.getDaysRemainingText} />
                             </div>
                         </div>
                     </CSSTransition>
                 </div>
                 <br/><br/>
-                <OrderSummary selectedLicenceType={this.state.selectedLicenceType} />
+                <OrderSummary context={'renew'} selectedLicenceType={this.state.selectedLicenceType} getUpgradePrice={this.getUpgradePrice} getDaysRemainingText={this.getDaysRemainingText} />
                 <br/><br/>
                 <Discount discountError={this.state.discountError} discountFocus={this.state.discountFocus} setDiscountFocus={this.setDiscountFocus} checkDiscountCode={this.checkDiscountCode} isCheckingDiscountCode={this.state.isCheckingDiscountCode} discountSubmsg={this.state.discountSubmsg} setDiscountSubmsg={this.setDiscountSubmsg} />
                 <br/>
@@ -353,10 +476,17 @@ export class Upgrade extends React.Component {
     setPaymentSubmsg(msg) {
         sharedSetPaymentSubmsg(this, msg);
     }
+    getUpgradePrice(type) {
+        return sharedGetUpgradePrice(this, type);
+    }
+    getDaysRemainingText() {
+        return sharedgetDaysRemainingText(this);
+    }
     checkDiscountCode(code) {
         sharedCheckDiscountCode(this, code);
     }
     validateAndSubmit() {
+        sharedValidateAndSubmit(this);
     }
     render() {
         const diffMinutes = getDiffMinutes(accountData.accountExpiresAt);
@@ -377,12 +507,12 @@ export class Upgrade extends React.Component {
                             Select your new licence type:
                         </div>
                         <div>
-                            <LicenceTypes context={'upgrade'} selectedLicenceType={this.state.selectedLicenceType} setSelectedLicenceType={this.setSelectedLicenceType} />
+                            <LicenceTypes context={'upgrade'} selectedLicenceType={this.state.selectedLicenceType} setSelectedLicenceType={this.setSelectedLicenceType} getUpgradePrice={this.getUpgradePrice} getDaysRemainingText={this.getDaysRemainingText} />
                         </div>
                     </div>
                 </div>
                 <br/><br/>
-                <OrderSummary selectedLicenceType={this.state.selectedLicenceType} />
+                <OrderSummary context={'upgrade'} selectedLicenceType={this.state.selectedLicenceType} getUpgradePrice={this.getUpgradePrice} getDaysRemainingText={this.getDaysRemainingText} />
                 <br/><br/>
                 <Discount discountError={this.state.discountError} discountFocus={this.state.discountFocus} setDiscountFocus={this.setDiscountFocus} checkDiscountCode={this.checkDiscountCode} isCheckingDiscountCode={this.state.isCheckingDiscountCode} discountSubmsg={this.state.discountSubmsg} setDiscountSubmsg={this.setDiscountSubmsg} />
                 <br/>
@@ -566,14 +696,35 @@ class LicenceTypes extends React.Component {
                             &nbsp;
                         </div>
                         <div className="price dummy">
-                            &nbsp;
+                            {(this.props.context == 'renew') ? (
+                                <div className="text">
+                                    &nbsp;
+                                </div>
+                            ) : (
+                                <React.Fragment>
+                                    <div className="text">
+                                        &nbsp;
+                                    </div>
+                                    <div className="subtext">
+                                        &nbsp;
+                                    </div>
+                                </React.Fragment>
+                            )}
                         </div>
                         <div className="button dummy">
                             <div className="button-word-cont grey active">&nbsp;</div>
                         </div>
                     </div>
                     <div className="row">
-                        Licence period
+                        {(this.props.context == 'renew') ? (
+                            <React.Fragment>
+                                Licence period
+                            </React.Fragment>
+                        ) : (
+                            <React.Fragment>
+                                Remaining period
+                            </React.Fragment>
+                        )}
                     </div>
                     <div className="row">
                         All features
@@ -603,14 +754,35 @@ class LicenceTypes extends React.Component {
                             &nbsp;
                         </div>
                         <div className="price dummy">
-                            &nbsp;
+                            {(this.props.context == 'renew') ? (
+                                <div className="text">
+                                    &nbsp;
+                                </div>
+                            ) : (
+                                <React.Fragment>
+                                    <div className="text">
+                                        &nbsp;
+                                    </div>
+                                    <div className="subtext">
+                                        &nbsp;
+                                    </div>
+                                </React.Fragment>
+                            )}
                         </div>
                         <div className="button dummy">
                             <div className="button-word-cont grey active">&nbsp;</div>
                         </div>
                     </div>
                     <div className="row">
-                        Licence period
+                        {(this.props.context == 'renew') ? (
+                            <React.Fragment>
+                                Licence period
+                            </React.Fragment>
+                        ) : (
+                            <React.Fragment>
+                                Remaining period
+                            </React.Fragment>
+                        )}
                     </div>
                     <div className="row">
                         All features
@@ -658,14 +830,35 @@ class LicenceTypes extends React.Component {
                             Basic
                         </div>
                         <div className="price">
-                            $36
+                            {(this.props.context == 'renew') ? (
+                                <div className="text">
+                                    ${licenceDetails['1'].priceCents / 100}
+                                </div>
+                            ) : (
+                                <React.Fragment>
+                                    <div className="text">
+                                        ${this.props.getUpgradePrice(1)}
+                                    </div>
+                                    <div className="subtext">
+                                        ${licenceDetails['1'].priceCents / 100} / year
+                                    </div>
+                                </React.Fragment>
+                            )}
                         </div>
                         <div className="button">
                             <div className="button-word-cont grey active" onClick={()=>{this.props.setSelectedLicenceType(1)}}>SELECT</div>
                         </div>
                     </div>
                     <div className="row">
-                        1 year
+                        {(this.props.context == 'renew') ? (
+                            <React.Fragment>
+                                1 year
+                            </React.Fragment>
+                        ) : (
+                            <React.Fragment>
+                                {this.props.getDaysRemainingText()}
+                            </React.Fragment>
+                        )}
                     </div>
                     <div className="row">
                         <i className="sld icon-check-ui"></i>
@@ -696,14 +889,35 @@ class LicenceTypes extends React.Component {
                             &nbsp;
                         </div>
                         <div className="price dummy">
-                            &nbsp;
+                            {(this.props.context == 'renew') ? (
+                                <div className="text">
+                                    &nbsp;
+                                </div>
+                            ) : (
+                                <React.Fragment>
+                                    <div className="text">
+                                        &nbsp;
+                                    </div>
+                                    <div className="subtext">
+                                        &nbsp;
+                                    </div>
+                                </React.Fragment>
+                            )}
                         </div>
                         <div className="button dummy">
                             <div className="button-word-cont grey active">&nbsp;</div>
                         </div>
                     </div>
                     <div className="row">
-                        Licence period
+                        {(this.props.context == 'renew') ? (
+                            <React.Fragment>
+                                Licence period
+                            </React.Fragment>
+                        ) : (
+                            <React.Fragment>
+                                Remaining period
+                            </React.Fragment>
+                        )}
                     </div>
                     <div className="row">
                         All features
@@ -751,14 +965,35 @@ class LicenceTypes extends React.Component {
                             Professional
                         </div>
                         <div className="price">
-                            $108
+                            {(this.props.context == 'renew') ? (
+                                <div className="text">
+                                    ${licenceDetails['2'].priceCents / 100}
+                                </div>
+                            ) : (
+                                <React.Fragment>
+                                    <div className="text">
+                                        ${this.props.getUpgradePrice(2)}
+                                    </div>
+                                    <div className="subtext">
+                                        ${licenceDetails['2'].priceCents / 100} / year
+                                    </div>
+                                </React.Fragment>
+                            )}
                         </div>
                         <div className="button">
                             <div className="button-word-cont grey active" onClick={()=>{this.props.setSelectedLicenceType(2)}}>SELECT</div>
                         </div>
                     </div>
                     <div className="row">
-                        1 year
+                        {(this.props.context == 'renew') ? (
+                            <React.Fragment>
+                                1 year
+                            </React.Fragment>
+                        ) : (
+                            <React.Fragment>
+                                {this.props.getDaysRemainingText()}
+                            </React.Fragment>
+                        )}
                     </div>
                     <div className="row">
                         <i className="sld icon-check-ui"></i>
@@ -789,14 +1024,35 @@ class LicenceTypes extends React.Component {
                             &nbsp;
                         </div>
                         <div className="price dummy">
-                            &nbsp;
+                            {(this.props.context == 'renew') ? (
+                                <div className="text">
+                                    &nbsp;
+                                </div>
+                            ) : (
+                                <React.Fragment>
+                                    <div className="text">
+                                        &nbsp;
+                                    </div>
+                                    <div className="subtext">
+                                        &nbsp;
+                                    </div>
+                                </React.Fragment>
+                            )}
                         </div>
                         <div className="button dummy">
                             <div className="button-word-cont grey active">&nbsp;</div>
                         </div>
                     </div>
                     <div className="row">
-                        Licence period
+                        {(this.props.context == 'renew') ? (
+                            <React.Fragment>
+                                Licence period
+                            </React.Fragment>
+                        ) : (
+                            <React.Fragment>
+                                Remaining period
+                            </React.Fragment>
+                        )}
                     </div>
                     <div className="row">
                         All features
@@ -844,14 +1100,35 @@ class LicenceTypes extends React.Component {
                             Enterprise
                         </div>
                         <div className="price">
-                            $648
+                            {(this.props.context == 'renew') ? (
+                                <div className="text">
+                                    ${licenceDetails['3'].priceCents / 100}
+                                </div>
+                            ) : (
+                                <React.Fragment>
+                                    <div className="text">
+                                        ${this.props.getUpgradePrice(3)}
+                                    </div>
+                                    <div className="subtext">
+                                        ${licenceDetails['3'].priceCents / 100} / year
+                                    </div>
+                                </React.Fragment>
+                            )}
                         </div>
                         <div className="button">
                             <div className="button-word-cont grey active" onClick={()=>{this.props.setSelectedLicenceType(3)}}>SELECT</div>
                         </div>
                     </div>
                     <div className="row">
-                        1 year
+                        {(this.props.context == 'renew') ? (
+                            <React.Fragment>
+                                1 year
+                            </React.Fragment>
+                        ) : (
+                            <React.Fragment>
+                                {this.props.getDaysRemainingText()}
+                            </React.Fragment>
+                        )}
                     </div>
                     <div className="row">
                         <i className="sld icon-check-ui"></i>
@@ -878,14 +1155,19 @@ class LicenceTypes extends React.Component {
 }
 
 const OrderSummary = (props) => {
-    const price = '$' + (licenceDetails[props.selectedLicenceType].priceCents / 100).toFixed(2);
+    let price;
+    if (props.context == 'renew') {
+        price = '$' + (licenceDetails[props.selectedLicenceType].priceCents / 100).toFixed(2);
+    } else {
+        price = '$' + props.getUpgradePrice(props.selectedLicenceType);
+    }
     const subtotal = price;
     const taxes = '$0.00';
     const total = price;
 
-    let expiresText = moment(accountData.accountExpiresAt).add(1, 'years').format('LL');
+    let expires = moment(accountData.accountExpiresAt).add(1, 'years').format('LL');
     if (getDiffMinutes(accountData.accountExpiresAt) <= 0) {
-        expiresText = moment().add(1, 'years').format('LL');
+        expires = moment().add(1, 'years').format('LL');
     }
     return (
         <div className="section-cont">
@@ -907,10 +1189,17 @@ const OrderSummary = (props) => {
                                 <td colSpan="2">&nbsp;</td>
                                 <td className="col-right">USD</td>
                             </tr>
-                            <tr>
-                                <td colSpan="2">{licenceDetails[props.selectedLicenceType].name}<br/>Expires: {expiresText}</td>
-                                <td className="col-right">{price}</td>
-                            </tr>
+                            {(props.context == 'renew') ? (
+                                <tr>
+                                    <td colSpan="2">{licenceDetails[props.selectedLicenceType].name} - 12 month licence<br/>Expires: {expires}</td>
+                                    <td className="col-right">{price}</td>
+                                </tr>
+                            ) : (
+                                <tr>
+                                    <td colSpan="2">{licenceDetails[props.selectedLicenceType].name} - {props.getDaysRemainingText()}</td>
+                                    <td className="col-right">{price}</td>
+                                </tr>
+                            )}
                             <tr>
                                 <td>&nbsp;</td>
                                 <td className="border-top col-mdl">Subtotal</td>
@@ -978,9 +1267,7 @@ class Discount extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className={submsgContClasses}>
-                    {this.props.discountSubmsg}
-                </div>
+                <div className={submsgContClasses} dangerouslySetInnerHTML={{__html: this.props.discountSubmsg}} />
             </div>
         );
     }
@@ -1022,9 +1309,7 @@ class Payment extends React.Component {
                     <div id={idDivPaymentExpirationDate} className={paymentExpirationDateClasses}></div>&nbsp;&nbsp;
                     <div id={idDivPaymentCVV} className={paymentCVVClasses}></div>
                 </div>
-                <div className={submsgContClasses}>
-                    {this.props.paymentSubmsg}
-                </div>
+                <div className={submsgContClasses} dangerouslySetInnerHTML={{__html: this.props.paymentSubmsg}} />
                 <div className="para">
                     <img width="32" className="payment" src={images_url + 'payment-paypal.png'} title="PayPal" alt="Paypal"/>
                     <img width="32" className="payment" src={images_url + 'payment-visa.png'} title="Visa" alt="Visa"/>

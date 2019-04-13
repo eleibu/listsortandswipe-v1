@@ -1109,8 +1109,17 @@ span.textlink:hover {
 
 										div.price {
 											margin: 1em 0;
-											font-size: 150%;
-											font-weight: bold;
+
+											div.text {
+												font-size: 150%;
+												font-weight: bold;
+											}
+
+											div.subtext {
+												//@@
+												margin-top: 0.6em;
+												font-size: 80%;	
+											}
 										}
 
 										div.button {

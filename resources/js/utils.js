@@ -46,14 +46,14 @@ export function domainsMsgText(expiresAt, accountType) {
                 if (diffDays > 1) {
                     return 'Your licence expires in ' + diffDays + ' days';
                 } else {
-                    return 'Your licence expires in less than 1 day';
+                    return 'Your licence expires in 1 day';
                 }
             } else {
                 const diffHours = Math.floor(diffMinutes / 60);
                 if (diffHours > 1) {
                     return 'Your licence expires in ' + diffHours + ' hours';
                 } else {
-                    return 'Your licence expires in less than 1 hour';
+                    return 'Your licence expires in 1 hour';
                 }
             }
         } else {
@@ -73,14 +73,14 @@ export function expiresText(expiresAt, accountType) {
             if (diffDays > 1) {
             	return moment(expiresAt).format('LL') + ' (' + diffDays + ' days)';
             } else {
-            	return moment(expiresAt).format('LL') + ' (less than 1 day)';
+            	return moment(expiresAt).format('LL') + ' (1 day)';
             }
         } else {
             const diffHours = Math.floor(diffMinutes / 60);
             if (diffHours > 1) {
                 return diffHours + ' hours';
             } else {
-                return 'Less than 1 hour';
+                return '1 hour';
             }
         }
     }

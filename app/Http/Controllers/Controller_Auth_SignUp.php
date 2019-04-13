@@ -109,7 +109,7 @@ class Controller_Auth_SignUp extends Controller
 			$productDetails = array(
 				'id' => $dbProduct->id,
 				'pageTitle' => $pageTitle,
-				'name' => $this->getProductName($dbProduct->description),
+				'name' => $this->getProductName($dbProduct),
 				'priceCents' => $dbProduct->price_cents
 			);
 
@@ -262,7 +262,7 @@ class Controller_Auth_SignUp extends Controller
 					'customerName' => $firstname . ' ' . $surname,
 					'companyName' => $companyName,
 					'countryName' => Toolkit::getCountryName($request->input('country')),
-					'productName' => $this->getProductName($dbProduct->description),
+					'productName' => $this->getProductName($dbProduct),
 					'price' => $dbProduct->price_cents,
 					'taxes' => 0,
 					'discount' => 0,
@@ -447,7 +447,12 @@ class Controller_Auth_SignUp extends Controller
             ->with('signupPath', $pageInfo['signup']['path']);
 	}
 
-	protected function getProductName($description) {
-		return 'Lithium List - ' . $description;
+	protected function getProductName($dbProduct) {
+		$productIDs = Toolkit::productIDs();
+		if ($dbProduct->id == $productIDs['accountTypeFree']) {
+			return 'Lithium List - ' . $dbProduct->description . ' - 30 day licence';
+		} else {
+			return 'Lithium List - ' . $dbProduct->description . ' - 12 month licence';
+		}
 	}
 }

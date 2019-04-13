@@ -293,5 +293,4 @@ class Controller_Site extends Controller
 	protected function getProductName($description) {
 		return 'Lithium List - ' . $description;
 	}
-
 }

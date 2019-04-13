@@ -94,7 +94,7 @@ export class Landing extends React.Component {
                 <div className="avail-cont">
                     <div className="plan">
                         <strong>{getLicenceTypeText(accountData.accountType)}</strong> <span className="plan">plan</span>
-                        {(accountData.accountType < 3) &&
+                        {(getDiffMinutes(accountData.accountExpiresAt) > 0 && accountData.accountType < 3) &&
                             <React.Fragment>
                                 &nbsp;&nbsp;&nbsp;<span className="textlink" onClick={() => {this.props.setAccountSubpage('Upgrade') }}>UPGRADE</span>
                             </React.Fragment>
