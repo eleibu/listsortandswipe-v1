@@ -196,7 +196,10 @@ function sharedSetPaymentSubmsg(obj, msg) {
 function sharedGetUpgradePrice(obj, type) {
     const priceDollars = (licenceDetails[type].priceCents * obj.state.upgradePriceMultiplier) / 100;
     const priceOneSF = Math.round(priceDollars * 10) / 10;
-    const priceTwoSF = priceOneSF.toFixed(2);
+    let priceTwoSF = priceOneSF.toFixed(2);
+    if (priceTwoSF == 0) {
+        priceTwoSF = (0.1).toFixed(2);
+    }
     return priceTwoSF;
 }
 
@@ -389,7 +392,7 @@ export class Renew extends React.Component {
                 <br/><br/>
                 <div className="section-cont">
                     <div className="title">
-                        Renewal details
+                        Renewal
                     </div>
                     <CSSTransition in={(!this.state.willChangeLicenceType)} classNames="renewtype-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
                         <div>
@@ -500,7 +503,7 @@ export class Upgrade extends React.Component {
                 <br/><br/>
                 <div className="section-cont">
                     <div className="title">
-                        Upgrade details
+                        Upgrade
                     </div>
                     <div className="para">
                         <div>
