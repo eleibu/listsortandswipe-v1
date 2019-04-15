@@ -70813,7 +70813,12 @@ function sharedConstructor(obj, context) {
     obj.setStateOnHostedFieldFocus = obj.setStateOnHostedFieldFocus.bind(obj);
     obj.setStateOnHostedFieldBlur = obj.setStateOnHostedFieldBlur.bind(obj);
     obj.setPaymentSubmsg = obj.setPaymentSubmsg.bind(obj);
-    obj.getUpgradePrice = obj.getUpgradePrice.bind(obj);
+    obj.getProductName = obj.getProductName.bind(obj);
+    if (context == 'renew') {
+        obj.getRenewPrice = obj.getRenewPrice.bind(obj);
+    } else {
+        obj.getUpgradePrice = obj.getUpgradePrice.bind(obj);
+    }
     obj.getDaysRemainingText = obj.getDaysRemainingText.bind(obj);
     obj.checkDiscountCode = obj.checkDiscountCode.bind(obj);
     obj.validateAndSubmit = obj.validateAndSubmit.bind(obj);
@@ -70958,6 +70963,18 @@ function sharedSetPaymentSubmsg(obj, msg) {
     });
 }
 
+function sharedGetProductName(obj, context) {
+    if (context == 'renew') {
+        return licenceDetails[obj.state.selectedLicenceType].name + ' - 12 month licence';
+    } else {
+        return licenceDetails[obj.state.selectedLicenceType].name + ' - ' + obj.getDaysRemainingText(obj);
+    }
+}
+
+function sharedGetRenewPrice(obj, type) {
+    return (licenceDetails[type].priceCents / 100).toFixed(2);
+}
+
 function sharedGetUpgradePrice(obj, type) {
     var priceDollars = licenceDetails[type].priceCents * obj.state.upgradePriceMultiplier / 100;
     var priceOneSF = Math.round(priceDollars * 10) / 10;
@@ -70968,7 +70985,7 @@ function sharedGetUpgradePrice(obj, type) {
     return priceTwoSF;
 }
 
-function sharedgetDaysRemainingText(obj) {
+function sharedGetDaysRemainingText(obj) {
     var days = __WEBPACK_IMPORTED_MODULE_4_moment___default.a.utc(accountData.accountExpiresAt).diff(__WEBPACK_IMPORTED_MODULE_4_moment___default.a.utc(), 'days');
     if (days == 1) {
         return '1 day';
@@ -71009,7 +71026,7 @@ function sharedCheckDiscountCode(obj, code) {
     }
 }
 
-function sharedValidateAndSubmit(obj) {
+function sharedValidateAndSubmit(obj, context) {
     if (hostedFieldsInstance != null) {
         obj.props.setShowMask(true);
         obj.setState({
@@ -71069,33 +71086,37 @@ function sharedValidateAndSubmit(obj) {
                 return;
             }
 
-            // inputNonce.value = payload.nonce;
-            // document.getElementById('form').submit();
+            var requestObj = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["j" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_5_axios___default.a.CancelToken);
+            obj.props.addServerRequestObj(requestObj);
 
-            // const requestObj = requestObjCreate(axios.CancelToken);
-            // obj.props.addServerRequestObj(requestObj);
+            var amount = obj.getRenewPrice(obj, obj.selectedLicenceType);
+            if (context == 'upgrade') {
+                amount = obj.getUpgradePrice(obj, obj.selectedLicenceType);
+            }
 
-            // let url = api_url_web + 'account-discount';
-            // axios({
-            //     method: 'post',
-            //     url: url,
-            //     data: {
-            //         'code' : code
-            //     }
-            // })
-            // .then((response)=>{
-            //     // discount code is valid - change order summary to include discount
-            // })
-            // .catch((error)=>{
-            //     obj.setDiscountSubmsg(msgDiscountInvalid);
-            // })
-            // .then(()=>{
-            //     obj.props.setShowMask(false);
-            //     obj.setState({
-            //         isCheckingDiscountCode: false
-            //     });
-            //     obj.props.deleteServerRequestObj(requestObj);
-            // });
+            // if renewing to lower licence, show warning that excess domains will be deleted!!!!!
+
+            var url = api_url_web + 'account-' + context;
+            __WEBPACK_IMPORTED_MODULE_5_axios___default()({
+                method: 'post',
+                url: url,
+                data: {
+                    'type': obj.state.selectedLicenceType,
+                    'productName': obj.getProductName(),
+                    'amount': amount,
+                    'nonce': payload.nonce
+                }
+            }).then(function (response) {
+                // discount code is valid - change order summary to include discount
+            }).catch(function (error) {
+                // obj.setDiscountSubmsg(msgDiscountInvalid);
+            }).then(function () {
+                // obj.props.setShowMask(false);
+                // obj.setState({
+                //     isCheckingDiscountCode: false
+                // });
+                // obj.props.deleteServerRequestObj(requestObj);
+            });
         });
     }
 }
@@ -71153,14 +71174,19 @@ var Renew = function (_React$Component) {
             sharedSetPaymentSubmsg(this, msg);
         }
     }, {
-        key: 'getUpgradePrice',
-        value: function getUpgradePrice(type) {
-            return sharedGetUpgradePrice(this, type);
+        key: 'getProductName',
+        value: function getProductName() {
+            return sharedGetProductName(this, 'renew');
+        }
+    }, {
+        key: 'getRenewPrice',
+        value: function getRenewPrice(type) {
+            return sharedGetRenewPrice(this, type);
         }
     }, {
         key: 'getDaysRemainingText',
         value: function getDaysRemainingText() {
-            return sharedgetDaysRemainingText(this);
+            return sharedGetDaysRemainingText(this);
         }
     }, {
         key: 'checkDiscountCode',
@@ -71169,8 +71195,8 @@ var Renew = function (_React$Component) {
         }
     }, {
         key: 'validateAndSubmit',
-        value: function validateAndSubmit() {
-            sharedValidateAndSubmit(this);
+        value: function validateAndSubmit(context) {
+            sharedValidateAndSubmit(this, context);
         }
     }, {
         key: 'render',
@@ -71180,7 +71206,7 @@ var Renew = function (_React$Component) {
             var diffMinutes = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["f" /* getDiffMinutes */])(accountData.accountExpiresAt);
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner renewupgrade-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'page-title default' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-reload-ui' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('strong', null, 'Renew'), ' ', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'licence')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(CurrentLicence, { diffMinutes: diffMinutes }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'section-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title' }, 'Renewal'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': !this.state.willChangeLicenceType, classNames: 'renewtype-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, diffMinutes > 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, 'Renew current licence for 1 year') : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, 'Renew expired licence from today for 1 year')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey active', onClick: function onClick() {
                     _this2.setWillChangeLicenceType(true);
-                } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text' }, 'CHANGE LICENCE TYPE')))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.state.willChangeLicenceType, classNames: 'renewtype-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, accountData.accountType == 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, 'Select your licence type:') : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, 'Select new licence type:')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(LicenceTypes, { context: 'renew', selectedLicenceType: this.state.selectedLicenceType, setSelectedLicenceType: this.setSelectedLicenceType, getUpgradePrice: this.getUpgradePrice, getDaysRemainingText: this.getDaysRemainingText }))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(OrderSummary, { context: 'renew', selectedLicenceType: this.state.selectedLicenceType, getUpgradePrice: this.getUpgradePrice, getDaysRemainingText: this.getDaysRemainingText }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Discount, { discountError: this.state.discountError, discountFocus: this.state.discountFocus, setDiscountFocus: this.setDiscountFocus, checkDiscountCode: this.checkDiscountCode, isCheckingDiscountCode: this.state.isCheckingDiscountCode, discountSubmsg: this.state.discountSubmsg, setDiscountSubmsg: this.setDiscountSubmsg }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Payment, {
+                } }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text' }, 'CHANGE LICENCE TYPE')))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_transition_group__["CSSTransition"], { 'in': this.state.willChangeLicenceType, classNames: 'renewtype-trans', timeout: { enter: 200, exit: 200 }, unmountOnExit: true }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, accountData.accountType == 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, 'Select your licence type:') : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Fragment, null, 'Select new licence type:')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(LicenceTypes, { context: 'renew', selectedLicenceType: this.state.selectedLicenceType, setSelectedLicenceType: this.setSelectedLicenceType, getUpgradePrice: this.getUpgradePrice, getDaysRemainingText: this.getDaysRemainingText }))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(OrderSummary, { context: 'renew', getProductName: this.getProductName, selectedLicenceType: this.state.selectedLicenceType, getRenewPrice: this.getRenewPrice, getUpgradePrice: this.getUpgradePrice, getDaysRemainingText: this.getDaysRemainingText }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Discount, { discountError: this.state.discountError, discountFocus: this.state.discountFocus, setDiscountFocus: this.setDiscountFocus, checkDiscountCode: this.checkDiscountCode, isCheckingDiscountCode: this.state.isCheckingDiscountCode, discountSubmsg: this.state.discountSubmsg, setDiscountSubmsg: this.setDiscountSubmsg }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Payment, {
                 selectedLicenceType: this.state.selectedLicenceType,
                 paymentNumberError: this.state.paymentNumberError,
                 paymentNumberFocus: this.state.paymentNumberFocus,
@@ -71190,7 +71216,7 @@ var Renew = function (_React$Component) {
                 paymentCVVFocus: this.state.paymentCVVFocus,
                 paymentSubmsg: this.state.paymentSubmsg,
                 setPaymentSubmsg: this.setPaymentSubmsg
-            }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Buttons, { spinning: this.state.spinning, validateAndSubmit: this.validateAndSubmit, setAccountSubpage: this.props.setAccountSubpage }));
+            }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Buttons, { context: 'renew', spinning: this.state.spinning, validateAndSubmit: this.validateAndSubmit, setAccountSubpage: this.props.setAccountSubpage }));
         }
     }]);
 
@@ -71250,6 +71276,11 @@ var Upgrade = function (_React$Component2) {
             sharedSetPaymentSubmsg(this, msg);
         }
     }, {
+        key: 'getProductName',
+        value: function getProductName() {
+            return sharedGetProductName(this, 'upgrade');
+        }
+    }, {
         key: 'getUpgradePrice',
         value: function getUpgradePrice(type) {
             return sharedGetUpgradePrice(this, type);
@@ -71257,7 +71288,7 @@ var Upgrade = function (_React$Component2) {
     }, {
         key: 'getDaysRemainingText',
         value: function getDaysRemainingText() {
-            return sharedgetDaysRemainingText(this);
+            return sharedGetDaysRemainingText(this);
         }
     }, {
         key: 'checkDiscountCode',
@@ -71266,14 +71297,14 @@ var Upgrade = function (_React$Component2) {
         }
     }, {
         key: 'validateAndSubmit',
-        value: function validateAndSubmit() {
-            sharedValidateAndSubmit(this);
+        value: function validateAndSubmit(context) {
+            sharedValidateAndSubmit(this, context);
         }
     }, {
         key: 'render',
         value: function render() {
             var diffMinutes = Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["f" /* getDiffMinutes */])(accountData.accountExpiresAt);
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner renewupgrade-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'page-title default' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-uploading-ui' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('strong', null, 'Upgrade'), ' ', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'licence')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(CurrentLicence, { diffMinutes: diffMinutes }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'section-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title' }, 'Upgrade'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, 'Select your new licence type:'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(LicenceTypes, { context: 'upgrade', selectedLicenceType: this.state.selectedLicenceType, setSelectedLicenceType: this.setSelectedLicenceType, getUpgradePrice: this.getUpgradePrice, getDaysRemainingText: this.getDaysRemainingText })))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(OrderSummary, { context: 'upgrade', selectedLicenceType: this.state.selectedLicenceType, getUpgradePrice: this.getUpgradePrice, getDaysRemainingText: this.getDaysRemainingText }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Discount, { discountError: this.state.discountError, discountFocus: this.state.discountFocus, setDiscountFocus: this.setDiscountFocus, checkDiscountCode: this.checkDiscountCode, isCheckingDiscountCode: this.state.isCheckingDiscountCode, discountSubmsg: this.state.discountSubmsg, setDiscountSubmsg: this.setDiscountSubmsg }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Payment, {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'content-inner renewupgrade-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'page-title default' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'oln icon-uploading-ui' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('strong', null, 'Upgrade'), ' ', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', null, 'licence')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(CurrentLicence, { diffMinutes: diffMinutes }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'section-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title' }, 'Upgrade'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, 'Select your new licence type:'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(LicenceTypes, { context: 'upgrade', selectedLicenceType: this.state.selectedLicenceType, setSelectedLicenceType: this.setSelectedLicenceType, getUpgradePrice: this.getUpgradePrice, getDaysRemainingText: this.getDaysRemainingText })))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(OrderSummary, { context: 'upgrade', getProductName: this.getProductName, selectedLicenceType: this.state.selectedLicenceType, getRenewPrice: this.getRenewPrice, getUpgradePrice: this.getUpgradePrice, getDaysRemainingText: this.getDaysRemainingText }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Discount, { discountError: this.state.discountError, discountFocus: this.state.discountFocus, setDiscountFocus: this.setDiscountFocus, checkDiscountCode: this.checkDiscountCode, isCheckingDiscountCode: this.state.isCheckingDiscountCode, discountSubmsg: this.state.discountSubmsg, setDiscountSubmsg: this.setDiscountSubmsg }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Payment, {
                 selectedLicenceType: this.state.selectedLicenceType,
                 paymentNumberError: this.state.paymentNumberError,
                 paymentNumberFocus: this.state.paymentNumberFocus,
@@ -71283,7 +71314,7 @@ var Upgrade = function (_React$Component2) {
                 paymentCVVFocus: this.state.paymentCVVFocus,
                 paymentSubmsg: this.state.paymentSubmsg,
                 setPaymentSubmsg: this.setPaymentSubmsg
-            }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Buttons, { spinning: this.state.spinning, validateAndSubmit: this.validateAndSubmit, setAccountSubpage: this.props.setAccountSubpage }));
+            }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Buttons, { context: 'upgrade', spinning: this.state.spinning, validateAndSubmit: this.validateAndSubmit, setAccountSubpage: this.props.setAccountSubpage }));
         }
     }]);
 
@@ -71480,7 +71511,7 @@ var LicenceTypes = function (_React$Component3) {
 var OrderSummary = function OrderSummary(props) {
     var price = void 0;
     if (props.context == 'renew') {
-        price = '$' + (licenceDetails[props.selectedLicenceType].priceCents / 100).toFixed(2);
+        price = '$' + props.getRenewPrice(props.selectedLicenceType);
     } else {
         price = '$' + props.getUpgradePrice(props.selectedLicenceType);
     }
@@ -71492,7 +71523,7 @@ var OrderSummary = function OrderSummary(props) {
     if (Object(__WEBPACK_IMPORTED_MODULE_3__utils_js__["f" /* getDiffMinutes */])(accountData.accountExpiresAt) <= 0) {
         expires = __WEBPACK_IMPORTED_MODULE_4_moment___default()().add(1, 'years').format('LL');
     }
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'section-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title' }, 'Order summary'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: '' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para address' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', null, accountData.name, ' ', accountData.surname), accountData.companyName != null && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', null, accountData.companyName), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', null, accountData.countryName)), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para orderdetails' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', { cellPadding: '0', cellSpacing: '0' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { colSpan: '2' }, '\xA0'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'col-right' }, 'USD')), props.context == 'renew' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { colSpan: '2' }, licenceDetails[props.selectedLicenceType].name, ' - 12 month licence', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), 'Expires: ', expires), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'col-right' }, price)) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { colSpan: '2' }, licenceDetails[props.selectedLicenceType].name, ' - ', props.getDaysRemainingText()), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'col-right' }, price)), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', null, '\xA0'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'border-top col-mdl' }, 'Subtotal'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'border-top col-right' }, subtotal)), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', null, '\xA0'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'border-btm col-mdl' }, 'Taxes'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'border-btm col-right' }, taxes)), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', null, '\xA0'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'col-mdl' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('strong', null, 'Total')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'col-right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('strong', null, total))))))));
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'section-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'title' }, 'Order summary'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: '' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para address' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', null, accountData.name, ' ', accountData.surname), accountData.companyName != null && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', null, accountData.companyName), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', null, accountData.countryName)), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'para orderdetails' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', { cellPadding: '0', cellSpacing: '0' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { colSpan: '2' }, '\xA0'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'col-right' }, 'USD')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { colSpan: '2' }, props.getProductName(), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null), 'Expires: ', expires), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'col-right' }, price)), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', null, '\xA0'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'border-top col-mdl' }, 'Subtotal'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'border-top col-right' }, subtotal)), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', null, '\xA0'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'border-btm col-mdl' }, 'Taxes'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'border-btm col-right' }, taxes)), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', null, '\xA0'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'col-mdl' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('strong', null, 'Total')), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'col-right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('strong', null, total))))))));
 };
 
 var Discount = function (_React$Component4) {
@@ -71592,7 +71623,7 @@ var Buttons = function Buttons(props) {
         'spinning': props.spinning
     });
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'section-cont' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'buttons' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont darkblue', onClick: function onClick() {
-            props.validateAndSubmit();
+            props.validateAndSubmit(props.context);
         }, tabIndex: '4' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: spinnerContClasses }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'text' }, 'PLACE ORDER'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-outer' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'spinner-inner' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect0' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect1' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect2' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect3' }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'rect rect4' }))))), '\xA0\xA0\xA0\xA0', __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont grey', onClick: function onClick() {
             props.setAccountSubpage('Landing');
         }, tabIndex: '5' }, 'CANCEL')));

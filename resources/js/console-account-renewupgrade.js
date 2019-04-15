@@ -48,7 +48,12 @@ function sharedConstructor(obj, context) {
     obj.setStateOnHostedFieldFocus = obj.setStateOnHostedFieldFocus.bind(obj);
     obj.setStateOnHostedFieldBlur = obj.setStateOnHostedFieldBlur.bind(obj);
     obj.setPaymentSubmsg = obj.setPaymentSubmsg.bind(obj);
-    obj.getUpgradePrice = obj.getUpgradePrice.bind(obj);
+    obj.getProductName = obj.getProductName.bind(obj);
+    if (context == 'renew') {
+        obj.getRenewPrice = obj.getRenewPrice.bind(obj);
+    } else {
+        obj.getUpgradePrice = obj.getUpgradePrice.bind(obj);
+    }
     obj.getDaysRemainingText = obj.getDaysRemainingText.bind(obj);
     obj.checkDiscountCode = obj.checkDiscountCode.bind(obj);
     obj.validateAndSubmit = obj.validateAndSubmit.bind(obj);
@@ -193,6 +198,18 @@ function sharedSetPaymentSubmsg(obj, msg) {
     });
 }
 
+function sharedGetProductName(obj, context) {
+    if (context == 'renew') {
+        return licenceDetails[obj.state.selectedLicenceType].name + ' - 12 month licence';
+    } else {
+        return licenceDetails[obj.state.selectedLicenceType].name + ' - ' + obj.getDaysRemainingText(obj);
+    }
+}
+
+function sharedGetRenewPrice(obj, type) {
+    return (licenceDetails[type].priceCents / 100).toFixed(2);
+}
+
 function sharedGetUpgradePrice(obj, type) {
     const priceDollars = (licenceDetails[type].priceCents * obj.state.upgradePriceMultiplier) / 100;
     const priceOneSF = Math.round(priceDollars * 10) / 10;
@@ -203,7 +220,7 @@ function sharedGetUpgradePrice(obj, type) {
     return priceTwoSF;
 }
 
-function sharedgetDaysRemainingText(obj) {
+function sharedGetDaysRemainingText(obj) {
     const days = moment.utc(accountData.accountExpiresAt).diff(moment.utc(), 'days');
     if (days == 1) {
         return '1 day';
@@ -247,7 +264,7 @@ function sharedCheckDiscountCode(obj, code) {
     }
 }
 
-function sharedValidateAndSubmit(obj) {
+function sharedValidateAndSubmit(obj, context) {
     if (hostedFieldsInstance != null) {
         obj.props.setShowMask(true);
         obj.setState({
@@ -307,34 +324,40 @@ function sharedValidateAndSubmit(obj) {
                 return;
             }
 
-            // inputNonce.value = payload.nonce;
-            // document.getElementById('form').submit();
+            const requestObj = requestObjCreate(axios.CancelToken);
+            obj.props.addServerRequestObj(requestObj);
 
-            // const requestObj = requestObjCreate(axios.CancelToken);
-            // obj.props.addServerRequestObj(requestObj);
+            let amount = obj.getRenewPrice(obj, obj.selectedLicenceType);
+            if (context == 'upgrade') {
+                amount = obj.getUpgradePrice(obj, obj.selectedLicenceType);
+            }
 
-            // let url = api_url_web + 'account-discount';
-            // axios({
-            //     method: 'post',
-            //     url: url,
-            //     data: {
-            //         'code' : code
-            //     }
-            // })
-            // .then((response)=>{
-            //     // discount code is valid - change order summary to include discount
-            // })
-            // .catch((error)=>{
-            //     obj.setDiscountSubmsg(msgDiscountInvalid);
-            // })
-            // .then(()=>{
-            //     obj.props.setShowMask(false);
-            //     obj.setState({
-            //         isCheckingDiscountCode: false
-            //     });
-            //     obj.props.deleteServerRequestObj(requestObj);
-            // });
+            // if renewing to lower licence, show warning that excess domains will be deleted!!!!!
 
+            const url = api_url_web + 'account-' + context;
+            axios({
+                method: 'post',
+                url: url,
+                data: {
+                    'type' : obj.state.selectedLicenceType,
+                    'productName' : obj.getProductName(),
+                    'amount' : amount,
+                    'nonce' : payload.nonce
+                }
+            })
+            .then((response)=>{
+                // discount code is valid - change order summary to include discount
+            })
+            .catch((error)=>{
+                // obj.setDiscountSubmsg(msgDiscountInvalid);
+            })
+            .then(()=>{
+                // obj.props.setShowMask(false);
+                // obj.setState({
+                //     isCheckingDiscountCode: false
+                // });
+                // obj.props.deleteServerRequestObj(requestObj);
+            });
         });
     }
 }
@@ -368,17 +391,20 @@ export class Renew extends React.Component {
     setPaymentSubmsg(msg) {
         sharedSetPaymentSubmsg(this, msg);
     }
-    getUpgradePrice(type) {
-        return sharedGetUpgradePrice(this, type);
+    getProductName() {
+        return sharedGetProductName(this, 'renew');
+    }
+    getRenewPrice(type) {
+        return sharedGetRenewPrice(this, type);
     }
     getDaysRemainingText() {
-        return sharedgetDaysRemainingText(this);
+        return sharedGetDaysRemainingText(this);
     }
     checkDiscountCode(code) {
         sharedCheckDiscountCode(this, code);
     }
-    validateAndSubmit() {
-        sharedValidateAndSubmit(this);
+    validateAndSubmit(context) {
+        sharedValidateAndSubmit(this, context);
     }
     render() {
         const diffMinutes = getDiffMinutes(accountData.accountExpiresAt);
@@ -428,7 +454,7 @@ export class Renew extends React.Component {
                     </CSSTransition>
                 </div>
                 <br/><br/>
-                <OrderSummary context={'renew'} selectedLicenceType={this.state.selectedLicenceType} getUpgradePrice={this.getUpgradePrice} getDaysRemainingText={this.getDaysRemainingText} />
+                <OrderSummary context={'renew'} getProductName={this.getProductName} selectedLicenceType={this.state.selectedLicenceType} getRenewPrice={this.getRenewPrice} getUpgradePrice={this.getUpgradePrice} getDaysRemainingText={this.getDaysRemainingText} />
                 <br/><br/>
                 <Discount discountError={this.state.discountError} discountFocus={this.state.discountFocus} setDiscountFocus={this.setDiscountFocus} checkDiscountCode={this.checkDiscountCode} isCheckingDiscountCode={this.state.isCheckingDiscountCode} discountSubmsg={this.state.discountSubmsg} setDiscountSubmsg={this.setDiscountSubmsg} />
                 <br/>
@@ -444,7 +470,7 @@ export class Renew extends React.Component {
                     setPaymentSubmsg={this.setPaymentSubmsg}
                 />
                 <br/><br/>
-                <Buttons spinning={this.state.spinning} validateAndSubmit={this.validateAndSubmit} setAccountSubpage={this.props.setAccountSubpage} />
+                <Buttons context={'renew'} spinning={this.state.spinning} validateAndSubmit={this.validateAndSubmit} setAccountSubpage={this.props.setAccountSubpage} />
             </div>
         );
     }
@@ -479,17 +505,20 @@ export class Upgrade extends React.Component {
     setPaymentSubmsg(msg) {
         sharedSetPaymentSubmsg(this, msg);
     }
+    getProductName() {
+        return sharedGetProductName(this, 'upgrade');
+    }
     getUpgradePrice(type) {
         return sharedGetUpgradePrice(this, type);
     }
     getDaysRemainingText() {
-        return sharedgetDaysRemainingText(this);
+        return sharedGetDaysRemainingText(this);
     }
     checkDiscountCode(code) {
         sharedCheckDiscountCode(this, code);
     }
-    validateAndSubmit() {
-        sharedValidateAndSubmit(this);
+    validateAndSubmit(context) {
+        sharedValidateAndSubmit(this, context);
     }
     render() {
         const diffMinutes = getDiffMinutes(accountData.accountExpiresAt);
@@ -515,7 +544,7 @@ export class Upgrade extends React.Component {
                     </div>
                 </div>
                 <br/><br/>
-                <OrderSummary context={'upgrade'} selectedLicenceType={this.state.selectedLicenceType} getUpgradePrice={this.getUpgradePrice} getDaysRemainingText={this.getDaysRemainingText} />
+                <OrderSummary context={'upgrade'} getProductName={this.getProductName} selectedLicenceType={this.state.selectedLicenceType} getRenewPrice={this.getRenewPrice} getUpgradePrice={this.getUpgradePrice} getDaysRemainingText={this.getDaysRemainingText} />
                 <br/><br/>
                 <Discount discountError={this.state.discountError} discountFocus={this.state.discountFocus} setDiscountFocus={this.setDiscountFocus} checkDiscountCode={this.checkDiscountCode} isCheckingDiscountCode={this.state.isCheckingDiscountCode} discountSubmsg={this.state.discountSubmsg} setDiscountSubmsg={this.setDiscountSubmsg} />
                 <br/>
@@ -531,7 +560,7 @@ export class Upgrade extends React.Component {
                     setPaymentSubmsg={this.setPaymentSubmsg}
                 />
                 <br/><br/>
-                <Buttons spinning={this.state.spinning} validateAndSubmit={this.validateAndSubmit} setAccountSubpage={this.props.setAccountSubpage} />
+                <Buttons context={'upgrade'} spinning={this.state.spinning} validateAndSubmit={this.validateAndSubmit} setAccountSubpage={this.props.setAccountSubpage} />
             </div>
         );
     }
@@ -1160,7 +1189,7 @@ class LicenceTypes extends React.Component {
 const OrderSummary = (props) => {
     let price;
     if (props.context == 'renew') {
-        price = '$' + (licenceDetails[props.selectedLicenceType].priceCents / 100).toFixed(2);
+        price = '$' + props.getRenewPrice(props.selectedLicenceType);
     } else {
         price = '$' + props.getUpgradePrice(props.selectedLicenceType);
     }
@@ -1192,17 +1221,10 @@ const OrderSummary = (props) => {
                                 <td colSpan="2">&nbsp;</td>
                                 <td className="col-right">USD</td>
                             </tr>
-                            {(props.context == 'renew') ? (
-                                <tr>
-                                    <td colSpan="2">{licenceDetails[props.selectedLicenceType].name} - 12 month licence<br/>Expires: {expires}</td>
-                                    <td className="col-right">{price}</td>
-                                </tr>
-                            ) : (
-                                <tr>
-                                    <td colSpan="2">{licenceDetails[props.selectedLicenceType].name} - {props.getDaysRemainingText()}</td>
-                                    <td className="col-right">{price}</td>
-                                </tr>
-                            )}
+                            <tr>
+                                <td colSpan="2">{props.getProductName()}<br/>Expires: {expires}</td>
+                                <td className="col-right">{price}</td>
+                            </tr>
                             <tr>
                                 <td>&nbsp;</td>
                                 <td className="border-top col-mdl">Subtotal</td>
@@ -1337,7 +1359,7 @@ const Buttons = (props) => {
     return (
         <div className="section-cont">
             <div className="buttons">
-                <div className="button-word-cont darkblue" onClick={() => {props.validateAndSubmit()}} tabIndex="4">
+                <div className="button-word-cont darkblue" onClick={() => {props.validateAndSubmit(props.context)}} tabIndex="4">
                     <div className={spinnerContClasses}>
                         <div className="text">PLACE ORDER</div>
                         <div className="spinner-outer">

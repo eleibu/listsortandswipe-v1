@@ -28,4 +28,7 @@ Route::middleware(['auth:api','activated:api', 'throttle:60,1'])->group(function
 	Route::put('/public/v1/domains/{id}', 'Controller_API_Domains@put');				// done, description, reorder, delete or undelete context
 
 	Route::put('/public/v1/users/{email}', 'Controller_API_Users@put');
+
+	Route::post('/web/v1/account-renew', 'Controller_API_Account@renew');
+	Route::post('/web/v1/account-upgrade', 'Controller_API_Account@upgrade');
 });

@@ -353,24 +353,29 @@ class Controller_Auth_SignUp extends Controller
 
 		switch ($dbProduct->id) {
 			case $productIDs['accountTypeBasic']:
+				$licencePeriodSecs = 31536000;	// 1 year
 				$user->account_type = 1;
 				$user->account_expires_at = Carbon::now('UTC')->addYear();
-				$user->domain_count_base = 1;
+				$user->domain_count_base = Toolkit::getDomainCount(1);
 				break;
 			case $productIDs['accountTypeProfessional']:
+				$licencePeriodSecs = 31536000;	// 1 year
 				$user->account_type = 2;
 				$user->account_expires_at = Carbon::now('UTC')->addYear();
-				$user->domain_count_base = 5;
+				$user->domain_count_base = Toolkit::getDomainCount(2);
 				break;
 			case $productIDs['accountTypeEnterprise']:
+				$licencePeriodSecs = 31536000;	// 1 year
 				$user->account_type = 3;
 				$user->account_expires_at = Carbon::now('UTC')->addYear();
-				$user->domain_count_base = 35;
+				$user->domain_count_base = Toolkit::getDomainCount(3);
+				$user->account_licence_key = str_random(30);
 				break;
 			default:
+				$licencePeriodSecs = 2592000;	// 30 days
 				$user->account_type = 0;
 				$user->account_expires_at = Carbon::now('UTC')->addDays(30);
-				$user->domain_count_base = 1;
+				$user->domain_count_base = Toolkit::getDomainCount(0);
 		}
 
 		$user->domain_count_additional = 0;
@@ -387,6 +392,7 @@ class Controller_Auth_SignUp extends Controller
 		$sale->discount_percent = 0;
 		$sale->price_cents_orig = $dbProduct->price_cents;
 		$sale->price_cents_after_discount = $dbProduct->price_cents;
+		$sale->licence_period_secs = $licencePeriodSecs;
 
 		// save
 		$success = false;

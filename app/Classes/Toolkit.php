@@ -8,6 +8,26 @@ class Toolkit {
 		sleep (1);
 	}
 
+	public static function getDomainCount($licenceType) {	
+		switch($licenceType) {
+			case 1:
+				// basic
+				return 1;
+			break;
+			case 2:
+				// professional
+				return 5;
+			break;
+			case 3:
+				// enterprise
+				return 35;
+			break;
+			default:
+				// free trial
+				return 1;
+		}
+	}
+
 	public static function getAllCountries() {
         $tempCountries = new Countries();
 		$allCountries = $tempCountries->all();

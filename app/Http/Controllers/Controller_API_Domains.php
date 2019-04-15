@@ -50,12 +50,7 @@ class Controller_API_Domains extends Controller
 				$domain->id = $domainId;
 				$domain->user_id = $user->id;
 				$domain->domain = Toolkit::stripUrl($request->input('domain'));
-
-				if (($user->account_type == 3) && isset($user->account_licence_key)) {
-					$domain->licence_key = $user->account_licence_key;
-				} else {
-					$domain->licence_key = str_random(30);
-				}
+				$domain->licence_key = str_random(30);
 
 				DB::beginTransaction();
 				try {
