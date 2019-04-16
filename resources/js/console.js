@@ -53,7 +53,6 @@ class App extends React.Component {
         if (accountData.hasDomains) {
             const requestObj = requestObjCreate(axios.CancelToken);
             this.addServerRequestObj(requestObj);
-
             let url = api_url_public + 'domains';
             axios({
                 method: 'get',

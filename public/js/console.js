@@ -72419,7 +72419,6 @@ var App = function (_React$Component) {
             if (accountData.hasDomains) {
                 var requestObj = Object(__WEBPACK_IMPORTED_MODULE_8__utils_js__["j" /* requestObjCreate */])(__WEBPACK_IMPORTED_MODULE_4_axios___default.a.CancelToken);
                 this.addServerRequestObj(requestObj);
-
                 var url = api_url_public + 'domains';
                 __WEBPACK_IMPORTED_MODULE_4_axios___default()({
                     method: 'get',
