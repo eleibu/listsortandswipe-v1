@@ -30,6 +30,7 @@ function sharedConstructor(obj, context) {
         paymentCVVFocus: false,
         paymentSubmsg: null
     };
+
     if (context == 'renew') {
         if (accountData.accountType == 0) {
             state.selectedLicenceType = 2;
@@ -327,9 +328,11 @@ function sharedValidateAndSubmit(obj, context) {
             const requestObj = requestObjCreate(axios.CancelToken);
             obj.props.addServerRequestObj(requestObj);
 
-            let amount = obj.getRenewPrice(obj, obj.selectedLicenceType);
-            if (context == 'upgrade') {
-                amount = obj.getUpgradePrice(obj, obj.selectedLicenceType);
+            let amount;
+            if (context == 'renew') {
+                amount = obj.getRenewPrice(obj.state.selectedLicenceType);
+            } else {
+                amount = obj.getUpgradePrice(obj.state.selectedLicenceType);
             }
 
             // if renewing to lower licence, show warning that excess domains will be deleted!!!!!
@@ -346,17 +349,32 @@ function sharedValidateAndSubmit(obj, context) {
                 }
             })
             .then((response)=>{
-                // discount code is valid - change order summary to include discount
+                console.log(JSON.stringify(response));
+                accountData.accountType = parseInt(response.data.accountData.accountType);
+                accountData.domainCountBase = parseInt(response.data.accountData.domainCountBase);
+                if (response.data.accountData.accountLicenceKey != null) {
+                    accountData.accountLicenceKey = response.data.accountData.accountLicenceKey;
+                }
+
+                obj.props.setAccountSubpage('Landing');
+
+                let children = <table><tbody><tr><td className="left">Congratulations, your licence has been renewed.</td><td className="right"><div className="button-word-cont mainmsg dummy">&nbsp;</div></td></tr></tbody></table>;
+                if (context == 'upgrade') {
+                    children = <table><tbody><tr><td className="left">Congratulations, your licence has been upgraded.</td><td className="right"><div className="button-word-cont mainmsg dummy">&nbsp;</div></td></tr></tbody></table>;
+                }
+                obj.props.showMainMsg(children);
             })
             .catch((error)=>{
-                // obj.setDiscountSubmsg(msgDiscountInvalid);
+                obj.setState({
+                    paymentSubmsg: 'An error occurred, please try again.'
+                });
             })
             .then(()=>{
-                // obj.props.setShowMask(false);
-                // obj.setState({
-                //     isCheckingDiscountCode: false
-                // });
-                // obj.props.deleteServerRequestObj(requestObj);
+                obj.props.setShowMask(false);
+                obj.setState({
+                    spinning: false
+                });
+                obj.props.deleteServerRequestObj(requestObj);
             });
         });
     }
@@ -454,7 +472,7 @@ export class Renew extends React.Component {
                     </CSSTransition>
                 </div>
                 <br/><br/>
-                <OrderSummary context={'renew'} getProductName={this.getProductName} selectedLicenceType={this.state.selectedLicenceType} getRenewPrice={this.getRenewPrice} getUpgradePrice={this.getUpgradePrice} getDaysRemainingText={this.getDaysRemainingText} />
+                <OrderSummary context={'renew'} getProductName={this.getProductName} selectedLicenceType={this.state.selectedLicenceType} getRenewPrice={this.getRenewPrice} getDaysRemainingText={this.getDaysRemainingText} />
                 <br/><br/>
                 <Discount discountError={this.state.discountError} discountFocus={this.state.discountFocus} setDiscountFocus={this.setDiscountFocus} checkDiscountCode={this.checkDiscountCode} isCheckingDiscountCode={this.state.isCheckingDiscountCode} discountSubmsg={this.state.discountSubmsg} setDiscountSubmsg={this.setDiscountSubmsg} />
                 <br/>
@@ -544,7 +562,7 @@ export class Upgrade extends React.Component {
                     </div>
                 </div>
                 <br/><br/>
-                <OrderSummary context={'upgrade'} getProductName={this.getProductName} selectedLicenceType={this.state.selectedLicenceType} getRenewPrice={this.getRenewPrice} getUpgradePrice={this.getUpgradePrice} getDaysRemainingText={this.getDaysRemainingText} />
+                <OrderSummary context={'upgrade'} getProductName={this.getProductName} selectedLicenceType={this.state.selectedLicenceType} getUpgradePrice={this.getUpgradePrice} getDaysRemainingText={this.getDaysRemainingText} />
                 <br/><br/>
                 <Discount discountError={this.state.discountError} discountFocus={this.state.discountFocus} setDiscountFocus={this.setDiscountFocus} checkDiscountCode={this.checkDiscountCode} isCheckingDiscountCode={this.state.isCheckingDiscountCode} discountSubmsg={this.state.discountSubmsg} setDiscountSubmsg={this.setDiscountSubmsg} />
                 <br/>

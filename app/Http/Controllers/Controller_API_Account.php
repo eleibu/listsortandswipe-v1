@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\User;
+use DB;
 use App\Classes\Toolkit;
 use App\Mail\SendReceipt;
 use App\Product;
@@ -53,10 +56,28 @@ class Controller_API_Account extends Controller
 		Toolkit::sleep();
 
         if ($request->filled('type', 'productName', 'amount', 'nonce')) {
-			$user = Auth::guard('api')->user();
+        	$user = Auth::guard('api')->user();
+
+
+
+						$accountData = array(
+							'accountType' => 2,
+							'accountExpiresAt' => $user->account_expires_at,
+							'domainCountBase' => 5
+						);
+						// if (isset($user->account_licence_key)) {
+						// 	$accountData['accountLicenceKey'] = $user->account_licence_key;
+						// }
+
+						return response()->json([
+							'accountData' => $accountData
+						], 200);
+
+
+			
 
 			$newLicenceType = intval($request->input('type'));
-			if ($newLicenceType > $user->account_type)) {
+			if ($newLicenceType > $user->account_type) {
 	        	$result = $this->submitPayment($request->input('amount'), $request->input('nonce'));
 
 				if ($result->success) {
@@ -121,28 +142,31 @@ class Controller_API_Account extends Controller
 					DB::commit();
 
 					if ($success) {
-
-
 						$invoice['refnumber'] = Toolkit::getFullReceiptNumber($sale->id);
 						Mail::to($email)
-							->send(new SendInvoice($firstname, $invoice));
+							->send(new SendInvoice($user->name, $invoice));
 
-						// $returnUser = array(
-						// 	'' => []
-						// );
+						$accountData = array(
+							'accountType' => $user->account_type,
+							'accountExpiresAt' => $user->account_expires_at,
+							'domainCountBase' => $user->domain_count_base
+						);
+						if (isset($user->account_licence_key)) {
+							$accountData['accountLicenceKey'] = $user->account_licence_key;
+						}
 
-						// return response()->json([
-						// 	'user' => $returnUser
-						// ], 200);
+						return response()->json([
+							'accountData' => $accountData
+						], 200);
 					} else {
 						return response()->json([
-							'id' => '',
+							'id' => '0ABA1BE4-8DC4-4746-87D8-7FC1279715ED',
 							'message' => 'A database error occurred.'
 						], 500);
 					}
 				} else {
 					return response()->json([
-						'id' => '',
+						'id' => '6A5EC71F-D627-4679-BE89-9B867DDB1758',
 						'message' => 'Credit card billing failed.'
 					], 500);
 				}
