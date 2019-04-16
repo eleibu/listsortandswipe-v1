@@ -62,6 +62,8 @@ export class Account extends React.Component {
                         accountData_countryName={this.props.accountData_countryName}
                         accountData_accountType={this.props.accountData_accountType}
                         accountData_accountExpiresAt={this.props.accountData_accountExpiresAt}
+                        accountData_domainCountAdditional={this.props.accountData_domainCountAdditional}
+                        setAccountData={this.props.setAccountData}
                         setShowMask={this.setShowMask}
                         setAccountSubpage={this.props.setAccountSubpage}
                         showMainMsg={this.props.showMainMsg}
@@ -78,6 +80,8 @@ export class Account extends React.Component {
                         accountData_countryName={this.props.accountData_countryName}
                         accountData_accountType={this.props.accountData_accountType}
                         accountData_accountExpiresAt={this.props.accountData_accountExpiresAt}
+                        accountData_domainCountAdditional={this.props.accountData_domainCountAdditional}
+                        setAccountData={this.props.setAccountData}
                         setShowMask={this.setShowMask}
                         setAccountSubpage={this.props.setAccountSubpage}
                         showMainMsg={this.props.showMainMsg}

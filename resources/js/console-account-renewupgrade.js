@@ -349,18 +349,23 @@ function sharedValidateAndSubmit(obj, context) {
                 }
             })
             .then((response)=>{
-                // console.log(JSON.stringify(response));
-                // this.props.accountData_accountType = parseInt(response.data.this.props.accountData_accountType);
-                // accountData.domainCountBase = parseInt(response.data.accountData.domainCountBase);
-                // if (response.data.accountData.accountLicenceKey != null) {
-                //     accountData.accountLicenceKey = response.data.accountData.accountLicenceKey;
-                // }
+                let accountLicenceKey = null;
+                if (response.data.accountData.accountLicenceKey) {
+                    accountLicenceKey = response.data.accountData.accountLicenceKey;
+                }
+                obj.props.setAccountData(
+                    response.data.accountData.accountType,
+                    accountLicenceKey,
+                    obj.props.accountData_accountExpiresAt,
+                    parseInt(response.data.accountData.domainCountBase),
+                    obj.props.accountData_domainCountAdditional
+                );
 
                 obj.props.setAccountSubpage('Landing');
 
-                let children = <table><tbody><tr><td className="left">Congratulations, your licence has been renewed.</td><td className="right"><div className="button-word-cont mainmsg dummy">&nbsp;</div></td></tr></tbody></table>;
+                let children = <table><tbody><tr><td className="left">Congratulations, your licence has been renewed. Thanks for continuing to support Lithium List.</td><td className="right"><div className="button-word-cont mainmsg dummy">&nbsp;</div></td></tr></tbody></table>;
                 if (context == 'upgrade') {
-                    children = <table><tbody><tr><td className="left">Congratulations, your licence has been upgraded.</td><td className="right"><div className="button-word-cont mainmsg dummy">&nbsp;</div></td></tr></tbody></table>;
+                    children = <table><tbody><tr><td className="left">Congratulations, your licence has been upgraded. Thanks for continuing to support Lithium List.</td><td className="right"><div className="button-word-cont mainmsg dummy">&nbsp;</div></td></tr></tbody></table>;
                 }
                 obj.props.showMainMsg(children);
             })

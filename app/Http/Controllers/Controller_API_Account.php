@@ -65,9 +65,9 @@ class Controller_API_Account extends Controller
 							'accountExpiresAt' => $user->account_expires_at,
 							'domainCountBase' => 5
 						);
-						// if (isset($user->account_licence_key)) {
-						// 	$accountData['accountLicenceKey'] = $user->account_licence_key;
-						// }
+						if (isset($user->account_licence_key)) {
+							$accountData['accountLicenceKey'] = $user->account_licence_key;
+						}
 
 						return response()->json([
 							'accountData' => $accountData

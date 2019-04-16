@@ -71110,18 +71110,17 @@ function sharedValidateAndSubmit(obj, context) {
                     'nonce': payload.nonce
                 }
             }).then(function (response) {
-                // console.log(JSON.stringify(response));
-                // this.props.accountData_accountType = parseInt(response.data.this.props.accountData_accountType);
-                // accountData.domainCountBase = parseInt(response.data.accountData.domainCountBase);
-                // if (response.data.accountData.accountLicenceKey != null) {
-                //     accountData.accountLicenceKey = response.data.accountData.accountLicenceKey;
-                // }
+                var accountLicenceKey = null;
+                if (response.data.accountData.accountLicenceKey) {
+                    accountLicenceKey = response.data.accountData.accountLicenceKey;
+                }
+                obj.props.setAccountData(response.data.accountData.accountType, accountLicenceKey, obj.props.accountData_accountExpiresAt, parseInt(response.data.accountData.domainCountBase), obj.props.accountData_domainCountAdditional);
 
                 obj.props.setAccountSubpage('Landing');
 
-                var children = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'left' }, 'Congratulations, your licence has been renewed.'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont mainmsg dummy' }, '\xA0')))));
+                var children = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'left' }, 'Congratulations, your licence has been renewed. Thanks for continuing to support Lithium List.'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont mainmsg dummy' }, '\xA0')))));
                 if (context == 'upgrade') {
-                    children = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'left' }, 'Congratulations, your licence has been upgraded.'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont mainmsg dummy' }, '\xA0')))));
+                    children = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('table', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tbody', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'left' }, 'Congratulations, your licence has been upgraded. Thanks for continuing to support Lithium List.'), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('td', { className: 'right' }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'button-word-cont mainmsg dummy' }, '\xA0')))));
                 }
                 obj.props.showMainMsg(children);
             }).catch(function (error) {
@@ -71779,6 +71778,8 @@ var Account = function (_React$Component) {
                 accountData_countryName: this.props.accountData_countryName,
                 accountData_accountType: this.props.accountData_accountType,
                 accountData_accountExpiresAt: this.props.accountData_accountExpiresAt,
+                accountData_domainCountAdditional: this.props.accountData_domainCountAdditional,
+                setAccountData: this.props.setAccountData,
                 setShowMask: this.setShowMask,
                 setAccountSubpage: this.props.setAccountSubpage,
                 showMainMsg: this.props.showMainMsg,
@@ -71792,6 +71793,8 @@ var Account = function (_React$Component) {
                 accountData_countryName: this.props.accountData_countryName,
                 accountData_accountType: this.props.accountData_accountType,
                 accountData_accountExpiresAt: this.props.accountData_accountExpiresAt,
+                accountData_domainCountAdditional: this.props.accountData_domainCountAdditional,
+                setAccountData: this.props.setAccountData,
                 setShowMask: this.setShowMask,
                 setAccountSubpage: this.props.setAccountSubpage,
                 showMainMsg: this.props.showMainMsg,
@@ -72459,7 +72462,6 @@ var App = function (_React$Component) {
             accountData_accountType: null,
             accountData_accountLicenceKey: null,
             accountData_accountExpiresAt: null,
-            // accountData_hasDomains: null,
             accountData_domainCountBase: null,
             accountData_domainCountAdditional: null,
             tabIndex: 0,
@@ -72474,6 +72476,7 @@ var App = function (_React$Component) {
             mainMsgChildren: null,
             serverRequestObjs: []
         };
+        _this.setAccountData = _this.setAccountData.bind(_this);
         _this.setAccountSubpage = _this.setAccountSubpage.bind(_this);
         _this.tabClick = _this.tabClick.bind(_this);
         _this.setTab = _this.setTab.bind(_this);
@@ -72561,6 +72564,23 @@ var App = function (_React$Component) {
             //        domainsLoaded: true
             //     });
             // }
+        }
+        // this.props.accountData_accountType = parseInt(response.data.this.props.accountData_accountType);
+        // accountData.domainCountBase = parseInt(response.data.accountData.domainCountBase);
+        // if (response.data.accountData.accountLicenceKey != null) {
+        //     accountData.accountLicenceKey = response.data.accountData.accountLicenceKey;
+        // }
+
+    }, {
+        key: 'setAccountData',
+        value: function setAccountData(accountType, accountLicenceKey, accountExpiresAt, domainCountBase, domainCountAdditional) {
+            this.setState({
+                accountData_accountType: accountType,
+                accountData_accountLicenceKey: accountLicenceKey,
+                accountData_accountExpiresAt: accountExpiresAt,
+                accountData_domainCountBase: domainCountBase,
+                accountData_domainCountAdditional: domainCountAdditional
+            });
         }
     }, {
         key: 'setAccountSubpage',
@@ -72938,6 +72958,7 @@ var App = function (_React$Component) {
                 accountData_accountExpiresAt: this.state.accountData_accountExpiresAt,
                 accountData_domainCountBase: this.state.accountData_domainCountBase,
                 accountData_domainCountAdditional: this.state.accountData_domainCountAdditional,
+                setAccountData: this.setAccountData,
                 accountSubpage: this.state.accountSubpage,
                 setAccountSubpage: this.setAccountSubpage,
                 domainsUsed: this.state.domains.length,

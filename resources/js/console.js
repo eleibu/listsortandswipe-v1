@@ -30,7 +30,6 @@ class App extends React.Component {
             accountData_accountType: null,
             accountData_accountLicenceKey: null,
             accountData_accountExpiresAt: null,
-            // accountData_hasDomains: null,
             accountData_domainCountBase: null,
             accountData_domainCountAdditional: null,
             tabIndex: 0,
@@ -45,6 +44,7 @@ class App extends React.Component {
             mainMsgChildren: null,
             serverRequestObjs: []
         };
+        this.setAccountData = this.setAccountData.bind(this);
         this.setAccountSubpage = this.setAccountSubpage.bind(this);
         this.tabClick = this.tabClick.bind(this);
         this.setTab = this.setTab.bind(this);
@@ -129,6 +129,21 @@ class App extends React.Component {
         //        domainsLoaded: true
         //     });
         // }
+    }
+                // this.props.accountData_accountType = parseInt(response.data.this.props.accountData_accountType);
+                // accountData.domainCountBase = parseInt(response.data.accountData.domainCountBase);
+                // if (response.data.accountData.accountLicenceKey != null) {
+                //     accountData.accountLicenceKey = response.data.accountData.accountLicenceKey;
+                // }
+
+    setAccountData(accountType, accountLicenceKey, accountExpiresAt, domainCountBase, domainCountAdditional) {
+        this.setState({
+            accountData_accountType: accountType,
+            accountData_accountLicenceKey: accountLicenceKey,
+            accountData_accountExpiresAt: accountExpiresAt,
+            accountData_domainCountBase: domainCountBase,
+            accountData_domainCountAdditional: domainCountAdditional
+        });
     }
     setAccountSubpage(name) {
         this.setState({
@@ -476,6 +491,7 @@ class App extends React.Component {
                                     accountData_accountExpiresAt={this.state.accountData_accountExpiresAt}
                                     accountData_domainCountBase={this.state.accountData_domainCountBase}
                                     accountData_domainCountAdditional={this.state.accountData_domainCountAdditional}
+                                    setAccountData={this.setAccountData}
                                     accountSubpage={this.state.accountSubpage}
                                     setAccountSubpage={this.setAccountSubpage}
                                     domainsUsed={this.state.domains.length}
