@@ -23,6 +23,8 @@ Route::middleware(['throttle:60,1'])->group(function () {
 });
 
 Route::middleware(['auth:api','activated:api', 'throttle:60,1'])->group(function () {
+	Route::get('/web/v1/console-loadpage', 'Controller_API_Console@api_loadpage');
+
 	Route::get('/public/v1/domains', 'Controller_API_Domains@get');						// retrieve domains
 	Route::post('/public/v1/domains', 'Controller_API_Domains@post');					// create new domain
 	Route::put('/public/v1/domains/{id}', 'Controller_API_Domains@put');				// done, description, reorder, delete or undelete context

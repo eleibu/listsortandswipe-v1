@@ -15,8 +15,8 @@ const idDivPaymentCVV = 'div-payment-cvv';
 function sharedConstructor(obj, context) {
     const state = {
         spinning: false,
-        willChangeLicenceType: (accountData.accountType == 0),   // if free trial you must change the licence type, otherwise initial setting is to keep the same licence
-        selectedLicenceType: ((accountData.accountType == 0) ? 2 : accountData.accountType),
+        willChangeLicenceType: (obj.props.accountData_accountType == 0),   // if free trial you must change the licence type, otherwise initial setting is to keep the same licence
+        selectedLicenceType: ((obj.props.accountData_accountType == 0) ? 2 : obj.props.accountData_accountType),
         upgradePriceMultiplier: 1,
         isCheckingDiscountCode: false,
         discountError: false,
@@ -32,13 +32,13 @@ function sharedConstructor(obj, context) {
     };
 
     if (context == 'renew') {
-        if (accountData.accountType == 0) {
+        if (obj.props.accountData_accountType == 0) {
             state.selectedLicenceType = 2;
         } else {
-            state.selectedLicenceType = accountData.accountType;
+            state.selectedLicenceType = obj.props.accountData_accountType;
         }
     } else {
-        state.selectedLicenceType = accountData.accountType + 1;
+        state.selectedLicenceType = obj.props.accountData_accountType + 1;
     }
     obj.state = state;
 
@@ -62,7 +62,7 @@ function sharedConstructor(obj, context) {
 
 function sharedComponentDidMount(obj) {
     const secsInYear = 31536000;
-    const secsRemaining = moment.utc(accountData.accountExpiresAt).diff(moment.utc(), 'seconds');
+    const secsRemaining = moment.utc(obj.props.accountData_accountExpiresAt).diff(moment.utc(), 'seconds');
     obj.setState({
         upgradePriceMultiplier: secsRemaining / secsInYear
     });
@@ -222,7 +222,7 @@ function sharedGetUpgradePrice(obj, type) {
 }
 
 function sharedGetDaysRemainingText(obj) {
-    const days = moment.utc(accountData.accountExpiresAt).diff(moment.utc(), 'days');
+    const days = moment.utc(obj.props.accountData_accountExpiresAt).diff(moment.utc(), 'days');
     if (days == 1) {
         return '1 day';
     }
@@ -349,12 +349,12 @@ function sharedValidateAndSubmit(obj, context) {
                 }
             })
             .then((response)=>{
-                console.log(JSON.stringify(response));
-                accountData.accountType = parseInt(response.data.accountData.accountType);
-                accountData.domainCountBase = parseInt(response.data.accountData.domainCountBase);
-                if (response.data.accountData.accountLicenceKey != null) {
-                    accountData.accountLicenceKey = response.data.accountData.accountLicenceKey;
-                }
+                // console.log(JSON.stringify(response));
+                // this.props.accountData_accountType = parseInt(response.data.this.props.accountData_accountType);
+                // accountData.domainCountBase = parseInt(response.data.accountData.domainCountBase);
+                // if (response.data.accountData.accountLicenceKey != null) {
+                //     accountData.accountLicenceKey = response.data.accountData.accountLicenceKey;
+                // }
 
                 obj.props.setAccountSubpage('Landing');
 
@@ -425,14 +425,14 @@ export class Renew extends React.Component {
         sharedValidateAndSubmit(this, context);
     }
     render() {
-        const diffMinutes = getDiffMinutes(accountData.accountExpiresAt);
+        const diffMinutes = getDiffMinutes(this.props.accountData_accountExpiresAt);
         return (
             <div className="content-inner renewupgrade-cont">
                 <div className="page-title default">
                     <i className="oln icon-reload-ui"></i><strong>Renew</strong> <span>licence</span>
                 </div>
                 <br/><br/>
-                <CurrentLicence diffMinutes={diffMinutes} />
+                <CurrentLicence diffMinutes={diffMinutes} accountData_accountExpiresAt={this.props.accountData_accountExpiresAt} accountData_accountType={this.props.accountData_accountType} />
                 <br/><br/>
                 <div className="section-cont">
                     <div className="title">
@@ -459,20 +459,31 @@ export class Renew extends React.Component {
                     <CSSTransition in={(this.state.willChangeLicenceType)} classNames="renewtype-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
                         <div>
                             <div className="para">
-                                {(accountData.accountType == 0) ? (
+                                {(this.props.accountData_accountType == 0) ? (
                                     <React.Fragment>Select your licence type:</React.Fragment>
                                 ) : (
                                     <React.Fragment>Select new licence type:</React.Fragment>
                                 )}
                             </div>
                             <div className="para">
-                                <LicenceTypes context={'renew'} selectedLicenceType={this.state.selectedLicenceType} setSelectedLicenceType={this.setSelectedLicenceType} getUpgradePrice={this.getUpgradePrice} getDaysRemainingText={this.getDaysRemainingText} />
+                                <LicenceTypes context={'renew'} accountData_accountType={this.props.accountData_accountType} selectedLicenceType={this.state.selectedLicenceType} setSelectedLicenceType={this.setSelectedLicenceType} getUpgradePrice={this.getUpgradePrice} getDaysRemainingText={this.getDaysRemainingText} />
                             </div>
                         </div>
                     </CSSTransition>
                 </div>
                 <br/><br/>
-                <OrderSummary context={'renew'} getProductName={this.getProductName} selectedLicenceType={this.state.selectedLicenceType} getRenewPrice={this.getRenewPrice} getDaysRemainingText={this.getDaysRemainingText} />
+                <OrderSummary
+                    context={'renew'}
+                    accountData_accountExpiresAt={this.props.accountData_accountExpiresAt}
+                    accountData_name={this.props.accountData_name}
+                    accountData_surname={this.props.accountData_surname}
+                    accountData_companyName={this.props.accountData_companyName}
+                    accountData_countryName={this.props.accountData_countryName}
+                    getProductName={this.getProductName}
+                    selectedLicenceType={this.state.selectedLicenceType}
+                    getRenewPrice={this.getRenewPrice}
+                    getDaysRemainingText={this.getDaysRemainingText}
+                />
                 <br/><br/>
                 <Discount discountError={this.state.discountError} discountFocus={this.state.discountFocus} setDiscountFocus={this.setDiscountFocus} checkDiscountCode={this.checkDiscountCode} isCheckingDiscountCode={this.state.isCheckingDiscountCode} discountSubmsg={this.state.discountSubmsg} setDiscountSubmsg={this.setDiscountSubmsg} />
                 <br/>
@@ -539,14 +550,14 @@ export class Upgrade extends React.Component {
         sharedValidateAndSubmit(this, context);
     }
     render() {
-        const diffMinutes = getDiffMinutes(accountData.accountExpiresAt);
+        const diffMinutes = getDiffMinutes(this.props.accountData_accountExpiresAt);
         return (
             <div className="content-inner renewupgrade-cont">
                 <div className="page-title default">
                     <i className="oln icon-uploading-ui"></i><strong>Upgrade</strong> <span>licence</span>
                 </div>
                 <br/><br/>
-                <CurrentLicence diffMinutes={diffMinutes} />
+                <CurrentLicence diffMinutes={diffMinutes} accountData_accountExpiresAt={this.props.accountData_accountExpiresAt} accountData_accountType={this.props.accountData_accountType} />
                 <br/><br/>
                 <div className="section-cont">
                     <div className="title">
@@ -557,12 +568,23 @@ export class Upgrade extends React.Component {
                             Select your new licence type:
                         </div>
                         <div>
-                            <LicenceTypes context={'upgrade'} selectedLicenceType={this.state.selectedLicenceType} setSelectedLicenceType={this.setSelectedLicenceType} getUpgradePrice={this.getUpgradePrice} getDaysRemainingText={this.getDaysRemainingText} />
+                            <LicenceTypes context={'upgrade'} accountData_accountType={this.props.accountData_accountType} selectedLicenceType={this.state.selectedLicenceType} setSelectedLicenceType={this.setSelectedLicenceType} getUpgradePrice={this.getUpgradePrice} getDaysRemainingText={this.getDaysRemainingText} />
                         </div>
                     </div>
                 </div>
                 <br/><br/>
-                <OrderSummary context={'upgrade'} getProductName={this.getProductName} selectedLicenceType={this.state.selectedLicenceType} getUpgradePrice={this.getUpgradePrice} getDaysRemainingText={this.getDaysRemainingText} />
+                <OrderSummary
+                    context={'upgrade'}
+                    accountData_accountExpiresAt={this.props.accountData_accountExpiresAt}
+                    accountData_name={this.props.accountData_name}
+                    accountData_surname={this.props.accountData_surname}
+                    accountData_companyName={this.props.accountData_companyName}
+                    accountData_countryName={this.props.accountData_countryName}
+                    getProductName={this.getProductName}
+                    selectedLicenceType={this.state.selectedLicenceType}
+                    getUpgradePrice={this.getUpgradePrice}
+                    getDaysRemainingText={this.getDaysRemainingText}
+                />
                 <br/><br/>
                 <Discount discountError={this.state.discountError} discountFocus={this.state.discountFocus} setDiscountFocus={this.setDiscountFocus} checkDiscountCode={this.checkDiscountCode} isCheckingDiscountCode={this.state.isCheckingDiscountCode} discountSubmsg={this.state.discountSubmsg} setDiscountSubmsg={this.setDiscountSubmsg} />
                 <br/>
@@ -597,10 +619,10 @@ const CurrentLicence = (props) => {
                 {title}
             </div>
             <div className="para">
-                <strong>{label}:</strong> {expiresText(accountData.accountExpiresAt, accountData.accountType)}
+                <strong>{label}:</strong> {expiresText(props.accountData_accountExpiresAt, props.accountData_accountType)}
             </div>
             <div className="para">
-                <strong>Type:</strong> {getLicenceTypeText(accountData.accountType)}
+                <strong>Type:</strong> {getLicenceTypeText(props.accountData_accountType)}
             </div>
         </div>
     );
@@ -623,7 +645,7 @@ class LicenceTypes extends React.Component {
             if (this.props.context == 'renew') {
                 this.props.setSelectedLicenceType(type);
             } else {
-                if (type > accountData.accountType) {
+                if (type > this.props.accountData_accountType) {
                     this.props.setSelectedLicenceType(type);
                 }
             }
@@ -704,22 +726,22 @@ class LicenceTypes extends React.Component {
             basicLabelsContClasses = classNames({
                 'labels-cont' : true,
                 'xsonly' : true,
-                'active' : accountData.accountType < 1
+                'active' : this.props.accountData_accountType < 1
             });
             basicDetailsContClasses = classNames({
                 'details-cont' : true,
-                'active' : accountData.accountType < 1,
+                'active' : this.props.accountData_accountType < 1,
                 'selected' : this.props.selectedLicenceType == 1,
                 'hover' : this.state.basicHover
             });
             professionalLabelsContClasses = classNames({
                 'labels-cont' : true,
                 'xsonly' : true,
-                'active' : accountData.accountType < 2
+                'active' : this.props.accountData_accountType < 2
             });
             professionalDetailsContClasses = classNames({
                 'details-cont' : true,
-                'active' : accountData.accountType < 2,
+                'active' : this.props.accountData_accountType < 2,
                 'selected' : this.props.selectedLicenceType == 2,
                 'hover' : this.state.professionalHover
             });
@@ -864,7 +886,7 @@ class LicenceTypes extends React.Component {
                                 &nbsp;
                             </div>
                         ) : (
-                            (accountData.accountType == 1) ? (
+                            (this.props.accountData_accountType == 1) ? (
                                 <div className="lbltop current">
                                     CURRENT
                                 </div>
@@ -999,7 +1021,7 @@ class LicenceTypes extends React.Component {
                                 RECOMMENDED<img src={images_url + 'recommended-arrow.png'} alt="" width="40" height="8"/>
                             </div>
                         ) : (
-                            (accountData.accountType == 2) ? (
+                            (this.props.accountData_accountType == 2) ? (
                                 <div className="lbltop current">
                                     CURRENT
                                 </div>
@@ -1134,7 +1156,7 @@ class LicenceTypes extends React.Component {
                                 &nbsp;
                             </div>
                         ) : (
-                            (accountData.accountType == 3) ? (
+                            (this.props.accountData_accountType == 3) ? (
                                 <div className="lbltop current">
                                     CURRENT
                                 </div>
@@ -1215,8 +1237,8 @@ const OrderSummary = (props) => {
     const taxes = '$0.00';
     const total = price;
 
-    let expires = moment(accountData.accountExpiresAt).add(1, 'years').format('LL');
-    if (getDiffMinutes(accountData.accountExpiresAt) <= 0) {
+    let expires = moment(props.accountData_accountExpiresAt).add(1, 'years').format('LL');
+    if (getDiffMinutes(props.accountData_accountExpiresAt) <= 0) {
         expires = moment().add(1, 'years').format('LL');
     }
     return (
@@ -1226,11 +1248,11 @@ const OrderSummary = (props) => {
             </div>
             <div className="">
                 <div className="para address">
-                    <p>{accountData.name} {accountData.surname}</p>
-                    {accountData.companyName != null &&
-                        <p>{accountData.companyName}</p>
+                    <p>{props.accountData_name} {props.accountData_surname}</p>
+                    {props.accountData_companyName != null &&
+                        <p>{props.accountData_companyName}</p>
                     }
-                    <p>{accountData.countryName}</p>
+                    <p>{props.accountData_countryName}</p>
                 </div>
                 <div className="para orderdetails">
                     <table cellPadding="0" cellSpacing="0">

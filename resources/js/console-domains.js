@@ -220,7 +220,7 @@ export class Domains extends React.Component {
                                 ADD DOMAIN
                             </div>
                         </div>
-                        <CSSTransition in={(accountData.domainCountBase + accountData.domainCountAdditional - this.props.domains.length == 0)} classNames="add-item-mask-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
+                        <CSSTransition in={(this.props.accountData_domainCountBase + this.props.accountData_domainCountAdditional - this.props.domains.length == 0)} classNames="add-item-mask-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
                             <div className="add-item-mask-cont">
                                 <div className="add-item-mask-outer">
                                     <div className="add-item-mask-inner">
@@ -386,10 +386,10 @@ class Domain extends React.Component {
                             <span className="label">Licence key:</span>
                             {(this.props.licence_key != null) ? (
                                 <React.Fragment>
-                                    {(accountData.accountType == 3 && accountData.accountLicenceKey != null) ? (
+                                    {(this.props.accountData_accountType == 3 && this.props.accountData_accountLicenceKey != null) ? (
                                         <React.Fragment>
-                                            <input type="text" readOnly={true} ref={(input) => { this.inputCopy = input; }} style={inputStyle} value={accountData.accountLicenceKey} />
-                                            <span className={spanClasses}>{accountData.accountLicenceKey}</span>
+                                            <input type="text" readOnly={true} ref={(input) => { this.inputCopy = input; }} style={inputStyle} value={this.props.accountData_accountLicenceKey} />
+                                            <span className={spanClasses}>{this.props.accountData_accountLicenceKey}</span>
                                         </React.Fragment>
                                     ) : (
                                         <React.Fragment>

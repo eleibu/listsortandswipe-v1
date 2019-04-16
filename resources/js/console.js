@@ -22,13 +22,24 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            tabIndex: 1,
+            accountData_name: null,
+            accountData_surname: null,
+            accountData_email: null,
+            accountData_companyName: null,
+            accountData_countryName: null,
+            accountData_accountType: null,
+            accountData_accountLicenceKey: null,
+            accountData_accountExpiresAt: null,
+            // accountData_hasDomains: null,
+            accountData_domainCountBase: null,
+            accountData_domainCountAdditional: null,
+            tabIndex: 0,
             accountSubpage: 'Landing',
             // tabIndex: 1,
             // accountSubpage: 'Upgrade',
             domainsLoaded: false,
-            domainsMsgShow : isBelowRenewThreshold(accountData.accountExpiresAt, accountData.accountType),
-            domainsMsgText : domainsMsgText(accountData.accountExpiresAt, accountData.accountType),
+            domainsMsgShow : false,
+            domainsMsgText : '',
             domains: [],
             mainMsgShow: false,
             mainMsgChildren: null,
@@ -50,36 +61,74 @@ class App extends React.Component {
         this.deleteServerRequestObj = this.deleteServerRequestObj.bind(this);
     }
     componentDidMount() {
-        if (accountData.hasDomains) {
-            const requestObj = requestObjCreate(axios.CancelToken);
-            this.addServerRequestObj(requestObj);
-            let url = api_url_public + 'domains';
-            axios({
-                method: 'get',
-                url: url,
-                cancelToken: requestObj.source.token
-            })
-            .then((response)=>{
-                this.setState({
-                   domainsLoaded: true,
-                   domains: response.data.domains
-                });
-            })
-            .catch((error)=>{
-                this.setState({
-                   domainsLoaded: true
-                });
-                const children = <table><tbody><tr><td className="left">The server could not be reached. Please try again.</td><td className="right"><div className="button-word-cont mainmsg dummy">&nbsp;</div></td></tr></tbody></table>;
-                this.showMainMsg(children);
-            })
-            .then(()=>{
-                this.deleteServerRequestObj(requestObj);
+        const requestObj = requestObjCreate(axios.CancelToken);
+        this.addServerRequestObj(requestObj);
+
+        let url = api_url_web + 'console-loadpage';
+        axios({
+            method: 'get',
+            url: url,
+            cancelToken: requestObj.source.token
+        })
+        .then((response)=>{
+            this.setState({
+                domainsLoaded: true,
+                accountData_name: response.data.accountData.name,
+                accountData_surname: response.data.accountData.surname,
+                accountData_email: response.data.accountData.email,
+                accountData_companyName: response.data.accountData.companyName,
+                accountData_countryName: response.data.accountData.countryName,
+                accountData_accountType: response.data.accountData.accountType,
+                accountData_accountLicenceKey: response.data.accountData.accountLicenceKey,
+                accountData_accountExpiresAt: response.data.accountData.accountExpiresAt,
+                accountData_domainCountBase: response.data.accountData.domainCountBase,
+                accountData_domainCountAdditional: response.data.accountData.domainCountAdditional,
+                domainsMsgShow : isBelowRenewThreshold(response.data.accountData.accountExpiresAt, response.data.accountData.accountType),
+                domainsMsgText : domainsMsgText(response.data.accountData.accountExpiresAt, response.data.accountData.accountType),
+                domains: response.data.domains
             });
-        } else {
+        })
+        .catch((error)=>{
             this.setState({
                domainsLoaded: true
             });
-        }
+            const children = <table><tbody><tr><td className="left">The server could not be reached. Please try again.</td><td className="right"><div className="button-word-cont mainmsg dummy">&nbsp;</div></td></tr></tbody></table>;
+            this.showMainMsg(children);
+        })
+        .then(()=>{
+            this.deleteServerRequestObj(requestObj);
+        });
+        // if (accountData.hasDomains) {
+        //     const requestObj = requestObjCreate(axios.CancelToken);
+        //     this.addServerRequestObj(requestObj);
+
+        //     let url = api_url_public + 'domains';
+        //     axios({
+        //         method: 'get',
+        //         url: url,
+        //         cancelToken: requestObj.source.token
+        //     })
+        //     .then((response)=>{
+        //         this.setState({
+        //            domainsLoaded: true,
+        //            domains: response.data.domains
+        //         });
+        //     })
+        //     .catch((error)=>{
+        //         this.setState({
+        //            domainsLoaded: true
+        //         });
+        //         const children = <table><tbody><tr><td className="left">The server could not be reached. Please try again.</td><td className="right"><div className="button-word-cont mainmsg dummy">&nbsp;</div></td></tr></tbody></table>;
+        //         this.showMainMsg(children);
+        //     })
+        //     .then(()=>{
+        //         this.deleteServerRequestObj(requestObj);
+        //     });
+        // } else {
+        //     this.setState({
+        //        domainsLoaded: true
+        //     });
+        // }
     }
     setAccountSubpage(name) {
         this.setState({
@@ -398,10 +447,43 @@ class App extends React.Component {
                     {(this.state.domainsLoaded) ? (
                         <div className="content-outer">
                             <CSSTransition in={(this.state.tabIndex == 0)} classNames="domains-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
-                                <Domains domains={this.state.domains} setTab={this.setTab}  setAccountSubpage={this.setAccountSubpage} domainsMsgShow={this.state.domainsMsgShow} domainsMsgText={this.state.domainsMsgText} domainsMsgCloseClick={this.domainsMsgCloseClick} addDomain={this.addDomain} updateDomain={this.updateDomain} sortEnd={this.sortEnd} leftEnd={this.leftEnd} />
+                                <Domains
+                                    accountData_accountType={this.state.accountData_accountType}
+                                    accountData_accountLicenceKey={this.state.accountData_accountLicenceKey}
+                                    accountData_domainCountBase={this.state.accountData_domainCountBase}
+                                    accountData_domainCountAdditional={this.state.accountData_domainCountAdditional}
+                                    domains={this.state.domains}
+                                    setTab={this.setTab}
+                                    setAccountSubpage={this.setAccountSubpage}
+                                    domainsMsgShow={this.state.domainsMsgShow}
+                                    domainsMsgText={this.state.domainsMsgText}
+                                    domainsMsgCloseClick={this.domainsMsgCloseClick}
+                                    addDomain={this.addDomain}
+                                    updateDomain={this.updateDomain}
+                                    sortEnd={this.sortEnd}
+                                    leftEnd={this.leftEnd}
+                                />
                             </CSSTransition>
                             <CSSTransition in={(this.state.tabIndex == 1)} classNames="account-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
-                                <Account accountSubpage={this.state.accountSubpage} setAccountSubpage={this.setAccountSubpage} domainsUsed={this.state.domains.length} showMainMsg={this.showMainMsg} closeMainMsg={this.closeMainMsg} addServerRequestObj={this.addServerRequestObj} deleteServerRequestObj={this.deleteServerRequestObj} />
+                                <Account
+                                    accountData_name={this.state.accountData_name}
+                                    accountData_surname={this.state.accountData_surname}
+                                    accountData_email={this.state.accountData_email}
+                                    accountData_companyName={this.state.accountData_companyName}
+                                    accountData_countryName={this.state.accountData_countryName}
+                                    accountData_accountType={this.state.accountData_accountType}
+                                    accountData_accountLicenceKey={this.state.accountData_accountLicenceKey}
+                                    accountData_accountExpiresAt={this.state.accountData_accountExpiresAt}
+                                    accountData_domainCountBase={this.state.accountData_domainCountBase}
+                                    accountData_domainCountAdditional={this.state.accountData_domainCountAdditional}
+                                    accountSubpage={this.state.accountSubpage}
+                                    setAccountSubpage={this.setAccountSubpage}
+                                    domainsUsed={this.state.domains.length}
+                                    showMainMsg={this.showMainMsg}
+                                    closeMainMsg={this.closeMainMsg}
+                                    addServerRequestObj={this.addServerRequestObj}
+                                    deleteServerRequestObj={this.deleteServerRequestObj}
+                                />
                             </CSSTransition>
                         </div>
                     ) : (

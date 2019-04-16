@@ -27,11 +27,11 @@ export class Landing extends React.Component {
     }
     render() {
         let totalDomainsText = 'domains maximum';
-        if (accountData.domainCountBase + accountData.domainCountAdditional == 1) {
+        if (this.props.accountData_domainCountBase + this.props.accountData_domainCountAdditional == 1) {
             totalDomainsText = 'domain maximum';
         }
         const totalHeightPX = 160;
-        const usedHeightPX = Math.round((this.props.domainsUsed / (accountData.domainCountBase + accountData.domainCountAdditional)) * totalHeightPX);
+        const usedHeightPX = Math.round((this.props.domainsUsed / (this.props.accountData_domainCountBase + this.props.accountData_domainCountAdditional)) * totalHeightPX);
         const styleChartOuter = {
             height: totalHeightPX + 'px'
         };
@@ -56,7 +56,7 @@ export class Landing extends React.Component {
                 transform: 'translateX(100%)'
             };
         }
-        const domainsAvailable = accountData.domainCountBase + accountData.domainCountAdditional - this.props.domainsUsed;
+        const domainsAvailable = this.props.accountData_domainCountBase + this.props.accountData_domainCountAdditional - this.props.domainsUsed;
         let domainsAvailableText;
         switch (domainsAvailable) {
             case 0:
@@ -82,28 +82,28 @@ export class Landing extends React.Component {
         return (
             <div className="content-inner">
                 <div className="contact-cont">
-                    <p className="name">{accountData.name} {accountData.surname}</p>
-                    {(accountData.companyName) &&
-                        <p className="coname">{accountData.companyName}</p>
+                    <p className="name">{this.props.accountData_name} {this.props.accountData_surname}</p>
+                    {(this.props.accountData_companyName) &&
+                        <p className="coname">{this.props.accountData_companyName}</p>
                     }
-                    <p className="email">{accountData.email}</p>
+                    <p className="email">{this.props.accountData_email}</p>
                     <div className="buttons-cont">
                         <span className="textlink" onClick={() => {this.props.setAccountSubpage('ChangePwd') }}>CHANGE PASSWORD</span>
                     </div>
                 </div>
                 <div className="avail-cont">
                     <div className="plan">
-                        <strong>{getLicenceTypeText(accountData.accountType)}</strong> <span className="plan">plan</span>
-                        {(getDiffMinutes(accountData.accountExpiresAt) > 0 && accountData.accountType < 3) &&
+                        <strong>{getLicenceTypeText(this.props.accountData_accountType)}</strong> <span className="plan">plan</span>
+                        {(getDiffMinutes(this.props.accountData_accountExpiresAt) > 0 && this.props.accountData_accountType < 3) &&
                             <React.Fragment>
                                 &nbsp;&nbsp;&nbsp;<span className="textlink" onClick={() => {this.props.setAccountSubpage('Upgrade') }}>UPGRADE</span>
                             </React.Fragment>
                         }
                     </div>
                     <div className="expires">
-                        {(getDiffMinutes(accountData.accountExpiresAt) > 0) ? (
+                        {(getDiffMinutes(this.props.accountData_accountExpiresAt) > 0) ? (
                             <React.Fragment>
-                                Expires: {expiresText(accountData.accountExpiresAt, accountData.accountType)}
+                                Expires: {expiresText(this.props.accountData_accountExpiresAt, this.props.accountData_accountType)}
                             </React.Fragment>
                         ) : (
                             <React.Fragment>
@@ -111,18 +111,18 @@ export class Landing extends React.Component {
                             </React.Fragment>
                         )}
                     </div>
-                    {(isBelowRenewThreshold(accountData.accountExpiresAt, accountData.accountType)) &&
+                    {(isBelowRenewThreshold(this.props.accountData_accountExpiresAt, this.props.accountData_accountType)) &&
                         <div className="buttons-cont">
                             <div className="button-word-cont renew" onClick={() => {this.props.setAccountSubpage('Renew') }}>
                                 RENEW
                             </div>
                         </div>    
                     }
-                    {(getDiffMinutes(accountData.accountExpiresAt) > 0 && accountData.accountType == 3 && accountData.accountLicenceKey != null) &&
+                    {(getDiffMinutes(this.props.accountData_accountExpiresAt) > 0 && this.props.accountData_accountType == 3 && this.props.accountData_accountLicenceKey != null) &&
                         <div className="key-cont">
-                            <input type="text" readOnly={true} ref={(input) => { this.inputCopy = input; }} style={inputStyle} value={accountData.accountLicenceKey} />
+                            <input type="text" readOnly={true} ref={(input) => { this.inputCopy = input; }} style={inputStyle} value={this.props.accountData_accountLicenceKey} />
                             <span className="label">Licence key:</span>
-                            <span className={spanClasses}>{accountData.accountLicenceKey}</span>
+                            <span className={spanClasses}>{this.props.accountData_accountLicenceKey}</span>
                             <span className="copy-cont">
                                 <span className="copy-outer" title="Copy to clipboard" onClick={() => {this.copyClick()}}>
                                     <i className="oln icon-clipboard"></i>
@@ -131,14 +131,14 @@ export class Landing extends React.Component {
                             </span>
                         </div>
                     }
-                    {(getDiffMinutes(accountData.accountExpiresAt) > 0) &&
+                    {(getDiffMinutes(this.props.accountData_accountExpiresAt) > 0) &&
                         <React.Fragment>
                             <div className="chart-cont">
                                 <div style={styleChartOuter} className="chart-outer">
                                     <div style={styleTotalCont} className="bar-cont total">
                                         <div className="bar-outer">
                                             <div className="label left">
-                                                <div className="count">{accountData.domainCountBase + accountData.domainCountAdditional}</div>
+                                                <div className="count">{this.props.accountData_domainCountBase + this.props.accountData_domainCountAdditional}</div>
                                                 <div className="text">{totalDomainsText}</div>
                                             </div>
                                         </div>

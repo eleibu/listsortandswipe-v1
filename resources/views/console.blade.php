@@ -44,27 +44,6 @@
         var api_url_public = "{{ url('/api/public/v1/') }}/";
         var api_url_web = "{{ url('/api/web/v1/') }}/";
         var images_url = "{{ url('images') }}/";
-        var accountData = {
-            name: "{{$name}}",
-            surname: "{{$surname}}",
-            email: "{{$email}}",
-            @if(isset($companyName))
-                companyName: "{{$companyName}}",
-            @else
-                companyName: null,
-            @endif
-            countryName: "{{$countryName}}",
-            accountType: {{$accountType}},
-            @if(isset($accountLicenceKey))
-                accountLicenceKey: "{{$accountLicenceKey}}",
-            @else
-                accountLicenceKey: null,
-            @endif
-            accountExpiresAt: "{{$accountExpiresAt}}",
-            hasDomains: {{$hasDomains == 1 ? 'true' : 'false'}},
-            domainCountBase: {{$domainCountBase}},
-            domainCountAdditional: {{$domainCountAdditional}}
-        };
         var licenceDetails = {!!$licenceDetails!!};
         var msgPasswordDefault = "{!! $msgPasswordDefault !!}";
         var msgPasswordNoBlank = "{!! $msgPasswordNoBlank !!}";

@@ -113,7 +113,7 @@ export class ChangePwd extends React.Component {
             const requestObj = requestObjCreate(axios.CancelToken);
             this.props.addServerRequestObj(requestObj);
 
-            let url = api_url_public + 'users/' + accountData.email;
+            let url = api_url_public + 'users/' + this.props.accountData_email;
             axios({
                 method: 'put',
                 url: url,
