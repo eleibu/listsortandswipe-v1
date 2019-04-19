@@ -356,26 +356,26 @@ class Controller_Auth_SignUp extends Controller
 				$licencePeriodSecs = 31536000;	// 1 year
 				$user->account_type = 1;
 				$user->account_expires_at = Carbon::now('UTC')->addYear();
-				$user->domain_count_base = Toolkit::getDomainCount(1);
+				$user->domain_count_base = Toolkit::getDomainCountBase(1);
 				break;
 			case $productIDs['accountTypeProfessional']:
 				$licencePeriodSecs = 31536000;	// 1 year
 				$user->account_type = 2;
 				$user->account_expires_at = Carbon::now('UTC')->addYear();
-				$user->domain_count_base = Toolkit::getDomainCount(2);
+				$user->domain_count_base = Toolkit::getDomainCountBase(2);
 				break;
 			case $productIDs['accountTypeEnterprise']:
 				$licencePeriodSecs = 31536000;	// 1 year
 				$user->account_type = 3;
 				$user->account_expires_at = Carbon::now('UTC')->addYear();
-				$user->domain_count_base = Toolkit::getDomainCount(3);
+				$user->domain_count_base = Toolkit::getDomainCountBase(3);
 				$user->account_licence_key = str_random(30);
 				break;
 			default:
 				$licencePeriodSecs = 2592000;	// 30 days
 				$user->account_type = 0;
 				$user->account_expires_at = Carbon::now('UTC')->addDays(30);
-				$user->domain_count_base = Toolkit::getDomainCount(0);
+				$user->domain_count_base = Toolkit::getDomainCountBase(0);
 		}
 
 		$user->domain_count_additional = 0;
@@ -420,7 +420,7 @@ class Controller_Auth_SignUp extends Controller
 
 			$invoice['refnumber'] = Toolkit::getFullReceiptNumber($sale->id);
 			Mail::to($email)
-				->send(new SendInvoice($firstname, $invoice));
+				->send(new SendReceipt($firstname, $invoice));
 
 			$pageInfo = Toolkit::pageInfo();
 			return view('signup')

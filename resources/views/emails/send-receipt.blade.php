@@ -34,22 +34,23 @@
                     </tr>
                     <tr>
                         <td colspan="2" style="padding: 0.6em;">{{$invoice['productName']}}</td>
-                        <td style="padding: 0.6em; width: 10%; text-align: right;">{{ '$' . ($invoice['price'] / 100) . '.00' }}</td>
+                        <td style="padding: 0.6em; width: 10%; text-align: right;">{{ '$' . number_format($invoice['price'] / 100, 2) }}</td>
                     </tr>
                     <tr>
+
                         <td>&nbsp;</td>
                         <td style="padding: 0.6em;width: 40%; border-top: 1px solid #777777;">Subtotal</td>
-                        <td style="padding: 0.6em; width: 10%; text-align: right; border-top: 1px solid #777777;">{{ '$' . ($invoice['price'] / 100) . '.00' }}</td>
+                        <td style="padding: 0.6em; width: 10%; text-align: right; border-top: 1px solid #777777;">{{ '$' . number_format($invoice['price'] / 100, 2) }}</td>
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
                         <td style="padding: 0.6em;width: 40%; border-bottom: 1px solid #777777;">Taxes</td>
-                        <td style="padding: 0.6em; width: 10%; text-align: right; border-bottom: 1px solid #777777;">{{ '$' . ($invoice['taxes'] / 100) . '.00' }}</td>
+                        <td style="padding: 0.6em; width: 10%; text-align: right; border-bottom: 1px solid #777777;">{{ '$' . number_format($invoice['taxes'] / 100, 2) }}</td>
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
                         <td style="padding: 0.6em;width: 40%;"><strong>Total</strong></td>
-                        <td style="padding: 0.6em; width: 10%; text-align: right;"><strong>{{ '$' . ($invoice['total'] / 100) . '.00' }}</strong></td>
+                        <td style="padding: 0.6em; width: 10%; text-align: right;"><strong>{{ '$' . number_format($invoice['total'] / 100, 2) }}</strong></td>
                     </tr>
                 </tbody>
             </table>

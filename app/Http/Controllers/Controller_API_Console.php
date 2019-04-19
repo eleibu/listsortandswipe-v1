@@ -12,7 +12,7 @@ class Controller_API_Console extends Controller
 {
     public function api_loadpage(Request $request) {
     	Toolkit::sleep();
-    	
+
 		$user = Auth::guard('api')->user();
 
 		$accountData = array(

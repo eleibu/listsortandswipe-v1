@@ -8,7 +8,7 @@ class Toolkit {
 		sleep (1);
 	}
 
-	public static function getDomainCount($licenceType) {	
+	public static function getDomainCountBase($licenceType) {	
 		switch($licenceType) {
 			case 1:
 				// basic

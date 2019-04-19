@@ -335,8 +335,6 @@ function sharedValidateAndSubmit(obj, context) {
                 amount = obj.getUpgradePrice(obj.state.selectedLicenceType);
             }
 
-            // if renewing to lower licence, show warning that excess domains will be deleted!!!!!
-
             const url = api_url_web + 'account-' + context;
             axios({
                 method: 'post',
@@ -353,20 +351,32 @@ function sharedValidateAndSubmit(obj, context) {
                 if (response.data.accountData.accountLicenceKey) {
                     accountLicenceKey = response.data.accountData.accountLicenceKey;
                 }
-                obj.props.setAccountData(
-                    response.data.accountData.accountType,
-                    accountLicenceKey,
-                    obj.props.accountData_accountExpiresAt,
-                    parseInt(response.data.accountData.domainCountBase),
-                    obj.props.accountData_domainCountAdditional
-                );
+
+                let msg = '';
+                if (context == 'renew') {
+                    obj.props.setAccountData(
+                        response.data.accountData.accountType,
+                        accountLicenceKey,
+                        response.data.accountData.accountExpiresAt,
+                        parseInt(response.data.accountData.domainCountBase),
+                        obj.props.accountData_domainCountAdditional,
+                        response.data.domains
+                    );
+                    msg = 'Congratulations, your licence has been renewed. Thanks for supporting Lithium List.';
+                } else {
+                    obj.props.setAccountData(
+                        response.data.accountData.accountType,
+                        accountLicenceKey,
+                        obj.props.accountData_accountExpiresAt,
+                        parseInt(response.data.accountData.domainCountBase),
+                        obj.props.accountData_domainCountAdditional,
+                        null
+                    );
+                    msg = 'Congratulations, your licence has been upgraded. Thanks for supporting Lithium List.';
+                }
 
                 obj.props.setAccountSubpage('Landing');
-
-                let children = <table><tbody><tr><td className="left">Congratulations, your licence has been renewed. Thanks for continuing to support Lithium List.</td><td className="right"><div className="button-word-cont mainmsg dummy">&nbsp;</div></td></tr></tbody></table>;
-                if (context == 'upgrade') {
-                    children = <table><tbody><tr><td className="left">Congratulations, your licence has been upgraded. Thanks for continuing to support Lithium List.</td><td className="right"><div className="button-word-cont mainmsg dummy">&nbsp;</div></td></tr></tbody></table>;
-                }
+                const children = <table><tbody><tr><td className="left">{msg}</td><td className="right"><div className="button-word-cont mainmsg dummy">&nbsp;</div></td></tr></tbody></table>;
                 obj.props.showMainMsg(children);
             })
             .catch((error)=>{
@@ -431,6 +441,11 @@ export class Renew extends React.Component {
     }
     render() {
         const diffMinutes = getDiffMinutes(this.props.accountData_accountExpiresAt);
+        const deleteDomainsCount = (licenceDetails[this.state.selectedLicenceType].maxDomains + this.props.accountData_domainCountAdditional) - this.props.domainsUsed;
+        const warnDeleteClasses = classNames({
+            'warndelete' : true,
+            'show' : deleteDomainsCount < 0
+        });
         return (
             <div className="content-inner renewupgrade-cont">
                 <div className="page-title default">
@@ -469,6 +484,11 @@ export class Renew extends React.Component {
                                 ) : (
                                     <React.Fragment>Select new licence type:</React.Fragment>
                                 )}
+                            </div>
+                            <div className="para">
+                                <div className={warnDeleteClasses}>
+                                    <strong>WARNING:</strong> This licence will require {Math.abs(deleteDomainsCount)} of your licence keys to be deleted
+                                </div>
                             </div>
                             <div className="para">
                                 <LicenceTypes context={'renew'} accountData_accountType={this.props.accountData_accountType} selectedLicenceType={this.state.selectedLicenceType} setSelectedLicenceType={this.setSelectedLicenceType} getUpgradePrice={this.getUpgradePrice} getDaysRemainingText={this.getDaysRemainingText} />
@@ -941,7 +961,7 @@ class LicenceTypes extends React.Component {
                         <i className="sld icon-check-ui"></i>
                     </div>
                     <div className="row">
-                        1
+                        {licenceDetails['1'].maxDomains}
                     </div>
                     <div className="row">
                         Per domain
@@ -1076,7 +1096,7 @@ class LicenceTypes extends React.Component {
                         <i className="sld icon-check-ui"></i>
                     </div>
                     <div className="row">
-                        5
+                        {licenceDetails['2'].maxDomains}
                     </div>
                     <div className="row">
                         Per domain
@@ -1211,7 +1231,7 @@ class LicenceTypes extends React.Component {
                         <i className="sld icon-check-ui"></i>
                     </div>
                     <div className="row">
-                        35
+                        {licenceDetails['3'].maxDomains}
                     </div>
                     <div className="row">
                         Per account

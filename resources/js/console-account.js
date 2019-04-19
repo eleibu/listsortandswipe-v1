@@ -63,6 +63,7 @@ export class Account extends React.Component {
                         accountData_accountType={this.props.accountData_accountType}
                         accountData_accountExpiresAt={this.props.accountData_accountExpiresAt}
                         accountData_domainCountAdditional={this.props.accountData_domainCountAdditional}
+                        domainsUsed={this.props.domainsUsed}
                         setAccountData={this.props.setAccountData}
                         setShowMask={this.setShowMask}
                         setAccountSubpage={this.props.setAccountSubpage}

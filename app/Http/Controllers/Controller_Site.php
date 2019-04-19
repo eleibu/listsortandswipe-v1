@@ -51,15 +51,18 @@ class Controller_Site extends Controller
 		$licenceDetails = array(
 			1 => array(
 				'name' => $this->getProductName($dbProductBasic->description),
-				'priceCents' => $dbProductBasic->price_cents
+				'priceCents' => $dbProductBasic->price_cents,
+				'maxDomains' => Toolkit::getDomainCountBase(1)
 			),
 			2 => array(
 				'name' => $this->getProductName($dbProductProfessional->description),
-				'priceCents' => $dbProductProfessional->price_cents
+				'priceCents' => $dbProductProfessional->price_cents,
+				'maxDomains' => Toolkit::getDomainCountBase(2)
 			),
 			3 => array(
 				'name' => $this->getProductName($dbProductEnterprise->description),
-				'priceCents' => $dbProductEnterprise->price_cents
+				'priceCents' => $dbProductEnterprise->price_cents,
+				'maxDomains' => Toolkit::getDomainCountBase(3)
 			)
 		);
 
@@ -67,17 +70,6 @@ class Controller_Site extends Controller
 			->with('clientToken', $this->gateway->clientToken()->generate())
             ->with('signoutName', $pageInfo['signout']['name'])
             ->with('signoutPath', $pageInfo['signout']['path'])
-   //          ->with('name', $user->name)
-   //          ->with('surname', $user->surname)
-   //          ->with('email', $user->email)
-   //          ->with('companyName', $user->company_name)
-   //          ->with('countryName', Toolkit::getCountryName($user->country_code))
-   //          ->with('accountType', $user->account_type)
-   //          ->with('accountLicenceKey', $user->account_licence_key)
-   //          ->with('accountExpiresAt', $user->account_expires_at)
-   //          ->with('hasDomains', $hasDomains)
-   //          ->with('domainCountBase', $user->domain_count_base)
-			// ->with('domainCountAdditional', $user->domain_count_additional)
 			->with('licenceDetails', json_encode($licenceDetails))
             ->with('msgPasswordDefault', $this->msgPasswordDefault)
             ->with('msgPasswordNoBlank', $this->msgPasswordNoBlank)

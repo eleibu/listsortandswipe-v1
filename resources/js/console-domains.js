@@ -220,7 +220,7 @@ export class Domains extends React.Component {
                                 ADD DOMAIN
                             </div>
                         </div>
-                        <CSSTransition in={(this.props.accountData_domainCountBase + this.props.accountData_domainCountAdditional - this.props.domains.length == 0)} classNames="add-item-mask-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
+                        <CSSTransition in={(this.props.accountData_domainCountBase + this.props.accountData_domainCountAdditional - this.props.domains.length < 1)} classNames="add-item-mask-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
                             <div className="add-item-mask-cont">
                                 <div className="add-item-mask-outer">
                                     <div className="add-item-mask-inner">
@@ -424,6 +424,3 @@ class Domain extends React.Component {
         );
     }
 }
-
-
-

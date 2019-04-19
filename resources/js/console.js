@@ -36,6 +36,7 @@ class App extends React.Component {
             accountSubpage: 'Landing',
             // tabIndex: 1,
             // accountSubpage: 'Upgrade',
+            pageError : false,
             domainsLoaded: false,
             domainsMsgShow : false,
             domainsMsgText : '',
@@ -90,60 +91,25 @@ class App extends React.Component {
         })
         .catch((error)=>{
             this.setState({
-               domainsLoaded: true
+                pageError: true
             });
-            const children = <table><tbody><tr><td className="left">The server could not be reached. Please try again.</td><td className="right"><div className="button-word-cont mainmsg dummy">&nbsp;</div></td></tr></tbody></table>;
-            this.showMainMsg(children);
         })
         .then(()=>{
             this.deleteServerRequestObj(requestObj);
         });
-        // if (accountData.hasDomains) {
-        //     const requestObj = requestObjCreate(axios.CancelToken);
-        //     this.addServerRequestObj(requestObj);
-
-        //     let url = api_url_public + 'domains';
-        //     axios({
-        //         method: 'get',
-        //         url: url,
-        //         cancelToken: requestObj.source.token
-        //     })
-        //     .then((response)=>{
-        //         this.setState({
-        //            domainsLoaded: true,
-        //            domains: response.data.domains
-        //         });
-        //     })
-        //     .catch((error)=>{
-        //         this.setState({
-        //            domainsLoaded: true
-        //         });
-        //         const children = <table><tbody><tr><td className="left">The server could not be reached. Please try again.</td><td className="right"><div className="button-word-cont mainmsg dummy">&nbsp;</div></td></tr></tbody></table>;
-        //         this.showMainMsg(children);
-        //     })
-        //     .then(()=>{
-        //         this.deleteServerRequestObj(requestObj);
-        //     });
-        // } else {
-        //     this.setState({
-        //        domainsLoaded: true
-        //     });
-        // }
     }
-                // this.props.accountData_accountType = parseInt(response.data.this.props.accountData_accountType);
-                // accountData.domainCountBase = parseInt(response.data.accountData.domainCountBase);
-                // if (response.data.accountData.accountLicenceKey != null) {
-                //     accountData.accountLicenceKey = response.data.accountData.accountLicenceKey;
-                // }
-
-    setAccountData(accountType, accountLicenceKey, accountExpiresAt, domainCountBase, domainCountAdditional) {
-        this.setState({
+    setAccountData(accountType, accountLicenceKey, accountExpiresAt, domainCountBase, domainCountAdditional, domains) {
+        const newState = {
             accountData_accountType: accountType,
             accountData_accountLicenceKey: accountLicenceKey,
             accountData_accountExpiresAt: accountExpiresAt,
             accountData_domainCountBase: domainCountBase,
-            accountData_domainCountAdditional: domainCountAdditional
-        });
+            accountData_domainCountAdditional: domainCountAdditional            
+        };
+        if (domains != null) {
+            newState['domains'] = domains;
+        }
+        this.setState(newState);
     }
     setAccountSubpage(name) {
         this.setState({
@@ -426,6 +392,8 @@ class App extends React.Component {
         });
     }
     render() {
+        const addHeight = 7.2;
+        const domainHeight = 4.8;
         const tab0Classes = classNames({
             'tab-cont' : true,
             'selected' : this.state.tabIndex == 0,
@@ -503,7 +471,13 @@ class App extends React.Component {
                             </CSSTransition>
                         </div>
                     ) : (
-                        <DomainMasksCont />
+                        <React.Fragment>
+                            {(this.state.pageError) ? (
+                                <PageErrorCont addHeight={addHeight} domainHeight={domainHeight} />
+                            ) : (
+                                <DomainMasksCont addHeight={addHeight} domainHeight={domainHeight} />
+                            )}
+                        </React.Fragment>
                     )}
                 </div>
                 <MainMsg children={this.state.mainMsgChildren} visible={this.state.mainMsgShow} closeClick={this.closeMainMsg} />
@@ -513,8 +487,35 @@ class App extends React.Component {
     }
 }
 
-export const DomainMasksCont = ({}) => {
-    const addHeight = '7.2em';
+const PageErrorCont = (props) => {
+    const contHeight = props.addHeight + (3 * props.domainHeight) + 'em';
+    return (
+        <div className="content-outer">
+            <div className="content-inner">
+                <div className="pageerror-cont" style={{height: contHeight}}>
+                    <div className="emptymsg-cont">
+                        <div className="icon-cont">
+                            <i className="oln icon-alert-sign" />
+                        </div>
+                        <div className="msg-cont">
+                            <div className="msg-outer">
+                                An error occurred
+                            </div>
+                        </div>
+                        <div className="submsg-cont">
+                            <div className="submsg-outer">
+                                The page could not be loaded, please<br/><span className="textlink" onClick={()=>{location.reload()}}>try again</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+const DomainMasksCont = (props) => {
+    const addHeight = props.addHeight + 'em';
     return (
         <div className="content-outer">
             <div className="shimmer">
@@ -532,16 +533,16 @@ export const DomainMasksCont = ({}) => {
                     <div style={{position: 'absolute', right: '0', top: '0', width: '1.4em', height: addHeight, backgroundColor: '#FFFFFF'}}>
                     </div>
                 </div>
-                <DomainMask />
-                <DomainMask />
-                <DomainMask />
+                <DomainMask domainHeight={props.domainHeight} />
+                <DomainMask domainHeight={props.domainHeight} />
+                <DomainMask domainHeight={props.domainHeight} />
             </div>
         </div>
     );
 }
 
-export const DomainMask = ({}) => {
-    const domainHeight = '4.8em';
+const DomainMask = (props) => {
+    const domainHeight = props.domainHeight + 'em';
     return (
         <div style={{position: 'relative'}}>
             <div style={{position: 'absolute', left: '0', top: '0', width: '4em', height: domainHeight, backgroundColor: '#FFFFFF'}}>

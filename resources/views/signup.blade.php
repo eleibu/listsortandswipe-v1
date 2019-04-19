@@ -29,7 +29,7 @@ if (isset($productDetails)) {
     <div class="section-cont">
         <div class="section-outer">
             <div class="page-title default">
-                <i class="oln icon-user-plus"></i><strong>{{$productDetails['pageTitle']}}</strong> <span>plan</span>
+                <i class="oln icon-user-plus"></i><strong>{{$productDetails['pageTitle']}}</strong> <span>licence</span>
             </div>
         </div>
     </div>

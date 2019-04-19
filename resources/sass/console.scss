@@ -362,6 +362,57 @@ span.textlink:hover {
 						}
 					}
 
+					div.emptymsg-cont {
+						position: absolute;
+						// top: 2.6em;
+						left: 0;
+						width: 100%;
+						text-align: center;
+
+						div.icon-cont {
+							i {
+								font-size: 500%;
+								color: #EEEEEE;			
+							}
+						}
+
+						div.msg-cont {
+							margin: 1.4em 22% 0 22%;
+
+							div.msg-outer {
+								font-size: 120%;
+								line-height: 140%;
+								color: #333333;			
+							}
+						}
+
+						div.submsg-cont {
+							margin: 0.6em 22% 0 22%;
+
+							div.submsg-outer {
+								font-size: 85%;
+								line-height: 140%;
+								color: #AAAAAA;
+
+								// span.link {
+								// 	color: #3366CC;
+								// }
+
+								// span.link:hover, span.link:active {
+								// 	cursor: pointer;
+								// 	text-decoration: underline;
+								// }
+							}
+						}
+					}
+
+					div.pageerror-cont {
+						div.emptymsg-cont {
+							top: 50%;
+							transform: translateY(-50%);
+						}
+					}
+
 					div.add-cont {
 						div.message-outer {
 							div.message-inner {
@@ -602,38 +653,38 @@ span.textlink:hover {
 						}
 
 						div.emptymsg-cont {
-							position: absolute;
+							// position: absolute;
 							top: 2.6em;
-							left: 0;
-							width: 100%;
-							text-align: center;
+							// left: 0;
+							// width: 100%;
+							// text-align: center;
 
-							div.icon-cont {
-								i {
-									font-size: 500%;
-									color: #EEEEEE;			
-								}
-							}
+							// div.icon-cont {
+							// 	i {
+							// 		font-size: 500%;
+							// 		color: #EEEEEE;			
+							// 	}
+							// }
 
-							div.msg-cont {
-								margin: 1.4em 22% 0 22%;
+							// div.msg-cont {
+							// 	margin: 1.4em 22% 0 22%;
 
-								div.msg-outer {
-									font-size: 120%;
-									line-height: 140%;
-									color: #333333;			
-								}
-							}
+							// 	div.msg-outer {
+							// 		font-size: 120%;
+							// 		line-height: 140%;
+							// 		color: #333333;			
+							// 	}
+							// }
 
-							div.submsg-cont {
-								margin: 0.6em 22% 0 22%;
+							// div.submsg-cont {
+							// 	margin: 0.6em 22% 0 22%;
 
-								div.submsg-outer {
-									font-size: 85%;
-									line-height: 140%;
-									color: #AAAAAA;
-								}
-							}
+							// 	div.submsg-outer {
+							// 		font-size: 85%;
+							// 		line-height: 140%;
+							// 		color: #AAAAAA;
+							// 	}
+							// }
 						}
 					}
 
@@ -693,7 +744,7 @@ span.textlink:hover {
 								color: #333333;
 							}
 
-							span.plan {
+							span.licence {
 								font-size: 150%;
 								color: #666666;	
 							}
@@ -1032,6 +1083,17 @@ span.textlink:hover {
 
 								img.payment {
 									margin-right: 4px;
+								}
+
+								div.warndelete {
+									padding: 0.2em 0 0.4em 0;
+									color: #FF3B0A;
+									font-size: 90%;
+									visibility: hidden;
+								}
+
+								div.warndelete.show {
+									visibility: visible;
 								}
 
 								div.licence-cont {

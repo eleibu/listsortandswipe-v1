@@ -31,7 +31,10 @@ export class Landing extends React.Component {
             totalDomainsText = 'domain maximum';
         }
         const totalHeightPX = 160;
-        const usedHeightPX = Math.round((this.props.domainsUsed / (this.props.accountData_domainCountBase + this.props.accountData_domainCountAdditional)) * totalHeightPX);
+        let usedHeightPX = Math.round((this.props.domainsUsed / (this.props.accountData_domainCountBase + this.props.accountData_domainCountAdditional)) * totalHeightPX);
+        if (usedHeightPX > 160) {
+            usedHeightPX = 160;
+        }
         const styleChartOuter = {
             height: totalHeightPX + 'px'
         };
@@ -57,17 +60,6 @@ export class Landing extends React.Component {
             };
         }
         const domainsAvailable = this.props.accountData_domainCountBase + this.props.accountData_domainCountAdditional - this.props.domainsUsed;
-        let domainsAvailableText;
-        switch (domainsAvailable) {
-            case 0:
-                domainsAvailableText = 'You have no domains available. Consider upgrading your account or buying more.';
-            break;
-            case 1:
-                domainsAvailableText = 'You have <strong>1 domain</strong> still available.';
-            break;
-            default:
-                domainsAvailableText = 'You have <strong>' + domainsAvailable + ' domains</strong> still available.';
-        }
         const inputStyle = {
             fontSize: '20px',
             position: 'fixed',
@@ -93,7 +85,7 @@ export class Landing extends React.Component {
                 </div>
                 <div className="avail-cont">
                     <div className="plan">
-                        <strong>{getLicenceTypeText(this.props.accountData_accountType)}</strong> <span className="plan">plan</span>
+                        <strong>{getLicenceTypeText(this.props.accountData_accountType)}</strong> <span className="licence">licence</span>
                         {(getDiffMinutes(this.props.accountData_accountExpiresAt) > 0 && this.props.accountData_accountType < 3) &&
                             <React.Fragment>
                                 &nbsp;&nbsp;&nbsp;<span className="textlink" onClick={() => {this.props.setAccountSubpage('Upgrade') }}>UPGRADE</span>
@@ -152,7 +144,31 @@ export class Landing extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="avail-text" dangerouslySetInnerHTML={{__html: domainsAvailableText}} />
+                            <div className="avail-text">
+                                {(domainsAvailable < 1) &&
+                                    <React.Fragment>
+                                        {(this.props.accountData_accountType < 3) ? (
+                                            <React.Fragment>
+                                                You have no domains available. Consider <span className="textlink" onClick={() => {this.props.setAccountSubpage('Upgrade') }}>upgrading your licence</span>.
+                                            </React.Fragment>
+                                        ) : (
+                                            <React.Fragment>
+                                                You have no domains available.
+                                            </React.Fragment>
+                                        )}
+                                    </React.Fragment>
+                                }
+                                {(domainsAvailable == 1) &&
+                                    <React.Fragment>
+                                        You have <strong>1 domain</strong> available.
+                                    </React.Fragment>
+                                }
+                                {(domainsAvailable >= 2) &&
+                                    <React.Fragment>
+                                        You have <strong>{domainsAvailable} domains</strong> available.
+                                    </React.Fragment>
+                                }
+                            </div>
                         </React.Fragment>
                     }
                 </div>
