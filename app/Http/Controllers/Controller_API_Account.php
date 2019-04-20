@@ -9,6 +9,7 @@ use DB;
 use App\Classes\Toolkit;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendReceipt;
+use App\Mail\LogFailureAfterCharge;
 use App\Product;
 use App\Sale;
 use App\Domain;
@@ -32,10 +33,6 @@ class Controller_API_Account extends Controller
         	$result = $this->submitPayment($request->input('amount'), $request->input('nonce'));
 
 			if ($result->success) {
-
-				// MUST TEST ENTERPRISE ACCOUNT (DOMAIN CREATION) AND CHANGE FROM AND TO ENTERPRISE ACCOUNT
-				// CREATE AN ALERT IF DB CHANGES FAIL AFTER CREDIT CARD HAS BEEN CHARGED (here and on sign up page)
-
 				$user = Auth::guard('api')->user();
 
 				$domainIds = json_decode($user->domain_ids);
@@ -64,12 +61,16 @@ class Controller_API_Account extends Controller
 					$newDomainIds = $domainIds;
 				}
 
-				$newAccountExpiresAt = Carbon::createFromTimestamp(strtotime($user->account_expires_at))->addYear();
+				$newAccountExpiresAt = Carbon::createFromTimestamp(strtotime($user->account_expires_at))->addYear()->toDateTimeString();
 
-				if ($newLicenceType != 3) {
-					$accountLicenceKey = null;
+				if ($newLicenceType == 3) {
+					if ($user->account_type != 3) {
+						$accountLicenceKey = str_random(30);
+					} else {
+						$accountLicenceKey = $user->account_licence_key;
+					}
 				} else {
-					$accountLicenceKey = $user->account_licence_key;
+					$accountLicenceKey = null;
 				}
 
 				DB::beginTransaction();
@@ -92,6 +93,11 @@ class Controller_API_Account extends Controller
 						$sale->save();
 					} else {
 						DB::rollback();
+
+						$emailAddresses = Toolkit::emailAddresses();
+						Mail::to($emailAddresses['errorLog'])
+							->send(new LogFailureAfterCharge($user, $invoice, 'Controller_API_Account', '1AAD1607-7A09-47B8-96AE-2D5122352B16'));
+
 						return response()->json([
 							'id' => 'F1E2C56E-C4F1-48D5-B12F-0524D5C765BA',
 							'message' => 'Database conflict.'
@@ -99,6 +105,11 @@ class Controller_API_Account extends Controller
 					}
 				} catch(\Exception $e) {
 				   DB::rollback();
+
+					$emailAddresses = Toolkit::emailAddresses();
+					Mail::to($emailAddresses['errorLog'])
+						->send(new LogFailureAfterCharge($user, $invoice, 'Controller_API_Account', '983246DC-0720-431E-8316-73AF37FA3553'));
+
 				   throw $e;
 				}
 				DB::commit();
@@ -177,6 +188,11 @@ class Controller_API_Account extends Controller
 						$sale->save();
 					} catch(\Exception $e) {
 					   DB::rollback();
+
+						$emailAddresses = Toolkit::emailAddresses();
+						Mail::to($emailAddresses['errorLog'])
+							->send(new LogFailureAfterCharge($user, $invoice, 'Controller_API_Account', '89C7AACB-B7E1-420F-B54A-ACC921038C9F'));
+
 					   throw $e;
 					}
 					DB::commit();

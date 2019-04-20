@@ -44304,12 +44304,17 @@ function validateAndSubmit() {
 					'spinner-cont': true,
 					'spinning': true
 				});
+				divPlaceOrderSubmsg.innerHTML = 'Your order is processing. Please do not refresh or use the back button.';
+				divPlaceOrderSubmsg.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+					'submsg-cont': true
+				});
 				hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
 					if (tokenizeErr) {
 						maskCont.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({});
 						spinnerContPlaceOrder.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
 							'spinner-cont': true
 						});
+						hidePlaceOrderSubmsg();
 
 						switch (tokenizeErr.code) {
 							case 'HOSTED_FIELDS_FIELDS_EMPTY':
@@ -44366,8 +44371,10 @@ function validateAndSubmit() {
 							'submsg-cont': true,
 							'error': true
 						});
-
-						showPlaceOrderSubmsg();
+						divPlaceOrderSubmsg.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+							'submsg-cont': true,
+							'error': true
+						});
 						return;
 					}
 
@@ -44387,7 +44394,10 @@ function validateAndSubmit() {
 		}
 	} else {
 		divPlaceOrderSubmsg.innerHTML = msgPlaceOrderErrors;
-		showPlaceOrderSubmsg();
+		divPlaceOrderSubmsg.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
+			'submsg-cont': true,
+			'error': true
+		});
 	}
 }
 
@@ -44436,15 +44446,8 @@ function setClassesOnHostedFieldBlur() {
 	});
 }
 
-function showPlaceOrderSubmsg() {
-	divPlaceOrderSubmsg.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
-		'submsg-cont': true,
-		'error': true
-	});
-}
-
 function hidePlaceOrderSubmsg() {
-	divPlaceOrderSubmsg.innerHTML = '';
+	divPlaceOrderSubmsg.innerHTML = msgPlaceOrderDefault;
 	divPlaceOrderSubmsg.className = __WEBPACK_IMPORTED_MODULE_1_classNames_dedupe___default()({
 		'submsg-cont': true
 	});

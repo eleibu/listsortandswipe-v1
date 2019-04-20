@@ -223,14 +223,22 @@ export class Domains extends React.Component {
                         <CSSTransition in={(this.props.accountData_domainCountBase + this.props.accountData_domainCountAdditional - this.props.domains.length < 1)} classNames="add-item-mask-trans" timeout={{ enter: 200, exit: 200 }} unmountOnExit>
                             <div className="add-item-mask-cont">
                                 <div className="add-item-mask-outer">
-                                    <div className="add-item-mask-inner">
-                                        <div className="title">
-                                            Need to use Lithium List with more websites?
+                                    {(this.props.accountData_accountType < 3) ? (
+                                        <div className="add-item-mask-inner">
+                                            <div className="title">
+                                                Need to use Lithium List with more websites?
+                                            </div>
+                                            <div className="subtitle">
+                                                <div className="button-word-cont grey" onClick={() => {this.props.setAccountSubpage('Upgrade'); this.props.setTab(1);}}>Upgrade your licence</div>
+                                            </div>
                                         </div>
-                                        <div className="subtitle">
-                                            <div className="button-word-cont grey">Upgrade or buy more domains</div>
+                                    ) : (
+                                        <div className="add-item-mask-inner">
+                                            <div className="title">
+                                                You have no more domains available
+                                            </div>
                                         </div>
-                                    </div>
+                                    )}
                                 </div>
                             </div>
                         </CSSTransition>
@@ -240,7 +248,7 @@ export class Domains extends React.Component {
                     <TransitionGroup component={null}>
                         {this.props.domains.map((domain, index) => (
                             <CSSTransition key={domain.id} classNames="domain-trans" timeout={{ enter: 200, exit: 200 }}>
-                                <Domain id={domain.id} index={index} domain={domain.domain} licence_key={domain.licence_key} updateDomain={this.props.updateDomain} checkExists={this.checkExists} />
+                                <Domain id={domain.id} index={index} domain={domain.domain} licence_key={domain.licence_key} accountData_accountType={this.props.accountData_accountType} accountData_accountLicenceKey={this.props.accountData_accountLicenceKey} updateDomain={this.props.updateDomain} checkExists={this.checkExists} />
                             </CSSTransition>
                         ))}
                     </TransitionGroup>

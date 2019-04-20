@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ResendActivationLink;
 use App\Mail\SendActivationLink;
 use App\Mail\SendReceipt;
+use App\Mail\LogFailureAfterCharge;
 use App\Product;
 use App\Sale;
 use \Carbon\Carbon;
@@ -395,46 +396,45 @@ class Controller_Auth_SignUp extends Controller
 		$sale->licence_period_secs = $licencePeriodSecs;
 
 		// save
-		$success = false;
 		DB::beginTransaction();
 		try {
 			$user->save();
-			
 			$sale->user_id = $user->id;
 			$sale->save();
-			
-			$success = true;
 		} catch(\Exception $e) {
-		   DB::rollback();
-		   throw $e;
+			DB::rollback();
+
+			if ($dbProduct->id != $productIDs['accountTypeFree']) {
+				$emailAddresses = Toolkit::emailAddresses();
+				Mail::to($emailAddresses['errorLog'])
+					->send(new LogFailureAfterCharge($user, $invoice, 'Controller_Auth_SignUp', '0F64A0C3-1EAD-4850-9381-A594F4DF10B5'));
+			}
+
+			throw $e;
 		}
 		DB::commit();
 
-		if ($success) {
-			Auth::attempt(['email' => $email, 'password' => $password], false);
+		Auth::attempt(['email' => $email, 'password' => $password], false);
 
-			if ($dbProduct->id == $productIDs['accountTypeFree']) {
-				Mail::to($email)
-					->send(new SendActivationLink($firstname, $vcode));
-			}
-
-			$invoice['refnumber'] = Toolkit::getFullReceiptNumber($sale->id);
+		if ($dbProduct->id == $productIDs['accountTypeFree']) {
 			Mail::to($email)
-				->send(new SendReceipt($firstname, $invoice));
-
-			$pageInfo = Toolkit::pageInfo();
-			return view('signup')
-				->with('view', $accountCreatedView)
-				->with('accountType', $user->account_type)
-	            ->with('homeName', $pageInfo['home']['name'])
-	            ->with('homePath', $pageInfo['home']['path'])
-	            ->with('loginName', $pageInfo['login']['name'])
-	            ->with('loginPath', $pageInfo['login']['path'])
-	            ->with('signupName', $pageInfo['signup']['name'])
-	            ->with('signupPath', $pageInfo['signup']['path']);
-		} else {
-			abort(500);
+				->send(new SendActivationLink($firstname, $vcode));
 		}
+
+		$invoice['refnumber'] = Toolkit::getFullReceiptNumber($sale->id);
+		Mail::to($email)
+			->send(new SendReceipt($firstname, $invoice));
+
+		$pageInfo = Toolkit::pageInfo();
+		return view('signup')
+			->with('view', $accountCreatedView)
+			->with('accountType', $user->account_type)
+            ->with('homeName', $pageInfo['home']['name'])
+            ->with('homePath', $pageInfo['home']['path'])
+            ->with('loginName', $pageInfo['login']['name'])
+            ->with('loginPath', $pageInfo['login']['path'])
+            ->with('signupName', $pageInfo['signup']['name'])
+            ->with('signupPath', $pageInfo['signup']['path']);
 	}
 
 	protected function resendlink($request) {

@@ -8,7 +8,15 @@ class Toolkit {
 		sleep (1);
 	}
 
-	public static function getDomainCountBase($licenceType) {	
+	public static function emailAddresses() {
+		$emailAddresses = array(
+			'admin' => 'admin@lithiumlist.com',
+			'errorLog' => 'admin@lithiumlist.com'
+		);
+		return $emailAddresses;
+	}
+
+	public static function getDomainCountBase($licenceType) {
 		switch($licenceType) {
 			case 1:
 				// basic

@@ -92,6 +92,19 @@ export class Landing extends React.Component {
                             </React.Fragment>
                         }
                     </div>
+                    {(getDiffMinutes(this.props.accountData_accountExpiresAt) > 0 && this.props.accountData_accountType == 3 && this.props.accountData_accountLicenceKey != null) &&
+                        <div className="key-cont">
+                            <input type="text" readOnly={true} ref={(input) => { this.inputCopy = input; }} style={inputStyle} value={this.props.accountData_accountLicenceKey} />
+                            <span className="label">Licence key:</span>
+                            <span className={spanClasses}>{this.props.accountData_accountLicenceKey}</span>
+                            <span className="copy-cont">
+                                <span className="copy-outer" title="Copy to clipboard" onClick={() => {this.copyClick()}}>
+                                    <i className="oln icon-clipboard"></i>
+                                </span>
+                                &nbsp;
+                            </span>
+                        </div>
+                    }
                     <div className="expires">
                         {(getDiffMinutes(this.props.accountData_accountExpiresAt) > 0) ? (
                             <React.Fragment>
@@ -109,19 +122,6 @@ export class Landing extends React.Component {
                                 RENEW
                             </div>
                         </div>    
-                    }
-                    {(getDiffMinutes(this.props.accountData_accountExpiresAt) > 0 && this.props.accountData_accountType == 3 && this.props.accountData_accountLicenceKey != null) &&
-                        <div className="key-cont">
-                            <input type="text" readOnly={true} ref={(input) => { this.inputCopy = input; }} style={inputStyle} value={this.props.accountData_accountLicenceKey} />
-                            <span className="label">Licence key:</span>
-                            <span className={spanClasses}>{this.props.accountData_accountLicenceKey}</span>
-                            <span className="copy-cont">
-                                <span className="copy-outer" title="Copy to clipboard" onClick={() => {this.copyClick()}}>
-                                    <i className="oln icon-clipboard"></i>
-                                </span>
-                                &nbsp;
-                            </span>
-                        </div>
                     }
                     {(getDiffMinutes(this.props.accountData_accountExpiresAt) > 0) &&
                         <React.Fragment>

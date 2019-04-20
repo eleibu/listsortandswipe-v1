@@ -56,102 +56,62 @@ input.textentry {
     position: relative;
 }
 
-// div.spinner-outer {
-// 	position: absolute;
-
-// 	div.spinner-inner {
-// 		margin: 0 auto;
-// 		height: 100%;
-
-// 		div.rect {
-// 			display: inline-block;
-// 			height: 100%;
-// 			width: 12%;
-// 			margin-right: 10%;
-// 			-webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
-// 			animation: sk-stretchdelay 1.2s infinite ease-in-out;
-// 		}
-
-// 		div.rect1 {
-// 			-webkit-animation-delay: -1.1s;
-// 			animation-delay: -1.1s;
-// 		}
-
-// 		div.rect2 {
-// 			-webkit-animation-delay: -1.0s;
-// 			animation-delay: -1.0s;
-// 		}
-// 		div.rect3 {
-// 			-webkit-animation-delay: -0.9s;
-// 			animation-delay: -0.9s;
-// 		}
-
-// 		div.rect4 {
-// 			margin-right: 0;
-// 			-webkit-animation-delay: -0.8s;
-// 			animation-delay: -0.8s;
-// 		}
-// 	}
-// }
-
-.button-word-cont {
-	div.spinner-cont {
- 		position: relative;
-
- 		div.spinner-outer {
- 			position: absolute;
- 			top: 0;
- 			left: 0;
- 			height: 100%;
- 			width: 100%;
- 			visibility: hidden;
-
-			div.spinner-inner {
-				max-width: 40px;
-				margin: 0 auto;
-	 			height: 100%;
-
-	 			div.rect {
-	 				display: inline-block;
-	 				height: 100%;
-	 				width: 12%;
-	 				margin-right: 10%;
-	 				border-radius: 2px;
-					-webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
-					animation: sk-stretchdelay 1.2s infinite ease-in-out;
-	 			}
-
-	 			div.rect1 {
-					-webkit-animation-delay: -1.1s;
-					animation-delay: -1.1s;
-	 			}
-
-	 			div.rect2 {
-					-webkit-animation-delay: -1.0s;
-					animation-delay: -1.0s;
-	 			}
-	 			div.rect3 {
-					-webkit-animation-delay: -0.9s;
-					animation-delay: -0.9s;
-	 			}
-
-	 			div.rect4 {
-	 				margin-right: 0;
-					-webkit-animation-delay: -0.8s;
-					animation-delay: -0.8s;
-	 			}
-			}
- 		}
-	}
-
-	div.spinner-cont.spinning {
-		div.text {
-			visibility: hidden;
-		}
+div.spinner-cont {
+		position: relative;
 
 		div.spinner-outer {
-			visibility: visible;
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+			visibility: hidden;
+
+		div.spinner-inner {
+			max-width: 40px;
+			margin: 0 auto;
+ 			height: 100%;
+
+ 			div.rect {
+ 				display: inline-block;
+ 				height: 100%;
+ 				width: 12%;
+ 				margin-right: 10%;
+ 				border-radius: 2px;
+				-webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+				animation: sk-stretchdelay 1.2s infinite ease-in-out;
+ 			}
+
+ 			div.rect1 {
+				-webkit-animation-delay: -1.1s;
+				animation-delay: -1.1s;
+ 			}
+
+ 			div.rect2 {
+				-webkit-animation-delay: -1.0s;
+				animation-delay: -1.0s;
+ 			}
+ 			div.rect3 {
+				-webkit-animation-delay: -0.9s;
+				animation-delay: -0.9s;
+ 			}
+
+ 			div.rect4 {
+ 				margin-right: 0;
+				-webkit-animation-delay: -0.8s;
+				animation-delay: -0.8s;
+ 			}
 		}
+		}
+}
+
+div.spinner-cont.spinning {
+	div.text {
+		visibility: hidden;
+	}
+
+	div.spinner-outer {
+		visibility: visible;
 	}
 }
 
@@ -364,7 +324,6 @@ span.textlink:hover {
 
 					div.emptymsg-cont {
 						position: absolute;
-						// top: 2.6em;
 						left: 0;
 						width: 100%;
 						text-align: center;
@@ -393,15 +352,6 @@ span.textlink:hover {
 								font-size: 85%;
 								line-height: 140%;
 								color: #AAAAAA;
-
-								// span.link {
-								// 	color: #3366CC;
-								// }
-
-								// span.link:hover, span.link:active {
-								// 	cursor: pointer;
-								// 	text-decoration: underline;
-								// }
 							}
 						}
 					}
@@ -653,38 +603,7 @@ span.textlink:hover {
 						}
 
 						div.emptymsg-cont {
-							// position: absolute;
 							top: 2.6em;
-							// left: 0;
-							// width: 100%;
-							// text-align: center;
-
-							// div.icon-cont {
-							// 	i {
-							// 		font-size: 500%;
-							// 		color: #EEEEEE;			
-							// 	}
-							// }
-
-							// div.msg-cont {
-							// 	margin: 1.4em 22% 0 22%;
-
-							// 	div.msg-outer {
-							// 		font-size: 120%;
-							// 		line-height: 140%;
-							// 		color: #333333;			
-							// 	}
-							// }
-
-							// div.submsg-cont {
-							// 	margin: 0.6em 22% 0 22%;
-
-							// 	div.submsg-outer {
-							// 		font-size: 85%;
-							// 		line-height: 140%;
-							// 		color: #AAAAAA;
-							// 	}
-							// }
 						}
 					}
 
@@ -759,7 +678,7 @@ span.textlink:hover {
 						}
 
 						div.key-cont {
-							margin-top: 0.2em;
+							margin: 0.4em 0;
 						}
 
 						div.chart-cont {
@@ -817,7 +736,7 @@ span.textlink:hover {
 								}
 
 								div.bar-cont.used {
-									background-color: #3366CC;
+									background-color: #A2A18E;
 								}
 							}
 						}
@@ -836,54 +755,6 @@ span.textlink:hover {
 
 					div.account-cont {
 						padding: 2em 1em;
-
-						// i.account-close {
-						// 	cursor: pointer;
-						// 	position: absolute;
-						// 	top: 0.6em;
-						// 	right: 0.6em;
-						// 	font-size: 130%;
-						// 	padding: 0.3em;
-						// 	border-radius: 999px;
-						// }
-
-						// i.icon-cross-ui:hover, i.icon-cross-ui:active {
-						// 	background-color: rgba(0,0,0,0.05);
-						// }
-
-						.button-word-cont {
-							div.spinner-cont {
-						 		position: relative;
-
-						 		// div.spinner-outer {
-						 		// 	top: 0;
-						 		// 	left: 0;
-						 		// 	height: 100%;
-						 		// 	width: 100%;
-						 		// 	visibility: hidden;
-
-									// div.spinner-inner {
-									// 	max-width: 40px;
-
-							 	// 		div.rect {
-							 	// 			background-color: #EEEEEE;
-							 	// 			background-color: rgba(255, 255, 255, 0.9);
-							 	// 			border-radius: 2px;
-							 	// 		}
-									// }
-						 		// }
-							}
-
-							// div.spinner-cont.spinning {
-							// 	div.text {
-							// 		visibility: hidden;
-							// 	}
-
-							// 	div.spinner-outer {
-							// 		visibility: visible;
-							// 	}
-							// }
-						}
 
 						div.title-main {
 							span {
@@ -981,11 +852,7 @@ span.textlink:hover {
 					}
 
 					div.renewupgrade-cont {
-						padding: 2em 1em;
-
-						// div.button-word-cont {
-						// 	font-size: 80%;
-						// }
+						padding: 2em 1em 1em 1em;
 
 						div.page-title {
 							position: relative;
@@ -1178,7 +1045,6 @@ span.textlink:hover {
 											}
 
 											div.subtext {
-												//@@
 												margin-top: 0.6em;
 												font-size: 80%;	
 											}
@@ -1267,7 +1133,6 @@ span.textlink:hover {
 						}
 					}
 
-
 					div.account-mask {
 						position: absolute;
 						top: 0;
@@ -1275,8 +1140,6 @@ span.textlink:hover {
 						height: 100%;
 						width: 100%;
 					}
-
-
 				}
 			}
 		}		
@@ -1580,7 +1443,6 @@ div.message-trans-exit.message-trans-exit-active {
 	opacity: 0;
 	transition: opacity 200ms ease;
 }
-
 
 // trans - add item mask
 div.add-item-mask-trans-enter {

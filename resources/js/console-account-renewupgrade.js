@@ -28,7 +28,8 @@ function sharedConstructor(obj, context) {
         paymentExpirationDateFocus: false,
         paymentCVVError: false,
         paymentCVVFocus: false,
-        paymentSubmsg: null
+        paymentSubmsg: null,
+        placeOrderSubmsg: null
     };
 
     if (context == 'renew') {
@@ -269,13 +270,15 @@ function sharedValidateAndSubmit(obj, context) {
     if (hostedFieldsInstance != null) {
         obj.props.setShowMask(true);
         obj.setState({
-            spinning: true
+            spinning: true,
+            placeOrderSubmsg: 'Your order is processing. Please do not refresh or use the back button.'
         });
         hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
             if (tokenizeErr) {
                 obj.props.setShowMask(false);
                 obj.setState({
-                    spinning: false
+                    spinning: false,
+                    placeOrderSubmsg: null
                 });
                 switch (tokenizeErr.code) {
                     case 'HOSTED_FIELDS_FIELDS_EMPTY':
@@ -362,7 +365,7 @@ function sharedValidateAndSubmit(obj, context) {
                         obj.props.accountData_domainCountAdditional,
                         response.data.domains
                     );
-                    msg = 'Congratulations, your licence has been renewed. Thanks for supporting Lithium List.';
+                    msg = 'Your licence has been renewed. Thanks for supporting Lithium List.';
                 } else {
                     obj.props.setAccountData(
                         response.data.accountData.accountType,
@@ -372,7 +375,7 @@ function sharedValidateAndSubmit(obj, context) {
                         obj.props.accountData_domainCountAdditional,
                         null
                     );
-                    msg = 'Congratulations, your licence has been upgraded. Thanks for supporting Lithium List.';
+                    msg = 'Your licence has been upgraded. Thanks for supporting Lithium List.';
                 }
 
                 obj.props.setAccountSubpage('Landing');
@@ -387,7 +390,8 @@ function sharedValidateAndSubmit(obj, context) {
             .then(()=>{
                 obj.props.setShowMask(false);
                 obj.setState({
-                    spinning: false
+                    spinning: false,
+                    placeOrderSubmsg: null
                 });
                 obj.props.deleteServerRequestObj(requestObj);
             });
@@ -487,7 +491,7 @@ export class Renew extends React.Component {
                             </div>
                             <div className="para">
                                 <div className={warnDeleteClasses}>
-                                    <strong>WARNING:</strong> This licence will require {Math.abs(deleteDomainsCount)} of your licence keys to be deleted
+                                    <strong>WARNING:</strong> Selecting this licence will delete {Math.abs(deleteDomainsCount)} of your licence keys
                                 </div>
                             </div>
                             <div className="para">
@@ -524,7 +528,7 @@ export class Renew extends React.Component {
                     setPaymentSubmsg={this.setPaymentSubmsg}
                 />
                 <br/><br/>
-                <Buttons context={'renew'} spinning={this.state.spinning} validateAndSubmit={this.validateAndSubmit} setAccountSubpage={this.props.setAccountSubpage} />
+                <Buttons context={'renew'} spinning={this.state.spinning} validateAndSubmit={this.validateAndSubmit} setAccountSubpage={this.props.setAccountSubpage} placeOrderSubmsg={this.state.placeOrderSubmsg} />
             </div>
         );
     }
@@ -625,7 +629,7 @@ export class Upgrade extends React.Component {
                     setPaymentSubmsg={this.setPaymentSubmsg}
                 />
                 <br/><br/>
-                <Buttons context={'upgrade'} spinning={this.state.spinning} validateAndSubmit={this.validateAndSubmit} setAccountSubpage={this.props.setAccountSubpage} />
+                <Buttons context={'upgrade'} spinning={this.state.spinning} validateAndSubmit={this.validateAndSubmit} setAccountSubpage={this.props.setAccountSubpage} placeOrderSubmsg={this.state.placeOrderSubmsg} />
             </div>
         );
     }
@@ -1438,6 +1442,15 @@ const Buttons = (props) => {
                     CANCEL
                 </div>
             </div>
+            {(props.placeOrderSubmsg != null && props.placeOrderSubmsg.length > 0) ? (
+                <div class="submsg-cont">
+                    {props.placeOrderSubmsg}
+                </div>
+            ) : (
+                <div class="submsg-cont">
+                    &nbsp;
+                </div>
+            )}
         </div>
     );
 }

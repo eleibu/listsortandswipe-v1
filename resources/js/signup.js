@@ -616,12 +616,17 @@ function validateAndSubmit() {
 					'spinner-cont' : true,
 					'spinning' : true
 				});
+				divPlaceOrderSubmsg.innerHTML = 'Your order is processing. Please do not refresh or use the back button.';
+				divPlaceOrderSubmsg.className = classNames({
+					'submsg-cont' : true
+				});
 		        hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
 					if (tokenizeErr) {
 						maskCont.className = classNames({});
 						spinnerContPlaceOrder.className = classNames({
 							'spinner-cont' : true
 						});
+						hidePlaceOrderSubmsg();
 
 						switch (tokenizeErr.code) {
 							case 'HOSTED_FIELDS_FIELDS_EMPTY':
@@ -678,8 +683,10 @@ function validateAndSubmit() {
 							'submsg-cont' : true,
 							'error' : true
 						});
-
-						showPlaceOrderSubmsg();
+						divPlaceOrderSubmsg.className = classNames({
+							'submsg-cont' : true,
+							'error' : true
+						});
 						return;
 					}
 
@@ -699,7 +706,10 @@ function validateAndSubmit() {
 		}
 	} else {
 		divPlaceOrderSubmsg.innerHTML = msgPlaceOrderErrors;
-		showPlaceOrderSubmsg();
+		divPlaceOrderSubmsg.className = classNames({
+			'submsg-cont' : true,
+			'error' : true
+		});
 	}
 }
 
@@ -748,15 +758,8 @@ function setClassesOnHostedFieldBlur() {
 	});
 }
 
-function showPlaceOrderSubmsg() {
-	divPlaceOrderSubmsg.className = classNames({
-		'submsg-cont' : true,
-		'error' : true
-	});
-}
-
 function hidePlaceOrderSubmsg() {
-	divPlaceOrderSubmsg.innerHTML = '';
+	divPlaceOrderSubmsg.innerHTML = msgPlaceOrderDefault;
 	divPlaceOrderSubmsg.className = classNames({
 		'submsg-cont' : true
 	});

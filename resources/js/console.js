@@ -34,8 +34,6 @@ class App extends React.Component {
             accountData_domainCountAdditional: null,
             tabIndex: 0,
             accountSubpage: 'Landing',
-            // tabIndex: 1,
-            // accountSubpage: 'Upgrade',
             pageError : false,
             domainsLoaded: false,
             domainsMsgShow : false,
@@ -95,6 +93,7 @@ class App extends React.Component {
             });
         })
         .then(()=>{
+
             this.deleteServerRequestObj(requestObj);
         });
     }
@@ -104,7 +103,9 @@ class App extends React.Component {
             accountData_accountLicenceKey: accountLicenceKey,
             accountData_accountExpiresAt: accountExpiresAt,
             accountData_domainCountBase: domainCountBase,
-            accountData_domainCountAdditional: domainCountAdditional            
+            accountData_domainCountAdditional: domainCountAdditional,
+            domainsMsgShow : isBelowRenewThreshold(accountExpiresAt, accountType),
+            domainsMsgText : domainsMsgText(accountExpiresAt, accountType),
         };
         if (domains != null) {
             newState['domains'] = domains;
@@ -572,7 +573,7 @@ const UploadingIndicator = (props) => {
                 &nbsp;
                 <CSSTransition in={show} classNames="upindicator-trans" timeout={{ exit: 2000 }} unmountOnExit>
                     <div className="upindicator-outer">
-                        <div className="upindicator-inner">
+                        <div className="upindicator-inner spinner-cont spinning">
                             <i className="cloud oln icon-cloud" />
                             {(show) ? (
                                 <div className="spinner-outer">
