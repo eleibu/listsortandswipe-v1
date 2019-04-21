@@ -22,11 +22,12 @@
             <div class="siteheader-outer">
                 <a id="a-logo" href="{{ url('/') }}" title="Lithium List - home"><img src="{{ url('/images/LithiumListLogo-blue.png') }}" alt="Lithium List logo" height="60" width="113" /></a>
                 <div class="links-cont">
-                    <a class="button-word-cont hlink" href="" title="">PRICING</a>
-                    <a class="button-word-cont hlink" href="" title="">EXAMPLES</a>
-                    <a class="button-word-cont hlink" href="" title="">DOCUMENTATION</a>
-                    <a class="button-word-cont hlink" href="" title="">SUPPORT</a>
-                    <a class="button-word-cont login" href="" title="">LOG IN</a>
+                    <a class="button-word-cont hlink" href="{{ url('/pricing') }}" title="">PRICING</a>
+                    <a class="button-word-cont hlink" href="{{ url('/examples') }}" title="">EXAMPLES</a>
+                    <a class="button-word-cont hlink" href="{{ url('/documentation') }}" title="">DOCUMENTATION</a>
+                    <a class="button-word-cont hlink" href="{{ url('/support') }}" title="">SUPPORT</a>
+                    @component('button-auth', ['loginName' => $loginName, 'loginPath' => $loginPath, 'consoleName' => $consoleName, 'consolePath' => $consolePath])
+                    @endcomponent
                 </div>
                 <div class="menubtn-cont">
                     <a id="a-pagemenu-show" class="menubtn"><i class="sld icon-hamburger-ui"></i></a>
@@ -36,11 +37,9 @@
         <div id="div-sitecont">
             @yield('content')
         </div>
-        <div id="div-sitefooter">
-            <div class="sitefooter-outer">
-                © 2019
-            </div>
-        </div>
+        <br/>
+        @component('sitefooter')
+        @endcomponent
         <div id="div-pagemask"></div>
         <div id="div-pagemenu-cont">
             <div class="menu-outer">
@@ -48,11 +47,12 @@
                     <a id="a-pagemenu-hide" class="menubtn"><i class="sld icon-cross-ui"></i></a>
                 </div>
                 <div class="links-cont">
-                    <a class="button-word-cont hlink" href="" title="">PRICING</a>
-                    <a class="button-word-cont hlink" href="" title="">EXAMPLES</a>
-                    <a class="button-word-cont hlink" href="" title="">DOCUMENTATION</a>
-                    <a class="button-word-cont hlink" href="" title="">SUPPORT</a>
-                    <a class="button-word-cont login" href="" title="">LOG IN</a>
+                    <a class="button-word-cont hlink" href="{{ url('/pricing') }}" title="">PRICING</a>
+                    <a class="button-word-cont hlink" href="{{ url('/examples') }}" title="">EXAMPLES</a>
+                    <a class="button-word-cont hlink" href="{{ url('/documentation') }}" title="">DOCUMENTATION</a>
+                    <a class="button-word-cont hlink" href="{{ url('/support') }}" title="">SUPPORT</a>
+                    @component('button-auth', ['loginName' => $loginName, 'loginPath' => $loginPath, 'consoleName' => $consoleName, 'consolePath' => $consolePath])
+                    @endcomponent
                 </div>
             </div>
         </div>

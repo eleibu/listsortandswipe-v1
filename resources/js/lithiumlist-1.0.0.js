@@ -65,15 +65,12 @@
 
 // TO FINALISE DOCS
 // Replace 'click/tap' with 'press'
-// Move 'Why Lithium List?' to its own page, remove delete functionality and add a line about great docs
 // Change 'Overview of functionality' to 'Concepts' and re-read/write (including explaining difference between 'slide' and 'swipe')
 // Look for square brackets and fix
 // Make all examples CHANGE the default settings
-// Ensure all links actually link to something (especially in docs.blade.php and demos.blade.php)
 
 
 // TODO: Finish Controller_Auth_SignUp
-// TODO: Create /terms and /privacy
 // TODO: Can't get out of edit domain if it is below keyboard
 // TODO: Check that copy button is working on mobile
 // TODO: Include '-webkit-tap-highlight-color: rgba(0,0,0,0);' in documentation, see:
@@ -99,7 +96,6 @@
 // TODO: Reset props for already attached list
 // TODO: Change prop combinations
 // TODO: Minify and upload to NPM
-// TODO: In Controller_Auth_LogIn@post and Controller_Auth_SignUp@signup, clear accounts that have not activited within 30 days
 
 
 // TODO: Do not attach to window, attach to outer div instead - change validation to check for this

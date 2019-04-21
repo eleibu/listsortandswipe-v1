@@ -288,87 +288,94 @@ a.menubtn:active {
   background: rgba(0, 0, 0, 0.025);
 }
 
-div.title-main-cont {
-  padding: 1em 16px 0 16px;
+div.sitecont-outer {
+  position: relative;
 }
 
-div.title-main-cont div.title-main-outer {
-  margin: 0 auto 20px auto;
-  max-width: 800px;
-  min-width: 300px;
+div.toc-cont div.toc-outer {
+  margin: 0 1.4em;
+}
+
+div.toc-cont div.toc-outer div.title-main {
+  font-weight: bold;
+  font-size: 110%;
+  color: #222222;
+  padding: 0.4em 0;
+  margin-bottom: 0.8em;
+  border-bottom: 1px solid #EEEEEE;
+}
+
+div.toc-cont div.toc-outer div.subtitle-main {
+  font-size: 110%;
+  color: #666666;
+  margin-bottom: 1em;
+}
+
+div.toc-cont div.toc-outer .button-word-cont {
+  display: block;
+  text-align: left;
+  margin: 0.2em 0;
+}
+
+div.toc-cont div.toc-outer div.button-word-cont {
+  color: #777777;
+}
+
+div.toc-cont div.toc-outer div.button-word-cont.selected {
+  color: #222222;
+  background-color: #EEEEEE;
+}
+
+div.toc-cont div.toc-outer a.button-word-cont:hover {
+  background-color: #F8F8F8;
+}
+
+div.details-cont div.details-outer {
+  margin: 0 1.4em;
+}
+
+div.details-cont div.details-outer div.title-main {
   font-size: 180%;
-  font-weight: bold;
   color: #222222;
+  padding: 0.4em 0;
+  margin-bottom: 0.8em;
+  border-bottom: 1px solid #EEEEEE;
 }
 
-div.section-cont div.section-outer {
-  margin: 0 auto;
-  max-width: 800px;
-  min-width: 300px;
-}
-
-div.section-cont div.section-outer div.title {
-  line-height: 130%;
-  color: #222222;
-  font-weight: bold;
-}
-
-div.section-cont div.section-outer div.para {
+div.details-cont div.details-outer div.nextpage-cont {
   margin: 1em 0;
-  line-height: 140%;
-  color: #555555;
+  text-align: right;
+  font-size: 120%;
 }
 
-div.section-cont div.section-outer div.para ol[type="a"] {
-  padding-left: 1em;
+div.details-cont div.details-outer div.nextpage-cont a.button-word-cont {
+  font-weight: normal;
 }
 
-div.section-cont div.section-outer div.para ol[type="a"] li {
-  margin: 1em 0;
+div.details-cont div.details-outer div.nextpage-cont a.button-word-cont:hover {
+  background-color: #F8F8F8;
 }
 
-div.section-cont div.section-outer div.para ol[type="i"] {
-  padding-left: 2em;
+#pageWrapper.xl div.toc-cont, #pageWrapper.lg div.toc-cont, #pageWrapper.md div.toc-cont, #pageWrapper.sm div.toc-cont {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 360px;
+  height: 100%;
+  overflow: auto;
 }
 
-div.section-cont div.section-outer div.para ol[type="i"] li {
-  margin: 1em 0;
+#pageWrapper.xl div.details-cont, #pageWrapper.lg div.details-cont, #pageWrapper.md div.details-cont, #pageWrapper.sm div.details-cont {
+  border-left: 1px solid #EEEEEE;
+  min-height: 40em;
+  margin-left: 360px;
 }
 
-div.section-cont div.section-outer div.para table {
-  margin: 1em 0 1.6em 0;
+#pageWrapper.xs div.toc-cont {
+  border-bottom: 1px solid #EEEEEE;
+  margin-bottom: 2em;
 }
 
-div.section-cont div.section-outer div.para table td {
-  padding: 0.4em 0.8em;
-  vertical-align: top;
-}
-
-div.section-cont div.section-outer div.para table td.heading {
-  color: #222222;
-  font-weight: bold;
-}
-
-div.section-cont div.section-outer div.para.def {
-  margin-left: 2em;
-}
-
-div.section-cont.grey {
-  background-color: #FBFBFB;
-}
-
-#pageWrapper.xl div.section-cont, #pageWrapper.lg div.section-cont, #pageWrapper.md div.section-cont, #pageWrapper.sm div.section-cont {
-  padding: 30px 16px;
-}
-
-#pageWrapper.xl div.section-cont div.section-outer div.title, #pageWrapper.lg div.section-cont div.section-outer div.title, #pageWrapper.md div.section-cont div.section-outer div.title, #pageWrapper.sm div.section-cont div.section-outer div.title {
-  font-size: 160%;
-}
-
-#pageWrapper.xs div.section-cont {
-  padding: 20px 16px;
-}
-
-#pageWrapper.xs div.section-cont div.section-outer div.title {
-  font-size: 140%;
+div.details-cont div.details-outer div.section-cont {
+  padding: 1.6em 0;
 }

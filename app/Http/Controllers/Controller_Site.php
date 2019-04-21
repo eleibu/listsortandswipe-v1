@@ -27,58 +27,90 @@ class Controller_Site extends Controller
     }
 
 	public function page_home(Request $request) {
-		return view('home');
+		$pageInfo = Toolkit::pageInfo();
+		return view('home')
+            ->with('loginName', $pageInfo['login']['name'])
+            ->with('loginPath', $pageInfo['login']['path'])
+            ->with('consoleName', $pageInfo['console']['name'])
+            ->with('consolePath', $pageInfo['console']['path']);
 	}
 
-	public function page_console(Request $request) {
+	public function page_why_lithium_list(Request $request) {
 		$pageInfo = Toolkit::pageInfo();
+		return view('why-lithium-list')
+            ->with('loginName', $pageInfo['login']['name'])
+            ->with('loginPath', $pageInfo['login']['path'])
+            ->with('consoleName', $pageInfo['console']['name'])
+            ->with('consolePath', $pageInfo['console']['path']);
+	}
 
-		$user = Auth::user();
-		$domainIds = json_decode($user->domain_ids);
-
-		$hasDomains = 1;
-		if (isset($domainIds) && (count($domainIds) > 0)) {
-			$hasDomains = 1;
-		}
-
+	public function page_pricing(Request $request) {
 		$productIDs = Toolkit::productIDs();
-		$dbProductBasic = Product::where('id', $productIDs['accountTypeBasic'])
-			->first();
-		$dbProductProfessional = Product::where('id', $productIDs['accountTypeProfessional'])
-			->first();
-		$dbProductEnterprise = Product::where('id', $productIDs['accountTypeEnterprise'])
-			->first();
-		$licenceDetails = array(
-			1 => array(
-				'name' => $this->getProductName($dbProductBasic->description),
-				'priceCents' => $dbProductBasic->price_cents,
-				'maxDomains' => Toolkit::getDomainCountBase(1)
-			),
-			2 => array(
-				'name' => $this->getProductName($dbProductProfessional->description),
-				'priceCents' => $dbProductProfessional->price_cents,
-				'maxDomains' => Toolkit::getDomainCountBase(2)
-			),
-			3 => array(
-				'name' => $this->getProductName($dbProductEnterprise->description),
-				'priceCents' => $dbProductEnterprise->price_cents,
-				'maxDomains' => Toolkit::getDomainCountBase(3)
-			)
-		);
+		$pageInfo = Toolkit::pageInfo();
+		return view('pricing')
+			->with('productIDs', $productIDs)
+            ->with('loginName', $pageInfo['login']['name'])
+            ->with('loginPath', $pageInfo['login']['path'])
+            ->with('consoleName', $pageInfo['console']['name'])
+            ->with('consolePath', $pageInfo['console']['path']);
+	}
 
-		return view('console')
-			->with('clientToken', $this->gateway->clientToken()->generate())
-            ->with('signoutName', $pageInfo['signout']['name'])
-            ->with('signoutPath', $pageInfo['signout']['path'])
-			->with('licenceDetails', json_encode($licenceDetails))
-            ->with('msgPasswordDefault', $this->msgPasswordDefault)
-            ->with('msgPasswordNoBlank', $this->msgPasswordNoBlank)
-            ->with('msgPasswordInvalid', $this->msgPasswordInvalid)
-            ->with('msgDiscountDefault', $this->msgDiscountDefault)
-            ->with('msgDiscountInvalid', $this->msgDiscountInvalid);
+	public function page_support(Request $request) {
+		$pageInfo = Toolkit::pageInfo();
+		return view('support')
+            ->with('loginName', $pageInfo['login']['name'])
+            ->with('loginPath', $pageInfo['login']['path'])
+            ->with('consoleName', $pageInfo['console']['name'])
+            ->with('consolePath', $pageInfo['console']['path']);
+	}
+
+	public function page_terms(Request $request) {
+		$pageInfo = Toolkit::pageInfo();
+		return view('terms')
+            ->with('loginName', $pageInfo['login']['name'])
+            ->with('loginPath', $pageInfo['login']['path'])
+            ->with('consoleName', $pageInfo['console']['name'])
+            ->with('consolePath', $pageInfo['console']['path']);
+	}
+
+	public function page_privacy(Request $request) {
+		$pageInfo = Toolkit::pageInfo();
+		return view('privacy')
+            ->with('loginName', $pageInfo['login']['name'])
+            ->with('loginPath', $pageInfo['login']['path'])
+            ->with('consoleName', $pageInfo['console']['name'])
+            ->with('consolePath', $pageInfo['console']['path']);
+	}
+
+	public function page_about(Request $request) {
+		$pageInfo = Toolkit::pageInfo();
+		return view('about')
+            ->with('loginName', $pageInfo['login']['name'])
+            ->with('loginPath', $pageInfo['login']['path'])
+            ->with('consoleName', $pageInfo['console']['name'])
+            ->with('consolePath', $pageInfo['console']['path']);
+	}
+
+	public function page_browser_support(Request $request) {
+		$pageInfo = Toolkit::pageInfo();
+		return view('browser-support')
+            ->with('loginName', $pageInfo['login']['name'])
+            ->with('loginPath', $pageInfo['login']['path'])
+            ->with('consoleName', $pageInfo['console']['name'])
+            ->with('consolePath', $pageInfo['console']['path']);
+	}
+
+	public function page_upcoming_features(Request $request) {
+		$pageInfo = Toolkit::pageInfo();
+		return view('upcoming-features')
+            ->with('loginName', $pageInfo['login']['name'])
+            ->with('loginPath', $pageInfo['login']['path'])
+            ->with('consoleName', $pageInfo['console']['name'])
+            ->with('consolePath', $pageInfo['console']['path']);
 	}
 
 	public function section_examples(Request $request, $subpage = '') {
+		$pageInfo = Toolkit::pageInfo();
 		$subpages = array(
 			'super-simple' => array(
 				'selected' => false,
@@ -177,13 +209,18 @@ class Controller_Site extends Controller
 			return view('examples')
 				->with('selectedpage', $selectedpage)
 				->with('nextpage', $nextpage)
-				->with('subpages', $subpages);
+				->with('subpages', $subpages)
+	            ->with('loginName', $pageInfo['login']['name'])
+	            ->with('loginPath', $pageInfo['login']['path'])
+	            ->with('consoleName', $pageInfo['console']['name'])
+	            ->with('consolePath', $pageInfo['console']['path']);
 		} else {
 			abort(403);
 		}
 	}
 
 	public function section_documentation(Request $request, $subpage = '') {
+		$pageInfo = Toolkit::pageInfo();
 		$subpages = array(
 			'installation' => array(
 				'selected' => false,
@@ -254,32 +291,62 @@ class Controller_Site extends Controller
 			return view('documentation')
 				->with('selectedpage', $selectedpage)
 				->with('nextpage', $nextpage)
-				->with('subpages', $subpages);
+				->with('subpages', $subpages)
+	            ->with('loginName', $pageInfo['login']['name'])
+	            ->with('loginPath', $pageInfo['login']['path'])
+	            ->with('consoleName', $pageInfo['console']['name'])
+	            ->with('consolePath', $pageInfo['console']['path']);
 		} else {
 			abort(403);
 		}
 	}
 
-	public function page_why_lithium_list(Request $request) {
-		return view('why-lithium-list');
-	}
+	public function page_console(Request $request) {
+		$pageInfo = Toolkit::pageInfo();
 
-	public function page_pricing(Request $request) {
+		$user = Auth::user();
+		$domainIds = json_decode($user->domain_ids);
+
+		$hasDomains = 1;
+		if (isset($domainIds) && (count($domainIds) > 0)) {
+			$hasDomains = 1;
+		}
+
 		$productIDs = Toolkit::productIDs();
-		return view('pricing')
-			->with('productIDs', $productIDs);
-	}
+		$dbProductBasic = Product::where('id', $productIDs['accountTypeBasic'])
+			->first();
+		$dbProductProfessional = Product::where('id', $productIDs['accountTypeProfessional'])
+			->first();
+		$dbProductEnterprise = Product::where('id', $productIDs['accountTypeEnterprise'])
+			->first();
+		$licenceDetails = array(
+			1 => array(
+				'name' => $this->getProductName($dbProductBasic->description),
+				'priceCents' => $dbProductBasic->price_cents,
+				'maxDomains' => Toolkit::getDomainCountBase(1)
+			),
+			2 => array(
+				'name' => $this->getProductName($dbProductProfessional->description),
+				'priceCents' => $dbProductProfessional->price_cents,
+				'maxDomains' => Toolkit::getDomainCountBase(2)
+			),
+			3 => array(
+				'name' => $this->getProductName($dbProductEnterprise->description),
+				'priceCents' => $dbProductEnterprise->price_cents,
+				'maxDomains' => Toolkit::getDomainCountBase(3)
+			)
+		);
 
-	public function page_support(Request $request) {
-		return view('support');
-	}
-
-	public function page_terms(Request $request) {
-		return view('terms');
-	}
-
-	public function page_privacy(Request $request) {
-		return view('privacy');
+		return view('console')
+			->with('clientToken', $this->gateway->clientToken()->generate())
+            ->with('signoutName', $pageInfo['signout']['name'])
+            ->with('signoutPath', $pageInfo['signout']['path'])
+			->with('licenceDetails', json_encode($licenceDetails))
+            ->with('msgPasswordDefault', $this->msgPasswordDefault)
+            ->with('msgPasswordNoBlank', $this->msgPasswordNoBlank)
+            ->with('msgPasswordInvalid', $this->msgPasswordInvalid)
+            ->with('msgDiscountDefault', $this->msgDiscountDefault)
+            ->with('msgDiscountInvalid', $this->msgDiscountInvalid);
 	}
 
 	protected function getProductName($description) {

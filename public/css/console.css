@@ -171,6 +171,26 @@ a.menubtn:hover {
   left: 20%;
 }
 
+#div-sitefooter {
+  background-color: #EEEEEE;
+}
+
+#div-sitefooter div.sitefooter-outer {
+  padding: 30px 0;
+}
+
+#div-sitefooter div.sitefooter-outer div.col-cont a {
+  display: block;
+  font-size: 85%;
+  border-radius: 4px;
+}
+
+#div-sitefooter div.sitefooter-outer div.col-cont a:hover, #div-sitefooter div.sitefooter-outer div.col-cont a:active {
+  cursor: pointer;
+  text-decoration: none;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
 #pageWrapper.xl #div-siteheader div.links-cont, #pageWrapper.lg #div-siteheader div.links-cont, #pageWrapper.md #div-siteheader div.links-cont, #pageWrapper.sm #div-siteheader div.links-cont {
   display: block;
 }
@@ -188,6 +208,21 @@ a.menubtn:hover {
   margin: 0.8em 0.4em;
 }
 
+#pageWrapper.xl #div-sitefooter div.sitefooter-outer, #pageWrapper.lg #div-sitefooter div.sitefooter-outer, #pageWrapper.md #div-sitefooter div.sitefooter-outer, #pageWrapper.sm #div-sitefooter div.sitefooter-outer {
+  min-width: 800px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+#pageWrapper.xl #div-sitefooter div.sitefooter-outer div.col-cont, #pageWrapper.lg #div-sitefooter div.sitefooter-outer div.col-cont, #pageWrapper.md #div-sitefooter div.sitefooter-outer div.col-cont, #pageWrapper.sm #div-sitefooter div.sitefooter-outer div.col-cont {
+  float: left;
+  width: 25%;
+}
+
+#pageWrapper.xl #div-sitefooter div.sitefooter-outer div.col-cont a, #pageWrapper.lg #div-sitefooter div.sitefooter-outer div.col-cont a, #pageWrapper.md #div-sitefooter div.sitefooter-outer div.col-cont a, #pageWrapper.sm #div-sitefooter div.sitefooter-outer div.col-cont a {
+  padding: 0.6em 0.8em;
+}
+
 #pageWrapper.xs #div-siteheader div.links-cont {
   display: none;
 }
@@ -201,13 +236,15 @@ a.menubtn:hover {
   margin: 1.2em 0;
 }
 
-#div-sitefooter {
-  background-color: #EEEEEE;
+#pageWrapper.xs #div-sitefooter div.sitefooter-outer {
+  margin: 0 16px;
 }
 
-#div-sitefooter div.sitefooter-outer {
-  position: relative;
-  padding: 20px 16px;
+#pageWrapper.xs #div-sitefooter div.sitefooter-outer div.col-cont a {
+  padding: 0.8em;
+  margin: 0.6em 0;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 div.tooltip-cont {

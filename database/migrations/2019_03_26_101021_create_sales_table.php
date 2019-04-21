@@ -22,9 +22,9 @@ class CreateSalesTable extends Migration
             $table->foreign('product_id')->references('id')->on('products');
             $table->char('country_code', 3);
             $table->char('currency', 3);
-            $table->integer('discount_percent')->unsigned();
-            $table->integer('price_cents_orig')->unsigned();
-            $table->integer('price_cents_after_discount')->unsigned();
+            $table->integer('discount_percent');
+            $table->integer('price_cents_orig');
+            $table->integer('price_cents_after_discount');
         });
     }
 

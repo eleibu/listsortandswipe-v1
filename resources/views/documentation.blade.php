@@ -326,9 +326,9 @@ $refs_glossary = array(
                 @endforeach
     			<br/><br/><br/>
     			<div class="subtitle-main">Other resources</div>
-    			<a class="button-word-cont" href="" title="Examples">Examples</a>
-    			<a class="button-word-cont" href="" title="Browser support">Browser support</a>
-    			<a class="button-word-cont" href="" title="Upcoming features">Upcoming features</a>
+    			<a class="button-word-cont" href="{{ url('/examples') }}" title="Examples">Examples</a>
+    			<a class="button-word-cont" href="{{ url('/browser-support') }}" title="Browser support">Browser support</a>
+    			<a class="button-word-cont" href="{{ url('/upcoming-features') }}" title="Upcoming features">Upcoming features</a>
     		</div>
     	</div>
     	<div class="details-cont">

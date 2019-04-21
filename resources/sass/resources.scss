@@ -1,0 +1,11 @@
+@import 'shared-all';
+@import 'shared-all-except-home';
+@import 'toc-details';
+
+div.details-cont {
+	div.details-outer {
+		div.section-cont {
+			padding: 1.6em 0;
+		}
+	}
+}

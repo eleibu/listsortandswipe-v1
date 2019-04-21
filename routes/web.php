@@ -17,17 +17,18 @@ Route::get('/', 'Controller_Site@page_home');
 Route::get('/home', 'Controller_Site@page_home')->name('home');
 Route::get('/pricing', 'Controller_Site@page_pricing')->name('pricing');
 Route::get('/support', 'Controller_Site@page_support')->name('support');
+Route::get('/about', 'Controller_Site@page_about');
 Route::get('/why-lithium-list', 'Controller_Site@page_why_lithium_list')->name('why-lithium-list');
 Route::get('/terms', 'Controller_Site@page_terms')->name('terms');
 Route::get('/privacy', 'Controller_Site@page_privacy')->name('privacy');
+Route::get('/documentation/{subsection?}', 'Controller_Site@section_documentation');
+Route::get('/examples/{subsection?}', 'Controller_Site@section_examples');
+Route::get('/browser-support', 'Controller_Site@page_browser_support');
+Route::get('/upcoming-features', 'Controller_Site@page_upcoming_features');
 
 Route::middleware(['auth', 'activated'])->group(function () {
 	Route::get('/console', 'Controller_Site@page_console');
 });
-// Route::get('/console', 'Controller_Site@page_console')->name('console');
-
-Route::get('/documentation/{subsection?}', 'Controller_Site@section_documentation');
-Route::get('/examples/{subsection?}', 'Controller_Site@section_examples');
 
 // auth
 Route::get('/login', 'Controller_Auth_LogIn@page')->name('login');
