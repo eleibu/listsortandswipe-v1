@@ -1,0 +1,49 @@
+@import 'shared-all';
+@import 'shared-all-except-home';
+@import 'sales-all';
+
+fieldset {
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+
+div.row {
+	div.dataentry {
+		.textentry {
+	font-family: 'Roboto';
+	-webkit-appearance: none;
+	outline: none;
+	border: none;
+	background-color: #FFFFFF;
+
+			font-size: 100%;
+			box-sizing: border-box;
+			width: 100%;
+			padding: 0.6em 0.4em;
+			border: 1px solid #DDDDDD;
+		}
+
+		.textentry.error {
+			border: 1px solid #FF3B0A;
+		}
+
+		.textentry.focus {
+			border: 1px solid #3366CC;
+		}
+	}
+
+	div.submsg-cont {
+		margin: 0.3em 0;
+		font-size: 85%;
+		line-height: 130%;
+		height: 3em;
+		overflow: hidden;
+		color: #777777;
+	}
+
+	div.submsg-cont.error {
+		font-weight: bold;
+		color: #FF3B0A;
+	}
+}

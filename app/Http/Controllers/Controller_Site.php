@@ -55,15 +55,6 @@ class Controller_Site extends Controller
             ->with('consolePath', $pageInfo['console']['path']);
 	}
 
-	public function page_support(Request $request) {
-		$pageInfo = Toolkit::pageInfo();
-		return view('support')
-            ->with('loginName', $pageInfo['login']['name'])
-            ->with('loginPath', $pageInfo['login']['path'])
-            ->with('consoleName', $pageInfo['console']['name'])
-            ->with('consolePath', $pageInfo['console']['path']);
-	}
-
 	public function page_terms(Request $request) {
 		$pageInfo = Toolkit::pageInfo();
 		return view('terms')

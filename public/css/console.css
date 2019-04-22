@@ -290,6 +290,10 @@ div.tooltip-cont.click div.tooltip-outer div.tooltip-inner {
   padding: 10px;
 }
 
+body {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
 .button-word-cont.signout {
   color: #003182;
   background-color: #F8F8F8;
@@ -547,7 +551,6 @@ span.textlink:hover {
 }
 
 #pageWrapper #div-sitecont {
-  background-color: rgba(0, 0, 0, 0.02);
   padding: 2em 16px;
 }
 

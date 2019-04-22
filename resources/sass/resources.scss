@@ -6,6 +6,100 @@ div.details-cont {
 	div.details-outer {
 		div.section-cont {
 			padding: 1.6em 0;
+
+			.title-section {
+				font-size: 140%;
+				font-weight: bold;
+				color: #222222;
+				margin-bottom: 1em;
+			}
+
+			p {
+				color: #444444;
+				line-height: 130%;
+			}
+
+			table {
+				tr {
+					td.heading {
+						font-weight: bold;
+						line-height: 130%;
+						color: #222222;
+					}
+
+					td.detail {
+						color: #666666;
+						line-height: 130%;
+					}
+				}
+
+				tr.grey {
+					td.detail {
+						background-color: #FBFBFB;
+					}
+				}
+			}
+
+			table.browser-support {
+				tr {
+					td.heading {
+						padding: 1em 8px;
+					}
+
+					td.detail {
+						padding: 0.8em 8px;
+					}
+				}
+			}
+
+			table.upcoming-features {
+				tr {
+					td {
+						padding: 1.2em 20px;
+					}
+				}
+			}
+
+		}
+	}
+}
+
+#pageWrapper.xl, #pageWrapper.lg, #pageWrapper.md, #pageWrapper.sm {
+	div.section-cont {
+		table.browser-support {
+			tr {
+				td {
+					width: 14em;
+				}
+			}
+		}
+
+		table.upcoming-features {
+			tr {
+				td.feature {
+					width: 30em;
+				}
+
+				td.priority {
+					width: 8em;
+				}
+
+				td.commenced {
+					width: 8em;
+				}
+			}
+		}
+	}
+}
+
+#pageWrapper.xs {
+	div.section-cont {
+		table.browser-support {
+			tr {
+				td.notes {
+					display: none;
+				}
+			}
 		}
 	}
 }

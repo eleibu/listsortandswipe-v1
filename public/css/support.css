@@ -288,153 +288,167 @@ a.menubtn:active {
   background: rgba(0, 0, 0, 0.025);
 }
 
-div.sitecont-outer {
-  position: relative;
+div.title-main-cont {
+  padding: 1em 16px 0 16px;
 }
 
-div.toc-cont div.toc-outer {
-  margin: 0 1.4em;
-}
-
-div.toc-cont div.toc-outer div.title-main {
-  font-weight: bold;
-  font-size: 110%;
-  color: #222222;
-  padding: 0.4em 0;
-  margin-bottom: 0.8em;
-  border-bottom: 1px solid #EEEEEE;
-}
-
-div.toc-cont div.toc-outer div.subtitle-main {
-  font-size: 110%;
-  color: #666666;
-  margin-bottom: 1em;
-}
-
-div.toc-cont div.toc-outer .button-word-cont {
-  display: block;
-  text-align: left;
-  margin: 0.2em 0;
-}
-
-div.toc-cont div.toc-outer div.button-word-cont {
-  color: #777777;
-}
-
-div.toc-cont div.toc-outer div.button-word-cont.selected {
-  color: #222222;
-  background-color: #EEEEEE;
-}
-
-div.toc-cont div.toc-outer a.button-word-cont:hover {
-  background-color: #F8F8F8;
-}
-
-div.details-cont div.details-outer {
-  margin: 0 1.4em;
-}
-
-div.details-cont div.details-outer div.title-main {
+div.title-main-cont div.title-main-outer {
+  margin: 0 auto 20px auto;
+  max-width: 800px;
+  min-width: 300px;
   font-size: 180%;
-  color: #222222;
-  padding: 0.4em 0;
-  margin-bottom: 0.8em;
-  border-bottom: 1px solid #EEEEEE;
-}
-
-div.details-cont div.details-outer div.nextpage-cont {
-  margin: 1em 0;
-  text-align: right;
-  font-size: 120%;
-}
-
-div.details-cont div.details-outer div.nextpage-cont a.button-word-cont {
-  font-weight: normal;
-}
-
-div.details-cont div.details-outer div.nextpage-cont a.button-word-cont:hover {
-  background-color: #F8F8F8;
-}
-
-#pageWrapper.xl div.toc-cont, #pageWrapper.lg div.toc-cont, #pageWrapper.md div.toc-cont, #pageWrapper.sm div.toc-cont {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 360px;
-  height: 100%;
-  overflow: auto;
-}
-
-#pageWrapper.xl div.details-cont, #pageWrapper.lg div.details-cont, #pageWrapper.md div.details-cont, #pageWrapper.sm div.details-cont {
-  border-left: 1px solid #EEEEEE;
-  min-height: 40em;
-  margin-left: 360px;
-}
-
-#pageWrapper.xs div.toc-cont {
-  border-bottom: 1px solid #EEEEEE;
-  margin-bottom: 2em;
-}
-
-div.details-cont div.details-outer div.section-cont {
-  padding: 1.6em 0;
-}
-
-div.details-cont div.details-outer div.section-cont .title-section {
-  font-size: 140%;
   font-weight: bold;
   color: #222222;
-  margin-bottom: 1em;
 }
 
-div.details-cont div.details-outer div.section-cont p {
-  color: #444444;
-  line-height: 130%;
+div.section-cont div.section-outer {
+  margin: 0 auto;
+  max-width: 800px;
+  min-width: 300px;
 }
 
-div.details-cont div.details-outer div.section-cont table tr td.heading {
-  font-weight: bold;
+div.section-cont div.section-outer div.details div.title {
   line-height: 130%;
   color: #222222;
+  font-weight: bold;
 }
 
-div.details-cont div.details-outer div.section-cont table tr td.detail {
-  color: #666666;
-  line-height: 130%;
+div.section-cont div.section-outer div.details div.description {
+  line-height: 140%;
+  color: #999999;
 }
 
-div.details-cont div.details-outer div.section-cont table tr.grey td.detail {
+div.section-cont div.section-outer div.details div.description a.button-word-cont {
+  font-size: 85%;
+  background-color: #EEEEEE;
+  -webkit-box-shadow: 0 1px 4px 0 #CCCCCC;
+          box-shadow: 0 1px 4px 0 #CCCCCC;
+}
+
+div.section-cont div.section-outer div.details div.description a.button-word-cont:hover {
+  background-color: #F2F2F2;
+  -webkit-box-shadow: 0 1px 4px 0 #BBBBBB;
+          box-shadow: 0 1px 4px 0 #BBBBBB;
+}
+
+div.section-cont.grey {
   background-color: #FBFBFB;
 }
 
-div.details-cont div.details-outer div.section-cont table.browser-support tr td.heading {
-  padding: 1em 8px;
+#pageWrapper.xl div.section-cont, #pageWrapper.lg div.section-cont, #pageWrapper.md div.section-cont, #pageWrapper.sm div.section-cont {
+  padding: 60px 16px;
 }
 
-div.details-cont div.details-outer div.section-cont table.browser-support tr td.detail {
-  padding: 0.8em 8px;
+#pageWrapper.xl div.section-cont div.section-outer, #pageWrapper.lg div.section-cont div.section-outer, #pageWrapper.md div.section-cont div.section-outer, #pageWrapper.sm div.section-cont div.section-outer {
+  position: relative;
 }
 
-div.details-cont div.details-outer div.section-cont table.upcoming-features tr td {
-  padding: 1.2em 20px;
+#pageWrapper.xl div.section-cont div.section-outer div.image, #pageWrapper.lg div.section-cont div.section-outer div.image, #pageWrapper.md div.section-cont div.section-outer div.image, #pageWrapper.sm div.section-cont div.section-outer div.image {
+  position: absolute;
+  top: 0;
+  height: 200px;
+  width: 200px;
 }
 
-#pageWrapper.xl div.section-cont table.browser-support tr td, #pageWrapper.lg div.section-cont table.browser-support tr td, #pageWrapper.md div.section-cont table.browser-support tr td, #pageWrapper.sm div.section-cont table.browser-support tr td {
-  width: 14em;
+#pageWrapper.xl div.section-cont div.section-outer div.image img.large, #pageWrapper.lg div.section-cont div.section-outer div.image img.large, #pageWrapper.md div.section-cont div.section-outer div.image img.large, #pageWrapper.sm div.section-cont div.section-outer div.image img.large {
+  display: inline;
 }
 
-#pageWrapper.xl div.section-cont table.upcoming-features tr td.feature, #pageWrapper.lg div.section-cont table.upcoming-features tr td.feature, #pageWrapper.md div.section-cont table.upcoming-features tr td.feature, #pageWrapper.sm div.section-cont table.upcoming-features tr td.feature {
-  width: 30em;
-}
-
-#pageWrapper.xl div.section-cont table.upcoming-features tr td.priority, #pageWrapper.lg div.section-cont table.upcoming-features tr td.priority, #pageWrapper.md div.section-cont table.upcoming-features tr td.priority, #pageWrapper.sm div.section-cont table.upcoming-features tr td.priority {
-  width: 8em;
-}
-
-#pageWrapper.xl div.section-cont table.upcoming-features tr td.commenced, #pageWrapper.lg div.section-cont table.upcoming-features tr td.commenced, #pageWrapper.md div.section-cont table.upcoming-features tr td.commenced, #pageWrapper.sm div.section-cont table.upcoming-features tr td.commenced {
-  width: 8em;
-}
-
-#pageWrapper.xs div.section-cont table.browser-support tr td.notes {
+#pageWrapper.xl div.section-cont div.section-outer div.image img.small, #pageWrapper.lg div.section-cont div.section-outer div.image img.small, #pageWrapper.md div.section-cont div.section-outer div.image img.small, #pageWrapper.sm div.section-cont div.section-outer div.image img.small {
   display: none;
+}
+
+#pageWrapper.xl div.section-cont div.section-outer div.details, #pageWrapper.lg div.section-cont div.section-outer div.details, #pageWrapper.md div.section-cont div.section-outer div.details, #pageWrapper.sm div.section-cont div.section-outer div.details {
+  min-height: 200px;
+}
+
+#pageWrapper.xl div.section-cont div.section-outer div.details div.title, #pageWrapper.lg div.section-cont div.section-outer div.details div.title, #pageWrapper.md div.section-cont div.section-outer div.details div.title, #pageWrapper.sm div.section-cont div.section-outer div.details div.title {
+  font-size: 160%;
+}
+
+#pageWrapper.xl div.section-cont div.section-outer div.details div.description, #pageWrapper.lg div.section-cont div.section-outer div.details div.description, #pageWrapper.md div.section-cont div.section-outer div.details div.description, #pageWrapper.sm div.section-cont div.section-outer div.details div.description {
+  font-size: 110%;
+}
+
+#pageWrapper.xl div.section-cont.left div.section-outer div.image, #pageWrapper.lg div.section-cont.left div.section-outer div.image, #pageWrapper.md div.section-cont.left div.section-outer div.image, #pageWrapper.sm div.section-cont.left div.section-outer div.image {
+  left: 0;
+}
+
+#pageWrapper.xl div.section-cont.left div.section-outer div.details, #pageWrapper.lg div.section-cont.left div.section-outer div.details, #pageWrapper.md div.section-cont.left div.section-outer div.details, #pageWrapper.sm div.section-cont.left div.section-outer div.details {
+  margin-left: 220px;
+}
+
+#pageWrapper.xl div.section-cont.right div.section-outer div.image, #pageWrapper.lg div.section-cont.right div.section-outer div.image, #pageWrapper.md div.section-cont.right div.section-outer div.image, #pageWrapper.sm div.section-cont.right div.section-outer div.image {
+  right: 0;
+}
+
+#pageWrapper.xl div.section-cont.right div.section-outer div.details, #pageWrapper.lg div.section-cont.right div.section-outer div.details, #pageWrapper.md div.section-cont.right div.section-outer div.details, #pageWrapper.sm div.section-cont.right div.section-outer div.details {
+  margin-right: 220px;
+}
+
+#pageWrapper.xs div.section-cont {
+  padding: 40px 16px;
+}
+
+#pageWrapper.xs div.section-cont div.section-outer div.image {
+  height: 150px;
+  margin-bottom: 1.4em;
+}
+
+#pageWrapper.xs div.section-cont div.section-outer div.image img.large {
+  display: none;
+}
+
+#pageWrapper.xs div.section-cont div.section-outer div.image img.small {
+  display: inline;
+}
+
+#pageWrapper.xs div.section-cont div.section-outer div.details div.title {
+  font-size: 140%;
+}
+
+#pageWrapper.xs div.section-cont div.section-outer div.details div.description {
+  font-size: 100%;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+div.row div.dataentry .textentry {
+  font-family: 'Roboto';
+  -webkit-appearance: none;
+  outline: none;
+  border: none;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+  padding: 0.6em 0.4em;
+  border: 1px solid #DDDDDD;
+}
+
+div.row div.dataentry .textentry.error {
+  border: 1px solid #FF3B0A;
+}
+
+div.row div.dataentry .textentry.focus {
+  border: 1px solid #3366CC;
+}
+
+div.row div.submsg-cont {
+  margin: 0.3em 0;
+  font-size: 85%;
+  line-height: 130%;
+  height: 3em;
+  overflow: hidden;
+  color: #777777;
+}
+
+div.row div.submsg-cont.error {
+  font-weight: bold;
+  color: #FF3B0A;
 }

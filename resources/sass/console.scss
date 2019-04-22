@@ -1,6 +1,10 @@
 @import 'shared-all';
 @import 'tooltips';
 
+body {
+	background-color: rgba(0,0,0,0.02);
+}
+
 .button-word-cont.signout {
 	color: #003182;
 	background-color: #F8F8F8;
@@ -235,7 +239,6 @@ span.textlink:hover {
 	overflow: auto;
 
 	#div-sitecont {
-		background-color: rgba(0,0,0,0.02);
 		padding: 2em 16px;
 
 		div.sitecont-outer {

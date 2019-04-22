@@ -18615,37 +18615,6 @@ if (outerContSetup && listContSetup) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return lithiumlist; });
-// TESTED ON:
-// IE11
-// Edge38
-// Safari 12 on Mac
-// Chrome 71 on Windows
-// Chrome 71 on Mac
-// Chrome 59 on Android
-// Samsung Browser 5.4 on Android
-// Firefox 64 on Mac
-
-
-// SHOULD WORK ON:
-// IE 10	(IE9 and below does not support 'transition')
-// Edge 12
-// Firefox 12
-// Chrome 4
-// Safari 4
-// Opera 11.5
-// iOS Safari 4
-// Android Browser 2.3
-// Chrome for Android all
-// Firefox for Android all
-// (based on getBoundingClientRect - see caniuse)
-
-
-// OVERVIEW AND FEATURES
-// Vertical only
-// Sorts and swipes left/right (sliding 'out' and 'back')
-// Sort start delay allows time to swipe first
-// Drag handles / buttons
-// Active item clone
 
 
 // Notes:
@@ -18658,16 +18627,6 @@ if (outerContSetup && listContSetup) {
 // does not work with '-webkit-overflow-scrolling: touch' (iOS only)
 
 
-// Pipeline:
-// hasClass, addClass and removeClass should be able to handle 'mask left' (at the moment they can't) - if not, update docs to say this
-// allow trigger left/right on multiple items at the same time
-// confirm left / right
-// left / right buttons and multiple (remember to delete tempFunctionRemoveMasks())
-// elastic drag left / right
-// slow auto scroll when approach top / bottom
-// triggerSort - item to new position
-
-
 // Known issues:
 // * Cursor is sometimes far above itemCont but still moving it (seems to happen only when moving up, but not sure).
 // * When: (i) listItems have non-uniform top/bottom margins; (ii) listCont has a top/bottom margin; or (iii) both (i) and (ii), items in the list can jump up and down when
@@ -18678,8 +18637,6 @@ if (outerContSetup && listContSetup) {
 // Validation using plain JS
 
 // TO FINALISE DOCS
-// Replace 'click/tap' with 'press'
-// Change 'Overview of functionality' to 'Concepts' and re-read/write (including explaining difference between 'slide' and 'swipe')
 // Look for square brackets and fix
 // Make all examples CHANGE the default settings
 

@@ -34,11 +34,6 @@
             <div id="div-target" class="sitecont-outer">
             </div>
         </div>
-        <div id="div-sitefooter">
-            <div class="sitefooter-outer">
-                © 2019
-            </div>
-        </div>
     </div>
     <script>
         var api_url_public = "{{ url('/api/public/v1/') }}/";
