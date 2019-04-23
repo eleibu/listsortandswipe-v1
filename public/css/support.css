@@ -411,13 +411,64 @@ div.section-cont.grey {
   font-size: 100%;
 }
 
-fieldset {
+div.button-word-cont.disabled {
+  color: #FFFFFF;
+  background-color: #003182;
+  -webkit-box-shadow: 0 1px 4px 0 #BBBBBB;
+          box-shadow: 0 1px 4px 0 #BBBBBB;
+  opacity: 0.3;
+}
+
+div.section-cont div.section-outer div.page-title {
+  position: relative;
+  font-size: 220%;
+  padding-left: 2.2em;
+}
+
+div.section-cont div.section-outer div.page-title i {
+  font-size: 180%;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+div.section-cont div.section-outer div.page-title.default {
+  color: #666666;
+}
+
+div.section-cont div.section-outer div.page-title.default strong {
+  color: #333333;
+}
+
+div.section-cont div.section-outer div.page-title.active {
+  color: #339900;
+}
+
+div.section-cont div.section-outer div.page-title.active strong {
+  color: #336600;
+}
+
+div.section-cont div.section-outer div.intro {
+  line-height: 140%;
+}
+
+div.section-cont div.section-outer div.intro.default {
+  color: #666666;
+}
+
+div.section-cont div.section-outer div.intro.active {
+  color: #339900;
+}
+
+div.section-cont div.section-outer fieldset {
   margin: 0;
   padding: 0;
   border: none;
 }
 
-div.row div.dataentry .textentry {
+div.section-cont div.section-outer div.row div.dataentry .textentry {
   font-family: 'Roboto';
   -webkit-appearance: none;
   outline: none;
@@ -431,15 +482,19 @@ div.row div.dataentry .textentry {
   border: 1px solid #DDDDDD;
 }
 
-div.row div.dataentry .textentry.error {
+div.section-cont div.section-outer div.row div.dataentry .textentry.disabled {
+  background-color: #F7F7F7;
+}
+
+div.section-cont div.section-outer div.row div.dataentry .textentry.error {
   border: 1px solid #FF3B0A;
 }
 
-div.row div.dataentry .textentry.focus {
+div.section-cont div.section-outer div.row div.dataentry .textentry.focus {
   border: 1px solid #3366CC;
 }
 
-div.row div.submsg-cont {
+div.section-cont div.section-outer div.row div.submsg-cont {
   margin: 0.3em 0;
   font-size: 85%;
   line-height: 130%;
@@ -448,7 +503,15 @@ div.row div.submsg-cont {
   color: #777777;
 }
 
-div.row div.submsg-cont.error {
+div.section-cont div.section-outer div.row div.submsg-cont.error {
   font-weight: bold;
   color: #FF3B0A;
+}
+
+#pageWrapper.xl div.section-cont, #pageWrapper.lg div.section-cont, #pageWrapper.md div.section-cont, #pageWrapper.sm div.section-cont {
+  padding: 40px 16px;
+}
+
+#pageWrapper.xs div.section-cont {
+  padding: 27px 16px;
 }

@@ -18,9 +18,15 @@ class Controller_Support extends Controller
     }
 
 	public function page(Request $request) {
+		$accountType = -1;
+		if (Auth::check()) {
+			$user = Auth::user();
+			$accountType = $user->account_type;
+		}
 		$pageInfo = Toolkit::pageInfo();
 		return view('support')
 			->with('view', 'support')
+			->with('accountType', $accountType)
             ->with('loginName', $pageInfo['login']['name'])
             ->with('loginPath', $pageInfo['login']['path'])
             ->with('consoleName', $pageInfo['console']['name'])

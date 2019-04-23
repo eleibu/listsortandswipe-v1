@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icon-font-solid';
-  src:  url('fonts/icon-font-solid.eot?vxzo5f');
-  src:  url('fonts/icon-font-solid.eot?vxzo5f#iefix') format('embedded-opentype'),
-    url('fonts/icon-font-solid.ttf?vxzo5f') format('truetype'),
-    url('fonts/icon-font-solid.woff?vxzo5f') format('woff'),
-    url('fonts/icon-font-solid.svg?vxzo5f#icon-font-solid') format('svg');
+  src:  url('fonts/icon-font-solid.eot?k06wtz');
+  src:  url('fonts/icon-font-solid.eot?k06wtz#iefix') format('embedded-opentype'),
+    url('fonts/icon-font-solid.ttf?k06wtz') format('truetype'),
+    url('fonts/icon-font-solid.woff?k06wtz') format('woff'),
+    url('fonts/icon-font-solid.svg?k06wtz#icon-font-solid') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,6 +24,9 @@ i.sld {
   -moz-osx-font-smoothing: grayscale;
 }
 
+i.sld.icon-chat-question:before {
+  content: "\e919";
+}
 i.sld.icon-alert-sign:before {
   content: "\e918";
 }
