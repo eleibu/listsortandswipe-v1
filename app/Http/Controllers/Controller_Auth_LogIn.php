@@ -19,7 +19,12 @@ class Controller_Auth_LogIn extends Controller
 		if (Auth::check()) {			
 			return redirect($pageInfo['console']['path']);
 		} else {
+			$nextPage = '';
+			if ($request->filled('nextPage')) {
+				$nextPage = $request->input('nextPage');
+			}
 			return view('login')
+				->with('nextPage', $nextPage)
 	            ->with('homeName', $pageInfo['home']['name'])
 	            ->with('homePath', $pageInfo['home']['path'])
 	            ->with('loginName', $pageInfo['login']['name'])
@@ -77,10 +82,14 @@ class Controller_Auth_LogIn extends Controller
 	            	$user = Auth::user();
 					$pageInfo = Toolkit::pageInfo();
 
-	            	if ($user->verified == 1) {
-						return redirect($pageInfo['console']['path']);
+	            	if ($request->filled('nextPage')) {
+						return redirect($request->input('nextPage'));
 	            	} else {
-						return redirect($pageInfo['activate']['path']);
+		            	if ($user->verified == 1) {
+							return redirect($pageInfo['console']['path']);
+		            	} else {
+							return redirect($pageInfo['activate']['path']);
+		            	}	            		
 	            	}
 	            } else {
 			        return back()

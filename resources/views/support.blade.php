@@ -14,40 +14,26 @@
 @if ($view == 'support')
     <div class="section-cont">
         <div class="section-outer">
-            @if (($accountType == 2) || ($accountType == 3))
-                <div class="page-title active">
-                    <i class="oln icon-chat-question"></i><strong>Support</strong>
-                </div>
-            @else
-                <div class="page-title default">
-                    <i class="oln icon-chat-question"></i><strong>Support</strong>
-                </div>
-            @endif
+            <div class="page-title default">
+                <i class="oln icon-chat-question"></i><strong>Support</strong>
+            </div>
         </div>
     </div>
     <div class="section-cont">
         <div class="section-outer">
-            @if ($accountType == 0)
-                <div class="intro default">
+            <div class="intro">
+                @if ($accountType == 0)
                     Your <strong>Free trial</strong> licence does not include tech support. To obtain tech support please upgrade to a <strong>Professional</strong> or <strong>Enterprise</strong> licence via the Account tab in your <a href="{{ url($consolePath) }}" title="{{$consoleName}}">{{$consoleName}}</a>.
-                </div>
-            @elseif ($accountType == 1)
-                <div class="intro default">
+                @elseif ($accountType == 1)
                     Your <strong>Basic</strong> licence does not include tech support. To obtain tech support please upgrade to a <strong>Professional</strong> or <strong>Enterprise</strong> licence via the Account tab in your <a href="{{ url($consolePath) }}" title="{{$consoleName}}">{{$consoleName}}</a>.
-                </div>
-            @elseif ($accountType == 2)
-                <div class="intro active">
+                @elseif ($accountType == 2)
                     Your <strong>Professional</strong> licence includes standard tech support. Enter details of your support request below. Please expect a response within 72 hours.
-                </div>
-            @elseif ($accountType == 3)
-                <div class="intro active">
+                @elseif ($accountType == 3)
                     Your <strong>Enterprise</strong> licence includes premium tech support. Enter details of your support request below. Please expect a response within 24 hours.
-                </div>
-            @else
-                <div class="intro default">
-                    Tech support is available to holders of <strong>Professional</strong> and <strong>Enterprise</strong> licences. If you have one of these licences, please <a href="{{ url($loginPath) }}" title="{{$loginName}}">{{$loginName}}</a> to activate the form below.
-                </div>
-            @endif
+                @else
+                    Tech support is available to holders of <strong>Professional</strong> and <strong>Enterprise</strong> licences. If you have one of these licences, please <a href="{{ url($loginPath) . '?nextPage=support' }}" title="{{$loginName}}">{{$loginName}}</a> to activate the form below.
+                @endif
+            </div>
         </div>
     </div>
     <div class="section-cont grey">
@@ -149,15 +135,37 @@
         </div>
     </div>
 @endif
-@if ($view == 'submitted')
-    <div class="title-main-cont">
-        <div class="title-main-outer">
-            Submitted
-        </div>
-    </div>
+@if ($view == 'success')
     <div class="section-cont">
         <div class="section-outer">
-            <br/>
+            <div class="page-title success">
+                <i class="oln icon-chat-tick"></i><strong>Request</strong> <span>submitted</span>
+            </div>
+        </div>
+    </div>
+    <div class="section-cont grey">
+        <div class="section-outer">
+            <div class="subtitle">
+                @if ($accountType == 2)
+                    Thanks, your support request has been submitted. Please expect a response within 72 hours.
+                @elseif ($accountType == 3)
+                    Thanks, your support request has been submitted. Please expect a response within 24 hours.
+                @else
+                    Thanks, your support request has been submitted.
+                @endif
+            </div>
+        </div>
+    </div>
+    <form id="form" method="POST" action="{{url('/activate')}}">
+        @csrf
+    </form>
+    <div class="section-cont">
+        <div class="section-outer">
+            <a class="button-word-cont darkblue" href="{{url('/support')}}" title="">
+                <div class="spinner-cont">
+                    <div class="text">SUBMIT ANOTHER</div>
+                </div>
+            </a>
         </div>
     </div>
 @endif

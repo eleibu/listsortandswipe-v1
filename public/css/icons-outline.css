@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icon-font-outline';
-  src:  url('fonts/icon-font-outline.eot?ix28pl');
-  src:  url('fonts/icon-font-outline.eot?ix28pl#iefix') format('embedded-opentype'),
-    url('fonts/icon-font-outline.ttf?ix28pl') format('truetype'),
-    url('fonts/icon-font-outline.woff?ix28pl') format('woff'),
-    url('fonts/icon-font-outline.svg?ix28pl#icon-font-outline') format('svg');
+  src:  url('fonts/icon-font-outline.eot?xacsyr');
+  src:  url('fonts/icon-font-outline.eot?xacsyr#iefix') format('embedded-opentype'),
+    url('fonts/icon-font-outline.ttf?xacsyr') format('truetype'),
+    url('fonts/icon-font-outline.woff?xacsyr') format('woff'),
+    url('fonts/icon-font-outline.svg?xacsyr#icon-font-outline') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,6 +24,9 @@ i.oln {
   -moz-osx-font-smoothing: grayscale;
 }
 
+i.oln.icon-chat-tick:before {
+  content: "\e91a";
+}
 i.oln.icon-chat-question:before {
   content: "\e919";
 }

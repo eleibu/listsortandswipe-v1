@@ -24,6 +24,7 @@
 <form id="form" method="POST" action="{{url('/login')}}">
     @csrf
     <fieldset>
+        <input name="nextPage" type="hidden" value="{{$nextPage}}" />
         <div class="section-cont grey">
             <div class="section-outer">
                 <div class="login-row">

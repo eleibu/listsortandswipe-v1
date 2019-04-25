@@ -92,7 +92,7 @@ fieldset {
   }
 }
 
-input.textentry {
+.textentry {
   font-family: 'Roboto';
   -webkit-appearance: none;
   outline: none;

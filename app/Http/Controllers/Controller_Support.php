@@ -25,7 +25,7 @@ class Controller_Support extends Controller
 		}
 		$pageInfo = Toolkit::pageInfo();
 		return view('support')
-			->with('view', 'support')
+			->with('view', 'success')
 			->with('accountType', $accountType)
             ->with('loginName', $pageInfo['login']['name'])
             ->with('loginPath', $pageInfo['login']['path'])
