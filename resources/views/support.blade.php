@@ -27,9 +27,9 @@
                 @elseif ($accountType == 1)
                     Your <strong>Basic</strong> licence does not include tech support. To obtain tech support please upgrade to a <strong>Professional</strong> or <strong>Enterprise</strong> licence via the Account tab in your <a href="{{ url($consolePath) }}" title="{{$consoleName}}">{{$consoleName}}</a>.
                 @elseif ($accountType == 2)
-                    Your <strong>Professional</strong> licence includes standard tech support. Enter details of your support request below. Please expect a response within 72 hours.
+                    Your <strong>Professional</strong> licence includes standard tech support. Please enter the details of your support request below.
                 @elseif ($accountType == 3)
-                    Your <strong>Enterprise</strong> licence includes premium tech support. Enter details of your support request below. Please expect a response within 24 hours.
+                    Your <strong>Enterprise</strong> licence includes premium tech support. Please enter the details of your support request below.
                 @else
                     Tech support is available to holders of <strong>Professional</strong> and <strong>Enterprise</strong> licences. If you have one of these licences, please <a href="{{ url($loginPath) . '?nextPage=support' }}" title="{{$loginName}}">{{$loginName}}</a> to activate the form below.
                 @endif
@@ -48,14 +48,14 @@
                                     <input id="input-subject" name="subject" class="textentry error" type="text" placeholder="Subject" value="{{Request::old('subject')}}" tabindex="1" />
                                 </div>
                                 <div id="div-subject-submsg" class="submsg-cont error">
-                                    {!! $errors->support->first('subject') !!}
+                                    &nbsp;
                                 </div>
                             @else
                                 <div class="dataentry">
                                     <input id="input-subject" name="subject" class="textentry" type="text" placeholder="Subject" value="{{Request::old('subject')}}" tabindex="1" />
                                 </div>
                                 <div id="div-subject-submsg" class="submsg-cont">
-                                    {!! $msgSubjectDefault !!}
+                                    &nbsp;
                                 </div>
                             @endif
                         @else
@@ -105,18 +105,9 @@
                                     </div>
                                 </div>
                             </div>
-                            @if ($errors->submit->isEmpty())
-                                <div id="div-submit-submsg" class="submsg-cont">
-                                    {!! $msgSubmitDefault !!}
-                                </div>
-                            @else
-                                <div id="div-submit-submsg" class="submsg-cont error">
-                                    {!! $msgSubmitErrors !!}
-                                </div>
-                            @endif
                         @else
                             <div id="div-disabled" class="button-word-cont disabled">
-                                <div id="div-spinner-cont-submit" class="spinner-cont">
+                                <div id="div-spinner-cont" class="spinner-cont">
                                     <div class="text">SUBMIT REQUEST</div>
                                     <div class="spinner-outer">
                                         <div class="spinner-inner">
@@ -134,6 +125,8 @@
             </form>
         </div>
     </div>
+    <div id="div-sitecont-mask">
+    </div>
 @endif
 @if ($view == 'success')
     <div class="section-cont">
@@ -147,24 +140,19 @@
         <div class="section-outer">
             <div class="subtitle">
                 @if ($accountType == 2)
-                    Thanks, your support request has been submitted. Please expect a response within 72 hours.
+                    Thanks, your support request has been submitted. You&#39;ll receive a response within 72 hours.
                 @elseif ($accountType == 3)
-                    Thanks, your support request has been submitted. Please expect a response within 24 hours.
+                    Thanks, your support request has been submitted. You&#39;ll receive a response within 24 hours.
                 @else
                     Thanks, your support request has been submitted.
                 @endif
             </div>
         </div>
     </div>
-    <form id="form" method="POST" action="{{url('/activate')}}">
-        @csrf
-    </form>
     <div class="section-cont">
         <div class="section-outer">
-            <a class="button-word-cont darkblue" href="{{url('/support')}}" title="">
-                <div class="spinner-cont">
-                    <div class="text">SUBMIT ANOTHER</div>
-                </div>
+            <a class="textlink" href="{{url('/support')}}" title="Submit another">
+                SUBMIT ANOTHER
             </a>
         </div>
     </div>
@@ -175,12 +163,8 @@
 @if ($view == 'support')
     @section('scriptBottom')
         <script>
-            var msgSubjectDefault = "{!! $msgSubjectDefault !!}";
-            var msgSubjectNoBlank = "{!! $msgSubjectNoBlank !!}";
             var msgMessageDefault = "{!! $msgMessageDefault !!}";
             var msgMessageNoBlank = "{!! $msgMessageNoBlank !!}";
-            var msgSubmitDefault = "{!! $msgSubmitDefault !!}";
-            var msgSubmitErrors = "{!! $msgSubmitErrors !!}";
         </script>
     @endsection
 @endif

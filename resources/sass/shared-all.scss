@@ -75,6 +75,16 @@ a.button-word-cont {
 	box-shadow: 0 1px 4px 0 #AAAAAA;
 }
 
+.textlink {
+	font-weight: bold;
+	color: #3366CC;
+}
+
+.textlink:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
 a.menubtn {
 	display: inline-block;
 	padding: 0.3em;

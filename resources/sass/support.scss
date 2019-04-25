@@ -1,6 +1,5 @@
 @import 'shared-all';
 @import 'shared-all-except-home';
-// @import 'sales-all';
 @import 'auth';
 
 div.button-word-cont.disabled {
@@ -12,55 +11,13 @@ div.button-word-cont.disabled {
 
 div.section-cont {
 	div.section-outer {
-		// div.page-title {
-		// 	position: relative;
-		// 	font-size: 220%;
-		// 	padding-left: 2.2em;
-
-		// 	i {
-		// 		font-size: 180%;
-		// 		position: absolute;
-		// 		left: 0;
-		// 		top: 50%;
-		// 		transform: translateY(-50%);
-		// 	}
-		// }
-
-		// div.page-title.default {
-		// 	color: #666666;
-
-		// 	strong {
-		// 		color: #333333;
-		// 	}
-		// }
-
-		// div.page-title.success {
-		// 	color: #339900;
-
-		// 	strong {
-		// 		color: #336600;
-		// 	}
-		// }
-
 		div.intro {
 			line-height: 140%;
 			color: #666666;
 		}
-
-		// fieldset {
-		// 	margin: 0;
-		// 	padding: 0;
-		// 	border: none;
-		// }
-
 		div.row {
 			div.dataentry {
 				.textentry {
-					// font-family: 'Roboto';
-					// -webkit-appearance: none;
-					// outline: none;
-					// border: none;
-					// background-color: #FFFFFF;
 					font-size: 100%;
 					box-sizing: border-box;
 					width: 100%;

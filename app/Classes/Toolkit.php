@@ -11,7 +11,8 @@ class Toolkit {
 	public static function emailAddresses() {
 		$emailAddresses = array(
 			'admin' => 'admin@lithiumlist.com',
-			'errorLog' => 'admin@lithiumlist.com'
+			'errorLog' => 'admin@lithiumlist.com',
+			'support' => 'admin@lithiumlist.com'
 		);
 		return $emailAddresses;
 	}
