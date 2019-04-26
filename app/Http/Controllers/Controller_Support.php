@@ -10,9 +10,16 @@ use App\Mail\SupportRequest;
 
 class Controller_Support extends Controller
 {
+
+
+
+	// INCLUDE SEND COPY TO ME OPTION!!!!!!!
+
+
+
     function __construct() {
-		$this->msgMessageDefault = '';
-		$this->msgMessageNoBlank = 'Message can&#39;t be blank.';
+		$this->msgBodyDefault = '';
+		$this->msgBodyNoBlank = 'Message can&#39;t be blank.';
     }
 
 	public function page(Request $request) {
@@ -29,18 +36,18 @@ class Controller_Support extends Controller
             ->with('loginPath', $pageInfo['login']['path'])
             ->with('consoleName', $pageInfo['console']['name'])
             ->with('consolePath', $pageInfo['console']['path'])
-            ->with('msgMessageDefault', $this->msgMessageDefault)
-            ->with('msgMessageNoBlank', $this->msgMessageNoBlank);
+            ->with('msgBodyDefault', $this->msgBodyDefault)
+            ->with('msgBodyNoBlank', $this->msgBodyNoBlank);
 	}
 
 	public function post(Request $request) {
-		if ((Auth::check()) && ($request->has('subject', 'message'))) {
+		if ((Auth::check()) && ($request->has('subject', 'body'))) {
 			$user = Auth::user();
 
-			if (strlen($request->input('message')) > 0) {
-				$message = $request->input('message');
-				if (strlen($message) > 60000) {
-					$message = substr($message, 0, 60000);
+			if (strlen($request->input('body')) > 0) {
+				$body = $request->input('body');
+				if (strlen($body) > 60000) {
+					$body = substr($body, 0, 60000);
 				}
 
 				if (strlen($request->input('subject')) > 0) {
@@ -54,7 +61,7 @@ class Controller_Support extends Controller
 
 				$emailAddresses = Toolkit::emailAddresses();
 				Mail::to($emailAddresses['support'])
-					->send(new SupportRequest($user, $subject, $message));
+					->send(new SupportRequest($user, $subject, $body));
 
 				$pageInfo = Toolkit::pageInfo();
 				return view('support')
@@ -67,7 +74,7 @@ class Controller_Support extends Controller
 			} else {
 		        return back()
 		            ->withInput()
-		        	->withErrors(['message' => $this->msgMessageNoBlank], 'support');
+		        	->withErrors(['body' => $this->msgBodyNoBlank], 'support');
 			}
 		} else {
 			abort(400);

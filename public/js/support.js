@@ -4016,6 +4016,124 @@
 
 /***/ }),
 
+/***/ "./node_modules/classNames/dedupe.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+  Copyright (c) 2017 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var classNames = (function () {
+		// don't inherit from Object so we can skip hasOwnProperty check later
+		// http://stackoverflow.com/questions/15518328/creating-js-object-with-object-createnull#answer-21079232
+		function StorageObject() {}
+		StorageObject.prototype = Object.create(null);
+
+		function _parseArray (resultSet, array) {
+			var length = array.length;
+
+			for (var i = 0; i < length; ++i) {
+				_parse(resultSet, array[i]);
+			}
+		}
+
+		var hasOwn = {}.hasOwnProperty;
+
+		function _parseNumber (resultSet, num) {
+			resultSet[num] = true;
+		}
+
+		function _parseObject (resultSet, object) {
+			for (var k in object) {
+				if (hasOwn.call(object, k)) {
+					// set value to false instead of deleting it to avoid changing object structure
+					// https://www.smashingmagazine.com/2012/11/writing-fast-memory-efficient-javascript/#de-referencing-misconceptions
+					resultSet[k] = !!object[k];
+				}
+			}
+		}
+
+		var SPACE = /\s+/;
+		function _parseString (resultSet, str) {
+			var array = str.split(SPACE);
+			var length = array.length;
+
+			for (var i = 0; i < length; ++i) {
+				resultSet[array[i]] = true;
+			}
+		}
+
+		function _parse (resultSet, arg) {
+			if (!arg) return;
+			var argType = typeof arg;
+
+			// 'foo bar'
+			if (argType === 'string') {
+				_parseString(resultSet, arg);
+
+			// ['foo', 'bar', ...]
+			} else if (Array.isArray(arg)) {
+				_parseArray(resultSet, arg);
+
+			// { 'foo': true, ... }
+			} else if (argType === 'object') {
+				_parseObject(resultSet, arg);
+
+			// '130'
+			} else if (argType === 'number') {
+				_parseNumber(resultSet, arg);
+			}
+		}
+
+		function _classNames () {
+			// don't leak arguments
+			// https://github.com/petkaantonov/bluebird/wiki/Optimization-killers#32-leaking-arguments
+			var len = arguments.length;
+			var args = Array(len);
+			for (var i = 0; i < len; i++) {
+				args[i] = arguments[i];
+			}
+
+			var classSet = new StorageObject();
+			_parseArray(classSet, args);
+
+			var list = [];
+
+			for (var k in classSet) {
+				if (classSet[k]) {
+					list.push(k)
+				}
+			}
+
+			return list.join(' ');
+		}
+
+		return _classNames;
+	})();
+
+	if (typeof module !== 'undefined' && module.exports) {
+		classNames.default = classNames;
+		module.exports = classNames;
+	} else if (true) {
+		// register as 'classnames', consistent with npm package name
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+			return classNames;
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {
+		window.classNames = classNames;
+	}
+}());
+
+
+/***/ }),
+
 /***/ "./node_modules/jquery/dist/jquery.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17069,50 +17187,112 @@ var pageMenuShowHide = function () {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__monitor_win_width_js__ = __webpack_require__("./resources/js/monitor-win-width.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__page_menu_show_hide_js__ = __webpack_require__("./resources/js/page-menu-show-hide.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_classNames_dedupe__ = __webpack_require__("./node_modules/classNames/dedupe.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_classNames_dedupe___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_classNames_dedupe__);
 __webpack_require__("./node_modules/bootstrap/dist/js/bootstrap.js");
+
 
 
 
 
 var maskCont = document.getElementById('div-sitecont-mask');
 var inputSubject = document.getElementById('input-subject');
-var textareaMessage = document.getElementById('textarea-message');
-var divMessageSubmsg = document.getElementById('div-message-submsg');
+var textareaBody = document.getElementById('textarea-body');
+var divBodySubmsg = document.getElementById('div-body-submsg');
+var submitButton = document.getElementById('div-submit');
 var spinnerCont = document.getElementById('div-spinner-cont');
 
-if (maskCont && inputSubject && textareaMessage && divMessageSubmsg && spinnerCont) {
-	// inputEmail.addEventListener("focus", function(e) {
-	// 	inputEmail.className = classNames({
-	// 		'textentry' : true,
-	// 		'focus' : true
-	// 	});
-	// 	divEmailSubmsg.innerHTML = msgEmailDefault;
-	// 	divEmailSubmsg.className = classNames({
-	// 		'submsg-cont' : true
-	// 	});
-	// 	hideSubmitSubmsg();
-	// });
+if (maskCont && inputSubject && textareaBody && divBodySubmsg && submitButton && spinnerCont) {
+	inputSubject.addEventListener("focus", function (e) {
+		inputSubject.className = __WEBPACK_IMPORTED_MODULE_2_classNames_dedupe___default()({
+			'textentry': true,
+			'focus': true
+		});
+	});
 
-	// inputEmail.addEventListener("blur", function(e) {
-	// 	inputEmail.className = classNames({
-	// 		'textentry' : true
-	// 	});
-	// 	divEmailSubmsg.innerHTML = msgEmailDefault;
-	// 	divEmailSubmsg.className = classNames({
-	// 		'submsg-cont' : true
-	// 	});
-	// 	hideSubmitSubmsg();
-	// });
+	inputSubject.addEventListener("blur", function (e) {
+		inputSubject.className = __WEBPACK_IMPORTED_MODULE_2_classNames_dedupe___default()({
+			'textentry': true
+		});
+	});
 
-	// inputEmail.addEventListener("keypress", function(e) {
+	inputSubject.addEventListener("keypress", function (e) {
+		if (e.which && e.which == 13 || e.keyCode && e.keyCode == 13) {
+			e.preventDefault();
+			textareaBody.focus();
+			textareaBody.select();
+		}
+	});
+
+	textareaBody.addEventListener("focus", function (e) {
+		textareaBody.className = __WEBPACK_IMPORTED_MODULE_2_classNames_dedupe___default()({
+			'textentry': true,
+			'focus': true
+		});
+		divBodySubmsg.innerHTML = msgBodyDefault;
+		divBodySubmsg.className = __WEBPACK_IMPORTED_MODULE_2_classNames_dedupe___default()({
+			'submsg-cont': true
+		});
+	});
+
+	textareaBody.addEventListener("blur", function (e) {
+		textareaBody.className = __WEBPACK_IMPORTED_MODULE_2_classNames_dedupe___default()({
+			'textentry': true
+		});
+		divBodySubmsg.innerHTML = msgBodyDefault;
+		divBodySubmsg.className = __WEBPACK_IMPORTED_MODULE_2_classNames_dedupe___default()({
+			'submsg-cont': true
+		});
+	});
+
+	// textareaBody.addEventListener("keypress", function(e) {
 	// 	if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
 	// 		e.preventDefault();
-	// 		inputPassword.focus();
-	// 		inputPassword.select();
+	// 		validateAndSubmit();
 	// 	}
 	// });
 
+	submitButton.addEventListener("click", function () {
+		validateAndSubmit();
+	});
+}
 
+function validateAndSubmit() {
+	var bodyOk = false;
+	var body = textareaBody.value;
+
+	if (body.length > 0) {
+		bodyOk = true;
+
+		textareaBody.className = __WEBPACK_IMPORTED_MODULE_2_classNames_dedupe___default()({
+			'textentry': true
+		});
+		divBodySubmsg.innerHTML = msgBodyDefault;
+		divBodySubmsg.className = __WEBPACK_IMPORTED_MODULE_2_classNames_dedupe___default()({
+			'submsg-cont': true
+		});
+	} else {
+		textareaBody.className = __WEBPACK_IMPORTED_MODULE_2_classNames_dedupe___default()({
+			'textentry': true,
+			'error': true
+		});
+		divBodySubmsg.innerHTML = msgBodyNoBlank;
+		divBodySubmsg.className = __WEBPACK_IMPORTED_MODULE_2_classNames_dedupe___default()({
+			'submsg-cont': true,
+			'error': true
+		});
+	}
+
+	if (bodyOk) {
+		maskCont.className = __WEBPACK_IMPORTED_MODULE_2_classNames_dedupe___default()({
+			'show': true
+		});
+		spinnerCont.className = __WEBPACK_IMPORTED_MODULE_2_classNames_dedupe___default()({
+			'spinner-cont': true,
+			'spinning': true
+		});
+		document.getElementById('form').submit();
+	}
 }
 
 /***/ }),

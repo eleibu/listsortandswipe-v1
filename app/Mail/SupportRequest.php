@@ -19,13 +19,13 @@ class SupportRequest extends Mailable
 
     public $user;
     public $subject;
-    public $message;
+    public $body;
 
-    public function __construct()
+    public function __construct($user, $subject, $body)
     {
         $this->user = $user;
         $this->subject = $subject;
-        $this->message = $message;
+        $this->body = $body;
     }
 
     /**

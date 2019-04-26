@@ -15,11 +15,12 @@
     <body style="margin: 0; padding: 0; font-family: 'Roboto', Sans-Serif; font-size: 110%;">
         <div style="margin: 1em 0; padding: 0.6em 0; color: #222222; line-height: 130%; border-bottom: 1px solid #CCCCCC;">
             <div style="margin: 0.2em 0;">
-                Email: {{$user->email}}
+                From: {{$user->email}}
             </div>
+            <br/>
         </div>
         <div style="margin: 1em 0; padding: 0.6em 0; color: #222222; line-height: 130%;">
-            {{$message}}
+            {!! nl2br(htmlspecialchars($body)) !!}
         </div>
     </body>
 </html>

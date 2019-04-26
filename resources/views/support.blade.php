@@ -69,26 +69,26 @@
                     </div>
                     <div class="row">
                         @if (($accountType == 2) || ($accountType == 3))
-                            @if ((!$errors->support->isEmpty()) && (strlen($errors->support->first('message')) > 0))
+                            @if ((!$errors->support->isEmpty()) && (strlen($errors->support->first('body')) > 0))
                                 <div class="dataentry">
-                                    <textarea id="textarea-message" rows="15" name="message" class="textentry error" placeholder="Details of your support request" value="{{Request::old('message')}}" tabindex="2"></textarea>
+                                    <textarea id="textarea-body" rows="15" name="body" class="textentry error" placeholder="Details of your support request" value="{{Request::old('body')}}" tabindex="2"></textarea>
                                 </div>
-                                <div id="div-message-submsg" class="submsg-cont error">
-                                    {!! $errors->support->first('message') !!}
+                                <div id="div-body-submsg" class="submsg-cont error">
+                                    {!! $errors->support->first('body') !!}
                                 </div>
                             @else
                                 <div class="dataentry">
-                                    <textarea id="textarea-message" rows="15" name="message" class="textentry" placeholder="Details of your support request" value="{{Request::old('message')}}" tabindex="2"></textarea>
+                                    <textarea id="textarea-body" rows="15" name="body" class="textentry" placeholder="Details of your support request" value="{{Request::old('body')}}" tabindex="2"></textarea>
                                 </div>
-                                <div id="div-message-submsg" class="submsg-cont">
-                                    {!! $msgMessageDefault !!}
+                                <div id="div-body-submsg" class="submsg-cont">
+                                    {!! $msgBodyDefault !!}
                                 </div>
                             @endif
                         @else
                             <div class="dataentry">
-                                <textarea id="textarea-message" rows="15" name="message" class="textentry disabled" tabindex="2" disabled=""></textarea>
+                                <textarea id="textarea-body" rows="15" name="body" class="textentry disabled" tabindex="2" disabled=""></textarea>
                             </div>
-                            <div id="div-message-submsg" class="submsg-cont">
+                            <div id="div-body-submsg" class="submsg-cont">
                                 &nbsp;
                             </div>
                         @endif
@@ -96,7 +96,7 @@
                     <div class="row">
                         @if (($accountType == 2) || ($accountType == 3))
                             <div id="div-submit" class="button-word-cont darkblue">
-                                <div id="div-spinner-cont-submit" class="spinner-cont">
+                                <div id="div-spinner-cont" class="spinner-cont">
                                     <div class="text">SUBMIT REQUEST</div>
                                     <div class="spinner-outer">
                                         <div class="spinner-inner">
@@ -107,17 +107,9 @@
                             </div>
                         @else
                             <div id="div-disabled" class="button-word-cont disabled">
-                                <div id="div-spinner-cont" class="spinner-cont">
+                                <div class="spinner-cont">
                                     <div class="text">SUBMIT REQUEST</div>
-                                    <div class="spinner-outer">
-                                        <div class="spinner-inner">
-                                            <div class="rect rect0"></div><div class="rect rect1"></div><div class="rect rect2"></div><div class="rect rect3"></div><div class="rect rect4"></div>
-                                        </div>
-                                    </div>
                                 </div>
-                            </div>
-                            <div id="div-submit-submsg" class="submsg-cont">
-                                &nbsp;
                             </div>
                         @endif
                     </div>
@@ -140,9 +132,9 @@
         <div class="section-outer">
             <div class="subtitle">
                 @if ($accountType == 2)
-                    Thanks, your support request has been submitted. You&#39;ll receive a response within 72 hours.
+                    Thanks, your support request has been submitted. We&#39;ll get back to you within 72 hours.
                 @elseif ($accountType == 3)
-                    Thanks, your support request has been submitted. You&#39;ll receive a response within 24 hours.
+                    Thanks, your support request has been submitted. We&#39;ll get back to you within 24 hours.
                 @else
                     Thanks, your support request has been submitted.
                 @endif
@@ -163,8 +155,8 @@
 @if ($view == 'support')
     @section('scriptBottom')
         <script>
-            var msgMessageDefault = "{!! $msgMessageDefault !!}";
-            var msgMessageNoBlank = "{!! $msgMessageNoBlank !!}";
+            var msgBodyDefault = "{!! $msgBodyDefault !!}";
+            var msgBodyNoBlank = "{!! $msgBodyNoBlank !!}";
         </script>
     @endsection
 @endif
