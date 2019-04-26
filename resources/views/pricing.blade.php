@@ -524,22 +524,5 @@
         </div>
     </div>
 </div>
-<div class="section-cont right">
-    <div class="section-outer">
-        <div class="image">
-            <img class="large" src="{{url('/images/reload-ui.png')}}" alt="" width="200" height="200" />
-            <img class="small" src="{{url('/images/reload-ui.png')}}" alt="" width="150" height="150" />
-        </div>
-        <div class="details">
-            <div class="title">
-                Discounted renewals
-            </div>
-            <div class="description">
-                <p>
-                    Get 10% off renewals within one month of the licence expiry. It&#39;s our way of saying thanks for your ongoing support.
-                </p>
-            </div>            
-        </div>
-    </div>
-</div>
+<br/><br/><br/>
 @endsection

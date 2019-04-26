@@ -1,0 +1,29 @@
+@import 'shared-all';
+
+div.section-cont {
+	padding: 20px 16px;
+
+	div.section-outer {
+		margin: 0 auto;
+		max-width: 800px;
+		min-width: 300px;
+
+		div.title {
+			font-size: 260%;
+			line-height: 130%;
+			color: #222222;
+			font-weight: bold;
+		}
+
+		div.para {
+			font-size: 120%;
+			margin: 1em 0;
+			line-height: 140%;
+			color: #555555;
+		}
+	}
+}
+
+div.section-cont.grey {
+	background-color: #FBFBFB;
+}

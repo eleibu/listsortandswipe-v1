@@ -63,7 +63,7 @@
                                         MacOS
                                     </td>
                                     <td class="detail">
-                                        71
+                                        73, 71
                                     </td>
                                 </tr>
                                 <tr class="grey">
@@ -74,7 +74,7 @@
                                         iOS
                                     </td>
                                     <td class="detail">
-                                        71
+                                        73, 71
                                     </td>
                                 </tr>
                                 <tr>
@@ -96,7 +96,7 @@
                                         MacOS
                                     </td>
                                     <td class="detail">
-                                        12
+                                        12.2, 12 
                                     </td>
                                 </tr>
                                 <tr>
@@ -118,7 +118,7 @@
                                         Windows
                                     </td>
                                     <td class="detail">
-                                        ?????
+                                        66
                                     </td>
                                 </tr>
                                 <tr>
