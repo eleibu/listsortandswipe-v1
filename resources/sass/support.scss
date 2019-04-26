@@ -15,6 +15,7 @@ div.section-cont {
 			line-height: 140%;
 			color: #666666;
 		}
+
 		div.row {
 			div.dataentry {
 				.textentry {
@@ -35,6 +36,20 @@ div.section-cont {
 
 				.textentry.focus {
 					border: 1px solid #3366CC;
+				}
+			}
+
+			div.dataentry.copyme {
+				input {
+					transform: scale(1.2);
+				}
+
+				label {
+					color: #666666;
+				}
+
+				label.disabled {
+					color: #CCCCCC;
 				}
 			}
 

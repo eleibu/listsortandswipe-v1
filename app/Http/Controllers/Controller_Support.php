@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Classes\Toolkit;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\SupportRequest;
+use App\Mail\SupportRequestOrig;
+use App\Mail\SupportRequestCopy;
 
 class Controller_Support extends Controller
 {
@@ -51,17 +52,27 @@ class Controller_Support extends Controller
 				}
 
 				if (strlen($request->input('subject')) > 0) {
-					$subject = 'SUPPORT REQUEST: ' . $request->input('subject');
+					$subjectOrig = 'SUPPORT REQUEST: ' . $request->input('subject');
+					$subjectCopy = 'Support request: ' . $request->input('subject');
 				} else {
-					$subject = 'SUPPORT REQUEST: (no subject)';
+					$subjectOrig = 'SUPPORT REQUEST: (no subject)';
+					$subjectCopy = 'Support request: (no subject)';
 				}
-				if (strlen($subject) > 78) {
-					$subject = substr($subject, 0, 78);
+				if (strlen($subjectOrig) > 78) {
+					$subjectOrig = substr($subjectOrig, 0, 78);
+				}
+				if (strlen($subjectCopy) > 78) {
+					$subjectCopy = substr($subjectCopy, 0, 78);
 				}
 
 				$emailAddresses = Toolkit::emailAddresses();
 				Mail::to($emailAddresses['support'])
-					->send(new SupportRequest($user, $subject, $body));
+					->send(new SupportRequestOrig($user, $subjectOrig, $body));
+
+				if ($request->input('copyme')) {
+					Mail::to($user->email)
+						->send(new SupportRequestCopy($user, $subjectCopy, $body));
+				}
 
 				$pageInfo = Toolkit::pageInfo();
 				return view('support')

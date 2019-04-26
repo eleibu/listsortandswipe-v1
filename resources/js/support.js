@@ -54,13 +54,6 @@ if ((maskCont) && (inputSubject) && (textareaBody) && (divBodySubmsg) && (submit
 		});
 	});
 
-	// textareaBody.addEventListener("keypress", function(e) {
-	// 	if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
-	// 		e.preventDefault();
-	// 		validateAndSubmit();
-	// 	}
-	// });
-
 	submitButton.addEventListener("click", function() {
 		validateAndSubmit();
 	});

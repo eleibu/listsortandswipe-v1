@@ -17245,13 +17245,6 @@ if (maskCont && inputSubject && textareaBody && divBodySubmsg && submitButton &&
 		});
 	});
 
-	// textareaBody.addEventListener("keypress", function(e) {
-	// 	if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
-	// 		e.preventDefault();
-	// 		validateAndSubmit();
-	// 	}
-	// });
-
 	submitButton.addEventListener("click", function () {
 		validateAndSubmit();
 	});

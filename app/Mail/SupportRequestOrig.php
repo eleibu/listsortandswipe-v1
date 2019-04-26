@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SupportRequest extends Mailable
+class SupportRequestOrig extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -35,6 +35,6 @@ class SupportRequest extends Mailable
      */
     public function build()
     {
-        return $this->subject($this->subject)->view('emails.support-request');
+        return $this->subject($this->subject)->view('emails.support-request-orig');
     }
 }

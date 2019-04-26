@@ -1443,11 +1443,11 @@ const Buttons = (props) => {
                 </div>
             </div>
             {(props.placeOrderSubmsg != null && props.placeOrderSubmsg.length > 0) ? (
-                <div class="submsg-cont">
+                <div className="submsg-cont">
                     {props.placeOrderSubmsg}
                 </div>
             ) : (
-                <div class="submsg-cont">
+                <div className="submsg-cont">
                     &nbsp;
                 </div>
             )}

@@ -546,6 +546,19 @@ div.section-cont div.section-outer div.row div.dataentry .textentry.focus {
   border: 1px solid #3366CC;
 }
 
+div.section-cont div.section-outer div.row div.dataentry.copyme input {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+}
+
+div.section-cont div.section-outer div.row div.dataentry.copyme label {
+  color: #666666;
+}
+
+div.section-cont div.section-outer div.row div.dataentry.copyme label.disabled {
+  color: #CCCCCC;
+}
+
 div.section-cont div.section-outer div.row div.submsg-cont {
   margin: 0.3em 0;
   font-size: 85%;

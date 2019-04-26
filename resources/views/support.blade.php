@@ -95,6 +95,22 @@
                     </div>
                     <div class="row">
                         @if (($accountType == 2) || ($accountType == 3))
+                            <div class="dataentry copyme">
+                                @if ((Request::old('copyme') == null) || (!Request::old('copyme')))
+                                    <input id="input-copyme" type="checkbox" name="copyme" tabindex="3" checked/><label for="input-copyme">&nbsp;Send a copy to me</label>
+                                @else
+                                    <input id="input-copyme" type="checkbox" name="copyme" tabindex="3"/><label for="input-copyme">&nbsp;Send a copy to me</label>
+                                @endif
+                            </div>
+                        @else
+                            <div class="dataentry copyme" >
+                                <input id="input-copyme" type="checkbox" name="copyme" tabindex="3" checked disabled/><label for="input-copyme" class="disabled">&nbsp;Send a copy to me</label>
+                            </div>
+                        @endif
+                    </div>
+                    <br/><br/>
+                    <div class="row">
+                        @if (($accountType == 2) || ($accountType == 3))
                             <div id="div-submit" class="button-word-cont darkblue">
                                 <div id="div-spinner-cont" class="spinner-cont">
                                     <div class="text">SUBMIT REQUEST</div>

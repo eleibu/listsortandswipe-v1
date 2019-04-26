@@ -74,7 +74,7 @@
                                         iOS
                                     </td>
                                     <td class="detail">
-                                        ?????
+                                        71
                                     </td>
                                 </tr>
                                 <tr>
@@ -107,7 +107,7 @@
                                         iOS
                                     </td>
                                     <td class="detail">
-                                        ?????
+                                        12.2
                                     </td>
                                 </tr>
                                 <tr class="grey">
@@ -132,7 +132,7 @@
                                         64
                                     </td>
                                 </tr>
-                                <tr class="grey">
+                                <tr>
                                     <td class="detail">
                                         Firefox
                                     </td>
@@ -140,7 +140,7 @@
                                         iOS
                                     </td>
                                     <td class="detail">
-                                        ?????
+                                        16.2
                                     </td>
                                 </tr>
                                 <tr>
@@ -151,7 +151,7 @@
                                         Android
                                     </td>
                                     <td class="detail">
-                                        ?????
+                                        66
                                     </td>
                                 </tr>
                                 <tr class="grey">
