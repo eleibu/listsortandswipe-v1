@@ -352,6 +352,17 @@ div.details-cont div.details-outer div.title-main {
   border-bottom: 1px solid #EEEEEE;
 }
 
+div.details-cont div.details-outer div.subsection-cont {
+  margin: 2em 0 4em 2em;
+}
+
+div.details-cont div.details-outer .title-subsection {
+  font-size: 110%;
+  font-weight: bold;
+  color: #444444;
+  margin-bottom: 1em;
+}
+
 div.details-cont div.details-outer div.nextpage-cont {
   margin: 1em 0;
   text-align: right;

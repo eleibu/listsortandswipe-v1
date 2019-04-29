@@ -199,7 +199,7 @@
         {{$refs['attachment']['title']}}
     </a>
     <p>
-        Call [LINK TO .attachToList() METHOD] to attach Lithium List to a list:
+        Call <a href="{{ url($subpages['methods']['url'] . '#' . $refs_methods['attachToList']['aref']) }}" title="{{$refs_methods['attachToList']['title']}}">{{$refs_methods['attachToList']['title']}}</a> to attach Lithium List to a list:
     </p>
 <pre class="line-numbers"><code class="language-js">var outerCont = document.getElementById('outerCont');
 var listCont = document.getElementById('listCont');

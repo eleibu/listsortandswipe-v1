@@ -28,7 +28,7 @@
                 <div class="section-cont">
                     <div class="title-section">Tested browsers</div>
                     <p>
-                        Lithium List has been tested, and verified to work properly, on these browsers:
+                        Lithium List has been tested, and verified to work properly, in these browsers:
                     </p>
                     <div>
                         <table class="browser-support" cellspacing="0" cellpadding="0">
@@ -194,7 +194,7 @@
                 <div class="section-cont">
                     <div class="title-section">Other browsers</div>
                     <p>
-                        Lithium List should also work, but has not been specifically tested, on these browsers:
+                        Lithium List should also work, but has not been specifically tested, in these browsers:
                     </p>
                     <div>
                         <table class="browser-support" cellspacing="0" cellpadding="0">
