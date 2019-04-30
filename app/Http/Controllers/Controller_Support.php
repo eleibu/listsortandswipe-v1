@@ -11,13 +11,6 @@ use App\Mail\SupportRequestCopy;
 
 class Controller_Support extends Controller
 {
-
-
-
-	// INCLUDE SEND COPY TO ME OPTION!!!!!!!
-
-
-
     function __construct() {
 		$this->msgBodyDefault = '';
 		$this->msgBodyNoBlank = 'Message can&#39;t be blank.';

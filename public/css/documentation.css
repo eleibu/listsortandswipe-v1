@@ -497,6 +497,11 @@ div.details-cont div.details-outer div.section-cont p {
   line-height: 130%;
 }
 
+div.details-cont div.details-outer div.section-cont p.image-licence-key img {
+  -webkit-box-shadow: 0 5px 14px rgba(0, 0, 0, 0.15), 0 6px 6px rgba(0, 0, 0, 0.12);
+          box-shadow: 0 5px 14px rgba(0, 0, 0, 0.15), 0 6px 6px rgba(0, 0, 0, 0.12);
+}
+
 div.details-cont div.details-outer div.section-cont div.related-cont {
   margin: 2em 0 2em 2em;
 }
@@ -533,24 +538,16 @@ div.details-cont div.details-outer div.nextpage-cont a.button-word-cont:hover {
   background-color: #F8F8F8;
 }
 
-#div-body.xl div.toc-cont, #div-body.lg div.toc-cont, #div-body.md div.toc-cont, #div-body.sm div.toc-cont {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 360px;
-  height: 100%;
-  overflow: auto;
+#pageWrapper.xl p.image-licence-key img.small, #pageWrapper.lg p.image-licence-key img.small, #pageWrapper.md p.image-licence-key img.small, #pageWrapper.sm p.image-licence-key img.small {
+  display: none;
 }
 
-#div-body.xl div.details-cont, #div-body.lg div.details-cont, #div-body.md div.details-cont, #div-body.sm div.details-cont {
-  border-left: 1px solid #EEEEEE;
-  min-height: 40em;
-  margin-left: 360px;
+#pageWrapper.xs p.image-licence-key {
+  text-align: center;
 }
 
-#div-body.xs div.toc-cont {
-  border-bottom: 1px solid #EEEEEE;
-  margin-bottom: 2em;
+#pageWrapper.xs p.image-licence-key img.large {
+  display: none;
 }
 
 #ul-html-structure {

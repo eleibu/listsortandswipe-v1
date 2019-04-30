@@ -4,9 +4,9 @@
             'aref' => 'ref-licence-key',
             'title' => 'Licence key'
         ),
-        'html-structure' => array(
-            'aref' => 'ref-html-structure',
-            'title' => 'HTML structure'
+        'required-html' => array(
+            'aref' => 'ref-required-html',
+            'title' => 'Required HTML'
         ),
         'required-css' => array(
             'aref' => 'ref-required-css',
@@ -36,15 +36,36 @@
         {{$refs['licence-key']['title']}}
     </a>
     <p>
-        [You will need a licence key - LINK TO SIGN UP PAGE]
+        First you&#39;ll need to create an account and get a licence key.
     </p>
+    <div class="subsection-cont">
+        <div class="title-subsection">
+            Creating an account
+        </div>
+        <p>
+            Sign up for a <a href="{{ $createFreeTrialUrl }}" title="free trial">free trial</a> or visit the <a href="{{ url('/pricing') }}" title="pricing page">pricing page</a> to select a basic, professional or enterprise account.
+        </p>
+    </div>
+    <div class="subsection-cont">
+        <div class="title-subsection">
+            Get a licence key
+        </div>
+        <p>
+            Once your account is created, go to your <a href="{{ url('/' . $consolePath) }}" title="{{$consoleName}}">{{$consoleName}}</a> and enter the domain or subdomain of the site you want to use Lithium List with:
+        </p>
+        <br/>
+        <p class="image-licence-key">
+            <img class="large" src="{{url('/images/console-licencekey.png')}}" alt="Console - licence key" width="533" height="471" />
+            <img class="small" src="{{url('/images/console-licencekey.png')}}" alt="Console - licence key" width="300" height="265" />
+        </p>
+    </div>
 </div>
 <div class="section-cont">
-    <a id="{{$refs['html-structure']['aref']}}" class="title-section">
-        {{$refs['html-structure']['title']}}
+    <a id="{{$refs['required-html']['aref']}}" class="title-section">
+        {{$refs['required-html']['title']}}
     </a>
     <p>
-        Lithium List requires three elements:
+        Lithium List requires three HTML elements:
     </p>
     <p>
         <ul id="ul-html-structure">

@@ -49,37 +49,6 @@ class Controller_Auth_SignUp extends Controller
     }
 
 	public function page(Request $request) {
-		// $invoice = array(
-		// 	'date' => gmdate('Y-m-d'),
-		// 	'customerName' => 'Elliot Leibu',
-		// 	'companyName' => 'Indysoft Pty Ltd',
-		// 	'countryName' => 'Australia',
-		// 	'productName' => 'Lithium List - Basic - 12 months licence',
-		// 	'price' => 3600,
-		// 	'taxes' => 0,
-		// 	'discount' => 0,
-		// 	'total' => 3600
-		// );		
-		// $invoice['refnumber'] = Toolkit::getFullReceiptNumber(1);
-		// return new SendReceipt('Elliot', $invoice);
-
-
-        // Mail::to('elliot.leibu@gmail.com')
-        // 	->send(new ResendActivationLink('Elliot', '123'));
-
-			// $user = Auth::user();
-
-			// $pageInfo = Toolkit::pageInfo();
-			// return view('signup')
-			// 	->with('view', 'account-created-requires-activation')
-			// 	// ->with('accountType', $user->account_type)
-	  //           ->with('homeName', $pageInfo['home']['name'])
-	  //           ->with('homePath', $pageInfo['home']['path'])
-	  //           ->with('loginName', $pageInfo['login']['name'])
-	  //           ->with('loginPath', $pageInfo['login']['path'])
-	  //           ->with('signupName', $pageInfo['signup']['name'])
-	  //           ->with('signupPath', $pageInfo['signup']['path']);
-
 		if (Auth::check()) {
 			$pageInfo = Toolkit::pageInfo();
 			return redirect($pageInfo['console']['path']);
@@ -297,18 +266,6 @@ class Controller_Auth_SignUp extends Controller
 	}
 
 	protected function createAccount($request, $dbProduct, $invoice) {
-			// Auth::attempt(['email' => $email, 'password' => $password], false);
-
-			// $pageInfo = Toolkit::pageInfo();
-			// return view('signup')
-			// 	->with('view', 'accountcreated')
-	  //           ->with('homeName', $pageInfo['home']['name'])
-	  //           ->with('homePath', $pageInfo['home']['path'])
-	  //           ->with('loginName', $pageInfo['login']['name'])
-	  //           ->with('loginPath', $pageInfo['login']['path'])
-	  //           ->with('signupName', $pageInfo['signup']['name'])
-	  //           ->with('signupPath', $pageInfo['signup']['path']);
-
 		$productIDs = Toolkit::productIDs();
 
 		// user
@@ -414,7 +371,7 @@ class Controller_Auth_SignUp extends Controller
 		}
 		DB::commit();
 
-		Auth::attempt(['email' => $email, 'password' => $password], false);
+		Auth::attempt(['email' => $email, 'password' => $user->password], false);
 
 		if ($dbProduct->id == $productIDs['accountTypeFree']) {
 			Mail::to($email)

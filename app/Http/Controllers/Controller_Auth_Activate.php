@@ -8,7 +8,7 @@ use App\Classes\Toolkit;
 use App\User;
 use DB;
 use Illuminate\Support\Facades\Mail;
-// use App\Mail\ResendActivationLink;
+use App\Mail\ResendActivationLink;
 
 class Controller_Auth_Activate extends Controller
 {
@@ -70,7 +70,7 @@ class Controller_Auth_Activate extends Controller
         	if ($user->verified == 1) {
 				return redirect($pageInfo['console']['path']);
         	} else {
-        		// Mail::to($user->email)->send(new ResendActivationLink($user->verification_code));
+        		Mail::to($user->email)->send(new ResendActivationLink($user->name, $user->verification_code));
 
 				return view('activate')
 					->with('view', 'linksent')

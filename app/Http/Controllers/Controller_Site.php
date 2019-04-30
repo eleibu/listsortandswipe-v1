@@ -211,7 +211,7 @@ class Controller_Site extends Controller
 	}
 
 	public function section_documentation(Request $request, $subpage = '') {
-		$pageInfo = Toolkit::pageInfo();
+		
 		$subpages = array(
 			'installation' => array(
 				'selected' => false,
@@ -279,6 +279,9 @@ class Controller_Site extends Controller
 			}
 		}
 		if (isset($selectedpage)) {
+			$pageInfo = Toolkit::pageInfo();
+			$productIDs = Toolkit::productIDs();
+
 			return view('documentation')
 				->with('selectedpage', $selectedpage)
 				->with('nextpage', $nextpage)
@@ -286,7 +289,8 @@ class Controller_Site extends Controller
 	            ->with('loginName', $pageInfo['login']['name'])
 	            ->with('loginPath', $pageInfo['login']['path'])
 	            ->with('consoleName', $pageInfo['console']['name'])
-	            ->with('consolePath', $pageInfo['console']['path']);
+	            ->with('consolePath', $pageInfo['console']['path'])
+	            ->with('createFreeTrialUrl', url($pageInfo['signup']['path'] . '?pid=' . $productIDs['accountTypeFree']));
 		} else {
 			abort(403);
 		}
