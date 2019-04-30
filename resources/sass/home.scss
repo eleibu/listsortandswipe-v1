@@ -1,4 +1,5 @@
 @import 'shared-all';
+@import 'sales-all';
 
 .button-word-cont.hlink {
 	color: #F8F8F8;
@@ -52,29 +53,34 @@ a.menubtn:active {
 	height: 100%;
 	overflow: auto;
 
-	#div-sitecont {
-		text-align: center;
-		padding: 0 1em;
+	// #div-sitecont {
+	// 	text-align: center;
+	// 	padding: 0 1em;
 
-		div.sitecont-outer {
-			display: inline-block;
-			text-align: left;
-			max-width: 800px;
-		}		
-	}
+	// 	div.sitecont-outer {
+	// 		display: inline-block;
+	// 		text-align: left;
+	// 		max-width: 800px;
+	// 	}		
+	// }
 
 	#div-title {
 		line-height: 130%;
 		color: #222222;
 	}
 
-	#div-buttons {
+	#div-subtitle {
 		line-height: 130%;
-
-		a.button-word-cont {
-			margin: 0.3em 0;
-		}
+		color: #555555;
 	}
+
+	// #div-buttons {
+	// 	line-height: 130%;
+
+	// 	a.button-word-cont {
+	// 		margin: 0.3em 0;
+	// 	}
+	// }
 
 	#div-ptable {
 		max-width: 500px;
@@ -86,11 +92,32 @@ a.menubtn:active {
 			margin-bottom: 0.4em;
 		}
 	}
+
+	div.section-cont.pagetitle {
+		background-image: url('../images/greytriangle-top.jpg');
+		background-repeat: no-repeat;
+		background-position: center bottom;
+		background-size: 100% auto;
+	}
+
+	div.section-cont.greybgd {
+		background-color: #FBFBFB;
+	}
+
+	div.section-cont.whytitle {
+		background-image: url('../images/greytriangle-btm.jpg');
+		background-repeat: no-repeat;
+		background-position: center top;
+		background-size: 100% auto;
+	}
+
 }
 
 #div-list-cont {
 	position: relative;
 	border-top: 0.1px solid transparent;
+	height: 300px;
+	overflow: hidden;
 
 	div.listitem-cont {
 		div.listitem-outer {
@@ -182,7 +209,11 @@ a.menubtn:active {
 
 #pageWrapper.xl, #pageWrapper.lg, #pageWrapper.md, #pageWrapper.sm {
 	#div-title {
-		font-size: 200%;
+		font-size: 220%;
+	}
+
+	#div-subtitle {
+		font-size: 150%;
 	}
 
 	#div-buttons {
@@ -239,7 +270,11 @@ a.menubtn:active {
 
 #pageWrapper.xs {
 	#div-title {
-		font-size: 130%;
+		font-size: 150%;
+	}
+
+	#div-subtitle {
+		font-size: 120%;
 	}
 
 	#div-buttons {
