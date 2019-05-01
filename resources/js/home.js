@@ -5,7 +5,7 @@ import { pageMenuShowHide } from './page-menu-show-hide.js';
 import { lithiumlist } from './lithiumlist-1.0.0.js';
 
 var listCont = document.getElementById('div-list-cont');
-var outerCont = document.getElementById('pageWrapper');
+var outerCont = document.getElementById('div-ptable');
 // var outerCont = window;
 var listItemClass = 'listitem-cont';
 

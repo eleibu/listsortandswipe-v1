@@ -1,5 +1,5 @@
 @import 'shared-all';
-@import 'sales-all';
+// @import 'sales-all';
 
 .button-word-cont.hlink {
 	color: #F8F8F8;
@@ -50,8 +50,8 @@ a.menubtn:active {
 }
 
 #pageWrapper {
-	height: 100%;
-	overflow: auto;
+	// height: 100%;
+	// overflow: auto;
 
 	// #div-sitecont {
 	// 	text-align: center;
@@ -74,6 +74,12 @@ a.menubtn:active {
 		color: #555555;
 	}
 
+	#div-getstarted {
+		a.button-word-cont {
+			margin-top: 1.4em;
+		}
+	}
+
 	// #div-buttons {
 	// 	line-height: 130%;
 
@@ -85,39 +91,78 @@ a.menubtn:active {
 	#div-ptable {
 		max-width: 500px;
 		margin: 0 auto;
+		height: 350px;
+		overflow: auto;
+	}
 
-		div.restore {
-			text-align: right;
-			font-size: 0.9em;
-			margin-bottom: 0.4em;
+	div.section-cont {
+		div.section-outer {
+			margin: 0 auto;
+			max-width: 800px;
+			min-width: 300px;
+
+			div.details {
+				div.title {
+					line-height: 130%;
+					color: #222222;
+					font-weight: bold;
+				}
+
+				div.description {
+					line-height: 140%;
+					color: #999999;
+
+					a.button-word-cont {
+						font-size: 85%;
+						background-color: #EEEEEE;
+						box-shadow: 0 1px 4px 0 #CCCCCC;
+					}
+
+					a.button-word-cont:hover {
+						background-color: #F2F2F2;
+						box-shadow: 0 1px 4px 0 #BBBBBB;
+					}
+				}			
+			}
 		}
 	}
 
-	div.section-cont.pagetitle {
+	div.section-cont.grey {
+		background-color: #FBFBFB;
+	}
+
+	div.pagetitle-cont {
 		background-image: url('../images/greytriangle-top.jpg');
 		background-repeat: no-repeat;
 		background-position: center bottom;
 		background-size: 100% auto;
 	}
 
-	div.section-cont.greybgd {
-		background-color: #FBFBFB;
+	div.list-cont {
+		background-color: #EEEEEE;
 	}
 
-	div.section-cont.whytitle {
+	div.whytitle-cont {
 		background-image: url('../images/greytriangle-btm.jpg');
 		background-repeat: no-repeat;
 		background-position: center top;
 		background-size: 100% auto;
+
+		div.whytitle {
+			font-size: 180%;
+			font-weight: bold;
+			color: #222222;
+		}
 	}
+
 
 }
 
 #div-list-cont {
 	position: relative;
 	border-top: 0.1px solid transparent;
-	height: 300px;
-	overflow: hidden;
+	// height: 300px;
+	// overflow: hidden;
 
 	div.listitem-cont {
 		div.listitem-outer {
@@ -216,8 +261,88 @@ a.menubtn:active {
 		font-size: 150%;
 	}
 
-	#div-buttons {
-		font-size: 110%;
+	// #div-buttons {
+	// 	font-size: 110%;
+	// }
+
+	// div.section-cont.pagetitle-cont {
+	// 	padding-bottom: 120px;
+	// }
+
+	// div.section-cont.whytitle-cont {
+	// 	padding-top: 120px;
+	// 	padding-bottom: 30px;
+	// }
+
+	div.pagetitle-cont {
+		padding: 40px 16px 120px 16px;
+	}
+
+	div.list-cont {
+		padding: 40px 16px;
+	}
+
+	div.whytitle-cont {
+		padding: 100px 16px 20px 16px;
+	}
+
+	div.whyrow-cont {
+		padding: 60px 16px;
+
+		div.whyrow-outer {
+			position: relative;
+
+			div.image {
+				position: absolute;
+				top: 0;
+				height: 200px;
+				width: 200px;
+
+				img.large {
+					display: inline;
+				}
+
+				img.small {
+					display: none;
+				}
+			}
+
+			div.details {
+				min-height: 200px;
+
+				div.title {
+					font-size: 160%;
+				}
+
+				div.description {
+					font-size: 110%;
+				}			
+			}
+		}
+	}
+
+	div.whyrow-cont.left {
+		div.whyrow-outer {
+			div.image {
+				left: 0;
+			}
+
+			div.details {
+				margin-left: 220px;
+			}
+		}
+	}
+
+	div.whyrow-cont.right {
+		div.whyrow-outer {
+			div.image {
+				right: 0;
+			}
+
+			div.details {
+				margin-right: 220px;
+			}
+		}
 	}
 
 	div.listitem-cont {
@@ -259,6 +384,11 @@ a.menubtn:active {
 		}
 	}
 
+	div.listitem-cont.lithium {
+		padding-top: 2.4em;
+		padding-bottom: 2.4em;
+	}
+
 	div.listitem-cont:hover {
 		div.listitem-outer {
 			i {
@@ -277,8 +407,57 @@ a.menubtn:active {
 		font-size: 120%;
 	}
 
-	#div-buttons {
-		font-size: 90%;
+	// #div-buttons {
+	// 	font-size: 90%;
+	// }
+
+	// div.section-cont.pagetitle-cont {
+	// 	padding-bottom: 60px;
+	// }
+
+	// div.section-cont.whytitle-cont {
+	// 	padding-top: 60px;
+	// }
+
+	div.list-cont {
+		padding: 60px 16px;
+	}
+
+	div.pagetitle-cont {
+		padding: 40px 16px 60px 16px;
+	}
+
+	div.whytitle-cont {
+		padding: 80px 16px 20px 16px;
+	}
+
+	div.whyrow-cont {
+		padding: 40px 16px;
+
+		div.whyrow-outer {
+			div.image {
+				height: 150px;
+				margin-bottom: 1.4em;
+
+				img.large {
+					display: none;
+				}
+
+				img.small {
+					display: inline;
+				}
+			}
+
+			div.details {
+				div.title {
+					font-size: 140%;
+				}
+
+				div.description {
+					font-size: 100%;
+				}			
+			}
+		}
 	}
 
 	div.listitem-cont {
@@ -289,5 +468,10 @@ a.menubtn:active {
 				display: none;
 			}
 		}
+	}
+
+	div.listitem-cont.lithium {
+		padding-top: 2em;
+		padding-bottom: 2em;
 	}
 }

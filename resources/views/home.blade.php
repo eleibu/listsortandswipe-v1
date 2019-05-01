@@ -33,7 +33,7 @@
                 </div>
             </div>
         </div>
-        <div class="section-cont pagetitle">
+        <div class="section-cont pagetitle-cont">
             <div class="section-outer">
                 <br/>
                 <div id="div-title">
@@ -43,15 +43,17 @@
                 <div id="div-subtitle">
                     Lithium List is a beautifully engineered <strong>sortable</strong> and <strong>swipeable</strong> list that works perfectly on desktop and mobile
                 </div>
+                <div id="div-getstarted">
+                    <a class="button-word-cont darkblue" title="" href="{{ url('/documentation') }}">
+                        Get started
+                    </a>
+                </div>
                 <br/>
             </div>
         </div>
-        <div class="section-cont greybgd">
+        <div class="section-cont list-cont">
             <div class="section-outer">
                 <div id="div-ptable">
-                    <div class="restore">
-                        <a href="" title="">Restore and shuffle</a>
-                    </div>
                     <div id="div-list-cont" class="lg">
                         <div class="listitem-cont othernonmetal unselectable">
                             <div class="listitem-outer">
@@ -69,7 +71,7 @@
                                 <i class="oln icon-trash delete" title="Delete"></i>
                             </div>
                         </div>
-                        <div class="listitem-cont alkali unselectable">
+                        <div class="listitem-cont lithium alkali unselectable">
                             <div class="listitem-outer">
                                 <i class="sld icon-grab-ui sort" title="Sort"></i>
                                 <i class="sld icon-archive archive" title="Archive"></i>
@@ -247,21 +249,17 @@
                         </div>
                     </div>
                 </div>
-                <br/><br/>
             </div>
         </div>
-        <div class="section-cont left whytitle">
-            <div class="section-outer">
-                <div class="title-main-cont">
-                    <div class="title-main-outer">
-                        Why use Lithium List?
-                    </div>
+        <div class="section-cont whytitle-cont">
+            <div class="section-outer">                
+                <div class="whytitle">
+                    Why Lithium List?
                 </div>
             </div>
         </div>
-
-        <div class="section-cont left">
-            <div class="section-outer">
+        <div class="section-cont whyrow-cont left">
+            <div class="section-outer whyrow-outer">
                 <div class="image">
                     <img class="large" src="{{url('/images/image-caption.png')}}" alt="" width="193" height="200" />
                     <img class="small" src="{{url('/images/image-caption.png')}}" alt="" width="145" height="150" />
@@ -281,8 +279,8 @@
                 </div>
             </div>
         </div>
-        <div class="section-cont right grey">
-            <div class="section-outer">
+        <div class="section-cont whyrow-cont right grey">
+            <div class="section-outer whyrow-outer">
                 <div class="image">
                     <img class="large" src="{{url('/images/desktop-smartphone.png')}}" alt="" width="193" height="200" />
                     <img class="small" src="{{url('/images/desktop-smartphone.png')}}" alt="" width="145" height="150" />
@@ -299,8 +297,8 @@
                 </div>
             </div>
         </div>
-        <div class="section-cont left">
-            <div class="section-outer">
+        <div class="section-cont whyrow-cont left">
+            <div class="section-outer whyrow-outer">
                 <div class="image">
                     <img class="large" src="{{url('/images/cog.png')}}" alt="" width="200" height="200" />
                     <img class="small" src="{{url('/images/cog.png')}}" alt="" width="150" height="150" />
@@ -317,8 +315,8 @@
                 </div>
             </div>
         </div>
-        <div class="section-cont right grey">
-            <div class="section-outer">
+        <div class="section-cont whyrow-cont right grey">
+            <div class="section-outer whyrow-outer">
                 <div class="image">
                     <img class="large" src="{{url('/images/front-page.png')}}" alt="" width="174" height="200" />
                     <img class="small" src="{{url('/images/front-page.png')}}" alt="" width="131" height="150" />
@@ -338,8 +336,8 @@
                 </div>
             </div>
         </div>
-        <div class="section-cont left">
-            <div class="section-outer">
+        <div class="section-cont whyrow-cont left">
+            <div class="section-outer whyrow-outer">
                 <div class="image">
                     <img class="large" src="{{url('/images/science.png')}}" alt="" width="200" height="184" />
                     <img class="small" src="{{url('/images/science.png')}}" alt="" width="150" height="138" />
@@ -359,7 +357,28 @@
                 </div>
             </div>
         </div>
-        <br/><br/>
+        <div class="section-cont whyrow-cont right grey">
+            <div class="section-outer whyrow-outer">
+                <div class="image">
+                    <img class="large" src="{{url('/images/browser.png')}}" alt="" width="200" height="167" />
+                    <img class="small" src="{{url('/images/browser.png')}}" alt="" width="150" height="125" />
+                </div>
+                <div class="details">
+                    <div class="title">
+                        Robust browser support
+                    </div>
+                    <div class="description">
+                        <p>
+                            Lithium List is tested extensively in all major browsers. So you can have confidence that it will work however your users access your website.
+                        </p>
+                        <p>
+                            <a href="{{url('/browser-support')}}" title="" class="button-word-cont">Check out the brower support page</a>
+                        </p>
+                    </div>            
+                </div>
+            </div>
+        </div>
+        <br/><br/><br/>
         @component('sitefooter')
         @endcomponent
         <div id="div-pagemask"></div>
