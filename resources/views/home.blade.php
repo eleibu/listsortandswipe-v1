@@ -372,7 +372,7 @@
                             Lithium List is tested extensively in all major browsers. So you can have confidence that it will work however your users access your website.
                         </p>
                         <p>
-                            <a href="{{url('/browser-support')}}" title="" class="button-word-cont">Check out the brower support page</a>
+                            <a href="{{url('/browser-support')}}" title="" class="button-word-cont">Read the brower support page</a>
                         </p>
                     </div>            
                 </div>
