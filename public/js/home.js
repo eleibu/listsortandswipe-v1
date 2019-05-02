@@ -16985,13 +16985,6 @@ var divLeft = document.createElement("div");
 divLeft.appendChild(spanLeft);
 divLeft.className = 'label-cont';
 
-var textRight = document.createTextNode("Archive");
-var spanRight = document.createElement("span");
-spanRight.appendChild(textRight);
-var divRight = document.createElement("div");
-divRight.appendChild(spanRight);
-divRight.className = 'label-cont';
-
 var listProperties = {
 	sortDragHandleClass: 'icon-grab-ui',
 	leftButtonClass: 'icon-trash',
@@ -17034,12 +17027,25 @@ function leftEnd(instance, index, didSlideOut) {
 		if (items.length >= 1) {
 			items[index].remove();
 			if (items.length == 0) {
-				var divRefresh = document.getElementById('div-refresh-cont');
-				divRefresh.className = 'show';
+				var divRestore = document.getElementById('div-restore-cont');
+				divRestore.className = 'show';
 			}
 		}
 	}
 }
+
+var retoreItems = Array.prototype.slice.call(listCont.getElementsByClassName(listItemClass));
+var restoreCont = document.getElementById('div-restore-cont');
+restoreCont.addEventListener('click', function () {
+	if (this.className == 'show') {
+		this.className = null;
+		setTimeout(function () {
+			for (var i = 0, len = retoreItems.length; i < len; i++) {
+				listCont.appendChild(retoreItems[i]);
+			}
+		}, 200);
+	}
+});
 
 /***/ }),
 

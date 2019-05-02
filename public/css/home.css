@@ -403,12 +403,55 @@ a.menubtn:active {
   overflow-x: hidden;
 }
 
-#pageWrapper #div-ptable #div-refresh-cont {
-  display: none;
+#pageWrapper #div-ptable #div-restore-cont {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  opacity: 0;
+  -webkit-transition: opacity 200ms ease;
+  transition: opacity 200ms ease;
 }
 
-#pageWrapper #div-ptable #div-refresh-cont.show {
-  display: block;
+#pageWrapper #div-ptable #div-restore-cont div.restore-outer {
+  position: relative;
+  color: #3366CC;
+}
+
+#pageWrapper #div-ptable #div-restore-cont div.restore-outer span {
+  font-size: 80%;
+}
+
+#pageWrapper #div-ptable #div-restore-cont div.restore-outer i {
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  font-size: 600%;
+  padding: 30px;
+  border-radius: 999px;
+}
+
+#pageWrapper #div-ptable #div-restore-cont.show {
+  opacity: 1;
+}
+
+#pageWrapper #div-ptable #div-restore-cont.show:hover {
+  cursor: pointer;
+}
+
+#pageWrapper #div-ptable #div-restore-cont.show:hover div.restore-outer i {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+#pageWrapper #div-phint {
+  max-width: 500px;
+  margin: 8px auto 0 auto;
+  font-size: 80%;
+  color: #999999;
 }
 
 #pageWrapper div.section-cont div.section-outer {
@@ -641,4 +684,8 @@ a.menubtn:active {
 #pageWrapper.xs div.listitem-cont.lithium {
   padding-top: 2em;
   padding-bottom: 2em;
+}
+
+#pageWrapper.xs #div-phint {
+  display: none;
 }

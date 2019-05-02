@@ -160,13 +160,55 @@ a.menubtn:active {
 			overflow-x: hidden;	// recommended to allow left/right shadow when scrolling but hide clone when swiping left/right
 		}
 
-		#div-refresh-cont {
-			display: none;
+		#div-restore-cont {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			opacity: 0;
+			transition: opacity 200ms ease;
+
+			div.restore-outer {
+				position: relative;
+				color: #3366CC;
+
+				span {
+					font-size: 80%;
+				}
+
+				i {
+					display: inline-block;
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+					font-size: 600%;
+					padding: 30px;
+					border-radius: 999px;
+				}
+			}
 		}
 
-		#div-refresh-cont.show {
-			display: block;
+		#div-restore-cont.show {
+			opacity: 1;
 		}
+
+		#div-restore-cont.show:hover {
+			cursor: pointer;
+
+			div.restore-outer {
+				i {
+					background-color: rgba(255, 255, 255, 0.3);
+				}
+			}
+		}
+	}
+
+	#div-phint {
+		max-width: 500px;
+		margin: 8px auto 0 auto;
+		font-size: 80%;
+		color: #999999;
 	}
 
 	div.section-cont {
@@ -422,5 +464,9 @@ a.menubtn:active {
 	div.listitem-cont.lithium {
 		padding-top: 2em;
 		padding-bottom: 2em;
+	}
+
+	#div-phint {
+		display: none;
 	}
 }

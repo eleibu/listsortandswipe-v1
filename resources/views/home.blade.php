@@ -54,6 +54,12 @@
         <div class="section-cont list-cont">
             <div class="section-outer">
                 <div id="div-ptable">
+                    <div id="div-restore-cont">
+                        <div class="restore-outer">
+                            <span>RESTORE</span>
+                            <i class="sld icon-reload-ui"></i>
+                        </div>
+                    </div>
                     <div id="div-list-cont" class="lg">
                         <div class="listitem-cont othernonmetal unselectable">
                             <div class="listitem-outer">
@@ -83,10 +89,122 @@
                                 <i class="oln icon-trash delete" title="Delete"></i>
                             </div>
                         </div>
+                        <div class="listitem-cont metalloid unselectable">
+                            <div class="listitem-outer">
+                                <i class="sld icon-grab-ui sort" title="Sort"></i>
+                                <div class="text"><span>B</span>Boron</div>
+                                <i class="oln icon-trash delete" title="Delete"></i>
+                            </div>
+                        </div>
+                        <div class="listitem-cont othernonmetal unselectable">
+                            <div class="listitem-outer">
+                                <i class="sld icon-grab-ui sort" title="Sort"></i>
+                                <div class="text"><span>C</span>Carbon</div>
+                                <i class="oln icon-trash delete" title="Delete"></i>
+                            </div>
+                        </div>
+                        <div class="listitem-cont othernonmetal unselectable">
+                            <div class="listitem-outer">
+                                <i class="sld icon-grab-ui sort" title="Sort"></i>
+                                <div class="text"><span>N</span>Nitrogen</div>
+                                <i class="oln icon-trash delete" title="Delete"></i>
+                            </div>
+                        </div>
+                        <div class="listitem-cont othernonmetal unselectable">
+                            <div class="listitem-outer">
+                                <i class="sld icon-grab-ui sort" title="Sort"></i>
+                                <div class="text"><span>O</span>Oxygen</div>
+                                <i class="oln icon-trash delete" title="Delete"></i>
+                            </div>
+                        </div>
+                        <div class="listitem-cont othernonmetal unselectable">
+                            <div class="listitem-outer">
+                                <i class="sld icon-grab-ui sort" title="Sort"></i>
+                                <div class="text"><span>F</span>Fluorine</div>
+                                <i class="oln icon-trash delete" title="Delete"></i>
+                            </div>
+                        </div>
+                        <div class="listitem-cont noblegas unselectable">
+                            <div class="listitem-outer">
+                                <i class="sld icon-grab-ui sort" title="Sort"></i>
+                                <div class="text"><span>Ne</span>Neon</div>
+                                <i class="oln icon-trash delete" title="Delete"></i>
+                            </div>
+                        </div>
+                        <div class="listitem-cont alkali unselectable">
+                            <div class="listitem-outer">
+                                <i class="sld icon-grab-ui sort" title="Sort"></i>
+                                <div class="text"><span>Na</span>Sodium</div>
+                                <i class="oln icon-trash delete" title="Delete"></i>
+                            </div>
+                        </div>
+                        <div class="listitem-cont alkaline unselectable">
+                            <div class="listitem-outer">
+                                <i class="sld icon-grab-ui sort" title="Sort"></i>
+                                <div class="text"><span>Mg</span>Magnesium</div>
+                                <i class="oln icon-trash delete" title="Delete"></i>
+                            </div>
+                        </div>
+                        <div class="listitem-cont posttransition unselectable">
+                            <div class="listitem-outer">
+                                <i class="sld icon-grab-ui sort" title="Sort"></i>
+                                <div class="text"><span>Al</span>Aluminium</div>
+                                <i class="oln icon-trash delete" title="Delete"></i>
+                            </div>
+                        </div>
+                        <div class="listitem-cont metalloid unselectable">
+                            <div class="listitem-outer">
+                                <i class="sld icon-grab-ui sort" title="Sort"></i>
+                                <div class="text"><span>Si</span>Silicon</div>
+                                <i class="oln icon-trash delete" title="Delete"></i>
+                            </div>
+                        </div>
+                        <div class="listitem-cont othernonmetal unselectable">
+                            <div class="listitem-outer">
+                                <i class="sld icon-grab-ui sort" title="Sort"></i>
+                                <div class="text"><span>P</span>Phosphorus</div>
+                                <i class="oln icon-trash delete" title="Delete"></i>
+                            </div>
+                        </div>
+                        <div class="listitem-cont othernonmetal unselectable">
+                            <div class="listitem-outer">
+                                <i class="sld icon-grab-ui sort" title="Sort"></i>
+                                <div class="text"><span>S</span>Sulfur</div>
+                                <i class="oln icon-trash delete" title="Delete"></i>
+                            </div>
+                        </div>
+                        <div class="listitem-cont othernonmetal unselectable">
+                            <div class="listitem-outer">
+                                <i class="sld icon-grab-ui sort" title="Sort"></i>
+                                <div class="text"><span>Cl</span>Chlorine</div>
+                                <i class="oln icon-trash delete" title="Delete"></i>
+                            </div>
+                        </div>
+                        <div class="listitem-cont noblegas unselectable">
+                            <div class="listitem-outer">
+                                <i class="sld icon-grab-ui sort" title="Sort"></i>
+                                <div class="text"><span>Ar</span>Argon</div>
+                                <i class="oln icon-trash delete" title="Delete"></i>
+                            </div>
+                        </div>
+                        <div class="listitem-cont alkali unselectable">
+                            <div class="listitem-outer">
+                                <i class="sld icon-grab-ui sort" title="Sort"></i>
+                                <div class="text"><span>K</span>Potassium</div>
+                                <i class="oln icon-trash delete" title="Delete"></i>
+                            </div>
+                        </div>
+                        <div class="listitem-cont alkaline unselectable">
+                            <div class="listitem-outer">
+                                <i class="sld icon-grab-ui sort" title="Sort"></i>
+                                <div class="text"><span>Ca</span>Calcium</div>
+                                <i class="oln icon-trash delete" title="Delete"></i>
+                            </div>
+                        </div>
                     </div>
-                    <div id="div-refresh-cont">
-                        REFRESH
-                    </div>
+                </div>
+                <div id="div-phint">
+                    <strong>Tip:</strong> Try this page in a mobile browser too
                 </div>
             </div>
         </div>
