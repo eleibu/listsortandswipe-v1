@@ -175,6 +175,10 @@ class Controller_API_Account extends Controller
 					$invoice = $this->getInvoice($request, $user);
 					$sale = $this->getSale($newLicenceType, $user, $invoice);
 
+					if ($user->account_type == 0) {
+						$user->account_expires_at = Carbon::now('UTC')->addYear()->toDateTimeString();
+					}
+
 					$user->account_type = $newLicenceType;
 					$user->domain_count_base = Toolkit::getDomainCountBase($newLicenceType);
 
@@ -204,6 +208,7 @@ class Controller_API_Account extends Controller
 
 					$accountData = array(
 						'accountType' => $user->account_type,
+						'accountExpiresAt' => $user->account_expires_at,
 						'domainCountBase' => $user->domain_count_base
 					);
 					if (isset($user->account_licence_key)) {

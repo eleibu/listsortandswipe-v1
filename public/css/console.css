@@ -1276,7 +1276,7 @@ div.spinner-cont.spinning div.spinner-outer {
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont {
   text-align: center;
-  font-size: 95%;
+  font-size: 90%;
 }
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.lbltop {
@@ -1303,8 +1303,8 @@ div.spinner-cont.spinning div.spinner-outer {
 
 #pageWrapper #div-sitecont div.sitecont-outer div.content-cont div.content-outer div.renewupgrade-cont div.section-cont div.para div.licence-cont div.details-cont {
   display: inline-block;
-  margin-left: 4px;
-  margin-right: 4px;
+  margin-left: 3px;
+  margin-right: 3px;
   background-color: #FFFFFF;
   -webkit-transition: -webkit-box-shadow 200ms ease, -webkit-transform 200ms ease;
   transition: -webkit-box-shadow 200ms ease, -webkit-transform 200ms ease;

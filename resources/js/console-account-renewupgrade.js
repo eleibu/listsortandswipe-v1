@@ -201,7 +201,7 @@ function sharedSetPaymentSubmsg(obj, msg) {
 }
 
 function sharedGetProductName(obj, context) {
-    if (context == 'renew') {
+    if (context == 'renew' || obj.props.accountData_accountType == 0) {
         return licenceDetails[obj.state.selectedLicenceType].name + ' - 12 month licence';
     } else {
         return licenceDetails[obj.state.selectedLicenceType].name + ' - ' + obj.getDaysRemainingText(obj);
@@ -213,13 +213,16 @@ function sharedGetRenewPrice(obj, type) {
 }
 
 function sharedGetUpgradePrice(obj, type) {
+    if (obj.props.accountData_accountType == 0) {
+        return (licenceDetails[type].priceCents / 100).toFixed(2);
+    }
     const priceDollars = (licenceDetails[type].priceCents * obj.state.upgradePriceMultiplier) / 100;
     const priceOneSF = Math.round(priceDollars * 10) / 10;
     let priceTwoSF = priceOneSF.toFixed(2);
     if (priceTwoSF == 0) {
         priceTwoSF = (0.1).toFixed(2);
     }
-    return priceTwoSF;
+    return priceTwoSF;   
 }
 
 function sharedGetDaysRemainingText(obj) {
@@ -370,7 +373,7 @@ function sharedValidateAndSubmit(obj, context) {
                     obj.props.setAccountData(
                         response.data.accountData.accountType,
                         accountLicenceKey,
-                        obj.props.accountData_accountExpiresAt,
+                        response.data.accountData.accountExpiresAt,
                         parseInt(response.data.accountData.domainCountBase),
                         obj.props.accountData_domainCountAdditional,
                         null
@@ -504,6 +507,7 @@ export class Renew extends React.Component {
                 <OrderSummary
                     context={'renew'}
                     accountData_accountExpiresAt={this.props.accountData_accountExpiresAt}
+                    accountData_accountType={this.props.accountData_accountType}
                     accountData_name={this.props.accountData_name}
                     accountData_surname={this.props.accountData_surname}
                     accountData_companyName={this.props.accountData_companyName}
@@ -605,6 +609,7 @@ export class Upgrade extends React.Component {
                 <OrderSummary
                     context={'upgrade'}
                     accountData_accountExpiresAt={this.props.accountData_accountExpiresAt}
+                    accountData_accountType={this.props.accountData_accountType}
                     accountData_name={this.props.accountData_name}
                     accountData_surname={this.props.accountData_surname}
                     accountData_companyName={this.props.accountData_companyName}
@@ -797,7 +802,7 @@ class LicenceTypes extends React.Component {
                             &nbsp;
                         </div>
                         <div className="price dummy">
-                            {(this.props.context == 'renew') ? (
+                            {(this.props.context == 'renew' || this.props.accountData_accountType == 0) ? (
                                 <div className="text">
                                     &nbsp;
                                 </div>
@@ -817,7 +822,7 @@ class LicenceTypes extends React.Component {
                         </div>
                     </div>
                     <div className="row">
-                        {(this.props.context == 'renew') ? (
+                        {(this.props.context == 'renew' || this.props.accountData_accountType == 0) ? (
                             <React.Fragment>
                                 Licence period
                             </React.Fragment>
@@ -855,7 +860,7 @@ class LicenceTypes extends React.Component {
                             &nbsp;
                         </div>
                         <div className="price dummy">
-                            {(this.props.context == 'renew') ? (
+                            {(this.props.context == 'renew' || this.props.accountData_accountType == 0) ? (
                                 <div className="text">
                                     &nbsp;
                                 </div>
@@ -875,7 +880,7 @@ class LicenceTypes extends React.Component {
                         </div>
                     </div>
                     <div className="row">
-                        {(this.props.context == 'renew') ? (
+                        {(this.props.context == 'renew' || this.props.accountData_accountType == 0) ? (
                             <React.Fragment>
                                 Licence period
                             </React.Fragment>
@@ -910,7 +915,7 @@ class LicenceTypes extends React.Component {
                             SELECTED
                         </div>
                     ) : (
-                        (this.props.context == 'renew') ? (
+                        (this.props.context == 'renew' || this.props.accountData_accountType == 0) ? (
                             <div className="lbltop">
                                 &nbsp;
                             </div>
@@ -931,7 +936,7 @@ class LicenceTypes extends React.Component {
                             Basic
                         </div>
                         <div className="price">
-                            {(this.props.context == 'renew') ? (
+                            {(this.props.context == 'renew' || this.props.accountData_accountType == 0) ? (
                                 <div className="text">
                                     ${licenceDetails['1'].priceCents / 100}
                                 </div>
@@ -951,7 +956,7 @@ class LicenceTypes extends React.Component {
                         </div>
                     </div>
                     <div className="row">
-                        {(this.props.context == 'renew') ? (
+                        {(this.props.context == 'renew' || this.props.accountData_accountType == 0) ? (
                             <React.Fragment>
                                 1 year
                             </React.Fragment>
@@ -990,7 +995,7 @@ class LicenceTypes extends React.Component {
                             &nbsp;
                         </div>
                         <div className="price dummy">
-                            {(this.props.context == 'renew') ? (
+                            {(this.props.context == 'renew' || this.props.accountData_accountType == 0) ? (
                                 <div className="text">
                                     &nbsp;
                                 </div>
@@ -1010,7 +1015,7 @@ class LicenceTypes extends React.Component {
                         </div>
                     </div>
                     <div className="row">
-                        {(this.props.context == 'renew') ? (
+                        {(this.props.context == 'renew' || this.props.accountData_accountType == 0) ? (
                             <React.Fragment>
                                 Licence period
                             </React.Fragment>
@@ -1045,7 +1050,7 @@ class LicenceTypes extends React.Component {
                             SELECTED
                         </div>
                     ) : (
-                        (this.props.context == 'renew') ? (
+                        (this.props.context == 'renew' || this.props.accountData_accountType == 0) ? (
                             <div className="lbltop recommended">
                                 RECOMMENDED<img src={images_url + 'recommended-arrow.png'} alt="" width="40" height="8"/>
                             </div>
@@ -1066,7 +1071,7 @@ class LicenceTypes extends React.Component {
                             Professional
                         </div>
                         <div className="price">
-                            {(this.props.context == 'renew') ? (
+                            {(this.props.context == 'renew' || this.props.accountData_accountType == 0) ? (
                                 <div className="text">
                                     ${licenceDetails['2'].priceCents / 100}
                                 </div>
@@ -1086,7 +1091,7 @@ class LicenceTypes extends React.Component {
                         </div>
                     </div>
                     <div className="row">
-                        {(this.props.context == 'renew') ? (
+                        {(this.props.context == 'renew' || this.props.accountData_accountType == 0) ? (
                             <React.Fragment>
                                 1 year
                             </React.Fragment>
@@ -1125,7 +1130,7 @@ class LicenceTypes extends React.Component {
                             &nbsp;
                         </div>
                         <div className="price dummy">
-                            {(this.props.context == 'renew') ? (
+                            {(this.props.context == 'renew' || this.props.accountData_accountType == 0) ? (
                                 <div className="text">
                                     &nbsp;
                                 </div>
@@ -1145,7 +1150,7 @@ class LicenceTypes extends React.Component {
                         </div>
                     </div>
                     <div className="row">
-                        {(this.props.context == 'renew') ? (
+                        {(this.props.context == 'renew' || this.props.accountData_accountType == 0) ? (
                             <React.Fragment>
                                 Licence period
                             </React.Fragment>
@@ -1180,7 +1185,7 @@ class LicenceTypes extends React.Component {
                             SELECTED
                         </div>
                     ) : (
-                        (this.props.context == 'renew') ? (
+                        (this.props.context == 'renew' || this.props.accountData_accountType == 0) ? (
                             <div className="lbltop">
                                 &nbsp;
                             </div>
@@ -1201,7 +1206,7 @@ class LicenceTypes extends React.Component {
                             Enterprise
                         </div>
                         <div className="price">
-                            {(this.props.context == 'renew') ? (
+                            {(this.props.context == 'renew' || this.props.accountData_accountType == 0) ? (
                                 <div className="text">
                                     ${licenceDetails['3'].priceCents / 100}
                                 </div>
@@ -1221,7 +1226,7 @@ class LicenceTypes extends React.Component {
                         </div>
                     </div>
                     <div className="row">
-                        {(this.props.context == 'renew') ? (
+                        {(this.props.context == 'renew' || this.props.accountData_accountType == 0) ? (
                             <React.Fragment>
                                 1 year
                             </React.Fragment>
@@ -1266,9 +1271,19 @@ const OrderSummary = (props) => {
     const taxes = '$0.00';
     const total = price;
 
-    let expires = moment(props.accountData_accountExpiresAt).add(1, 'years').format('LL');
-    if (getDiffMinutes(props.accountData_accountExpiresAt) <= 0) {
-        expires = moment().add(1, 'years').format('LL');
+    let expires;
+    if (props.context == 'renew') {
+        if (getDiffMinutes(props.accountData_accountExpiresAt) > 0) {
+            expires = moment(props.accountData_accountExpiresAt).add(1, 'years').format('LL');
+        } else {
+            expires = moment().add(1, 'years').format('LL');
+        }
+    } else {
+        if (props.accountData_accountType == 0) {
+            expires = moment().add(1, 'years').format('LL');
+        } else {
+            expires = moment(props.accountData_accountExpiresAt).format('LL');
+        }
     }
     return (
         <div className="section-cont">
