@@ -6,7 +6,6 @@ import { lithiumlist } from './lithiumlist-1.0.0.js';
 
 var listCont = document.getElementById('div-list-cont');
 var outerCont = document.getElementById('div-ptable');
-// var outerCont = window;
 var listItemClass = 'listitem-cont';
 
 var textLeft = document.createTextNode("Delete");
@@ -38,19 +37,12 @@ var listProperties = {
 		classNameSlideBack: 'left-mask-slide-back',
 		childNode: divLeft
     }],
-	rightEnabled: true,
-	rightBySwipe: true,
-    rightMasks: [{
-    	background: 'rgba(15, 127, 18, 1)',
-		classNameDefault: 'right-mask',
-		classNameSlideOut: 'right-mask-slide-out',
-		classNameSlideBack: 'right-mask-slide-back',
-		childNode: divRight
-    }],
+    onLeftEnd: leftEnd,
+	rightEnabled: false
 };
 
 lithiumlist.attachToList(
-	'123456789',
+	'h7rg0P4NRjsXOffykBu7sUaBwGdBBL',
     outerCont,
     listCont,
     listItemClass,
@@ -69,5 +61,18 @@ function sortEnd(instance, origIndex, newIndex) {
 		} else {
 			instance.listCont.insertBefore(origItem, newItem);
 		}		
+	}
+}
+
+function leftEnd(instance, index, didSlideOut) {
+	if (didSlideOut) {
+		var items = instance.listCont.getElementsByClassName(instance.listItemClass);
+		if (items.length >= 1) {
+			items[index].remove();
+			if (items.length == 0) {
+				var divRefresh = document.getElementById('div-refresh-cont');
+				divRefresh.className = 'show';				
+			}
+		}
 	}
 }

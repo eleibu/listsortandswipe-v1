@@ -319,10 +319,96 @@ a.menubtn:active {
 }
 
 #pageWrapper #div-ptable {
+  position: relative;
   max-width: 500px;
   margin: 0 auto;
   height: 350px;
   overflow: auto;
+}
+
+#pageWrapper #div-ptable #div-list-cont {
+  position: relative;
+  border-top: 0.1px solid transparent;
+}
+
+#pageWrapper #div-ptable #div-list-cont div.listitem-cont div.listitem-outer {
+  position: relative;
+}
+
+#pageWrapper #div-ptable #div-list-cont div.listitem-cont div.listitem-outer div.text span {
+  display: inline-block;
+  font-weight: bold;
+  width: 1.6em;
+  margin: 0 0.6em;
+}
+
+#pageWrapper #div-ptable #div-list-cont div.listitem-cont.othernonmetal {
+  background-color: #F56E44;
+}
+
+#pageWrapper #div-ptable #div-list-cont div.listitem-cont.noblegas {
+  background-color: #F8951D;
+}
+
+#pageWrapper #div-ptable #div-list-cont div.listitem-cont.alkali {
+  background-color: #F2DF29;
+}
+
+#pageWrapper #div-ptable #div-list-cont div.listitem-cont.alkaline {
+  background-color: #C6C848;
+}
+
+#pageWrapper #div-ptable #div-list-cont div.listitem-cont.metalloid {
+  background-color: #B0CD9D;
+}
+
+#pageWrapper #div-ptable #div-list-cont div.listitem-cont.posttransition {
+  background-color: #A3DAD2;
+}
+
+#pageWrapper #div-ptable #div-list-cont div.listitem-cont.transition {
+  background-color: #A2A18E;
+}
+
+#pageWrapper #div-ptable #div-list-cont div.listitem-cont.lanthanoid {
+  background-color: #C9B481;
+}
+
+#pageWrapper #div-ptable #div-list-cont div.listitem-cont.actinoid {
+  background-color: #FBB5B0;
+}
+
+#pageWrapper #div-ptable #div-list-cont div.left-mask div.label-cont, #pageWrapper #div-ptable #div-list-cont div.right-mask div.label-cont {
+  position: relative;
+  height: 100%;
+}
+
+#pageWrapper #div-ptable #div-list-cont div.left-mask div.label-cont span, #pageWrapper #div-ptable #div-list-cont div.right-mask div.label-cont span {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  color: #F8F8F8;
+}
+
+#pageWrapper #div-ptable #div-list-cont div.left-mask div.label-cont span {
+  right: 0.4em;
+}
+
+#pageWrapper #div-ptable #div-list-cont div.right-mask div.label-cont span {
+  left: 0.4em;
+}
+
+#pageWrapper #div-ptable #div-list-cont.left-list, #pageWrapper #div-ptable #div-list-cont.right-list {
+  overflow-x: hidden;
+}
+
+#pageWrapper #div-ptable #div-refresh-cont {
+  display: none;
+}
+
+#pageWrapper #div-ptable #div-refresh-cont.show {
+  display: block;
 }
 
 #pageWrapper div.section-cont div.section-outer {
@@ -381,83 +467,6 @@ a.menubtn:active {
   font-size: 180%;
   font-weight: bold;
   color: #222222;
-}
-
-#div-list-cont {
-  position: relative;
-  border-top: 0.1px solid transparent;
-}
-
-#div-list-cont div.listitem-cont div.listitem-outer {
-  position: relative;
-}
-
-#div-list-cont div.listitem-cont div.listitem-outer div.text span {
-  display: inline-block;
-  font-weight: bold;
-  width: 1.6em;
-  margin: 0 0.6em;
-}
-
-#div-list-cont div.listitem-cont.othernonmetal {
-  background-color: #F56E44;
-}
-
-#div-list-cont div.listitem-cont.noblegas {
-  background-color: #F8951D;
-}
-
-#div-list-cont div.listitem-cont.alkali {
-  background-color: #F2DF29;
-}
-
-#div-list-cont div.listitem-cont.alkaline {
-  background-color: #C6C848;
-}
-
-#div-list-cont div.listitem-cont.metalloid {
-  background-color: #B0CD9D;
-}
-
-#div-list-cont div.listitem-cont.posttransition {
-  background-color: #A3DAD2;
-}
-
-#div-list-cont div.listitem-cont.transition {
-  background-color: #A2A18E;
-}
-
-#div-list-cont div.listitem-cont.lanthanoid {
-  background-color: #C9B481;
-}
-
-#div-list-cont div.listitem-cont.actinoid {
-  background-color: #FBB5B0;
-}
-
-#div-list-cont div.left-mask div.label-cont, #div-list-cont div.right-mask div.label-cont {
-  position: relative;
-  height: 100%;
-}
-
-#div-list-cont div.left-mask div.label-cont span, #div-list-cont div.right-mask div.label-cont span {
-  position: absolute;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-  color: #F8F8F8;
-}
-
-#div-list-cont div.left-mask div.label-cont span {
-  right: 0.4em;
-}
-
-#div-list-cont div.right-mask div.label-cont span {
-  left: 0.4em;
-}
-
-#div-list-cont.left-list, #div-list-cont.right-list {
-  overflow-x: hidden;
 }
 
 #pageWrapper.xl #div-title, #pageWrapper.lg #div-title, #pageWrapper.md #div-title, #pageWrapper.sm #div-title {
@@ -559,16 +568,12 @@ a.menubtn:active {
   left: 0;
 }
 
-#pageWrapper.xl div.listitem-cont div.listitem-outer i.archive, #pageWrapper.lg div.listitem-cont div.listitem-outer i.archive, #pageWrapper.md div.listitem-cont div.listitem-outer i.archive, #pageWrapper.sm div.listitem-cont div.listitem-outer i.archive {
-  left: 1.6em;
-}
-
 #pageWrapper.xl div.listitem-cont div.listitem-outer i.delete, #pageWrapper.lg div.listitem-cont div.listitem-outer i.delete, #pageWrapper.md div.listitem-cont div.listitem-outer i.delete, #pageWrapper.sm div.listitem-cont div.listitem-outer i.delete {
   right: 0;
 }
 
 #pageWrapper.xl div.listitem-cont div.listitem-outer div.text, #pageWrapper.lg div.listitem-cont div.listitem-outer div.text, #pageWrapper.md div.listitem-cont div.listitem-outer div.text, #pageWrapper.sm div.listitem-cont div.listitem-outer div.text {
-  margin: 0 2em 0 4em;
+  margin: 0 2em 0 2em;
 }
 
 #pageWrapper.xl div.listitem-cont.lithium, #pageWrapper.lg div.listitem-cont.lithium, #pageWrapper.md div.listitem-cont.lithium, #pageWrapper.sm div.listitem-cont.lithium {

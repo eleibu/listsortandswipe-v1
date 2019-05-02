@@ -1,5 +1,4 @@
 @import 'shared-all';
-// @import 'sales-all';
 
 .button-word-cont.hlink {
 	color: #F8F8F8;
@@ -50,20 +49,6 @@ a.menubtn:active {
 }
 
 #pageWrapper {
-	// height: 100%;
-	// overflow: auto;
-
-	// #div-sitecont {
-	// 	text-align: center;
-	// 	padding: 0 1em;
-
-	// 	div.sitecont-outer {
-	// 		display: inline-block;
-	// 		text-align: left;
-	// 		max-width: 800px;
-	// 	}		
-	// }
-
 	#div-title {
 		line-height: 130%;
 		color: #222222;
@@ -80,19 +65,108 @@ a.menubtn:active {
 		}
 	}
 
-	// #div-buttons {
-	// 	line-height: 130%;
-
-	// 	a.button-word-cont {
-	// 		margin: 0.3em 0;
-	// 	}
-	// }
-
 	#div-ptable {
+		position: relative;
 		max-width: 500px;
 		margin: 0 auto;
 		height: 350px;
 		overflow: auto;
+
+		#div-list-cont {
+			position: relative;
+			border-top: 0.1px solid transparent;
+
+			div.listitem-cont {
+				div.listitem-outer {
+					position: relative;
+
+					div.text span {
+						display: inline-block;
+						font-weight: bold;
+						width: 1.6em;
+						margin: 0 0.6em;
+					}
+				}
+			}
+
+			div.listitem-cont.othernonmetal {
+				background-color: #F56E44;
+			}
+
+			div.listitem-cont.noblegas {
+				background-color: #F8951D;
+			}
+
+			div.listitem-cont.alkali {
+				background-color: #F2DF29;
+			}
+
+			div.listitem-cont.alkaline {
+				background-color: #C6C848;
+			}
+
+			div.listitem-cont.metalloid {
+				background-color: #B0CD9D;
+			}
+
+			div.listitem-cont.posttransition {
+				background-color: #A3DAD2;
+			}
+
+			div.listitem-cont.transition {
+				background-color: #A2A18E;
+			}
+
+			div.listitem-cont.lanthanoid {
+				background-color: #C9B481;
+			}
+
+			div.listitem-cont.actinoid {
+				background-color: #FBB5B0;
+			}
+
+			div.left-mask, div.right-mask {
+				div.label-cont {
+					position: relative;
+					height: 100%;
+
+					span {
+						position: absolute;
+						top: 50%;
+						transform: translateY(-50%);
+						color: #F8F8F8;
+					}
+				}
+			}
+
+			div.left-mask {
+				div.label-cont {
+					span {
+						right: 0.4em;
+					}
+				}
+			}
+
+			div.right-mask {
+				div.label-cont {
+					span {
+						left: 0.4em;
+					}
+				}
+			}
+		}
+
+		#div-list-cont.left-list, #div-list-cont.right-list {
+			overflow-x: hidden;	// recommended to allow left/right shadow when scrolling but hide clone when swiping left/right
+		}
+
+		#div-refresh-cont {
+			display: none;
+		}
+
+		#div-refresh-cont.show {
+			display: block;
+		}
 	}
 
 	div.section-cont {
@@ -154,102 +228,6 @@ a.menubtn:active {
 			color: #222222;
 		}
 	}
-
-
-}
-
-#div-list-cont {
-	position: relative;
-	border-top: 0.1px solid transparent;
-	// height: 300px;
-	// overflow: hidden;
-
-	div.listitem-cont {
-		div.listitem-outer {
-			position: relative;
-
-			div.text span {
-				display: inline-block;
-				font-weight: bold;
-				width: 1.6em;
-				margin: 0 0.6em;
-			}
-		}
-	}
-
-	div.listitem-cont.othernonmetal {
-		background-color: #F56E44;
-	}
-
-	div.listitem-cont.noblegas {
-		background-color: #F8951D;
-	}
-
-	div.listitem-cont.alkali {
-		background-color: #F2DF29;
-	}
-
-	div.listitem-cont.alkaline {
-		background-color: #C6C848;
-	}
-
-	div.listitem-cont.metalloid {
-		background-color: #B0CD9D;
-	}
-
-	div.listitem-cont.posttransition {
-		background-color: #A3DAD2;
-	}
-
-	div.listitem-cont.transition {
-		background-color: #A2A18E;
-	}
-
-	div.listitem-cont.lanthanoid {
-		background-color: #C9B481;
-	}
-
-	div.listitem-cont.actinoid {
-		background-color: #FBB5B0;
-	}
-
-	div.listitem-cont.unknown {
-
-	}
-
-	div.left-mask, div.right-mask {
-		div.label-cont {
-			position: relative;
-			height: 100%;
-
-			span {
-				position: absolute;
-				top: 50%;
-				transform: translateY(-50%);
-				color: #F8F8F8;
-			}
-		}
-	}
-
-	div.left-mask {
-		div.label-cont {
-			span {
-				right: 0.4em;
-			}
-		}
-	}
-
-	div.right-mask {
-		div.label-cont {
-			span {
-				left: 0.4em;
-			}
-		}
-	}
-}
-
-#div-list-cont.left-list, #div-list-cont.right-list {
-	overflow-x: hidden;	// recommended to allow left/right shadow when scrolling but hide clone when swiping left/right
 }
 
 #pageWrapper.xl, #pageWrapper.lg, #pageWrapper.md, #pageWrapper.sm {
@@ -260,19 +238,6 @@ a.menubtn:active {
 	#div-subtitle {
 		font-size: 150%;
 	}
-
-	// #div-buttons {
-	// 	font-size: 110%;
-	// }
-
-	// div.section-cont.pagetitle-cont {
-	// 	padding-bottom: 120px;
-	// }
-
-	// div.section-cont.whytitle-cont {
-	// 	padding-top: 120px;
-	// 	padding-bottom: 30px;
-	// }
 
 	div.pagetitle-cont {
 		padding: 40px 16px 120px 16px;
@@ -370,16 +335,12 @@ a.menubtn:active {
 				left : 0;
 			}
 
-			i.archive {
-				left : 1.6em;
-			}
-
 			i.delete {
 				right : 0;
 			}
 
 			div.text {
-				margin: 0 2em 0 4em;
+				margin: 0 2em 0 2em;
 			}
 		}
 	}
@@ -406,18 +367,6 @@ a.menubtn:active {
 	#div-subtitle {
 		font-size: 120%;
 	}
-
-	// #div-buttons {
-	// 	font-size: 90%;
-	// }
-
-	// div.section-cont.pagetitle-cont {
-	// 	padding-bottom: 60px;
-	// }
-
-	// div.section-cont.whytitle-cont {
-	// 	padding-top: 60px;
-	// }
 
 	div.list-cont {
 		padding: 60px 16px;

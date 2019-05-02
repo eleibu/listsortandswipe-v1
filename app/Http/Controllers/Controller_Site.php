@@ -35,15 +35,6 @@ class Controller_Site extends Controller
             ->with('consolePath', $pageInfo['console']['path']);
 	}
 
-	public function page_why_lithium_list(Request $request) {
-		$pageInfo = Toolkit::pageInfo();
-		return view('why-lithium-list')
-            ->with('loginName', $pageInfo['login']['name'])
-            ->with('loginPath', $pageInfo['login']['path'])
-            ->with('consoleName', $pageInfo['console']['name'])
-            ->with('consolePath', $pageInfo['console']['path']);
-	}
-
 	public function page_pricing(Request $request) {
 		$productIDs = Toolkit::productIDs();
 		$pageInfo = Toolkit::pageInfo();

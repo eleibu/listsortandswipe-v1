@@ -1,6 +1,6 @@
 @extends('layout-info')
 
-@section('pageTitle', 'Browser support')
+@section('pageTitle', 'Lithium List - browser support')
 
 @section('cssLinks')
     <link rel="stylesheet" href="{{ url(mix('/css/resources.css')) }}">

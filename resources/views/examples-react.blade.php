@@ -126,7 +126,7 @@ i.icon-trash {
     }
     componentDidMount() {
 	    lithiumlist.attachToList(
-	        &#39;123456789&#39;,
+	        &#39;0123456789&#39;,
 	        this.outerCont,
 	        this.listCont,
 	        &#39;listItem&#39;,

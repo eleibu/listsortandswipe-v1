@@ -16976,7 +16976,6 @@ __webpack_require__("./node_modules/bootstrap/dist/js/bootstrap.js");
 
 var listCont = document.getElementById('div-list-cont');
 var outerCont = document.getElementById('div-ptable');
-// var outerCont = window;
 var listItemClass = 'listitem-cont';
 
 var textLeft = document.createTextNode("Delete");
@@ -17008,18 +17007,11 @@ var listProperties = {
 		classNameSlideBack: 'left-mask-slide-back',
 		childNode: divLeft
 	}],
-	rightEnabled: true,
-	rightBySwipe: true,
-	rightMasks: [{
-		background: 'rgba(15, 127, 18, 1)',
-		classNameDefault: 'right-mask',
-		classNameSlideOut: 'right-mask-slide-out',
-		classNameSlideBack: 'right-mask-slide-back',
-		childNode: divRight
-	}]
+	onLeftEnd: leftEnd,
+	rightEnabled: false
 };
 
-__WEBPACK_IMPORTED_MODULE_2__lithiumlist_1_0_0_js__["a" /* lithiumlist */].attachToList('123456789', outerCont, listCont, listItemClass, listProperties);
+__WEBPACK_IMPORTED_MODULE_2__lithiumlist_1_0_0_js__["a" /* lithiumlist */].attachToList('h7rg0P4NRjsXOffykBu7sUaBwGdBBL', outerCont, listCont, listItemClass, listProperties);
 
 function sortEnd(instance, origIndex, newIndex) {
 	if (origIndex != newIndex) {
@@ -17032,6 +17024,19 @@ function sortEnd(instance, origIndex, newIndex) {
 			instance.listCont.insertBefore(origItem, newItem.nextSibling);
 		} else {
 			instance.listCont.insertBefore(origItem, newItem);
+		}
+	}
+}
+
+function leftEnd(instance, index, didSlideOut) {
+	if (didSlideOut) {
+		var items = instance.listCont.getElementsByClassName(instance.listItemClass);
+		if (items.length >= 1) {
+			items[index].remove();
+			if (items.length == 0) {
+				var divRefresh = document.getElementById('div-refresh-cont');
+				divRefresh.className = 'show';
+			}
 		}
 	}
 }
@@ -19322,13 +19327,6 @@ var pageMenuShowHide = function () {
 
 /***/ }),
 
-/***/ "./resources/sass/why-lithium-list.scss":
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19336,7 +19334,6 @@ __webpack_require__("./resources/js/home.js");
 __webpack_require__("./resources/sass/home.scss");
 __webpack_require__("./resources/sass/documentation.scss");
 __webpack_require__("./resources/sass/examples.scss");
-__webpack_require__("./resources/sass/why-lithium-list.scss");
 __webpack_require__("./resources/sass/pricing.scss");
 __webpack_require__("./resources/sass/console.scss");
 __webpack_require__("./resources/sass/auth.scss");
