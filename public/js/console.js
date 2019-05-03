@@ -73014,13 +73014,11 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 // Medium articles:
 // Validation using plain JS
 
+
 // TO FINALISE DOCS
-// Look for square brackets and fix
 // Make all examples CHANGE the default settings
 
 
-// TODO: Finish Controller_Auth_SignUp
-// TODO: Can't get out of edit domain if it is below keyboard
 // TODO: Check that copy button is working on mobile
 // TODO: Include '-webkit-tap-highlight-color: rgba(0,0,0,0);' in documentation, see:
 // https://stackoverflow.com/questions/5106934/prevent-grey-overlay-on-touchstart-in-mobile-safari-webview
@@ -73044,7 +73042,6 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 // TODO: Allow '-webkit-overflow-scrolling: touch' by turning it off when sorting starts?
 // TODO: Reset props for already attached list
 // TODO: Change prop combinations
-// TODO: Minify and upload to NPM
 
 
 // TODO: Do not attach to window, attach to outer div instead - change validation to check for this
@@ -73053,6 +73050,7 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 
 
 var lithiumlist = function () {
+	var version = '1.0.0';
 	var instances = [];
 
 	var defaultProperties = {
@@ -74630,10 +74628,10 @@ var lithiumlist = function () {
 		request.onload = function () {
 			rLoad(request, instance);
 		};
-		var url0 = 'http://192.168.1';
-		var url1 = '.12/~elliotleibu/listso';
-		var url2 = 'rtandswipe-v1/public/api/v1/rcheck?host=';
-		var url = url0 + url1 + url2 + window.location.hostname + '&key=' + instance.rkey;
+		var url0 = 'http://loca';
+		var url1 = 'lhost/~elliotleibu/listso';
+		var url2 = 'rtandswipe-v1/public/api/v1/rcheck?llv=';
+		var url = url0 + url1 + url2 + version + '&key=' + instance.rkey;
 		request.open('GET', url, true);
 		request.send();
 	};

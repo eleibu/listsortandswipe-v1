@@ -371,7 +371,7 @@ class Controller_Auth_SignUp extends Controller
 		}
 		DB::commit();
 
-		Auth::attempt(['email' => $email, 'password' => $user->password], false);
+		Auth::attempt(['email' => $email, 'password' => $request->input('password')], false);
 
 		if ($dbProduct->id == $productIDs['accountTypeFree']) {
 			Mail::to($email)
