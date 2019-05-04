@@ -30,7 +30,8 @@ class Controller_API_Account extends Controller
 		Toolkit::sleep();
 
         if ($request->filled('type', 'productName', 'amount', 'nonce')) {
-        	$result = $this->submitPayment($request->input('amount'), $request->input('nonce'));
+        	$paymentRef = Toolkit::getGUID();
+        	$result = $this->submitPayment($request->input('amount'), $request->input('nonce'), $paymentRef);
 
 			if ($result->success) {
 				$user = Auth::guard('api')->user();
@@ -38,7 +39,7 @@ class Controller_API_Account extends Controller
 				$domainIds = json_decode($user->domain_ids);
 				$newLicenceType = intval($request->input('type'));
 				$invoice = $this->getInvoice($request, $user);
-				$sale = $this->getSale($newLicenceType, $user, $invoice);
+				$sale = $this->getSale($newLicenceType, $user, $invoice, $paymentRef);
 
 				$newDomainIds = array();
 				$deleteDomainIds = array();
@@ -169,11 +170,12 @@ class Controller_API_Account extends Controller
 
 			$newLicenceType = intval($request->input('type'));
 			if ($newLicenceType > $user->account_type) {
-	        	$result = $this->submitPayment($request->input('amount'), $request->input('nonce'));
+				$paymentRef = Toolkit::getGUID();
+	        	$result = $this->submitPayment($request->input('amount'), $request->input('nonce'), $paymentRef);
 
 				if ($result->success) {
 					$invoice = $this->getInvoice($request, $user);
-					$sale = $this->getSale($newLicenceType, $user, $invoice);
+					$sale = $this->getSale($newLicenceType, $user, $invoice, $paymentRef);
 
 					if ($user->account_type == 0) {
 						$user->account_expires_at = Carbon::now('UTC')->addYear()->toDateTimeString();
@@ -238,7 +240,7 @@ class Controller_API_Account extends Controller
         }
 	}
 
-	protected function getSale($newLicenceType, $user, $invoice) {
+	protected function getSale($newLicenceType, $user, $invoice, $paymentRef) {
 		$productIDs = Toolkit::productIDs();
 		switch($newLicenceType) {
 			case 1:
@@ -267,6 +269,7 @@ class Controller_API_Account extends Controller
 		$sale->price_cents_orig = $invoice['price'];
 		$sale->price_cents_after_discount = $invoice['price'];
 		$sale->licence_period_secs = strtotime($user->account_expires_at) - time();
+		$sale->payment_ref = $paymentRef;
 
 		return $sale;
 	}
@@ -286,7 +289,7 @@ class Controller_API_Account extends Controller
 		return $invoice;
 	}
 
-	protected function submitPayment($amount, $nonce) {
+	protected function submitPayment($amount, $nonce, $paymentRef) {
 		$gateway = new \Braintree_Gateway([
 		    'environment' => env('BRAINTREE_ENV'),
 		    'merchantId' => env('BRAINTREE_MERCHANT_ID'),
@@ -298,6 +301,9 @@ class Controller_API_Account extends Controller
 			'paymentMethodNonce' => $nonce,
 			'options' => [
 				'submitForSettlement' => true
+			],
+			'customFields' => [
+				'sales_payment_ref' => $paymentRef
 			]
 		]);
 		return $result;

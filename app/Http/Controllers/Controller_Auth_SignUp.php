@@ -241,15 +241,19 @@ class Controller_Auth_SignUp extends Controller
 
 				if ($requirePayment) {
 					$transAmount = round(($invoice['total'] / 100), 2);
+					$paymentRef = Toolkit::getGUID();
 					$result = $this->gateway->transaction()->sale([
 						'amount' => $transAmount,
 						'paymentMethodNonce' => $request->input('nonce'),
 						'options' => [
 							'submitForSettlement' => true
+						],
+						'customFields' => [
+							'sales_payment_ref' => $paymentRef
 						]
 					]);
 					if ($result->success) {
-						return $this->createAccount($request, $dbProduct, $invoice);
+						return $this->createAccount($request, $dbProduct, $invoice, $paymentRef);
 					} else {
 						// billing failed
 				        return back()
@@ -257,7 +261,7 @@ class Controller_Auth_SignUp extends Controller
 				        	->withErrors(['creditcard' => $cardErrorMsg], 'signup');
 					}
 				} else {
-					return $this->createAccount($request, $dbProduct, $invoice);
+					return $this->createAccount($request, $dbProduct, $invoice, null);
 				}
 			}
 		} else {
@@ -265,7 +269,7 @@ class Controller_Auth_SignUp extends Controller
 		}
 	}
 
-	protected function createAccount($request, $dbProduct, $invoice) {
+	protected function createAccount($request, $dbProduct, $invoice, $paymentRef) {
 		$productIDs = Toolkit::productIDs();
 
 		// user
@@ -351,6 +355,7 @@ class Controller_Auth_SignUp extends Controller
 		$sale->price_cents_orig = $dbProduct->price_cents;
 		$sale->price_cents_after_discount = $dbProduct->price_cents;
 		$sale->licence_period_secs = $licencePeriodSecs;
+		$sale->payment_ref = $paymentRef;
 
 		// save
 		DB::beginTransaction();
