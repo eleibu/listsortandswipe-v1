@@ -26,6 +26,7 @@
         "braintree-web": "^3.43.0",
         "classnames": "^2.2.6",
         "immutability-helper": "^3.0.0",
+        "lithiumlist": "^1.0.0",
         "moment": "^2.24.0",
         "prismjs": "^1.15.0",
         "react-transition-group": "^2.5.3",

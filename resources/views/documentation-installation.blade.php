@@ -26,7 +26,7 @@
 	<p>
 		Install Lithium List with npm:
 	</p>
-    <pre><code class="language-js">$ npm install lithium-list</code></pre>
+    <pre><code class="language-js">$ npm install lithiumlist</code></pre>
 </div>
 <div class="section-cont">
 	<a id="{{$refs['import']['aref']}}" class="title-section">
@@ -35,7 +35,7 @@
 	<p>
 		Import Lithium List into your code bundle:
 	</p>
-    <pre class="line-numbers"><code class="language-js">import { lithiumlist } from 'lithiumlist';</code></pre>
+    <pre class="line-numbers"><code class="language-js">import lithiumlist from 'lithiumlist';</code></pre>
 </div>
 <div class="section-cont">
 	<a id="{{$refs['update']['aref']}}" class="title-section">
@@ -44,5 +44,5 @@
 	<p>
 		Update to the latest version via npm:
 	</p>
-    <pre><code class="language-js">$ npm update lithium-list</code></pre>
+    <pre><code class="language-js">$ npm update lithiumlist</code></pre>
 </div>

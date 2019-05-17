@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { monitorWinWidth } from './monitor-win-width.js';
 import { pageMenuShowHide } from './page-menu-show-hide.js';
-import { lithiumlist } from './lithiumlist-1.0.0.js';
+import lithiumlist from 'lithiumlist';
 
 import Prism from 'prismjs';
 Prism.highlightAll();

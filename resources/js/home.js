@@ -2,7 +2,7 @@ require('bootstrap');
 
 import { monitorWinWidth } from './monitor-win-width.js';
 import { pageMenuShowHide } from './page-menu-show-hide.js';
-import { lithiumlist } from './lithiumlist-1.0.0.js';
+import lithiumlist from 'lithiumlist';
 
 var listCont = document.getElementById('div-list-cont');
 var outerCont = document.getElementById('div-ptable');

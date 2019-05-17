@@ -3,7 +3,7 @@ import classNames from 'classNames/dedupe';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import Tooltip from 'tooltip.js';
 import { hasDomainForm, stripUrl, trimString } from './utils.js';
-import { lithiumlist } from './lithiumlist-1.0.0.js';
+import lithiumlist from 'lithiumlist';
 
 export class Domains extends React.Component {
     constructor(props) {
